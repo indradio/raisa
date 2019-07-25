@@ -10,9 +10,9 @@
                             <h4 class="card-title">Data Perjalanan</h4>
                         </div>
                         <div class="card-body ">
-                            <form action="<?= base_url('reservasi/dl1c1_proses'); ?>" method="post">
+                            <form action="<?= base_url('reservasi/dl1c2_proses'); ?>" method="post">
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Kepemilikan</label>
+                                    <label class="col-md-2 col-form-label">Jenis Kendaraan</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <select class="selectpicker" name="kepemilikan" data-style="select-with-transition" title="Pilih" data-size="7" required>
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Anggota Perjalanan</label>
+                                    <label class="col-md-2 col-form-label">Peserta Perjalanan</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Anggota" data-size="7" required>

@@ -50,12 +50,6 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    $queryRsv = "SELECT *
-                                            FROM `reservasi`
-                                            WHERE `status` = 3
-                                            ORDER BY `id` DESC
-                                            ";
-                                    $reservasi = $this->db->query($queryRsv)->result_array();
                                     foreach ($reservasi as $rsv) : ?>
                                         <tr>
                                             <td><?= $rsv['id']; ?></td>
@@ -70,9 +64,8 @@
                                             <td><?= $rsv['tglkembali']; ?></td>
                                             <td><?= $rsv['jamkembali']; ?></td>
                                             <td class="text-right">
-                                                <a href="#" class="btn btn-link btn-warning btn-just-icon edit" data-toggle="modal" data-target="#rsvDetail" data-rsv_id="<?= $rsv['id']; ?>" data-rsv_nama="<?= $rsv['nama']; ?>" data-rsv_tujuan="<?= $rsv['tujuan']; ?>"><i class="material-icons">dvr</i></a>
                                                 <a href="<?= base_url('perjalanandl/prosesdl/') . $rsv['id']; ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
-                                                <a href="<?= base_url('perjalanandl/bataldl/') . $rsv['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a>
+                                                <a href="<?= base_url('perjalanandl/bataldl/') . $rsv['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#rsvBataldl" data-rsv_id="<?= $rsv['id']; ?>"><i class="material-icons">close</i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -105,6 +98,48 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="rsvBataldl" tabindex="-1" role="dialog" aria-labelledby="rsvBataldlTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Pembatalan Perjalanan Dinas</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl/'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">No. Reservasi</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="id" id="id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Alasan Pembatalan</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <textarea rows="2" class="form-control" name="catatan" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger btn-round btn-wd btn-sm">BATALKAN PERJALANAN INI!</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

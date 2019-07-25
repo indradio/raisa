@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Anggota</label>
+                                    <label class="col-md-2 col-form-label">Peserta</label>
                                     <div class="col-md-5">
                                         <div class="material-datatables">
                                             <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

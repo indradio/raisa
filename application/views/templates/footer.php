@@ -42,7 +42,7 @@
             <i class="fa fa-cog fa-2x"> </i>
         </a>
         <ul class="dropdown-menu">
-            <li class="header-title"> Sidebar Filters</li>
+            <!-- <li class="header-title"> Sidebar Filters</li>
             <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger active-color">
                     <div class="badge-colors ml-auto mr-auto">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </a>
-            </li>
+            </li> -->
             <li class="header-title">Sidebar Background</li>
             <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger background-color">
@@ -299,47 +299,42 @@
                 }
             });
 
-            // $('.switch-sidebar-mini input').change(function() {
-            //     $body = $('body');
+            $('.switch-sidebar-mini input').change(function() {
+                $body = $('body');
 
-            //     $input = $(this);
+                $input = $(this);
 
-            //     if (md.misc.sidebar_mini_active == true) {
-            //         $('body').removeClass('sidebar-mini');
-            //         md.misc.sidebar_mini_active = false;
+                if (md.misc.sidebar_mini_active == true) {
+                    $('body').removeClass('sidebar-mini');
+                    md.misc.sidebar_mini_active = false;
 
-            //         $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+                    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
-            //     } else {
+                } else {
 
-            //         $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+                    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
 
-            //         setTimeout(function() {
-            //             $('body').addClass('sidebar-mini');
+                    setTimeout(function() {
+                        $('body').addClass('sidebar-mini');
 
-            //             md.misc.sidebar_mini_active = true;
-            //         }, 300);
-            //     }
+                        md.misc.sidebar_mini_active = true;
+                    }, 300);
+                }
 
-            //     // we simulate the window Resize so the charts will get updated in realtime.
-            //     var simulateWindowResize = setInterval(function() {
-            //         window.dispatchEvent(new Event('resize'));
-            //     }, 180);
+                // we simulate the window Resize so the charts will get updated in realtime.
+                var simulateWindowResize = setInterval(function() {
+                    window.dispatchEvent(new Event('resize'));
+                }, 180);
 
-            //     // we stop the simulation of Window Resize after the animations are completed
-            //     setTimeout(function() {
-            //         clearInterval(simulateWindowResize);
-            //     }, 1000);
+                // we stop the simulation of Window Resize after the animations are completed
+                setTimeout(function() {
+                    clearInterval(simulateWindowResize);
+                }, 1000);
 
-            // });
+            });
         });
     });
 </script>
-<!-- <script>
-    $(document).ready(function() {
-        sweet.showSwal();
-    });
-</script> -->
 
 </body>
 

@@ -22,6 +22,7 @@ class Perjalanandl extends CI_Controller
     public function admindl()
     {
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '3'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -65,5 +66,15 @@ class Perjalanandl extends CI_Controller
             $this->db->update('reservasi');
             redirect('perjalanandl/prosesdl/' . $rsv_id);
         }
+    }
+    public function bataldl()
+    {
+        $this->db->set('status', '0');
+        $this->db->set('catatan', $this->input->post('catatan'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'bataldl');
+        redirect('perjalanandl/admindl');
     }
 }

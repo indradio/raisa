@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'setujudl') {
   swal({
     title: "Terima kasih!",
-    text: "Anda telah menyetujui perjalanan ini.",
+    text: "Perjalanan ini telah disetujui.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
@@ -11,15 +11,15 @@ if (flashData == 'setujudl') {
 } else if (flashData == 'bataldl') {
   swal({
     title: "Terima kasih!",
-    text: "Anda telah membatalkan perjalanan ini.",
+    text: "Perjalanan ini telah dibatalkan.",
     buttonsStyling: false,
-    confirmButtonClass: "btn btn-success",
+    confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
 } else if (flashData == 'nopolsalah') {
   swal({
     title: "Maaf!",
-    text: "Nomor polisi yang anda masukan tidak ada dalam daftar kendaraan operasional.",
+    text: "Nomor polisi yang anda masukan tidak terdaftar dalam kendaraan operasional.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"
@@ -33,7 +33,7 @@ $('.btn-bataldl').on('click', function (e) {
 
   swal({
     title: 'Apakah anda yakin?',
-    text: "Anda tidak setuju dengan perjalanan ini",
+    text: "Anda ingin membatalkan perjalanan ini",
     type: 'warning',
     showCancelButton: true,
     confirmButtonClass: 'btn btn-success',

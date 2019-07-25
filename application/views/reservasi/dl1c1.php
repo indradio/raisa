@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-md-2 col-form-label">Anggota Perjalanan</label>
+                  <label class="col-md-2 col-form-label">Peserta Perjalanan</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
                       <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Anggota" data-size="7">

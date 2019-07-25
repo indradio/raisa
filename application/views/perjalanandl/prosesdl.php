@@ -1,6 +1,6 @@
 <div class="content">
+    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
-        <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
@@ -25,7 +25,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi['nopol'] . ' (' . $reservasi['kepemilikan'] . ')'; ?>">
-                                        <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#rsvGantikend" data-rsv_id="<?= $reservasi['id']; ?>">Ganti Kendaraan</a>
+                                        <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#rsvGantikend">Ganti Kendaraan</a>
                                     </div>
                                 </div>
                             </div>
