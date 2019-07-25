@@ -335,11 +335,11 @@
         });
     });
 </script>
-<script>
+<!-- <script>
     $(document).ready(function() {
         sweet.showSwal();
     });
-</script>
+</script> -->
 
 </body>
 

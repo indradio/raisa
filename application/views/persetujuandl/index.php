@@ -1,5 +1,5 @@
     <div class="content">
-    <?= $this->session->flashdata('swal_dlsuccess'); ?>
+        <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -42,7 +42,7 @@
                                         <?php
                                         $queryRsv = "SELECT *
                                             FROM `reservasi`
-                                            WHERE `atasan1` = '{$karyawan['inisial']}' or `atasan2` = '{$karyawan['inisial']}' and `status` != 0
+                                            WHERE `atasan1` = '{$karyawan['inisial']}' or `atasan2` = '{$karyawan['inisial']}' and (`status` = 1 or `status` = 2)
                                             ORDER BY `id` DESC
                                             ";
                                         $reservasi = $this->db->query($queryRsv)->result_array();
@@ -56,8 +56,8 @@
                                                 <td><?= $rsv['kepemilikan']; ?></td>
                                                 <td class="text-right">
                                                     <a href="#" class="btn btn-link btn-warning btn-just-icon edit" data-toggle="modal" data-target="#rsvDetail" data-rsv_id="<?= $rsv['id']; ?>" data-rsv_nama="<?= $rsv['nama']; ?>" data-rsv_tujuan="<?= $rsv['tujuan']; ?>"><i class="material-icons">dvr</i></a>
-                                                    <a href="<?= base_url('persetujuandl/setujudl'); ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-rsv_id="<?= $rsv['id']; ?>" onclick="sweet.showSwal('tolakdl')"><i class="material-icons">close</i></a>
+                                                    <a href="<?= base_url('persetujuandl/setujudl/') . $rsv['id']; ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
+                                                    <a href="<?= base_url('persetujuandl/bataldl/') . $rsv['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove btn-bataldl"><i class="material-icons">close</i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -90,7 +90,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
