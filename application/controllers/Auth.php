@@ -24,7 +24,9 @@ class Auth extends CI_Controller
         if ($karyawan) {
             if (password_verify($password, $karyawan['password'])) {
                 //cari atasan 1
-                if ($karyawan['atasan1'] == 1) {
+                if ($karyawan['atasan1'] == 0) {
+                    $atasan1 = '';
+                } elseif ($karyawan['atasan1'] == 1) {
                     $atasan1 = $this->db->get_where('karyawan', ['posisi_id' =>  '1'])->row_array();
                 } elseif ($karyawan['atasan1'] == 2) {
                     $this->db->where('posisi_id', $karyawan['atasan1']);
@@ -48,7 +50,9 @@ class Auth extends CI_Controller
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 };
                 //cari atasan 1
-                if ($karyawan['atasan2'] == 1) {
+                if ($karyawan['atasan2'] == 0) {
+                    $atasan2 = '';
+                } elseif ($karyawan['atasan2'] == 1) {
                     $atasan2 = $this->db->get_where('karyawan', ['posisi_id' =>  '1'])->row_array();
                 } elseif ($karyawan['atasan2'] == 2) {
                     $this->db->where('posisi_id', $karyawan['atasan2']);
