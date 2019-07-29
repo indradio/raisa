@@ -11,7 +11,7 @@
                         <h4 class="card-title">Reservasi</h4>
                     </div>
                     <div class="card-body ">
-                        <form class="form-horizontal" action="<?= base_url('reservasi/dl1z_proses'); ?>" method="post">
+                        <form class="form-horizontal" action="<?= base_url('perjalanandl/prosesdl2'); ?>" method="post">
                             <div class="row">
                                 <label class="col-md-2 col-form-label">Nomor Reservasi</label>
                                 <div class="col-md-5">
@@ -21,10 +21,21 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Nama</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="nama" value="<?= $reservasi['nama']; ?>">
+                                        <input type="text" class="form-control disabled" name="npk" value="<?= $reservasi['npk']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Nomor Polisi</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi['nopol'] . ' (' . $reservasi['kepemilikan'] . ')'; ?>">
+                                        <input type="text" class="form-control disabled" name="kendaraan" value="<?= $reservasi['nopol'] . ' (' . $reservasi['kepemilikan'] . ')'; ?>">
+                                        <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi['nopol']; ?>">
+                                        <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $reservasi['kepemilikan']; ?>">
                                         <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#rsvGantikend">Ganti Kendaraan</a>
                                     </div>
                                 </div>
@@ -78,8 +89,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Anggota</label>
+                                <label class="col-md-2 col-form-label">Peserta</label>
                                 <div class="col-md-5">
+                                    <input type="text" class="form-control disabled" name="anggota" value="<?= $reservasi['anggota']; ?>">
                                     <div class="material-datatables">
                                         <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                             <thead>

@@ -64,7 +64,7 @@
                                             <td><?= $rsv['tglkembali']; ?></td>
                                             <td><?= $rsv['jamkembali']; ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('perjalanandl/prosesdl/') . $rsv['id']; ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
+                                                <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
                                                 <a href="<?= base_url('perjalanandl/bataldl/') . $rsv['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#rsvBataldl" data-rsv_id="<?= $rsv['id']; ?>"><i class="material-icons">close</i></a>
                                             </td>
                                         </tr>

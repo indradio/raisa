@@ -289,14 +289,11 @@ class Reservasi extends CI_Controller
 
     public function dl1z_proses()
     {
-        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $reservasi_temp = $this->db->order_by('id', "DESC");
         $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
-        $this->db->where('posisi_id', '3');
-        $this->db->where('div_id', $karyawan['div_id']);
-        $ka_dept = $this->db->get('karyawan')->row_array();
 
         $queryRsv = "SELECT COUNT(*)
         FROM `reservasi`
@@ -320,7 +317,6 @@ class Reservasi extends CI_Controller
             'kepemilikan' => $reservasi_temp['kepemilikan'],
             'atasan1' => $atasan1['inisial'],
             'atasan2' => $atasan2['inisial'],
-            'ka_dept' => $ka_dept['nama'],
             'status' => '1'
         ];
         $this->db->insert('reservasi', $data);

@@ -34,6 +34,8 @@
 </footer>
 </div>
 <!-- end main-panel-->
+<?php $this->load->view('modal/index'); ?>
+
 </div>
 <!-- end wrapper-->
 <div class="fixed-plugin">

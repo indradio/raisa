@@ -39,7 +39,7 @@ $('.btn-bataldl').on('click', function (e) {
     confirmButtonClass: 'btn btn-success',
     cancelButtonClass: 'btn btn-danger',
     confirmButtonText: 'YA, BATALKAN PERJALANAN!',
-    cancelButtonText: 'KEMBALI',
+    cancelButtonText: 'TUTUP',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
