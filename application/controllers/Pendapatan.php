@@ -12,7 +12,7 @@ class Pendapatan extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('posisi_id') >= 3) {
+        if ($this->session->userdata('posisi_id') <= 3) {
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['pendapatan'] = $this->db->get('pendapatan')->result_array();
             $this->load->view('templates/header', $data);
@@ -27,7 +27,7 @@ class Pendapatan extends CI_Controller
 
     public function data()
     {
-        if ($this->session->userdata('posisi_id') >= 3) {
+        if ($this->session->userdata('posisi_id') <= 3) {
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['pendapatan'] = $this->db->get('pendapatan')->result_array();
             $this->load->view('templates/header', $data);
