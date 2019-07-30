@@ -12,6 +12,8 @@ class Perjalanandl extends CI_Controller
 
     public function index()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'PerjalananKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -21,6 +23,8 @@ class Perjalanandl extends CI_Controller
     }
     public function admindl()
     {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '3'])->result_array();
         $this->load->view('templates/header', $data);
@@ -32,6 +36,8 @@ class Perjalanandl extends CI_Controller
 
     public function prosesdl1($rsv_id)
     {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->get_where('reservasi', ['id' =>  $rsv_id])->row_array();
         $this->load->view('templates/header', $data);

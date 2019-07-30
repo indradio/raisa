@@ -11,6 +11,8 @@ class Reservasi extends CI_Controller
 
     public function index()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->get_where('reservasi', ['npk' =>  $this->session->userdata('npk')])->result_array();
         $this->load->view('templates/header', $data);
@@ -22,6 +24,8 @@ class Reservasi extends CI_Controller
 
     public function dl()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -32,6 +36,8 @@ class Reservasi extends CI_Controller
 
     public function dl1a()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -58,6 +64,8 @@ class Reservasi extends CI_Controller
 
     public function dl1b()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
         $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -73,6 +81,8 @@ class Reservasi extends CI_Controller
         if ($id == 1) {
             redirect('reservasi/dl1c2');
         } else {
+            $data['sidemenu'] = 'Perjalanan Dinas';
+            $data['sidesubmenu'] = 'Reservasi';
             $kendaraan = $this->db->get_where('kendaraan', ['id' =>  $id])->row_array();
             $reservasi_temp = $this->db->order_by('id', "DESC");
             $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -86,6 +96,8 @@ class Reservasi extends CI_Controller
 
     public function dl1c1()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
         $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -181,6 +193,8 @@ class Reservasi extends CI_Controller
     // Jika menggunakan kendaraan non operasional
     public function dl1c2()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
         $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -277,6 +291,8 @@ class Reservasi extends CI_Controller
 
     public function dl1z()
     {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
         $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();

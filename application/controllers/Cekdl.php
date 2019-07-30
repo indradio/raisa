@@ -22,6 +22,8 @@ class Cekdl extends CI_Controller
 
     public function berangkat()
     {
+        $data['sidemenu'] = 'Security';
+        $data['sidesubmenu'] = 'Keberangkatan / Keluar';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' => '1'])->result_array();
         $this->load->view('templates/header', $data);
@@ -33,6 +35,8 @@ class Cekdl extends CI_Controller
 
     public function cekberangkat($dl)
     {
+        $data['sidemenu'] = 'Security';
+        $data['sidesubmenu'] = 'Keberangkatan / Keluar';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
         $this->load->view('templates/header', $data);

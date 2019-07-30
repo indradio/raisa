@@ -23,7 +23,7 @@ class Pendapatan extends CI_Controller
             $this->load->view('pendapatan/index', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->load->view('errors/denied');
+            $this->load->view('auth/denied');
         }
     }
 
@@ -40,7 +40,7 @@ class Pendapatan extends CI_Controller
             $this->load->view('pendapatan/data', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->load->view('errors/denied');
+            $this->load->view('auth/denied');
         }
     }
 
