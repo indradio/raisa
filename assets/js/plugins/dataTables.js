@@ -28,7 +28,7 @@ $(document).ready(function () {
             "decimal": ","
         },
         order: [
-            [0, 'desc']
+            [0, 'asc']
         ],
         language: {
             search: "_INPUT_",

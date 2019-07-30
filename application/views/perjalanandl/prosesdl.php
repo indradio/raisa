@@ -25,7 +25,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="nama" value="<?= $reservasi['nama']; ?>">
-                                        <input type="text" class="form-control disabled" name="npk" value="<?= $reservasi['npk']; ?>">
+                                        <input type="text" class="form-control disabled" name="npk" value="<?= $reservasi['npk']; ?>" hidden>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,6 @@
                                 <label class="col-md-2 col-form-label">Nomor Polisi</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kendaraan" value="<?= $reservasi['nopol'] . ' (' . $reservasi['kepemilikan'] . ')'; ?>">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi['nopol']; ?>">
                                         <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $reservasi['kepemilikan']; ?>">
                                         <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#rsvGantikend">Ganti Kendaraan</a>

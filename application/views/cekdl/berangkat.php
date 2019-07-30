@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Data Reservasi</h4>
+                        <h4 class="card-title">Data Perjalanan Dinas Luar</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -18,33 +18,29 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Nomor Reservasi</th>
-                                        <th>Tanggal Reservasi</th>
-                                        <th>Nomor Polisi</th>
-                                        <th>Kendaraan</th>
+                                        <th>Nomor DL</th>
+                                        <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Anggota</th>
-                                        <th>Tanggal Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>Tanggal Kembali</th>
-                                        <th>Jam kembali</th>
+                                        <th>Peserta</th>
+                                        <th>Tanggal Keberangkatan (Estimasi)</th>
+                                        <th>Jam Keberangkatan (Estimasi)</th>
+                                        <th>Nomor Polisi</th>
+                                        <th>Kendaraan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No. Reservasi</th>
-                                        <th>Tgl Reservasi</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
+                                        <th>Nomor DL</th>
+                                        <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Anggota</th>
-                                        <th>Tgl Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>Tgl Kembali</th>
-                                        <th>Jam kembali</th>
+                                        <th>Peserta</th>
+                                        <th>Tgl Keberangkatan (Estimasi)</th>
+                                        <th>Jam Keberangkatan (Estimasi)</th>
+                                        <th>No. Polisi</th>
+                                        <th>Kendaraan</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -54,18 +50,15 @@
                                         <tr>
                                             <td><?= $pdl['id']; ?></td>
                                             <td><?= $pdl['nama']; ?></td>
-                                            <td><?= $pdl['nopol']; ?></td>
-                                            <td><?= $pdl['kepemilikan']; ?></td>
                                             <td><?= $pdl['tujuan']; ?></td>
                                             <td><?= $pdl['keperluan']; ?></td>
                                             <td><?= $pdl['anggota']; ?></td>
                                             <td><?= $pdl['tglberangkat']; ?></td>
                                             <td><?= $pdl['jamberangkat']; ?></td>
-                                            <td><?= $pdl['tglkembali']; ?></td>
-                                            <td><?= $pdl['jamkembali']; ?></td>
+                                            <td><?= $pdl['nopol']; ?></td>
+                                            <td><?= $pdl['kepemilikan']; ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('perjalanandl/prosesdl1/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
-                                                <a href="<?= base_url('perjalanandl/bataldl/') . $pdl['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#rsvBataldl" data-rsv_id="<?= $pdl['id']; ?>"><i class="material-icons">close</i></a>
+                                                <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Cek</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

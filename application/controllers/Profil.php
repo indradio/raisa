@@ -11,6 +11,8 @@ class Profil extends CI_Controller
 
     public function index()
     {
+        $data['sidemenu'] = 'Profil';
+        $data['sidesubmenu'] = 'Profil';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

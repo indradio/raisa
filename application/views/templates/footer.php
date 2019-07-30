@@ -44,7 +44,7 @@
             <i class="fa fa-cog fa-2x"> </i>
         </a>
         <ul class="dropdown-menu">
-            <!-- <li class="header-title"> Sidebar Filters</li>
+            <li class="header-title"> Sidebar Filters</li>
             <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger active-color">
                     <div class="badge-colors ml-auto mr-auto">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </a>
-            </li> -->
+            </li>
             <li class="header-title">Sidebar Background</li>
             <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger background-color">

@@ -11,6 +11,8 @@ class Asset extends CI_Controller
 
     public function index()
     {
+        $data['sidemenu'] = 'Asset';
+        $data['sidesubmenu'] = 'AssetKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get_where('asset', ['npk' =>  $this->session->userdata('npk')])->result_array();
         $this->load->view('templates/header', $data);
