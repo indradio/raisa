@@ -27,6 +27,9 @@ $(document).ready(function () {
         "language": {
             "decimal": ","
         },
+        order: [
+            [1, 'desc']
+        ],
         language: {
             search: "_INPUT_",
             searchPlaceholder: "Search records",
