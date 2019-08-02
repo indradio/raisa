@@ -18,7 +18,7 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('persetujuandl/index', $data);
+        $this->load->view('perjalanandl/index', $data);
         $this->load->view('templates/footer');
     }
     public function admindl()
@@ -99,6 +99,7 @@ class Perjalanandl extends CI_Controller
         $this->db->where('reservasi_id', $this->input->post('id'));
         $this->db->update('perjalanan_anggota');
 
+        $this->db->set('admin_ga', $this->session->userdata('inisial'));
         $this->db->set('status', '4');
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('reservasi');

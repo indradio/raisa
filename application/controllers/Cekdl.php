@@ -80,4 +80,17 @@ class Cekdl extends CI_Controller
 
         redirect('cekdl/berangkat');
     }
+
+    public function kembali()
+    {
+        $data['sidemenu'] = 'Security';
+        $data['sidesubmenu'] = 'Kembali / Masuk';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' => '2'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cekdl/kembali', $data);
+        $this->load->view('templates/footer');
+    }
 }

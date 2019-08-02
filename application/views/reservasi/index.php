@@ -1,4 +1,5 @@
   <div class="content">
+    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -22,7 +23,7 @@
                       <th>Tgl Reservasi</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
-                      <th>Anggota</th>
+                      <th>Peserta</th>
                       <th class="disabled-sorting text-right">Actions</th>
                     </tr>
                   </thead>
@@ -32,7 +33,7 @@
                       <th>Tgl Reservasi</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
-                      <th>Anggota</th>
+                      <th>Peserta</th>
                       <th class="text-right">Actions</th>
                     </tr>
                   </tfoot>

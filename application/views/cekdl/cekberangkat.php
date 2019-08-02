@@ -39,10 +39,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Awal</label>
+                                <label class="col-md-2 col-form-label">Kilometer Awal*</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmberangkat" value="<?= $perjalanan['id']; ?>">
+                                        <input type="number" class="form-control" name="kmberangkat" required>
                                     </div>
                                 </div>
                             </div>
@@ -55,10 +55,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
+                                <label class="col-md-2 col-form-label">Jam Keberangkatan*</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="<?= $perjalanan['jamberangkat']; ?>">
+                                        <input type="time" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
                                     </div>
                                 </div>
                             </div>
@@ -94,11 +94,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Catatan</label>
+                                <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <textarea rows="2" class="form-control" name="catatan"></textarea>
-                                        <small> Harap menuliskan nama jika memberi catatan</small>
+                                        <small> Mohon mencantumkan nama jika memberikan catatan</small>
                                     </div>
                                 </div>
                             </div>

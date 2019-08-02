@@ -19,28 +19,28 @@
                                 <thead>
                                     <tr>
                                         <th>Nomor DL</th>
+                                        <th>Nomor Polisi</th>
+                                        <th>Kendaraan</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
                                         <th>Tanggal Keberangkatan (Estimasi)</th>
                                         <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th>Nomor Polisi</th>
-                                        <th>Kendaraan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Nomor DL</th>
+                                        <th>No. Polisi</th>
+                                        <th>Kendaraan</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
                                         <th>Tgl Keberangkatan (Estimasi)</th>
                                         <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -49,14 +49,14 @@
                                     foreach ($perjalanan as $pdl) : ?>
                                         <tr>
                                             <td><?= $pdl['id']; ?></td>
+                                            <td><?= $pdl['nopol']; ?></td>
+                                            <td><?= $pdl['kepemilikan']; ?></td>
                                             <td><?= $pdl['nama']; ?></td>
                                             <td><?= $pdl['tujuan']; ?></td>
                                             <td><?= $pdl['keperluan']; ?></td>
                                             <td><?= $pdl['anggota']; ?></td>
                                             <td><?= $pdl['tglberangkat']; ?></td>
                                             <td><?= $pdl['jamberangkat']; ?></td>
-                                            <td><?= $pdl['nopol']; ?></td>
-                                            <td><?= $pdl['kepemilikan']; ?></td>
                                             <td class="text-right">
                                                 <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Cek</a>
                                             </td>

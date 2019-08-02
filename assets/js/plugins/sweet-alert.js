@@ -24,6 +24,22 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'backdate') {
+  swal({
+    title: "Maaf!",
+    text: "Tanggal kembali tidak boleh lebih kecil dari tanggal berangkat.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
+} else if (flashData == 'rsvbaru') {
+  swal({
+    title: "Reservasi Berhasil!",
+    text: "RAISA akan mengirimkan notifikasi jika perjalanan anda telah disetujui dan siap diberangkatkan.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
 }
 
 $('.btn-bataldl').on('click', function (e) {
