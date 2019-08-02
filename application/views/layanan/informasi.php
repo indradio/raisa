@@ -55,20 +55,20 @@
                                 <tbody>
                                     <!-- <?php
                                             foreach ($perjalanan as $pdl) : ?>
-                                                    <tr>
-                                                        <td><?= $pdl['id']; ?></td>
-                                                        <td><?= $pdl['nopol']; ?></td>
-                                                        <td><?= $pdl['kepemilikan']; ?></td>
-                                                        <td><?= $pdl['nama']; ?></td>
-                                                        <td><?= $pdl['tujuan']; ?></td>
-                                                        <td><?= $pdl['keperluan']; ?></td>
-                                                        <td><?= $pdl['anggota']; ?></td>
-                                                        <td><?= $pdl['tglberangkat']; ?></td>
-                                                        <td><?= $pdl['jamberangkat']; ?></td>
-                                                        <td class="text-right">
-                                                            <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Cek</a>
-                                                        </td>
-                                                    </tr>
+                                                            <tr>
+                                                                <td><?= $pdl['id']; ?></td>
+                                                                <td><?= $pdl['nopol']; ?></td>
+                                                                <td><?= $pdl['kepemilikan']; ?></td>
+                                                                <td><?= $pdl['nama']; ?></td>
+                                                                <td><?= $pdl['tujuan']; ?></td>
+                                                                <td><?= $pdl['keperluan']; ?></td>
+                                                                <td><?= $pdl['anggota']; ?></td>
+                                                                <td><?= $pdl['tglberangkat']; ?></td>
+                                                                <td><?= $pdl['jamberangkat']; ?></td>
+                                                                <td class="text-right">
+                                                                    <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Cek</a>
+                                                                </td>
+                                                            </tr>
                                     <?php endforeach; ?> -->
                                 </tbody>
                             </table>
@@ -84,3 +84,8 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+<script>
+    tinymce.init({
+        selector: 'textarea'
+    });
+</script>

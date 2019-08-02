@@ -24,6 +24,8 @@
                       <th>Tujuan</th>
                       <th>Keperluan</th>
                       <th>Peserta</th>
+                      <th>Atasan 1</th>
+                      <th>Atasan 2</th>
                       <th class="disabled-sorting text-right">Actions</th>
                     </tr>
                   </thead>
@@ -34,6 +36,8 @@
                       <th>Tujuan</th>
                       <th>Keperluan</th>
                       <th>Peserta</th>
+                      <th>Atasan 1</th>
+                      <th>Atasan 2</th>
                       <th class="text-right">Actions</th>
                     </tr>
                   </tfoot>
@@ -45,6 +49,8 @@
                         <td><?= $rsv['tujuan']; ?></td>
                         <td><?= $rsv['keperluan']; ?></td>
                         <td><?= $rsv['anggota']; ?></td>
+                        <td><?= $rsv['atasan1']; ?></td>
+                        <td><?= $rsv['atasan2']; ?></td>
                         <td class="text-right">
                           <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                           <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a>
