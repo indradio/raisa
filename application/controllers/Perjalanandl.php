@@ -24,7 +24,7 @@ class Perjalanandl extends CI_Controller
     public function admindl()
     {
         $data['sidemenu'] = 'GA';
-        $data['sidesubmenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '3'])->result_array();
         $this->load->view('templates/header', $data);
@@ -37,7 +37,7 @@ class Perjalanandl extends CI_Controller
     public function prosesdl1($rsv_id)
     {
         $data['sidemenu'] = 'GA';
-        $data['sidesubmenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->get_where('reservasi', ['id' =>  $rsv_id])->row_array();
         $this->load->view('templates/header', $data);
@@ -84,6 +84,7 @@ class Perjalanandl extends CI_Controller
             'catatan_ga' => $this->input->post('catatan'),
             'ka_dept' => $ka_dept['nama'],
             'kmtotal' => '0',
+            'jenis_perjalanan' => $this->input->post('jperjalanan'),
             'reservasi_id' => $this->input->post('id'),
             'status' => '1'
         ];
@@ -145,5 +146,116 @@ class Perjalanandl extends CI_Controller
 
         $this->session->set_flashdata('message', 'bataldl');
         redirect('perjalanandl/admindl');
+    }
+
+    public function perjalanan()
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Laporan Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/perjalanan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function suratjalan($id)
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Laporan Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAMP') {
+            $this->load->view('perjalanandl/sjdlpp', $data);
+        } else ($jenis['jenis_perjalanan'] == 'TAPP'){
+            $this->load->view('perjalanandl/sjtapp', $data)};
+    }
+
+    public function ikut()
+    {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Ikut Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' =>  '1'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/ikut', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function ikut_proses($dl)
+    {
+        $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $dept = $this->db->get_where('karyawan_dept', ['id' => $dataku['dept_id']])->row_array();
+        $posisi = $this->db->get_where('karyawan_posisi', ['id' => $dataku['posisi_id']])->row_array();
+        $me = [
+            'perjalanan_id' => $dl,
+            'npk' => $dataku['npk'],
+            'karyawan_inisial' => $dataku['inisial'],
+            'karyawan_nama' => $dataku['nama'],
+            'karyawan_dept' => $dept['nama'],
+            'karyawan_posisi' => $posisi['nama'],
+            'status' => '1'
+        ];
+        $this->db->insert('perjalanan_anggota', $me);
+
+        $anggota = $this->db->where('perjalanan_id', $dl);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $dl);
+        $this->db->update('perjalanan');
+
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $perjalanan['reservasi_id']);
+        $this->db->update('reservasi');
+
+        $this->db->where('sect_id', '214');
+        $ga_admin = $this->db->get('karyawan_admin')->row_array();
+
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $ga_admin['phone'];
+        $message = "*INFO PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $dl . "*" .
+            "\r\n \r\n" . $dataku['nama'] . " Ikut dalam Perjalanan ini. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
+        if ($this->session->userdata('posisi_id') >= 4) {
+            $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $atasan1['phone'];
+            $message = "*INFO PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $dl . "*" .
+                "\r\n \r\n" . $dataku['nama'] . " Ikut dalam Perjalanan ini. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
+        }
+        if ($this->session->userdata('posisi_id') >= 7) {
+            $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
+
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $atasan2['phone'];
+            $message = "*INFO PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $dl . "*" .
+                "\r\n \r\n" . $dataku['nama'] . " Ikut dalam Perjalanan ini. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
+        }
+
+        redirect('perjalanandl/index');
     }
 }

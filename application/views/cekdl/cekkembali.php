@@ -11,7 +11,7 @@
                         <h4 class="card-title">Perjalanan Dinas Luar</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="<?= base_url('cekdl/cekberangkat_proses'); ?>" method="post">
+                        <form class="form-horizontal" action="<?= base_url('cekdl/cekkembali_proses'); ?>" method="post">
                             <div class="row">
                                 <label class="col-md-2 col-form-label">No. Perjalanan DL</label>
                                 <div class="col-md-5">
@@ -47,18 +47,42 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jam Keberangkatan*</label>
+                                <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                                        <input type="time" class="form-control timepicker disabled" id="jamberangkat" name="jamberangkat" value="<?= $perjalanan['jamberangkat']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Awal*</label>
+                                <label class="col-md-2 col-form-label">Kilometer Awal</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmberangkat" required>
+                                        <input type="number" class="form-control disabled" name="kmberangkat" value="<?= $perjalanan['kmberangkat']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Tanggal Kembali</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Jam Kembali*</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="time" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Kilometer Akhir*</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="number" class="form-control" name="kmkembali" required>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +121,7 @@
                                 <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <textarea rows="2" class="form-control" name="catatan"></textarea>
+                                        <textarea rows="2" class="form-control" name="catatan"><?= $perjalanan['catatan_security']; ?></textarea>
                                         <small> Mohon mencantumkan nama jika memberikan catatan</small>
                                     </div>
                                 </div>
@@ -106,7 +130,7 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-success">BERANGKAT!</button>
+                                        <button type="submit" class="btn btn-fill btn-primary">KEMBALI!</button>
                                     </div>
                                 </div>
                             </div>

@@ -56,7 +56,8 @@ class Reservasi extends CI_Controller
             'tglberangkat' => $this->input->post('tglberangkat'),
             'jamberangkat' => $this->input->post('jamberangkat'),
             'tglkembali' => $this->input->post('tglberangkat'),
-            'jamkembali' => $this->input->post('jamkembali')
+            'jamkembali' => $this->input->post('jamkembali'),
+            'jenis_perjalanan' => 'DLPP'
         ];
         $this->db->insert('reservasi_temp', $data);
         redirect('reservasi/dl1b');
@@ -168,21 +169,29 @@ class Reservasi extends CI_Controller
         // insert kedalam table anggota perjalanan
         foreach ($this->input->post('anggota') as $ang) :
             $karyawan = $this->db->get_where('karyawan', ['inisial' => $ang])->row_array();
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
             $data = [
                 'reservasi_id' => $reservasi_temp['id'],
                 'npk' => $karyawan['npk'],
                 'karyawan_inisial' => $karyawan['inisial'],
                 'karyawan_nama' => $karyawan['nama'],
+                'karyawan_dept' => $dept['nama'],
+                'karyawan_posisi' => $posisi['nama'],
                 'status' => '1'
             ];
             $this->db->insert('perjalanan_anggota', $data);
         endforeach;
         if ($this->input->post('ikut') != '') {
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $dataku['dept_id']])->row_array();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $dataku['posisi_id']])->row_array();
             $me = [
                 'reservasi_id' => $reservasi_temp['id'],
                 'npk' => $dataku['npk'],
                 'karyawan_inisial' => $dataku['inisial'],
                 'karyawan_nama' => $dataku['nama'],
+                'karyawan_dept' => $dept['nama'],
+                'karyawan_posisi' => $posisi['nama'],
                 'status' => '1'
             ];
             $this->db->insert('perjalanan_anggota', $me);
@@ -267,21 +276,29 @@ class Reservasi extends CI_Controller
         // insert kedalam table anggota perjalanan
         foreach ($this->input->post('anggota') as $ang) :
             $karyawan = $this->db->get_where('karyawan', ['inisial' => $ang])->row_array();
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
             $data = [
                 'reservasi_id' => $reservasi_temp['id'],
                 'npk' => $karyawan['npk'],
                 'karyawan_inisial' => $karyawan['inisial'],
                 'karyawan_nama' => $karyawan['nama'],
+                'karyawan_dept' => $dept['nama'],
+                'karyawan_posisi' => $posisi['nama'],
                 'status' => '1'
             ];
             $this->db->insert('perjalanan_anggota', $data);
         endforeach;
         if ($this->input->post('ikut') != '') {
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $dataku['dept_id']])->row_array();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $dataku['posisi_id']])->row_array();
             $me = [
                 'reservasi_id' => $reservasi_temp['id'],
                 'npk' => $dataku['npk'],
                 'karyawan_inisial' => $dataku['inisial'],
                 'karyawan_nama' => $dataku['nama'],
+                'karyawan_dept' => $dept['nama'],
+                'karyawan_posisi' => $posisi['nama'],
                 'status' => '1'
             ];
             $this->db->insert('perjalanan_anggota', $me);
@@ -333,6 +350,7 @@ class Reservasi extends CI_Controller
             'kepemilikan' => $reservasi_temp['kepemilikan'],
             'atasan1' => $atasan1['inisial'],
             'atasan2' => $atasan2['inisial'],
+            'jenis_perjalanan' => $reservasi_temp['jenis_perjalanan'],
             'status' => '1'
         ];
         $this->db->insert('reservasi', $data);
@@ -425,6 +443,35 @@ class Reservasi extends CI_Controller
         redirect('reservasi');
     }
 
+    public function dl2a()
+    {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('reservasi/dl2a', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function dl2a_proses()
+    {
+        $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data = [
+            'npk' => $this->session->userdata['npk'],
+            'nama' => $dataku['nama'],
+            'tglreservasi' => date("Y-m-d H:i:s"),
+            'tglberangkat' => $this->input->post('tglberangkat'),
+            'jamberangkat' => $this->input->post('jamberangkat'),
+            'tglkembali' => $this->input->post('tglberangkat'),
+            'jamkembali' => $this->input->post('jamkembali'),
+            'jenis_perjalanan' => 'TAPP'
+        ];
+        $this->db->insert('reservasi_temp', $data);
+        redirect('reservasi/dl1b');
+    }
+
     public function dl3a()
     {
         $data['sidemenu'] = 'Perjalanan Dinas';
@@ -452,7 +499,8 @@ class Reservasi extends CI_Controller
                 'tglberangkat' => $this->input->post('tglberangkat'),
                 'jamberangkat' => $this->input->post('jamberangkat'),
                 'tglkembali' => $this->input->post('tglkembali'),
-                'jamkembali' => $this->input->post('jamkembali')
+                'jamkembali' => $this->input->post('jamkembali'),
+                'jenis_perjalanan' => 'TAMP'
             ];
             $this->db->insert('reservasi_temp', $data);
             redirect('reservasi/dl3b');

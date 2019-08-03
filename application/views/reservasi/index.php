@@ -20,6 +20,7 @@
                   <thead>
                     <tr>
                       <th>No. Reservasi</th>
+                      <th>Jenis Perjalanan</th>
                       <th>Tgl Reservasi</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
@@ -32,6 +33,7 @@
                   <tfoot>
                     <tr>
                       <th>No. Reservasi</th>
+                      <th>Jenis Perjalanan</th>
                       <th>Tgl Reservasi</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
@@ -45,6 +47,7 @@
                     <?php foreach ($reservasi as $rsv) : ?>
                       <tr>
                         <td><?= $rsv['id']; ?></td>
+                        <td><?= $rsv['jenis_perjalanan']; ?></td>
                         <td><?= $rsv['tglreservasi']; ?></td>
                         <td><?= $rsv['tujuan']; ?></td>
                         <td><?= $rsv['keperluan']; ?></td>

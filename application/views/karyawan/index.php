@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('Hr/tmbahkry'); ?>" class="btn btn-rose mb-2" role="button" aria-disabled="false">Tambah Karyawan Baru</a>
+                            <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false">Tambah Karyawan Baru</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -57,28 +57,29 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($datakaryawan as $kry) : ?>
+                                    foreach ($datakaryawan as $kry) :
+                                        $golongan = $this->db->get_where('karyawan_gol', ['id' =>  $kry['gol_id']])->row_array();
+                                        $fasilitas = $this->db->get_where('karyawan_fasilitas', ['id' =>  $kry['fasilitas_id']])->row_array();
+                                        $posisi = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['posisi_id']])->row_array();
+                                        $divisi = $this->db->get_where('karyawan_div', ['id' =>  $kry['div_id']])->row_array();
+                                        $departemen = $this->db->get_where('karyawan_dept', ['id' =>  $kry['dept_id']])->row_array();
+                                        $seksi = $this->db->get_where('karyawan_sect', ['id' =>  $kry['sect_id']])->row_array();
+                                        $atasan1 = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['atasan1']])->row_array();
+                                        $atasan2 = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['atasan2']])->row_array();
+                                        ?>
                                         <tr>
                                             <td><?= $kry['npk']; ?></td>
                                             <td><?= $kry['nama']; ?></td>
                                             <td><?= $kry['inisial']; ?></td>
                                             <td><?= $kry['email']; ?></td>
                                             <td><?= $kry['phone']; ?></td>
-                                            <?php $golongan = $this->db->get_where('karyawan_gol', ['id' =>  $kry['gol_id']])->row_array(); ?>
                                             <td><?= $golongan['nama']; ?></td>
-                                            <?php $fasilitas = $this->db->get_where('karyawan_fasilitas', ['id' =>  $kry['fasilitas_id']])->row_array(); ?>
                                             <td><?= $fasilitas['nama']; ?></td>
-                                            <?php $posisi = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['posisi_id']])->row_array(); ?>
                                             <td><?= $posisi['nama']; ?></td>
-                                            <?php $divisi = $this->db->get_where('karyawan_div', ['id' =>  $kry['div_id']])->row_array(); ?>
                                             <td><?= $divisi['nama']; ?></td>
-                                            <?php $departemen = $this->db->get_where('karyawan_dept', ['id' =>  $kry['dept_id']])->row_array(); ?>
                                             <td><?= $departemen['nama']; ?></td>
-                                            <?php $seksi = $this->db->get_where('karyawan_sect', ['id' =>  $kry['sect_id']])->row_array(); ?>
                                             <td><?= $seksi['nama']; ?></td>
-                                            <?php $atasan1 = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['atasan1']])->row_array(); ?>
                                             <td><?= $atasan1['nama']; ?></td>
-                                            <?php $atasan2 = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['atasan2']])->row_array(); ?>
                                             <td><?= $atasan2['nama']; ?></td>
                                             <?php if ($kry['is_active'] == 1) : ?>
                                                 <td>Aktif</td>

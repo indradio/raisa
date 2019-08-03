@@ -12,6 +12,14 @@
                         <div class="card-body ">
                             <form class="form-horizontal" action="<?= base_url('reservasi/dl1z_proses'); ?>" method="post">
                                 <div class="row">
+                                    <label class="col-md-2 col-form-label">Jenis Perjalanan</label>
+                                    <div class="col-md-5">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" name="jperj" value="<?= $reservasi_temp['jenis_perjalanan']; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <label class="col-md-2 col-form-label">Nomor Polisi</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">

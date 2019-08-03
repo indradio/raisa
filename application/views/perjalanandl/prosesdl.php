@@ -13,6 +13,14 @@
                     <div class="card-body ">
                         <form class="form-horizontal" action="<?= base_url('perjalanandl/prosesdl2'); ?>" method="post">
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Jenis Perjalanan</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="jperjalanan" value="<?= $reservasi['jenis_perjalanan']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Nomor Reservasi</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">

@@ -10,7 +10,7 @@
               <h4 class="card-title">Jadwal keberangkatan</h4>
             </div>
             <div class="card-body ">
-              <form class="form-horizontal" action="<?= base_url('reservasi/dl1a_proses'); ?>" method="post">
+              <form class="form-horizontal" action="<?= base_url('reservasi/dl2a_proses'); ?>" method="post">
                 <div class="row">
                   <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                   <div class="col-md-3">

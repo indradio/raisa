@@ -70,9 +70,9 @@ class Cekdl extends CI_Controller
 
     public function cekberangkat_proses()
     {
-        $this->db->set('kmberangkat', $this->input->post('kmberangkat'));
         $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
         $this->db->set('cekberangkat', $this->session->userdata('inisial'));
+        $this->db->set('kmberangkat', $this->input->post('kmberangkat'));
         $this->db->set('catatan_security', $this->input->post('catatan'));
         $this->db->set('status', '2');
         $this->db->where('id', $this->input->post('id'));
@@ -92,5 +92,33 @@ class Cekdl extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('cekdl/kembali', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function cekkembali($dl)
+    {
+        $data['sidemenu'] = 'Security';
+        $data['sidesubmenu'] = 'Keberangkatan / Keluar';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cekdl/cekkembali', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function cekkembali_proses()
+    {
+        $kmtotal = $this->input->post('kmkembali') - $this->input->post('kmberangkat');
+        $this->db->set('jamkembali', $this->input->post('jamkembali'));
+        $this->db->set('cekkembali', $this->session->userdata('inisial'));
+        $this->db->set('kmkembali', $this->input->post('kmkembali'));
+        $this->db->set('kmtotal', $kmtotal);
+        $this->db->set('catatan_security', $this->input->post('catatan'));
+        $this->db->set('status', '9');
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('perjalanan');
+
+        redirect('cekdl/kembali');
     }
 }
