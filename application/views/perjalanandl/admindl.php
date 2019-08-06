@@ -22,6 +22,7 @@
                                         <th>Tanggal Reservasi</th>
                                         <th>Nomor Polisi</th>
                                         <th>Kendaraan</th>
+                                        <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Anggota</th>
@@ -38,6 +39,7 @@
                                         <th>Tgl Reservasi</th>
                                         <th>No. Polisi</th>
                                         <th>Kendaraan</th>
+                                        <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Anggota</th>
@@ -56,6 +58,7 @@
                                             <td><?= $rsv['tglreservasi']; ?></td>
                                             <td><?= $rsv['nopol']; ?></td>
                                             <td><?= $rsv['kepemilikan']; ?></td>
+                                            <td><?= $rsv['nama']; ?></td>
                                             <td><?= $rsv['tujuan']; ?></td>
                                             <td><?= $rsv['keperluan']; ?></td>
                                             <td><?= $rsv['anggota']; ?></td>

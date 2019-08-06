@@ -15,5 +15,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
     <link href="<?= base_url(); ?>assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
-    <script src="https://cdn.tiny.cloud/1/aylv19mad1xbg9785wkzsy9pz7tj1hhuj1kbryt3ksx522om/tinymce/5/tinymce.min.js"></script>
+    <!-- Plugin for tinymce  -->
+    <script src="<?= base_url(); ?>assets/js/plugins/tinymce.min.js"></script>
 </head>

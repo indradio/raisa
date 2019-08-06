@@ -114,78 +114,65 @@ class Reservasi extends CI_Controller
         $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $reservasi_temp = $this->db->order_by('id', "DESC");
         $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
-        //varianel tujuan
-        if ($this->input->post('tujuan') == null and $this->input->post('tlainnya') == null) {
-            $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan tujuan anda</div>');
-            redirect('reservasi/dl1c1');
-        } elseif ($this->input->post('tujuan') == null) {
-            $tujuan = $this->input->post('tlainnya');
-        } elseif ($this->input->post('tlainnya') == null) {
-            $tujuan = implode(', ', $this->input->post('tujuan'));
-        } else {
-            $tujuan = implode(', ', $this->input->post('tujuan')) . ', ' .  $this->input->post('tlainnya');
-        };
-        //variabel anggota
-        if ($this->input->post('anggota') == null and $this->input->post('ikut') == null) {
-            $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan pilih anggota perjalanan anda</div>');
-            redirect('reservasi/dl1c1');
-        } elseif ($this->input->post('anggota') == null) {
-            $anggota = $this->input->post('ikut');
-        } elseif ($this->input->post('ikut') == null) {
-            $anggota = implode(', ', $this->input->post('anggota'));
-        } else {
-            $anggota = implode(', ', $this->input->post('anggota')) . ', ' .  $this->input->post('ikut');
-        }
-        $this->db->set('tujuan', $tujuan);
-        $this->db->set('keperluan', $this->input->post('keperluan'));
-        $this->db->set('anggota', $anggota);
-        $this->db->where('id', $reservasi_temp['id']);
-        $this->db->update('reservasi_temp');
 
-        // insert kedalam table tujuan perjalanan
-        foreach ($this->input->post('tujuan') as $tjn) :
-            $tujuan = $this->db->get_where('customer', ['inisial' => $tjn])->row_array();
-            $data = [
+        //variabel tujuan
+        if ($this->input->post('tujuan') == null and $this->input->post('tlainnya') == null) {
+            $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan tujuan perjalanan anda terlebih dahulu.</div>');
+            redirect('reservasi/dl1c1');
+        } elseif ($this->input->post('tlainnya') == null) {
+            foreach ($this->input->post('tujuan') as $t) :
+                $customer = $this->db->get_where('customer', ['inisial' => $t])->row_array();
+                $tujuan = [
+                    'reservasi_id' => $reservasi_temp['id'],
+                    'inisial' => $customer['inisial'],
+                    'nama' => $customer['nama'],
+                    'kota' => $customer['kota'],
+                    'jarak' => $customer['jarak'],
+                    'status' => '1'
+                ];
+                $this->db->insert('perjalanan_tujuan', $tujuan);
+            endforeach;
+        } elseif ($this->input->post('tujuan') == null) {
+            $tujuan = [
                 'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => $tujuan['inisial'],
-                'nama' => $tujuan['nama'],
-                'kota' => $tujuan['kota'],
-                'jarak' => $tujuan['jarak'],
-                'status' => '1'
-            ];
-            $this->db->insert('perjalanan_tujuan', $data);
-        endforeach;
-        if ($this->input->post('tlainnya') != '') {
-            $tlainnya = [
-                'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => 'LAINNYA',
+                'inisial' => 'LAINNYA - ' . $this->input->post('tlainnya'),
                 'nama' => $this->input->post('tlainnya'),
                 'jarak' => '0',
                 'status' => '1'
             ];
-            $this->db->insert('perjalanan_tujuan', $tlainnya);
-        }
+            $this->db->insert('perjalanan_tujuan', $tujuan);
+        } else {
+            foreach ($this->input->post('tujuan') as $t) :
+                $customer = $this->db->get_where('customer', ['inisial' => $t])->row_array();
+                $tujuan1 = [
+                    'reservasi_id' => $reservasi_temp['id'],
+                    'inisial' => $customer['inisial'],
+                    'nama' => $customer['nama'],
+                    'kota' => $customer['kota'],
+                    'jarak' => $customer['jarak'],
+                    'status' => '1'
+                ];
+                $this->db->insert('perjalanan_tujuan', $tujuan1);
+            endforeach;
 
-        // insert kedalam table anggota perjalanan
-        foreach ($this->input->post('anggota') as $ang) :
-            $karyawan = $this->db->get_where('karyawan', ['inisial' => $ang])->row_array();
-            $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
-            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
-            $data = [
+            $tujuan2 = [
                 'reservasi_id' => $reservasi_temp['id'],
-                'npk' => $karyawan['npk'],
-                'karyawan_inisial' => $karyawan['inisial'],
-                'karyawan_nama' => $karyawan['nama'],
-                'karyawan_dept' => $dept['nama'],
-                'karyawan_posisi' => $posisi['nama'],
+                'inisial' => 'LAINNYA - ' . $this->input->post('tlainnya'),
+                'nama' => $this->input->post('tlainnya'),
+                'jarak' => '0',
                 'status' => '1'
             ];
-            $this->db->insert('perjalanan_anggota', $data);
-        endforeach;
-        if ($this->input->post('ikut') != '') {
+            $this->db->insert('perjalanan_tujuan', $tujuan2);
+        };
+
+        //variabel anggota
+        if ($this->input->post('anggota') == null and $this->input->post('ikut') == null) {
+            $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan peserta perjalanan anda terlebih dahulu.</div>');
+            redirect('reservasi/dl1c1');
+        } elseif ($this->input->post('anggota') == null) {
             $dept = $this->db->get_where('karyawan_dept', ['id' => $dataku['dept_id']])->row_array();
             $posisi = $this->db->get_where('karyawan_posisi', ['id' => $dataku['posisi_id']])->row_array();
-            $me = [
+            $peserta = [
                 'reservasi_id' => $reservasi_temp['id'],
                 'npk' => $dataku['npk'],
                 'karyawan_inisial' => $dataku['inisial'],
@@ -194,12 +181,72 @@ class Reservasi extends CI_Controller
                 'karyawan_posisi' => $posisi['nama'],
                 'status' => '1'
             ];
-            $this->db->insert('perjalanan_anggota', $me);
+            $this->db->insert('perjalanan_anggota', $peserta);
+        } elseif ($this->input->post('ikut') == null) {
+            foreach ($this->input->post('anggota') as $a) :
+                $karyawan = $this->db->get_where('karyawan', ['inisial' => $a])->row_array();
+                $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
+                $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
+                $peserta = [
+                    'reservasi_id' => $reservasi_temp['id'],
+                    'npk' => $karyawan['npk'],
+                    'karyawan_inisial' => $karyawan['inisial'],
+                    'karyawan_nama' => $karyawan['nama'],
+                    'karyawan_dept' => $dept['nama'],
+                    'karyawan_posisi' => $posisi['nama'],
+                    'status' => '1'
+                ];
+                $this->db->insert('perjalanan_anggota', $peserta);
+            endforeach;
+        } else {
+            $dept1 = $this->db->get_where('karyawan_dept', ['id' => $dataku['dept_id']])->row_array();
+            $posisi1 = $this->db->get_where('karyawan_posisi', ['id' => $dataku['posisi_id']])->row_array();
+            $peserta1 = [
+                'reservasi_id' => $reservasi_temp['id'],
+                'npk' => $dataku['npk'],
+                'karyawan_inisial' => $dataku['inisial'],
+                'karyawan_nama' => $dataku['nama'],
+                'karyawan_dept' => $dept1['nama'],
+                'karyawan_posisi' => $posisi1['nama'],
+                'status' => '1'
+            ];
+            $this->db->insert('perjalanan_anggota', $peserta1);
+
+            foreach ($this->input->post('anggota') as $a) :
+                $karyawan = $this->db->get_where('karyawan', ['inisial' => $a])->row_array();
+                $dept2 = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
+                $posisi2 = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
+                $peserta2 = [
+                    'reservasi_id' => $reservasi_temp['id'],
+                    'npk' => $karyawan['npk'],
+                    'karyawan_inisial' => $karyawan['inisial'],
+                    'karyawan_nama' => $karyawan['nama'],
+                    'karyawan_dept' => $dept2['nama'],
+                    'karyawan_posisi' => $posisi2['nama'],
+                    'status' => '1'
+                ];
+                $this->db->insert('perjalanan_anggota', $peserta2);
+            endforeach;
         }
+
+        $tujuan = $this->db->where('reservasi_id', $reservasi_temp['id']);
+        $tujuan = $this->db->get_where('perjalanan_tujuan')->result_array();
+        $listtujuan = array_column($tujuan, 'inisial');
+
+        $peserta = $this->db->where('reservasi_id', $reservasi_temp['id']);
+        $peserta = $this->db->get_where('perjalanan_anggota')->result_array();
+        $listpeserta = array_column($tujuan, 'inisial');
+
+        $this->db->set('tujuan', implode(', ', $listtujuan));
+        $this->db->set('keperluan', $this->input->post('keperluan'));
+        $this->db->set('anggota', implode(', ', $listpeserta));
+        $this->db->where('id', $reservasi_temp['id']);
+        $this->db->update('reservasi_temp');
+
         redirect('reservasi/dl1z');
     }
 
-    // Jika menggunakan kendaraan non operasional
+    // Jika menggunakan kendaraan non-operasional
     public function dl1c2()
     {
         $data['sidemenu'] = 'Perjalanan Dinas';
@@ -219,91 +266,13 @@ class Reservasi extends CI_Controller
         $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $reservasi_temp = $this->db->order_by('id', "DESC");
         $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
-        //varianel tujuan
-        if ($this->input->post('tujuan') == null and $this->input->post('tlainnya') == null) {
-            $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan tujuan anda</div>');
-            redirect('reservasi/dl1c1');
-        } elseif ($this->input->post('tujuan') == null) {
-            $tujuan = $this->input->post('tlainnya');
-        } elseif ($this->input->post('tlainnya') == null) {
-            $tujuan = implode(', ', $this->input->post('tujuan'));
-        } else {
-            $tujuan = implode(', ', $this->input->post('tujuan')) . ', ' .  $this->input->post('tlainnya');
-        };
-        //variabel anggota
-        if ($this->input->post('anggota') == null and $this->input->post('ikut') == null) {
-            $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan pilih anggota perjalanan anda</div>');
-            redirect('reservasi/dl1c1');
-        } elseif ($this->input->post('anggota') == null) {
-            $anggota = $this->input->post('ikut');
-        } elseif ($this->input->post('ikut') == null) {
-            $anggota = implode(', ', $this->input->post('anggota'));
-        } else {
-            $anggota = implode(', ', $this->input->post('anggota')) . ', ' .  $this->input->post('ikut');
-        }
-        $this->db->set('tujuan', $tujuan);
-        $this->db->set('keperluan', $this->input->post('keperluan'));
-        $this->db->set('anggota', $anggota);
+
         $this->db->set('nopol', $this->input->post('nopol'));
         $this->db->set('kepemilikan', $this->input->post('kepemilikan'));
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
-        // insert kedalam table tujuan perjalanan
-        foreach ($this->input->post('tujuan') as $tjn) :
-            $tujuan = $this->db->get_where('customer', ['inisial' => $tjn])->row_array();
-            $data = [
-                'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => $tujuan['inisial'],
-                'nama' => $tujuan['nama'],
-                'kota' => $tujuan['kota'],
-                'jarak' => $tujuan['jarak'],
-                'status' => '1'
-            ];
-            $this->db->insert('perjalanan_tujuan', $data);
-        endforeach;
-        if ($this->input->post('tlainnya') != '') {
-            $tlainnya = [
-                'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => 'LAINNYA',
-                'nama' => $this->input->post('tlainnya'),
-                'jarak' => '0',
-                'status' => '1'
-            ];
-            $this->db->insert('perjalanan_tujuan', $tlainnya);
-        }
-
-        // insert kedalam table anggota perjalanan
-        foreach ($this->input->post('anggota') as $ang) :
-            $karyawan = $this->db->get_where('karyawan', ['inisial' => $ang])->row_array();
-            $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
-            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
-            $data = [
-                'reservasi_id' => $reservasi_temp['id'],
-                'npk' => $karyawan['npk'],
-                'karyawan_inisial' => $karyawan['inisial'],
-                'karyawan_nama' => $karyawan['nama'],
-                'karyawan_dept' => $dept['nama'],
-                'karyawan_posisi' => $posisi['nama'],
-                'status' => '1'
-            ];
-            $this->db->insert('perjalanan_anggota', $data);
-        endforeach;
-        if ($this->input->post('ikut') != '') {
-            $dept = $this->db->get_where('karyawan_dept', ['id' => $dataku['dept_id']])->row_array();
-            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $dataku['posisi_id']])->row_array();
-            $me = [
-                'reservasi_id' => $reservasi_temp['id'],
-                'npk' => $dataku['npk'],
-                'karyawan_inisial' => $dataku['inisial'],
-                'karyawan_nama' => $dataku['nama'],
-                'karyawan_dept' => $dept['nama'],
-                'karyawan_posisi' => $posisi['nama'],
-                'status' => '1'
-            ];
-            $this->db->insert('perjalanan_anggota', $me);
-        }
-        redirect('reservasi/dl1z');
+        redirect('reservasi/dl1c1');
     }
 
     public function dl1z()
@@ -364,7 +333,6 @@ class Reservasi extends CI_Controller
 
             $this->db->where('sect_id', '214');
             $ga_admin = $this->db->get('karyawan_admin')->row_array();
-
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $ga_admin['phone'];
             $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
@@ -381,7 +349,7 @@ class Reservasi extends CI_Controller
             $api_url .= "&number=" . urlencode($destination);
             $api_url .= "&text=" . urlencode($message);
             json_decode(file_get_contents($api_url, false));
-        } elseif ($this->session->userdata('posisi_id') >= 4 and $this->session->userdata('posisi_id') <= 6) {
+        } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
             $this->db->set('atasan2', null);
             $this->db->set('status', '2');
             $this->db->where('id', $data['id']);
@@ -389,7 +357,6 @@ class Reservasi extends CI_Controller
 
             $this->db->where('npk', $atasan1['npk']);
             $karyawan = $this->db->get('karyawan')->row_array();
-
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
@@ -406,11 +373,10 @@ class Reservasi extends CI_Controller
             $api_url .= "&number=" . urlencode($destination);
             $api_url .= "&text=" . urlencode($message);
             json_decode(file_get_contents($api_url, false));
-        } elseif ($this->session->userdata('posisi_id') == 7) {
+        } elseif ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
 
             $this->db->where('npk', $atasan1['npk']);
             $karyawan = $this->db->get('karyawan')->row_array();
-
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .

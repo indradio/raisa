@@ -19,7 +19,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nomor DL</th>
-                                        <th>Nama</th>
+                                        <th>Nama <small>(<i>Pemohon</i>)</small></th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>

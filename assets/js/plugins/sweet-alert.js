@@ -40,6 +40,14 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
+} else if (flashData == 'berangkat') {
+  swal({
+    title: "Terimakasih!",
+    text: "Perjalanan telah diberangkatkan.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
 }
 
 $('.btn-bataldl').on('click', function (e) {

@@ -106,6 +106,27 @@ class Perjalanandl extends CI_Controller
         $this->db->update('reservasi');
 
         $this->session->set_flashdata('message', 'barudl');
+
+        $this->db->where('npk', $this->input->post('npk'));
+        $karyawan = $this->db->get('karyawan')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $karyawan['phone'];
+        $message = "*Perjalanan anda dengan*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+            "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
+            "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
+            "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
+            "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
+            "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
+            " ) \r\n \r\nPerjalanan telah siap untuk berangkat. 
+            \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
+            \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
         redirect('perjalanandl/admindl');
     }
 
