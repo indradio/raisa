@@ -356,10 +356,10 @@
                         <h4 class="card-title">Tambah Data Karyawan Baru</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('pendapatan/revedit'); ?>">
+                <form class="form" method="post" action="<?= base_url('hr/tambah'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row col-12">
                                 <label class="col-md-3 col-form-label">NPK</label>
                                 <div class="col-md-6">
                                     <div class="form-group has-default">
@@ -506,6 +506,24 @@
                                             <option value="<?= $ro['id']; ?>"><?= $ro['name']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h4 class="title">Foto</h4>
+                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail img-circle">
+                                        <img src="<?= base_url(); ?>assets/img/placeholder.jpg" alt="foto">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                                    <div>
+                                        <span class="btn btn-round btn-rose btn-file">
+                                            <span class="fileinput-new">Pilih Foto</span>
+                                            <span class="fileinput-exists">Ganti</span>
+                                            <input type="file" name="foto" />
+                                        </span>
+                                        <br />
+                                        <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i>Hapus</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

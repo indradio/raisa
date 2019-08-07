@@ -2,15 +2,23 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'setujudl') {
   swal({
-    title: "Terima kasih!",
+    title: "Terimakasih!",
     text: "Perjalanan ini telah disetujui.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
+} else if (flashData == 'masuk') {
+  swal({
+    title: "Selamat Datang!",
+    text: "PENTING : Silahkan buka halaman profil anda untuk memastikan data sudah sesuai. (pastikan atasan anda sudah benar)",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-primary",
+    type: "info"
+  }).catch(swal.noop)
 } else if (flashData == 'bataldl') {
   swal({
-    title: "Terima kasih!",
+    title: "Terimakasih!",
     text: "Perjalanan ini telah dibatalkan.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",

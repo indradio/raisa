@@ -1,4 +1,5 @@
 <div class="content">
+  <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
     <!-- Banner -->
     <div class="row">
