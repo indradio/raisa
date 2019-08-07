@@ -40,6 +40,14 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
+} else if (flashData == 'rsvgagal') {
+  swal({
+    title: "Reservasi Gagal!",
+    text: "Maaf Kendaraan yang anda pilih telah dipesan oleh orang lain. Silahkan melakukan reservasi kembali",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
 } else if (flashData == 'berangkat') {
   swal({
     title: "Terimakasih!",
