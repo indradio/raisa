@@ -135,7 +135,7 @@ class Reservasi extends CI_Controller
         } elseif ($this->input->post('tujuan') == null) {
             $tujuan = [
                 'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => 'LAINNYA - ' . $this->input->post('tlainnya'),
+                'inisial' => $this->input->post('tlainnya'),
                 'nama' => $this->input->post('tlainnya'),
                 'jarak' => '0',
                 'status' => '1'
@@ -157,7 +157,7 @@ class Reservasi extends CI_Controller
 
             $tujuan2 = [
                 'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => 'LAINNYA - ' . $this->input->post('tlainnya'),
+                'inisial' =>  $this->input->post('tlainnya'),
                 'nama' => $this->input->post('tlainnya'),
                 'jarak' => '0',
                 'status' => '1'
