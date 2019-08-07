@@ -343,4 +343,179 @@
         </div>
     </div>
 </div>
+<!-- Modal Tambah Karyawan -->
+<div class="modal fade" id="karyawanAdd" tabindex="-1" role="dialog" aria-labelledby="karyawanAddTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Tambah Data Karyawan Baru</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('pendapatan/revedit'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">NPK</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="npk" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Inisial</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="inisial" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Nama</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="nama" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Email</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">No HP</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Posisi</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="posisi" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $posisi = $this->db->get('karyawan_posisi')->result_array();
+                                        foreach ($posisi as $po) : ?>
+                                            <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Divisi</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="div" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $divisi = $this->db->get('karyawan_div')->result_array();
+                                        foreach ($divisi as $div) : ?>
+                                            <option value="<?= $div['id']; ?>"><?= $div['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Departemen</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="dept" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $departemen = $this->db->get('karyawan_dept')->result_array();
+                                        foreach ($departemen as $dept) : ?>
+                                            <option value="<?= $dept['id']; ?>"><?= $dept['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Unit Organisasi</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="sect" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $section = $this->db->get('karyawan_sect')->result_array();
+                                        foreach ($section as $sect) : ?>
+                                            <option value="<?= $sect['id']; ?>"><?= $sect['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Golongan</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="gol" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $golongan = $this->db->get('karyawan_gol')->result_array();
+                                        foreach ($golongan as $gol) : ?>
+                                            <option value="<?= $gol['id']; ?>"><?= $gol['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Fasilitas</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="fasilitas" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $fasilitas = $this->db->get('karyawan_fasilitas')->result_array();
+                                        foreach ($fasilitas as $f) : ?>
+                                            <option value="<?= $f['id']; ?>"><?= $f['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Atasan 1</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="atasan1" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $posisi = $this->db->get('karyawan_posisi')->result_array();
+                                        foreach ($posisi as $po) : ?>
+                                            <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Atasan 2</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="atasan2" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $posisi = $this->db->get('karyawan_posisi')->result_array();
+                                        foreach ($posisi as $po) : ?>
+                                            <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Role (catatan : Hanya untuk menu RAISA)</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" name="role" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                        <?php
+                                        $role = $this->db->order_by('id', "ASC");
+                                        $role = $this->db->get('user_role')->result_array();
+                                        foreach ($role as $ro) : ?>
+                                            <option value="<?= $ro['id']; ?>"><?= $ro['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">TAMBAH</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- end modal -->

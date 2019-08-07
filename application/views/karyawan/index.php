@@ -12,8 +12,8 @@
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
-                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false">Tambah Karyawan Baru</a>
+                            <!-- Here you can write extra buttons/actions for the toolbar -->
+                            <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false" data-toggle="modal" data-target="#karyawanAdd">Tambah Karyawan Baru</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
