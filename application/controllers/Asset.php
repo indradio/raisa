@@ -72,7 +72,7 @@ class Asset extends CI_Controller
 
         $config['upload_path']          = './assets/img/asset/';
         $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 2048;
+        $config['max_size']             = 5000;
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('foto')) {
             $this->db->set('asset_foto', $this->upload->data('file_name'));

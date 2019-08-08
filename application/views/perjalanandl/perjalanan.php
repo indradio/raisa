@@ -30,6 +30,11 @@
                                         <th>Jam Kembali</th>
                                         <th>Nomor Polisi</th>
                                         <th>Kendaraan</th>
+                                        <th>Uang Saku</th>
+                                        <th>UM 1</th>
+                                        <th>UM 2</th>
+                                        <th>UM 3</th>
+                                        <th>UM 4</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -48,6 +53,11 @@
                                         <th>Jam Kembali</th>
                                         <th>No. Polisi</th>
                                         <th>Kendaraan</th>
+                                        <th>Uang Saku</th>
+                                        <th>UM 1</th>
+                                        <th>UM 2</th>
+                                        <th>UM 3</th>
+                                        <th>UM 4</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
@@ -68,6 +78,11 @@
                                             <td><?= $pdl['jamkembali']; ?></td>
                                             <td><?= $pdl['nopol']; ?></td>
                                             <td><?= $pdl['kepemilikan']; ?></td>
+                                            <td><?= $pdl['uangsaku']; ?></td>
+                                            <td><?= $pdl['um1']; ?></td>
+                                            <td><?= $pdl['um2']; ?></td>
+                                            <td><?= $pdl['um3']; ?></td>
+                                            <td><?= $pdl['um4']; ?></td>
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                             <td class="text-right">

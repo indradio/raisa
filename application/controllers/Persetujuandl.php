@@ -31,20 +31,25 @@ class Persetujuandl extends CI_Controller
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         if ($rsv['atasan1'] == $this->session->userdata['inisial'] and $rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
+            $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
+            $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
         } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
+            $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
         } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
+            $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
         }
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
+            $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->set('status', '3');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
@@ -53,7 +58,7 @@ class Persetujuandl extends CI_Controller
             $ga_admin = $this->db->get('karyawan_admin')->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $ga_admin['phone'];
-            $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+            $message = "*PENGAJUAN PERJALANAN DINAS (Telah di setujui)*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .
                 "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
                 "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .

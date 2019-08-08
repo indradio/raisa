@@ -97,8 +97,11 @@ $pdf->Cell(90, 5, '', 110, 0);
 $pdf->Cell(30, 5, 'KA. DIV / KA DEPT', 110, 0, 'C');
 $pdf->Cell(50, 5, 'PEMAKAI', 0, 1, 'C');
 
-$pdf->Cell(32, 5, '1. *) Diisi oleh Keamanan (System)', 0, 1);
-$pdf->Cell(32, 5, '2. Dalam kotak diisi oleh Pool/Umum (System)', 0, 1);
+$pdf->Cell(80, 5, '1. *) Diisi oleh Keamanan (System)', 0, 0);
+$reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
+$pdf->Cell(32, 5, 'Disetujui pada ' . date('d/m/Y H:i:s', strtotime($reservasi['tgl_atasan2'])), 0, 1);
+$pdf->Cell(77, 5, '2. Dalam kotak diisi oleh Pool/Umum (System)', 0, 0);
+$pdf->Cell(32, 5, 'Tidak memerlukan tanda tangan basah', 0, 1);
 
 $pdf->Ln(2);
 
@@ -106,7 +109,7 @@ $pdf->Cell(32, 5, 'FR-GA-01.002', 0, 1);
 
 $pdf->Ln(-5);
 $pdf->Cell(90, 5, '', 110, 0);
-$pdf->Cell(30, 5, '(   ' . $perjalanan['ka_dept'] . '   )', 110, 0, 'C');
+$pdf->Cell(30, 5, '' . $perjalanan['ka_dept'] . '', 110, 0, 'C');
 $pdf->Cell(50, 5, '(................................)', 0, 1, 'C');
 
 

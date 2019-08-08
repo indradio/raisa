@@ -235,7 +235,7 @@ class Reservasi extends CI_Controller
 
         $peserta = $this->db->where('reservasi_id', $reservasi_temp['id']);
         $peserta = $this->db->get_where('perjalanan_anggota')->result_array();
-        $listpeserta = array_column($tujuan, 'inisial');
+        $listpeserta = array_column($peserta, 'inisial');
 
         $this->db->set('tujuan', implode(', ', $listtujuan));
         $this->db->set('keperluan', $this->input->post('keperluan'));

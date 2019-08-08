@@ -85,6 +85,9 @@ class Perjalanandl extends CI_Controller
             'kmtotal' => '0',
             'jenis_perjalanan' => $this->input->post('jperjalanan'),
             'reservasi_id' => $this->input->post('id'),
+            'div_id' => $karyawan['div_id'],
+            'dept_id' => $karyawan['dept_id'],
+            'sect_id' => $karyawan['sect_id'],
             'status' => '1'
         ];
         $this->db->insert('perjalanan', $data);
