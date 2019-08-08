@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Data Asset</h4>
+                        <h4 class="card-title">Data Opname Asset</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -25,9 +25,10 @@
                                         <th class="th-description">First Acq</th>
                                         <th class="th-description">Value Acq</th>
                                         <th class="th-description">Cost Center</th>
+                                        <th class="th-description">PIC</th>
                                         <th class="th-description">Status</th>
+                                        <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
-                                        <th class="disabled-sorting th-description">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -39,9 +40,10 @@
                                         <th class="th-description">First Acq</th>
                                         <th class="th-description">Value Acq</th>
                                         <th class="th-description">Cost Center</th>
+                                        <th class="th-description">PIC</th>
                                         <th class="th-description">Status</th>
+                                        <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
-                                        <th class="th-description">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -63,17 +65,19 @@
                                             <td><?= $a['first_acq']; ?></td>
                                             <td><?= $a['value_acq']; ?></td>
                                             <td><?= $a['cost_center']; ?></td>
-                                            <?php if ($a['status'] == null) { ?>
-                                                <td></td>
-                                            <?php } elseif ($a['status'] == 1) { ?>
-                                                <td>OK</td>
-                                            <?php } elseif ($a['status'] == 2) { ?>
-                                                <td>Sedang Diverifikasi</td>
-                                            <?php }; ?>
+                                            <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
+                                            <td><?= $karyawan['nama']; ?></td>
+                                            <?php if ($a['status'] == 1) {
+                                                echo '<td>BAIK-ADA-DIGUNAKAN</td>';
+                                            } else if ($a['status'] == 2) {
+                                                echo '<td>BAIK-TIDAK SESUAI</td>';
+                                            } else if ($a['status'] == 3) {
+                                                echo '<td>RUSAK</td>';
+                                            } else if ($a['status'] == 4) {
+                                                echo '<td>HILANG</td>';
+                                            }; ?>
+                                            <td><?= $a['catatan']; ?></td>
                                             <td><?= $a['tglopname']; ?></td>
-                                            <td class="text-right">
-                                                <a href="<?= base_url('asset/do_opname/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="badge badge-pill badge-primary">OPNAME</a>
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

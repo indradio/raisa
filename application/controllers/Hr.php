@@ -61,7 +61,20 @@ class Hr extends CI_Controller
         redirect('hr/karyawan');
     }
 
-    public function ubah()
+    public function ubah($npk)
+    {
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Data Karyawan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['datakaryawan'] = $this->db->get_where('karyawan', ['npk' =>  $npk])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('karyawan/ubah', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function ubah_proses()
     {
         $config['upload_path']          = './assets/img/faces/';
         $config['allowed_types']        = 'jpg|jpeg|png';

@@ -87,7 +87,7 @@
                                                 <td>Nonaktif</td>
                                             <?php endif; ?>
                                             <td class="text-right">
-                                                <a href="#" class="btn btn-link btn-warning btn-just-icon edit" data-toggle="modal" data-target="#karyawanUbah" data-npk="<?= $kry['npk']; ?>" data-nama="<?= $kry['nama']; ?>" data-inisial="<?= $kry['inisial']; ?>" data-email="<?= $kry['email']; ?>" data-phone="<?= $kry['phone']; ?>" data-foto="<?= base_url() . 'assets/img/' . $kry['foto']; ?>" data-golongan="<?= $golongan['nama']; ?>" data-fasilitas="<?= $fasilitas['nama']; ?>" data-posisi="<?= $posisi['nama']; ?>" data-divisi="<?= $divisi['nama']; ?>" data-departemen="<?= $departemen['nama']; ?>" data-seksi="<?= $seksi['nama']; ?>" data-atasan1="<?= $atasan1['nama']; ?>" data-atasan2="<?= $atasan2['nama']; ?>"><i class="material-icons">dvr</i></a>
+                                                <a href="<?= base_url('hr/ubah/') . $kry['npk']; ?>" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                                                 <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a>
                                             </td>
                                         </tr>

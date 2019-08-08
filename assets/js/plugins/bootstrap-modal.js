@@ -44,12 +44,14 @@ $('#karyawanUbah').on('show.bs.modal', function (event) {
     var email = button.data('email')
     var phone = button.data('phone')
     var foto = button.data('foto')
+    var posisi = button.data('posisi')
     var modal = $(this)
     modal.find('.modal-body input[name="npk"]').val(npk)
     modal.find('.modal-body input[name="inisial"]').val(inisial)
     modal.find('.modal-body input[name="nama"]').val(nama)
     modal.find('.modal-body input[name="email"]').val(email)
     modal.find('.modal-body input[name="phone"]').val(phone)
-    modal.find('.modal-body input[name="foto"]').src(foto)
+    modal.find('.modal-body [name="foto"]').src = foto
+    modal.find('.modal-body select[name="posisi"]').val(posisi)
 })
 
