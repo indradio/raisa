@@ -62,14 +62,14 @@ class Persetujuandl extends CI_Controller
             $karyawan = $this->db->get('karyawan')->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
-            $message = "*PENGAJUAN PERJALANAN DINAS (Sebagai Atasan 2)*\r\n \r\n No. Reservasi : *" . $reservasi['id'] . "*" .
-                "\r\n Nama : *" . $reservasi['nama'] . "*" .
-                "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
-                "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
-                "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
-                "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
-                "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
-                "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
+            $message = "*PENGAJUAN PERJALANAN DINAS (Sebagai Atasan 2)*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+                "\r\n Nama : *" . $rsv['nama'] . "*" .
+                "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
+                "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
+                "\r\n Peserta : *" . $rsv['anggota'] . "*" .
+                "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
+                "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
                 " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
             $api_url = "http://panel.apiwha.com/send_message.php";
             $api_url .= "?apikey=" . urlencode($my_apikey);
