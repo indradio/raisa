@@ -53,7 +53,7 @@ class Persetujuandl extends CI_Controller
             $api_url .= "&number=" . urlencode($destination);
             $api_url .= "&text=" . urlencode($message);
             json_decode(file_get_contents($api_url, false));
-        } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
+        } elseif ($rsv['atasan1'] == $this->session->userdata['inisial'] and $rsv['atasan2'] != $this->session->userdata['inisial']) {
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
@@ -76,7 +76,7 @@ class Persetujuandl extends CI_Controller
             $api_url .= "&number=" . urlencode($destination);
             $api_url .= "&text=" . urlencode($message);
             json_decode(file_get_contents($api_url, false));
-        } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
+        } elseif ($rsv['atasan1'] != $this->session->userdata['inisial'] and $rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');

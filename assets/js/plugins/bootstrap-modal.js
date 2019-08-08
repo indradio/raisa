@@ -36,3 +36,20 @@ $('#revEdit').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="desember"]').val(revdesember)
 })
 
+$('#karyawanUbah').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var npk = button.data('npk') // Extract info from data-* attributes
+    var nama = button.data('nama')
+    var inisial = button.data('inisial')
+    var email = button.data('email')
+    var phone = button.data('phone')
+    var foto = button.data('foto')
+    var modal = $(this)
+    modal.find('.modal-body input[name="npk"]').val(npk)
+    modal.find('.modal-body input[name="inisial"]').val(inisial)
+    modal.find('.modal-body input[name="nama"]').val(nama)
+    modal.find('.modal-body input[name="email"]').val(email)
+    modal.find('.modal-body input[name="phone"]').val(phone)
+    modal.find('.modal-body img[name="foto"]').val(npk)
+})
+

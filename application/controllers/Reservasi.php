@@ -128,7 +128,7 @@ class Reservasi extends CI_Controller
                     'nama' => $customer['nama'],
                     'kota' => $customer['kota'],
                     'jarak' => $customer['jarak'],
-                    'status' => '1'
+                    'status' => '0'
                 ];
                 $this->db->insert('perjalanan_tujuan', $tujuan);
             endforeach;
@@ -138,7 +138,7 @@ class Reservasi extends CI_Controller
                 'inisial' => $this->input->post('tlainnya'),
                 'nama' => $this->input->post('tlainnya'),
                 'jarak' => '0',
-                'status' => '1'
+                'status' => '0'
             ];
             $this->db->insert('perjalanan_tujuan', $tujuan);
         } else {
@@ -150,7 +150,7 @@ class Reservasi extends CI_Controller
                     'nama' => $customer['nama'],
                     'kota' => $customer['kota'],
                     'jarak' => $customer['jarak'],
-                    'status' => '1'
+                    'status' => '0'
                 ];
                 $this->db->insert('perjalanan_tujuan', $tujuan1);
             endforeach;
@@ -160,7 +160,7 @@ class Reservasi extends CI_Controller
                 'inisial' =>  $this->input->post('tlainnya'),
                 'nama' => $this->input->post('tlainnya'),
                 'jarak' => '0',
-                'status' => '1'
+                'status' => '0'
             ];
             $this->db->insert('perjalanan_tujuan', $tujuan2);
         };
@@ -179,7 +179,7 @@ class Reservasi extends CI_Controller
                 'karyawan_nama' => $dataku['nama'],
                 'karyawan_dept' => $dept['nama'],
                 'karyawan_posisi' => $posisi['nama'],
-                'status' => '1'
+                'status' => '0'
             ];
             $this->db->insert('perjalanan_anggota', $peserta);
         } elseif ($this->input->post('ikut') == null) {
@@ -194,7 +194,7 @@ class Reservasi extends CI_Controller
                     'karyawan_nama' => $karyawan['nama'],
                     'karyawan_dept' => $dept['nama'],
                     'karyawan_posisi' => $posisi['nama'],
-                    'status' => '1'
+                    'status' => '0'
                 ];
                 $this->db->insert('perjalanan_anggota', $peserta);
             endforeach;
@@ -208,7 +208,7 @@ class Reservasi extends CI_Controller
                 'karyawan_nama' => $dataku['nama'],
                 'karyawan_dept' => $dept1['nama'],
                 'karyawan_posisi' => $posisi1['nama'],
-                'status' => '1'
+                'status' => '0'
             ];
             $this->db->insert('perjalanan_anggota', $peserta1);
 
@@ -223,7 +223,7 @@ class Reservasi extends CI_Controller
                     'karyawan_nama' => $karyawan['nama'],
                     'karyawan_dept' => $dept2['nama'],
                     'karyawan_posisi' => $posisi2['nama'],
-                    'status' => '1'
+                    'status' => '0'
                 ];
                 $this->db->insert('perjalanan_anggota', $peserta2);
             endforeach;
@@ -405,11 +405,13 @@ class Reservasi extends CI_Controller
 
             // update table anggota perjalanan
             $this->db->set('reservasi_id', $data['id']);
+            $this->db->set('status', '1');
             $this->db->where('reservasi_id', $reservasi_temp['id']);
             $this->db->update('perjalanan_tujuan');
 
             // update table anggota perjalanan
             $this->db->set('reservasi_id', $data['id']);
+            $this->db->set('status', '1');
             $this->db->where('reservasi_id', $reservasi_temp['id']);
             $this->db->update('perjalanan_anggota');
 

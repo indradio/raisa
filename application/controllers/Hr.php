@@ -31,6 +31,7 @@ class Hr extends CI_Controller
             'nama' => $this->input->post('nama'),
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
+            'foto' => 'user.jpg',
             'posisi_id' => $this->input->post('posisi'),
             'div_id' => $this->input->post('div'),
             'dept_id' => $this->input->post('dept'),
@@ -44,6 +45,36 @@ class Hr extends CI_Controller
             'is_active' => 1
         ];
         $this->db->insert('karyawan', $data);
+
+        $config['upload_path']          = './assets/img/faces/';
+        $config['allowed_types']        = 'jpg|jpeg|png';
+        $config['max_size']             = 1024;
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('foto')) {
+            $this->db->set('foto', $this->upload->data('file_name'));
+            $this->db->where('npk', $this->input->post('npk'));
+            $this->db->update('karyawan');
+        } else {
+            echo $this->upload->display_errors();
+        }
+
+        redirect('hr/karyawan');
+    }
+
+    public function ubah()
+    {
+        $config['upload_path']          = './assets/img/faces/';
+        $config['allowed_types']        = 'jpg|jpeg|png';
+        $config['max_size']             = 1024;
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('foto')) {
+            $this->db->set('foto', $this->upload->data('file_name'));
+            $this->db->where('npk', $this->input->post('npk'));
+            $this->db->update('karyawan');
+        } else {
+            echo $this->upload->display_errors();
+        }
+
         redirect('hr/karyawan');
     }
 }
