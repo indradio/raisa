@@ -79,7 +79,6 @@ class Perjalanandl extends CI_Controller
             'cekkembali' => null,
             'nopol' => $this->input->post('nopol'),
             'kepemilikan' => $this->input->post('kepemilikan'),
-            'tunai' => $this->input->post('tunai'),
             'admin_ga' => $this->session->userdata('inisial'),
             'catatan_ga' => $this->input->post('catatan'),
             'ka_dept' => $ka_dept['nama'],
@@ -90,6 +89,12 @@ class Perjalanandl extends CI_Controller
         ];
         $this->db->insert('perjalanan', $data);
 
+        // update uangsaku
+        if ($this->input->post('jperjalanan') == 'TAPP' or $this->input->post('jperjalanan') == 'TAINAP') {
+            $this->db->set('uangsaku', 'YA');
+            $this->db->where('id', $data['id']);
+            $this->db->update('perjalanan');
+        }
         // update table anggota perjalanan
         $this->db->set('perjalanan_id', $data['id']);
         $this->db->where('reservasi_id', $this->input->post('id'));

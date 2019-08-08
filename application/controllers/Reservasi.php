@@ -480,7 +480,7 @@ class Reservasi extends CI_Controller
                 'jamberangkat' => $this->input->post('jamberangkat'),
                 'tglkembali' => $this->input->post('tglkembali'),
                 'jamkembali' => $this->input->post('jamkembali'),
-                'jenis_perjalanan' => 'TAMP'
+                'jenis_perjalanan' => 'TAINAP'
             ];
             $this->db->insert('reservasi_temp', $data);
             redirect('reservasi/dl3b');
