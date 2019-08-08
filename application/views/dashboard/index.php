@@ -24,8 +24,8 @@
                 <button type="button" class="btn btn-danger btn-link fix-broken-card">
                   <i class="material-icons">build</i> Fix Header!
                 </button>
-                <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="btn btn-default btn-link" rel="tooltip" title="Selengkapnya...">
-                  <i class="material-icons">art_track</i>
+                <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="btn btn-default btn-link" rel="tooltip" title="">
+                  Selengkapnya...
                 </a>
               </div>
               <h4 class="card-title">

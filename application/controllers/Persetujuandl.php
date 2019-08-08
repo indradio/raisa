@@ -34,14 +34,71 @@ class Persetujuandl extends CI_Controller
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
+
+            $this->db->where('sect_id', '214');
+            $ga_admin = $this->db->get('karyawan_admin')->row_array();
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $ga_admin['phone'];
+            $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+                "\r\n Nama : *" . $rsv['nama'] . "*" .
+                "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
+                "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
+                "\r\n Peserta : *" . $rsv['anggota'] . "*" .
+                "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
+                "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
+                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
         } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
+
+            $this->db->where('inisial', $rsv['atasan2']);
+            $karyawan = $this->db->get('karyawan')->row_array();
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $karyawan['phone'];
+            $message = "*PENGAJUAN PERJALANAN DINAS (Sebagai Atasan 2)*\r\n \r\n No. Reservasi : *" . $reservasi['id'] . "*" .
+                "\r\n Nama : *" . $reservasi['nama'] . "*" .
+                "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
+                "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
+                "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
+                "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
+                "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
+                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
         } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
+
+            $this->db->where('sect_id', '214');
+            $ga_admin = $this->db->get('karyawan_admin')->row_array();
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $ga_admin['phone'];
+            $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+                "\r\n Nama : *" . $rsv['nama'] . "*" .
+                "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
+                "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
+                "\r\n Peserta : *" . $rsv['anggota'] . "*" .
+                "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
+                "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
+                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
         }
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {

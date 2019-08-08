@@ -359,9 +359,9 @@
                 <form class="form" method="post" action="<?= base_url('hr/tambah'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
-                            <div class="row col-12">
+                            <div class="row">
                                 <label class="col-md-3 col-form-label">NPK</label>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control" name="npk" required>
                                     </div>
@@ -369,7 +369,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Inisial</label>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control" name="inisial" required>
                                     </div>
@@ -377,7 +377,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Nama</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control" name="nama" required>
                                     </div>
@@ -385,23 +385,23 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Email</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" name="email">
+                                        <input type="text" class="form-control" name="email" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">No HP</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" name="phone">
+                                        <input type="text" class="form-control" name="phone" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Posisi</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="posisi" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $posisi = $this->db->get('karyawan_posisi')->result_array();
@@ -413,7 +413,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Divisi</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="div" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $divisi = $this->db->get('karyawan_div')->result_array();
@@ -425,7 +425,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Departemen</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="dept" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $departemen = $this->db->get('karyawan_dept')->result_array();
@@ -437,7 +437,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Unit Organisasi</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="sect" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $section = $this->db->get('karyawan_sect')->result_array();
@@ -449,7 +449,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Golongan</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="gol" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $golongan = $this->db->get('karyawan_gol')->result_array();
@@ -461,7 +461,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Fasilitas</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="fasilitas" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $fasilitas = $this->db->get('karyawan_fasilitas')->result_array();
@@ -473,7 +473,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Atasan 1</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="atasan1" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $posisi = $this->db->get('karyawan_posisi')->result_array();
@@ -485,7 +485,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Atasan 2</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="atasan2" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $posisi = $this->db->get('karyawan_posisi')->result_array();
@@ -497,7 +497,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-3 col-form-label">Role (catatan : Hanya untuk menu RAISA)</label>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <select class="selectpicker" name="role" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                         <?php
                                         $role = $this->db->order_by('id', "ASC");
@@ -508,21 +508,23 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <h4 class="title">Foto</h4>
-                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail img-circle">
-                                        <img src="<?= base_url(); ?>assets/img/placeholder.jpg" alt="foto">
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
-                                    <div>
-                                        <span class="btn btn-round btn-rose btn-file">
-                                            <span class="fileinput-new">Pilih Foto</span>
-                                            <span class="fileinput-exists">Ganti</span>
-                                            <input type="file" name="foto" />
-                                        </span>
-                                        <br />
-                                        <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i>Hapus</a>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Foto</label>
+                                <div class="col-md-9">
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail img-circle">
+                                            <img src="<?= base_url(); ?>assets/img/default-avatar.png" alt="foto">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                                        <div>
+                                            <span class="btn btn-round btn-rose btn-file">
+                                                <span class="fileinput-new">Pilih Foto</span>
+                                                <span class="fileinput-exists">Ganti</span>
+                                                <input type="file" name="foto" />
+                                            </span>
+                                            <br />
+                                            <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i>Hapus</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

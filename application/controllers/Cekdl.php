@@ -115,7 +115,7 @@ class Cekdl extends CI_Controller
     public function cekkembali($dl)
     {
         $data['sidemenu'] = 'Security';
-        $data['sidesubmenu'] = 'Keberangkatan / Keluar';
+        $data['sidesubmenu'] = 'Kembali / Masuk';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
         $this->load->view('templates/header', $data);
