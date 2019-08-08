@@ -89,11 +89,6 @@ class Cekdl extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
         };
-        if ($this->input->post('jamberangkat') <= $um['um3']) {
-            $this->db->set('um3', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
 
         $this->session->set_flashdata('message', 'berangkat');
         redirect('cekdl/berangkat');
@@ -138,7 +133,12 @@ class Cekdl extends CI_Controller
         $this->db->update('perjalanan');
 
         $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
-        if ($this->input->post('jamberangkat') >= $um['um4']) {
+        if ($this->input->post('jamberangkat') <= $um['um3'] and $this->input->post('jamkembali') >= $um['um3']) {
+            $this->db->set('um3', 'YA');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        };
+        if ($this->input->post('jamkembali') >= $um['um4']) {
             $this->db->set('um4', 'YA');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
