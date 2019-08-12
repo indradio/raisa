@@ -75,6 +75,7 @@
                     <th>Peserta</th>
                     <th>Tanggal Keberangkatan</th>
                     <th>Jam Keberangkatan</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -89,6 +90,7 @@
                     <th>Peserta</th>
                     <th>Tgl Keberangkatan</th>
                     <th>Jam Keberangkatan</th>
+                    <th>Status</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -110,6 +112,8 @@
                       <td><?= $p['anggota']; ?></td>
                       <td><?= date('d/m/Y', strtotime($p['tglberangkat'])); ?></td>
                       <td><?= date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                      <?php $status = $this->db->get_where('perjalanan_status', ['id' => $perjalanan['status']])->row_array(); ?>
+                      <td><?= $status['nama']; ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
