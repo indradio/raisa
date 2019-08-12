@@ -112,7 +112,7 @@
                       <td><?= $p['anggota']; ?></td>
                       <td><?= date('d/m/Y', strtotime($p['tglberangkat'])); ?></td>
                       <td><?= date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                      <?php $status = $this->db->get_where('perjalanan_status', ['id' => $perjalanan['status']])->row_array(); ?>
+                      <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                       <td><?= $status['nama']; ?></td>
                     </tr>
                   <?php endforeach; ?>
