@@ -50,7 +50,8 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>">
+                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>" hidden>
+                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d/m/Y', strtotime($perjalanan['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +75,8 @@
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
+                                        <input type="date" class="form-control datepicker" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
+                                        <small> Bulan / Tanggal / Tahun</small>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +105,6 @@
                                                 <tr>
                                                     <th>Inisial</th>
                                                     <th>Nama</th>
-                                                    <th class="disabled-sorting text-right">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -117,7 +118,6 @@
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
                                                         <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>

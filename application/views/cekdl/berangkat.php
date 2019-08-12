@@ -55,7 +55,7 @@
                                             <td><?= $pdl['tujuan']; ?></td>
                                             <td><?= $pdl['keperluan']; ?></td>
                                             <td><?= $pdl['anggota']; ?></td>
-                                            <td><?= $pdl['tglberangkat']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
                                             <td><?= $pdl['jamberangkat']; ?></td>
                                             <td class="text-right">
                                                 <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Cek</a>

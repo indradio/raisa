@@ -22,8 +22,9 @@ $pdf->Cell(9, 6, '            : #' . $perjalanan['id'], 0, 1, 'L');
 $pdf->Cell(32, 6, 'NAMA', 0, 0);
 $pdf->Cell(9, 6, '            : ' . $perjalanan['nama'], 0, 1);
 
-$dept = $this->db->get_where('karyawan_dept', ['id' => $perjalanan['dept_id']])->row_array();
-$sect = $this->db->get_where('karyawan_sect', ['id' => $perjalanan['sect_id']])->row_array();
+$user = $this->db->get_where('karyawan', ['npk' => $perjalanan['npk']])->row_array();
+$dept = $this->db->get_where('karyawan_dept', ['id' => $user['dept_id']])->row_array();
+$sect = $this->db->get_where('karyawan_sect', ['id' => $user['sect_id']])->row_array();
 
 $pdf->Cell(32, 6, 'DEPARTEMENT/SEKSI', 0, 0);
 $pdf->Cell(9, 6, '            : ' . $dept['nama'] . ' / ' . $sect['nama'], 0, 1);
@@ -40,10 +41,10 @@ $pdf->Cell(9, 6, '            : ' . $perjalanan['anggota'], 0, 1);
 //BERANGKAT
 $pdf->Cell(35, 6, 'BERANGKAT*', 0, 0);
 $pdf->Cell(9, 6, '' . 'Tgl', 0, 0);
-$pdf->Cell(28, 6, ': ' . $perjalanan['tglberangkat'], 0, 0);
+$pdf->Cell(28, 6, ': ' . date('d/m/Y', strtotime($perjalanan['tglberangkat'])), 0, 0);
 
 $pdf->Cell(9, 6, 'Jam', 0, 0);
-$pdf->Cell(28, 6, ': ' . $perjalanan['jamberangkat'], 0, 0);
+$pdf->Cell(28, 6, ': ' . date('H:i', strtotime($perjalanan['jamberangkat'])), 0, 0);
 
 $pdf->Cell(9, 6, 'Km', 0, 0);
 $pdf->Cell(20, 6, ': ' . $perjalanan['kmberangkat'], 0, 0);
@@ -54,10 +55,10 @@ $pdf->Cell(25, 6, ': ' . $perjalanan['cekberangkat'], 0, 1);
 //KEMBALI
 $pdf->Cell(35, 6, 'KEMBALI*', 0, 0);
 $pdf->Cell(9, 6, '' . 'Tgl', 0, 0);
-$pdf->Cell(28, 6, ': ' . $perjalanan['tglkembali'], 0, 0);
+$pdf->Cell(28, 6, ': ' . date('d/m/Y', strtotime($perjalanan['tglkembali'])), 0, 0);
 
 $pdf->Cell(9, 6, 'Jam', 0, 0);
-$pdf->Cell(28, 6, ': ' . $perjalanan['jamkembali'], 0, 0);
+$pdf->Cell(28, 6, ': ' . date('H:i', strtotime($perjalanan['jamkembali'])), 0, 0);
 
 $pdf->Cell(9, 6, 'Km', 0, 0);
 $pdf->Cell(20, 6, ': ' . $perjalanan['kmkembali'], 0, 0);
@@ -97,10 +98,10 @@ $pdf->Cell(90, 5, '', 110, 0);
 $pdf->Cell(30, 5, 'KA. DIV / KA DEPT', 110, 0, 'C');
 $pdf->Cell(50, 5, 'PEMAKAI', 0, 1, 'C');
 
-$pdf->Cell(80, 5, '1. *) Diisi oleh Keamanan (System)', 0, 0);
+$pdf->Cell(82, 5, '1. *) Diisi oleh Keamanan (System)', 0, 0);
 $reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
-$pdf->Cell(32, 5, 'Disetujui pada ' . date('d/m/Y H:i:s', strtotime($reservasi['tgl_atasan2'])), 0, 1);
-$pdf->Cell(77, 5, '2. Dalam kotak diisi oleh Pool/Umum (System)', 0, 0);
+$pdf->Cell(32, 5, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 0, 1);
+$pdf->Cell(79, 5, '2. Dalam kotak diisi oleh Pool/Umum (System)', 0, 0);
 $pdf->Cell(32, 5, 'Tidak memerlukan tanda tangan basah', 0, 1);
 
 $pdf->Ln(2);

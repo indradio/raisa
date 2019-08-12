@@ -47,8 +47,11 @@ foreach ($peserta as $p) :
     $pdf->Cell(8, 5, $no, 1, 0, 'C', 1);
     $pdf->Cell(45, 5, $p['karyawan_nama'], 1, 0, 'C', 1);
     $pdf->Cell(14, 5, $p['npk'], 1, 0, 'C', 1);
-    $pdf->Cell(40, 5, $p['karyawan_dept'], 1, 0, 'C', 1);
-    $pdf->Cell(30, 5, $p['karyawan_posisi'], 1, 0, 'C', 1);
+    $user = $this->db->get_where('karyawan', ['npk' => $p['npk']])->row_array();
+    $dept = $this->db->get_where('karyawan_dept', ['id' => $user['dept_id']])->row_array();
+    $posisi = $this->db->get_where('karyawan_posisi', ['id' => $user['posisi_id']])->row_array();
+    $pdf->Cell(40, 5, $dept['nama'], 1, 0, 'C', 1);
+    $pdf->Cell(30, 5, $posisi['nama'], 1, 0, 'C', 1);
     $pdf->Cell(43, 5, '', 1, 0, 'C', 1);
     $pdf->Cell(0, 5, '', 0, 1, 0);
 

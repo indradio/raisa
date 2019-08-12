@@ -61,10 +61,10 @@
                                             <td><?= $pdl['tujuan']; ?></td>
                                             <td><?= $pdl['keperluan']; ?></td>
                                             <td><?= $pdl['anggota']; ?></td>
-                                            <td><?= $pdl['tglberangkat']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
                                             <td><?= $pdl['jamberangkat']; ?></td>
                                             <td><?= $pdl['cekberangkat']; ?></td>
-                                            <td><?= $pdl['tglkembali']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pdl['tglkembali'])); ?></td>
                                             <td><?= $pdl['jamkembali']; ?></td>
                                             <td class="text-right">
                                                 <a href="<?= base_url('cekdl/cekkembali/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Cek</a>

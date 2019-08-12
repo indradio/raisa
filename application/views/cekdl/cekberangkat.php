@@ -50,7 +50,8 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>">
+                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>" hidden>
+                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d/m/Y', strtotime($perjalanan['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>

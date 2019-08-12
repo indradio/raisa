@@ -48,6 +48,80 @@
       <?php endforeach; ?>
     </div>
     <!-- end banner -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">directions_car</i>
+            </div>
+            <h4 class="card-title">Perjalanan Dinas Luar Hari ini </h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <div class="material-datatables">
+              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Nomor DL</th>
+                    <th>Jenis DL</th>
+                    <th>Nomor Polisi</th>
+                    <th>Kendaraan</th>
+                    <th>Nama</th>
+                    <th>Tujuan</th>
+                    <th>Keperluan</th>
+                    <th>Peserta</th>
+                    <th>Tanggal Keberangkatan</th>
+                    <th>Jam Keberangkatan</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Nomor DL</th>
+                    <th>Jenis DL</th>
+                    <th>No. Polisi</th>
+                    <th>Kendaraan</th>
+                    <th>Nama</th>
+                    <th>Tujuan</th>
+                    <th>Keperluan</th>
+                    <th>Peserta</th>
+                    <th>Tgl Keberangkatan</th>
+                    <th>Jam Keberangkatan</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <?php
+                  $queryPerjalanan = "SELECT *
+                   FROM `perjalanan`
+                   WHERE `tglberangkat` = CURDATE()
+               ";
+                  $perjalanan = $this->db->query($queryPerjalanan)->result_array();
+                  foreach ($perjalanan as $p) : ?>
+                    <tr>
+                      <td><?= $p['id']; ?></td>
+                      <td><?= $p['jenis_perjalanan']; ?></td>
+                      <td><?= $p['nopol']; ?></td>
+                      <td><?= $p['kepemilikan']; ?></td>
+                      <td><?= $p['nama']; ?></td>
+                      <td><?= $p['tujuan']; ?></td>
+                      <td><?= $p['keperluan']; ?></td>
+                      <td><?= $p['anggota']; ?></td>
+                      <td><?= date('d/m/Y', strtotime($p['tglberangkat'])); ?></td>
+                      <td><?= date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
   </div>
   <!-- end container-fluid -->
 </div>
