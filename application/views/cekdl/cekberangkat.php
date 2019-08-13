@@ -72,6 +72,9 @@
                                 </div>
                             </div>
                             <div class="row">
+
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Peserta</label>
                                 <div class="col-md-5">
                                     <div class="material-datatables">
@@ -91,15 +94,16 @@
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
                                                 foreach ($anggota as $ang) : ?>
-                                                    <tr>
-                                                        <td><?= $ang['karyawan_inisial']; ?></td>
-                                                        <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
-                                                    </tr>
+                                                <tr>
+                                                    <td><?= $ang['karyawan_inisial']; ?></td>
+                                                    <td><?= $ang['karyawan_nama']; ?></td>
+                                                    <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
+                                                </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $perjalanan['id']; ?>">Tambahkan</button>
                                 </div>
                             </div>
                             <div class="row">

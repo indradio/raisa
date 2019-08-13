@@ -24,6 +24,14 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'sudahsetujudl') {
+  swal({
+    title: "Terimakasih!",
+    text: "Perjalanan ini telah Telah disetujui oleh Kepala Departemen.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "info"
+  }).catch(swal.noop)
 } else if (flashData == 'nopolsalah') {
   swal({
     title: "Maaf!",

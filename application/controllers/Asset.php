@@ -53,36 +53,83 @@ class Asset extends CI_Controller
 
     public function opname_proses()
     {
-        $data = [
-            'tglopname' => date('Y-m-d H:i:s'),
-            'asset_no' => $this->input->post('asset_no'),
-            'asset_sub_no' => $this->input->post('asset_sub_no'),
-            'asset_deskripsi' => $this->input->post('asset_deskripsi'),
-            'kategori' => $this->input->post('kategori'),
-            'lokasi' => $this->input->post('lokasi'),
-            'first_acq' => $this->input->post('first_acq'),
-            'value_acq' => $this->input->post('value_acq'),
-            'cost_center' => $this->input->post('cost_center'),
-            'npklama' => $this->input->post('npklama'),
-            'npk' => $this->input->post('npk'),
-            'status' => $this->input->post('status'),
-            'catatan' => $this->input->post('catatan')
-        ];
-        $this->db->insert('asset_opname', $data);
 
         $config['upload_path']          = './assets/img/asset/';
         $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 5000;
+        $config['max_size']             = 5120;
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('foto')) {
-            $this->db->set('asset_foto', $this->upload->data('file_name'));
-            $this->db->where('asset_no', $this->input->post('asset_no'));
-            $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
-            $this->db->update('asset_opname');
+            if (($this->input->post('status') == 2 or $this->input->post('status') == 3 or $this->input->post('status') == 4) and $this->input->post('catatan') == null) {
+                redirect('asset/do_opname/' . $this->input->post('asset_no') . '/' . $this->input->post('asset_sub_no'));
+            } else {
+                $karyawan =   $this->db->get_where('karyawan', ['npk' =>  $this->input->post('npklama'),])->row_array();
+                $assetno = $this->input->post('asset_no');
+                $assetsubno = $this->input->post('asset_sub_no');
+                $queryCek = "SELECT COUNT(*)
+                FROM `asset_opname`
+                WHERE `asset_no` =  '$assetno' AND `asset_sub_no` =  '$assetsubno'
+                ";
+                $cek = $this->db->query($queryCek)->row_array();
+                $ketemu = $cek['COUNT(*)'];
+                if ($ketemu == 0) {
+
+                    $data = [
+                        'tglopname' => date('Y-m-d H:i:s'),
+                        'asset_no' => $this->input->post('asset_no'),
+                        'asset_sub_no' => $this->input->post('asset_sub_no'),
+                        'asset_deskripsi' => $this->input->post('asset_deskripsi'),
+                        'kategori' => $this->input->post('kategori'),
+                        'lokasi' => $this->input->post('lokasi'),
+                        'first_acq' => $this->input->post('first_acq'),
+                        'value_acq' => $this->input->post('value_acq'),
+                        'cost_center' => $this->input->post('cost_center'),
+                        'npklama' => $this->input->post('npklama'),
+                        'npk' => $this->input->post('npk'),
+                        'status' => $this->input->post('status'),
+                        'status_opname' => '1',
+                        'catatan' => $this->input->post('catatan'),
+                        'dept_id' => $karyawan['dept_id']
+                    ];
+                    $this->db->insert('asset_opname', $data);
+
+                    $this->db->set('asset_foto', $this->upload->data('file_name'));
+                    $this->db->where('asset_no', $this->input->post('asset_no'));
+                    $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
+                    $this->db->update('asset_opname');
+
+                    $this->db->set('catatan', 'Sedang diverifikasi oleh Tim');
+                    $this->db->where('asset_no', $this->input->post('asset_no'));
+                    $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
+                    $this->db->update('asset');
+
+                    redirect('asset/opname');
+                } else {
+                    $this->db->set('tglopname', date('Y-m-d H:i:s'));
+                    $this->db->set('asset_deskripsi', $this->input->post('asset_deskripsi'));
+                    $this->db->set('lokasi', $this->input->post('lokasi'));
+                    $this->db->set('npk', $this->input->post('npk'));
+                    $this->db->set('status', $this->input->post('status'));
+                    $this->db->set('status_opname', '1');
+                    $this->db->set('catatan', $this->input->post('catatan'));
+                    $this->db->set('asset_foto', $this->upload->data('file_name'));
+                    $this->db->set('verifikasi', null);
+                    $this->db->set('ka_dept', null);
+                    $this->db->set('fin_dept', null);
+                    $this->db->where('asset_no', $this->input->post('asset_no'));
+                    $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
+                    $this->db->update('asset_opname');
+
+                    $this->db->set('catatan', 'Sedang diverifikasi oleh Tim');
+                    $this->db->where('asset_no', $this->input->post('asset_no'));
+                    $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
+                    $this->db->update('asset');
+
+                    redirect('asset/opname');
+                }
+            }
         } else {
-            echo $this->upload->display_errors();
+            redirect('asset/do_opname/' . $this->input->post('asset_no') . '/' . $this->input->post('asset_sub_no'));
         }
-        redirect('asset/opname');
     }
 
     public function verifikasi()

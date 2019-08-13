@@ -87,7 +87,7 @@ $pdf->Cell(45, 15, $perjalanan['admin_ga'], 1, 1, 'C', 1);
 
 
 $pdf->Cell(17, 5, 'Keterangan', 0, 0);
-$pdf->Cell(110, 5, ': ' . $perjalanan['catatan_ga'], 0, 0);
+$pdf->Cell(110, 5, ': ' . $perjalanan['catatan_ga'] . ' ' . $perjalanan['catatan_security'], 0, 0);
 
 $pdf->Cell(10, 5, 'Bogor, ', 0, 0);
 $pdf->Cell(50, 5, date("D, d-M-Y"), 0, 1);

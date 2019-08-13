@@ -196,7 +196,7 @@
                                             <?php
                                             $menu = $this->db->get('pendapatan')->result_array();
                                             foreach ($menu as $m) : ?>
-                                                <option value="<?= $m['nama']; ?>"><?= $m['nama']; ?></option>
+                                            <option value="<?= $m['nama']; ?>"><?= $m['nama']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -406,7 +406,7 @@
                                     <?php
                                     $posisi = $this->db->get('karyawan_posisi')->result_array();
                                     foreach ($posisi as $po) : ?>
-                                        <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
+                                    <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -418,7 +418,7 @@
                                     <?php
                                     $divisi = $this->db->get('karyawan_div')->result_array();
                                     foreach ($divisi as $div) : ?>
-                                        <option value="<?= $div['id']; ?>"><?= $div['nama']; ?></option>
+                                    <option value="<?= $div['id']; ?>"><?= $div['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -430,7 +430,7 @@
                                     <?php
                                     $departemen = $this->db->get('karyawan_dept')->result_array();
                                     foreach ($departemen as $dept) : ?>
-                                        <option value="<?= $dept['id']; ?>"><?= $dept['nama']; ?></option>
+                                    <option value="<?= $dept['id']; ?>"><?= $dept['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -442,7 +442,7 @@
                                     <?php
                                     $section = $this->db->get('karyawan_sect')->result_array();
                                     foreach ($section as $sect) : ?>
-                                        <option value="<?= $sect['id']; ?>"><?= $sect['nama']; ?></option>
+                                    <option value="<?= $sect['id']; ?>"><?= $sect['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -454,7 +454,7 @@
                                     <?php
                                     $golongan = $this->db->get('karyawan_gol')->result_array();
                                     foreach ($golongan as $gol) : ?>
-                                        <option value="<?= $gol['id']; ?>"><?= $gol['nama']; ?></option>
+                                    <option value="<?= $gol['id']; ?>"><?= $gol['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -466,7 +466,7 @@
                                     <?php
                                     $fasilitas = $this->db->get('karyawan_fasilitas')->result_array();
                                     foreach ($fasilitas as $f) : ?>
-                                        <option value="<?= $f['id']; ?>"><?= $f['nama']; ?></option>
+                                    <option value="<?= $f['id']; ?>"><?= $f['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -478,7 +478,7 @@
                                     <?php
                                     $posisi = $this->db->get('karyawan_posisi')->result_array();
                                     foreach ($posisi as $po) : ?>
-                                        <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
+                                    <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -490,7 +490,7 @@
                                     <?php
                                     $posisi = $this->db->get('karyawan_posisi')->result_array();
                                     foreach ($posisi as $po) : ?>
-                                        <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
+                                    <option value="<?= $po['id']; ?>"><?= $po['nama']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -503,7 +503,7 @@
                                     $role = $this->db->order_by('id', "ASC");
                                     $role = $this->db->get('user_role')->result_array();
                                     foreach ($role as $ro) : ?>
-                                        <option value="<?= $ro['id']; ?>"><?= $ro['name']; ?></option>
+                                    <option value="<?= $ro['id']; ?>"><?= $ro['name']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -533,6 +533,57 @@
                 <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">TAMBAH</button>
                 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tambah Karyawan -->
+<div class="modal fade" id="tambahPeserta" tabindex="-1" role="dialog" aria-labelledby="tambahPesertaTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Tambah Peseta perjalanan</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('cekdl/tambahpeserta'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Nomor Perjalanan</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Tambah Peserta</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Anggota" data-size="7">
+                                            <?php
+                                            $queryKaryawan = "SELECT *
+                                                FROM `karyawan`
+                                                WHERE `npk` != {$this->session->userdata('npk')} AND `npk` != '1111'
+                                                ORDER BY `nama` ASC
+                                                ";
+                                            $Karyawan = $this->db->query($queryKaryawan)->result_array();
+                                            foreach ($Karyawan as $k) : ?>
+                                            <option value="<?= $k['inisial']; ?>"><?= $k['nama']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">TAMBAH</button>
+                            </div>
                 </form>
             </div>
         </div>

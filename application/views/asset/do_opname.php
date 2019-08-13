@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <label class="col-md-1 col-form-label">Value Acq</label>
                             <div class="col-md-3">
                                 <div class="form-group has-default">
@@ -111,7 +111,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <label class="col-md-1 col-form-label">Cost Center</label>
                             <div class="col-md-3">
                                 <div class="form-group has-default">

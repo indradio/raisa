@@ -12,11 +12,14 @@ class Cekdl extends CI_Controller
 
     public function index()
     {
+        $data['sidemenu'] = 'Security';
+        $data['sidesubmenu'] = 'Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('persetujuandl/index', $data);
+        $this->load->view('cekdl/index', $data);
         $this->load->view('templates/footer');
     }
 
@@ -79,12 +82,12 @@ class Cekdl extends CI_Controller
         $this->db->update('perjalanan');
 
         $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
-        if ($this->input->post('jenis') == 'DLPP' and $this->input->post('jamberangkat') <= $um['um1']) {
+        if ($this->input->post('jenis') == 'DLPP' or $this->input->post('jenis') == 'TAPP' and $this->input->post('jamberangkat') <= $um['um1']) {
             $this->db->set('um1', 'YA');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
         };
-        if ($this->input->post('jenis') == 'DLPP' and $this->input->post('jamberangkat') <= $um['um2']) {
+        if ($this->input->post('jenis') == 'DLPP' or $this->input->post('jenis') == 'TAPP' and $this->input->post('jamberangkat') <= $um['um2']) {
             $this->db->set('um2', 'YA');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
@@ -144,6 +147,45 @@ class Cekdl extends CI_Controller
             $this->db->update('perjalanan');
         };
 
+        $dl = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
+        $this->db->set('status', '0');
+        $this->db->where('id', $dl['reservasi_id']);
+        $this->db->update('reservasi');
+
         redirect('cekdl/kembali');
+    }
+    public function tambahpeserta()
+    {
+        foreach ($this->input->post('anggota') as $a) :
+            $dl = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
+            $karyawan = $this->db->get_where('karyawan', ['inisial' => $a])->row_array();
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
+            $peserta = [
+                'perjalanan_id' => $dl['id'],
+                'reservasi_id' => $dl['reservasi_id'],
+                'npk' => $karyawan['npk'],
+                'karyawan_inisial' => $karyawan['inisial'],
+                'karyawan_nama' => $karyawan['nama'],
+                'karyawan_dept' => $dept['nama'],
+                'karyawan_posisi' => $posisi['nama'],
+                'status' => '1'
+            ];
+            $this->db->insert('perjalanan_anggota', $peserta);
+        endforeach;
+
+        $anggota = $this->db->where('perjalanan_id', $dl['id']);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $dl['id']);
+        $this->db->update('perjalanan');
+
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $dl['reservasi_id']);
+        $this->db->update('reservasi');
+
+        redirect('cekdl/cekberangkat/' . $dl['id']);
     }
 }

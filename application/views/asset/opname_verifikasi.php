@@ -20,12 +20,10 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">Kategori</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">Value Acq</th>
-                                        <th class="th-description">Cost Center</th>
                                         <th class="th-description">PIC</th>
+                                        <th class="th-description">Lokasi</th>
+                                        <th class="th-description">Kategori</th>
+                                        <th class="th-description">First Acq</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -36,12 +34,10 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">Kategori</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">Value Acq</th>
-                                        <th class="th-description">Cost Center</th>
                                         <th class="th-description">PIC</th>
+                                        <th class="th-description">Lokasi</th>
+                                        <th class="th-description">Kategori</th>
+                                        <th class="th-description">First Acq</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -51,25 +47,27 @@
                                 <tbody>
                                     <?php
                                     foreach ($asset as $a) : ?>
-                                        <tr>
-                                            <td>
-                                                <div class="img-container">
-                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
-                                                </div>
-                                            </td>
-                                            <td class="td-name">
-                                                <a><?= $a['asset_deskripsi']; ?></a>
-                                                <br />
-                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
-                                            </td>
-                                            <td><?= $a['kategori']; ?></td>
-                                            <td><?= $a['lokasi']; ?></td>
-                                            <td><?= $a['first_acq']; ?></td>
-                                            <td><?= $a['value_acq']; ?></td>
-                                            <td><?= $a['cost_center']; ?></td>
-                                            <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
-                                            <td><?= $karyawan['nama']; ?></td>
-                                            <?php if ($a['status'] == 1) {
+                                    <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
+                                    <tr class="text-dark bg-danger">
+                                        <?php } else { ?>
+                                    <tr>
+                                        <?php }; ?>
+                                        <td>
+                                            <div class="img-container">
+                                                <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
+                                            </div>
+                                        </td>
+                                        <td class="td-name">
+                                            <a><?= $a['asset_deskripsi']; ?></a>
+                                            <br />
+                                            <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
+                                        </td>
+                                        <td><?= $a['kategori']; ?></td>
+                                        <td><?= $a['lokasi']; ?></td>
+                                        <td><?= $a['first_acq']; ?></td>
+                                        <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
+                                        <td><?= $karyawan['nama']; ?></td>
+                                        <?php if ($a['status'] == 1) {
                                                 echo '<td>BAIK-ADA-DIGUNAKAN</td>';
                                             } else if ($a['status'] == 2) {
                                                 echo '<td>BAIK-TIDAK SESUAI</td>';
@@ -78,12 +76,12 @@
                                             } else if ($a['status'] == 4) {
                                                 echo '<td>HILANG</td>';
                                             }; ?>
-                                            <td><?= $a['catatan']; ?></td>
-                                            <td><?= $a['tglopname']; ?></td>
-                                            <td class="text-right">
-                                                <a href="#" class="badge badge-pill badge-success">Verifikasi</a>
-                                            </td>
-                                        </tr>
+                                        <td><?= $a['catatan']; ?></td>
+                                        <td><?= $a['tglopname']; ?></td>
+                                        <td class="text-right">
+                                            <a href="#" class="badge badge-pill badge-success">Verifikasi</a>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>

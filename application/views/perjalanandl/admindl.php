@@ -19,7 +19,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nomor Reservasi</th>
-                                        <th>Tanggal Reservasi</th>
+                                        <th>Jenis Perjalanan</th>
                                         <th>Nomor Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Nama</th>
@@ -36,7 +36,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>No. Reservasi</th>
-                                        <th>Tgl Reservasi</th>
+                                        <th>Jenis Perjalanan</th>
                                         <th>No. Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Nama</th>
@@ -53,24 +53,28 @@
                                 <tbody>
                                     <?php
                                     foreach ($reservasi as $rsv) : ?>
-                                        <tr>
-                                            <td><?= $rsv['id']; ?></td>
-                                            <td><?= $rsv['tglreservasi']; ?></td>
-                                            <td><?= $rsv['nopol']; ?></td>
-                                            <td><?= $rsv['kepemilikan']; ?></td>
-                                            <td><?= $rsv['nama']; ?></td>
-                                            <td><?= $rsv['tujuan']; ?></td>
-                                            <td><?= $rsv['keperluan']; ?></td>
-                                            <td><?= $rsv['anggota']; ?></td>
-                                            <td><?= $rsv['tglberangkat']; ?></td>
-                                            <td><?= $rsv['jamberangkat']; ?></td>
-                                            <td><?= $rsv['tglkembali']; ?></td>
-                                            <td><?= $rsv['jamkembali']; ?></td>
-                                            <td class="text-right">
-                                                <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">done</i></a>
-                                                <a href="<?= base_url('perjalanandl/bataldl/') . $rsv['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#rsvBataldl" data-rsv_id="<?= $rsv['id']; ?>"><i class="material-icons">close</i></a>
-                                            </td>
-                                        </tr>
+                                    <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
+                                    <tr class="text-dark bg-danger">
+                                        <?php } else { ?>
+                                    <tr>
+                                        <?php }; ?>
+                                        <td><?= $rsv['id']; ?></td>
+                                        <td><?= $rsv['jenis_perjalanan']; ?></td>
+                                        <td><?= $rsv['nopol']; ?></td>
+                                        <td><?= $rsv['kepemilikan']; ?></td>
+                                        <td><?= $rsv['nama']; ?></td>
+                                        <td><?= $rsv['tujuan']; ?></td>
+                                        <td><?= $rsv['keperluan']; ?></td>
+                                        <td><?= $rsv['anggota']; ?></td>
+                                        <td><?= $rsv['tglberangkat']; ?></td>
+                                        <td><?= $rsv['jamberangkat']; ?></td>
+                                        <td><?= $rsv['tglkembali']; ?></td>
+                                        <td><?= $rsv['jamkembali']; ?></td>
+                                        <td class="text-right">
+                                            <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
+                                            <a href="<?= base_url('perjalanandl/bataldl/') . $rsv['id']; ?>" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#rsvBataldl" data-rsv_id="<?= $rsv['id']; ?>">Batalkan</a>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>

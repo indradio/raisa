@@ -19,31 +19,45 @@
                                 <thead>
                                     <tr>
                                         <th>Nomor DL</th>
-                                        <th>Nomor Polisi</th>
-                                        <th>Kendaraan</th>
+                                        <th>Jenis DL</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tanggal Keberangkatan (Estimasi)</th>
-                                        <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th class="disabled-sorting text-center"></th>
-                                        <th>Actions</th>
+                                        <th>Tanggal Keberangkatan</th>
+                                        <th>Jam Keberangkatan</th>
+                                        <th>KM Keberangkatan</th>
+                                        <th>Security</th>
+                                        <th>Tanggal Kembali</th>
+                                        <th>Jam Kembali</th>
+                                        <th>KM Kembali</th>
+                                        <th>Security</th>
+                                        <th>Nomor Polisi</th>
+                                        <th>Kendaraan</th>
+                                        <th>Status</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Nomor DL</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
+                                        <th>Jenis DL</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tgl Keberangkatan (Estimasi)</th>
-                                        <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th class="text-center"></th>
-                                        <th>Actions</th>
+                                        <th>Tgl Keberangkatan</th>
+                                        <th>Jam Keberangkatan</th>
+                                        <th>KM Keberangkatan</th>
+                                        <th>Security</th>
+                                        <th>Tgl Kembali</th>
+                                        <th>Jam Kembali</th>
+                                        <th>KM Kembali</th>
+                                        <th>Security</th>
+                                        <th>No. Polisi</th>
+                                        <th>Kendaraan</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -51,19 +65,25 @@
                                     foreach ($perjalanan as $pdl) : ?>
                                     <tr>
                                         <td><?= $pdl['id']; ?></td>
-                                        <td><?= $pdl['nopol']; ?></td>
-                                        <td><?= $pdl['kepemilikan']; ?></td>
+                                        <td><?= $pdl['jenis_perjalanan']; ?></td>
                                         <td><?= $pdl['nama']; ?></td>
                                         <td><?= $pdl['tujuan']; ?></td>
                                         <td><?= $pdl['keperluan']; ?></td>
                                         <td><?= $pdl['anggota']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
+                                        <td><?= $pdl['tglberangkat']; ?></td>
                                         <td><?= $pdl['jamberangkat']; ?></td>
+                                        <td><?= $pdl['kmberangkat']; ?></td>
+                                        <td><?= $pdl['cekberangkat']; ?></td>
+                                        <td><?= $pdl['tglkembali']; ?></td>
+                                        <td><?= $pdl['jamkembali']; ?></td>
+                                        <td><?= $pdl['kmkembali']; ?></td>
+                                        <td><?= $pdl['cekkembali']; ?></td>
+                                        <td><?= $pdl['nopol']; ?></td>
+                                        <td><?= $pdl['kepemilikan']; ?></td>
+                                        <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
+                                        <td><?= $status['nama']; ?></td>
                                         <td class="text-right">
-                                            <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkatkan</a>
-                                        </td>
-                                        <td>
-                                            <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-warning btn-sm">Kembalikan</a>
+                                            <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

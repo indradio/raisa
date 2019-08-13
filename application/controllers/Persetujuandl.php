@@ -37,10 +37,15 @@ class Persetujuandl extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
         } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
-            $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
-            $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('reservasi');
+            if ($rsv['status'] == 3) {
+                $this->session->set_flashdata('message', 'udahsetujudl');
+                redirect('persetujuandl/index');
+            } else {
+                $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
+                $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('reservasi');
+            }
         } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));

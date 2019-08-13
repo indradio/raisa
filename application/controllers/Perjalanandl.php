@@ -119,14 +119,14 @@ class Perjalanandl extends CI_Controller
         $karyawan = $this->db->get('karyawan')->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
-        $message = "*Perjalanan anda dengan*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+        $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
             "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
             "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
             "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
             "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
             "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
             "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
-            " ) \r\n \r\nPerjalanan telah siap untuk berangkat. 
+            " ) \r\n \r\nTelah siap untuk berangkat. 
             \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
             \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
         $api_url = "http://panel.apiwha.com/send_message.php";

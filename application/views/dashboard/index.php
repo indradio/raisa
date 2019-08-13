@@ -55,7 +55,7 @@
             <div class="card-icon">
               <i class="material-icons">directions_car</i>
             </div>
-            <h4 class="card-title">Perjalanan Dinas Luar Hari ini </h4>
+            <h4 class="card-title">Perjalanan Dinas Luar Hari ini</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -97,7 +97,7 @@
                   <?php
                   $queryPerjalanan = "SELECT *
                    FROM `perjalanan`
-                   WHERE `tglberangkat` = CURDATE()
+                   WHERE `tglberangkat` >= CURDATE() and `tglkembali` <= CURDATE()
                ";
                   $perjalanan = $this->db->query($queryPerjalanan)->result_array();
                   foreach ($perjalanan as $p) : ?>

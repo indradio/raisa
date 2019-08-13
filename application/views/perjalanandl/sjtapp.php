@@ -130,7 +130,7 @@ $pdf->Ln(1);
 
 $pdf->Cell(32, 3, 'Catatan', 0, 0);
 $pdf->Cell(3, 3, ':', 0, 0);
-$pdf->Cell(25, 3, $perjalanan['catatan_ga'], 0, 1);
+$pdf->Cell(25, 3, $perjalanan['catatan_security'], 0, 1);
 
 $pdf->Ln(2);
 
@@ -139,15 +139,29 @@ $pdf->Cell(50, 5, 'Diketahui ,', 1, 0, 'C', 1);
 $pdf->Cell(50, 5, 'Dibuat Oleh ,', 1, 0, 'C', 0);
 $pdf->Cell(0, 5, '', 0, 1, 0);
 
-$pdf->Cell(40, 14, '', 1, 0, 'C', 1);
-$pdf->Cell(40, 14, '', 1, 0, 'C', 1);
-$pdf->Cell(50, 14, '', 1, 0, 'C', 1);
-$pdf->Cell(50, 14, '', 1, 1, 'C', 1);
+$reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
 
+$pdf->Cell(40, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(40, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(50, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(50, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(0, 12, '', 0, 1, 0);
+
+$pdf->Cell(40, -16, '', 0, 0, 'C', 0);
+$pdf->Cell(40, -16, '', 0, 0, 'C', 0);
+$pdf->Cell(50, -16, 'Diketahui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 0, 0, 'C', 0);
+$pdf->Cell(50, -16, '', 0, 0, 'C', 0);
+$pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
+
+$pdf->Cell(40, -11, '', 0, 0, 'C', 0);
+$pdf->Cell(40, -11, '', 0, 0, 'C', 0);
+$pdf->Cell(50, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
+$pdf->Cell(50, -11, '', 0, 0, 'C', 0);
+$pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 
 $pdf->Cell(40, -3, '( Eko Juwono )', 0, 0, 'C', 0);
 $pdf->Cell(40, -3, '( Dwi Ayu W. )', 0, 0, 'C', 0);
-$pdf->Cell(50, -3, '( ' . $perjalanan['ka_dept'] . ' )', 0, 0, 'C', 0);
+$pdf->Cell(50, -3, $perjalanan['ka_dept'], 0, 0, 'C', 0);
 $pdf->Cell(50, -3, '( ' . $perjalanan['nama'] . ' )', 0, 0, 'C', 0);
 $pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 
