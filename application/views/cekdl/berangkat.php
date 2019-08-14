@@ -63,7 +63,7 @@
                                             <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
                                         </td>
                                         <td>
-                                            <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-warning btn-sm disabled">Revisi</a>
+                                            <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#revisiPerjalanan" data-id="<?= $pdl['id']; ?>">Revisi</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

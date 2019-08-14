@@ -166,7 +166,7 @@ class Perjalanandl extends CI_Controller
         }
     }
 
-    public function bataldl()
+    public function batalrsv()
     {
         $this->db->set('status', '0');
         $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan'));
@@ -286,5 +286,99 @@ class Perjalanandl extends CI_Controller
         }
 
         redirect('perjalanandl/index');
+    }
+
+    public function revisi()
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Revisi Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' => '8'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/revisidl', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function do_revisi($id)
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Revisi Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/do_revisi', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function bataldl($id)
+    {
+        $this->db->set('status', '0');
+        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Oleh GA");
+        $this->db->where('id', $id);
+        $this->db->update('perjalanan');
+
+        $perjalanan = $this->db->get_where('perjalanan', ['id' =>  $id])->row_array();
+        $this->db->set('status', '0');
+        $this->db->where('id', $perjalanan['reservasi_id']);
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'bataldl');
+        redirect('perjalanandl/admindl');
+    }
+
+    public function gantikend2($id)
+    {
+        if ($this->input->post('kepemilikan') == 'Operasional') {
+            $queryCarinopol = "SELECT COUNT(*)
+                FROM `kendaraan`
+                WHERE `nopol` =  '{$this->input->post('nopol')}'
+                ";
+            $carinopol = $this->db->query($queryCarinopol)->row_array();
+            $total = $carinopol['COUNT(*)'];
+            if ($total == 0) {
+                $this->session->set_flashdata('message', 'nopolsalah');
+                redirect('perjalanandl/do_revisi/' . $id);
+            } else {
+
+                $this->db->set('nopol', $this->input->post('nopol'));
+                $this->db->set('kepemilikan', $this->input->post('kepemilikan'));
+                $this->db->where('id', $id);
+                $this->db->update('perjalanan');
+
+                $perjalanan = $this->db->get_where('perjalanan', ['id' =>  $id])->row_array();
+                $this->db->set('nopol', $this->input->post('nopol'));
+                $this->db->set('kepemilikan', $this->input->post('kepemilikan'));
+                $this->db->where('id',  $perjalanan['reservasi_id']);
+                $this->db->update('reservasi');
+                redirect('perjalanandl/do_revisi/' . $id);
+            }
+        } else {
+            $this->db->set('nopol', $this->input->post('nopol'));
+            $this->db->set('kepemilikan', $this->input->post('kepemilikan'));
+            $this->db->where('id', $id);
+            $this->db->update('perjalanan');
+
+            $perjalanan = $this->db->get_where('perjalanan', ['id' =>  $id])->row_array();
+            $this->db->set('nopol', $this->input->post('nopol'));
+            $this->db->set('kepemilikan', $this->input->post('kepemilikan'));
+            $this->db->where('id',  $perjalanan['reservasi_id']);
+            $this->db->update('reservasi');
+            redirect('perjalanandl/do_revisi/' . $id);
+        }
+    }
+
+    public function revisi_proses()
+    {
+        $this->db->set('status', '1');
+        $this->db->set('catatan_ga',  $this->input->post('catatan'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('perjalanan');
+
+        $this->session->set_flashdata('message', 'setujudl');
+        redirect('perjalanandl/revisi');
     }
 }

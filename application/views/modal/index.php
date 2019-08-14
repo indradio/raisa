@@ -566,7 +566,7 @@
                                 <label class="col-md-4 col-form-label">Tambah Peserta</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Anggota" data-size="7">
+                                        <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Peserta" data-size="7">
                                             <?php
                                             $queryKaryawan = "SELECT *
                                                 FROM `karyawan`
@@ -584,8 +584,56 @@
                             <div class="modal-footer justify-content-center">
                                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">TAMBAH</button>
                             </div>
+                        </div>
+                    </div>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Revisi DL - Cek DL -->
+<div class="modal fade" id="revisiPerjalanan" tabindex="-1" role="dialog" aria-labelledby="revisiPerjalananLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="revisiPerjalananLabel">Berikan catatan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('cekdl/revisi'); ?>">
+                <div class="modal-body">
+                    <input type="text" class="form-control disabled" name="id">
+                    <textarea rows="2" class="form-control" name="catatan" required></textarea>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-danger">REVISI PERJALANAN INI!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Batal DL - GA DL -->
+<div class="modal fade" id="batalDl" tabindex="-1" role="dialog" aria-labelledby="batalDlLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="batalDlLabel">Berikan Alasan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl'); ?>">
+                <div class="modal-body">
+                    <input type="text" class="form-control disabled" name="id">
+                    <textarea rows="2" class="form-control" name="catatan" required></textarea>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-danger">REVISI PERJALANAN INI!</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

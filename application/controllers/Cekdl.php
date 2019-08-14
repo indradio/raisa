@@ -76,6 +76,7 @@ class Cekdl extends CI_Controller
         $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
         $this->db->set('cekberangkat', $this->session->userdata('inisial'));
         $this->db->set('kmberangkat', $this->input->post('kmberangkat'));
+        $this->db->set('supirberangkat', $this->input->post('supirberangkat'));
         $this->db->set('catatan_security', $this->input->post('catatan'));
         $this->db->set('status', '2');
         $this->db->where('id', $this->input->post('id'));
@@ -129,6 +130,7 @@ class Cekdl extends CI_Controller
         $this->db->set('jamkembali', $this->input->post('jamkembali'));
         $this->db->set('cekkembali', $this->session->userdata('inisial'));
         $this->db->set('kmkembali', $this->input->post('kmkembali'));
+        $this->db->set('supirkembali', $this->input->post('supirkembali'));
         $this->db->set('kmtotal', $kmtotal);
         $this->db->set('catatan_security', $this->input->post('catatan'));
         $this->db->set('status', '9');
@@ -187,5 +189,15 @@ class Cekdl extends CI_Controller
         $this->db->update('reservasi');
 
         redirect('cekdl/cekberangkat/' . $dl['id']);
+    }
+
+    public function revisi()
+    {
+        $this->db->set('catatan_security', $this->input->post('catatan'));
+        $this->db->set('status', '8');
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('perjalanan');
+
+        redirect('cekdl/berangkat');
     }
 }

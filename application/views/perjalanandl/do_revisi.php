@@ -8,12 +8,12 @@
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Perjalanan Dinas Luar</h4>
+                        <h4 class="card-title">Perjalanan</h4>
                     </div>
-                    <div class="card-body">
-                        <form class="form-horizontal" action="<?= base_url('cekdl/cekkembali_proses'); ?>" method="post">
+                    <div class="card-body ">
+                        <form class="form-horizontal" action="<?= base_url('perjalanandl/revisi_proses'); ?>" method="post">
                             <div class="row">
-                                <label class="col-md-2 col-form-label">No. Perjalanan DL</label>
+                                <label class="col-md-2 col-form-label">Nomor perjalanan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="id" value="<?= $perjalanan['id']; ?>">
@@ -21,10 +21,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jenis Perjalanan DL</label>
+                                <label class="col-md-2 col-form-label">Jenis Perjalanan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="jenis" value="<?= $perjalanan['jenis_perjalanan']; ?>">
+                                        <input type="text" class="form-control disabled" name="jperjalanan" value="<?= $perjalanan['jenis_perjalanan']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -43,6 +43,7 @@
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $perjalanan['nopol']; ?>">
                                         <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $perjalanan['kepemilikan']; ?>">
+                                        <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#rsvGantikend">Ganti Kendaraan</a>
                                     </div>
                                 </div>
                             </div>
@@ -50,8 +51,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>" hidden>
-                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d/m/Y', strtotime($perjalanan['tglberangkat'])); ?>">
+                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -64,41 +64,41 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Awal</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="number" class="form-control disabled" name="kmberangkat" value="<?= $perjalanan['kmberangkat']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
-                                        <small> Bulan / Tanggal / Tahun</small>
+                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jam Kembali*</label>
+                                <label class="col-md-2 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                                        <input type="time" class="form-control timepicker disabled" id="jamkembali" name="jamkembali" value="<?= $perjalanan['jamkembali']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Akhir*</label>
+                                <label class="col-md-2 col-form-label">Tujuan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmkembali" required>
+                                        <input type="text" class="form-control disabled" name="tujuan" value="<?= $perjalanan['tujuan']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Keperluan</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <textarea rows="2" class="form-control disabled" name="keperluan"><?= $perjalanan['keperluan']; ?></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-md-2 col-form-label">Peserta</label>
                                 <div class="col-md-5">
+                                    <input type="text" class="form-control disabled" name="anggota" value="<?= $perjalanan['anggota']; ?>">
                                     <div class="material-datatables">
                                         <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                             <thead>
@@ -126,26 +126,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Pengemudi</label>
+                                <label class="col-md-2 col-form-label">Catatan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <select class="selectpicker" name="supirkembali" data-style="select-with-transition" title="Pilih Pengemudi" data-size="7" required>
-                                            <option value="PENGEMUDI UMUM">Pengemudi Umum</option>
-                                            <?php
-                                            $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' =>  $perjalanan['id']])->result_array();
-                                            foreach ($peserta as $p) : ?>
-                                            <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <textarea rows="2" class="form-control" name="catatan"><?= $perjalanan['catatan_security']; ?></textarea>
-                                        <small> Mohon mencantumkan nama jika memberikan catatan</small>
+                                        <textarea rows="2" class="form-control" name="catatan"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -153,13 +137,72 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-primary">KEMBALI!</button>
+                                        <button type="submit" class="btn btn-fill btn-rose">OK!</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="rsvGantikend" tabindex="-1" role="dialog" aria-labelledby="rsvGantikendTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Ganti Kendaraan</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('perjalanandl/gantikend2/') . $perjalanan['id']; ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Jenis Kendaraan</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="kepemilikan" data-style="select-with-transition" data-size="7" required>
+                                            <?php
+                                            $Kendaraan = $this->db->get('kendaraan_status')->result_array();
+                                            foreach ($Kendaraan as $kend) :
+                                                echo '<option value="' . $kend['nama'] . '"';
+                                                if ($kend['nama'] == $perjalanan['kepemilikan']) {
+                                                    echo 'selected';
+                                                }
+                                                echo '>' . $kend['nama'] . '</option>' . "\n";
+                                            endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Nomor Polisi</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="nopol" list="listnopol" value="<?= $perjalanan['nopol']; ?>">
+                                        <datalist id="listnopol">
+                                            <?php
+                                            $Kendaraan = $this->db->get('kendaraan')->result_array();
+                                            foreach ($Kendaraan as $kend) : ?>
+                                            <option><?= $kend['nopol']; ?></option>
+                                            <?php endforeach; ?>
+                                        </datalist>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">OK!</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

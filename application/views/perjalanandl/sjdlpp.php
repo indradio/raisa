@@ -19,7 +19,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(32, 6, 'NO PERJALANAN', 0, 0, 'L');
 $pdf->Cell(9, 6, '            : #' . $perjalanan['id'], 0, 1, 'L');
 
-$pdf->Cell(32, 6, 'NAMA', 0, 0);
+$pdf->Cell(32, 6, 'NAMA PEMOHON', 0, 0);
 $pdf->Cell(9, 6, '            : ' . $perjalanan['nama'], 0, 1);
 
 $user = $this->db->get_where('karyawan', ['npk' => $perjalanan['npk']])->row_array();
@@ -82,26 +82,31 @@ $pdf->SetFont('Arial', '', 8);
 $kend = $this->db->get_where('kendaraan', ['nopol' => $perjalanan['nopol']])->row_array();
 $pdf->Cell(45, 15, $kend['nama'] . ' / ' . $perjalanan['kepemilikan'], 1, 0, 'C', 1);
 $pdf->Cell(35, 15, $perjalanan['nopol'], 1, 0, 'C', 1);
-$pdf->Cell(44, 15, '', 1, 0, 'C', 1);
+$pdf->Cell(44, 15, 'BERANGKAT : ' . $perjalanan['supirberangkat'], 1, 0, 'C', 1);
 $pdf->Cell(45, 15, $perjalanan['admin_ga'], 1, 1, 'C', 1);
 
+$pdf->Cell(45, -7, '', 0, 0, 'C', 0);
+$pdf->Cell(35, -7, '', 0, 0, 'C', 0);
+$pdf->Cell(44, -7, 'KEMBALI : ' . $perjalanan['supirkembali'], 0, 0, 'C', 0);
+$pdf->Cell(45, -7, '', 0, 0, 'C', 0);
+
+$pdf->Ln(1);
+$reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
 
 $pdf->Cell(17, 5, 'Keterangan', 0, 0);
-$pdf->Cell(110, 5, ': ' . $perjalanan['catatan_ga'] . ' ' . $perjalanan['catatan_security'], 0, 0);
+$pdf->Cell(115, 5, ': ' . $perjalanan['catatan_ga'] . ' ' . $perjalanan['catatan_security'], 0, 0);
 
 $pdf->Cell(10, 5, 'Bogor, ', 0, 0);
-$pdf->Cell(50, 5, date("D, d-M-Y"), 0, 1);
+$pdf->Cell(50, 5, date('d/m/Y', strtotime($reservasi['tglreservasi'])), 0, 1);
 
 $pdf->Ln(1);
 
 $pdf->Cell(90, 5, '', 110, 0);
 $pdf->Cell(30, 5, 'KA. DIV / KA DEPT', 110, 0, 'C');
-$pdf->Cell(50, 5, 'PEMAKAI', 0, 1, 'C');
-
-$pdf->Cell(82, 5, '1. *) Diisi oleh Keamanan (System)', 0, 0);
-$reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
+$pdf->Cell(50, 5, 'PEMOHON', 0, 1, 'C');
+$pdf->Cell(82, 5, '', 0, 0);
 $pdf->Cell(32, 5, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 0, 1);
-$pdf->Cell(79, 5, '2. Dalam kotak diisi oleh Pool/Umum (System)', 0, 0);
+$pdf->Cell(79, 5, '', 0, 0);
 $pdf->Cell(32, 5, 'Tidak memerlukan tanda tangan basah', 0, 1);
 
 $pdf->Ln(2);
@@ -110,8 +115,8 @@ $pdf->Cell(32, 5, 'FR-GA-01.002', 0, 1);
 
 $pdf->Ln(-5);
 $pdf->Cell(90, 5, '', 110, 0);
-$pdf->Cell(30, 5, '' . $perjalanan['ka_dept'] . '', 110, 0, 'C');
-$pdf->Cell(50, 5, '(................................)', 0, 1, 'C');
+$pdf->Cell(30, 5, $perjalanan['ka_dept'], 110, 0, 'C');
+$pdf->Cell(50, 5, $perjalanan['nama'], 0, 1, 'C');
 
 
 

@@ -107,6 +107,21 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Pengemudi</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="supirberangkat" data-style="select-with-transition" title="Pilih Pengemudi" data-size="7" required>
+                                            <option value="PENGEMUDI UMUM">Pengemudi Umum</option>
+                                            <?php
+                                            $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' =>  $perjalanan['id']])->result_array();
+                                            foreach ($peserta as $p) : ?>
+                                            <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">

@@ -15,38 +15,42 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Nomor DL</th>
+                                        <th>Jenis DL</th>
                                         <th>Nomor Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tanggal Keberangkatan (Aktual)</th>
-                                        <th>Jam Keberangkatan (Aktual)</th>
-                                        <th>Security</th>
-                                        <th>Tanggal Kembali (Estimasi)</th>
-                                        <th>Jam Kembali (Estimasi)</th>
+                                        <th>Tanggal Keberangkatan</th>
+                                        <th>Jam Keberangkatan</th>
+                                        <th>Tanggal Kembali</th>
+                                        <th>Jam Kembali</th>
+                                        <th>Catatan Security</th>
+                                        <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Nomor DL</th>
-                                        <th>No. Polisi</th>
+                                        <th>Jenis DL</th>
+                                        <th>Nomor Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tgl Keberangkatan (Aktual)</th>
-                                        <th>Jam Keberangkatan (Aktual)</th>
-                                        <th>Security</th>
-                                        <th>Tanggal Kembali (Estimasi)</th>
-                                        <th>Jam Kembali (Estimasi)</th>
+                                        <th>Tanggal Keberangkatan</th>
+                                        <th>Jam Keberangkatan</th>
+                                        <th>Tanggal Kembali</th>
+                                        <th>Jam Kembali</th>
+                                        <th>Catatan Security</th>
+                                        <th>Status</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -55,19 +59,23 @@
                                     foreach ($perjalanan as $pdl) : ?>
                                     <tr>
                                         <td><?= $pdl['id']; ?></td>
+                                        <td><?= $pdl['jenis_perjalanan']; ?></td>
                                         <td><?= $pdl['nopol']; ?></td>
                                         <td><?= $pdl['kepemilikan']; ?></td>
                                         <td><?= $pdl['nama']; ?></td>
                                         <td><?= $pdl['tujuan']; ?></td>
                                         <td><?= $pdl['keperluan']; ?></td>
                                         <td><?= $pdl['anggota']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
+                                        <td><?= $pdl['tglberangkat']; ?></td>
                                         <td><?= $pdl['jamberangkat']; ?></td>
-                                        <td><?= $pdl['cekberangkat']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($pdl['tglkembali'])); ?></td>
+                                        <td><?= $pdl['tglkembali']; ?></td>
                                         <td><?= $pdl['jamkembali']; ?></td>
+                                        <td><?= $pdl['catatan_security']; ?></td>
+                                        <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
+                                        <td><?= $status['nama']; ?></td>
                                         <td class="text-right">
-                                            <a href="<?= base_url('cekdl/cekkembali/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Kembali</a>
+                                            <a href="<?= base_url('perjalanandl/do_revisi/') . $pdl['id']; ?>" class="badge badge-pill badge-success">REVISI</a>
+                                            <a href="<?= base_url('perjalanandl/bataldl/') . $pdl['id']; ?>" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdl['id']; ?>">Batalkan</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
