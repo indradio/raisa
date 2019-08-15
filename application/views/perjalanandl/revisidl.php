@@ -93,3 +93,28 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+<div class="modal fade" id="batalDl" tabindex="-1" role="dialog" aria-labelledby="batalDlTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">ALASAN PEMBATALAN</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl'); ?>">
+                    <div class="modal-body">
+                        <input type="text" class="form-control disabled" name="id">
+                        <textarea rows="2" class="form-control" name="catatan" required></textarea>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger">BATALKAN PERJALANAN INI!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,7 +33,7 @@
                 $jamkembali = $reservasi_temp['jamkembali'];
                 $querySaring1 = "SELECT COUNT(*)
                       FROM `reservasi`
-                      WHERE `nopol` =  '$nopol' AND `tglberangkat` <= '$tglberangkat'  AND `tglkembali` >= '$tglberangkat' AND `status` != 0
+                      WHERE `nopol` =  '$nopol' AND `tglberangkat` <= '$tglberangkat'  AND `tglkembali` >= '$tglberangkat' AND `status` != 0 AND `status` != 9
                       ";
                 $saring1 = $this->db->query($querySaring1)->row_array();
                 $total = $saring1['COUNT(*)'];

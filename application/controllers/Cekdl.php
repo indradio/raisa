@@ -150,7 +150,7 @@ class Cekdl extends CI_Controller
         };
 
         $dl = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
-        $this->db->set('status', '0');
+        $this->db->set('status', '9');
         $this->db->where('id', $dl['reservasi_id']);
         $this->db->update('reservasi');
 

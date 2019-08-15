@@ -314,15 +314,15 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function bataldl($id)
+    public function bataldl()
     {
         $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Oleh GA");
-        $this->db->where('id', $id);
+        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'));
+        $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
-        $perjalanan = $this->db->get_where('perjalanan', ['id' =>  $id])->row_array();
-        $this->db->set('status', '0');
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+        $this->db->set('status', '9');
         $this->db->where('id', $perjalanan['reservasi_id']);
         $this->db->update('reservasi');
 

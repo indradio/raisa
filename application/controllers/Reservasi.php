@@ -502,4 +502,15 @@ class Reservasi extends CI_Controller
         $this->load->view('reservasi/dl3b', $data);
         $this->load->view('templates/footer');
     }
+
+    public function batalrsv()
+    {
+        $this->db->set('status', '0');
+        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'bataldl');
+        redirect('reservasi');
+    }
 }

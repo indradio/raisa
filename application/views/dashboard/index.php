@@ -21,8 +21,8 @@
           </div>
           <div class="card-body">
             <div class="card-actions text-center">
-              <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                <i class="material-icons">build</i> Fix Header!
+              <button type="button" class="btn btn-info btn-link fix-broken-card">
+                <i class="material-icons">build</i> Muat Ulang!
               </button>
               <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="btn btn-default btn-link" rel="tooltip" title="">
                 Selengkapnya...

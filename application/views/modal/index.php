@@ -615,27 +615,4 @@
     </div>
 </div>
 
-<!-- Modal Batal DL - GA DL -->
-<div class="modal fade" id="batalDl" tabindex="-1" role="dialog" aria-labelledby="batalDlLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="batalDlLabel">Berikan Alasan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl'); ?>">
-                <div class="modal-body">
-                    <input type="text" class="form-control disabled" name="id">
-                    <textarea rows="2" class="form-control" name="catatan" required></textarea>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-danger">REVISI PERJALANAN INI!</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <!-- end modal -->
