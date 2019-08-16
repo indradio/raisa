@@ -117,6 +117,10 @@ class Reservasi extends CI_Controller
         $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
 
         //variabel tujuan
+
+        $this->db->where('reservasi_id',$reservasi_temp['id']);
+        $this->db->delete('perjalanan_tujuan');
+        
         if ($this->input->post('tujuan') == null and $this->input->post('tlainnya') == null) {
             $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan tujuan perjalanan anda terlebih dahulu.</div>');
             redirect('reservasi/dl1c1');
@@ -167,6 +171,10 @@ class Reservasi extends CI_Controller
         };
 
         //variabel anggota
+
+        $this->db->where('reservasi_id',$reservasi_temp['id']);
+        $this->db->delete('perjalanan_anggota');
+
         if ($this->input->post('anggota') == null and $this->input->post('ikut') == null) {
             $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan peserta perjalanan anda terlebih dahulu.</div>');
             redirect('reservasi/dl1c1');
