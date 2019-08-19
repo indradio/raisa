@@ -2,6 +2,7 @@
 $pdf = new FPDF('L', 'mm', 'A5');
 $pdf->SetMargins(20, 0);
 // membuat halaman baru
+$pdf->AddFont('arial-monospaced','','arial-monospaced.php');
 $pdf->AddPage();
 // setting jenis font yang akan digunakan
 // mencetak string 
@@ -19,12 +20,15 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(32, 6, 'NO PERJALANAN', 0, 0, 'L');
 $pdf->Cell(9, 6, '            : #' . $perjalanan['id'], 0, 1, 'L');
 
-$pdf->Cell(32, 6, 'NAMA PEMOHON', 0, 0);
-$pdf->Cell(9, 6, '            : ' . $perjalanan['nama'], 0, 1);
+// $pdf->Cell(32, 6, 'NAMA PEMOHON', 0, 0);
+// $pdf->Cell(9, 6, '            : ' . $perjalanan['nama'], 0, 1);
 
 $user = $this->db->get_where('karyawan', ['npk' => $perjalanan['npk']])->row_array();
 $dept = $this->db->get_where('karyawan_dept', ['id' => $user['dept_id']])->row_array();
 $sect = $this->db->get_where('karyawan_sect', ['id' => $user['sect_id']])->row_array();
+
+$pdf->Cell(32, 6, 'PESERTA PERJALANAN', 0, 0);
+$pdf->Cell(9, 6, '            : ' . $perjalanan['anggota'], 0, 1);
 
 $pdf->Cell(32, 6, 'DEPARTEMENT/SEKSI', 0, 0);
 $pdf->Cell(9, 6, '            : ' . $dept['nama'] . ' / ' . $sect['nama'], 0, 1);
@@ -34,9 +38,6 @@ $pdf->Cell(9, 6, '            : ' . $perjalanan['tujuan'], 0, 1);
 
 $pdf->Cell(32, 6, 'KEPERLUAN', 0, 0);
 $pdf->Cell(9, 6, '            : ' . $perjalanan['keperluan'], 0, 1);
-
-$pdf->Cell(32, 6, 'PENUMPANG', 0, 0);
-$pdf->Cell(9, 6, '            : ' . $perjalanan['anggota'], 0, 1);
 
 //BERANGKAT
 $pdf->Cell(35, 6, 'BERANGKAT*', 0, 0);
@@ -79,8 +80,7 @@ $pdf->Cell(44, 7, 'Pengemudi', 1, 0, 'C', 1);
 $pdf->Cell(45, 7, 'Bagian Umum', 1, 1, 'C', 1);
 
 $pdf->SetFont('Arial', '', 8);
-$kend = $this->db->get_where('kendaraan', ['nopol' => $perjalanan['nopol']])->row_array();
-$pdf->Cell(45, 15, $kend['nama'] . ' / ' . $perjalanan['kepemilikan'], 1, 0, 'C', 1);
+$pdf->Cell(45, 15, $perjalanan['kepemilikan'], 1, 0, 'C', 1);
 $pdf->Cell(35, 15, $perjalanan['nopol'], 1, 0, 'C', 1);
 $pdf->Cell(44, 15, 'BERANGKAT : ' . $perjalanan['supirberangkat'], 1, 0, 'C', 1);
 $pdf->Cell(45, 15, $perjalanan['admin_ga'], 1, 1, 'C', 1);
@@ -96,27 +96,34 @@ $reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_i
 $pdf->Cell(17, 5, 'Keterangan', 0, 0);
 $pdf->Cell(115, 5, ': ' . $perjalanan['catatan_ga'] . ' ' . $perjalanan['catatan_security'], 0, 0);
 
-$pdf->Cell(10, 5, 'Bogor, ', 0, 0);
-$pdf->Cell(50, 5, date('d/m/Y', strtotime($reservasi['tglreservasi'])), 0, 1);
+$pdf->Cell(1, 5, '', 0, 1);
 
 $pdf->Ln(1);
 
-$pdf->Cell(90, 5, '', 110, 0);
-$pdf->Cell(30, 5, 'KA. DIV / KA DEPT', 110, 0, 'C');
+$pdf->Cell(70, 5, '', 110, 0);
+$pdf->Cell(50, 5, 'KA. DIV / KA DEPT', 110, 0, 'C');
 $pdf->Cell(50, 5, 'PEMOHON', 0, 1, 'C');
-$pdf->Cell(82, 5, '', 0, 0);
-$pdf->Cell(32, 5, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 0, 1);
-$pdf->Cell(79, 5, '', 0, 0);
-$pdf->Cell(32, 5, 'Tidak memerlukan tanda tangan basah', 0, 1);
+$pdf->SetFont('arial-monospaced', '', 6);
+$pdf->Cell(80, 5, '', 0, 0);
+$pdf->Cell(50, 5, 'Ini adalah form digital', 0, 0);
+$pdf->Cell(1, 5, 'Ini adalah form digital', 0, 1);
+$pdf->Cell(72, 5, '', 0, 0);
+$pdf->Cell(50, 5, 'Tidak memerlukan tanda tangan basah', 0, 0);
+$pdf->Cell(1, 5, 'Tidak memerlukan tanda tangan basah', 0, 1);
 
 $pdf->Ln(2);
-
+$pdf->SetFont('Arial', '', 8);
 $pdf->Cell(32, 5, 'FR-GA-01.002', 0, 1);
 
 $pdf->Ln(-5);
-$pdf->Cell(90, 5, '', 110, 0);
-$pdf->Cell(30, 5, $perjalanan['ka_dept'], 110, 0, 'C');
+$pdf->Cell(71, 5, '', 110, 0);
+$pdf->Cell(50, 5, $perjalanan['ka_dept'], 110, 0, 'C');
 $pdf->Cell(50, 5, $perjalanan['nama'], 0, 1, 'C');
+
+$pdf->SetFont('Arial', '', 6);
+$pdf->Cell(71, 5, '', 110, 0);
+$pdf->Cell(50, 5, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 110, 0, 'C');
+$pdf->Cell(50, 5, 'Dibuat pada ' . date('d/m/Y H:i', strtotime($reservasi['tglreservasi'])), 110, 0, 'C');
 
 
 

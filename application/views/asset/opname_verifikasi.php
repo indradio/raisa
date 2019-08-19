@@ -20,10 +20,10 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">PIC</th>
-                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Kategori</th>
+                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">First Acq</th>
+                                        <th class="th-description">PIC</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -34,10 +34,10 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">PIC</th>
-                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Kategori</th>
+                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">First Acq</th>
+                                        <th class="th-description">PIC</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -47,11 +47,7 @@
                                 <tbody>
                                     <?php
                                     foreach ($asset as $a) : ?>
-                                    <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
-                                    <tr class="text-dark bg-danger">
-                                        <?php } else { ?>
                                     <tr>
-                                        <?php }; ?>
                                         <td>
                                             <div class="img-container">
                                                 <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">

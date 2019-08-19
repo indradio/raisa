@@ -58,11 +58,83 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
     </div>
     <!-- end banner -->
     <div class="row">
-      <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">directions_car</i>
+                        </div>
+                        <h4 class="card-title">Kendaraan Dinas Hari Ini</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                        <div class="material-datatables">
+                            <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                    $queryKendaraan = "SELECT *
+                                                                FROM `kendaraan`
+                                                                WHERE `kontrak` >= CURDATE() AND `is_active` = 1
+                                                                ORDER BY `id` DESC
+                                                            ";
+                                    $kendaraan = $this->db->query($queryKendaraan)->result_array();
+                                    foreach ($kendaraan as $k) : ?>
+                                    <tr>
+                                        <td>
+                                            <div class="img-container">
+                                                <img src="<?= base_url(); ?>assets/img/kendaraan/<?= $k['gambar']; ?>" alt="...">
+                                            </div>
+                                        </td>
+                                        <td class="td-name">
+                                            <a><?= $k['nopol']; ?></a>
+                                            <br />
+                                            <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                            <br />
+                                            <?php
+                                        $nopol = $k['nopol'];
+                                        $queryCari = "SELECT COUNT(*)
+                                              FROM `reservasi`
+                                              WHERE `nopol` =  '$nopol' AND `tglberangkat` <= CURDATE()  AND `tglkembali` >= CURDATE() AND `status` != 0 AND `status` != 9
+                                              ";
+                                        $Cari = $this->db->query($queryCari)->row_array();
+                                        $total = $Cari['COUNT(*)'];
+                                        if ($total == 0) { ?>
+                                        <span class="badge badge-pill badge-success">Tersedia</span>
+                                        <?php } else { ?>
+                                          <span class="badge badge-pill badge-danger">Sudah Dipesan</span>
+                                        <?php }; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-4 -->
+      <div class="col-md-9">
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
             <div class="card-icon">
-              <i class="material-icons">directions_car</i>
+              <i class="material-icons">assignment</i>
             </div>
             <h4 class="card-title">Perjalanan Dinas Luar Hari ini</h4>
           </div>
@@ -81,8 +153,8 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                     <th>Tujuan</th>
                     <th>Keperluan</th>
                     <th>Peserta</th>
-                    <th>Tanggal Keberangkatan</th>
-                    <th>Jam Keberangkatan</th>
+                    <th>Keberangkatan</th>
+                    <th>Kembali</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -95,8 +167,8 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                     <th>Tujuan</th>
                     <th>Keperluan</th>
                     <th>Peserta</th>
-                    <th>Tgl Keberangkatan</th>
-                    <th>Jam Keberangkatan</th>
+                    <th>Keberangkatan</th>
+                    <th>Kembali</th>
                     <th>Status</th>
                   </tr>
                 </tfoot>
@@ -116,8 +188,8 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                     <td><?= $p['tujuan']; ?></td>
                     <td><?= $p['keperluan']; ?></td>
                     <td><?= $p['anggota']; ?></td>
-                    <td><?= date('d/m/Y', strtotime($p['tglberangkat'])); ?></td>
-                    <td><?= date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                    <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                    <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                     <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                     <td><?= $status['nama']; ?></td>
                   </tr>
