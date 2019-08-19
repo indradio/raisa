@@ -29,7 +29,7 @@ class Pendapatan extends CI_Controller
 
     public function data()
     {
-        if ($this->session->userdata('posisi_id') <= 3) or $this->session->userdata('npk') == '0270' {
+        if ($this->session->userdata('posisi_id') <= 3 or $this->session->userdata('npk') == '0270') {
             $data['sidemenu'] = 'Pendapatan';
             $data['sidesubmenu'] = 'Data';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
