@@ -4,6 +4,15 @@
     <!-- Banner -->
     <div class="row">
       <?php
+        $queryLayInfo = "SELECT COUNT(*)
+        FROM `informasi`
+        WHERE `berlaku` >= CURDATE()
+        ORDER BY `id` DESC
+    ";
+$layinfo = $this->db->query($queryLayInfo)->row_array();
+  $total = $layinfo['COUNT(*)'];
+  $lay = 12 / $total;
+
       $queryInfo = "SELECT *
                                     FROM `informasi`
                                     WHERE `berlaku` >= CURDATE()
@@ -12,7 +21,7 @@
       $informasi = $this->db->query($queryInfo)->result_array();
       ?>
       <?php foreach ($informasi as $info) : ?>
-      <div class="col-md-4">
+      <div class="col-md-<?= $lay; ?>">
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <a href="#pablo">

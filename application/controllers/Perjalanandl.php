@@ -90,52 +90,62 @@ class Perjalanandl extends CI_Controller
             'sect_id' => $karyawan['sect_id'],
             'status' => '1'
         ];
-        $this->db->insert('perjalanan', $data);
 
-        // update uangsaku
-        if ($this->input->post('jperjalanan') == 'TAPP' or $this->input->post('jperjalanan') == 'TAINAP') {
-            $this->db->set('uangsaku', 'YA');
-            $this->db->where('id', $data['id']);
-            $this->db->update('perjalanan');
+        $rsv_id = $this->input->post('id');
+        $queryCek = "SELECT COUNT(*)
+                      FROM `perjalanan`
+                      WHERE `reservasi_id` =  '$rsv_id'
+                      ";
+        $cek = $this->db->query($queryCek)->row_array();
+        $total = $cek['COUNT(*)'];
+        if ($total == 0) {
+        
+            $this->db->insert('perjalanan', $data);
+
+            // update uangsaku
+            if ($this->input->post('jperjalanan') == 'TAPP' or $this->input->post('jperjalanan') == 'TAINAP') {
+                $this->db->set('uangsaku', 'YA');
+                $this->db->where('id', $data['id']);
+                $this->db->update('perjalanan');
+            }
+            // update table anggota perjalanan
+            $this->db->set('perjalanan_id', $data['id']);
+            $this->db->where('reservasi_id', $this->input->post('id'));
+            $this->db->update('perjalanan_tujuan');
+
+            // update table anggota perjalanan
+            $this->db->set('perjalanan_id', $data['id']);
+            $this->db->where('reservasi_id', $this->input->post('id'));
+            $this->db->update('perjalanan_anggota');
+
+            $this->db->set('admin_ga', $this->session->userdata('inisial'));
+            $this->db->set('status', '4');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('reservasi');
+
+                $this->db->where('npk', $this->input->post('npk'));
+                $karyawan = $this->db->get('karyawan')->row_array();
+                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $destination = $karyawan['phone'];
+                $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
+                    "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
+                    "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
+                    "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
+                    "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
+                    "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
+                    "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
+                    " ) \r\n \r\nTelah siap untuk berangkat. 
+                    \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
+                    \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
+                $api_url = "http://panel.apiwha.com/send_message.php";
+                $api_url .= "?apikey=" . urlencode($my_apikey);
+                $api_url .= "&number=" . urlencode($destination);
+                $api_url .= "&text=" . urlencode($message);
+                json_decode(file_get_contents($api_url, false));
+
+            $this->session->set_flashdata('message', 'barudl');
+            redirect('perjalanandl/admindl');
         }
-        // update table anggota perjalanan
-        $this->db->set('perjalanan_id', $data['id']);
-        $this->db->where('reservasi_id', $this->input->post('id'));
-        $this->db->update('perjalanan_tujuan');
-
-        // update table anggota perjalanan
-        $this->db->set('perjalanan_id', $data['id']);
-        $this->db->where('reservasi_id', $this->input->post('id'));
-        $this->db->update('perjalanan_anggota');
-
-        $this->db->set('admin_ga', $this->session->userdata('inisial'));
-        $this->db->set('status', '4');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('reservasi');
-
-        $this->session->set_flashdata('message', 'barudl');
-
-        $this->db->where('npk', $this->input->post('npk'));
-        $karyawan = $this->db->get('karyawan')->row_array();
-        $my_apikey = "NQXJ3HED5LW2XV440HCG";
-        $destination = $karyawan['phone'];
-        $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
-            "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
-            "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
-            "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
-            "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
-            "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
-            "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
-            " ) \r\n \r\nTelah siap untuk berangkat. 
-            \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
-            \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
-        $api_url = "http://panel.apiwha.com/send_message.php";
-        $api_url .= "?apikey=" . urlencode($my_apikey);
-        $api_url .= "&number=" . urlencode($destination);
-        $api_url .= "&text=" . urlencode($message);
-        json_decode(file_get_contents($api_url, false));
-
-        redirect('perjalanandl/admindl');
     }
 
     public function gantikend($rsv_id)
