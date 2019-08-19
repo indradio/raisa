@@ -137,6 +137,7 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
+                                        <a href="<?= base_url('perjalanandl/revisi'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                         <button type="submit" class="btn btn-fill btn-rose">OK!</button>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 <div class="content">
+<?php date_default_timezone_set('asia/jakarta'); ?>
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
@@ -50,8 +51,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>" hidden>
-                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d/m/Y', strtotime($perjalanan['tglberangkat'])); ?>">
+                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('Y-m-d'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -59,20 +59,9 @@
                                 <label class="col-md-2 col-form-label">Jam Keberangkatan*</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                                        <input type="time" class="form-control timepicker disabled" id="jamberangkat" name="jamberangkat" value="<?= date('H:i:s'); ?>">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Awal*</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmberangkat" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-
                             </div>
                             <div class="row">
                                 <label class="col-md-2 col-form-label">Peserta</label>
@@ -122,6 +111,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Kilometer Awal*</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="number" class="form-control" name="kmberangkat" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -135,6 +132,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <button type="submit" class="btn btn-fill btn-success">BERANGKAT!</button>
+                                    <a href="<?= base_url('cekdl/berangkat'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,5 @@
 <div class="content">
+<?php date_default_timezone_set('asia/jakarta'); ?>
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
@@ -51,7 +52,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>" hidden>
-                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d/m/Y', strtotime($perjalanan['tglberangkat'])); ?>">
+                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d / m / Y', strtotime($perjalanan['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -75,24 +76,15 @@
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
-                                        <small> Bulan / Tanggal / Tahun</small>
+                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= date('Y-m-d'); ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jam Kembali*</label>
+                                <label class="col-md-2 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Akhir*</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmkembali" required>
+                                        <input type="time" class="form-control timepicker disabled" id="jamkembali" name="jamkembali" value="<?= date('H:i:s'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -141,6 +133,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Kilometer Akhir*</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="number" class="form-control" name="kmkembali" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -153,7 +153,8 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-primary">KEMBALI!</button>
+                                        <button type="submit" class="btn btn-fill btn-primary">SELESAI</button>
+                                        <a href="<?= base_url('cekdl/kembali'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                     </div>
                                 </div>
                             </div>

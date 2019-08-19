@@ -72,7 +72,7 @@
                                         <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
                                         <td><?= $status['nama']; ?></td>
                                         <td class="text-right">
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                                        <a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
                                             <?php if ($pdetail['status'] == 1) { ?>
                                             <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>"><i class="material-icons">close</i></a>
                                             <?php } else { ?>
