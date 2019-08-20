@@ -219,7 +219,7 @@ class Perjalanandl extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
         $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAMP') {
+        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAINAP') {
             $this->load->view('perjalanandl/sjdlpp', $data);
         } else ($jenis['jenis_perjalanan'] == 'TAPP'){
             $this->load->view('perjalanandl/sjtapp', $data)};

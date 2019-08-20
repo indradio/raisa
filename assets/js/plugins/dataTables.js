@@ -21,7 +21,7 @@ $(document).ready(function () {
         scrollX: true,
         dom: 'Bfrtip',
         buttons: [
-            'pageLength', 'csv', 'print'
+            'csv', 'print'
         ],
         "lengthMenu": [
             [10, 25, 50, -1],
