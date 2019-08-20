@@ -133,6 +133,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                             ";
                                             $p = $this->db->query($queryPerjalanan)->row_array();
+                                            if ($p['id'] != null) {
                                             ?>
                                               <td><?= $p['id']; ?></td>
                                               <td><?= $p['jenis_perjalanan']; ?></td>
@@ -143,7 +144,56 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                               <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                               <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                                               <td><?= $status['nama']; ?></td>
+                                            <?php } else { 
+                                              $queryReservasi = "SELECT *
+                                              FROM `reservasi`
+                                              WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
+                                              ";
+                                              $r = $this->db->query($queryReservasi)->row_array();?>
+                                              <td><?= $r['id']; ?></td>
+                                              <td><?= $r['jenis_perjalanan']; ?></td>
+                                              <td><?= $r['tujuan']; ?></td>
+                                              <td><?= $r['keperluan']; ?></td>
+                                              <td><?= $r['anggota']; ?></td>
+                                              <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
+                                              <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
+                                              <?php $statusrsv = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
+                                              <td><?= $statusrsv['nama']; ?></td>
+                                            <?php }; ?>
                                         <?php }; ?>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                                <tbody>
+                                    <?php
+                                            $queryPerjalananNon = "SELECT *
+                                            FROM `perjalanan`
+                                            WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9 AND `kepemilikan` != 'Operasional'
+                                            ";
+                                            $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
+                                            foreach ($perjalananNon as $pn) : ?>
+                                         <tr>
+                                         <td>
+                                            <div class="img-container">
+                                                <img src="<?= base_url(); ?>assets/img/kendaraan/avanza.jpg" alt="...">
+                                            </div>
+                                        </td>
+                                        <td class="td-name">
+                                            <a><?= $pn['nopol']; ?></a>
+                                            <br />
+                                            <small><?= $pn['kepemilikan']; ?></small>
+                                            <br />
+                                          <span class="badge badge-pill badge-danger">Sudah Dipesan</span>
+                                        </td>  
+                                              <td><?= $pn['id']; ?></td>
+                                              <td><?= $pn['jenis_perjalanan']; ?></td>
+                                              <td><?= $pn['tujuan']; ?></td>
+                                              <td><?= $pn['keperluan']; ?></td>
+                                              <td><?= $pn['anggota']; ?></td>
+                                              <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
+                                              <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
+                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
+                                              <td><?= $status['nama']; ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
