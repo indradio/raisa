@@ -11,7 +11,7 @@ if (flashData == 'setujudl') {
 } else if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "PENTING : Silahkan buka halaman profil anda untuk memastikan data sudah sesuai. (pastikan atasan anda sudah benar)",
+    text: "INFO : Jika tidak melakukan perjalanan lebih dari 2 Jam dari jadwal estimasi keberangkatan yang anda pesan, maka perjalanan anda akan dibatalkan secara otomatis.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
