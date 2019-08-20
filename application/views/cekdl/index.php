@@ -84,7 +84,11 @@
                                         <td><?= $status['nama']; ?></td>
                                         <td class="text-right">
                                             <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
-                                        </td>
+                                            <?php
+                                            if ($this->session->userdata('npk') == '0616'){ ?>
+                                            <a href="#" class="btn btn-round btn-info btn-sm" data-toggle="modal" data-target="#editPerjalanan" data-id="<?= $pdl['id']; ?>">Edit</a>
+                                            <?php }; ?>
+                                            </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -101,3 +105,70 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+<!-- Modal -->
+<div class="modal fade" id="editPerjalanan" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-rose text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Perubahan Perjalanan Dinas</h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="post" action="<?= base_url('cekdl/edit'); ?>">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Nomor Reservasi</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Tanggal Keberangkatan</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="date" class="form-control" name="tglberangkat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Jam Keberangkatan</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="time" class="form-control" name="jamberangkat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Tanggal Kembali</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="date" class="form-control" name="tglkembali">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Jam Kembali</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="time" class="form-control" name="jamkembali">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-fill btn-success">UPDATE</button>
+                            <a href="<?= base_url('cekdl/index'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

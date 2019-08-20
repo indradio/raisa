@@ -200,4 +200,39 @@ class Cekdl extends CI_Controller
 
         redirect('cekdl/berangkat');
     }
+
+    public function edit()
+    {
+
+        $this->db->set('tglberangkat', $this->input->post('tglberangkat'));
+        $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+        $this->db->set('tglkembali', $this->input->post('tglkembali'));
+        $this->db->set('jamkembali', $this->input->post('jamkembali'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('perjalanan');
+
+        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        if (($this->input->post('jenis') == 'DLPP' or $this->input->post('jenis') == 'TAPP') and $this->input->post('jamberangkat') <= $um['um1']) {
+            $this->db->set('um1', 'YA');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        };
+        if (($this->input->post('jenis') == 'DLPP' or $this->input->post('jenis') == 'TAPP') and $this->input->post('jamberangkat') <= $um['um2']) {
+            $this->db->set('um2', 'YA');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        };
+        if ($this->input->post('jenis') == 'DLPP' and $this->input->post('jenis') == 'TAPP' and $this->input->post('jamberangkat') <= $um['um3'] and $this->input->post('jamkembali') >= $um['um3']) {
+            $this->db->set('um3', 'YA');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        };
+        if ($this->input->post('jenis') == 'DLPP' and $this->input->post('jenis') == 'TAPP' and $this->input->post('jamkembali') >= $um['um4']) {
+            $this->db->set('um4', 'YA');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        };
+
+        redirect('cekdl/index');
+    }
 }

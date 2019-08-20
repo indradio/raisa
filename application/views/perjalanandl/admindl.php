@@ -81,6 +81,13 @@
                             </table>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="fa fa-circle text-danger"></i> Perjalanan yang tanggal keberangkatan sudah lewat
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--  end card  -->
             </div>
