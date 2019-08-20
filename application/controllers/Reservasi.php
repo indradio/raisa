@@ -305,7 +305,7 @@ class Reservasi extends CI_Controller
 
         $queryVal = "SELECT COUNT(*)
                       FROM `reservasi`
-                      WHERE `nopol` =  '{$reservasi_temp['nopol']}' AND `tglberangkat` <= '{$reservasi_temp['tglberangkat']}'  AND `tglkembali` >= '{$reservasi_temp['tglberangkat']}' AND `status` != 0
+                      WHERE `nopol` =  '{$reservasi_temp['nopol']}' AND `tglberangkat` <= '{$reservasi_temp['tglberangkat']}'  AND `tglkembali` >= '{$reservasi_temp['tglberangkat']}' AND `status` != 0 AND `status` != 9
                       ";
         $saring1 = $this->db->query($queryVal)->row_array();
         $total = $saring1['COUNT(*)'];
