@@ -179,7 +179,7 @@ class Perjalanandl extends CI_Controller
     public function batalrsv()
     {
         $this->db->set('status', '0');
-        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan'));
+        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'). " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('reservasi');
 
@@ -338,8 +338,9 @@ class Perjalanandl extends CI_Controller
 
     public function bataldl()
     {
+        date_default_timezone_set('asia/jakarta');
         $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'));
+        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'). " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
