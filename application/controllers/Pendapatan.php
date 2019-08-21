@@ -12,7 +12,6 @@ class Pendapatan extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('posisi_id') <= 3) {
             $data['sidemenu'] = 'Pendapatan';
             $data['sidesubmenu'] = 'Laporan';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -22,9 +21,6 @@ class Pendapatan extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('pendapatan/index', $data);
             $this->load->view('templates/footer');
-        } else {
-            $this->load->view('auth/denied');
-        }
     }
 
     public function data()
