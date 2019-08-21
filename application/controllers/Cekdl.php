@@ -83,7 +83,7 @@ class Cekdl extends CI_Controller
         $this->db->update('perjalanan');
 
         $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
-        if (($this->input->post('jenis') == 'DLPP' or $this->input->post('jenis') == 'TAPP') and $this->input->post('jamberangkat') <= $um['um1']) {
+        if ($this->input->post('jenis') != 'TAINAP' and $this->input->post('jamberangkat') <= $um['um1']) {
             $this->db->set('um1', 'YA');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');

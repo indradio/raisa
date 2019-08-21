@@ -73,7 +73,7 @@
                                         <td class="text-right">
                                             <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
                                             <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-info disabled">Gabungkan</a>
-                                            <a href="<?= base_url('perjalanandl/batalrsv/') . $rsv['id']; ?>" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#rsvBataldl" data-rsv_id="<?= $rsv['id']; ?>">Batalkan</a>
+                                            <a href="" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -118,7 +118,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="rsvBataldl" tabindex="-1" role="dialog" aria-labelledby="rsvBataldlTitle" aria-hidden="true">
+<div class="modal fade" id="batalRsv" tabindex="-1" role="dialog" aria-labelledby="batalRsvTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="card card-signup card-plain">
@@ -130,7 +130,7 @@
                         <h4 class="card-title">Pembatalan Perjalanan Dinas</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl/'); ?>">
+                <form class="form" method="post" action="<?= base_url('perjalanandl/batalrsv/'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row">

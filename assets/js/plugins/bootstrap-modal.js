@@ -1,10 +1,3 @@
-$('#rsvBataldl').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var rsv_id = button.data('rsv_id') // Extract info from data-* attributes
-    var modal = $(this)
-    modal.find('.modal-body input[name="id"]').val(rsv_id)
-})
-
 $('#revEdit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var revmenu = button.data('nama') // Extract info from data-* attributes
