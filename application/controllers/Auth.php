@@ -106,4 +106,9 @@ class Auth extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">You have been logged out</div>');
         redirect('auth');
     }
+
+    public function denied()
+    {
+        $this->load->view('auth/denied');
+    }
 }

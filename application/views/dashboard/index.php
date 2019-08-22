@@ -183,7 +183,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             <br />
                                             <small><?= $pn['kepemilikan']; ?></small>
                                             <br />
-                                          <span class="badge badge-pill badge-danger">Sudah Dipesan</span>
+                                          <span class="badge badge-pill badge-info">Non-Operasional</span>
                                         </td>  
                                               <td><?= $pn['id']; ?></td>
                                               <td><?= $pn['jenis_perjalanan']; ?></td>

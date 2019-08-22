@@ -64,6 +64,10 @@
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#revisiPerjalanan" data-id="<?= $pdl['id']; ?>">Revisi</a>
+                                            <?php
+                                            if ($this->session->userdata('npk') == '1111'){ ?>
+                                            <a href="<?= base_url('perjalanandl/bataldladmin/') . $pdl['id']; ?>" class="btn btn-round btn-danger btn-sm">Batalkan</a>
+                                            <?php }; ?>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

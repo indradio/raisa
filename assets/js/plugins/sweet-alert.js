@@ -24,6 +24,18 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'unfinishdl') {
+  swal({
+    title: "Maaf!",
+    text: "Perjalanan ini mungkin dibatalkan ataupun belum selesai.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).then((result) => {
+    if (result.value) {
+      window.close();
+    }
+  }).catch(swal.noop)
 } else if (flashData == 'sudahsetujudl') {
   swal({
     title: "Terimakasih!",

@@ -218,11 +218,19 @@ class Perjalanandl extends CI_Controller
         $data['sidesubmenu'] = 'Laporan Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAINAP') {
-            $this->load->view('perjalanandl/sjdlpp', $data);
-        } else ($jenis['jenis_perjalanan'] == 'TAPP'){
-            $this->load->view('perjalanandl/sjtapp', $data)};
+        $statusperjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        if ($statusperjalanan['status'] == 1 or $statusperjalanan['status'] == 9){
+            $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+            if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAINAP') {
+                $this->load->view('perjalanandl/sjdlpp', $data);
+            } else ($jenis['jenis_perjalanan'] == 'TAPP'){
+                $this->load->view('perjalanandl/sjtapp', $data)};
+        }else{
+            $this->session->set_flashdata('message', 'unfinishdl');
+            redirect('auth/denied');
+        }
+
+     
     }
 
     public function ikut()
@@ -403,5 +411,22 @@ class Perjalanandl extends CI_Controller
 
         $this->session->set_flashdata('message', 'setujudl');
         redirect('perjalanandl/revisi');
+    }
+
+    public function bataldladmin($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->set('status', '0');
+        $this->db->set('catatan_ga', "Alasan pembatalan : Waktu keberangkatan anda telah habis atau melewati 2 jam. - Dibatalkan oleh " . $this->session->userdata('inisial'). " pada " . date('d-m-Y H:i'));
+        $this->db->where('id', $id);
+        $this->db->update('perjalanan');
+
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        $this->db->set('status', '9');
+        $this->db->where('id', $perjalanan['reservasi_id']);
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'bataldl');
+        redirect('dashboard/index');
     }
 }

@@ -63,6 +63,7 @@
     <div class="page-header error-page header-filter" style="background-image: url('<?= base_url(); ?>assets/img/clint-mckoy.jpg')">
       <!--   you can change the color of the filter page using: data-color="blue | green | orange | red | purple" -->
       <div class="content-center">
+      <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
         <div class="row">
           <div class="col-md-12">
             <h1 class="title">MAAF!</h1>
@@ -90,8 +91,9 @@
   <script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!-- Plugin for the momentJs  -->
   <script src="<?= base_url(); ?>assets/js/plugins/moment.min.js"></script>
-  <!--  Plugin for Sweet Alert -->
-  <script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.js"></script>
+<!--  Plugin for Sweet Alert -->
+<script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/sweet-alert.js"></script>
   <!-- Forms Validations Plugin -->
   <script src="<?= base_url(); ?>assets/js/plugins/jquery.validate.min.js"></script>
   <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
