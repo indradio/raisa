@@ -6,6 +6,15 @@ $pdf->AddFont('arial-monospaced','','arial-monospaced.php');
 $pdf->AddPage();
 // setting jenis font yang akan digunakan
 // mencetak string 
+
+if ($perjalanan['status']== 0){
+    $pdf->Image('assets/img/watermark/batal-perjalanan.png', 40, 5, 100, 70);
+    $pdf->Image('assets/img/watermark/batal-perjalanan.png', 80, 5, 100, 70);
+}elseif($perjalanan['status']== 2){
+    $pdf->Image('assets/img/watermark/sedang-perjalanan.png', 40, 5, 100, 70);
+    $pdf->Image('assets/img/watermark/sedang-perjalanan.png', 80, 5, 100, 70);
+}
+
 $pdf->Image('assets/img/WINTEQ8.jpg', 15, 5, 50, 0);
 
 $pdf->SetFont('Arial', 'B', 12);

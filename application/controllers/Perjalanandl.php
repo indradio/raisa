@@ -218,19 +218,12 @@ class Perjalanandl extends CI_Controller
         $data['sidesubmenu'] = 'Laporan Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        $statusperjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if ($statusperjalanan['status'] == 1 or $statusperjalanan['status'] == 9){
-            $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-            if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAINAP') {
-                $this->load->view('perjalanandl/sjdlpp', $data);
-            } else ($jenis['jenis_perjalanan'] == 'TAPP'){
-                $this->load->view('perjalanandl/sjtapp', $data)};
-        }else{
-            $this->session->set_flashdata('message', 'unfinishdl');
-            redirect('auth/denied');
-        }
-
-     
+        $statusperjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();    
+        $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAINAP') {
+            $this->load->view('perjalanandl/sjdlpp', $data);
+        } else ($jenis['jenis_perjalanan'] == 'TAPP'){
+            $this->load->view('perjalanandl/sjtapp', $data)};
     }
 
     public function ikut()
