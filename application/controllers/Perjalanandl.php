@@ -99,11 +99,11 @@ class Perjalanandl extends CI_Controller
         $cek = $this->db->query($queryCek)->row_array();
         $total = $cek['COUNT(*)'];
         if ($total == 0) {
-        
+
             $this->db->insert('perjalanan', $data);
 
             // update uangsaku
-            if ($this->input->post('jperjalanan') == 'TAPP' or $this->input->post('jperjalanan') == 'TAINAP') {
+            if ($this->input->post('jperjalanan') == 'TAPP' or $this->input->post('jperjalanan') == 'TA') {
                 $this->db->set('uangsaku', 'YA');
                 $this->db->where('id', $data['id']);
                 $this->db->update('perjalanan');
@@ -123,25 +123,25 @@ class Perjalanandl extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
 
-                $this->db->where('npk', $this->input->post('npk'));
-                $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $karyawan['phone'];
-                $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
-                    "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
-                    "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
-                    "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
-                    "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
-                    "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
-                    " ) \r\n \r\nTelah siap untuk berangkat. 
+            $this->db->where('npk', $this->input->post('npk'));
+            $karyawan = $this->db->get('karyawan')->row_array();
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $karyawan['phone'];
+            $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
+                "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
+                "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
+                "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
+                "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
+                "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
+                " ) \r\n \r\nTelah siap untuk berangkat. 
                     \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
                     \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
 
             $this->session->set_flashdata('message', 'barudl');
             redirect('perjalanandl/admindl');
@@ -179,7 +179,7 @@ class Perjalanandl extends CI_Controller
     public function batalrsv()
     {
         $this->db->set('status', '0');
-        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'). " pada " . date('d-m-Y H:i'));
+        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('reservasi');
 
@@ -218,9 +218,9 @@ class Perjalanandl extends CI_Controller
         $data['sidesubmenu'] = 'Laporan Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        $statusperjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();    
+        $statusperjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
         $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TAINAP') {
+        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TA') {
             $this->load->view('perjalanandl/sjdlpp', $data);
         } else ($jenis['jenis_perjalanan'] == 'TAPP'){
             $this->load->view('perjalanandl/sjtapp', $data)};
@@ -341,7 +341,7 @@ class Perjalanandl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial'). " pada " . date('d-m-Y H:i'));
+        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
@@ -410,7 +410,7 @@ class Perjalanandl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Alasan pembatalan : Waktu keberangkatan anda telah habis atau melewati 2 jam. - Dibatalkan oleh " . $this->session->userdata('inisial'). " pada " . date('d-m-Y H:i'));
+        $this->db->set('catatan_ga', "Alasan pembatalan : Waktu keberangkatan anda telah habis atau melewati 2 jam. - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
