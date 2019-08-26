@@ -422,4 +422,30 @@ class Perjalanandl extends CI_Controller
         $this->session->set_flashdata('message', 'bataldl');
         redirect('dashboard/index');
     }
+
+    public function konfirmasi($id)
+    {
+        $reservasi = $this->db->get_where('reservasi', ['id' => $id])->row_array();
+        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $reservasi['npk']])->row_array();
+
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $karyawan['phone'];
+            $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Reservasi : *" . $id . "*" .
+                "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
+                "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
+                "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
+                "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
+                "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
+                " ) \r\n \r\nAkan dibatalkan secara otomatis dalam 15 menit. 
+                    \r\nSilahkan lakukan konfirmasi ke bagian GA jika ingin melanjutkan perjalanan ini.";
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
+
+            $this->session->set_flashdata('message', 'barudl');
+            redirect('perjalanandl/admindl');
+    }
 }

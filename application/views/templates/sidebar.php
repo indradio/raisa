@@ -44,10 +44,14 @@
                         <span class="sidebar-normal"> Profil </span>
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <span class="sidebar-mini"> GP </span>
-                        <span class="sidebar-normal"> Ganti Password </span>
+                    <?php if ($sidesubmenu == 'Ubah Password') : ?>
+                      <li class="nav-item active">
+                      <?php else : ?>
+                      <li class="nav-item">
+                      <?php endif; ?>
+                      <a class="nav-link" href="<?= base_url('profil/ubahpwd'); ?>">
+                        <span class="sidebar-mini"> U </span>
+                        <span class="sidebar-normal"> Ubah Password </span>
                       </a>
                     </li>
                     <li class="nav-item">

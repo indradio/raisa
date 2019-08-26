@@ -96,6 +96,12 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
+                <div class="card card-profile">
+                        <div class="card-body">
+                        <img class="img" src="<?= base_url(); ?>assets/img/qrcode/<?= $karyawan['qrcode'].'.png'; ?>" />
+                        <h2 class="card-title"><?= $karyawan['qrcode']; ?></h2>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <div class="card">

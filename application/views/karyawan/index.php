@@ -14,11 +14,13 @@
                         <div class="toolbar">
                             <!-- Here you can write extra buttons/actions for the toolbar -->
                             <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false" data-toggle="modal" data-target="#karyawanAdd">Tambah Karyawan Baru</a>
+                            <a href="<?= base_url('hr/qrc/'); ?>" class="btn btn-warning disabled">Generate QR CODE</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>NPK</th>
                                         <th>Nama</th>
                                         <th>Inisial</th>
@@ -38,6 +40,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th>QR Code</th>
                                         <th>NPK</th>
                                         <th>Nama</th>
                                         <th>Inisial</th>
@@ -68,6 +71,11 @@
                                         $atasan2 = $this->db->get_where('karyawan_posisi', ['id' =>  $kry['atasan2']])->row_array();
                                         ?>
                                         <tr>
+                                            <td>
+                                                <div class="img-container">
+                                                    <img src="<?= base_url(); ?>assets/img/qrcode/<?= $kry['qrcode'].'.png'; ?>" alt="...">
+                                                </div>
+                                            </td>
                                             <td><?= $kry['npk']; ?></td>
                                             <td><?= $kry['nama']; ?></td>
                                             <td><?= $kry['inisial']; ?></td>

@@ -84,6 +84,22 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
+} else if (flashData == 'passok') {
+  swal({
+    title: "Berhasil!",
+    text: "Password anda telah berhasil diubah.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'passng') {
+  swal({
+    title: "Maaf!",
+    text: "Password anda gagal diubah.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
 }
 
 $('.btn-bataldl').on('click', function (e) {

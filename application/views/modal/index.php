@@ -496,7 +496,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label">Role (catatan : Hanya untuk menu RAISA)</label>
+                            <label class="col-md-3 col-form-label">Role (Hanya untuk menu RAISA)</label>
                             <div class="col-md-9">
                                 <select class="selectpicker" name="role" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
                                     <?php
