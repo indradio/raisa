@@ -33,7 +33,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
               <button type="button" class="btn btn-info btn-link fix-broken-card">
                 <i class="material-icons">build</i> Muat Ulang!
               </button>
-              <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="badge badge-pill badge-primary mt-2" rel="tooltip" title="">
+              <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="">
                 Selengkapnya...
               </a>
             </div>
