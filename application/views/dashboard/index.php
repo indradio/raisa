@@ -25,7 +25,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <a href="#pablo">
-              <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar']; ?>">
+              <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
             </a>
           </div>
           <div class="card-body">
@@ -33,7 +33,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
               <button type="button" class="btn btn-info btn-link fix-broken-card">
                 <i class="material-icons">build</i> Muat Ulang!
               </button>
-              <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="btn btn-default btn-link" rel="tooltip" title="">
+              <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="badge badge-pill badge-primary mt-2" rel="tooltip" title="">
                 Selengkapnya...
               </a>
             </div>
@@ -105,7 +105,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                     <tr>
                                         <td>
                                             <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/kendaraan/<?= $k['gambar_banner']; ?>" alt="...">
+                                                <img src="<?= base_url(); ?>assets/img/kendaraan/<?= $k['gambar']; ?>" alt="...">
                                             </div>
                                         </td>
                                         <td class="td-name">
