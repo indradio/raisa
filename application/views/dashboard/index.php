@@ -105,7 +105,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                     <tr>
                                         <td>
                                             <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/kendaraan/<?= $k['gambar']; ?>" alt="...">
+                                                <img src="<?= base_url(); ?>assets/img/kendaraan/<?= $k['gambar_banner']; ?>" alt="...">
                                             </div>
                                         </td>
                                         <td class="td-name">

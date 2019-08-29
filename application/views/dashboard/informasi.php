@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card card-product">
                     <div class="card-header card-header-image" data-header-animation="false">
-                        <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar']; ?>">
+                        <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar_konten']; ?>">
                     </div>
                     <div class="card-body">
                         <div class="card-actions"> </div>

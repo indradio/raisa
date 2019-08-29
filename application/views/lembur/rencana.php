@@ -139,14 +139,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Jam Mulai</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="time" class="form-control timepicker" id="jammulai" name="jammulai">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <label class="col-md-4 col-form-label">Tanggal Selesai</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
@@ -154,18 +146,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Jam Selesai</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="time" class="form-control timepicker" id="jamselesai" name="jamselesai">
-                                </div>
-                            </div>
-                        </div>
                         <div class="modal-footer justify-content-center">
                             <button type="submit" class="btn btn-primary">SELANJUTNYA</button>
                             <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-fill btn-default">Kembali</a>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
