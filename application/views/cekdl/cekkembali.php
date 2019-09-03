@@ -52,7 +52,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>" hidden>
-                                        <input type="text" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d / m / Y', strtotime($perjalanan['tglberangkat'])); ?>">
+                                        <input type="text" class="form-control disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d / m / Y', strtotime($perjalanan['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= date('Y-m-d'); ?>">
+                                        <input type="text" class="form-control disabled" id="tglkembali" name="tglkembali" value="<?= date('d / m / Y'); ?>">
                                     </div>
                                 </div>
                             </div>

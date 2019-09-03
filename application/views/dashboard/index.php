@@ -122,7 +122,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                         $Cari = $this->db->query($queryCari)->row_array();
                                         $total = $Cari['COUNT(*)'];
                                         if ($total == 0) { ?>
-                                          <span class="badge badge-pill badge-success">Tersedia</span>
+                                          <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
                                           </td>
                                         <?php } else { ?>
                                           <span class="badge badge-pill badge-danger">Sudah Dipesan</span>

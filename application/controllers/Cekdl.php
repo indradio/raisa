@@ -126,7 +126,10 @@ class Cekdl extends CI_Controller
 
     public function cekkembali_proses()
     {
+        date_default_timezone_set('asia/jakarta');
         $kmtotal = $this->input->post('kmkembali') - $this->input->post('kmberangkat');
+
+        $this->db->set('tglkembali', date("Y-m-d"));
         $this->db->set('jamkembali', $this->input->post('jamkembali'));
         $this->db->set('cekkembali', $this->session->userdata('inisial'));
         $this->db->set('kmkembali', $this->input->post('kmkembali'));

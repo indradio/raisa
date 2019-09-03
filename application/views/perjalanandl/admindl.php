@@ -53,31 +53,30 @@
                                 <tbody>
                                     <?php
                                     foreach ($reservasi as $rsv) : ?>
-                                    <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
-                                    <tr class="text-dark bg-danger">
-                                        <?php } else { ?>
-                                    <tr>
-                                        <?php }; ?>
-                                        <td><?= $rsv['id']; ?></td>
-                                        <td><?= $rsv['jenis_perjalanan']; ?></td>
-                                        <td><?= $rsv['nopol']; ?></td>
-                                        <td><?= $rsv['kepemilikan']; ?></td>
-                                        <td><?= $rsv['nama']; ?></td>
-                                        <td><?= $rsv['tujuan']; ?></td>
-                                        <td><?= $rsv['keperluan']; ?></td>
-                                        <td><?= $rsv['anggota']; ?></td>
-                                        <td><?= $rsv['tglberangkat']; ?></td>
-                                        <td><?= $rsv['jamberangkat']; ?></td>
-                                        <td><?= $rsv['tglkembali']; ?></td>
-                                        <td><?= $rsv['jamkembali']; ?></td>
-                                        <td class="text-right">
-                                            <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
-                                            <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-info disabled">Gabungkan</a>
-                                            <a href="<?= base_url('perjalanandl/konfirmasi/') . $rsv['id']; ?>" class="badge badge-pill badge-warning">Konfirmasi</a>
-                                            <a href="" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
+                                        <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
+                                            <tr class="text-dark bg-danger">
+                                            <?php } else { ?>
+                                            <tr>
+                                            <?php }; ?>
+                                            <td><?= $rsv['id']; ?></td>
+                                            <td><?= $rsv['jenis_perjalanan']; ?></td>
+                                            <td><?= $rsv['nopol']; ?></td>
+                                            <td><?= $rsv['kepemilikan']; ?></td>
+                                            <td><?= $rsv['nama']; ?></td>
+                                            <td><?= $rsv['tujuan']; ?></td>
+                                            <td><?= $rsv['keperluan']; ?></td>
+                                            <td><?= $rsv['anggota']; ?></td>
+                                            <td><?= $rsv['tglberangkat']; ?></td>
+                                            <td><?= $rsv['jamberangkat']; ?></td>
+                                            <td><?= $rsv['tglkembali']; ?></td>
+                                            <td><?= $rsv['jamkembali']; ?></td>
+                                            <td class="text-right">
+                                                <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
+                                                <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-info disabled">Gabungkan</a>
+                                                <a href="" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
+                                            </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
