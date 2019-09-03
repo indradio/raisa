@@ -73,7 +73,8 @@ class Cekdl extends CI_Controller
 
     public function cekberangkat_proses()
     {
-        $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+        $this->db->set('tglberangkat', date("Y-m-d"));
+        $this->db->set('jamberangkat', date("H:i:s"));
         $this->db->set('cekberangkat', $this->session->userdata('inisial'));
         $this->db->set('kmberangkat', $this->input->post('kmberangkat'));
         $this->db->set('supirberangkat', $this->input->post('supirberangkat'));
@@ -130,7 +131,7 @@ class Cekdl extends CI_Controller
         $kmtotal = $this->input->post('kmkembali') - $this->input->post('kmberangkat');
 
         $this->db->set('tglkembali', date("Y-m-d"));
-        $this->db->set('jamkembali', $this->input->post('jamkembali'));
+        $this->db->set('jamkembali', date("H:i:s"));
         $this->db->set('cekkembali', $this->session->userdata('inisial'));
         $this->db->set('kmkembali', $this->input->post('kmkembali'));
         $this->db->set('supirkembali', $this->input->post('supirkembali'));
