@@ -22,8 +22,8 @@
                       <th>No. Reservasi</th>
                       <th>Tgl Reservasi</th>
                       <th>Jenis Perjalanan</th>
-                      <th>Nomor Kendaraan</th>
-                      <th>Jenis Kendaraan</th>
+                      <th>Nomor Polisi</th>
+                      <th>Kendaraan</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
                       <th>Peserta</th>
@@ -39,8 +39,8 @@
                       <th>No. Reservasi</th>
                       <th>Tgl Reservasi</th>
                       <th>Jenis Perjalanan</th>
-                      <th>Nomor Kendaraan</th>
-                      <th>Jenis Kendaraan</th>
+                      <th>Nomor Polisi</th>
+                      <th>Kendaraan</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
                       <th>Peserta</th>

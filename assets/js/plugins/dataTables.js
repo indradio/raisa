@@ -33,7 +33,7 @@ $(document).ready(function () {
         }
     });
 
-    var table = $('#dtperjalanan').DataTable();
+    var tablePerjalanan = $('#dtperjalanan').DataTable();
 
     //datatables persetujuan
 

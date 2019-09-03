@@ -200,6 +200,28 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function cariperjalanan()
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Laporan Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        $tglawal = date("Y-m-d", strtotime($this->input->post('tglawal')));
+        $tglakhir = date("Y-m-d", strtotime($this->input->post('tglakhir')));
+        $queryPerjalanan = "SELECT *
+                                    FROM `perjalanan`
+                                    WHERE `tglberangkat` >= '$tglawal' AND `tglkembali` <= '$tglakhir'
+                                ";
+        $data['perjalanan'] = $this->db->query($queryPerjalanan)->result_array();
+        $data['tglawal'] = $tglawal;
+        $data['tglakhir'] = $tglakhir;
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/perjalanan', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function perjalanan_peserta()
     {
         $data['sidemenu'] = 'GA';
