@@ -55,7 +55,7 @@ if (flashData == 'setujudl') {
 } else if (flashData == 'backdate') {
   swal({
     title: "Maaf!",
-    text: "Tanggal kembali tidak boleh lebih kecil dari tanggal berangkat.",
+    text: "Tanggal BERANGKAT tidak boleh lebih kecil dari HARI INI atau tanggal KEMBALI tidak boleh lebih kecil dari tanggal BERANGKAT.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"

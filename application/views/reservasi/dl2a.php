@@ -1,4 +1,5 @@
   <div class="content">
+    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -15,7 +16,7 @@
                   <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                   <div class="col-md-3">
                     <div class="form-group has-default">
-                      <input type="date" class="form-control datepicker" id="tglberangkat" name="tglberangkat" required>
+                      <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" required>
                     </div>
                   </div>
                 </div>
@@ -23,7 +24,7 @@
                   <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
                   <div class="col-md-3">
                     <div class="form-group has-default">
-                      <input type="time" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                      <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
                     </div>
                   </div>
                 </div>
@@ -31,7 +32,7 @@
                   <label class="col-md-2 col-form-label">Jam Kembali</label>
                   <div class="col-md-3">
                     <div class="form-group has-default">
-                      <input type="time" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                      <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
                     </div>
                   </div>
                 </div>

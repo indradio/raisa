@@ -50,18 +50,23 @@ class Reservasi extends CI_Controller
     {
         $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         date_default_timezone_set('asia/jakarta');
-        $data = [
-            'npk' => $this->session->userdata['npk'],
-            'nama' => $dataku['nama'],
-            'tglreservasi' => date("Y-m-d H:i:s"),
-            'tglberangkat' => $this->input->post('tglberangkat'),
-            'jamberangkat' => $this->input->post('jamberangkat'),
-            'tglkembali' => $this->input->post('tglberangkat'),
-            'jamkembali' => $this->input->post('jamkembali'),
-            'jenis_perjalanan' => 'DLPP'
-        ];
-        $this->db->insert('reservasi_temp', $data);
-        redirect('reservasi/dl1b');
+        if (date("Y-m-d", strtotime($this->input->post('tglberangkat'))) < date("Y-m-d")) {
+            $this->session->set_flashdata('message', 'backdate');
+            redirect('reservasi/dl1a');
+        } else {
+            $data = [
+                'npk' => $this->session->userdata['npk'],
+                'nama' => $dataku['nama'],
+                'tglreservasi' => date("Y-m-d H:i:s"),
+                'tglberangkat' => date("Y-m-d", strtotime($this->input->post('tglberangkat'))),
+                'jamberangkat' => $this->input->post('jamberangkat'),
+                'tglkembali' => date("Y-m-d", strtotime($this->input->post('tglberangkat'))),
+                'jamkembali' => $this->input->post('jamkembali'),
+                'jenis_perjalanan' => 'DLPP'
+            ];
+            $this->db->insert('reservasi_temp', $data);
+            redirect('reservasi/dl1b');
+        }
     }
 
     public function dl1b()
@@ -448,18 +453,24 @@ class Reservasi extends CI_Controller
     public function dl2a_proses()
     {
         $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data = [
-            'npk' => $this->session->userdata['npk'],
-            'nama' => $dataku['nama'],
-            'tglreservasi' => date("Y-m-d H:i:s"),
-            'tglberangkat' => $this->input->post('tglberangkat'),
-            'jamberangkat' => $this->input->post('jamberangkat'),
-            'tglkembali' => $this->input->post('tglberangkat'),
-            'jamkembali' => $this->input->post('jamkembali'),
-            'jenis_perjalanan' => 'TAPP'
-        ];
-        $this->db->insert('reservasi_temp', $data);
-        redirect('reservasi/dl1b');
+        date_default_timezone_set('asia/jakarta');
+        if (date("Y-m-d", strtotime($this->input->post('tglberangkat'))) < date("Y-m-d")) {
+            $this->session->set_flashdata('message', 'backdate');
+            redirect('reservasi/dl2a');
+        } else {
+            $data = [
+                'npk' => $this->session->userdata['npk'],
+                'nama' => $dataku['nama'],
+                'tglreservasi' => date("Y-m-d H:i:s"),
+                'tglberangkat' => date("Y-m-d", strtotime($this->input->post('tglberangkat'))),
+                'jamberangkat' => $this->input->post('jamberangkat'),
+                'tglkembali' => date("Y-m-d", strtotime($this->input->post('tglberangkat'))),
+                'jamkembali' => $this->input->post('jamkembali'),
+                'jenis_perjalanan' => 'TAPP'
+            ];
+            $this->db->insert('reservasi_temp', $data);
+            redirect('reservasi/dl1b');
+        }
     }
 
     public function dl3a()
@@ -476,7 +487,12 @@ class Reservasi extends CI_Controller
 
     public function dl3a_proses()
     {
-        if ($this->input->post('tglkembali') < $this->input->post('tglberangkat')) {
+        date_default_timezone_set('asia/jakarta');
+        if (date("Y-m-d", strtotime($this->input->post('tglberangkat'))) < date("Y-m-d")) {
+
+            $this->session->set_flashdata('message', 'backdate');
+            redirect('reservasi/dl3a');
+        } elseif (date("Y-m-d", strtotime($this->input->post('tglkembali'))) < date("Y-m-d", strtotime($this->input->post('tglberangkat')))) {
 
             $this->session->set_flashdata('message', 'backdate');
             redirect('reservasi/dl3a');
@@ -486,9 +502,9 @@ class Reservasi extends CI_Controller
                 'npk' => $this->session->userdata['npk'],
                 'nama' => $dataku['nama'],
                 'tglreservasi' => date("Y-m-d H:i:s"),
-                'tglberangkat' => $this->input->post('tglberangkat'),
+                'tglberangkat' => date("Y-m-d", strtotime($this->input->post('tglberangkat'))),
                 'jamberangkat' => $this->input->post('jamberangkat'),
-                'tglkembali' => $this->input->post('tglkembali'),
+                'tglkembali' => date("Y-m-d", strtotime($this->input->post('tglkembali'))),
                 'jamkembali' => $this->input->post('jamkembali'),
                 'jenis_perjalanan' => 'TA'
             ];
