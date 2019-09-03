@@ -51,7 +51,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('Y-m-d'); ?>">
+                                        <input type="text" class="form-control disabled" id="tglberangkat" name="tglberangkat" value="<?= date("d / m / Y", strtotime($perjalanan['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <label class="col-md-2 col-form-label">Jam Keberangkatan*</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker disabled" id="jamberangkat" name="jamberangkat" value="<?= date('H:i:s'); ?>">
+                                        <input type="time" class="form-control disabled" id="jamberangkat" name="jamberangkat" value="<?= date('H:i:s'); ?>">
                                     </div>
                                 </div>
                             </div>

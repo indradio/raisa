@@ -51,7 +51,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $reservasi['tglberangkat']; ?>">
+                                        <input type="date" class="form-control disabled" id="tglberangkat" name="tglberangkat" value="<?= $reservasi['tglberangkat']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker disabled" id="jamberangkat" name="jamberangkat" value="<?= $reservasi['jamberangkat']; ?>">
+                                        <input type="time" class="form-control disabled" id="jamberangkat" name="jamberangkat" value="<?= $reservasi['jamberangkat']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= $reservasi['tglkembali']; ?>">
+                                        <input type="date" class="form-control disabled" id="tglkembali" name="tglkembali" value="<?= $reservasi['tglkembali']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                                 <label class="col-md-2 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker disabled" id="jamkembali" name="jamkembali" value="<?= $reservasi['jamkembali']; ?>">
+                                        <input type="time" class="form-control disabled" id="jamkembali" name="jamkembali" value="<?= $reservasi['jamkembali']; ?>">
                                     </div>
                                 </div>
                             </div>
