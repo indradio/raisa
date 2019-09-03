@@ -305,6 +305,7 @@ class Reservasi extends CI_Controller
 
     public function dl1z_proses()
     {
+        date_default_timezone_set('asia/jakarta');
         $reservasi_temp = $this->db->order_by('id', "DESC");
         $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
 
@@ -325,7 +326,6 @@ class Reservasi extends CI_Controller
         ";
             $rsv = $this->db->query($queryRsv)->row_array();
             $totalRsv = $rsv['COUNT(*)'] + 1;
-            date_default_timezone_set('asia/jakarta');
             $data = [
                 'id' => 'RSV' . date('y') . $totalRsv,
                 'tglreservasi' => date('Y-m-d H:i:s'),
