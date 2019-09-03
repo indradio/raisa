@@ -2,7 +2,7 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 align-content-start">
                 <div class="card">
                     <div class="card-header card-header-primary card-header-icon">
                         <div class="card-icon">
@@ -11,26 +11,47 @@
                         <h4 class="card-title">Rencana Aktivitas Lembur</h4>
                     </div>
                     <div class="card-body">
+                        <div class="row">
+                            <label class="col-md-1 col-form-label">Lembur ID</label>
+                            <div class="col-md-3">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-1 col-form-label">Tanggal Mulai</label>
+                            <div class="col-md-3">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control datetimepicker disabled" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-1 col-form-label">Tanggal Selesai</label>
+                            <div class="col-md-3">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control datetimepicker disabled" id="tglselesai" name="tglselesai" value="<?= $lembur['tglselesai']; ?>">
+                                </div>
+                            </div>
+                        </div>
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Tambah Aktivitas</a>
+                            <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No. Lembur</th>
-                                        <th>Jenis Lembur</th>
-                                        <th>Tgl Mengajukan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>No. Aktivitas</th>
+                                        <th>Tanggal</th>
+                                        <th>Kategori</th>
+                                        <th>COPRO</th>
+                                        <th>WBS</th>
+                                        <th>Rencana Aktivitas</th>
+                                        <th>Realisasi Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Atasan 1</th>
-                                        <th>Atasan 2</th>
-                                        <th>Admin GA</th>
-                                        <th>Catatan</th>
+                                        <th>Hasil</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                         <th class="disabled-sorting"></th>
@@ -38,51 +59,36 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No. Reservasi</th>
-                                        <th>Jenis Lembur</th>
-                                        <th>Tgl Mengajukan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>No. Aktivitas</th>
+                                        <th>Tanggal</th>
+                                        <th>Kategori</th>
+                                        <th>COPRO</th>
+                                        <th>WBS</th>
+                                        <th>Rencana Aktivitas</th>
+                                        <th>Realisasi Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Atasan 1</th>
-                                        <th>Atasan 2</th>
-                                        <th>Admin GA</th>
-                                        <th>Catatan</th>
+                                        <th>Hasil</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                         <th class="disabled-sorting"></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php foreach ($lembur as $l) : ?>
-                                    <tr>
-                                        <td><?= $l['id']; ?></td>
-                                        <td><?= $l['jenis_lembur']; ?></td>
-                                        <td><?= $l['tglpengajuan']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                                        <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                                        <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                                        <td><?= $l['durasi']; ?></td>
-                                        <td><?= $l['atasan1']; ?></td>
-                                        <td><?= $l['atasan2']; ?></td>
-                                        <td><?= $l['admin_ga']; ?></td>
-                                        <td><?= $l['catatan']; ?></td>
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
-                                        <td><?= $status['nama']; ?></td>
-                                        <td>
-                                            <a href="<?= base_url('lembur/detail/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        </td>
-                                        <td class="text-right">
-                                            <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                                            <?php } else { ?>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                                            <?php }; ?>
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($aktivitas as $a) : ?>
+                                        <tr>
+                                            <td><?= $a['id']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($a['tanggal'])); ?></td>
+                                            <td><?= $a['kategori']; ?></td>
+                                            <td><?= $a['copro']; ?></td>
+                                            <td><?= $a['wbs']; ?></td>
+                                            <td><?= $a['rencana_aktivitas']; ?></td>
+                                            <td><?= $a['realisasi_aktivitas']; ?></td>
+                                            <td><?= $a['durasi']; ?></td>
+                                            <td><?= $a['hasil']; ?></td>
+                                            <td><?= $a['status']; ?></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -98,7 +104,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="tambahLembur" tabindex="-1" role="dialog" aria-labelledby="tambahLemburTitle" aria-hidden="true">
+<div class="modal fade" id="tambahAktivitas" tabindex="-1" role="dialog" aria-labelledby="tambahAktivitasTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="card card-signup card-plain">
@@ -113,10 +119,22 @@
                 <form class="form" method="post" action="<?= base_url('lembur/tambah'); ?>">
                     <div class="modal-body">
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Jenis Lembur</label>
+                            <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="jenis" data-style="select-with-transition" title="Pilih" data-size="3" required>
+                                    <select class="selectpicker" name="kategori" data-style="select-with-transition" title="Pilih" data-size="3" required>
+                                        <?php foreach ($kategori as $k) : ?>
+                                            <option value="<?= $k['id']; ?>"><?= $k['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">COPRO</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="copro" data-style="select-with-transition" title="Pilih" data-size="7" required>
                                         <?php
                                         $queryJenis = "SELECT *
                                                                     FROM `lembur_jenis`
@@ -124,31 +142,59 @@
                                                                     ";
                                         $jenis = $this->db->query($queryJenis)->result_array();
                                         foreach ($jenis as $j) : ?>
-                                        <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
+                                            <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Tanggal Mulai</label>
+                            <label class="col-md-4 col-form-label">WBS</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" required>
+                                    <select class="selectpicker" name="wbs" data-style="select-with-transition" title="Pilih" data-size="10" required>
+                                        <?php
+                                        $queryJenis = "SELECT *
+                                                                    FROM `lembur_jenis`
+                                                                    ORDER BY `id` ASC
+                                                                    ";
+                                        $jenis = $this->db->query($queryJenis)->result_array();
+                                        foreach ($jenis as $j) : ?>
+                                            <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Tanggal Selesai</label>
+                            <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control datetimepicker" id="tglselesai" name="tglselesai" required>
+                                    <select class="selectpicker" name="wbs" data-style="select-with-transition" title="Pilih" data-size="10" required>
+                                        <?php
+                                        $queryJenis = "SELECT *
+                                                                    FROM `lembur_jenis`
+                                                                    ORDER BY `id` ASC
+                                                                    ";
+                                        $jenis = $this->db->query($queryJenis)->result_array();
+                                        foreach ($jenis as $j) : ?>
+                                            <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Aktivitas Lain</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <textarea rows="3" class="form-control disabled" name="aktivitas"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button type="submit" class="btn btn-primary">SELANJUTNYA</button>
-                            <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">KEMBALI</a>
                         </div>
                     </div>
                 </form>

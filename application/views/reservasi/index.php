@@ -20,8 +20,10 @@
                   <thead>
                     <tr>
                       <th>No. Reservasi</th>
-                      <th>Jenis Perjalanan</th>
                       <th>Tgl Reservasi</th>
+                      <th>Jenis Perjalanan</th>
+                      <th>Nomor Kendaraan</th>
+                      <th>Jenis Kendaraan</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
                       <th>Peserta</th>
@@ -35,8 +37,10 @@
                   <tfoot>
                     <tr>
                       <th>No. Reservasi</th>
-                      <th>Jenis Perjalanan</th>
                       <th>Tgl Reservasi</th>
+                      <th>Jenis Perjalanan</th>
+                      <th>Nomor Kendaraan</th>
+                      <th>Jenis Kendaraan</th>
                       <th>Tujuan</th>
                       <th>Keperluan</th>
                       <th>Peserta</th>
@@ -49,26 +53,28 @@
                   </tfoot>
                   <tbody>
                     <?php foreach ($reservasi as $rsv) : ?>
-                    <tr>
-                      <td><?= $rsv['id']; ?></td>
-                      <td><?= $rsv['jenis_perjalanan']; ?></td>
-                      <td><?= $rsv['tglreservasi']; ?></td>
-                      <td><?= $rsv['tujuan']; ?></td>
-                      <td><?= $rsv['keperluan']; ?></td>
-                      <td><?= $rsv['anggota']; ?></td>
-                      <td><?= $rsv['atasan1']; ?></td>
-                      <td><?= $rsv['atasan2']; ?></td>
-                      <td><?= $rsv['catatan']; ?></td>
-                      <?php $status = $this->db->get_where('reservasi_status', ['id' => $rsv['status']])->row_array(); ?>
-                      <td><?= $status['nama']; ?></td>
-                      <td class="text-right">
-                        <?php if ($rsv['status'] == 1 or $rsv['status'] == 2 or $rsv['status'] == 3) { ?>
-                        <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>"><i class="material-icons">close</i></a>
-                        <?php } else { ?>
-                        <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                        <?php }; ?>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td><?= $rsv['id']; ?></td>
+                        <td><?= $rsv['tglreservasi']; ?></td>
+                        <td><?= $rsv['jenis_perjalanan']; ?></td>
+                        <td><?= $rsv['nopol']; ?></td>
+                        <td><?= $rsv['kepemilikan']; ?></td>
+                        <td><?= $rsv['tujuan']; ?></td>
+                        <td><?= $rsv['keperluan']; ?></td>
+                        <td><?= $rsv['anggota']; ?></td>
+                        <td><?= $rsv['atasan1']; ?></td>
+                        <td><?= $rsv['atasan2']; ?></td>
+                        <td><?= $rsv['catatan']; ?></td>
+                        <?php $status = $this->db->get_where('reservasi_status', ['id' => $rsv['status']])->row_array(); ?>
+                        <td><?= $status['nama']; ?></td>
+                        <td class="text-right">
+                          <?php if ($rsv['status'] == 1 or $rsv['status'] == 2 or $rsv['status'] == 3) { ?>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>"><i class="material-icons">close</i></a>
+                          <?php } else { ?>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
+                          <?php }; ?>
+                        </td>
+                      </tr>
                     <?php endforeach; ?>
                   </tbody>
                 </table>

@@ -57,32 +57,33 @@
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                    <tr>
-                                        <td><?= $l['id']; ?></td>
-                                        <td><?= $l['jenis_lembur']; ?></td>
-                                        <td><?= $l['tglpengajuan']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                                        <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                                        <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                                        <td><?= $l['durasi']; ?></td>
-                                        <td><?= $l['atasan1']; ?></td>
-                                        <td><?= $l['atasan2']; ?></td>
-                                        <td><?= $l['admin_ga']; ?></td>
-                                        <td><?= $l['catatan']; ?></td>
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
-                                        <td><?= $status['nama']; ?></td>
-                                        <td>
-                                            <a href="<?= base_url('lembur/detail/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        </td>
-                                        <td class="text-right">
-                                            <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                                            <?php } else { ?>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                                            <?php }; ?>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><?= $l['id']; ?></td>
+                                            <?php $jenis = $this->db->get_where('lembur_jenis', ['id' => $l['jenis_lembur']])->row_array(); ?>
+                                            <td><?= $jenis['nama']; ?></td>
+                                            <td><?= $l['tglpengajuan']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= $l['durasi']; ?></td>
+                                            <td><?= $l['atasan1']; ?></td>
+                                            <td><?= $l['atasan2']; ?></td>
+                                            <td><?= $l['admin_ga']; ?></td>
+                                            <td><?= $l['catatan']; ?></td>
+                                            <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
+                                            <td><?= $status['nama']; ?></td>
+                                            <td>
+                                                <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                                            </td>
+                                            <td class="text-right">
+                                                <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
+                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
+                                                <?php } else { ?>
+                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
+                                                <?php }; ?>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -124,7 +125,7 @@
                                                                     ";
                                         $jenis = $this->db->query($queryJenis)->result_array();
                                         foreach ($jenis as $j) : ?>
-                                        <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
+                                            <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>

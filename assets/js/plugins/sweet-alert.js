@@ -11,7 +11,7 @@ if (flashData == 'setujudl') {
 } else if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "INFO : Jika tidak melakukan perjalanan lebih dari 2 Jam dari jadwal estimasi keberangkatan yang anda pesan, maka perjalanan anda akan dibatalkan secara otomatis.",
+    text: "INFO : Perjalanan kamu akan dibatalkan jika tidak segera melakukan perjalanan dalam 1 jam dari waktu keberangkatan yang kamu pesan.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"

@@ -1,5 +1,5 @@
 <div class="content">
-<?php date_default_timezone_set('asia/jakarta'); ?>
+    <?php date_default_timezone_set('asia/jakarta'); ?>
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
@@ -107,10 +107,10 @@
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
                                                 foreach ($anggota as $ang) : ?>
-                                                <tr>
-                                                    <td><?= $ang['karyawan_inisial']; ?></td>
-                                                    <td><?= $ang['karyawan_nama']; ?></td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?= $ang['karyawan_inisial']; ?></td>
+                                                        <td><?= $ang['karyawan_nama']; ?></td>
+                                                    </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
@@ -122,11 +122,11 @@
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="supirkembali" data-style="select-with-transition" title="Pilih Pengemudi" data-size="7" required>
-                                            <option value="PENGEMUDI UMUM">Pengemudi Umum</option>
+                                            <option value="UMUM">Pengemudi Umum</option>
                                             <?php
                                             $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' =>  $perjalanan['id']])->result_array();
                                             foreach ($peserta as $p) : ?>
-                                            <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
+                                                <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

@@ -83,15 +83,17 @@ class Lembur extends CI_Controller
         ];
         $this->db->insert('lembur', $data);
 
-        redirect('lembur/rencana_aktivitas');
+        redirect('lembur/rencana_aktivitas/' . $data['id']);
     }
 
-    public function rencana_activitas()
+    public function rencana_aktivitas($id)
     {
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Rencana';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
+        $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+        $data['aktivitas'] = $this->db->get_where('jamkerja_aktivitas', ['aktivitas_id' =>  $id])->result_array();
+        $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);

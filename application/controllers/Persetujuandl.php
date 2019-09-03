@@ -28,6 +28,7 @@ class Persetujuandl extends CI_Controller
 
     public function setujudl()
     {
+        date_default_timezone_set('asia/jakarta');
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         if ($rsv['atasan1'] == $this->session->userdata['inisial'] and $rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
@@ -38,17 +39,19 @@ class Persetujuandl extends CI_Controller
             $this->db->update('reservasi');
         } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
             if ($rsv['status'] == 3) {
+                $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
+                $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('reservasi');
                 $this->session->set_flashdata('message', 'udahsetujudl');
                 redirect('persetujuandl/index');
             } else {
-                date_default_timezone_set('asia/jakarta');
                 $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
             }
         } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
-            date_default_timezone_set('asia/jakarta');
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->where('id', $this->input->post('id'));
@@ -56,7 +59,6 @@ class Persetujuandl extends CI_Controller
         }
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
-            date_default_timezone_set('asia/jakarta');
             $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->set('status', '3');
             $this->db->where('id', $this->input->post('id'));

@@ -1,5 +1,5 @@
 <div class="content">
-<?php date_default_timezone_set('asia/jakarta'); ?>
+    <?php date_default_timezone_set('asia/jakarta'); ?>
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
@@ -83,11 +83,11 @@
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
                                                 foreach ($anggota as $ang) : ?>
-                                                <tr>
-                                                    <td><?= $ang['karyawan_inisial']; ?></td>
-                                                    <td><?= $ang['karyawan_nama']; ?></td>
-                                                    <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?= $ang['karyawan_inisial']; ?></td>
+                                                        <td><?= $ang['karyawan_nama']; ?></td>
+                                                        <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
+                                                    </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
@@ -100,11 +100,11 @@
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="supirberangkat" data-style="select-with-transition" title="Pilih Pengemudi" data-size="7" required>
-                                            <option value="PENGEMUDI UMUM">Pengemudi Umum</option>
+                                            <option value="UMUM">Pengemudi Umum</option>
                                             <?php
                                             $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' =>  $perjalanan['id']])->result_array();
                                             foreach ($peserta as $p) : ?>
-                                            <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
+                                                <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -132,7 +132,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <button type="submit" class="btn btn-fill btn-success">BERANGKAT!</button>
-                                    <a href="<?= base_url('cekdl/berangkat'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                                        <a href="<?= base_url('cekdl/berangkat'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                     </div>
                                 </div>
                             </div>

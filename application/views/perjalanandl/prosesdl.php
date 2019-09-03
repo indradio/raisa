@@ -51,7 +51,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $reservasi['tglberangkat']; ?>">
+                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d/m/Y', strtotime($reservasi['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= $reservasi['tglkembali']; ?>">
+                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= date('d/m/Y', strtotime($reservasi['tglkembali'])); ?>">
                                     </div>
                                 </div>
                             </div>

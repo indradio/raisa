@@ -410,7 +410,7 @@ class Perjalanandl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Alasan pembatalan : Waktu keberangkatan anda telah habis atau melewati 2 jam. - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
+        $this->db->set('catatan_ga', "Waktu keberangkatan perjalanan kamu telah habis. - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
@@ -429,23 +429,23 @@ class Perjalanandl extends CI_Controller
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $reservasi['npk']])->row_array();
 
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $karyawan['phone'];
-            $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Reservasi : *" . $id . "*" .
-                "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
-                "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
-                "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
-                "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
-                "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
-                "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
-                " ) \r\n \r\nAkan dibatalkan secara otomatis dalam 15 menit. 
+        $destination = $karyawan['phone'];
+        $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Reservasi : *" . $id . "*" .
+            "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
+            "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
+            "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
+            " ) \r\n \r\nAkan dibatalkan secara otomatis dalam 15 menit. 
                     \r\nSilahkan lakukan konfirmasi ke bagian GA jika ingin melanjutkan perjalanan ini.";
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
 
-            $this->session->set_flashdata('message', 'barudl');
-            redirect('perjalanandl/admindl');
+        $this->session->set_flashdata('message', 'barudl');
+        redirect('perjalanandl/admindl');
     }
 }
