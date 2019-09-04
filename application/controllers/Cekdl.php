@@ -73,6 +73,7 @@ class Cekdl extends CI_Controller
 
     public function cekberangkat_proses()
     {
+        date_default_timezone_set('asia/jakarta');
         $this->db->set('tglberangkat', date("Y-m-d"));
         $this->db->set('jamberangkat', date("H:i:s"));
         $this->db->set('cekberangkat', $this->session->userdata('inisial'));
