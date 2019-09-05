@@ -79,9 +79,9 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                         <th>Kendaraan</th>
                                         <th>Nomor DL</th>
                                         <th>Jenis DL</th>
+                                        <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Peserta</th>
                                         <th>Keberangkatan</th>
                                         <th>Kembali</th>
                                         <th>Status</th>
@@ -137,9 +137,9 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             ?>
                                               <td><?= $p['id']; ?></td>
                                               <td><?= $p['jenis_perjalanan']; ?></td>
+                                              <td><?= $p['anggota']; ?></td>
                                               <td><?= $p['tujuan']; ?></td>
                                               <td><?= $p['keperluan']; ?></td>
-                                              <td><?= $p['anggota']; ?></td>
                                               <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                               <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                               <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>

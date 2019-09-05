@@ -202,6 +202,27 @@ class Cekdl extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
+        $dl = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
+        $this->db->where('sect_id', '214');
+        $ga_admin = $this->db->get('karyawan_admin')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $ga_admin['phone'];
+        $message = "*REVISI PERJALANAN DINAS*\r\n \r\n No. Perjalanan : *" . $dl['id'] . "*" .
+            "\r\n Nama Pemohon: *" . $dl['nama'] . "*" .
+            "\r\n Tujuan : *" . $dl['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $dl['keperluan'] . "*" .
+            "\r\n Peserta : *" . $dl['anggota'] . "*" .
+            "\r\n Berangkat : *" . $dl['tglberangkat'] . "* *" . $dl['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $dl['tglkembali'] . "* *" . $dl['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $dl['nopol'] . "* ( *" . $dl['kepemilikan'] . "*" .
+            "\r\n Catatan : *" . $dl['catatan_security'] . "*" .
+            " ) \r\n \r\nPerjalanan ini membutuhkan revisi dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
         redirect('cekdl/berangkat');
     }
 
