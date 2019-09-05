@@ -254,6 +254,7 @@ class Reservasi extends CI_Controller
         $this->db->set('tujuan', implode(', ', $listtujuan));
         $this->db->set('keperluan', $this->input->post('keperluan'));
         $this->db->set('anggota', implode(', ', $listpeserta));
+        $this->db->set('catatan', $this->input->post('catatan'));
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
@@ -342,6 +343,7 @@ class Reservasi extends CI_Controller
                 'kepemilikan' => $reservasi_temp['kepemilikan'],
                 'atasan1' => $atasan1['inisial'],
                 'atasan2' => $atasan2['inisial'],
+                'catatan' => $reservasi_temp['catatan'],
                 'jenis_perjalanan' => $reservasi_temp['jenis_perjalanan'],
                 'status' => '1'
             ];
@@ -429,6 +431,10 @@ class Reservasi extends CI_Controller
             $this->db->set('status', '1');
             $this->db->where('reservasi_id', $reservasi_temp['id']);
             $this->db->update('perjalanan_anggota');
+
+            //delete temporary
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $this->db->delete('reservasi_temp');
 
             $this->session->set_flashdata('message', 'rsvbaru');
             redirect('reservasi');
@@ -525,6 +531,47 @@ class Reservasi extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('reservasi/dl3b', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function tambahpeserta()
+    {
+        $peserta = [
+            'reservasi_id' => $this->input->post('id'),
+            'npk' => null,
+            'karyawan_inisial' => 'MGG',
+            'karyawan_nama' => $this->input->post('nama'),
+            'karyawan_dept' => $this->input->post('dept'),
+            'karyawan_posisi' => 'Magang',
+            'status' => '0'
+        ];
+        $this->db->insert('perjalanan_anggota', $peserta);
+
+        $anggota = $this->db->where('reservasi_id', $this->input->post('id'));
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('reservasi_temp');
+
+        redirect('reservasi/dl1z');
+    }
+
+    public function hapuspeserta($id, $inisial)
+    {
+        $this->db->where('reservasi_id', $id);
+        $this->db->where('karyawan_inisial', $inisial);
+        $this->db->delete('perjalanan_anggota');
+
+        $anggota = $this->db->where('reservasi_id', $id);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $id);
+        $this->db->update('reservasi_temp');
+
+        redirect('reservasi/dl1z');
     }
 
     public function batalrsv()

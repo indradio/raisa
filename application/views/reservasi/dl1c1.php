@@ -26,7 +26,7 @@
                                     ";
                         $tujuan = $this->db->query($queryTujuan)->result_array();
                         foreach ($tujuan as $tjn) : ?>
-                        <option value="<?= $tjn['inisial']; ?>"><?= $tjn['nama']; ?></option>
+                          <option value="<?= $tjn['inisial']; ?>"><?= $tjn['nama']; ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
@@ -61,7 +61,7 @@
                                     ";
                         $Karyawan = $this->db->query($queryKaryawan)->result_array();
                         foreach ($Karyawan as $kry) : ?>
-                        <option value="<?= $kry['inisial']; ?>"><?= $kry['nama']; ?></option>
+                          <option value="<?= $kry['inisial']; ?>"><?= $kry['nama']; ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
@@ -77,6 +77,14 @@
                           <span class="check"></span>
                         </span>
                       </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-md-2 col-form-label">Catatan</label>
+                  <div class="col-md-5">
+                    <div class="form-group has-default">
+                      <textarea rows="3" class="form-control" name="catatan" value="<?= set_value('catatan'); ?>"></textarea>
                     </div>
                   </div>
                 </div>

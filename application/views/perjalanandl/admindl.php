@@ -25,11 +25,12 @@
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Anggota</th>
+                                        <th>Peserta</th>
                                         <th>Tanggal Keberangkatan</th>
                                         <th>Jam Keberangkatan</th>
                                         <th>Tanggal Kembali</th>
                                         <th>Jam kembali</th>
+                                        <th>Catatan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
@@ -42,11 +43,12 @@
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Anggota</th>
+                                        <th>Peserta</th>
                                         <th>Tgl Keberangkatan</th>
                                         <th>Jam Keberangkatan</th>
                                         <th>Tgl Kembali</th>
                                         <th>Jam kembali</th>
+                                        <th>Catatan</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -70,6 +72,7 @@
                                             <td><?= $rsv['jamberangkat']; ?></td>
                                             <td><?= $rsv['tglkembali']; ?></td>
                                             <td><?= $rsv['jamkembali']; ?></td>
+                                            <td><?= $rsv['catatan']; ?></td>
                                             <td class="text-right">
                                                 <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
                                                 <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-info disabled">Gabungkan</a>

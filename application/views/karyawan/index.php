@@ -21,6 +21,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
+                                        <th>Foto</th>
                                         <th>NPK</th>
                                         <th>Nama</th>
                                         <th>Inisial</th>
@@ -41,6 +42,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>QR Code</th>
+                                        <th>Foto</th>
                                         <th>NPK</th>
                                         <th>Nama</th>
                                         <th>Inisial</th>
@@ -73,7 +75,12 @@
                                         <tr>
                                             <td>
                                                 <div class="img-container">
-                                                    <img src="<?= base_url(); ?>assets/img/qrcode/<?= $kry['qrcode'].'.png'; ?>" alt="...">
+                                                    <img src="<?= base_url(); ?>assets/img/qrcode/<?= $kry['qrcode'] . '.png'; ?>" alt="...">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="img-container">
+                                                    <img src="<?= base_url(); ?>assets/img/faces/<?= $kry['foto']; ?>" alt="...">
                                                 </div>
                                             </td>
                                             <td><?= $kry['npk']; ?></td>

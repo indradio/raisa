@@ -49,28 +49,6 @@ class Cekdl extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function hapus_anggota($dl, $inisial)
-    {
-        $this->db->where('perjalanan_id', $dl);
-        $this->db->where('karyawan_inisial', $inisial);
-        $this->db->delete('perjalanan_anggota');
-
-        $anggota = $this->db->where('perjalanan_id', $dl);
-        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
-        $anggotabaru = array_column($anggota, 'karyawan_inisial');
-
-        $this->db->set('anggota', implode(', ', $anggotabaru));
-        $this->db->where('id', $dl);
-        $this->db->update('perjalanan');
-
-        $perjalanan = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
-        $this->db->set('anggota', implode(', ', $anggotabaru));
-        $this->db->where('id', $perjalanan['reservasi_id']);
-        $this->db->update('reservasi');
-
-        redirect('cekdl/cekberangkat/' . $dl);
-    }
-
     public function cekberangkat_proses()
     {
         date_default_timezone_set('asia/jakarta');
@@ -130,7 +108,6 @@ class Cekdl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $kmtotal = $this->input->post('kmkembali') - $this->input->post('kmberangkat');
-
         $this->db->set('tglkembali', date("Y-m-d"));
         $this->db->set('jamkembali', date("H:i:s"));
         $this->db->set('cekkembali', $this->session->userdata('inisial'));
@@ -196,6 +173,28 @@ class Cekdl extends CI_Controller
         redirect('cekdl/cekberangkat/' . $dl['id']);
     }
 
+    public function hapus_anggota($dl, $inisial)
+    {
+        $this->db->where('perjalanan_id', $dl);
+        $this->db->where('karyawan_inisial', $inisial);
+        $this->db->delete('perjalanan_anggota');
+
+        $anggota = $this->db->where('perjalanan_id', $dl);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $dl);
+        $this->db->update('perjalanan');
+
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $perjalanan['reservasi_id']);
+        $this->db->update('reservasi');
+
+        redirect('cekdl/cekberangkat/' . $dl);
+    }
+
     public function revisi()
     {
         $this->db->set('catatan_security', $this->input->post('catatan'));
@@ -208,7 +207,6 @@ class Cekdl extends CI_Controller
 
     public function edit()
     {
-
         $this->db->set('tglberangkat', $this->input->post('tglberangkat'));
         $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
         $this->db->set('tglkembali', $this->input->post('tglkembali'));
