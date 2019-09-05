@@ -18,7 +18,7 @@
                   <label class="col-md-2 col-form-label">Tujuan</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
-                      <select class="selectpicker" name="tujuan[]" data-style="select-with-transition" multiple title="Pilih Tujuan" data-size="7">
+                      <select class="selectpicker" name="tujuan[]" data-style="select-with-transition" multiple title="Pilih Tujuan" data-size="7" data-width="fit" data-live-search="true">
                         <?php
                         $queryTujuan = "SELECT *
                                     FROM `customer`
@@ -26,7 +26,7 @@
                                     ";
                         $tujuan = $this->db->query($queryTujuan)->result_array();
                         foreach ($tujuan as $tjn) : ?>
-                          <option value="<?= $tjn['inisial']; ?>"><?= $tjn['nama']; ?></option>
+                          <option data-subtext="<?= $tjn['nama']; ?>" value="<?= $tjn['inisial']; ?>"><?= $tjn['inisial']; ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
@@ -52,7 +52,7 @@
                   <label class="col-md-2 col-form-label">Peserta Perjalanan</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
-                      <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Peserta" data-size="7">
+                      <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Peserta" data-size="7" data-width="fit" data-live-search="true">
                         <?php
                         $queryKaryawan = "SELECT *
                                     FROM `karyawan`
@@ -61,7 +61,7 @@
                                     ";
                         $Karyawan = $this->db->query($queryKaryawan)->result_array();
                         foreach ($Karyawan as $kry) : ?>
-                          <option value="<?= $kry['inisial']; ?>"><?= $kry['nama']; ?></option>
+                          <option data-subtext="<?= $kry['nama']; ?>" value="<?= $kry['inisial']; ?>"><?= $kry['inisial']; ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>

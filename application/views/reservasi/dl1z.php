@@ -124,8 +124,8 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-rose">Selesai</button>
                                         <a href="<?= base_url('reservasi/dl1c1'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                                        <button type="submit" class="btn btn-fill btn-rose">Selesai</button>
                                     </div>
                                 </div>
                             </div>
