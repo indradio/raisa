@@ -14,6 +14,7 @@ class Lembur extends CI_Controller
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'LemburKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -71,19 +72,19 @@ class Lembur extends CI_Controller
         $data = [
             'id' => 'OT' . date('y') . $totalLembur,
             'tglpengajuan' => date('Y-m-d H:i:s'),
-            'jenis_lembur' => $this->input->post('jenis'),
             'npk' => $this->session->userdata('npk'),
             'nama' => $karyawan['nama'],
             'tglmulai' => $this->input->post('tglmulai'),
             'tglselesai' => $this->input->post('tglselesai'),
-            'atasan1' => $atasan1['inisial'],
-            'atasan2' => $atasan2['inisial'],
-            'durasi' => $jam . ' jam ' . $menit . ' menit',
+            'atasan1_rencana' => $atasan1['inisial'],
+            'atasan2_rencana' => $atasan2['inisial'],
+            'durasi' => $jam . ':' . $menit . ':00',
             'status' => '1'
         ];
         $this->db->insert('lembur', $data);
 
-        redirect('lembur/rencana_aktivitas/' . $data['id']);
+        redirect('lembur/rencana');
+        // redirect('lembur/rencana_aktivitas/' . $data['id']);
     }
 
     public function rencana_aktivitas($id)

@@ -20,7 +20,6 @@
                                 <thead>
                                     <tr>
                                         <th>No. Lembur</th>
-                                        <th>Jenis Lembur</th>
                                         <th>Tgl Mengajukan</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Jam Mulai</th>
@@ -39,7 +38,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>No. Reservasi</th>
-                                        <th>Jenis Lembur</th>
                                         <th>Tgl Mengajukan</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Jam Mulai</th>
@@ -51,24 +49,22 @@
                                         <th>Admin GA</th>
                                         <th>Catatan</th>
                                         <th>Status</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
-                                        <th class="disabled-sorting"></th>
+                                        <th class="text-right">Actions</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
                                         <tr>
                                             <td><?= $l['id']; ?></td>
-                                            <?php $jenis = $this->db->get_where('lembur_jenis', ['id' => $l['jenis_lembur']])->row_array(); ?>
-                                            <td><?= $jenis['nama']; ?></td>
                                             <td><?= $l['tglpengajuan']; ?></td>
                                             <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= $l['durasi']; ?></td>
-                                            <td><?= $l['atasan1']; ?></td>
-                                            <td><?= $l['atasan2']; ?></td>
+                                            <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                                            <td><?= $l['atasan1_rencana']; ?></td>
+                                            <td><?= $l['atasan2_rencana']; ?></td>
                                             <td><?= $l['admin_ga']; ?></td>
                                             <td><?= $l['catatan']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
@@ -113,24 +109,6 @@
                 </div>
                 <form class="form" method="post" action="<?= base_url('lembur/tambah'); ?>">
                     <div class="modal-body">
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Jenis Lembur</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="jenis" data-style="select-with-transition" title="Pilih" data-size="3" required>
-                                        <?php
-                                        $queryJenis = "SELECT *
-                                                                    FROM `lembur_jenis`
-                                                                    ORDER BY `id` ASC
-                                                                    ";
-                                        $jenis = $this->db->query($queryJenis)->result_array();
-                                        foreach ($jenis as $j) : ?>
-                                            <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <label class="col-md-4 col-form-label">Tanggal Mulai</label>
                             <div class="col-md-7">
