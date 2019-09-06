@@ -433,7 +433,7 @@ class Reservasi extends CI_Controller
             $this->db->update('perjalanan_anggota');
 
             //delete temporary
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $this->db->where('id', $reservasi_temp['id']);
             $this->db->delete('reservasi_temp');
 
             $this->session->set_flashdata('message', 'rsvbaru');

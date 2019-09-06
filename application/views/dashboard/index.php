@@ -152,9 +152,9 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                               $r = $this->db->query($queryReservasi)->row_array();?>
                                               <td><?= $r['id']; ?></td>
                                               <td><?= $r['jenis_perjalanan']; ?></td>
+                                              <td><?= $r['anggota']; ?></td>
                                               <td><?= $r['tujuan']; ?></td>
                                               <td><?= $r['keperluan']; ?></td>
-                                              <td><?= $r['anggota']; ?></td>
                                               <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                               <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
                                               <?php $statusrsv = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
@@ -187,9 +187,9 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                         </td>  
                                               <td><?= $pn['id']; ?></td>
                                               <td><?= $pn['jenis_perjalanan']; ?></td>
+                                              <td><?= $pn['anggota']; ?></td>
                                               <td><?= $pn['tujuan']; ?></td>
                                               <td><?= $pn['keperluan']; ?></td>
-                                              <td><?= $pn['anggota']; ?></td>
                                               <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
                                               <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
                                               <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
