@@ -29,6 +29,7 @@
                                         <th>Jam Keberangkatan</th>
                                         <th>Tgl Kembali</th>
                                         <th>Jam Kembali</th>
+                                        <th>Jenis Perjalanan</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -44,6 +45,7 @@
                                         <th>Jam Keberangkatan</th>
                                         <th>Tgl Kembali</th>
                                         <th>Jam Kembali</th>
+                                        <th>Jenis Perjalanan</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -75,6 +77,7 @@
                                             <td><?= $rsv['jamberangkat']; ?></td>
                                             <td><?= $rsv['tglkembali']; ?></td>
                                             <td><?= $rsv['jamkembali']; ?></td>
+                                            <td><?= $rsv['jenis_perjalanan']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -116,6 +119,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-4 col-form-label">Jenis Perjalanan</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="jenis">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Nama</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -148,22 +159,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Nomor Polisi</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="nopol">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-4 col-form-label">Jenis Kendaraan</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kepemilikan">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-4 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -192,6 +187,22 @@
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="jamkembali">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Nomor Polisi</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="nopol">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Jenis Kendaraan</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="kepemilikan">
                                     </div>
                                 </div>
                             </div>

@@ -104,8 +104,8 @@ $(document).ready(function () {
             { "visible": false, "targets": 5 },
             { "visible": false, "targets": 6 },
             { "visible": false, "targets": 8 },
-            { "visible": false, "targets": 9 },
-            { "visible": false, "targets": 10 }
+            { "visible": false, "targets": 10 },
+            { "visible": false, "targets": 11 }
         ],
         scrollX: true,
         language: {
@@ -133,6 +133,7 @@ $(document).ready(function () {
                 modal.find('.modal-body input[name="jamberangkat"]').val(tableAtasan.rows(indexes).data().pluck(8).toArray())
                 modal.find('.modal-body input[name="tglkembali"]').val(tableAtasan.rows(indexes).data().pluck(9).toArray())
                 modal.find('.modal-body input[name="jamkembali"]').val(tableAtasan.rows(indexes).data().pluck(10).toArray())
+                modal.find('.modal-body input[name="jenis"]').val(tableAtasan.rows(indexes).data().pluck(11).toArray())
             })
             $('#rsvBatal').on('show.bs.modal', function () {
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
