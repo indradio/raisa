@@ -114,31 +114,31 @@ $(document).ready(function () {
         }
     });
 
-    var tableAtasan = $('#tableTa').DataTable();
+    var tableApprovalta = $('#tableTa').DataTable();
 
     // Select record
-    tableAtasan.on('select', function (e, dt, type, indexes) {
+    tableApprovalta.on('select', function (e, dt, type, indexes) {
         if (type === 'row') {
             $('#modalTa').on('show.bs.modal', function () {
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
-                modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
-                modal.find('.modal-body input[name="nama"]').val(tableAtasan.rows(indexes).data().pluck(1).toArray())
-                modal.find('.modal-body input[name="tujuan"]').val(tableAtasan.rows(indexes).data().pluck(2).toArray())
-                modal.find('.modal-body textarea[name="keperluan"]').val(tableAtasan.rows(indexes).data().pluck(3).toArray())
-                modal.find('.modal-body input[name="anggota"]').val(tableAtasan.rows(indexes).data().pluck(4).toArray())
-                modal.find('.modal-body input[name="nopol"]').val(tableAtasan.rows(indexes).data().pluck(5).toArray())
-                modal.find('.modal-body input[name="kepemilikan"]').val(tableAtasan.rows(indexes).data().pluck(6).toArray())
-                modal.find('.modal-body input[name="tglberangkat"]').val(tableAtasan.rows(indexes).data().pluck(7).toArray())
-                modal.find('.modal-body input[name="jamberangkat"]').val(tableAtasan.rows(indexes).data().pluck(8).toArray())
-                modal.find('.modal-body input[name="tglkembali"]').val(tableAtasan.rows(indexes).data().pluck(9).toArray())
-                modal.find('.modal-body input[name="jamkembali"]').val(tableAtasan.rows(indexes).data().pluck(10).toArray())
-                modal.find('.modal-body input[name="jenis"]').val(tableAtasan.rows(indexes).data().pluck(11).toArray())
+                modal.find('.modal-body input[name="id"]').val(tableApprovalta.rows(indexes).data().pluck(0).toArray())
+                modal.find('.modal-body input[name="nama"]').val(tableApprovalta.rows(indexes).data().pluck(1).toArray())
+                modal.find('.modal-body input[name="tujuan"]').val(tableApprovalta.rows(indexes).data().pluck(2).toArray())
+                modal.find('.modal-body textarea[name="keperluan"]').val(tableApprovalta.rows(indexes).data().pluck(3).toArray())
+                modal.find('.modal-body input[name="anggota"]').val(tableApprovalta.rows(indexes).data().pluck(4).toArray())
+                modal.find('.modal-body input[name="nopol"]').val(tableApprovalta.rows(indexes).data().pluck(5).toArray())
+                modal.find('.modal-body input[name="kepemilikan"]').val(tableApprovalta.rows(indexes).data().pluck(6).toArray())
+                modal.find('.modal-body input[name="tglberangkat"]').val(tableApprovalta.rows(indexes).data().pluck(7).toArray())
+                modal.find('.modal-body input[name="jamberangkat"]').val(tableApprovalta.rows(indexes).data().pluck(8).toArray())
+                modal.find('.modal-body input[name="tglkembali"]').val(tableApprovalta.rows(indexes).data().pluck(9).toArray())
+                modal.find('.modal-body input[name="jamkembali"]').val(tableApprovalta.rows(indexes).data().pluck(10).toArray())
+                modal.find('.modal-body input[name="jenis"]').val(tableApprovalta.rows(indexes).data().pluck(11).toArray())
             })
             $('#batalTa').on('show.bs.modal', function () {
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
-                modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
+                modal.find('.modal-body input[name="id"]').val(tableApprovalta.rows(indexes).data().pluck(0).toArray())
             })
             $('#modalTa').modal("show");
         }
