@@ -1,20 +1,20 @@
 const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
-if (flashData == 'setujudl') {
-  swal({
-    title: "Terimakasih!",
-    text: "Perjalanan ini telah disetujui.",
-    buttonsStyling: false,
-    confirmButtonClass: "btn btn-success",
-    type: "success"
-  }).catch(swal.noop)
-} else if (flashData == 'masuk') {
+if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
     text: "INFO : Perjalanan kamu akan dibatalkan jika tidak segera melakukan perjalanan dalam 2 (DUA) jam dari waktu keberangkatan yang kamu pesan.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
+  }).catch(swal.noop)
+}else if (flashData == 'setujudl') {
+  swal({
+    title: "Terimakasih!",
+    text: "Perjalanan ini telah disetujui.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
   }).catch(swal.noop)
 } else if (flashData == 'bataldl') {
   swal({

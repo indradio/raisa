@@ -207,13 +207,35 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#" class="btn btn-link btn-danger" data-toggle="modal" data-target="#rsvBatal">BATALKAN!</a>
+                                <a href="#" class="btn btn-link btn-danger" data-toggle="modal" data-target="#batalTa">BATALKAN!</a>
                                 <button type="submit" class="btn btn-fill btn-success">SETUJUI</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Batal TA -->
+<div class="modal fade" id="batalTa" tabindex="-1" role="dialog" aria-labelledby="batalTaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="batalTaLabel">Masukan alasan pembatalan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('persetujuanta/batalta'); ?>">
+                <div class="modal-body">
+                    <input type="text" class="form-control disabled" name="id" hidden>
+                    <textarea rows="2" class="form-control" name="catatan" required></textarea>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-danger">BATALKAN PERJALANAN INI!</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

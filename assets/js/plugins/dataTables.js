@@ -135,7 +135,7 @@ $(document).ready(function () {
                 modal.find('.modal-body input[name="jamkembali"]').val(tableAtasan.rows(indexes).data().pluck(10).toArray())
                 modal.find('.modal-body input[name="jenis"]').val(tableAtasan.rows(indexes).data().pluck(11).toArray())
             })
-            $('#rsvBatal').on('show.bs.modal', function () {
+            $('#batalTa').on('show.bs.modal', function () {
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
