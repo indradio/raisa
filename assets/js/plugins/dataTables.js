@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     var tablePerjalanan = $('#dtperjalanan').DataTable();
 
-    //datatables persetujuan
+    //datatables persetujuan DL
 
     $('#dtatasan').DataTable({
         "pagingType": "full_numbers",
@@ -86,6 +86,60 @@ $(document).ready(function () {
                 modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
             })
             $('#rsvDetail').modal("show");
+        }
+    });
+
+    //datatables persetujuan TA
+
+    $('#tableTa').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        select: {
+            style: 'single'
+        },
+        "columnDefs": [
+            { "visible": false, "targets": 5 },
+            { "visible": false, "targets": 6 },
+            { "visible": false, "targets": 8 },
+            { "visible": false, "targets": 9 },
+            { "visible": false, "targets": 10 }
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
+    var tableAtasan = $('#tableTa').DataTable();
+
+    // Select record
+    tableAtasan.on('select', function (e, dt, type, indexes) {
+        if (type === 'row') {
+            $('#modalTa').on('show.bs.modal', function () {
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
+                modal.find('.modal-body input[name="nama"]').val(tableAtasan.rows(indexes).data().pluck(1).toArray())
+                modal.find('.modal-body input[name="tujuan"]').val(tableAtasan.rows(indexes).data().pluck(2).toArray())
+                modal.find('.modal-body textarea[name="keperluan"]').val(tableAtasan.rows(indexes).data().pluck(3).toArray())
+                modal.find('.modal-body input[name="anggota"]').val(tableAtasan.rows(indexes).data().pluck(4).toArray())
+                modal.find('.modal-body input[name="nopol"]').val(tableAtasan.rows(indexes).data().pluck(5).toArray())
+                modal.find('.modal-body input[name="kepemilikan"]').val(tableAtasan.rows(indexes).data().pluck(6).toArray())
+                modal.find('.modal-body input[name="tglberangkat"]').val(tableAtasan.rows(indexes).data().pluck(7).toArray())
+                modal.find('.modal-body input[name="jamberangkat"]').val(tableAtasan.rows(indexes).data().pluck(8).toArray())
+                modal.find('.modal-body input[name="tglkembali"]').val(tableAtasan.rows(indexes).data().pluck(9).toArray())
+                modal.find('.modal-body input[name="jamkembali"]').val(tableAtasan.rows(indexes).data().pluck(10).toArray())
+            })
+            $('#rsvBatal').on('show.bs.modal', function () {
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
+            })
+            $('#modalTa').modal("show");
         }
     });
 
