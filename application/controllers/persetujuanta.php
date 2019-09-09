@@ -109,7 +109,7 @@ class Persetujuanta extends CI_Controller
             $this->db->where('npk', $rsv['npk']);
             $karyawan = $this->db->get('karyawan')->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $ga_admin['phone'];
+            $destination = $karyawan['phone'];
             $message = "*PERJALANAN DINAS TA ANDA DIBATALKAN*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .
                 "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
@@ -135,7 +135,7 @@ class Persetujuanta extends CI_Controller
             $this->db->where('npk', $rsv['npk']);
             $karyawan = $this->db->get('karyawan')->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $ga_admin['phone'];
+            $destination = $karyawan['phone'];
             $message = "*PERJALANAN DINAS TA ANDA DIBATALKAN*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .
                 "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
