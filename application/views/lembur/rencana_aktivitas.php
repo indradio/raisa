@@ -60,12 +60,11 @@
                                 <tfoot>
                                     <tr>
                                         <th>No. Aktivitas</th>
-                                        <th>Tanggal</th>
+                                        <th>jenis Aktivitas</th>
                                         <th>Kategori</th>
                                         <th>COPRO</th>
                                         <th>WBS</th>
                                         <th>Rencana Aktivitas</th>
-                                        <th>Realisasi Aktivitas</th>
                                         <th>Durasi/Jam</th>
                                         <th>Hasil</th>
                                         <th>Status</th>
@@ -77,14 +76,14 @@
                                     <?php foreach ($aktivitas as $a) : ?>
                                         <tr>
                                             <td><?= $a['id']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($a['tanggal'])); ?></td>
+                                            <td><?= $a['jenis_aktivitas']; ?></td>
                                             <td><?= $a['kategori']; ?></td>
                                             <td><?= $a['copro']; ?></td>
                                             <td><?= $a['wbs']; ?></td>
-                                            <td><?= $a['rencana_aktivitas']; ?></td>
-                                            <td><?= $a['realisasi_aktivitas']; ?></td>
-                                            <td><?= $a['durasi']; ?></td>
-                                            <td><?= $a['hasil']; ?></td>
+                                            <td><?= $a['aktivitas']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($a['waktu_mulai_estimasi'])); ?></td>
+                                            <td><?= $a['durasi_estimasi']; ?></td>
+                                            <td><?= $a['diskripsi _hasil']; ?></td>
                                             <td><?= $a['status']; ?></td>
                                             <td></td>
                                             <td></td>
@@ -136,13 +135,13 @@
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" data-style="select-with-transition" title="Pilih" data-size="7" required>
                                         <?php
-                                        $queryJenis = "SELECT *
-                                                                    FROM `lembur_jenis`
+                                        $queyCopro = "SELECT *
+                                                                    FROM `copro`
                                                                     ORDER BY `id` ASC
                                                                     ";
-                                        $jenis = $this->db->query($queryJenis)->result_array();
-                                        foreach ($jenis as $j) : ?>
-                                            <option value="<?= $j['id']; ?>"><?= $j['nama']; ?></option>
+                                        $copro = $this->db->query($queyCopro)->result_array();
+                                        foreach ($copro as $c) : ?>
+                                            <option value="<?= $c['id']; ?>"><?= $c['no_material']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -152,7 +151,7 @@
                             <label class="col-md-4 col-form-label">WBS</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="wbs" data-style="select-with-transition" title="Pilih" data-size="10" required>
+                                    <select class="selectpicker disabled" name="wbs" data-style="select-with-transition" title="Pilih" data-size="10" required>
                                         <?php
                                         $queryJenis = "SELECT *
                                                                     FROM `lembur_jenis`
