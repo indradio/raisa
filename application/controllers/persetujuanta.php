@@ -89,7 +89,6 @@ class Persetujuanta extends CI_Controller
             $api_url .= "&text=" . urlencode($message);
             json_decode(file_get_contents($api_url, false));
         }
-
         $this->session->set_flashdata('message', 'setujudl');
         redirect('persetujuanta/index');
     }
