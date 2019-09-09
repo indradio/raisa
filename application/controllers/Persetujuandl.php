@@ -67,9 +67,9 @@ class Persetujuandl extends CI_Controller
 
                 $this->db->where('posisi_id', '3');
                 $this->db->where('dept_id', '21');
-                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $ga_admin['phone'];
+                $destination = $karyawan['phone'];
                 $message = "*PENGAJUAN PERJALANAN DINAS TA*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                     "\r\n Nama : *" . $rsv['nama'] . "*" .
                     "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
@@ -86,10 +86,10 @@ class Persetujuandl extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
 
                 $this->db->where('posisi_id', '2');
-                $this->db->where('dept_id', '2');
-                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                $this->db->where('vid_id', '2');
+                $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $ga_admin['phone'];
+                $destination = $karyawan['phone'];
                 $message = "*PENGAJUAN PERJALANAN DINAS TA*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                     "\r\n Nama : *" . $rsv['nama'] . "*" .
                     "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
