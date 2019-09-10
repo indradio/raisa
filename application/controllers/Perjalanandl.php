@@ -26,7 +26,7 @@ class Perjalanandl extends CI_Controller
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Reservasi Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '3'])->result_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '5'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -119,7 +119,7 @@ class Perjalanandl extends CI_Controller
             $this->db->update('perjalanan_anggota');
 
             $this->db->set('admin_ga', $this->session->userdata('inisial'));
-            $this->db->set('status', '4');
+            $this->db->set('status', '6');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
 

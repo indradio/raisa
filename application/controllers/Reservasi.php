@@ -584,4 +584,17 @@ class Reservasi extends CI_Controller
         $this->session->set_flashdata('message', 'bataldl');
         redirect('reservasi');
     }
+
+    public function status($id)
+    {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['id' =>  $id])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('reservasi/status', $data);
+        $this->load->view('templates/footer');
+    }
 }

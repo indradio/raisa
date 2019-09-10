@@ -61,7 +61,7 @@ class Persetujuandl extends CI_Controller
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
             if ($rsv['jenis_perjalanan'] == 'TAPP' or $rsv['jenis_perjalanan'] == 'TA') {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
-                $this->db->set('status', '5');
+                $this->db->set('status', '3');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 
@@ -86,7 +86,7 @@ class Persetujuandl extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
 
                 $this->db->where('posisi_id', '2');
-                $this->db->where('vid_id', '2');
+                $this->db->where('div_id', '2');
                 $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = "NQXJ3HED5LW2XV440HCG";
                 $destination = $karyawan['phone'];
@@ -106,7 +106,7 @@ class Persetujuandl extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
             } else {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
-                $this->db->set('status', '3');
+                $this->db->set('status', '5');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 

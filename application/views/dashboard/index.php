@@ -134,6 +134,12 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             ";
                                             $p = $this->db->query($queryPerjalanan)->row_array();
                                             if ($p['id'] != null) {
+// cari selisih
+date_default_timezone_set('asia/jakarta');
+$mulai = strtotime($p['jamberangkat']);
+$selesai = time();
+$durasi = $selesai - $mulai;
+$jam   = floor($durasi / (60 * 60));
                                             ?>
                                               <td><?= $p['id']; ?></td>
                                               <td><?= $p['jenis_perjalanan']; ?></td>
