@@ -53,13 +53,13 @@
                                     if ($karyawan['posisi_id'] == '2') {
                                         $queryRsv = "SELECT *
                                             FROM `reservasi`
-                                            WHERE (`jenis_perjalanan` = 'TAPP' or `jenis_perjalanan` = 'TA') and (`status` = 5 or `status` = 6)
+                                            WHERE (`jenis_perjalanan` = 'TAPP' or `jenis_perjalanan` = 'TA') and (`status` = 3 or `status` = 4)
                                             ORDER BY `id` DESC
                                             ";
                                     } elseif ($karyawan['posisi_id'] == '3') {
                                         $queryRsv = "SELECT *
                                             FROM `reservasi`
-                                            WHERE (`jenis_perjalanan` = 'TAPP' or `jenis_perjalanan` = 'TA') and `status` = 5
+                                            WHERE (`jenis_perjalanan` = 'TAPP' or `jenis_perjalanan` = 'TA') and `status` = 3
                                             ORDER BY `id` DESC
                                             ";
                                     }
