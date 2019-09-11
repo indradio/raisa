@@ -55,7 +55,7 @@ $('#tambahPeserta').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
-$('#revisiPerjalanan').on('show.bs.modal', function (event) {
+$('#batalRsv').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
     var modal = $(this)
@@ -69,7 +69,7 @@ $('#batalDl').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
-$('#batalRsv').on('show.bs.modal', function (event) {
+$('#revisiPerjalanan').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
     var modal = $(this)

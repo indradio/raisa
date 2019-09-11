@@ -70,13 +70,14 @@
                                                 <td><?= $pdetail['anggota']; ?></td>
                                                 <td><?= date('d/m/Y', strtotime($pdetail['tglberangkat'])); ?> <?= date('H:i', strtotime($pdetail['jamberangkat'])); ?></td>
                                                 <td><?= date('d/m/Y', strtotime($pdetail['tglkembali'])); ?> <?= date('H:i', strtotime($pdetail['jamkembali'])); ?></td>
+                                                <td><?= $pdetail['catatan_ga']; ?></td>
                                                 <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
-                                                <td><?= $pdetail['catatan_ga']; ?></td>
-                                                <td class="text-right"><a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-warning btn-just-icon" target="_blank"><i class="material-icons">print</i></a></td>
+                                                <td class="text-right"><a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a></td>
                                                 <td class="text-right">
-                                                    <?php if ($pdetail['status'] == 1) { ?>
-                                                        <a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>"><i class="material-icons">close</i></a>
+                                                    <?php if ($pdetail['status'] == 11) { ?>
+                                                        <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $pdetail['id']; ?>" class="badge badge-warning">+2 JAM</a>
+                                                        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>">BATALKAN</a>
                                                     <?php }; ?>
                                                 </td>
                                             </tr>

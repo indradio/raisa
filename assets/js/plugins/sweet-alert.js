@@ -8,7 +8,7 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-primary",
     type: "info"
   }).catch(swal.noop)
-}else if (flashData == 'setujudl') {
+} else if (flashData == 'setujudl') {
   swal({
     title: "Terimakasih!",
     text: "Perjalanan ini telah disetujui.",
@@ -24,7 +24,7 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-} else if (flashData == 'unfinishdl') {
+} else if (flashData == 'Xunfinishdl') {
   swal({
     title: "Maaf!",
     text: "Perjalanan ini mungkin dibatalkan ataupun belum selesai.",
@@ -36,7 +36,7 @@ if (flashData == 'masuk') {
       window.close();
     }
   }).catch(swal.noop)
-} else if (flashData == 'sudahsetujudl') {
+} else if (flashData == 'Xsudahsetujudl') {
   swal({
     title: "Terimakasih!",
     text: "Perjalanan ini telah Telah disetujui oleh Kepala Departemen.",
@@ -46,8 +46,8 @@ if (flashData == 'masuk') {
   }).catch(swal.noop)
 } else if (flashData == 'nopolsalah') {
   swal({
-    title: "Maaf!",
-    text: "Nomor polisi yang anda masukan tidak terdaftar dalam kendaraan operasional.",
+    title: "Ooops!",
+    text: "Nomor polisi yang kamu masukan tidak terdaftar dalam kendaraan operasional.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"
@@ -60,10 +60,18 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'tambahwaktudl') {
+  swal({
+    title: "Yeaayy!!!",
+    text: "Waktu keberangkatan kamu RAISA tambah 2 JAM dari waktu keberangkatan yang kamu pesan.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-info",
+    type: "info"
+  }).catch(swal.noop)
 } else if (flashData == 'rsvbaru') {
   swal({
-    title: "Reservasi Berhasil!",
-    text: "RAISA akan mengirimkan notifikasi jika perjalanan anda telah disetujui dan siap diberangkatkan.",
+    title: "HOREEE!! Reservasi Berhasil!",
+    text: "Nanti RAISA kabarin deh kalo perjalanan kamu sudah disetujui dan siap untuk berangkat.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
@@ -86,8 +94,8 @@ if (flashData == 'masuk') {
   }).catch(swal.noop)
 } else if (flashData == 'passok') {
   swal({
-    title: "Berhasil!",
-    text: "Password anda telah berhasil diubah.",
+    title: "Yeayy!",
+    text: "Password kamu telah berhasil diubah.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
