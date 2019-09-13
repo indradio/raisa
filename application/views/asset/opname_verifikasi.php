@@ -15,10 +15,11 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtperjalanan" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th class="disabled-sorting text-center"></th>
+                                        <th>Nomor Asset</th>
                                         <th>Asset</th>
                                         <th class="th-description">Kategori</th>
                                         <th class="th-description">Lokasi</th>
@@ -33,6 +34,7 @@
                                 <tfoot>
                                     <tr>
                                         <th class="text-center"></th>
+                                        <th>Nomor Asset</th>
                                         <th>Asset</th>
                                         <th class="th-description">Kategori</th>
                                         <th class="th-description">Lokasi</th>
@@ -47,37 +49,36 @@
                                 <tbody>
                                     <?php
                                     foreach ($asset as $a) : ?>
-                                    <tr>
-                                        <td>
-                                            <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
-                                            </div>
-                                        </td>
-                                        <td class="td-name">
-                                            <a><?= $a['asset_deskripsi']; ?></a>
-                                            <br />
-                                            <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
-                                        </td>
-                                        <td><?= $a['kategori']; ?></td>
-                                        <td><?= $a['lokasi']; ?></td>
-                                        <td><?= $a['first_acq']; ?></td>
-                                        <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
-                                        <td><?= $karyawan['nama']; ?></td>
-                                        <?php if ($a['status'] == 1) {
-                                                echo '<td>BAIK-ADA-DIGUNAKAN</td>';
-                                            } else if ($a['status'] == 2) {
-                                                echo '<td>BAIK-TIDAK SESUAI</td>';
-                                            } else if ($a['status'] == 3) {
-                                                echo '<td>RUSAK</td>';
-                                            } else if ($a['status'] == 4) {
-                                                echo '<td>HILANG</td>';
-                                            }; ?>
-                                        <td><?= $a['catatan']; ?></td>
-                                        <td><?= $a['tglopname']; ?></td>
-                                        <td class="text-right">
-                                            <a href="#" class="badge badge-pill badge-success">Verifikasi</a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <a><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></a>
+                                            </td>
+                                            <td><?= $a['asset_deskripsi']; ?></td>
+                                            <td><?= $a['kategori']; ?></td>
+                                            <td><?= $a['lokasi']; ?></td>
+                                            <td><?= $a['first_acq']; ?></td>
+                                            <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
+                                            <td><?= $karyawan['nama']; ?></td>
+                                            <?php if ($a['status'] == 1) {
+                                                    echo '<td>BAIK-ADA-DIGUNAKAN</td>';
+                                                } else if ($a['status'] == 2) {
+                                                    echo '<td>BAIK-TIDAK SESUAI</td>';
+                                                } else if ($a['status'] == 3) {
+                                                    echo '<td>RUSAK</td>';
+                                                } else if ($a['status'] == 4) {
+                                                    echo '<td>HILANG</td>';
+                                                }; ?>
+                                            <td><?= $a['catatan']; ?></td>
+                                            <td><?= $a['tglopname']; ?></td>
+                                            <td class="text-right">
+                                                <a href="#" class="badge badge-pill badge-success">Verifikasi</a>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>

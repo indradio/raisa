@@ -381,6 +381,102 @@
             close: 'fa fa-remove'
         }
     });
+
+    $(document).ready(function() {
+        //dtproject
+        var tableproject = $('#dtproject').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            scrollX: true,
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [], //Initial no order.
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('project/ajax_list') ?>",
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [{
+                "targets": [0], //first column / numbering column
+                "orderable": false, //set not orderable
+            }, ],
+            "columnDefs": [{
+                "targets": [5], //first column / numbering column
+                "orderable": false, //set not orderable
+                "defaultContent": "<button>PILIH</button>",
+            }, ],
+        });
+        $('#dtproject tbody').on('click', 'button', function() {
+            var data = tableproject.row($(this).parents('tr')).data();
+            $('#projectModal').on('show.bs.modal', function() {
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input[name="copro"]').val(data[1])
+                modal.find('.modal-body input[name="no_material"]').val(data[2])
+                modal.find('.modal-body input[name="deskripsi"]').val(data[3])
+                modal.find('.modal-body input[name="status"]').val(data[4])
+            })
+            $('#projectModal').modal("show");
+        });
+
+        var groupColumn = 1;
+        var tablewbs = $('#dtwbs').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [-1],
+                ["All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            //Set column definition initialisation properties.
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }, ],
+            "columnDefs": [{
+                "targets": [12], //first column / numbering column
+                "orderable": false, //set not orderable
+            }, ],
+            "order": [
+                [0, 'asc']
+            ],
+            "displayLength": -1,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="13">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!-- JS fullcalendar -->
+<script>
+    $(document).ready(function() {
+        md.initFullCalendar();
+    });
 </script>
 
 </body>

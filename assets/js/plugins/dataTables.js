@@ -229,4 +229,5 @@ $(document).ready(function () {
     table.on('click', '.like', function () {
         alert('You clicked on Like button');
     });
+
 });

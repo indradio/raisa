@@ -77,14 +77,13 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Kendaraan</th>
-                                        <th>Nomor DL</th>
-                                        <th>Jenis DL</th>
+                                        <th>Nomor</th>
+                                        <th>Jenis</th>
                                         <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Keberangkatan</th>
                                         <th>Kembali</th>
-                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -124,23 +123,22 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                         if ($total == 0) { ?>
                                           <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
                                           </td>
-                                        <?php } else { ?>
-                                          <span class="badge badge-pill badge-danger">Sudah Dipesan</span>
-                                          </td>
-                                          <?php
+                                        <?php } else { 
                                             $queryPerjalanan = "SELECT *
                                             FROM `perjalanan`
                                             WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                             ";
                                             $p = $this->db->query($queryPerjalanan)->row_array();
                                             if ($p['id'] != null) {
-// cari selisih
-date_default_timezone_set('asia/jakarta');
-$mulai = strtotime($p['jamberangkat']);
-$selesai = time();
-$durasi = $selesai - $mulai;
-$jam   = floor($durasi / (60 * 60));
                                             ?>
+                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                              <?php if ($p['status'] == '1') {?>
+                                                <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span></td>
+                                                <?php }elseif ($p['status'] == '2') {?>
+                                                <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span></td>
+                                                <?php } elseif ($p['status'] == '8' or $p['status'] == '11') {?>
+                                                <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span></td>
+                                              <?php };?>
                                               <td><?= $p['id']; ?></td>
                                               <td><?= $p['jenis_perjalanan']; ?></td>
                                               <td><?= $p['anggota']; ?></td>
@@ -148,14 +146,15 @@ $jam   = floor($durasi / (60 * 60));
                                               <td><?= $p['keperluan']; ?></td>
                                               <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                               <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
-                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
-                                              <td><?= $status['nama']; ?></td>
                                             <?php } else { 
                                               $queryReservasi = "SELECT *
                                               FROM `reservasi`
                                               WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                               ";
                                               $r = $this->db->query($queryReservasi)->row_array();?>
+                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                                <span class="badge badge-primary"><?= $status['nama']; ?></span>
+                                              </td>
                                               <td><?= $r['id']; ?></td>
                                               <td><?= $r['jenis_perjalanan']; ?></td>
                                               <td><?= $r['anggota']; ?></td>
@@ -163,8 +162,6 @@ $jam   = floor($durasi / (60 * 60));
                                               <td><?= $r['keperluan']; ?></td>
                                               <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                               <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
-                                              <?php $statusrsv = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
-                                              <td><?= $statusrsv['nama']; ?></td>
                                             <?php }; ?>
                                         <?php }; ?>
                                     </tr>
@@ -189,7 +186,14 @@ $jam   = floor($durasi / (60 * 60));
                                             <br />
                                             <small><?= $pn['kepemilikan']; ?></small>
                                             <br />
-                                          <span class="badge badge-pill badge-info">Non-Operasional</span>
+                                            <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                              <?php if ($p['status'] == '1') {?>
+                                                <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
+                                                <?php }elseif ($p['status'] == '2') {?>
+                                                <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span>
+                                                <?php } elseif ($p['status'] == '8' or $p['status'] == '11') {?>
+                                                <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
+                                              <?php };?>
                                         </td>  
                                               <td><?= $pn['id']; ?></td>
                                               <td><?= $pn['jenis_perjalanan']; ?></td>
@@ -198,8 +202,6 @@ $jam   = floor($durasi / (60 * 60));
                                               <td><?= $pn['keperluan']; ?></td>
                                               <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
                                               <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
-                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
-                                              <td><?= $status['nama']; ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
