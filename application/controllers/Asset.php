@@ -54,10 +54,6 @@ class Asset extends CI_Controller
     public function opname_proses()
     {
         date_default_timezone_set('asia/jakarta');
-        $config['upload_path']          = './assets/img/asset/';
-        $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 5120;
-        $this->load->library('upload', $config);
 
         if (($this->input->post('status') == 2 or $this->input->post('status') == 3 or $this->input->post('status') == 4) and $this->input->post('catatan') == null) {
             $this->session->set_flashdata('message', 'gagalopname');
@@ -93,10 +89,17 @@ class Asset extends CI_Controller
                 ];
                 $this->db->insert('asset_opname', $data);
 
-                $this->db->set('asset_foto', $this->upload->data('file_name'));
-                $this->db->where('asset_no', $this->input->post('asset_no'));
-                $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
-                $this->db->update('asset_opname');
+
+                $config['upload_path']          = './assets/img/asset/';
+                $config['allowed_types']        = 'jpg|jpeg|png';
+                $config['max_size']             = 5120;
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('foto')) {
+                    $this->db->set('asset_foto', $this->upload->data('file_name'));
+                    $this->db->where('asset_no', $this->input->post('asset_no'));
+                    $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
+                    $this->db->update('asset_opname');
+                }
 
                 $this->db->set('tglopname', date('Y-m-d H:i:s'));
                 $this->db->set('status_opname', '2');
@@ -106,7 +109,7 @@ class Asset extends CI_Controller
                 $this->db->update('asset');
 
                 $this->session->set_flashdata('message', 'berhasilopname');
-                redirect('asset/opname');
+                redirect('asset');
             } else {
                 $this->db->set('tglopname', date('Y-m-d H:i:s'));
                 $this->db->set('asset_deskripsi', $this->input->post('asset_deskripsi'));
@@ -115,13 +118,23 @@ class Asset extends CI_Controller
                 $this->db->set('status', $this->input->post('status'));
                 $this->db->set('status_opname', '1');
                 $this->db->set('catatan', $this->input->post('catatan'));
-                $this->db->set('asset_foto', $this->upload->data('file_name'));
                 $this->db->set('verifikasi', null);
                 $this->db->set('ka_dept', null);
                 $this->db->set('fin_dept', null);
                 $this->db->where('asset_no', $this->input->post('asset_no'));
                 $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
                 $this->db->update('asset_opname');
+
+                $config['upload_path']          = './assets/img/asset/';
+                $config['allowed_types']        = 'jpg|jpeg|png';
+                $config['max_size']             = 5120;
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('foto')) {
+                    $this->db->set('asset_foto', $this->upload->data('file_name'));
+                    $this->db->where('asset_no', $this->input->post('asset_no'));
+                    $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
+                    $this->db->update('asset_opname');
+                }
 
                 $this->db->set('tglopname', date('Y-m-d H:i:s'));
                 $this->db->set('status_opname', '2');
@@ -131,7 +144,7 @@ class Asset extends CI_Controller
                 $this->db->update('asset');
 
                 $this->session->set_flashdata('message', 'berhasilopname');
-                redirect('asset/opname');
+                redirect('asset');
             }
         }
     }

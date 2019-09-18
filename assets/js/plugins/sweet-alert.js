@@ -119,7 +119,7 @@ if (flashData == 'masuk') {
 } else if (flashData == 'gagalopname') {
   swal({
     title: "Maaf!",
-    text: "Asset gagal diopname. foto harus ada, max 5Mb, catatan harus di isi jika ada perubahan asset",
+    text: "Asset gagal diopname. Foto max 5Mb, catatan harus di isi jika ada perubahan data asset",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"
