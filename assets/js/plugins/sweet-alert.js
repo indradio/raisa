@@ -108,6 +108,22 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'berhasilopname') {
+  swal({
+    title: "Terimakasih!",
+    text: "Asset berhasil diopneme.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'gagalopname') {
+  swal({
+    title: "Maaf!",
+    text: "Asset gagal diopname. foto harus ada, max 5Mb, catatan harus di isi jika ada perubahan asset",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
 }
 
 $('.btn-bataldl').on('click', function (e) {

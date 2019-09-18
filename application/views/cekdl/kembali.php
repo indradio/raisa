@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('cekdl/kembali'); ?>" class="btn btn-rose mb-2" role="button" aria-disabled="false">REFRESH / KLIK DAHULU UNTUK MENDAPATKAN DATA TERBARU</a>
+                            <a href="<?= base_url('cekdl/kembali'); ?>" class="btn btn-lg btn-block btn-info mb-2" role="button" aria-disabled="false">KLIK UNTUK REFRESH</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

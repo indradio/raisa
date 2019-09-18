@@ -31,7 +31,6 @@
                                         <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
-                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -49,7 +48,6 @@
                                         <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
-                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -73,11 +71,12 @@
                                                 <td><?= $pdetail['catatan_ga']; ?></td>
                                                 <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
-                                                <td class="text-right"><a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a></td>
                                                 <td class="text-right">
-                                                    <?php if ($pdetail['status'] == 11) { ?>
+                                                    <?php if ($pdetail['status'] == 1) { ?>
                                                         <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $pdetail['id']; ?>" class="badge badge-warning">+2 JAM</a>
                                                         <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>">BATALKAN</a>
+                                                    <?php } elseif ($pdetail['status'] == 9) { ?>
+                                                        <a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
                                                     <?php }; ?>
                                                 </td>
                                             </tr>

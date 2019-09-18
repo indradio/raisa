@@ -51,7 +51,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglberangkat" name="tglberangkat" value="<?= $perjalanan['tglberangkat']; ?>">
+                                        <input type="text" class="form-control disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d M Y', strtotime($perjalanan['tglberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control datepicker disabled" id="tglkembali" name="tglkembali" value="<?= $perjalanan['tglkembali']; ?>">
+                                        <input type="text" class="form-control disabled" id="tglkembali" name="tglkembali" value="<?= date('d M Y', strtotime($perjalanan['tglkembali'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -115,10 +115,10 @@
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
                                                 foreach ($anggota as $ang) : ?>
-                                                <tr>
-                                                    <td><?= $ang['karyawan_inisial']; ?></td>
-                                                    <td><?= $ang['karyawan_nama']; ?></td>
-                                                </tr>
+                                                    <tr>
+                                                        <td><?= $ang['karyawan_inisial']; ?></td>
+                                                        <td><?= $ang['karyawan_nama']; ?></td>
+                                                    </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
@@ -192,7 +192,7 @@
                                             <?php
                                             $Kendaraan = $this->db->get('kendaraan')->result_array();
                                             foreach ($Kendaraan as $kend) : ?>
-                                            <option><?= $kend['nopol']; ?></option>
+                                                <option><?= $kend['nopol']; ?></option>
                                             <?php endforeach; ?>
                                         </datalist>
                                     </div>

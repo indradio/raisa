@@ -23,7 +23,6 @@
                                         <th class="th-description">Kategori</th>
                                         <th class="th-description">Lokasi</th>
                                         <th class="th-description">First Acq</th>
-                                        <th class="th-description">Value Acq</th>
                                         <th class="th-description">Cost Center</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -38,7 +37,6 @@
                                         <th class="th-description">Kategori</th>
                                         <th class="th-description">Lokasi</th>
                                         <th class="th-description">First Acq</th>
-                                        <th class="th-description">Value Acq</th>
                                         <th class="th-description">Cost Center</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -49,35 +47,34 @@
                                 <tbody>
                                     <?php
                                     foreach ($asset as $a) : ?>
-                                    <tr>
-                                        <td>
-                                            <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
-                                            </div>
-                                        </td>
-                                        <td class="td-name">
-                                            <a><?= $a['asset_deskripsi']; ?></a>
-                                            <br />
-                                            <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
-                                        </td>
-                                        <td><?= $a['kategori']; ?></td>
-                                        <td><?= $a['lokasi']; ?></td>
-                                        <td><?= $a['first_acq']; ?></td>
-                                        <td><?= $a['value_acq']; ?></td>
-                                        <td><?= $a['cost_center']; ?></td>
-                                        <?php if ($a['status'] == null) { ?>
-                                        <td></td>
-                                        <?php } elseif ($a['status'] == 1) { ?>
-                                        <td>OK</td>
-                                        <?php } elseif ($a['status'] == 2) { ?>
-                                        <td>Sedang Diverifikasi</td>
-                                        <?php }; ?>
-                                        <td><?= $a['tglopname']; ?></td>
-                                        <td><?= $a['catatan']; ?></td>
-                                        <td class="text-right">
-                                            <a href="<?= base_url('asset/do_opname/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="badge badge-pill badge-primary">OPNAME</a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <a><?= $a['asset_deskripsi']; ?></a>
+                                                <br />
+                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
+                                            </td>
+                                            <td><?= $a['kategori']; ?></td>
+                                            <td><?= $a['lokasi']; ?></td>
+                                            <td><?= $a['first_acq']; ?></td>
+                                            <td><?= $a['cost_center']; ?></td>
+                                            <?php if ($a['status'] == null) { ?>
+                                                <td></td>
+                                            <?php } elseif ($a['status'] == 1) { ?>
+                                                <td>OK</td>
+                                            <?php } elseif ($a['status'] == 2) { ?>
+                                                <td>Sedang Diverifikasi</td>
+                                            <?php }; ?>
+                                            <td><?= $a['tglopname']; ?></td>
+                                            <td><?= $a['catatan']; ?></td>
+                                            <td class="text-right">
+                                                <a href="<?= base_url('asset/do_opname/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="badge badge-pill badge-primary">OPNAME</a>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>

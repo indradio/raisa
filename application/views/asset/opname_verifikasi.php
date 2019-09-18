@@ -22,9 +22,12 @@
                                         <th>Nomor Asset</th>
                                         <th>Asset</th>
                                         <th class="th-description">Kategori</th>
+                                        <th class="th-description">Lokasi Sebelumnya</th>
                                         <th class="th-description">Lokasi</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">PIC</th>
+                                        <th class="th-description">NPK PIC Sebelumnya</th>
+                                        <th class="th-description">NAMA PIC Sebelumnya</th>
+                                        <th class="th-description">NPK PIC</th>
+                                        <th class="th-description">NAMA PIC</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -37,9 +40,12 @@
                                         <th>Nomor Asset</th>
                                         <th>Asset</th>
                                         <th class="th-description">Kategori</th>
+                                        <th class="th-description">Lokasi Sebelumnya</th>
                                         <th class="th-description">Lokasi</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">PIC</th>
+                                        <th class="th-description">NPK PIC Sebelumnya</th>
+                                        <th class="th-description">NAMA PIC Sebelumnya</th>
+                                        <th class="th-description">NPK PIC</th>
+                                        <th class="th-description">NAMA PIC</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -48,7 +54,9 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($asset as $a) : ?>
+                                    foreach ($asset as $a) :
+                                        $assetlama = $this->db->where('asset_no', $a['asset_no']);
+                                        $assetlama = $this->db->get_where('asset', ['asset_sub_no' =>  $a['asset_sub_no']])->row_array(); ?>
                                         <tr>
                                             <td>
                                                 <div class="img-container">
@@ -60,9 +68,22 @@
                                             </td>
                                             <td><?= $a['asset_deskripsi']; ?></td>
                                             <td><?= $a['kategori']; ?></td>
+                                            <?php if ($assetlama['lokasi'] == $a['lokasi']) { ?>
+                                                <td></td>
+                                            <?php } else { ?>
+                                                <td><?= $assetlama['lokasi']; ?></td>
+                                            <?php }; ?>
                                             <td><?= $a['lokasi']; ?></td>
-                                            <td><?= $a['first_acq']; ?></td>
+                                            <?php $karyawanlama = $this->db->get_where('karyawan', ['npk' =>  $assetlama['npk']])->row_array(); ?>
+                                            <?php if ($assetlama['npk'] == $a['npk']) { ?>
+                                                <td></td>
+                                                <td></td>
+                                            <?php } else { ?>
+                                                <td><?= $assetlama['npk']; ?></td>
+                                                <td><?= $karyawanlama['nama']; ?></td>
+                                            <?php }; ?>
                                             <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
+                                            <td><?= $a['npk']; ?></td>
                                             <td><?= $karyawan['nama']; ?></td>
                                             <?php if ($a['status'] == 1) {
                                                     echo '<td>BAIK-ADA-DIGUNAKAN</td>';

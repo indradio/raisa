@@ -32,6 +32,7 @@
                                         <th>Jam kembali</th>
                                         <th>Catatan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
+                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -50,6 +51,7 @@
                                         <th>Jam kembali</th>
                                         <th>Catatan</th>
                                         <th class="text-right">Actions</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -75,7 +77,9 @@
                                             <td><?= $rsv['catatan']; ?></td>
                                             <td class="text-right">
                                                 <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
-                                                <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-info disabled">Gabungkan</a>
+                                            </td>
+                                            <td>
+                                                <!-- <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-info disabled">Gabungkan</a> -->
                                                 <a href="" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
                                             </td>
                                             </tr>

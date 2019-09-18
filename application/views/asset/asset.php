@@ -8,43 +8,61 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Data Opname Asset</h4>
+                        <h4 class="card-title">Data Asset</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <?php
+                            $queryOpname1 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  1');
+                            $queryOpname2 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  2');
+
+                            ?>
+                            <a href="<?= base_url('asset/asset'); ?>" class="btn btn-lg btn-primary mb-2" role="button" aria-disabled="false">TAMPILKAN SEMUA</a>
+                            <a href="<?= base_url('asset/opname1'); ?>" class="btn btn-lg btn-danger mb-2" role="button" aria-disabled="false">BELUM DIOPNAME : <?= $queryOpname1->num_rows(); ?></a>
+                            <a href="<?= base_url('asset/opname2'); ?>" class="btn btn-lg btn-success mb-2" role="button" aria-disabled="false">SUDAH DIOPNAME : <?= $queryOpname2->num_rows(); ?></a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th class="disabled-sorting text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">PIC</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">Kategori</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">Status</th>
-                                        <th class="th-description">Catatan</th>
-                                        <th class="th-description">Tgl Opname</th>
+                                        <th>Kategori</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
+                                        <th>First Acq</th>
+                                        <th>Value Acq</th>
+                                        <th>Cost Center</th>
+                                        <th>Status</th>
+                                        <th>Tgl Opname</th>
+                                        <th>Catatan</th>
+
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">PIC</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">Kategori</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">Status</th>
-                                        <th class="th-description">Catatan</th>
-                                        <th class="th-description">Tgl Opname</th>
+                                        <th>Kategori</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
+                                        <th>First Acq</th>
+                                        <th>Value Acq</th>
+                                        <th>Cost Center</th>
+                                        <th>Status</th>
+                                        <th>Tgl Opname</th>
+                                        <th>Catatan</th>
+
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php
-                                    foreach ($asset as $a) : ?>
+                                    <?php foreach ($asset as $a) :
+                                        if ($a['status_opname'] == 1) {
+                                            $status = "BELUM DIOPNAME";
+                                        } elseif ($a['status_opname'] == 2) {
+                                            $status = "SEDANG DIVERIFIKASI";
+                                        }; ?>
                                         <tr>
                                             <td>
                                                 <div class="img-container">
@@ -56,22 +74,15 @@
                                                 <br />
                                                 <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
                                             </td>
-                                            <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
-                                            <td><?= $karyawan['nama']; ?></td>
-                                            <td><?= $a['lokasi']; ?></td>
                                             <td><?= $a['kategori']; ?></td>
+                                            <td><?= $a['npk']; ?></td>
+                                            <td><?= $a['lokasi']; ?></td>
                                             <td><?= $a['first_acq']; ?></td>
-                                            <?php if ($a['status'] == 1) {
-                                                    echo '<td>BAIK-ADA-DIGUNAKAN</td>';
-                                                } else if ($a['status'] == 2) {
-                                                    echo '<td>BAIK-TIDAK SESUAI</td>';
-                                                } else if ($a['status'] == 3) {
-                                                    echo '<td>RUSAK</td>';
-                                                } else if ($a['status'] == 4) {
-                                                    echo '<td>HILANG</td>';
-                                                }; ?>
-                                            <td><?= $a['catatan']; ?></td>
+                                            <td><?= $a['value_acq']; ?></td>
+                                            <td><?= $a['cost_center']; ?></td>
+                                            <td><?= $status; ?></td>
                                             <td><?= $a['tglopname']; ?></td>
+                                            <td><?= $a['catatan']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

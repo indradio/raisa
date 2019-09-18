@@ -12,15 +12,6 @@ $(document).ready(function () {
         }
     });
 
-    var table = $('#datatable').DataTable({
-        ajax: "data.json"
-    });
-
-    setInterval(function () {
-        $('#datatable').DataTable().ajax.reload();
-    }, 30000);
-
-
     //datatables perjalananan
 
     $('#dtperjalanan').DataTable({
