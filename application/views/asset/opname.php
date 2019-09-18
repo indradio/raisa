@@ -20,10 +20,10 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">PIC</th>
-                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Kategori</th>
                                         <th class="th-description">First Acq</th>
+                                        <th class="th-description">PIC</th>
+                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -33,10 +33,10 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">PIC</th>
-                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Kategori</th>
                                         <th class="th-description">First Acq</th>
+                                        <th class="th-description">PIC</th>
+                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
@@ -57,10 +57,10 @@
                                                 <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
                                             </td>
                                             <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
-                                            <td><?= $karyawan['nama']; ?></td>
-                                            <td><?= $a['lokasi']; ?></td>
                                             <td><?= $a['kategori']; ?></td>
                                             <td><?= $a['first_acq']; ?></td>
+                                            <td><?= $karyawan['nama']; ?></td>
+                                            <td><?= $a['lokasi']; ?></td>
                                             <?php if ($a['status'] == 1) {
                                                     echo '<td>BAIK-ADA-DIGUNAKAN</td>';
                                                 } else if ($a['status'] == 2) {

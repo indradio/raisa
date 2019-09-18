@@ -22,14 +22,14 @@
                                         <th>Nomor Asset</th>
                                         <th>Asset</th>
                                         <th class="th-description">Kategori</th>
-                                        <th class="th-description">Lokasi Sebelumnya</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">NPK PIC Sebelumnya</th>
-                                        <th class="th-description">NAMA PIC Sebelumnya</th>
                                         <th class="th-description">NPK PIC</th>
-                                        <th class="th-description">NAMA PIC</th>
+                                        <th class="th-description">Nama PIC</th>
+                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
+                                        <th class="th-description">NPK PIC Sebelumnya</th>
+                                        <th class="th-description">Nama PIC Sebelumnya</th>
+                                        <th class="th-description">Lokasi Sebelumnya</th>
                                         <th class="th-description">Tgl Opname</th>
                                         <th class="disabled-sorting th-description">Actions</th>
                                     </tr>
@@ -40,14 +40,14 @@
                                         <th>Nomor Asset</th>
                                         <th>Asset</th>
                                         <th class="th-description">Kategori</th>
-                                        <th class="th-description">Lokasi Sebelumnya</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">NPK PIC Sebelumnya</th>
-                                        <th class="th-description">NAMA PIC Sebelumnya</th>
                                         <th class="th-description">NPK PIC</th>
-                                        <th class="th-description">NAMA PIC</th>
+                                        <th class="th-description">Nama PIC</th>
+                                        <th class="th-description">Lokasi</th>
                                         <th class="th-description">Status</th>
                                         <th class="th-description">Catatan</th>
+                                        <th class="th-description">NPK PIC Sebelumnya</th>
+                                        <th class="th-description">Nama PIC Sebelumnya</th>
+                                        <th class="th-description">Lokasi Sebelumnya</th>
                                         <th class="th-description">Tgl Opname</th>
                                         <th class="th-description">Actions</th>
                                     </tr>
@@ -68,23 +68,10 @@
                                             </td>
                                             <td><?= $a['asset_deskripsi']; ?></td>
                                             <td><?= $a['kategori']; ?></td>
-                                            <?php if ($assetlama['lokasi'] == $a['lokasi']) { ?>
-                                                <td></td>
-                                            <?php } else { ?>
-                                                <td><?= $assetlama['lokasi']; ?></td>
-                                            <?php }; ?>
-                                            <td><?= $a['lokasi']; ?></td>
-                                            <?php $karyawanlama = $this->db->get_where('karyawan', ['npk' =>  $assetlama['npk']])->row_array(); ?>
-                                            <?php if ($assetlama['npk'] == $a['npk']) { ?>
-                                                <td></td>
-                                                <td></td>
-                                            <?php } else { ?>
-                                                <td><?= $assetlama['npk']; ?></td>
-                                                <td><?= $karyawanlama['nama']; ?></td>
-                                            <?php }; ?>
                                             <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
                                             <td><?= $a['npk']; ?></td>
                                             <td><?= $karyawan['nama']; ?></td>
+                                            <td><?= $a['lokasi']; ?></td>
                                             <?php if ($a['status'] == 1) {
                                                     echo '<td>BAIK-ADA-DIGUNAKAN</td>';
                                                 } else if ($a['status'] == 2) {
@@ -95,6 +82,19 @@
                                                     echo '<td>HILANG</td>';
                                                 }; ?>
                                             <td><?= $a['catatan']; ?></td>
+                                            <?php $karyawanlama = $this->db->get_where('karyawan', ['npk' =>  $assetlama['npk']])->row_array(); ?>
+                                            <?php if ($assetlama['npk'] == $a['npk']) { ?>
+                                                <td></td>
+                                                <td></td>
+                                            <?php } else { ?>
+                                                <td><?= $assetlama['npk']; ?></td>
+                                                <td><?= $karyawanlama['nama']; ?></td>
+                                            <?php }; ?>
+                                            <?php if ($assetlama['lokasi'] == $a['lokasi']) { ?>
+                                                <td></td>
+                                            <?php } else { ?>
+                                                <td><?= $assetlama['lokasi']; ?></td>
+                                            <?php }; ?>
                                             <td><?= $a['tglopname']; ?></td>
                                             <td class="text-right">
                                                 <a href="#" class="badge badge-pill badge-success">Verifikasi</a>

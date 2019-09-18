@@ -29,11 +29,11 @@
                                         <th class="disabled-sorting text-center"></th>
                                         <th>Asset</th>
                                         <th>Kategori</th>
-                                        <th>PIC</th>
-                                        <th>Lokasi</th>
                                         <th>First Acq</th>
                                         <th>Value Acq</th>
                                         <th>Cost Center</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
                                         <th>Tgl Opname</th>
                                         <th>Catatan</th>
@@ -45,11 +45,11 @@
                                         <th class="text-center"></th>
                                         <th>Asset</th>
                                         <th>Kategori</th>
-                                        <th>PIC</th>
-                                        <th>Lokasi</th>
                                         <th>First Acq</th>
                                         <th>Value Acq</th>
                                         <th>Cost Center</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
                                         <th>Tgl Opname</th>
                                         <th>Catatan</th>
@@ -75,11 +75,11 @@
                                                 <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
                                             </td>
                                             <td><?= $a['kategori']; ?></td>
-                                            <td><?= $a['npk']; ?></td>
-                                            <td><?= $a['lokasi']; ?></td>
                                             <td><?= $a['first_acq']; ?></td>
                                             <td><?= $a['value_acq']; ?></td>
                                             <td><?= $a['cost_center']; ?></td>
+                                            <td><?= $a['npk']; ?></td>
+                                            <td><?= $a['lokasi']; ?></td>
                                             <td><?= $status; ?></td>
                                             <td><?= $a['tglopname']; ?></td>
                                             <td><?= $a['catatan']; ?></td>

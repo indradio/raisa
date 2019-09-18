@@ -53,6 +53,7 @@ class Asset extends CI_Controller
 
     public function opname_proses()
     {
+        date_default_timezone_set('asia/jakarta');
         $config['upload_path']          = './assets/img/asset/';
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 5120;
@@ -97,6 +98,7 @@ class Asset extends CI_Controller
                 $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
                 $this->db->update('asset_opname');
 
+                $this->db->set('tglopname', date('Y-m-d H:i:s'));
                 $this->db->set('status_opname', '2');
                 $this->db->set('catatan', 'Sedang diverifikasi oleh Tim');
                 $this->db->where('asset_no', $this->input->post('asset_no'));
@@ -121,6 +123,7 @@ class Asset extends CI_Controller
                 $this->db->where('asset_sub_no', $this->input->post('asset_sub_no'));
                 $this->db->update('asset_opname');
 
+                $this->db->set('tglopname', date('Y-m-d H:i:s'));
                 $this->db->set('status_opname', '2');
                 $this->db->set('catatan', 'Sedang diverifikasi oleh Tim');
                 $this->db->where('asset_no', $this->input->post('asset_no'));
