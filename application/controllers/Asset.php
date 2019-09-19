@@ -54,7 +54,6 @@ class Asset extends CI_Controller
     public function opname_proses()
     {
         date_default_timezone_set('asia/jakarta');
-
         if (($this->input->post('status') == 2 or $this->input->post('status') == 3 or $this->input->post('status') == 4) and $this->input->post('catatan') == null) {
             $this->session->set_flashdata('message', 'gagalopname');
             redirect('asset/do_opname/' . $this->input->post('asset_no') . '/' . $this->input->post('asset_sub_no'));
@@ -69,7 +68,6 @@ class Asset extends CI_Controller
             $cek = $this->db->query($queryCek)->row_array();
             $ketemu = $cek['COUNT(*)'];
             if ($ketemu == 0) {
-
                 $data = [
                     'tglopname' => date('Y-m-d H:i:s'),
                     'asset_no' => $this->input->post('asset_no'),
@@ -88,7 +86,6 @@ class Asset extends CI_Controller
                     'dept_id' => $karyawan['dept_id']
                 ];
                 $this->db->insert('asset_opname', $data);
-
 
                 $config['upload_path']          = './assets/img/asset/';
                 $config['allowed_types']        = 'jpg|jpeg|png';

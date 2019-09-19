@@ -68,15 +68,16 @@ class Cekdl extends CI_Controller
                 $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = "NQXJ3HED5LW2XV440HCG";
                 $destination = $karyawan['phone'];
-                $message = "*PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $p['id'] . "*" .
+                $message = "*PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
                     "\r\n Nama : *" . $p['nama'] . "*" .
                     "\r\n Tujuan : *" . $p['tujuan'] . "*" .
                     "\r\n Keperluan : *" . $p['keperluan'] . "*" .
                     "\r\n Peserta : *" . $p['anggota'] . "*" .
                     "\r\n Berangkat : *" . $p['tglberangkat'] . "* *" . $p['jamberangkat'] . "* _estimasi_" .
                     "\r\n Kembali : *" . $p['tglkembali'] . "* *" . $p['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "*" .
-                    " ) \r\n \r\nWaktu keberangkatan perjalanan kamu melebihi 2 Jam / batas waktu keberangkatan. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+                    "\r\n Kendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                    "\r\n Catatan : *" . $p['catatan_ga'] .  "*" .
+                    "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi 2 Jam / batas waktu keberangkatan. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
                 $api_url = "http://panel.apiwha.com/send_message.php";
                 $api_url .= "?apikey=" . urlencode($my_apikey);
                 $api_url .= "&number=" . urlencode($destination);

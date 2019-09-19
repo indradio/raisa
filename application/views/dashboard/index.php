@@ -77,11 +77,11 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Kendaraan</th>
-                                        <th>Nomor</th>
-                                        <th>Jenis</th>
                                         <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
+                                        <th>Nomor</th>
+                                        <th>Jenis</th>
                                         <th>Keberangkatan</th>
                                         <th>Kembali</th>
                                     </tr>
@@ -140,11 +140,11 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                                 <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
                                               <?php };?>
                                         </td>
-                                        <td><?= $p['id']; ?></td>
-                                        <td><?= $p['jenis_perjalanan']; ?></td>
                                         <td><?= $p['anggota']; ?></td>
                                         <td><?= $p['tujuan']; ?></td>
                                         <td><?= $p['keperluan']; ?></td>
+                                        <td><?= $p['id']; ?></td>
+                                        <td><?= $p['jenis_perjalanan']; ?></td>
                                         <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                         <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                             <?php } else { 
@@ -156,11 +156,11 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                               $rsvstatus = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
                                                 <span class="badge badge-pill badge-warning"><?= $rsvstatus['nama']; ?></span>
                                         </td>
-                                        <td><?= $r['id']; ?></td>
-                                        <td><?= $r['jenis_perjalanan']; ?></td>
                                         <td><?= $r['anggota']; ?></td>
                                         <td><?= $r['tujuan']; ?></td>
                                         <td><?= $r['keperluan']; ?></td>
+                                        <td><?= $r['id']; ?></td>
+                                        <td><?= $r['jenis_perjalanan']; ?></td>
                                         <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                         <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
                                             <?php }; ?>
@@ -196,11 +196,11 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                               <span class="badge badge-pill badge-warning"><?= $pnstatus['nama']; ?></span>
                                             <?php };?>
                                         </td> 
-                                        <td><?= $pn['id']; ?></td>
-                                        <td><?= $pn['jenis_perjalanan']; ?></td>
                                         <td><?= $pn['anggota']; ?></td>
                                         <td><?= $pn['tujuan']; ?></td>
                                         <td><?= $pn['keperluan']; ?></td>
+                                        <td><?= $pn['id']; ?></td>
+                                        <td><?= $pn['jenis_perjalanan']; ?></td>
                                         <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
                                         <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
                                     </tr>

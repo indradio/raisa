@@ -27,7 +27,7 @@ class Perjalanandl extends CI_Controller
         //auto batalkan reservasi
         $queryReservasi = "SELECT *
         FROM `reservasi`
-        WHERE `tglberangkat` <= CURDATE() AND (`status` = '1' OR `status` = '2'OR `status` = '3' OR `status` = '4' OR `status` = '5')
+        WHERE `tglberangkat` <= CURDATE() AND (`status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5')
         ";
         $reservasi = $this->db->query($queryReservasi)->result_array();
         foreach ($reservasi as $r) :

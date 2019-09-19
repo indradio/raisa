@@ -2,13 +2,14 @@
 
 class Jamkerja_model extends CI_Model
 {
-    public function getAll()
+    public function __construct()
     {
-        return $this->db->get($this->_table)->result();
+        parent::__construct();
+        $this->load->database();
     }
 
-    public function getByNpk()
+    public function get_events()
     {
-        return $this->db->get_where('Jamkerja', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        return $this->db->get("jamkerja");
     }
 }

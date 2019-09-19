@@ -8,7 +8,7 @@
             <div class="col-md-10 ml-auto mr-auto">
                 <div class="card card-calendar">
                     <div class="card-body ">
-                        <div id="fullCalendar"></div>
+                        <div id="calendarJamkerja"></div>
                     </div>
                 </div>
             </div>

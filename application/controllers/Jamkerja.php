@@ -7,6 +7,7 @@ class Jamkerja extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model("jamkerja_model");
     }
 
     public function index()
@@ -20,5 +21,24 @@ class Jamkerja extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('jamkerja/index', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function get_events()
+    {
+        // Our Start and End Dates
+        $events = $this->jamkerja_model->get_events();
+        $data_events = array();
+
+        foreach ($events->result() as $r) {
+
+            $data_events[] = array(
+                "id" => $r->id,
+                "title" => $r->nama,
+                "start" => $r->tanggal_mulai,
+                "end" => $r->tanggal_selesai
+            );
+        }
+        echo json_encode(array("events" => $data_events));
+        exit();
     }
 }

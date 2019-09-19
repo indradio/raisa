@@ -659,36 +659,34 @@ md = {
       },
 
       select: function (start, end) {
-
-        $('#jamkerjaModal').modal("show");
         // on select we show the Sweet Alert modal with an input
-        // swal({
-        //     title: 'Create an Event',
-        //     html: '<div class="form-group">' +
-        //       '<input class="form-control" placeholder="Event Title" id="input-field">' +
-        //       '</div>',
-        //     showCancelButton: true,
-        //     confirmButtonClass: 'btn btn-success',
-        //     cancelButtonClass: 'btn btn-danger',
-        //     buttonsStyling: false
-        //   }).then(function(result) { 
+        swal({
+          title: 'Create an Event',
+          html: '<div class="form-group">' +
+            '<input class="form-control" placeholder="Event Title" id="input-field">' +
+            '</div>',
+          showCancelButton: true,
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          buttonsStyling: false
+        }).then(function (result) {
 
-        //     var eventData;
-        //     event_title = $('#input-field').val();
+          var eventData;
+          event_title = $('#input-field').val();
 
-        //     if (event_title) {
-        //       eventData = {
-        //         title: event_title,
-        //         start: start,
-        //         end: end
-        //       };
-        //       $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
-        //     }
+          if (event_title) {
+            eventData = {
+              title: event_title,
+              start: start,
+              end: end
+            };
+            $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
+          }
 
-        //     $calendar.fullCalendar('unselect');
+          $calendar.fullCalendar('unselect');
 
-        //   })
-        //   .catch(swal.noop);
+        })
+          .catch(swal.noop);
       },
       editable: true,
       eventLimit: true, // allow "more" link when too many events
