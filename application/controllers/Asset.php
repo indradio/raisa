@@ -149,7 +149,7 @@ class Asset extends CI_Controller
     public function verifikasi()
     {
         $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Opname Verifikasi';
+        $data['sidesubmenu'] = 'Verifikasi Opname';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get('asset_opname')->result_array();
         $this->load->view('templates/header', $data);

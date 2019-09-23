@@ -240,6 +240,8 @@ class Perjalanandl extends CI_Controller
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Laporan Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->limit('100');
+        $data['perjalanan'] = $this->db->order_by('tglberangkat', 'desc');
         $data['perjalanan'] = $this->db->get_where('perjalanan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

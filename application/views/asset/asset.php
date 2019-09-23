@@ -11,7 +11,7 @@
                         <h4 class="card-title">Data Asset</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar">
+                        <div class="toolbar text-center">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <?php
                             $queryOpname1 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  1');
@@ -78,7 +78,8 @@
                                             <td><?= $a['first_acq']; ?></td>
                                             <td><?= $a['value_acq']; ?></td>
                                             <td><?= $a['cost_center']; ?></td>
-                                            <td><?= $a['npk']; ?></td>
+                                           <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
+                                            <td><?= $karyawan['nama']; ?></td>
                                             <td><?= $a['lokasi']; ?></td>
                                             <td><?= $status; ?></td>
                                             <td><?= $a['tglopname']; ?></td>

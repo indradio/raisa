@@ -44,14 +44,14 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
               <?= $info['deskripsi']; ?>
             </div>
           </div>
-          <div class="card-footer">
+          <!-- <div class="card-footer">
             <div class="price">
-              <h4><?= $info['sect_nama']; ?></h4>
+              <h4></h4>
             </div>
             <div class="stats">
-              <p class="card-category"><i class="material-icons">time</i> Berlaku sampai <?= $info['berlaku']; ?></p>
+              <p class="card-category"></p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <?php endforeach; ?>

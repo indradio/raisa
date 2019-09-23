@@ -83,3 +83,16 @@ $('#editPerjalanan').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
+$('#aktivitasModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var copro = button.data('copro') // Extract info from data-* attributes
+    var id = button.data('id') // Extract info from data-* attributes
+    var milestone = button.data('milestone') // Extract info from data-* attributes
+    var aktivitas = button.data('aktivitas') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('.modal-body input[name="copro"]').val(copro)
+    modal.find('.modal-body input[name="id"]').val(id)
+    modal.find('.modal-body input[name="milestone"]').val(milestone)
+    modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
+})
+

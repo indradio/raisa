@@ -121,6 +121,7 @@
         </ul>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!--   Core JS Files   -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
@@ -382,6 +383,29 @@
         }
     });
 
+    function setFormValidation(id) {
+        $(id).validate({
+            highlight: function(element) {
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+                $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+            },
+            success: function(element) {
+                $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+                $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+            },
+            errorPlacement: function(error, element) {
+                $(element).closest('.form-group').append(error);
+            },
+        });
+    }
+
+    $(document).ready(function() {
+        setFormValidation('#Aktivitas');
+        setFormValidation('#TypeValidation');
+        setFormValidation('#LoginValidation');
+        setFormValidation('#RangeValidation');
+    });
+
     $(document).ready(function() {
         //dtproject
         var tableproject = $('#dtproject').DataTable({
@@ -470,6 +494,52 @@
                 });
             }
         });
+
+        // var groupColumn = 1;
+        var tableakwbs = $('#dtakwbs').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [-1],
+                ["All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            //Set column definition initialisation properties.
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }, ],
+            "columnDefs": [{
+                "targets": [8], //first column / numbering column
+                "orderable": false, //set not orderable
+            }, ],
+            "order": [
+                [0, 'asc']
+            ],
+            "displayLength": -1,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="9">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
     });
 </script>
 <!-- JS fullcalendar -->
@@ -498,13 +568,21 @@
 
             firstDay: 1,
             defaultDate: today,
-            businessHours: {
+            businessHours: [
+                {
                 default: false,
                 // days of week. an array of zero-based day of week integers (0=Sunday)
-                dow: [1, 2, 3, 4, 5], // Monday - Friday
+                dow: [1, 2, 3, 4], // Monday - Friday
                 start: '07:30', // a start time 
                 end: '16:30' // an end time 
             },
+            {
+                default: false,
+                // days of week. an array of zero-based day of week integers (0=Sunday)
+                dow: [5], // Monday - Friday
+                start: '07:00', // a start time 
+                end: '16:00' // an end time 
+            },],
 
             views: {
                 month: { // name of view
@@ -573,6 +651,30 @@
                 $('#rsvBatal').modal("show");
             }
 
+        });
+    });
+</script>
+<!-- script ajax -->
+<script>
+    $(document).ready(function() {
+        $('#project').change(function() {
+            var copro = $(this).val();
+            if (copro != '') {
+                $.ajax({
+                    url: '<?php echo base_url() ?>jamkerja/fetch_milestone',
+                    method: 'POST',
+                    data: {
+                        copro: copro
+                    },
+                    success: function(data) {
+                        $('#milestone').html(data);
+                        $('#aktivitas').html('<option value="">Pilih Aktivitas</option>');
+                    }
+                });
+            } else {
+                $('#milestone').html('<option value="">Pilih Milestone</option>');
+                $('#aktivitas').html('<option value="">Pilih Aktivitas</option>');
+            }
         });
     });
 </script>
