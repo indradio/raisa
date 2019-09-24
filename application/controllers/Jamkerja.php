@@ -75,27 +75,24 @@ class Jamkerja extends CI_Controller
         $this->db->where('npk', $this->session->userdata('npk'));
         $jamkerja = $this->db->get("jamkerja")->row_array();
 
-        if ($jamkerja['id'] == '') {
-            if (date('D') != 'Fri'){
+        if ($jamkerja['id'] == null) {
+            if (date('D') != 'Fri') {
                 $tgl_mulai = date('Y-m-d 07:30:00');
                 $tgl_selesai = date('Y-m-d 16:30:00');
-            }else{
+            } else {
                 $tgl_mulai = date('Y-m-d 07:00:00');
                 $tgl_selesai = date('Y-m-d 16:00:00');
             }
-        $data_jamkerja = [
-            'id' => time(),
-            'npk' => $this->session->userdata('npk'),
-            'tanggal_mulai' => $tgl_mulai,
-            'tanggal_selesai' => $tgl_selesai,
-            'nama' => date('D'),
-            'durasi' => '08:00:00'
-        ];
-        $this->db->insert('jamkerja', $data_jamkerja);
-        redirect('jamkerja');
-            
-
-
+            $data_jamkerja = [
+                'id' => time(),
+                'npk' => $this->session->userdata('npk'),
+                'tanggal_mulai' => $tgl_mulai,
+                'tanggal_selesai' => $tgl_selesai,
+                'nama' => date('D'),
+                'durasi' => '08:00:00'
+            ];
+            $this->db->insert('jamkerja', $data_jamkerja);
+            redirect('jamkerja');
         } else {
             redirect('jamkerja/aktivitas_wbs');
         }

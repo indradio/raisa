@@ -165,75 +165,116 @@
                             </li>
                         <?php }; ?>
                     <?php }; ?>
-                    <?php if ($reservasi['status'] <= 2 and $reservasi['status'] != 0) { ?>
-                        <li class="timeline-inverted">
-                            <div class="timeline-badge warning">
-                                <i class="material-icons">fingerprint</i>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <span class="badge badge-pill badge-default">Menunggu Persetujuan ATASAN 2 (<?= $reservasi['atasan2']; ?>)</span>
+                    <?php if (
+                        $this->session->userdata['posisi_id'] == '7' or
+                        $this->session->userdata['posisi_id'] == '10'
+                    ) { ?>
+                        <?php if ($reservasi['status'] <= 2 and $reservasi['status'] != 0) { ?>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge warning">
+                                    <i class="material-icons">fingerprint</i>
                                 </div>
-                                <div class="timeline-body">
-                                    Perjalanan kamu belum disetujui nih! bantuin RAISA colek atasan kamu yuk!
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-default">Menunggu Persetujuan ATASAN 2 (<?= $reservasi['atasan2']; ?>)</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        Perjalanan kamu belum disetujui nih! bantuin RAISA colek atasan kamu yuk!
+                                    </div>
+                                    <h6>
+                                        <i class="ti-time"></i>
+                                    </h6>
                                 </div>
-                                <h6>
-                                    <i class="ti-time"></i>
-                                </h6>
-                            </div>
-                        </li>
-                    <?php } else if ($reservasi['status'] > 2) { ?>
-                        <li class="timeline-inverted">
-                            <div class="timeline-badge success">
-                                <i class="material-icons">fingerprint</i>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <span class="badge badge-pill badge-success">Telah disetujui ATASAN 2
+                            </li>
+                        <?php } else if ($reservasi['status'] > 2) { ?>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge success">
+                                    <i class="material-icons">fingerprint</i>
                                 </div>
-                                <div class="timeline-body">
-                                    Yeay!! Reservasi perjalanan kamu telah <?= $reservasi['atasan2']; ?>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-success">Telah disetujui ATASAN 2
+                                    </div>
+                                    <div class="timeline-body">
+                                        Yeay!! Reservasi perjalanan kamu telah <?= $reservasi['atasan2']; ?>
+                                    </div>
+                                    <h6>
+                                        <i class="ti-time"> <?= $reservasi['tgl_atasan2']; ?></i>
+                                    </h6>
                                 </div>
-                                <h6>
-                                    <i class="ti-time"> <?= $reservasi['tgl_atasan2']; ?></i>
-                                </h6>
-                            </div>
-                        </li>
-                    <?php }; ?>
-                    <?php if ($reservasi['status'] == 1) { ?>
-                        <li class="timeline-inverted">
-                            <div class="timeline-badge warning">
-                                <i class="material-icons">fingerprint</i>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <span class="badge badge-pill badge-default">Menunggu Persetujuan ATASAN 1 (<?= $reservasi['atasan1']; ?>)</span>
+                            </li>
+                        <?php }; ?>
+                        <?php if ($reservasi['status'] == 1) { ?>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge warning">
+                                    <i class="material-icons">fingerprint</i>
                                 </div>
-                                <div class="timeline-body">
-                                    Perjalanan kamu belum disetujui nih! bantuin RAISA colek atasan kamu yuk!
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-default">Menunggu Persetujuan ATASAN 1 (<?= $reservasi['atasan1']; ?>)</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        Perjalanan kamu belum disetujui nih! bantuin RAISA colek atasan kamu yuk!
+                                    </div>
+                                    <h6>
+                                        <i class="ti-time"></i>
+                                    </h6>
                                 </div>
-                                <h6>
-                                    <i class="ti-time"></i>
-                                </h6>
-                            </div>
-                        </li>
-                    <?php } elseif ($reservasi['status'] > 1) { ?>
-                        <li class="timeline-inverted">
-                            <div class="timeline-badge success">
-                                <i class="material-icons">fingerprint</i>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <span class="badge badge-pill badge-success">Telah disetujui ATASAN 1
+                            </li>
+                        <?php } elseif ($reservasi['status'] > 1) { ?>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge success">
+                                    <i class="material-icons">fingerprint</i>
                                 </div>
-                                <div class="timeline-body">
-                                    Yeay!! Reservasi perjalanan kamu telah <?= $reservasi['atasan1']; ?>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-success">Telah disetujui ATASAN 1
+                                    </div>
+                                    <div class="timeline-body">
+                                        Yeay!! Reservasi perjalanan kamu telah <?= $reservasi['atasan1']; ?>
+                                    </div>
+                                    <h6>
+                                        <i class="ti-time"> <?= $reservasi['tgl_atasan1']; ?></i>
+                                    </h6>
                                 </div>
-                                <h6>
-                                    <i class="ti-time"> <?= $reservasi['tgl_atasan1']; ?></i>
-                                </h6>
-                            </div>
-                        </li>
+                            </li>
+                        <?php }; ?>
+                    <?php } else { ?>
+                        <?php if ($reservasi['status'] <= 2 and $reservasi['status'] != 0) { ?>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge warning">
+                                    <i class="material-icons">fingerprint</i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-default">Menunggu Persetujuan ATASAN 1 (<?= $reservasi['atasan1']; ?>)</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        Perjalanan kamu belum disetujui nih! bantuin RAISA colek atasan kamu yuk!
+                                    </div>
+                                    <h6>
+                                        <i class="ti-time"></i>
+                                    </h6>
+                                </div>
+                            </li>
+                        <?php } else if ($reservasi['status'] > 2) { ?>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge success">
+                                    <i class="material-icons">fingerprint</i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-success">Telah disetujui ATASAN 1
+                                    </div>
+                                    <div class="timeline-body">
+                                        Yeay!! Reservasi perjalanan kamu telah <?= $reservasi['atasan1']; ?>
+                                    </div>
+                                    <h6>
+                                        <i class="ti-time"> <?= $reservasi['tgl_atasan1']; ?></i>
+                                    </h6>
+                                </div>
+                            </li>
+                        <?php }; ?>
                     <?php }; ?>
                     <?php if ($reservasi['status'] == 0) { ?>
                         <li class="timeline-inverted">

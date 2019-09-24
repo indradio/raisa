@@ -15,6 +15,15 @@
                         <form class="form-horizontal" action="<?= base_url('jamkerja/aktivitas_wbs'); ?>" method="post">
                             <div class="form-group input-group-lg">
                                 <div class="row justify-content-center">
+                                    <select class="selectpicker" id="kategori" name="kategori" data-style="select-with-transition" title="Pilih Kategori" data-size="7" data-width="75%" data-live-search="false">
+                                        <option value="1">Project</option>
+                                        <option value="2">Lain-lain Project</option>
+                                        <option value="3">Lain-lain Non Project</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group input-group-lg">
+                                <div class="row justify-content-center">
                                     <select class="selectpicker" id="copro" name="copro" data-style="select-with-transition" title="Pilih Project" data-size="7" data-width="75%" data-live-search="true">
                                         <?php
                                         foreach ($project as $row) {
