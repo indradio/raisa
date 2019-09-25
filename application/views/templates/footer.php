@@ -122,6 +122,8 @@
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!--   Core JS Files   -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
@@ -568,21 +570,21 @@
 
             firstDay: 1,
             defaultDate: today,
-            businessHours: [
+            businessHours: [{
+                    default: false,
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [1, 2, 3, 4], // Monday - Friday
+                    start: '07:30', // a start time 
+                    end: '16:30' // an end time 
+                },
                 {
-                default: false,
-                // days of week. an array of zero-based day of week integers (0=Sunday)
-                dow: [1, 2, 3, 4], // Monday - Friday
-                start: '07:30', // a start time 
-                end: '16:30' // an end time 
-            },
-            {
-                default: false,
-                // days of week. an array of zero-based day of week integers (0=Sunday)
-                dow: [5], // Monday - Friday
-                start: '07:00', // a start time 
-                end: '16:00' // an end time 
-            },],
+                    default: false,
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [5], // Monday - Friday
+                    start: '07:00', // a start time 
+                    end: '16:00' // an end time 
+                },
+            ],
 
             views: {
                 month: { // name of view
@@ -640,13 +642,10 @@
                             };
                             $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
                         }
-
                         $calendar.fullCalendar('unselect');
-
                     })
                     .catch(swal.noop);
             },
-
             eventClick: function(info) {
                 $('#rsvBatal').modal("show");
             }
@@ -657,23 +656,15 @@
 <!-- script ajax -->
 <script>
     $(document).ready(function() {
-        $('#project').change(function() {
-            var copro = $(this).val();
-            if (copro != '') {
-                $.ajax({
-                    url: '<?php echo base_url() ?>jamkerja/fetch_milestone',
-                    method: 'POST',
-                    data: {
-                        copro: copro
-                    },
-                    success: function(data) {
-                        $('#milestone').html(data);
-                        $('#aktivitas').html('<option value="">Pilih Aktivitas</option>');
-                    }
-                });
+        $('#kategori').change(function() {
+            var kategori = $('#kategori').val();
+            if (kategori == 3) {
+                // $('#copro').html('<option value="">Pilih Project</option>');
+                $('#copro').prop('disabled', true);
+                $('#copro').selectpicker('refresh');
             } else {
-                $('#milestone').html('<option value="">Pilih Milestone</option>');
-                $('#aktivitas').html('<option value="">Pilih Aktivitas</option>');
+                $('#copro').prop('disabled', false);
+                $('#copro').selectpicker('refresh');
             }
         });
     });

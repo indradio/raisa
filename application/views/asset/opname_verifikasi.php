@@ -13,6 +13,13 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <?php
+                            $queryVerifikasi1 = $this->db->query('SELECT * FROM asset_opname WHERE `status_opname` =  1');
+                            $queryVerifikasi2 = $this->db->query('SELECT * FROM asset_opname WHERE `status_opname` =  2');
+
+                            ?>
+                            <a href="<?= base_url('asset/verifikasi'); ?>" class="btn btn-lg btn-danger mb-2" role="button" aria-disabled="false">BELUM DIVERIVIKASI : <?= $queryVerifikasi1->num_rows(); ?></a>
+                            <a href="<?= base_url('asset/verifikasi2'); ?>" class="btn btn-lg btn-success mb-2" role="button" aria-disabled="false">SUDAH DIVERIFIKASI : <?= $queryVerifikasi2->num_rows(); ?></a>
                         </div>
                         <div class="material-datatables">
                             <table id="dtperjalanan" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
@@ -97,7 +104,11 @@
                                             <?php }; ?>
                                             <td><?= $a['tglopname']; ?></td>
                                             <td class="text-right">
-                                                <a href="#" class="badge badge-pill badge-success">Verifikasi</a>
+                                                <?php if ($a['status_opname'] == 1) { ?>
+                                                    <a href="<?= base_url('asset/do_verifikasi/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="btn btn-round btn-primary">Verifikasi</a>
+                                                <?php } else { ?>
+                                                    Diverifikasi oleh <?= $a['tim_opname']; ?>
+                                                <?php }; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

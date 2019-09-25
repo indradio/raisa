@@ -13,6 +13,14 @@ class Jamkerja_model extends CI_Model
         return $this->db->get("jamkerja");
     }
 
+    public function get_aktivitas()
+    {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('tgl_aktivitas', date("Y-m-d"));
+        $query = $this->db->get("aktivitas");
+        return $query->result_array();
+    }
+
     function fetch_project()
     {
         $this->db->order_by("copro", "ASC");
@@ -28,6 +36,22 @@ class Jamkerja_model extends CI_Model
         $this->db->where('level', 2);
         $this->db->where('copro', $copro);
         $query = $this->db->get("wbs");
+        return $query->result_array();
+    }
+
+    function get_jamkerja_lainpro()
+    {
+
+        $this->db->where('kategori_id', '2');
+        $query = $this->db->get("jamkerja_lain");
+        return $query->result_array();
+    }
+
+    function get_jamkerja_lain()
+    {
+
+        $this->db->where('kategori_id', '3');
+        $query = $this->db->get("jamkerja_lain");
         return $query->result_array();
     }
 

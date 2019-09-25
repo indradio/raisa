@@ -124,6 +124,14 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'berhasilverifikasi') {
+  swal({
+    title: "Terimakasih!",
+    text: "Asset Opname telah diverifikasi",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
 }
 
 $('.btn-bataldl').on('click', function (e) {
