@@ -15,7 +15,7 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <?php
                             $queryOpname1 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  1');
-                            $queryOpname2 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  2');
+                            $queryOpname2 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  2 or `status_opname` =  3');
 
                             ?>
                             <a href="<?= base_url('asset/asset'); ?>" class="btn btn-lg btn-primary mb-2" role="button" aria-disabled="false">TAMPILKAN SEMUA</a>
