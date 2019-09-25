@@ -63,7 +63,7 @@
                                             <td><?= $a['catatan']; ?></td>
                                             <td><?= $a['tglopname']; ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('asset/do_opname/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="badge badge-pill badge-primary">OPNAME</a>
+                                                <a href="<?= base_url('asset/do_opname/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="btn btn-round btn-primary">OPNAME</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

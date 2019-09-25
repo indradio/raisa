@@ -31,6 +31,7 @@
                                         <th>Tanggal Kembali</th>
                                         <th>Jam kembali</th>
                                         <th>Catatan</th>
+                                        <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
@@ -49,36 +50,64 @@
                                         <th>Tgl Kembali</th>
                                         <th>Jam kembali</th>
                                         <th>Catatan</th>
+                                        <th>Status</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($reservasi as $rsv) : ?>
-                                        <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
+                                    foreach ($reservasi as $r) : ?>
+                                        <?php if ($r['tglberangkat'] < date('Y-m-d')) { ?>
                                             <tr class="text-dark bg-danger">
                                             <?php } else { ?>
                                             <tr>
                                             <?php }; ?>
-                                            <td><?= $rsv['id']; ?></td>
-                                            <td><?= $rsv['jenis_perjalanan']; ?></td>
-                                            <td><?= $rsv['nopol']; ?></td>
-                                            <td><?= $rsv['kepemilikan']; ?></td>
-                                            <td><?= $rsv['nama']; ?></td>
-                                            <td><?= $rsv['tujuan']; ?></td>
-                                            <td><?= $rsv['keperluan']; ?></td>
-                                            <td><?= $rsv['anggota']; ?></td>
-                                            <td><?= $rsv['tglberangkat']; ?></td>
-                                            <td><?= $rsv['jamberangkat']; ?></td>
-                                            <td><?= $rsv['tglkembali']; ?></td>
-                                            <td><?= $rsv['jamkembali']; ?></td>
-                                            <td><?= $rsv['catatan']; ?></td>
+                                            <td><?= $r['id']; ?></td>
+                                            <td><?= $r['jenis_perjalanan']; ?></td>
+                                            <td><?= $r['nopol']; ?></td>
+                                            <td><?= $r['kepemilikan']; ?></td>
+                                            <td><?= $r['nama']; ?></td>
+                                            <td><?= $r['tujuan']; ?></td>
+                                            <td><?= $r['keperluan']; ?></td>
+                                            <td><?= $r['anggota']; ?></td>
+                                            <td><?= $r['tglberangkat']; ?></td>
+                                            <td><?= $r['jamberangkat']; ?></td>
+                                            <td><?= $r['tglkembali']; ?></td>
+                                            <td><?= $r['jamkembali']; ?></td>
+                                            <td><?= $r['catatan']; ?></td>
+                                            <?php $rstatus = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
+                                            <td><?= $rstatus['nama']; ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="badge badge-pill badge-success">Proses</a>
-                                                <br />
-                                                <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="badge badge-pill badge-warning">Gabungkan</a>
-                                                <br />
-                                                <a href="" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
+                                                <a href="<?= base_url('perjalanandl/gabungrsv/') . $rsvid . '/' . $r['id']; ?>" class="btn btn-sm btn-round btn-success">PILIH</a>
+                                            </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                </tbody>
+                                <tbody>
+                                    <?php
+                                    foreach ($perjalanan as $p) : ?>
+                                        <?php if ($p['tglberangkat'] < date('Y-m-d')) { ?>
+                                            <tr class="text-dark bg-danger">
+                                            <?php } else { ?>
+                                            <tr>
+                                            <?php }; ?>
+                                            <td><?= $p['id']; ?></td>
+                                            <td><?= $p['jenis_perjalanan']; ?></td>
+                                            <td><?= $p['nopol']; ?></td>
+                                            <td><?= $p['kepemilikan']; ?></td>
+                                            <td><?= $p['nama']; ?></td>
+                                            <td><?= $p['tujuan']; ?></td>
+                                            <td><?= $p['keperluan']; ?></td>
+                                            <td><?= $p['anggota']; ?></td>
+                                            <td><?= $p['tglberangkat']; ?></td>
+                                            <td><?= $p['jamberangkat']; ?></td>
+                                            <td><?= $p['tglkembali']; ?></td>
+                                            <td><?= $p['jamkembali']; ?></td>
+                                            <td><?= $p['catatan_security']; ?></td>
+                                            <?php $pstatus = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                            <td><?= $pstatus['nama']; ?></td>
+                                            <td class="text-right">
+                                                <a href="<?= base_url('perjalanandl/gabungdl/') . $rsvid . '/' . $p['id']; ?>" class="btn btn-sm btn-round btn-success">PILIH</a>
                                             </td>
                                             </tr>
                                         <?php endforeach; ?>

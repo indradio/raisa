@@ -525,4 +525,103 @@ class Perjalanandl extends CI_Controller
         $this->session->set_flashdata('message', 'barudl');
         redirect('perjalanandl/perjalanan');
     }
+
+    public function gabung($rsvid)
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Reservasi Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['rsvid'] = $rsvid;
+        $queryReservasi = "SELECT *
+        FROM `reservasi`
+        WHERE `status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5'
+        ";
+        $data['reservasi'] = $this->db->query($queryReservasi)->result_array();
+        $queryPerjalanan = "SELECT *
+        FROM `perjalanan`
+        WHERE `status` = '1'OR `status` = '8' OR `status` = '11'
+        ";
+        $data['perjalanan'] = $this->db->query($queryPerjalanan)->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/gabung', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function gabungrsv($rsvid1, $rsvid2)
+    {
+        $rsv1 =  $this->db->get_where('reservasi', ['id' => $rsvid1])->row_array();
+        $rsv2 =  $this->db->get_where('reservasi', ['id' => $rsvid2])->row_array();
+
+        // update table anggota perjalanan
+        $this->db->set('reservasi_id', $rsvid2);
+        $this->db->where('reservasi_id', $rsvid1);
+        $this->db->update('perjalanan_tujuan');
+        $tujuan = $this->db->where('reservasi_id', $rsvid2);
+        $tujuan = $this->db->get_where('perjalanan_tujuan')->result_array();
+        $tujuanbaru = array_column($tujuan, 'inisial');
+
+        // update table anggota perjalanan
+        $this->db->set('reservasi_id', $rsvid2);
+        $this->db->where('reservasi_id', $rsvid1);
+        $this->db->update('perjalanan_anggota');
+        $anggota = $this->db->where('reservasi_id', $rsvid2);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        // Update reservasi
+        $this->db->set('tujuan', implode(', ', $tujuanbaru));
+        $this->db->set('keperluan', $rsv1['keperluan'] . ",\r\n" . $rsv2['keperluan']);
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $rsvid2);
+        $this->db->update('reservasi');
+
+        // batalkan reservasi
+        $this->db->set('status', '9');
+        $this->db->set('catatan', 'Digabungkan dengan RESERVASI ' . $rsvid2);
+        $this->db->where('id', $rsvid1);
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'barudl');
+        redirect('perjalanandl/admindl');
+    }
+
+    public function gabungdl($rsvid, $dlid)
+    {
+        $rsv =  $this->db->get_where('reservasi', ['id' => $rsvid])->row_array();
+        $dl =  $this->db->get_where('perjalanan', ['id' => $dlid])->row_array();
+
+        // update table anggota perjalanan
+        $this->db->set('perjalanan_id', $dlid);
+        $this->db->where('reservasi_id', $rsvid);
+        $this->db->update('perjalanan_tujuan');
+        $tujuan = $this->db->where('perjalanan_id', $dlid);
+        $tujuan = $this->db->get_where('perjalanan_tujuan')->result_array();
+        $tujuanbaru = array_column($tujuan, 'inisial');
+
+        // update table anggota perjalanan
+        $this->db->set('perjalanan_id', $dlid);
+        $this->db->where('reservasi_id', $rsvid);
+        $this->db->update('perjalanan_anggota');
+        $anggota = $this->db->where('perjalanan_id', $dlid);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        // Update reservasi
+        $this->db->set('tujuan', implode(', ', $tujuanbaru));
+        $this->db->set('keperluan', $dl['keperluan'] . ",\r\n" . $rsv['keperluan']);
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $dlid);
+        $this->db->update('perjalanan');
+
+        // batalkan reservasi
+        $this->db->set('status', '9');
+        $this->db->set('catatan', 'Digabungkan dengan PERJALANAN ' . $dlid);
+        $this->db->where('id', $rsvid);
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'barudl');
+        redirect('perjalanandl/admindl');
+    }
 }
