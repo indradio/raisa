@@ -11,7 +11,7 @@
                         <h4 class="card-title">Data Opname Asset</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar">
+                        <div class="toolbar text-center">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <?php
                             $queryVerifikasi1 = $this->db->query('SELECT * FROM asset_opname WHERE `status_opname` =  1');

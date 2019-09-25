@@ -174,6 +174,12 @@ class Asset extends CI_Controller
 
     public function do_verifikasi($no, $sub)
     {
+        $this->db->set('status_opname', '3');
+        $this->db->set('catatan', 'Diverifikasi oleh ' . $this->session->userdata('inisial'));
+        $this->db->where('asset_no', $no);
+        $this->db->where('asset_sub_no', $sub);
+        $this->db->update('asset');
+
         $this->db->set('status_opname', '2');
         $this->db->set('tim_opname', $this->session->userdata('inisial'));
         $this->db->where('asset_no', $no);
@@ -213,7 +219,9 @@ class Asset extends CI_Controller
         $data['sidemenu'] = 'FA';
         $data['sidesubmenu'] = 'Asset Manajemen';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['status_opname' =>  2])->result_array();
+        $data['asset'] = $this->db->where('status_opname', '2');
+        $data['asset'] = $this->db->or_where('status_opname', '3');
+        $data['asset'] = $this->db->get('asset')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);

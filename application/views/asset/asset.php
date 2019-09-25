@@ -62,6 +62,8 @@
                                             $status = "BELUM DIOPNAME";
                                         } elseif ($a['status_opname'] == 2) {
                                             $status = "SEDANG DIVERIFIKASI";
+                                        } elseif ($a['status_opname'] == 3) {
+                                            $status = "SUDAH DIVERIFIKASI";
                                         }; ?>
                                         <tr>
                                             <td>
@@ -78,7 +80,7 @@
                                             <td><?= $a['first_acq']; ?></td>
                                             <td><?= $a['value_acq']; ?></td>
                                             <td><?= $a['cost_center']; ?></td>
-                                           <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
+                                            <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
                                             <td><?= $karyawan['nama']; ?></td>
                                             <td><?= $a['lokasi']; ?></td>
                                             <td><?= $status; ?></td>
