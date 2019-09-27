@@ -250,7 +250,7 @@ class Cekdl extends CI_Controller
 
     public function revisi()
     {
-        $this->db->set('catatan_security', $this->input->post('catatan'));
+        $this->db->set('catatan_security', $this->input->post('catatan') . ' -Direvisi oleh' . $this->session->userdata('inisial') . ' pada ' . date('d-m-Y H:i'));
         $this->db->set('status', '8');
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
@@ -269,6 +269,7 @@ class Cekdl extends CI_Controller
             "\r\n Kembali : *" . $dl['tglkembali'] . "* *" . $dl['jamkembali'] . "* _estimasi_" .
             "\r\n Kendaraan : *" . $dl['nopol'] . "* ( *" . $dl['kepemilikan'] . "*" .
             "\r\n Catatan : *" . $dl['catatan_security'] . "*" .
+            "\r\n Direvisi Oleh" . $this->session->userdata('inisial') . ' pada ' . date('d-m-Y H:i') .
             " ) \r\n \r\nPerjalanan ini membutuhkan revisi dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);

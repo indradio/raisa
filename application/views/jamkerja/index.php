@@ -14,6 +14,7 @@
                         <div class="toolbar">
                             <?php
                             $this->db->where('tanggal_mulai', date("Y-m-d 07:30:00"));
+                            $this->db->or_where('tanggal_mulai', date("Y-m-d 07:00:00"));
                             $this->db->where('npk', $this->session->userdata('npk'));
                             $jamkerja = $this->db->get("jamkerja")->row_array();
                             if ($jamkerja['id'] == null) { ?>

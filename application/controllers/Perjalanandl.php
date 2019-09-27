@@ -507,7 +507,7 @@ class Perjalanandl extends CI_Controller
         $karyawan = $this->db->get('karyawan')->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
-        $message = "*PERJALANAN DINAS AKTIFKAN KEMBALI*\r\n \r\n No. Perjalanan : *" . $perjalanan['id'] . "*" .
+        $message = "*PERJALANAN DINAS DIAKTIFKAN KEMBALI*\r\n \r\n No. Perjalanan : *" . $perjalanan['id'] . "*" .
             "\r\n Nama : *" . $perjalanan['nama'] . "*" .
             "\r\n Tujuan : *" . $perjalanan['tujuan'] . "*" .
             "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
@@ -515,7 +515,7 @@ class Perjalanandl extends CI_Controller
             "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "* _estimasi_" .
             "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "* _estimasi_" .
             "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "*" .
-            " ) \r\n \r\nPerjalanan kamu telah *AKTIF* kembali. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            " ) \r\n \r\nPerjalanan kamu telah *DIAKTIF* kembali. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);
@@ -534,7 +534,7 @@ class Perjalanandl extends CI_Controller
         $data['rsvid'] = $rsvid;
         $queryReservasi = "SELECT *
         FROM `reservasi`
-        WHERE `status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5'
+        WHERE `status` = '5'
         ";
         $data['reservasi'] = $this->db->query($queryReservasi)->result_array();
         $queryPerjalanan = "SELECT *
