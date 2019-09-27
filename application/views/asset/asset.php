@@ -23,7 +23,7 @@
                             <a href="<?= base_url('asset/opname2'); ?>" class="btn btn-lg btn-success mb-2" role="button" aria-disabled="false">SUDAH DIOPNAME : <?= $queryOpname2->num_rows(); ?></a>
                         </div>
                         <div class="material-datatables">
-                            <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtperjalanan" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="disabled-sorting text-center"></th>
