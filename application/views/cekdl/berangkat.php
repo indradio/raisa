@@ -50,8 +50,10 @@
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $pdl) : ?>
-                                        <?php if ($pdl['tglberangkat'] < date('Y-m-d')) { ?>
+                                        <?php if ($pdl['tglberangkat'] < date('Y-m-d') and $pdl['status'] == 1) { ?>
                                             <tr class="text-dark bg-danger">
+                                            <?php } elseif ($pdl['tglberangkat'] < date('Y-m-d') and $pdl['status'] == 11) { ?>
+                                            <tr class="text-dark bg-warning">
                                             <?php } else { ?>
                                             <tr>
                                             <?php }; ?>
@@ -74,6 +76,16 @@
                                         <?php endforeach; ?>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="fa fa-circle text-danger"></i> Perjalanan yang tanggal keberangkatan sudah lewat
+                            </div>
+                            <div class="col-md-12">
+                                <i class="fa fa-circle text-warning"></i> Perjalanan yang Konfirmasi Keterlambatan
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -583,6 +583,25 @@ class Perjalanandl extends CI_Controller
         $this->db->where('id', $rsvid1);
         $this->db->update('reservasi');
 
+        $this->db->where('npk', $rsv2['npk']);
+        $karyawan = $this->db->get('karyawan')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $karyawan['phone'];
+        $message = "*PERJALANAN DINAS DIGABUNGKAN*\r\n \r\n No. Reservasi : *" . $rsv2['id'] . "*" .
+            "\r\n Nama : *" . $rsv2['nama'] . "*" .
+            "\r\n Tujuan : *" . $rsv2['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $rsv2['keperluan'] . "*" .
+            "\r\n Peserta : *" . $rsv2['anggota'] . "*" .
+            "\r\n Berangkat : *" . $rsv2['tglberangkat'] . "* *" . $rsv2['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $rsv2['tglkembali'] . "* *" . $rsv2['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $rsv2['nopol'] . "* ( *" . $rsv2['kepemilikan'] . "*" .
+            " ) \r\n \r\nReservasi Perjalanan kamu telah digabungkan dengan *" . $rsv2['id'] . "*. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
         $this->session->set_flashdata('message', 'barudl');
         redirect('perjalanandl/admindl');
     }
@@ -620,6 +639,25 @@ class Perjalanandl extends CI_Controller
         $this->db->set('catatan', 'Digabungkan dengan PERJALANAN ' . $dlid);
         $this->db->where('id', $rsvid);
         $this->db->update('reservasi');
+
+        $this->db->where('npk', $dl['npk']);
+        $karyawan = $this->db->get('karyawan')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $karyawan['phone'];
+        $message = "*PERJALANAN DINAS DIGABUNGKAN*\r\n \r\n No. Perjalanan : *" . $dl['id'] . "*" .
+            "\r\n Nama : *" . $dl['nama'] . "*" .
+            "\r\n Tujuan : *" . $dl['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $dl['keperluan'] . "*" .
+            "\r\n Peserta : *" . $dl['anggota'] . "*" .
+            "\r\n Berangkat : *" . $dl['tglberangkat'] . "* *" . $dl['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $dl['tglkembali'] . "* *" . $dl['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $dl['nopol'] . "* ( *" . $dl['kepemilikan'] . "*" .
+            " ) \r\n \r\nReservasi Perjalanan kamu telah digabungkan dengan *" . $dl['id'] . "*. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
 
         $this->session->set_flashdata('message', 'barudl');
         redirect('perjalanandl/admindl');
