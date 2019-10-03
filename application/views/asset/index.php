@@ -13,6 +13,9 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <a href="<?= base_url('asset/index'); ?>" class="btn btn-lg btn-primary mb-2" role="button" aria-disabled="false">TAMPILKAN SEMUA</a>
+                            <a href="<?= base_url('asset/assetku1'); ?>" class="btn btn-lg btn-danger mb-2" role="button" aria-disabled="false">BELUM DIOPNAME </a>
+                            <a href="<?= base_url('asset/assetku2'); ?>" class="btn btn-lg btn-success mb-2" role="button" aria-disabled="false">SUDAH DIOPNAME </a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">

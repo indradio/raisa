@@ -132,6 +132,14 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
+} else if (flashData == 'vote') {
+  swal({
+    title: "Terimakasih!",
+    text: "Anda telah melakukan vote untuk acara Family Day 2019",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
 }
 
 $('.btn-bataldl').on('click', function (e) {

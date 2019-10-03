@@ -27,6 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th class="disabled-sorting text-center"></th>
+                                        <th>No Asset</th>
                                         <th>Asset</th>
                                         <th>Kategori</th>
                                         <th>First Acq</th>
@@ -43,6 +44,7 @@
                                 <tfoot>
                                     <tr>
                                         <th class="text-center"></th>
+                                        <th>No Asset</th>
                                         <th>Asset</th>
                                         <th>Kategori</th>
                                         <th>First Acq</th>
@@ -71,10 +73,9 @@
                                                     <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
                                                 </div>
                                             </td>
+                                            <td><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></td>
                                             <td class="td-name">
                                                 <a><?= $a['asset_deskripsi']; ?></a>
-                                                <br />
-                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
                                             </td>
                                             <td><?= $a['kategori']; ?></td>
                                             <td><?= $a['first_acq']; ?></td>

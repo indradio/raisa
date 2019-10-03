@@ -1,6 +1,59 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
+        <!-- Card Vote -->
+        <?php 
+    $queryOpname1 = $this->db->query('SELECT * FROM famday_vote WHERE `npk` =  '.$this->session->userdata('npk').'');
+   $a = $queryOpname1->num_rows();
+   if ($a == 0){
+    ?>
+     <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">local_florist</i>
+                        </div>
+                        <h4 class="card-title">Vote venue untuk WINTEQ Family Day 2019</h4>
+                    </div>
+                    <div class="card-body">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="card card-product">
+            <div class="card-header card-header-image" data-header-animation="false">
+              <img class="img" src="<?= base_url(); ?>assets/img/vote1.jpg">
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">
+              Ocean Dream Samudra
+              </h4>
+              <div class="card-footer justify-content-center">
+                <a href="<?= base_url('famday/vote1'); ?>" class="btn btn-info btn-round" role="button" aria-disabled="false">Pilih</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-product">
+            <div class="card-header card-header-image" data-header-animation="false">
+              <img class="img" src="<?= base_url(); ?>assets/img/vote2.jpg">
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">
+              Taman Safari Indonesia
+              </h4>
+              <div class="card-footer justify-content-center">
+                <a href="<?= base_url('famday/vote2'); ?>" class="btn btn-success btn-round" role="button" aria-disabled="true">Pilih</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+                    </div>
+                </div>
+     </div>
+      <?php }; ?>
+
+      <!-- End Vote -->
     <!-- Banner -->
     <div class="row">
       <?php

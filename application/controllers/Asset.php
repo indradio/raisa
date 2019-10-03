@@ -105,7 +105,7 @@ class Asset extends CI_Controller
                 $this->db->update('asset');
 
                 $this->session->set_flashdata('message', 'berhasilopname');
-                redirect('asset');
+                redirect('asset/assetku1');
             } else {
                 $this->db->set('tglopname', date('Y-m-d H:i:s'));
                 $this->db->set('asset_deskripsi', $this->input->post('asset_deskripsi'));
@@ -139,7 +139,7 @@ class Asset extends CI_Controller
                 $this->db->update('asset');
 
                 $this->session->set_flashdata('message', 'berhasilopname');
-                redirect('asset');
+                redirect('asset/assetku1');
             }
         }
     }
@@ -224,6 +224,36 @@ class Asset extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('asset/asset', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function assetku1()
+    {
+        $data['sidemenu'] = 'Asset';
+        $data['sidesubmenu'] = 'AssetKu';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['asset'] = $this->db->where('npk', $this->session->userdata('npk'));
+        $data['asset'] = $this->db->where('status_opname', '1');
+        $data['asset'] = $this->db->get('asset')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('asset/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function assetku2()
+    {
+        $data['sidemenu'] = 'Asset';
+        $data['sidesubmenu'] = 'AssetKu';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['asset'] = $this->db->where('npk', $this->session->userdata('npk'));
+        $data['asset'] = $this->db->where('status_opname !=', '1');
+        $data['asset'] = $this->db->get('asset')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('asset/index', $data);
         $this->load->view('templates/footer');
     }
 }
