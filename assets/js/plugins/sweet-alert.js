@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "INFO : Perjalanan kamu akan dibatalkan jika tidak segera melakukan perjalanan dalam 2 (DUA) jam dari waktu keberangkatan yang kamu pesan.",
+    text: "INFO : Silahkan VOTE venue untuk acara WINTEQ Family Day 2019, VOTE akan DITUTUP pada hari SENIN (07/10/19).",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
