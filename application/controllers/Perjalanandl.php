@@ -23,10 +23,58 @@ class Perjalanandl extends CI_Controller
     }
     public function admindl()
     {
+        date_default_timezone_set('asia/jakarta');
+        //auto batalkan reservasi
+        $queryReservasi = "SELECT *
+        FROM `reservasi`
+        WHERE `tglberangkat` <= CURDATE() AND (`status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5')
+        ";
+        $reservasi = $this->db->query($queryReservasi)->result_array();
+        foreach ($reservasi as $r) :
+            // cari selisih
+            $mulai = strtotime($r['jamberangkat']);
+            $selesai = time();
+            $durasi = $selesai - $mulai;
+            $jam   = floor($durasi / (60 * 60));
+
+            if ($jam >= 2) {
+                $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $r['id']])->row_array();
+                $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array();
+                if ($perjalanan['id'] == null) {
+
+                    $this->db->set('status', '0');
+                    $this->db->set('catatan', "Waktu reservasi perjalanan kamu telah selesai. - Dibatalkan oleh RAISA pada " . date('d-m-Y H:i'));
+                    $this->db->where('id', $r['id']);
+                    $this->db->update('reservasi');
+
+                    $this->db->where('npk', $r['npk']);
+                    $karyawan = $this->db->get('karyawan')->row_array();
+                    $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                    $destination = $karyawan['phone'];
+                    $message = "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
+                        "\r\n Nama : *" . $r['nama'] . "*" .
+                        "\r\n Tujuan : *" . $r['tujuan'] . "*" .
+                        "\r\n Keperluan : *" . $r['keperluan'] . "*" .
+                        "\r\n Peserta : *" . $r['anggota'] . "*" .
+                        "\r\n Berangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
+                        "\r\n Kembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
+                        "\r\n Kendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
+                        "\r\n Status Terakhir : *" . $status['nama'] . "*" .
+                        "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
+                        "\r\n Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+                    $api_url = "http://panel.apiwha.com/send_message.php";
+                    $api_url .= "?apikey=" . urlencode($my_apikey);
+                    $api_url .= "&number=" . urlencode($destination);
+                    $api_url .= "&text=" . urlencode($message);
+                    json_decode(file_get_contents($api_url, false));
+                }
+            }
+        endforeach;
+
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Reservasi Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '3'])->result_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '5'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -119,7 +167,7 @@ class Perjalanandl extends CI_Controller
             $this->db->update('perjalanan_anggota');
 
             $this->db->set('admin_ga', $this->session->userdata('inisial'));
-            $this->db->set('status', '4');
+            $this->db->set('status', '6');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
 
@@ -192,6 +240,8 @@ class Perjalanandl extends CI_Controller
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Laporan Perjalanan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['perjalanan'] = $this->db->limit('100');
+        $data['perjalanan'] = $this->db->order_by('tglberangkat', 'desc');
         $data['perjalanan'] = $this->db->get_where('perjalanan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -428,39 +478,181 @@ class Perjalanandl extends CI_Controller
         redirect('perjalanandl/revisi');
     }
 
-    public function bataldladmin($id)
+    public function tambahwaktudl($id)
+    {
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        $updatejam = date('H:i:s', strtotime('+2 hour', strtotime($perjalanan['jamberangkat'])));
+        $this->db->set('jamberangkat', $updatejam);
+        $this->db->where('id', $id);
+        $this->db->update('perjalanan');
+
+        $this->session->set_flashdata('message', 'tambahwaktudl');
+        redirect('perjalanandl/index');
+    }
+
+    public function aktifkan($id)
     {
         date_default_timezone_set('asia/jakarta');
-        $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Waktu keberangkatan perjalanan kamu telah habis. - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
+        $this->db->set('status', '11');
+        $this->db->set('catatan_ga', "");
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        $this->db->set('status', '9');
+        $this->db->set('status', '6');
         $this->db->where('id', $perjalanan['reservasi_id']);
         $this->db->update('reservasi');
 
-        $this->session->set_flashdata('message', 'bataldl');
-        redirect('dashboard/index');
-    }
-
-    public function konfirmasi($id)
-    {
-        $reservasi = $this->db->get_where('reservasi', ['id' => $id])->row_array();
-        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $reservasi['npk']])->row_array();
-
+        $this->db->where('npk', $perjalanan['npk']);
+        $karyawan = $this->db->get('karyawan')->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
-        $message = "*Perjalanan anda dengan detail berikut :*\r\n \r\n No. Reservasi : *" . $id . "*" .
-            "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
-            "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
-            "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
-            "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
-            "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
-            "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
-            " ) \r\n \r\nAkan dibatalkan secara otomatis dalam 15 menit. 
-                    \r\nSilahkan lakukan konfirmasi ke bagian GA jika ingin melanjutkan perjalanan ini.";
+        $message = "*PERJALANAN DINAS DIAKTIFKAN KEMBALI*\r\n \r\n No. Perjalanan : *" . $perjalanan['id'] . "*" .
+            "\r\n Nama : *" . $perjalanan['nama'] . "*" .
+            "\r\n Tujuan : *" . $perjalanan['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
+            "\r\n Peserta : *" . $perjalanan['anggota'] . "*" .
+            "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "*" .
+            " ) \r\n \r\nPerjalanan kamu telah *DIAKTIF* kembali. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
+        $this->session->set_flashdata('message', 'barudl');
+        redirect('perjalanandl/perjalanan');
+    }
+
+    public function gabung($rsvid)
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Reservasi Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['rsvid'] = $rsvid;
+        $queryReservasi = "SELECT *
+        FROM `reservasi`
+        WHERE `status` = '5'
+        ";
+        $data['reservasi'] = $this->db->query($queryReservasi)->result_array();
+        $queryPerjalanan = "SELECT *
+        FROM `perjalanan`
+        WHERE `status` = '1'OR `status` = '8' OR `status` = '11'
+        ";
+        $data['perjalanan'] = $this->db->query($queryPerjalanan)->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/gabung', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function gabungrsv($rsvid1, $rsvid2)
+    {
+        $rsv1 =  $this->db->get_where('reservasi', ['id' => $rsvid1])->row_array();
+        $rsv2 =  $this->db->get_where('reservasi', ['id' => $rsvid2])->row_array();
+
+        // update table anggota perjalanan
+        $this->db->set('reservasi_id', $rsvid2);
+        $this->db->where('reservasi_id', $rsvid1);
+        $this->db->update('perjalanan_tujuan');
+        $tujuan = $this->db->where('reservasi_id', $rsvid2);
+        $tujuan = $this->db->get_where('perjalanan_tujuan')->result_array();
+        $tujuanbaru = array_column($tujuan, 'inisial');
+
+        // update table anggota perjalanan
+        $this->db->set('reservasi_id', $rsvid2);
+        $this->db->where('reservasi_id', $rsvid1);
+        $this->db->update('perjalanan_anggota');
+        $anggota = $this->db->where('reservasi_id', $rsvid2);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        // Update reservasi
+        $this->db->set('tujuan', implode(', ', $tujuanbaru));
+        $this->db->set('keperluan', $rsv1['keperluan'] . ",\r\n" . $rsv2['keperluan']);
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $rsvid2);
+        $this->db->update('reservasi');
+
+        // batalkan reservasi
+        $this->db->set('status', '9');
+        $this->db->set('catatan', 'Digabungkan dengan RESERVASI ' . $rsvid2);
+        $this->db->where('id', $rsvid1);
+        $this->db->update('reservasi');
+
+        $this->db->where('npk', $rsv2['npk']);
+        $karyawan = $this->db->get('karyawan')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $karyawan['phone'];
+        $message = "*PERJALANAN DINAS DIGABUNGKAN*\r\n \r\n No. Reservasi : *" . $rsv2['id'] . "*" .
+            "\r\n Nama : *" . $rsv2['nama'] . "*" .
+            "\r\n Tujuan : *" . $rsv2['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $rsv2['keperluan'] . "*" .
+            "\r\n Peserta : *" . $rsv2['anggota'] . "*" .
+            "\r\n Berangkat : *" . $rsv2['tglberangkat'] . "* *" . $rsv2['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $rsv2['tglkembali'] . "* *" . $rsv2['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $rsv2['nopol'] . "* ( *" . $rsv2['kepemilikan'] . "*" .
+            " ) \r\n \r\nReservasi Perjalanan kamu telah digabungkan dengan *" . $rsv2['id'] . "*. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
+        $this->session->set_flashdata('message', 'barudl');
+        redirect('perjalanandl/admindl');
+    }
+
+    public function gabungdl($rsvid, $dlid)
+    {
+        $rsv =  $this->db->get_where('reservasi', ['id' => $rsvid])->row_array();
+        $dl =  $this->db->get_where('perjalanan', ['id' => $dlid])->row_array();
+
+        // update table anggota perjalanan
+        $this->db->set('perjalanan_id', $dlid);
+        $this->db->where('reservasi_id', $rsvid);
+        $this->db->update('perjalanan_tujuan');
+        $tujuan = $this->db->where('perjalanan_id', $dlid);
+        $tujuan = $this->db->get_where('perjalanan_tujuan')->result_array();
+        $tujuanbaru = array_column($tujuan, 'inisial');
+
+        // update table anggota perjalanan
+        $this->db->set('perjalanan_id', $dlid);
+        $this->db->where('reservasi_id', $rsvid);
+        $this->db->update('perjalanan_anggota');
+        $anggota = $this->db->where('perjalanan_id', $dlid);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        // Update reservasi
+        $this->db->set('tujuan', implode(', ', $tujuanbaru));
+        $this->db->set('keperluan', $dl['keperluan'] . ",\r\n" . $rsv['keperluan']);
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $dlid);
+        $this->db->update('perjalanan');
+
+        // batalkan reservasi
+        $this->db->set('status', '9');
+        $this->db->set('catatan', 'Digabungkan dengan PERJALANAN ' . $dlid);
+        $this->db->where('id', $rsvid);
+        $this->db->update('reservasi');
+
+        $this->db->where('npk', $dl['npk']);
+        $karyawan = $this->db->get('karyawan')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $karyawan['phone'];
+        $message = "*PERJALANAN DINAS DIGABUNGKAN*\r\n \r\n No. Perjalanan : *" . $dl['id'] . "*" .
+            "\r\n Nama : *" . $dl['nama'] . "*" .
+            "\r\n Tujuan : *" . $dl['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $dl['keperluan'] . "*" .
+            "\r\n Peserta : *" . $dl['anggota'] . "*" .
+            "\r\n Berangkat : *" . $dl['tglberangkat'] . "* *" . $dl['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $dl['tglkembali'] . "* *" . $dl['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $dl['nopol'] . "* ( *" . $dl['kepemilikan'] . "*" .
+            " ) \r\n \r\nReservasi Perjalanan kamu telah digabungkan dengan *" . $dl['id'] . "*. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);

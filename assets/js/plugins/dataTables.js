@@ -12,7 +12,55 @@ $(document).ready(function () {
         }
     });
 
-    var table = $('#datatable').DataTable();
+    $('#famday').DataTable({
+        "pagingType": "full_numbers",
+        scrollX: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'print'
+        ],
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column(10)
+                .data()
+                .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+
+            // Total over this page
+            pageTotal = api
+                .column(10, { page: 'current' })
+                .data()
+                .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+
+            // Update footer
+            $(api.column(10).footer()).html(
+                '( ' + total + ' orang)'
+            );
+        },
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+
+    });
 
     //datatables perjalananan
 
@@ -35,7 +83,7 @@ $(document).ready(function () {
 
     var tablePerjalanan = $('#dtperjalanan').DataTable();
 
-    //datatables persetujuan
+    //datatables persetujuan DL
 
     $('#dtatasan').DataTable({
         "pagingType": "full_numbers",
@@ -86,6 +134,61 @@ $(document).ready(function () {
                 modal.find('.modal-body input[name="id"]').val(tableAtasan.rows(indexes).data().pluck(0).toArray())
             })
             $('#rsvDetail').modal("show");
+        }
+    });
+
+    //datatables persetujuan TA
+
+    $('#tableTa').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        select: {
+            style: 'single'
+        },
+        "columnDefs": [
+            { "visible": false, "targets": 5 },
+            { "visible": false, "targets": 6 },
+            { "visible": false, "targets": 8 },
+            { "visible": false, "targets": 10 },
+            { "visible": false, "targets": 11 }
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
+    var tableApprovalta = $('#tableTa').DataTable();
+
+    // Select record
+    tableApprovalta.on('select', function (e, dt, type, indexes) {
+        if (type === 'row') {
+            $('#modalTa').on('show.bs.modal', function () {
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input[name="id"]').val(tableApprovalta.rows(indexes).data().pluck(0).toArray())
+                modal.find('.modal-body input[name="nama"]').val(tableApprovalta.rows(indexes).data().pluck(1).toArray())
+                modal.find('.modal-body input[name="tujuan"]').val(tableApprovalta.rows(indexes).data().pluck(2).toArray())
+                modal.find('.modal-body textarea[name="keperluan"]').val(tableApprovalta.rows(indexes).data().pluck(3).toArray())
+                modal.find('.modal-body input[name="anggota"]').val(tableApprovalta.rows(indexes).data().pluck(4).toArray())
+                modal.find('.modal-body input[name="nopol"]').val(tableApprovalta.rows(indexes).data().pluck(5).toArray())
+                modal.find('.modal-body input[name="kepemilikan"]').val(tableApprovalta.rows(indexes).data().pluck(6).toArray())
+                modal.find('.modal-body input[name="tglberangkat"]').val(tableApprovalta.rows(indexes).data().pluck(7).toArray())
+                modal.find('.modal-body input[name="jamberangkat"]').val(tableApprovalta.rows(indexes).data().pluck(8).toArray())
+                modal.find('.modal-body input[name="tglkembali"]').val(tableApprovalta.rows(indexes).data().pluck(9).toArray())
+                modal.find('.modal-body input[name="jamkembali"]').val(tableApprovalta.rows(indexes).data().pluck(10).toArray())
+                modal.find('.modal-body input[name="jenis"]').val(tableApprovalta.rows(indexes).data().pluck(11).toArray())
+            })
+            $('#batalTa').on('show.bs.modal', function () {
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input[name="id"]').val(tableApprovalta.rows(indexes).data().pluck(0).toArray())
+            })
+            $('#modalTa').modal("show");
         }
     });
 
@@ -167,4 +270,5 @@ $(document).ready(function () {
     table.on('click', '.like', function () {
         alert('You clicked on Like button');
     });
+
 });

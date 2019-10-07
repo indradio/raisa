@@ -13,6 +13,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <a href="<?= base_url('cekdl/berangkat'); ?>" class="btn btn-lg btn-block btn-info mb-2" role="button" aria-disabled="false">KLIK UNTUK REFRESH</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -27,8 +28,8 @@
                                         <th>Peserta</th>
                                         <th>Tanggal Keberangkatan (Estimasi)</th>
                                         <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th class="disabled-sorting text-center"></th>
-                                        <th>Actions</th>
+                                        <th class="disabled-sorting"></th>
+                                        <th class="disabled-sorting">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -42,37 +43,49 @@
                                         <th>Peserta</th>
                                         <th>Tgl Keberangkatan (Estimasi)</th>
                                         <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th class="text-center"></th>
+                                        <th></th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $pdl) : ?>
-                                    <tr>
-                                        <td><?= $pdl['id']; ?></td>
-                                        <td><?= $pdl['nopol']; ?></td>
-                                        <td><?= $pdl['kepemilikan']; ?></td>
-                                        <td><?= $pdl['nama']; ?></td>
-                                        <td><?= $pdl['tujuan']; ?></td>
-                                        <td><?= $pdl['keperluan']; ?></td>
-                                        <td><?= $pdl['anggota']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
-                                        <td><?= $pdl['jamberangkat']; ?></td>
-                                        <td class="text-right">
-                                            <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#revisiPerjalanan" data-id="<?= $pdl['id']; ?>">Revisi</a>
-                                            <?php
-                                            if ($this->session->userdata('npk') == '1111'){ ?>
-                                            <a href="<?= base_url('perjalanandl/bataldladmin/') . $pdl['id']; ?>" class="btn btn-round btn-danger btn-sm">Batalkan</a>
+                                        <?php if ($pdl['tglberangkat'] < date('Y-m-d') and $pdl['status'] == 1) { ?>
+                                            <tr class="text-dark bg-danger">
+                                            <?php } elseif ($pdl['tglberangkat'] < date('Y-m-d') and $pdl['status'] == 11) { ?>
+                                            <tr class="text-dark bg-warning">
+                                            <?php } else { ?>
+                                            <tr>
                                             <?php }; ?>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
+                                            <td><?= $pdl['id']; ?></td>
+                                            <td><?= $pdl['nopol']; ?></td>
+                                            <td><?= $pdl['kepemilikan']; ?></td>
+                                            <td><?= $pdl['nama']; ?></td>
+                                            <td><?= $pdl['tujuan']; ?></td>
+                                            <td><?= $pdl['keperluan']; ?></td>
+                                            <td><?= $pdl['anggota']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
+                                            <td><?= $pdl['jamberangkat']; ?></td>
+                                            <td class="text-right">
+                                                <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#revisiPerjalanan" data-id="<?= $pdl['id']; ?>">Revisi</a>
+                                            </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="fa fa-circle text-danger"></i> Perjalanan yang tanggal keberangkatan sudah lewat
+                            </div>
+                            <div class="col-md-12">
+                                <i class="fa fa-circle text-warning"></i> Perjalanan yang Konfirmasi Keterlambatan
+                            </div>
                         </div>
                     </div>
                 </div>

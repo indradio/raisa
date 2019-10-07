@@ -121,6 +121,9 @@
         </ul>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!--   Core JS Files   -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
@@ -380,6 +383,290 @@
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
         }
+    });
+
+    function setFormValidation(id) {
+        $(id).validate({
+            highlight: function(element) {
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+                $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+            },
+            success: function(element) {
+                $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+                $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+            },
+            errorPlacement: function(error, element) {
+                $(element).closest('.form-group').append(error);
+            },
+        });
+    }
+
+    $(document).ready(function() {
+        setFormValidation('#Aktivitas');
+        setFormValidation('#TypeValidation');
+        setFormValidation('#LoginValidation');
+        setFormValidation('#RangeValidation');
+    });
+
+    $(document).ready(function() {
+        //dtproject
+        var tableproject = $('#dtproject').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            scrollX: true,
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [], //Initial no order.
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('project/ajax_list') ?>",
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [{
+                "targets": [0], //first column / numbering column
+                "orderable": false, //set not orderable
+            }, ],
+            "columnDefs": [{
+                "targets": [5], //first column / numbering column
+                "orderable": false, //set not orderable
+                "defaultContent": "<button>PILIH</button>",
+            }, ],
+        });
+        $('#dtproject tbody').on('click', 'button', function() {
+            var data = tableproject.row($(this).parents('tr')).data();
+            $('#projectModal').on('show.bs.modal', function() {
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input[name="copro"]').val(data[1])
+                modal.find('.modal-body input[name="no_material"]').val(data[2])
+                modal.find('.modal-body input[name="deskripsi"]').val(data[3])
+                modal.find('.modal-body input[name="status"]').val(data[4])
+            })
+            $('#projectModal').modal("show");
+        });
+
+        var groupColumn = 1;
+        var tablewbs = $('#dtwbs').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [-1],
+                ["All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            //Set column definition initialisation properties.
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }, ],
+            "columnDefs": [{
+                "targets": [12], //first column / numbering column
+                "orderable": false, //set not orderable
+            }, ],
+            "order": [
+                [0, 'asc']
+            ],
+            "displayLength": -1,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="13">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+
+        // var groupColumn = 1;
+        var tableakwbs = $('#dtakwbs').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [-1],
+                ["All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            //Set column definition initialisation properties.
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }, ],
+            "columnDefs": [{
+                "targets": [8], //first column / numbering column
+                "orderable": false, //set not orderable
+            }, ],
+            "order": [
+                [0, 'asc']
+            ],
+            "displayLength": -1,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="9">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!-- JS fullcalendar -->
+<script>
+    $(document).ready(function() {
+        $cJamkerja = $('#calendarJamkerja');
+
+        today = new Date();
+        y = today.getFullYear();
+        m = today.getMonth();
+        d = today.getDate();
+
+        $cJamkerja.fullCalendar({
+            timeZone: 'asia/jakarta', // the default (unnecessary to specify)
+            viewRender: function(view, element) {
+                // We make sure that we activate the perfect scrollbar when the view isn't on Month
+                if (view.name != 'month') {
+                    $(element).find('.fc-scroller').perfectScrollbar();
+                }
+            },
+            header: {
+                left: 'month,agendaWeek,agendaDay',
+                center: 'title',
+                right: 'prev,next,today'
+            },
+
+            firstDay: 1,
+            defaultDate: today,
+            businessHours: [{
+                    default: false,
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [1, 2, 3, 4], // Monday - Friday
+                    start: '07:30', // a start time 
+                    end: '16:30' // an end time 
+                },
+                {
+                    default: false,
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [5], // Monday - Friday
+                    start: '07:00', // a start time 
+                    end: '16:00' // an end time 
+                },
+            ],
+
+            views: {
+                month: { // name of view
+                    titleFormat: 'MMMM YYYY'
+                    // other view-specific options here
+                },
+                week: {
+                    titleFormat: " MMMM D YYYY"
+                },
+                day: {
+                    titleFormat: 'D MMM, YYYY'
+                }
+            },
+
+            selectable: true,
+            selectHelper: true,
+            editable: true,
+
+            eventSources: [{
+                events: function(start, end, timezone, callback) {
+                    $.ajax({
+                        url: '<?php echo base_url() ?>jamkerja/get_events',
+                        dataType: 'json',
+                        success: function(msg) {
+                            var events = msg.events;
+                            callback(events);
+                        }
+                    });
+                }
+            }, ],
+            eventLimit: true, // allow "more" link when too many events
+
+            select: function(start, end) {
+
+                // on select we show the Sweet Alert modal with an input
+                swal({
+                        title: 'Create an Event',
+                        html: '<div class="form-group">' +
+                            '<input class="form-control" placeholder="Event Title" id="input-field">' +
+                            '</div>',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        buttonsStyling: false
+                    }).then(function(result) {
+
+                        var eventData;
+                        event_title = $('#input-field').val();
+
+                        if (event_title) {
+                            eventData = {
+                                title: event_title,
+                                start: start,
+                                end: end
+                            };
+                            $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
+                        }
+                        $calendar.fullCalendar('unselect');
+                    })
+                    .catch(swal.noop);
+            },
+            eventClick: function(info) {
+                $('#rsvBatal').modal("show");
+            }
+
+        });
+    });
+</script>
+<!-- script ajax -->
+<script>
+    $(document).ready(function() {
+        $('#kategori').change(function() {
+            var kategori = $('#kategori').val();
+            if (kategori == 3) {
+                // $('#copro').html('<option value="">Pilih Project</option>');
+                $('#copro').prop('disabled', true);
+                $('#copro').selectpicker('refresh');
+            } else {
+                $('#copro').prop('disabled', false);
+                $('#copro').selectpicker('refresh');
+            }
+        });
     });
 </script>
 

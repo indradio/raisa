@@ -55,7 +55,7 @@ $('#tambahPeserta').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
-$('#revisiPerjalanan').on('show.bs.modal', function (event) {
+$('#batalRsv').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
     var modal = $(this)
@@ -69,7 +69,7 @@ $('#batalDl').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
-$('#batalRsv').on('show.bs.modal', function (event) {
+$('#revisiPerjalanan').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
     var modal = $(this)
@@ -81,5 +81,18 @@ $('#editPerjalanan').on('show.bs.modal', function (event) {
     var id = button.data('id') // Extract info from data-* attributes
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
+})
+
+$('#aktivitasModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var copro = button.data('copro') // Extract info from data-* attributes
+    var id = button.data('id') // Extract info from data-* attributes
+    var milestone = button.data('milestone') // Extract info from data-* attributes
+    var aktivitas = button.data('aktivitas') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('.modal-body input[name="copro"]').val(copro)
+    modal.find('.modal-body input[name="id"]').val(id)
+    modal.find('.modal-body input[name="milestone"]').val(milestone)
+    modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
 })
 

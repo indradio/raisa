@@ -1,20 +1,20 @@
 const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
-if (flashData == 'setujudl') {
+if (flashData == 'masuk') {
+  swal({
+    title: "Selamat Datang!",
+    text: "INFO : Silahkan DAFTARKAN keluarga kamu untuk acara WINTEQ Family Day 2019, PENDAFTARAN akan DITUTUP pada hari KAMIS (10/10/19).",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-primary",
+    type: "info"
+  }).catch(swal.noop)
+} else if (flashData == 'setujudl') {
   swal({
     title: "Terimakasih!",
     text: "Perjalanan ini telah disetujui.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
-  }).catch(swal.noop)
-} else if (flashData == 'masuk') {
-  swal({
-    title: "Selamat Datang!",
-    text: "INFO : Perjalanan kamu akan dibatalkan jika tidak segera melakukan perjalanan dalam 1 jam dari waktu keberangkatan yang kamu pesan.",
-    buttonsStyling: false,
-    confirmButtonClass: "btn btn-primary",
-    type: "info"
   }).catch(swal.noop)
 } else if (flashData == 'bataldl') {
   swal({
@@ -24,8 +24,7 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-  
-} else if (flashData == 'unfinishdl') {
+} else if (flashData == 'Xunfinishdl') {
   swal({
     title: "Maaf!",
     text: "Perjalanan ini mungkin dibatalkan ataupun belum selesai.",
@@ -37,7 +36,7 @@ if (flashData == 'setujudl') {
       window.close();
     }
   }).catch(swal.noop)
-} else if (flashData == 'sudahsetujudl') {
+} else if (flashData == 'Xsudahsetujudl') {
   swal({
     title: "Terimakasih!",
     text: "Perjalanan ini telah Telah disetujui oleh Kepala Departemen.",
@@ -47,8 +46,8 @@ if (flashData == 'setujudl') {
   }).catch(swal.noop)
 } else if (flashData == 'nopolsalah') {
   swal({
-    title: "Maaf!",
-    text: "Nomor polisi yang anda masukan tidak terdaftar dalam kendaraan operasional.",
+    title: "Ooops!",
+    text: "Nomor polisi yang kamu masukan tidak terdaftar dalam kendaraan operasional.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"
@@ -61,10 +60,18 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'tambahwaktudl') {
+  swal({
+    title: "Yeaayy!!!",
+    text: "Waktu keberangkatan kamu RAISA tambah 2 JAM dari waktu keberangkatan yang kamu pesan.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-info",
+    type: "info"
+  }).catch(swal.noop)
 } else if (flashData == 'rsvbaru') {
   swal({
-    title: "Reservasi Berhasil!",
-    text: "RAISA akan mengirimkan notifikasi jika perjalanan anda telah disetujui dan siap diberangkatkan.",
+    title: "HOREEE!! Reservasi Berhasil!",
+    text: "Nanti RAISA kabarin deh kalo perjalanan kamu sudah disetujui dan siap untuk berangkat.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
@@ -87,8 +94,8 @@ if (flashData == 'setujudl') {
   }).catch(swal.noop)
 } else if (flashData == 'passok') {
   swal({
-    title: "Berhasil!",
-    text: "Password anda telah berhasil diubah.",
+    title: "Yeayy!",
+    text: "Password kamu telah berhasil diubah.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
@@ -101,15 +108,31 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-}else if (flashData == 'hapus') {
+    }else if (flashData == 'hapus') {
   swal({
     title: "Terimakasih!",
     text: "Aktivitas Telah dihapus.",
+      buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
+} else if (flashData == 'berhasilopname') {
+  swal({
+    title: "Terimakasih!",
+    text: "Asset berhasil diopneme.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'gagalopname') {
+  swal({
+    title: "Maaf!",
+    text: "Asset gagal diopname. Foto max 5Mb, catatan harus di isi jika ada perubahan data asset",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-}else if (flashData == 'batalbr') {
+    }else if (flashData == 'batalbr') {
   swal({
     title: "Terimakasih!",
     text: "Lembur ini telah dibatalkan.",
@@ -121,14 +144,38 @@ if (flashData == 'setujudl') {
   swal({
     title: "Terimakasih!",
     text: "Lembur ini telah disetujui.",
+       buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'berhasilverifikasi') {
+  swal({
+    title: "Terimakasih!",
+    text: "Asset Opname telah diverifikasi",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
-}else if (flashData == 'setujuilbrga') {
+} else if (flashData == 'vote') {
+  swal({
+    title: "Terimakasih!",
+    text: "Anda telah melakukan vote untuk acara Family Day 2019",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+    }else if (flashData == 'setujuilbrga') {
   swal({
     title: "Terimakasih!",
     text: "Konsumsi telah dikonfirmasi.",
+     buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'famday') {
+  swal({
+    title: "Terimakasih!",
+    text: "Anda telah melakukan pendaftaran untuk acara Family Day 2019",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"

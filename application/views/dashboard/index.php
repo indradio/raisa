@@ -1,6 +1,167 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
+        <!-- Card Vote -->
+        <?php 
+        if ($karyawan['status'] == '1') {
+    $queryOpname1 = $this->db->query('SELECT * FROM famday WHERE `npk` =  '.$this->session->userdata('npk').'');
+   $a = $queryOpname1->num_rows();
+   if ($a == 0){
+    ?>
+     <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">local_florist</i>
+                        </div>
+                        <h4 class="card-title">Pendaftaran WINTEQ Family Day 2019</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row justify-content-center">
+                      <form class="form" method="post" action="<?= base_url('famday/daftar'); ?>">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Nama Karyawan</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="nama" value="<?= $karyawan['nama']; ?> ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="ikut" name="ikut" value="1">
+                                        Saya
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="pasangan" name="pasangan" value="1">
+                                        Istri/Suami
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anak1" name="anak1" value="1">
+                                        Anak Ke-1
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anak2" name="anak2" value="1">
+                                        Anak Ke-2
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anak3" name="anak3" value="1">
+                                        Anak Ke-3
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Anak Usia 0 - 1 Thn</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="balita" name="balita" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
+                                        <option value="">Tidak Ada</option>
+                                        <option value="1">1 Anak</option>
+                                        <option value="2">2 Anak</option>
+                                        <option value="3">3 Anak</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Keluarga Tambahan</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="tambahan" name="tambahan" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
+                                        <option value="">Tidak Ada</option>
+                                        <option value="1">1 Orang</option>
+                                        <option value="2">2 Orang</option>
+                                        <option value="3">3 Orang</option>
+                                        <option value="4">4 Orang</option>
+                                        <option value="5">5 Orang</option>
+                                        <option value="6">6 Orang</option>
+                                        <option value="7">7 Orang</option>
+                                        <option value="8">8 Orang</option>
+                                        <option value="9">9 Orang</option>
+                                        <option value="10">10 Orang</option>
+                                        <option value="10+">Lebih dari 10 Orang</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Ukuran Baju Saya</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <?php
+                                        $ukuran = $this->db->get_where('famday_baju')->result_array();
+                                        foreach ($ukuran as $u) : ?>
+                                            <option value="<?= $u['ukuran']; ?>"><?= $u['ukuran']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Akomodasi</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="akomodasi" name="akomodasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <option value="BIS">BIS</option>
+                                        <option value="PRIBADI">PRIBADI</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-fill btn-success">DAFTAR</button>
+                            </div>
+                        </div>
+                    </form>
+                     </div>
+                  </div>
+                </div>
+              </div>
+      <?php }; ?>
+      <?php }; ?>
+
+      <!-- End Vote -->
     <!-- Banner -->
     <div class="row">
       <?php
@@ -44,14 +205,14 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
               <?= $info['deskripsi']; ?>
             </div>
           </div>
-          <div class="card-footer">
+          <!-- <div class="card-footer">
             <div class="price">
-              <h4><?= $info['sect_nama']; ?></h4>
+              <h4></h4>
             </div>
             <div class="stats">
-              <p class="card-category"><i class="material-icons">time</i> Berlaku sampai <?= $info['berlaku']; ?></p>
+              <p class="card-category"></p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <?php endforeach; ?>
@@ -77,14 +238,13 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Kendaraan</th>
-                                        <th>Nomor DL</th>
-                                        <th>Jenis DL</th>
                                         <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
+                                        <th>Nomor</th>
+                                        <th>Jenis</th>
                                         <th>Keberangkatan</th>
                                         <th>Kembali</th>
-                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -123,11 +283,8 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                         $total = $Cari['COUNT(*)'];
                                         if ($total == 0) { ?>
                                           <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
-                                          </td>
-                                        <?php } else { ?>
-                                          <span class="badge badge-pill badge-danger">Sudah Dipesan</span>
-                                          </td>
-                                          <?php
+                                        </td>
+                                        <?php } else { 
                                             $queryPerjalanan = "SELECT *
                                             FROM `perjalanan`
                                             WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
@@ -135,30 +292,38 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             $p = $this->db->query($queryPerjalanan)->row_array();
                                             if ($p['id'] != null) {
                                             ?>
-                                              <td><?= $p['id']; ?></td>
-                                              <td><?= $p['jenis_perjalanan']; ?></td>
-                                              <td><?= $p['anggota']; ?></td>
-                                              <td><?= $p['tujuan']; ?></td>
-                                              <td><?= $p['keperluan']; ?></td>
-                                              <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                              <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                               <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
-                                              <td><?= $status['nama']; ?></td>
+                                              <?php if ($p['status'] == 1) {?>
+                                                <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
+                                                <?php }elseif ($p['status'] == 2) {?>
+                                                <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span>
+                                                <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
+                                                <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
+                                              <?php };?>
+                                        </td>
+                                        <td><?= $p['anggota']; ?></td>
+                                        <td><?= $p['tujuan']; ?></td>
+                                        <td><?= $p['keperluan']; ?></td>
+                                        <td><?= $p['id']; ?></td>
+                                        <td><?= $p['jenis_perjalanan']; ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                             <?php } else { 
                                               $queryReservasi = "SELECT *
                                               FROM `reservasi`
                                               WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                               ";
-                                              $r = $this->db->query($queryReservasi)->row_array();?>
-                                              <td><?= $r['id']; ?></td>
-                                              <td><?= $r['jenis_perjalanan']; ?></td>
-                                              <td><?= $r['anggota']; ?></td>
-                                              <td><?= $r['tujuan']; ?></td>
-                                              <td><?= $r['keperluan']; ?></td>
-                                              <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
-                                              <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
-                                              <?php $statusrsv = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
-                                              <td><?= $statusrsv['nama']; ?></td>
+                                              $r = $this->db->query($queryReservasi)->row_array();
+                                              $rsvstatus = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
+                                                <span class="badge badge-pill badge-warning"><?= $rsvstatus['nama']; ?></span>
+                                        </td>
+                                        <td><?= $r['anggota']; ?></td>
+                                        <td><?= $r['tujuan']; ?></td>
+                                        <td><?= $r['keperluan']; ?></td>
+                                        <td><?= $r['id']; ?></td>
+                                        <td><?= $r['jenis_perjalanan']; ?></td>
+                                        <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
+                                        <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
                                             <?php }; ?>
                                         <?php }; ?>
                                     </tr>
@@ -166,14 +331,14 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                 </tbody>
                                 <tbody>
                                     <?php
-                                            $queryPerjalananNon = "SELECT *
-                                            FROM `perjalanan`
+                                        $queryPerjalananNon = "SELECT *
+                                        FROM `perjalanan`
                                             WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9 AND `kepemilikan` != 'Operasional'
                                             ";
                                             $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
                                             foreach ($perjalananNon as $pn) : ?>
-                                         <tr>
-                                         <td>
+                                      <tr>
+                                        <td>
                                             <div class="img-container">
                                                 <img src="<?= base_url(); ?>assets/img/kendaraan/avanza.jpg" alt="...">
                                             </div>
@@ -183,17 +348,22 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             <br />
                                             <small><?= $pn['kepemilikan']; ?></small>
                                             <br />
-                                          <span class="badge badge-pill badge-info">Non-Operasional</span>
-                                        </td>  
-                                              <td><?= $pn['id']; ?></td>
-                                              <td><?= $pn['jenis_perjalanan']; ?></td>
-                                              <td><?= $pn['anggota']; ?></td>
-                                              <td><?= $pn['tujuan']; ?></td>
-                                              <td><?= $pn['keperluan']; ?></td>
-                                              <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
-                                              <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
-                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
-                                              <td><?= $status['nama']; ?></td>
+                                            <?php $pnstatus = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
+                                            <?php if ($pn['status'] == '1') {?>
+                                              <span class="badge badge-pill badge-info"><?= $pnstatus['nama']; ?></span>
+                                              <?php } elseif ($pn['status'] == '2') {?>
+                                              <span class="badge badge-pill badge-danger"><?= $pnstatus['nama']; ?></span>
+                                              <?php } elseif ($pn['status'] == '8' or $pn['status'] == '11') {?>
+                                              <span class="badge badge-pill badge-warning"><?= $pnstatus['nama']; ?></span>
+                                            <?php };?>
+                                        </td> 
+                                        <td><?= $pn['anggota']; ?></td>
+                                        <td><?= $pn['tujuan']; ?></td>
+                                        <td><?= $pn['keperluan']; ?></td>
+                                        <td><?= $pn['id']; ?></td>
+                                        <td><?= $pn['jenis_perjalanan']; ?></td>
+                                        <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
+                                        <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>

@@ -64,22 +64,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <label class="col-md-1 col-form-label">Lokasi</label>
-                            <div class="col-md-3">
-                                <select class="selectpicker" name="lokasi" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
-                                    <?php $lokasi = $this->db->get('asset_lokasi')->result_array();
-                                    foreach ($lokasi as $lok) :
-                                        echo '<option value="' . $lok['id'] . '"';
-                                        if ($lok['id'] == $asset['lokasi']) {
-                                            echo 'selected';
-                                        }
-                                        echo '>' . $lok['id'] . '</option>' . "\n";
-                                    endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <label class="col-md-1 col-form-label">First Acq</label>
                             <div class="col-md-3">
                                 <div class="form-group has-default">
@@ -95,11 +80,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" hidden>
+                            <label class="col-md-1 col-form-label">Cost Center</label>
+                            <div class="col-md-3">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control" name="cost_center" value="<?= $asset['cost_center']; ?>" required>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <label class="col-md-1 col-form-label">PIC</label>
                             <div class="col-md-3">
                                 <input type="text" class="form-control disabled" name="npklama" value="<?= $asset['npk']; ?>" hidden>
-                                <select class="selectpicker" name="npk" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                <select class="selectpicker" name="npk" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true" required>
                                     <?php $karyawan = $this->db->get('karyawan')->result_array();
                                     foreach ($karyawan as $k) :
                                         echo '<option value="' . $k['npk'] . '"';
@@ -111,12 +104,19 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row" hidden>
-                            <label class="col-md-1 col-form-label">Cost Center</label>
+                        <div class="row">
+                            <label class="col-md-1 col-form-label">Lokasi</label>
                             <div class="col-md-3">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control" name="cost_center" value="<?= $asset['cost_center']; ?>" required>
-                                </div>
+                                <select class="selectpicker" name="lokasi" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true" required>
+                                    <?php $lokasi = $this->db->get('asset_lokasi')->result_array();
+                                    foreach ($lokasi as $lok) :
+                                        echo '<option value="' . $lok['id'] . '"';
+                                        if ($lok['id'] == $asset['lokasi']) {
+                                            echo 'selected';
+                                        }
+                                        echo '>' . $lok['id'] . '</option>' . "\n";
+                                    endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row">

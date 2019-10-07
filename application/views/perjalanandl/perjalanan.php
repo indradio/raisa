@@ -127,7 +127,11 @@
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
+                                                <?php if ($pdl['status'] == '0') { ?>
+                                                    <a href="<?= base_url('perjalanandl/aktifkan/') . $pdl['id']; ?>" class="badge badge-success">Aktifkan</a>
+                                                <?php } elseif ($pdl['status'] == '9') { ?>
+                                                    <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
+                                                <?php }; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

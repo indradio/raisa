@@ -19,16 +19,16 @@
                                 <thead>
                                     <tr>
                                         <th>Nomor DL</th>
+                                        <th>Jenis DL</th>
+                                        <th>No. Polisi</th>
+                                        <th>Kendaraan</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tanggal Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>Tanggal Kembali</th>
-                                        <th>Jam Kembali</th>
-                                        <th>Nomor Polisi</th>
-                                        <th>Kendaraan</th>
+                                        <th>Keberangkatan</th>
+                                        <th>Kembali</th>
+                                        <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -36,16 +36,16 @@
                                 <tfoot>
                                     <tr>
                                         <th>Nomor DL</th>
+                                        <th>Jenis DL</th>
+                                        <th>No. Polisi</th>
+                                        <th>Kendaraan</th>
                                         <th>Nama</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tgl Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>Tgl Kembali</th>
-                                        <th>Jam Kembali</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
+                                        <th>Keberangkatan</th>
+                                        <th>Kembali</th>
+                                        <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
@@ -57,30 +57,30 @@
                                         $rsvid = $pdl['perjalanan_id'];
                                         if ($rsvid != null) {
                                             $pdetail = $this->db->get_where('perjalanan', ['id' => $rsvid])->row_array(); ?>
-                                    <tr>
-                                        <td><?= $pdetail['id']; ?></td>
-                                        <td><?= $pdetail['nama']; ?></td>
-                                        <td><?= $pdetail['tujuan']; ?></td>
-                                        <td><?= $pdetail['keperluan']; ?></td>
-                                        <td><?= $pdetail['anggota']; ?></td>
-                                        <td><?= $pdetail['tglberangkat']; ?></td>
-                                        <td><?= $pdetail['jamberangkat']; ?></td>
-                                        <td><?= $pdetail['tglkembali']; ?></td>
-                                        <td><?= $pdetail['jamkembali']; ?></td>
-                                        <td><?= $pdetail['nopol']; ?></td>
-                                        <td><?= $pdetail['kepemilikan']; ?></td>
-                                        <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
-                                        <td><?= $status['nama']; ?></td>
-                                        <td class="text-right">
-                                        <a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
-                                            <?php if ($pdetail['status'] == 1) { ?>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>"><i class="material-icons">close</i></a>
-                                            <?php } else { ?>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                                            <?php }; ?>
-                                        </td>
-                                    </tr>
-                                    <?php }; ?>
+                                            <tr>
+                                                <td><?= $pdetail['id']; ?></td>
+                                                <td><?= $pdetail['jenis_perjalanan']; ?></td>
+                                                <td><?= $pdetail['nopol']; ?></td>
+                                                <td><?= $pdetail['kepemilikan']; ?></td>
+                                                <td><?= $pdetail['nama']; ?></td>
+                                                <td><?= $pdetail['tujuan']; ?></td>
+                                                <td><?= $pdetail['keperluan']; ?></td>
+                                                <td><?= $pdetail['anggota']; ?></td>
+                                                <td><?= date('d/m/Y', strtotime($pdetail['tglberangkat'])); ?> <?= date('H:i', strtotime($pdetail['jamberangkat'])); ?></td>
+                                                <td><?= date('d/m/Y', strtotime($pdetail['tglkembali'])); ?> <?= date('H:i', strtotime($pdetail['jamkembali'])); ?></td>
+                                                <td><?= $pdetail['catatan_ga']; ?></td>
+                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
+                                                <td><?= $status['nama']; ?></td>
+                                                <td class="text-right">
+                                                    <?php if ($pdetail['status'] == 1) { ?>
+                                                        <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $pdetail['id']; ?>" class="badge badge-warning">+2 JAM</a>
+                                                        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>">BATALKAN</a>
+                                                    <?php } elseif ($pdetail['status'] == 9) { ?>
+                                                        <a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
+                                                    <?php }; ?>
+                                                </td>
+                                            </tr>
+                                        <?php }; ?>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -111,7 +111,7 @@
                 </div>
                 <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl'); ?>">
                     <div class="modal-body">
-                        <input type="text" class="form-control disabled" name="id">
+                        <input type="text" class="form-control disabled" name="id" hidden>
                         <textarea rows="2" class="form-control" name="catatan" required></textarea>
                     </div>
                     <div class="modal-footer justify-content-center">
