@@ -24,6 +24,7 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+  
 } else if (flashData == 'unfinishdl') {
   swal({
     title: "Maaf!",
@@ -100,7 +101,40 @@ if (flashData == 'setujudl') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+}else if (flashData == 'hapus') {
+  swal({
+    title: "Terimakasih!",
+    text: "Aktivitas Telah dihapus.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
+}else if (flashData == 'batalbr') {
+  swal({
+    title: "Terimakasih!",
+    text: "Lembur ini telah dibatalkan.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
+}else if (flashData == 'setujuilbrhr') {
+  swal({
+    title: "Terimakasih!",
+    text: "Lembur ini telah disetujui.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+}else if (flashData == 'setujuilbrga') {
+  swal({
+    title: "Terimakasih!",
+    text: "Konsumsi telah dikonfirmasi.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
 }
+
 
 $('.btn-bataldl').on('click', function (e) {
 
@@ -109,12 +143,12 @@ $('.btn-bataldl').on('click', function (e) {
 
   swal({
     title: 'Apakah anda yakin?',
-    text: "Anda ingin membatalkan perjalanan ini",
+    text: "Anda ingin membatalkan aktivitas ini",
     type: 'warning',
     showCancelButton: true,
     confirmButtonClass: 'btn btn-success',
     cancelButtonClass: 'btn btn-danger',
-    confirmButtonText: 'YA, BATALKAN PERJALANAN!',
+    confirmButtonText: 'YA, BATALKAN AKTIVITAS!',
     cancelButtonText: 'TUTUP',
     buttonsStyling: false
   }).then((result) => {
@@ -125,6 +159,28 @@ $('.btn-bataldl').on('click', function (e) {
 
 });
 
+$('.btn-hapus').on('click', function (e) {
+
+  e.preventDefault();
+  const href = $(this).attr('href');
+
+  swal({
+    title: 'Apakah anda yakin?',
+    text: "Anda ingin menghapus aktivitas ini",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    confirmButtonText: 'YA, BATALKAN AKTIVITAS!',
+    cancelButtonText: 'TUTUP',
+    buttonsStyling: false
+  }).then((result) => {
+    if (result.value) {
+      document.location.href = href;
+    }
+  }).catch(swal.noop)
+
+});
 sweet = {
 
   // sweet alert
