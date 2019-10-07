@@ -83,7 +83,7 @@ class Famday extends CI_Controller
         ];
         $this->db->insert('famday', $data);
 
-        $this->session->set_flashdata('message', 'vote');
+        $this->session->set_flashdata('message', 'famday');
         redirect('famday');
     }
 }

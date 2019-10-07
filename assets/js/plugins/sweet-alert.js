@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "INFO : Silahkan VOTE venue untuk acara WINTEQ Family Day 2019, VOTE akan DITUTUP pada hari SENIN (07/10/19).",
+    text: "INFO : Silahkan DAFTARKAN keluarga kamu untuk acara WINTEQ Family Day 2019, PENDAFTARAN akan DITUTUP pada hari KAMIS (10/10/19).",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
@@ -136,6 +136,14 @@ if (flashData == 'masuk') {
   swal({
     title: "Terimakasih!",
     text: "Anda telah melakukan vote untuk acara Family Day 2019",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'famday') {
+  swal({
+    title: "Terimakasih!",
+    text: "Anda telah melakukan pendaftaran untuk acara Family Day 2019",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
