@@ -11,53 +11,6 @@
                         <h4 class="card-title">Hasil Vote</h4>
                     </div>
                     <div class="card-body">
-                        <!-- <div class="col-md-12">
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header card-header-icon card-header-rose">
-                                        <div class="card-icon">
-                                            <i class="material-icons">insert_chart</i>
-                                        </div>
-                                        <h4 class="card-title">Multiple Bars Chart
-                                            <small>- Bar Chart</small>
-                                        </h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="multipleBarsChart" class="ct-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header card-header-icon card-header-danger">
-                                        <div class="card-icon">
-                                            <i class="material-icons">pie_chart</i>
-                                        </div>
-                                        <h4 class="card-title">Pie Chart</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="chartPreferences" class="ct-chart"></div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h6 class="card-category">Legend</h6>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <i class="fa fa-circle text-info"></i> Apple
-                                                <i class="fa fa-circle text-warning"></i> Samsung
-                                                <i class="fa fa-circle text-danger"></i> Windows Phone
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="col-md-12"></div>
-                        <div class="toolbar">
-                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-
-                        </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -86,15 +39,49 @@
                                 </tbody>
                             </table>
                         </div>
+                        <?php if ($this->session->userdata('npk') == '1111' or  $this->session->userdata('npk') == '0075') { ?>
+                            <div class="material-datatables">
+                                <table id="dtperjalanan" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>Vote</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>Vote</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <?php
+                                            foreach ($kary as $k) : ?>
+                                            <tr>
+                                                <td><?= $k['nama']; ?></td>
+                                                <?php $vote = $this->db->get_where('famday_vote', ['npk' =>  $k['npk']])->row_array();
+                                                        if ($vote['ocean'] == 1) {
+                                                            echo " <td>Ocean Dream Samudra</td>";
+                                                        } elseif ($vote['safari'] == 1) {
+                                                            echo " <td>Taman Safari Indonesia</td>";
+                                                        } else {
+                                                            echo " <td>Belum Vote</td>";
+                                                        }
+                                                        ?>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php }; ?>
                     </div>
                 </div>
+                <!--  end card  -->
             </div>
-            <!--  end card  -->
+            <!-- end col-md-12 -->
         </div>
-        <!-- end col-md-12 -->
+        <!-- end row -->
     </div>
-    <!-- end row -->
-</div>
-<!-- end container-fluid-->
+    <!-- end container-fluid-->
 </div>
 <!-- end content-->

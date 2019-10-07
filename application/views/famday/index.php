@@ -26,8 +26,9 @@
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
+                                        <th>Balita (Anak)</th>
                                         <th>Tambahan (Orang)</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
+                                        <th>Akomodasi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -39,22 +40,51 @@
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
+                                        <th>Balita (Anak)</th>
                                         <th>Tambahan (Orang)</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
+                                        <th>Akomodasi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($famday as $f) : ?>
                                         <tr>
-                                            <td><?= $f['ikut']; ?></td>
+                                            <td>
+                                                <?php if ($f['ikut'] == 1) {
+                                                        echo "YA";
+                                                    } else {
+                                                        echo "TIDAK";
+                                                    }; ?>
+                                            </td>
                                             <td><?= $f['ukuran']; ?></td>
-                                            <td><?= $f['pasangan']; ?></td>
+                                            <td><?php if ($f['pasangan'] == 1) {
+                                                        echo "YA";
+                                                    } else {
+                                                        echo "TIDAK";
+                                                    }; ?>
+                                            </td>
                                             <td><?= $f['ukuran_pasangan']; ?></td>
-                                            <td><?= $f['anak1']; ?></td>
-                                            <td><?= $f['anak2']; ?></td>
-                                            <td><?= $f['anak3']; ?></td>
+                                            <td><?php if ($f['anak1'] == 1) {
+                                                        echo "YA";
+                                                    } else {
+                                                        echo "TIDAK";
+                                                    }; ?>
+                                            </td>
+                                            <td><?php if ($f['anak2'] == 1) {
+                                                        echo "YA";
+                                                    } else {
+                                                        echo "TIDAK";
+                                                    }; ?>
+                                            </td>
+                                            <td><?php if ($f['anak3'] == 1) {
+                                                        echo "YA";
+                                                    } else {
+                                                        echo "TIDAK";
+                                                    }; ?>
+                                            </td>
+                                            <td><?= $f['balita']; ?></td>
                                             <td><?= $f['tambahan']; ?></td>
+                                            <td><?= $f['akomodasi']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -96,7 +126,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Keikutsertaan</label>
+                                <label class="col-md-4 col-form-label">Ikut FAMDAY 2019</label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" id="ikut" name="ikut" value="1">
@@ -178,9 +208,20 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-4 col-form-label">Anak Usia 1 - 5 Thn</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="balita" name="balita" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
+                                        <option value="">Tidak Ada</option>
+                                        <option value="1">1 Anak</option>
+                                        <option value="2">2 Anak</option>
+                                        <option value="3">3 Anak</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Keluarga Tambahan</label>
                                 <div class="col-md-6">
-                                    <select class="selectpicker" id="tambahan" name="tambahan" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                    <select class="selectpicker" id="tambahan" name="tambahan" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
                                         <option value="">Tidak Ada</option>
                                         <option value="1">1 Orang</option>
                                         <option value="2">2 Orang</option>
@@ -193,6 +234,15 @@
                                         <option value="9">9 Orang</option>
                                         <option value="10">10 Orang</option>
                                         <option value="10+">Lebih dari 10 Orang</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Akomodasi</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="akomodasi" name="akomodasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <option value="BIS">BIS</option>
+                                        <option value="PRIBADI">PRIBADI</option>
                                     </select>
                                 </div>
                             </div>

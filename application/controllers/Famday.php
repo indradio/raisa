@@ -28,6 +28,7 @@ class Famday extends CI_Controller
         $data['sidesubmenu'] = 'Daftar & Vote';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['famday'] = $this->db->get_where('famday', ['npk' =>  $this->session->userdata('npk')])->result_array();
+        $data['kary'] = $this->db->get_where('karyawan', ['status' =>  '1'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -61,6 +62,9 @@ class Famday extends CI_Controller
 
     public function daftar()
     {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->delete('famday');
+
         $total = $this->input->post('ikut') + $this->input->post('pasangan') + $this->input->post('anak1') + $this->input->post('anak2') + $this->input->post('anak3') + $this->input->post('tambahan');
         $data = [
             'npk' => $this->session->userdata('npk'),
@@ -73,6 +77,8 @@ class Famday extends CI_Controller
             'anak2' => $this->input->post('anak2'),
             'anak3' => $this->input->post('anak3'),
             'tambahan' => $this->input->post('tambahan'),
+            'akomodasi' => $this->input->post('akomodasi'),
+            'balita' => $this->input->post('balita'),
             'total' => $total
         ];
         $this->db->insert('famday', $data);
