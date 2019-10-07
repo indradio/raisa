@@ -71,7 +71,7 @@ class Famday extends CI_Controller
             'nama' => $this->input->post('nama'),
             'ikut' => $this->input->post('ikut'),
             'ukuran' => $this->input->post('baju'),
-            'pasangan' => $this->input->post('pasangan'),
+            'ikut_pasangan' => $this->input->post('pasangan'),
             'ukuran_pasangan' => $this->input->post('pasangan_baju'),
             'anak1' => $this->input->post('anak1'),
             'anak2' => $this->input->post('anak2'),
