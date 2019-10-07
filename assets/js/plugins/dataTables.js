@@ -14,11 +14,15 @@ $(document).ready(function () {
 
     $('#famday').DataTable({
         "pagingType": "full_numbers",
+        scrollX: true,
         dom: 'Bfrtip',
         buttons: [
             'csv', 'print'
         ],
-        scrollX: true,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
         "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
 
@@ -32,7 +36,7 @@ $(document).ready(function () {
 
             // Total over all pages
             total = api
-                .column(11)
+                .column(10)
                 .data()
                 .reduce(function (a, b) {
                     return intVal(a) + intVal(b);
@@ -40,14 +44,14 @@ $(document).ready(function () {
 
             // Total over this page
             pageTotal = api
-                .column(11, { page: 'current' })
+                .column(10, { page: 'current' })
                 .data()
                 .reduce(function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0);
 
             // Update footer
-            $(api.column(11).footer()).html(
+            $(api.column(10).footer()).html(
                 '( ' + total + ' orang)'
             );
         },
