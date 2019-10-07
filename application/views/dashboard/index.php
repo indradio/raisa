@@ -3,7 +3,7 @@
   <div class="container-fluid">
         <!-- Card Vote -->
         <?php 
-    $queryOpname1 = $this->db->query('SELECT * FROM famday_vote WHERE `npk` =  '.$this->session->userdata('npk').'');
+    $queryOpname1 = $this->db->query('SELECT * FROM famday WHERE `npk` =  '.$this->session->userdata('npk').'');
    $a = $queryOpname1->num_rows();
    if ($a == 0){
     ?>
@@ -13,44 +13,150 @@
                         <div class="card-icon">
                             <i class="material-icons">local_florist</i>
                         </div>
-                        <h4 class="card-title">Vote venue untuk WINTEQ Family Day 2019</h4>
+                        <h4 class="card-title">Pendaftaran WINTEQ Family Day 2019</h4>
                     </div>
                     <div class="card-body">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-          <div class="card card-product">
-            <div class="card-header card-header-image" data-header-animation="false">
-              <img class="img" src="<?= base_url(); ?>assets/img/vote1.jpg">
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">
-              Ocean Dream Samudra
-              </h4>
-              <div class="card-footer justify-content-center">
-                <a href="<?= base_url('famday/vote1'); ?>" class="btn btn-info btn-round" role="button" aria-disabled="false">Pilih</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-product">
-            <div class="card-header card-header-image" data-header-animation="false">
-              <img class="img" src="<?= base_url(); ?>assets/img/vote2.jpg">
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">
-              Taman Safari Indonesia
-              </h4>
-              <div class="card-footer justify-content-center">
-                <a href="<?= base_url('famday/vote2'); ?>" class="btn btn-success btn-round" role="button" aria-disabled="true">Pilih</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-                    </div>
+                      <div class="row justify-content-center">
+                      <form class="form" method="post" action="<?= base_url('famday/daftar'); ?>">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Nama Karyawan</label>
+                                <div class="col-md-6">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="nama" value="<?= $karyawan['nama']; ?> ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="ikut" name="ikut" value="1">
+                                        Saya
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="pasangan" name="pasangan" value="1">
+                                        Istri/Suami
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anak1" name="anak1" value="1">
+                                        Anak Ke-1
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anak2" name="anak2" value="1">
+                                        Anak Ke-2
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label"></label>
+                                <div class="col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anak3" name="anak3" value="1">
+                                        Anak Ke-3
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Anak Usia 0 - 1 Thn</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="balita" name="balita" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
+                                        <option value="">Tidak Ada</option>
+                                        <option value="1">1 Anak</option>
+                                        <option value="2">2 Anak</option>
+                                        <option value="3">3 Anak</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Keluarga Tambahan</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="tambahan" name="tambahan" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
+                                        <option value="">Tidak Ada</option>
+                                        <option value="1">1 Orang</option>
+                                        <option value="2">2 Orang</option>
+                                        <option value="3">3 Orang</option>
+                                        <option value="4">4 Orang</option>
+                                        <option value="5">5 Orang</option>
+                                        <option value="6">6 Orang</option>
+                                        <option value="7">7 Orang</option>
+                                        <option value="8">8 Orang</option>
+                                        <option value="9">9 Orang</option>
+                                        <option value="10">10 Orang</option>
+                                        <option value="10+">Lebih dari 10 Orang</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Ukuran Baju Saya</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <?php
+                                        $ukuran = $this->db->get_where('famday_baju')->result_array();
+                                        foreach ($ukuran as $u) : ?>
+                                            <option value="<?= $u['ukuran']; ?>"><?= $u['ukuran']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 col-form-label">Akomodasi</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="akomodasi" name="akomodasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <option value="BIS">BIS</option>
+                                        <option value="PRIBADI">PRIBADI</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-fill btn-success">DAFTAR</button>
+                            </div>
+                        </div>
+                    </form>
+                     </div>
+                  </div>
                 </div>
-     </div>
+              </div>
       <?php }; ?>
 
       <!-- End Vote -->
