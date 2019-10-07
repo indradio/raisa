@@ -208,7 +208,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Anak Usia 1 - 5 Thn</label>
+                                <label class="col-md-4 col-form-label">Anak Usia 0 - 1 Thn</label>
                                 <div class="col-md-6">
                                     <select class="selectpicker" id="balita" name="balita" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
                                         <option value="">Tidak Ada</option>
