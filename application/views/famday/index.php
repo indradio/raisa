@@ -20,28 +20,26 @@
                                 <thead>
                                     <tr>
                                         <th>Ikut</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Istri/Suami</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
                                         <th>Balita (Anak)</th>
                                         <th>Tambahan (Orang)</th>
+                                        <th>Ukuran Baju</th>
                                         <th>Akomodasi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Ikut</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Istri/Suami</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
                                         <th>Balita (Anak)</th>
                                         <th>Tambahan (Orang)</th>
+                                        <th>Ukuran Baju</th>
                                         <th>Akomodasi</th>
                                     </tr>
                                 </tfoot>
@@ -56,14 +54,12 @@
                                                         echo "TIDAK";
                                                     }; ?>
                                             </td>
-                                            <td><?= $f['ukuran']; ?></td>
                                             <td><?php if ($f['pasangan'] == 1) {
                                                         echo "YA";
                                                     } else {
                                                         echo "TIDAK";
                                                     }; ?>
                                             </td>
-                                            <td><?= $f['ukuran_pasangan']; ?></td>
                                             <td><?php if ($f['anak1'] == 1) {
                                                         echo "YA";
                                                     } else {
@@ -84,6 +80,7 @@
                                             </td>
                                             <td><?= $f['balita']; ?></td>
                                             <td><?= $f['tambahan']; ?></td>
+                                            <td><?= $f['ukuran']; ?></td>
                                             <td><?= $f['akomodasi']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -126,10 +123,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Ikut FAMDAY 2019</label>
+                                <label class="col-md-4 col-form-label">Keikutsertaan</label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" id="ikut" name="ikut" value="1">
+                                        Saya
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>
@@ -137,22 +135,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Ukuran Baju</label>
-                                <div class="col-md-6">
-                                    <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
-                                        <?php
-                                        $ukuran = $this->db->get_where('famday_baju')->result_array();
-                                        foreach ($ukuran as $u) : ?>
-                                            <option value="<?= $u['ukuran']; ?>"><?= $u['ukuran']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-4 col-form-label">Istri/Suami</label>
+                                <label class="col-md-4 col-form-label"></label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" id="pasangan" name="pasangan" value="1">
+                                        Istri/Suami
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>
@@ -160,19 +147,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Ukuran Baju</label>
-                                <div class="col-md-6">
-                                    <select class="selectpicker" id="pasangan_baju" name="pasangan_baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
-                                        <?php
-                                        // $ukuran = $this->db->get_where('famday_baju')->result_array();
-                                        foreach ($ukuran as $u) : ?>
-                                            <option value="<?= $u['ukuran']; ?>"><?= $u['ukuran']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-4 col-form-label">Anak</label>
+                                <label class="col-md-4 col-form-label"></label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" id="anak1" name="anak1" value="1">
@@ -234,6 +209,18 @@
                                         <option value="9">9 Orang</option>
                                         <option value="10">10 Orang</option>
                                         <option value="10+">Lebih dari 10 Orang</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Ukuran Baju</label>
+                                <div class="col-md-6">
+                                    <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <?php
+                                        $ukuran = $this->db->get_where('famday_baju')->result_array();
+                                        foreach ($ukuran as $u) : ?>
+                                            <option value="<?= $u['ukuran']; ?>"><?= $u['ukuran']; ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>

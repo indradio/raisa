@@ -20,30 +20,28 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Ikut</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Istri/Suami</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
                                         <th>Balita (Anak)</th>
                                         <th>Tambahan (Orang)</th>
+                                        <th>Ukuran Baju</th>
                                         <th>Akomodasi</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                    <th>Nama</th>
+                                        <th>Nama</th>
                                         <th>Ikut</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Istri/Suami</th>
-                                        <th>Ukuran Baju</th>
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
                                         <th>Balita (Anak)</th>
                                         <th>Tambahan (Orang)</th>
+                                        <th>Ukuran Baju</th>
                                         <th>Akomodasi</th>
                                         <th>Total</th>
                                     </tr>
@@ -52,7 +50,7 @@
                                     <?php
                                     foreach ($famday as $f) : ?>
                                         <tr>
-                                        <td><?= $f['nama']; ?></td>
+                                            <td><?= $f['nama']; ?></td>
                                             <td>
                                                 <?php if ($f['ikut'] == 1) {
                                                         echo "YA";
@@ -60,14 +58,12 @@
                                                         echo "TIDAK";
                                                     }; ?>
                                             </td>
-                                            <td><?= $f['ukuran']; ?></td>
                                             <td><?php if ($f['pasangan'] == 1) {
                                                         echo "YA";
                                                     } else {
                                                         echo "TIDAK";
                                                     }; ?>
                                             </td>
-                                            <td><?= $f['ukuran_pasangan']; ?></td>
                                             <td><?php if ($f['anak1'] == 1) {
                                                         echo "YA";
                                                     } else {
@@ -88,6 +84,7 @@
                                             </td>
                                             <td><?= $f['balita']; ?></td>
                                             <td><?= $f['tambahan']; ?></td>
+                                            <td><?= $f['ukuran']; ?></td>
                                             <td><?= $f['akomodasi']; ?></td>
                                             <td><?= $f['total']; ?></td>
                                         </tr>
