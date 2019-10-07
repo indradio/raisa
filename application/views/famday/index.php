@@ -181,6 +181,7 @@
                                 <label class="col-md-4 col-form-label">Keluarga Tambahan</label>
                                 <div class="col-md-6">
                                     <select class="selectpicker" id="tambahan" name="tambahan" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                        <option value="">Tidak Ada</option>
                                         <option value="1">1 Orang</option>
                                         <option value="2">2 Orang</option>
                                         <option value="3">3 Orang</option>
