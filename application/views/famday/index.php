@@ -139,7 +139,7 @@
                             <div class="row">
                                 <label class="col-md-4 col-form-label">Ukuran Baju</label>
                                 <div class="col-md-6">
-                                    <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
+                                    <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false">
                                         <?php
                                         $ukuran = $this->db->get_where('famday_baju')->result_array();
                                         foreach ($ukuran as $u) : ?>
