@@ -3,6 +3,7 @@
   <div class="container-fluid">
         <!-- Card Vote -->
         <?php 
+        if ($karyawan['status'] == '1') {
     $queryOpname1 = $this->db->query('SELECT * FROM famday WHERE `npk` =  '.$this->session->userdata('npk').'');
    $a = $queryOpname1->num_rows();
    if ($a == 0){
@@ -157,6 +158,7 @@
                   </div>
                 </div>
               </div>
+      <?php }; ?>
       <?php }; ?>
 
       <!-- End Vote -->
