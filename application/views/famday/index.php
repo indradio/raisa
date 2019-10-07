@@ -228,7 +228,7 @@
                                 <label class="col-md-4 col-form-label">Akomodasi</label>
                                 <div class="col-md-6">
                                     <select class="selectpicker" id="akomodasi" name="akomodasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
-                                        <option value="BIS">BUS</option>
+                                        <option value="BUS">BUS</option>
                                         <option value="PRIBADI">PRIBADI</option>
                                     </select>
                                 </div>
