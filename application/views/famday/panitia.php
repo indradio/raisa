@@ -99,6 +99,102 @@
             <!-- end col-md-12 -->
         </div>
         <!-- end row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Data Peserta Family Day 2019</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                            <div class="material-datatables">
+                                <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Ukuran Baju</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Ukuran</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <?php
+                                            foreach ($ukuran as $u) : ?>
+                                                <?php
+                                                    $uk = $this->db->query('SELECT * FROM famday WHERE `ukuran` =     "' . $u['ukuran'] . '"   ');
+                                                    $total = $uk->num_rows();
+                                                    ?>
+                                                <td><?= $u['ukuran']; ?></td>
+                                                <td><?= $total; ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Data Peserta yang BELUM Daftar</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="material-datatables">
+                            <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Nama</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                    foreach ($kary as $k) : ?>
+                                        <tr>
+                                            <?php
+                                                $ki = $this->db->query('SELECT * FROM famday WHERE `npk` =     "' . $k['npk'] . '"   ');
+                                                $ada = $ki->num_rows();
+                                                if ($ada == 0) {
+                                                    echo "<td>" . $k['nama'] . "</td>";
+                                                }
+                                                ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
     </div>
     <!-- end container-fluid-->
 </div>
