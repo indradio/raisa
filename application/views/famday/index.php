@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Keikutsertaan</label>
+                                <label class="col-md-4 col-form-label"></label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" id="ikut" name="ikut" value="1">
@@ -213,7 +213,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-4 col-form-label">Ukuran Baju</label>
+                                <label class="col-md-4 col-form-label">Ukuran Baju Saya</label>
                                 <div class="col-md-6">
                                     <select class="selectpicker" id="baju" name="baju" data-style="select-with-transition" title="Pilih" data-size="7" data-width="75%" data-live-search="false" required>
                                         <?php
