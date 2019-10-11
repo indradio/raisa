@@ -109,4 +109,25 @@ class Famday extends CI_Controller
             redirect('famday');
         }
     }
+
+    public function colek($npk)
+    {
+
+        $this->db->where('npk', $npk);
+        $karyawan = $this->db->get('karyawan')->row_array();
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        $destination = $karyawan['phone'];
+        $message = "*PENDAFTARAN FAMILY DAY 2019 Goes to Taman Safari Indonesia*" .
+            "\r\n \r\nAcara yang ditunggu-tunggu datang lagi, yuk buruan daftarkan diri kamu dan keluarga supaya gak ketinggalan." .
+            "\r\nCaranya gampang kok, kamu cukup login di RAISA dengan masukan NPK (4 digit) dan password (default : winteq) kemudian isi deh formulir digital yang sudah disiapkan oleh tim panitia." .
+            "\r\nPendaftaran paling LAMBAT kamis 10 Oktober 2019, ayo cusss! daftarkan diri kamu dan keluarga SEKARANG." .
+            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        $api_url = "http://panel.apiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($my_apikey);
+        $api_url .= "&number=" . urlencode($destination);
+        $api_url .= "&text=" . urlencode($message);
+        json_decode(file_get_contents($api_url, false));
+
+        redirect('famday/panitia');
+    }
 }

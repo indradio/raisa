@@ -128,10 +128,31 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label"></label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <p class="mb-0">Perhatikan hal-hal berikut:</p>
+                                        <p class="mb-0">1. Pengemudi dan peserta yang tertulis sudah benar </p>
+                                        <p class="mb-0">2. Kendaraan yang berangkat sudah sesuai dengan yang dipesan</p>
+                                        <p class="mb-0">3. Kendaraan dalam kondisi layak jalan</p>
+                                        <p class="mb-0">4. Pengemudi dalam kondisi baik
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" id="check" name="check" value="1">
+                                            Saya sudah memastikan hal-hal di atas semuanya benar.
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-success">BERANGKAT!</button>
+                                        <button type="submit" class="btn btn-fill btn-success" id="submit">BERANGKAT!</button>
                                         <a href="<?= base_url('cekdl/berangkat'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                     </div>
                                 </div>

@@ -13,7 +13,6 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="#" class="btn btn-lg btn-success mb-2" data-toggle="modal" data-target="#daftar" role="button" aria-disabled="false">DAFTAR</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

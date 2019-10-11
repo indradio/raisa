@@ -108,11 +108,11 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-    }else if (flashData == 'hapus') {
+} else if (flashData == 'hapus') {
   swal({
     title: "Terimakasih!",
     text: "Aktivitas Telah dihapus.",
-      buttonsStyling: false,
+    buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
@@ -132,7 +132,7 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-    }else if (flashData == 'batalbr') {
+} else if (flashData == 'batalbr') {
   swal({
     title: "Terimakasih!",
     text: "Lembur ini telah dibatalkan.",
@@ -140,11 +140,11 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
-}else if (flashData == 'setujuilbrhr') {
+} else if (flashData == 'setujuilbrhr') {
   swal({
     title: "Terimakasih!",
     text: "Lembur ini telah disetujui.",
-       buttonsStyling: false,
+    buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
@@ -164,11 +164,11 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
-    }else if (flashData == 'setujuilbrga') {
+} else if (flashData == 'setujuilbrga') {
   swal({
     title: "Terimakasih!",
     text: "Konsumsi telah dikonfirmasi.",
-     buttonsStyling: false,
+    buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)

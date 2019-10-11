@@ -109,7 +109,7 @@
                             <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-5">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $reservasi_temp['id']; ?>">Tambah Magang</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $reservasi_temp['id']; ?>">TAMBAH MAGANG</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -121,11 +121,32 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label"></label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <p class="mb-0">Perhatikan hal-hal berikut:</p>
+                                        <p class="mb-0">1. Mengemudilah dengan aman dan gunakan selalu sabuk keselamatan.</p>
+                                        <p class="mb-0">2. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.</p>
+                                        <p class="mb-0">3. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.</p>
+                                        <p class="mb-0">4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" id="check" name="check" value="1">
+                                            Ya, Saya setuju dengan ketentuan yang ditetapkan.
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
+                                        <button type="submit" class="btn btn-fill btn-success" id="submit">RESERVASI</button>
                                         <a href="<?= base_url('reservasi/dl1c1'); ?>" class="btn btn-fill btn-default">Kembali</a>
-                                        <button type="submit" class="btn btn-fill btn-rose">Selesai</button>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +183,7 @@
                                 <label class="col-md-3 col-form-label">Nama</label>
                                 <div class="col-md-7">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" id="nama" name="nama">
+                                        <input type="text" class="form-control" id="nama" name="nama" required>
                                     </div>
                                 </div>
                             </div>

@@ -69,14 +69,15 @@
                       <td><?= $rsv['catatan']; ?></td>
                       <?php $status = $this->db->get_where('reservasi_status', ['id' => $rsv['status']])->row_array(); ?>
                       <td><?= $status['nama']; ?></td>
-                      <td><a href="<?= base_url('reservasi/status/') . $rsv['id']; ?>" class="badge badge-info">CEK STATUS</a></td>
                       <td class="text-right">
-                        <?php if ($rsv['status'] == 1 or $rsv['status'] == 2 or $rsv['status'] == 3) { ?>
+                        <?php date_default_timezone_set('asia/jakarta'); ?>
+                        <?php if ($rsv['status'] == 0 and $rsv['tglberangkat'] == date("Y-m-d")) { ?>
+                          <a href="<?= base_url('reservasi/aktifkan/') . $rsv['id']; ?>" class="badge badge-success">AKTIFKAN</a>
+                        <?php } elseif ($rsv['status'] == 1 or $rsv['status'] == 2 or $rsv['status'] == 3) { ?>
                           <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">BATALKAN</a>
-                        <?php } else { ?>
-                          <a href="#" class="badge badge-danger disabled">BATALKAN</a>
                         <?php }; ?>
                       </td>
+                      <td><a href="<?= base_url('reservasi/status/') . $rsv['id']; ?>" class="badge badge-info">CEK STATUS</a></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

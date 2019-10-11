@@ -24,7 +24,7 @@
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
-                                        <th>Balita (Anak)</th>
+                                        <th>Bayi (0-1Th)</th>
                                         <th>Tambahan (Orang)</th>
                                         <th>Ukuran Baju</th>
                                         <th>Akomodasi</th>
@@ -39,7 +39,7 @@
                                         <th>Anak Ke-1</th>
                                         <th>Anak Ke-2</th>
                                         <th>Anak Ke-3</th>
-                                        <th>Balita (Anak)</th>
+                                        <th>Bayi (0-1Th)</th>
                                         <th>Tambahan (Orang)</th>
                                         <th>Ukuran Baju</th>
                                         <th>Akomodasi</th>
@@ -147,6 +147,55 @@
                 </div>
                 <!--  end card  -->
             </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Data Peserta Family Day 2019</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                            <div class="material-datatables">
+                                <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Bus</th>
+                                            <th>Pribadi</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Bus</th>
+                                            <th>Pribadi</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <?php
+                                            $b = $this->db->query('SELECT * FROM famday WHERE `akomodasi` ="BIS" OR `akomodasi` =    "BUS"  ');
+                                            $bus = $b->num_rows();
+                                            $p = $this->db->query('SELECT * FROM famday WHERE `akomodasi` ="PRIBADI"  ');
+                                            $pribadi = $p->num_rows();
+                                            ?>
+                                            <td><?= $bus; ?> Keluarga</td>
+                                            <td><?= $pribadi; ?> Keluarga</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+        </div>
+        <!-- end row -->
+        <div class="row">
             <!-- end col-md-12 -->
             <div class="col-md-6">
                 <div class="card">
@@ -165,11 +214,13 @@
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Nama</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -181,7 +232,9 @@
                                                 $ada = $ki->num_rows();
                                                 if ($ada == 0) {
                                                     echo "<td>" . $k['nama'] . "</td>";
-                                                }
+                                                    ?>
+                                                <td><a href="<?= base_url('famday/colek/') . $k['npk']; ?>" class="btn btn-round btn-success btn-sm">Colek</a></td>
+                                            <?php }
                                                 ?>
                                         </tr>
                                     <?php endforeach; ?>

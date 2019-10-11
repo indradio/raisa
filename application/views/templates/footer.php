@@ -667,6 +667,19 @@
                 $('#copro').selectpicker('refresh');
             }
         });
+
+        var checker = document.getElementById('check');
+        var sendbtn = document.getElementById('submit');
+        sendbtn.disabled = true;
+        // when unchecked or checked, run the function
+        checker.onchange = function() {
+            if (this.checked) {
+                sendbtn.disabled = false;
+            } else {
+                sendbtn.disabled = true;
+            }
+
+        }
     });
 </script>
 
