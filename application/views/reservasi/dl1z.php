@@ -128,12 +128,13 @@
                                         <p class="mb-0">1. Mengemudilah dengan aman dan gunakan selalu sabuk keselamatan.</p>
                                         <p class="mb-0">2. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.</p>
                                         <p class="mb-0">3. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.</p>
-                                        <p class="mb-0">4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.
+                                        <p class="mb-0">4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.</p>
+                                        <p class="mb-0">5. Patuhi peraturan GA yang berlaku.
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="checkbox" id="check" name="check" value="1">
-                                            Ya, Saya setuju dengan ketentuan yang ditetapkan.
+                                            Ya, Saya setuju dengan ketentuan di atas dan siap dikenakan sanksi yang berlaku atas pelanggaran dan kelalaian yang saya lakukan.
                                             <span class="form-check-sign">
                                                 <span class="check"></span>
                                             </span>

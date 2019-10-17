@@ -50,42 +50,31 @@ class Jamkerja extends CI_Controller
 
     public function aktivitas()
     {
-        $copro = $this->input->post('copro');
+        date_default_timezone_set('asia/jakarta');
+        $aktivitas = $this->input->post('aktivitas');
+        $durasi = $this->input->post('durasi');
+        $durasi = $this->input->post('durasi');
+        $hasil = $this->input->post('progres_hasil');
         $kategori = $this->input->post('kategori');
-        if ($this->input->post('kategori') == 1) {
-            $data['sidemenu'] = 'Jam Kerja';
-            $data['sidesubmenu'] = 'Laporan Kerja Harian';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['wbs'] = $this->jamkerja_model->get_wbs_bycopro($copro);
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('jamkerja/aktivitas_wbs', $data);
-            $this->load->view('templates/footer');
-        } elseif ($this->input->post('kategori') == 2) {
-            $data['sidemenu'] = 'Jam Kerja';
-            $data['sidesubmenu'] = 'Laporan Kerja Harian';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['copro'] =  $copro;
-            $data['kategori'] = $kategori;
-            $data['aktivitas'] = $this->jamkerja_model->get_jamkerja_lainpro();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('jamkerja/aktivitas_lainpro', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $data['sidemenu'] = 'Jam Kerja';
-            $data['sidesubmenu'] = 'Laporan Kerja Harian';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['kategori'] = $kategori;
-            $data['aktivitas'] = $this->jamkerja_model->get_jamkerja_lain();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('jamkerja/aktivitas_lain', $data);
-            $this->load->view('templates/footer');
+        if ($kategori != 3) {
+            $copro = $this->input->post('copro');
         }
+
+        $data = [
+            'id' => time(),
+            'npk' => $this->session->userdata('npk'),
+            'link_aktivitas' => 'JK' . date('ymd'),
+            'jenis_aktivitas' => 'JAMKERJA',
+            'tgl_aktivitas' => date('Y-m-d'),
+            'kategori' => $kategori,
+            'copro' => $copro,
+            'aktivitas' => $aktivitas,
+            'durasi' => $durasi,
+            'progres_hasil' => $hasil,
+            'status' => '9'
+        ];
+        $this->db->insert('aktivitas', $data);
+        redirect('jamkerja');
     }
 
     public function aktivitas_wbs()
@@ -116,7 +105,7 @@ class Jamkerja extends CI_Controller
             $tgl_selesai = date('Y-m-d 16:00:00');
         }
         $data = [
-            'id' => $this->session->userdata('npk') . date('ymd'),
+            'id' => 'JK' . date('ymd'),
             'npk' => $this->session->userdata('npk'),
             'tanggal_mulai' => $tgl_mulai,
             'tanggal_selesai' => $tgl_selesai,
