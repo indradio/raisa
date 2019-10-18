@@ -8,7 +8,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Data Reservasi</h4>
+            <h4 class="card-title">Data Lembur</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -33,7 +33,7 @@
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>No. Reservasi</th>
+                    <th>No. Lembur</th>
                     <th>Tgl Mengajukan</th>
                     <th>Tanggal Mulai</th>
                     <th>Jam Mulai</th>
@@ -55,19 +55,25 @@
                       <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
                       <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                       <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                      <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                       <td><?= $l['catatan']; ?></td>
                       <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                       <td><?= $status['nama']; ?></td>
                       <td>
-                        <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                          <?php if ($l['status'] == 4 or $l['status'] == 5 or $l['status'] == 6) { ?>
+                              <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                          <?php }else if ($l['status'] == 7 or $l['status'] == 9 ) { ?>
+                            <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                          <?php } else { ?>
+                              <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                          <?php }; ?>
                       </td>
                       <td class="text-right">
-                        <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
-                          <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                        <?php } else { ?>
-                          <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                        <?php }; ?>
+                          <?php if ($l['status'] == 9 ) { ?>
+                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
+                          <?php } else { ?>
+                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons">dvr</i></a>
+                          <?php }; ?>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -85,28 +91,4 @@
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="batalRsv" tabindex="-1" role="dialog" aria-labelledby="batalRsvTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="card card-signup card-plain">
-        <div class="modal-header">
-          <div class="card-header card-header-primary text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              <i class="material-icons">clear</i>
-            </button>
-            <h4 class="card-title">ALASAN PEMBATALAN</h4>
-          </div>
-        </div>
-        <form class="form" method="post" action="<?= base_url('reservasi/batalrsv'); ?>">
-          <div class="modal-body">
-            <input type="text" class="form-control disabled" name="id">
-            <textarea rows="2" class="form-control" name="catatan" required></textarea>
-          </div>
-          <div class="modal-footer justify-content-center">
-            <button type="submit" class="btn btn-danger">BATALKAN PERJALANAN INI!</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+

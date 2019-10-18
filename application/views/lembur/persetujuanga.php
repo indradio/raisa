@@ -1,3 +1,4 @@
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
@@ -8,19 +9,18 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Realisasi Lembur</h4>
-                    </div>
+                        <h4 class="card-title">Konfirmasi Lembur </h4>
+                            <br>
+                            <br>
+                            <div class="badge badge-rose mb-2"><input type="checkbox" id="check-all" name="check-all"> Check All</div>
+                        </div>
                     <div class="card-body">
-                        <div class="toolbar">
-                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <!-- <a href="#" class="btn btn-rose mb-2" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Baru</a>
-                        </div> -->
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No. Lembur</th>
-                                        <th>Tgl Mengajukan</th>
+                                        <th>Nama</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Jam Mulai</th>
                                         <th>Tanggal Selesai</th>
@@ -37,8 +37,8 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No. Lembur</th>
-                                        <th>Tgl Mengajukan</th>
+                                    <th>No. Lembur</th>
+                                        <th>Nama</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Jam Mulai</th>
                                         <th>Tanggal Selesai</th>
@@ -57,28 +57,40 @@
                                     <?php foreach ($lembur as $l) : ?>
                                         <tr>
                                             <td><?= $l['id']; ?></td>
-                                            <td><?= $l['tglpengajuan']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglmulai_aktual'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglselesai_aktual'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglselesai_aktual'])); ?></td>
-                                            <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
-                                            <td><?= $l['atasan1_realisasi']; ?></td>
-                                            <td><?= $l['atasan2_realisasi']; ?></td>
+                                            <td><?= $l['nama']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                                            <td><?= $l['atasan1_rencana']; ?></td>
+                                            <td><?= $l['atasan2_rencana']; ?></td>
                                             <td><?= $l['admin_ga']; ?></td>
                                             <td><?= $l['catatan']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
+
+                                            <?php echo form_open('lembur/setujui_ga/'); ?>
                                             <td>
-                                                <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                                                <input type="checkbox" class='check-item' name="checkbox[]" value="<?= $l['id']; ?>" required>
                                             </td>
-                                            <td class="text-right">
-                                                <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                                                <?php } else { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                                                <?php }; ?>
+                                            <script>
+                                                 $(document).ready(function(){ 
+                                                    $("#check-all").click(function(){
+                                                        if($(this).is(":checked")) 
+                                                            $(".check-item").prop("checked", true); 
+                                                        else
+                                                            $(".check-item").prop("checked", false); 
+                                                            $("#setujuiall").prop("hidden", false);
+                                                            $("#setujui").prop("hidden", true);
+                                                        });
+                                                });
+                                            </script>
+                                            <td>
+                                                <a href="<?= base_url('lembur/setujui_all/'). $l['id']; ?>" id="setujuiall" class="badge badge-pill badge-warning" hidden>Setujui Semua</a>
+                                                <button type="submit" id="setujui" name="setujui" class="badge badge-pill badge-success">Setujui</button> 
                                             </td>
+                                            <?php echo form_close(); ?>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -94,4 +106,4 @@
         <!-- end row -->
     </div>
 </div>
-<!-- Modal -->
+
