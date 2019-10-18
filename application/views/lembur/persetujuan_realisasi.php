@@ -129,10 +129,10 @@
                                 </tbody>
                             </table>
                             <?php if ($lembur['status'] !='4'){ ?>
-                                    <button type="submit"  id="setujui" class="btn btn-warning">SETUJUI</button>
+                                    <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
                                     <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }else{ ?>
-                                    <button type="submit"  id="setujui" class="btn btn-warning disabled">SETUJUI</button>
+                                    <button type="submit"  id="setujui" class="btn btn-success disabled">SETUJUI</button>
                                     <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }; ?>
                                 <a href="<?= base_url('lembur/persetujuan_realisasi/') ?>" class="btn btn-default" role="button">Kembali</a>

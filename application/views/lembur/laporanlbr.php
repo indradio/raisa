@@ -85,6 +85,22 @@
 
       endforeach;
       
+      $nama1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1_rencana']])->row_array();
+      $n1 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama1['posisi_id']])->row_array();
+      $nama1['nama']; 
+
+      $nama2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2_rencana']])->row_array();
+      $n2 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama2['posisi_id']])->row_array();
+      $nama2['nama'];
+
+      $nama3 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_ga']])->row_array();
+      $n3 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama3['posisi_id']])->row_array();
+      $nama3['nama']; 
+
+      $nama4 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_hr']])->row_array();
+      $n4 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama4['posisi_id']])->row_array();
+      $nama4['nama']; 
+
       $pdf->Cell(56,5,'',0,0,'C',1);
       $pdf->Cell(144,5,'',1,1,'C',1);
       // $pdf->Cell(75,5,'',1,1,'C',1);
@@ -99,22 +115,14 @@
       $pdf->Cell(26,5,'DITERIMA',1,1,'C',1);
       
       $pdf->Cell(56,5,'',0,0,'C',1);
-      $pdf->Cell(23,5,'ATASAN 1',1,0,'C',1);
-      $pdf->Cell(24,5,'KEPALA DEPT.',1,0,'C',1);
-      $pdf->Cell(22,5,'GA',1,0,'C',1);
-      $pdf->Cell(25,5,'ATASAN 1',1,0,'C',1);
-      $pdf->Cell(24,5,'KEPALA DEPT.',1,0,'C',1);
-      $pdf->Cell(26,5,'PERSONALIA',1,1,'C',1);
+      $pdf->Cell(23,5, $n1['nama'],1,0,'C',1);
+      $pdf->Cell(24,5, $n2['nama'],1,0,'C',1);
+      $pdf->Cell(22,5, $n3['nama'],1,0,'C',1);
+      $pdf->Cell(25,5, $n1['nama'],1,0,'C',1);
+      $pdf->Cell(24,5, $n2['nama'],1,0,'C',1);
+      $pdf->Cell(26,5, $n4['nama'],1,1,'C',1);
       
       $pdf->SetFont('Arial','B',7);
-      $nama1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1_rencana']])->row_array();
-      $nama1['nama']; 
-      $nama2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2_rencana']])->row_array();
-      $nama2['nama']; 
-      $nama3 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_ga']])->row_array();
-      $nama3['nama']; 
-      $nama4 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_hr']])->row_array();
-      $nama4['nama']; 
       
       $pdf->Cell(56,5,'',0,0,'C',1);
       $pdf->Cell(23,25, $nama1['nama'],1,0,'C',1);
