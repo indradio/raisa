@@ -73,10 +73,10 @@
                                                 <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                                             </td>
                                             <td class="text-right">
-                                                <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
+                                                <?php if ($l['status'] == 2 or $l['status'] == 3) { ?>
                                                     <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
                                                 <?php } else { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
+                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
                                                 <?php }; ?>
                                             </td>
                                         </tr>
@@ -92,5 +92,31 @@
             <!-- end col-md-12 -->
         </div>
         <!-- end row -->
+    </div>
+</div>
+<!-- Modal Batal Aktivitas-->
+<div class="modal fade" id="batalRsv" tabindex="-1" role="dialog" aria-labelledby="batalAktivitasTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">ALASAN PEMBATALAN</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/batal_lembur'); ?>">
+                    <div class="modal-body">
+                        <input type="text" class="form-control disabled" name="id">
+                        <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-rose">BATALKAN LEMBUR INI!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

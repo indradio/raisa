@@ -62,8 +62,8 @@
                       <td>
                           <?php if ($l['status'] == 4 or $l['status'] == 5 or $l['status'] == 6) { ?>
                               <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                          <?php }else if ($l['status'] == 7 or $l['status'] == 9 ) { ?>
-                            <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                          <?php }else if ($l['status'] == 7 or $l['status'] == 9 or $l['status'] == 8  or $l['status'] == 0) { ?>
+                            <a href="<?= base_url('lembur/index1/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                           <?php } else { ?>
                               <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                           <?php }; ?>

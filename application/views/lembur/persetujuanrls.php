@@ -53,7 +53,7 @@
                     <tr>
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['nama']; ?></td>
-                      <td><?= $l['tglpengajuan']; ?></td>
+                      <td><?= date('d/m/Y H:i', strtotime($l['tglpengajuan'])); ?></td>
                       <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
                       <!-- <td><?= date('H:i', strtotime($l['tglmulai_aktual'])); ?></td> -->
                       <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>

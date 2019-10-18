@@ -130,8 +130,10 @@
                             </table>
                             <?php if ($lembur['status'] !='4'){ ?>
                                     <button type="submit"  id="setujui" class="btn btn-warning">SETUJUI</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }else{ ?>
                                     <button type="submit"  id="setujui" class="btn btn-warning disabled">SETUJUI</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }; ?>
                                 <a href="<?= base_url('lembur/persetujuan_realisasi/') ?>" class="btn btn-default" role="button">Kembali</a>
                             </div>
@@ -145,5 +147,30 @@
         <!-- end row -->
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal Batal Aktivitas-->
+<div class="modal fade" id="batalRsv" tabindex="-1" role="dialog" aria-labelledby="batalAktivitasTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-primary text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">ALASAN PEMBATALAN</h4>
+          </div>
+        </div>
+        <form class="form" method="post" action="<?= base_url('lembur/batalkan_realiasi'); ?>">
+          <div class="modal-body">
+            <input type="text" class="form-control disabled" name="id">
+            <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-rose">BATALKAN REALISASI LEMBUR INI!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 

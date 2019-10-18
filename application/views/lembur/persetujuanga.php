@@ -12,7 +12,7 @@
                         <h4 class="card-title">Konfirmasi Lembur </h4>
                             <br>
                             <br>
-                            <div class="badge badge-rose mb-2"><input type="checkbox" id="check-all" name="check-all"> Check All</div>
+                            <div class="badge badge-rose mb-2" hidden><input type="checkbox" id="check-all" name="check-all"> Check All</div>
                         </div>
                     <div class="card-body">
                         <div class="material-datatables">
@@ -26,11 +26,11 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Jam Selesai</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Atasan 1</th>
+                                        <!-- <th>Atasan 1</th>
                                         <th>Atasan 2</th>
-                                        <th>Admin GA</th>
-                                        <th>Catatan</th>
-                                        <th>Status</th>
+                                        <th>Admin GA</th> -->
+                                        <!-- <th>Catatan</th>
+                                        <th>Status</th> -->
                                         <th class="disabled-sorting text-right">Actions</th>
                                         <th class="disabled-sorting"></th>
                                     </tr>
@@ -44,11 +44,11 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Jam Selesai</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Atasan 1</th>
+                                        <!-- <th>Atasan 1</th>
                                         <th>Atasan 2</th>
                                         <th>Admin GA</th>
                                         <th>Catatan</th>
-                                        <th>Status</th>
+                                        <th>Status</th> -->
                                         <th class="text-right">Actions</th>
                                         <th></th>
                                     </tr>
@@ -63,12 +63,12 @@
                                             <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
-                                            <td><?= $l['atasan1_rencana']; ?></td>
+                                            <!-- <td><?= $l['atasan1_rencana']; ?></td>
                                             <td><?= $l['atasan2_rencana']; ?></td>
                                             <td><?= $l['admin_ga']; ?></td>
                                             <td><?= $l['catatan']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
-                                            <td><?= $status['nama']; ?></td>
+                                            <td><?= $status['nama']; ?></td> -->
 
                                             <?php echo form_open('lembur/setujui_ga/'); ?>
                                             <td>

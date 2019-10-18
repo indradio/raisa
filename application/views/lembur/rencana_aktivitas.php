@@ -131,9 +131,9 @@
                                         <td><?= $status['nama']; ?></td>
                                         <td class="text-right">
                                             <?php if ($this->session->userdata['posisi_id'] == '7' and $lembur['status'] == '3' or $lembur['status'] == '2' or $lembur['status'] == '0') { ?>
-                                                <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn-bataldl disabled"><i class="material-icons">delete</i></a>
+                                                <!-- <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn-bataldl disabled"><i class="material-icons">delete</i></a> -->
                                             <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '3' or $lembur['status'] == '2' or $lembur['status'] == '0') { ?>
-                                                <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn-bataldl disabled"><i class="material-icons">delete</i></a>
+                                                <!-- <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn-bataldl disabled"><i class="material-icons">delete</i></a> -->
                                             <?php } else { ?>
                                                 <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn-bataldl"><i class="material-icons">delete</i></a>
                                             <?php }; ?>
@@ -144,13 +144,15 @@
                         </table>
                         <!-- Sederhanakan koding -->
                         <?php if ($this->session->userdata['posisi_id'] == '7' and $totalAktivitas == '0') { ?>
-                            <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button>
+                            <!-- <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button> -->
+                            <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($this->session->userdata['posisi_id'] == '5' and $totalAktivitas == '0') { ?>
-                            <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button>
+                            <!-- <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button> -->
+                            <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($this->session->userdata['posisi_id'] == '7' and $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
 
                         <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
-                            <!-- <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-default" role="button">Kembali</a> -->
+                            
                         <?php } else if ($lembur['status'] == '0') { ?>
 
                         <?php } else { ?>
@@ -238,7 +240,7 @@
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="aktivitas"></textarea>
+                                    <textarea rows="3" class="form-control" name="aktivitas" required></textarea>
                                 </div>
                             </div>
                         </div>

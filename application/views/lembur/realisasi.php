@@ -28,7 +28,7 @@
                                         <th>Durasi/Jam</th>
                                         <th>Atasan 1</th>
                                         <th>Atasan 2</th>
-                                        <th>Admin GA</th>
+                                        <th>Admin HR</th>
                                         <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
@@ -46,7 +46,7 @@
                                         <th>Durasi/Jam</th>
                                         <th>Atasan 1</th>
                                         <th>Atasan 2</th>
-                                        <th>Admin GA</th>
+                                        <th>Admin HR</th>
                                         <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
@@ -65,7 +65,7 @@
                                             <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                             <td><?= $l['atasan1_realisasi']; ?></td>
                                             <td><?= $l['atasan2_realisasi']; ?></td>
-                                            <td><?= $l['admin_ga']; ?></td>
+                                            <td><?= $l['admin_hr']; ?></td>
                                             <td><?= $l['catatan']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>

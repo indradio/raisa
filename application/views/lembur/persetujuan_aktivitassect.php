@@ -91,12 +91,12 @@
                         <br>
                         <div class="toolbar">
                         <?php if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '3'){ ?>
-                                    <!-- <a href="#" id="tambah_aktivitas" class="btn btn-primary disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a> -->
+                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
                                     <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2') { ?>
+                                <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
+                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
                                 <?php  }; ?>
-                            <!-- <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a> -->
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover"  cellspacing="0" width="100%" style="width:100%">
@@ -109,8 +109,6 @@
                                         <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Progres Hasil</th>
-                                        <th>Hasil</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -124,8 +122,6 @@
                                         <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Progres Hasil</th>
-                                        <th>Hasil</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -141,12 +137,10 @@
                                             <!-- <td><?= $a['wbs']; ?></td> -->
                                             <td><?= $a['aktivitas']; ?></td>
                                             <td><?= $a['durasi']; ?> Jam</td>
-                                            <td><?= $a['progres_hasil'] ?> %</td>
-                                            <td><?= $a['deskripsi_hasil']; ?></td>
                                             <?php $status = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
-                                            <?php if ($lembur['status'] !='3'){ ?>
+                                            <?php if ($lembur['status'] !='7'){ ?>
                                                 <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-kategori="<?= $a['kategori']; ?>" data-copro="<?= $a['copro']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">dvr</i></a>
                                                 <a href="<?= base_url('lembur/hapus_sect/'). $a['id']; ?>" class="btn-bataldl"><i class="material-icons">delete</i></a> 
                                             <?php }else{ ?>
@@ -248,7 +242,7 @@
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="aktivitas"></textarea>
+                                    <textarea rows="3" class="form-control" name="aktivitas" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -327,10 +321,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
-                                <div class="form-group has-default">
+                                <div class="form-group has-default disabled">
                                     <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="3" value="<?= $a['kategori']; ?>" required>
                                     <?php
                                     $kategori = $this->db->get('jamkerja_kategori')->result_array();
@@ -345,10 +339,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <label class="col-md-4 col-form-label">COPRO</label>
                             <div class="col-md-7">
-                                <div class="form-group has-default">
+                                <div class="form-group has-default disabled">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
                                         <?php
                                         $queyCopro = "SELECT *
