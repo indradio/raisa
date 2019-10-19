@@ -258,7 +258,35 @@ class Reservasi extends CI_Controller
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
+        // $tglberangkat = $reservasi_temp['tglberangkat'];
+        // $querySaring1 = "SELECT *
+        //           FROM `reservasi`
+        //           WHERE `tglberangkat` <= '$tglberangkat' AND `tglkembali` >= '$tglberangkat' AND `status` != 0 AND `status` != 9
+        //           ";
+        // $reservasi = $this->db->query($querySaring1)->result_array();
+        // foreach ($reservasi as $rsv) :
+        //     $rsvid = $rsv['id'];
+        //     foreach ($this->input->post('anggota') as $b) :
+        //         $rsvinisial = $b['karyawan_inisial'];
+        //         $querySaring2 = "SELECT COUNT(*)
+        //                     FROM `perjalanan_anggota`
+        //                     WHERE `reservasi_id` = '$rsvid' AND `karyawan_inisial` = '$rsvinisial'
+        //                     ";
+        //         $ketemu = $this->db->query($querySaring2)->row_array();
+        //         $total = $ketemu['COUNT(*)'];
+        //         if ($total == 0) {
         redirect('reservasi/dl1z');
+        //         } else {
+        //             $this->session->set_flashdata('message', ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        //             <strong>Maaf!</strong> You should check in on some of those fields below.
+        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //               <span aria-hidden="true">&times;</span>
+        //             </button>
+        //           </div>');
+        //             redirect('reservasi/dl1c1');
+        //         }
+        //     endforeach;
+        // endforeach;
     }
 
     // Jika menggunakan kendaraan non-operasional
