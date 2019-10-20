@@ -134,11 +134,11 @@
                                     </tbody>
                                 </table>
                                 <?php if ($lembur['status'] == '4' and $a['status'] == '1') { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button>
+                                    <button type="submit" id="ajukan" class="btn btn-success disabled">LAPORKAN</button>
                                 <?php } else if ($lembur['status'] == '5' or $lembur['status'] == '6' or $lembur['status'] == '7' or $lembur['status'] == '9') { ?>
-                                    <!-- <button type="submit"  id="ajukan" class="btn btn-success disabled">AJUKAN</button> -->
+                                    <!-- <button type="submit"  id="ajukan" class="btn btn-success disabled">LAPORKAN</button> -->
                                 <?php } else { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-success">AJUKAN</button>
+                                    <button type="submit" id="ajukan" class="btn btn-success">LAPORKAN</button>
                                 <?php }; ?>
                                 <a href="<?= base_url('lembur/realisasi/') ?>" class="btn btn-default" role="button">Kembali</a>
                             </div>

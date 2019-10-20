@@ -34,25 +34,8 @@
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <input type="text" class="form-control datetimepicker disabled" placeholder="With Material Icons" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
-                                            <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                            <?php
-                                                $lid = $lembur['id'];
-                                                $queryLembur = "SELECT COUNT(*)
-                                                        FROM `aktivitas`
-                                                        WHERE `link_aktivitas` = '$lid' ";
-                                                        $totalLembur = $this->db->query($queryLembur)->row_array();
-                                                        $totalAktivitas = $totalLembur['COUNT(*)'];
-                                            ;?>
-                                            <?php if($totalAktivitas >= '1') {?>
-                                                <a href="#" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">dvr</i></a>
-                                            <?php } else { ?>
-                                                <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">dvr</i></a>
-                                            <?php } ?>
-                                        </span>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <div class="row">
                             <label class="col-md-1 col-form-label">Tanggal Selesai</label>
