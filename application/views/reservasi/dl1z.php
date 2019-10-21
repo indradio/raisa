@@ -112,7 +112,7 @@
                                                         $total = $ketemu['COUNT(*)'];
                                                         if ($total == 0) { } else {
                                                             $this->session->set_flashdata('message', ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                                <strong>Maaf!</strong> Salah satu peserta sudah ikut dalam perjalanan lain.
+                                                                <strong>Maaf!</strong> ' .  $ang['karyawan_nama'] . ' sudah ikut dalam perjalanan lain.
                                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                   <span aria-hidden="true">&times;</span>
                                                                 </button>
