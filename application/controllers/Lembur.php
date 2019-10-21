@@ -64,7 +64,6 @@ class Lembur extends CI_Controller
             $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
-            // $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->input->post('npk')])->row_array();
 
             $this->db->where('posisi_id', '3');
             $this->db->where('dept_id', $karyawan['dept_id']);
@@ -179,7 +178,7 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function index1($id)
+    public function lemburku($id)
     {
         date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'Lembur';
@@ -193,7 +192,7 @@ class Lembur extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('lembur/index1', $data);
+        $this->load->view('lembur/lemburku', $data);
         $this->load->view('templates/footer');
     }
 
