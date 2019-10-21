@@ -94,7 +94,32 @@
                                                         WHERE `reservasi_id` = '{$reservasi_temp['id']}'
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
-                                                foreach ($anggota as $ang) : ?>
+                                                foreach ($anggota as $ang) :
+                                                    $rsvnpk = $ang['npk'];
+                                                    $tglberangkat = $reservasi_temp['tglberangkat'];
+                                                    $querySaring1 = "SELECT *
+                                                              FROM `reservasi`
+                                                              WHERE `tglberangkat` <= '$tglberangkat' AND `tglkembali` >= '$tglberangkat' AND `status` != 0 AND `status` != 9
+                                                              ";
+                                                    $reservasi = $this->db->query($querySaring1)->result_array();
+                                                    foreach ($reservasi as $rsv) :
+                                                        $rsvid = $rsv['id'];
+                                                        $querySaring2 = "SELECT COUNT(*)
+                                                                        FROM `perjalanan_anggota`
+                                                                        WHERE `reservasi_id` = '$rsvid' AND `npk` = '$rsvnpk'
+                                                                        ";
+                                                        $ketemu = $this->db->query($querySaring2)->row_array();
+                                                        $total = $ketemu['COUNT(*)'];
+                                                        if ($total == 0) { } else {
+                                                            $this->session->set_flashdata('message', ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                                <strong>Maaf!</strong> ' .  $ang['karyawan_nama'] . ' sudah ikut dalam perjalanan lain.
+                                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>');
+                                                            redirect('reservasi/dl1c1');
+                                                        }
+                                                    endforeach; ?>
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
                                                         <td><?= $ang['karyawan_nama']; ?></td>

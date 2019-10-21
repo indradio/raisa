@@ -237,13 +237,6 @@ class Lembur extends CI_Controller
                 'status' => '1'
             ];
             $this->db->insert('aktivitas', $data);
-
-            $updatejam = date('Y-m-d H:i:s', strtotime($data['durasi_menit'], strtotime($lembur['tglselesai'])));
-            $this->db->set('tglselesai', $updatejam);
-            $this->db->where('id', $this->input->post('link_aktivitas'));
-            $this->db->update('lembur');
-
-            redirect('lembur/rencana_aktivitas/' . $this->input->post('link_aktivitas'));
         } else {
             $data = [
                 'id' => 'AK-' . $copro . $totalAktivitas . date('s'),
@@ -260,14 +253,22 @@ class Lembur extends CI_Controller
                 'status' => '1'
             ];
             $this->db->insert('aktivitas', $data);
-
-            $updatejam = date('Y-m-d H:i:s', strtotime($data['durasi_menit'], strtotime($lembur['tglselesai'])));
-            $this->db->set('tglselesai', $updatejam);
-            $this->db->where('id', $this->input->post('link_aktivitas'));
-            $this->db->update('lembur');
-
-            redirect('lembur/rencana_aktivitas/' . $this->input->post('link_aktivitas'));
         }
+
+        $updatejam = date('Y-m-d H:i:s', strtotime($data['durasi_menit'], strtotime($lembur['tglselesai'])));
+        $mulai = strtotime($lembur['tglmulai']);
+        $selesai = strtotime($updatejam);
+        $durasi = $selesai - $mulai;
+        $jam   = floor($durasi / (60 * 60));
+        $menit = $durasi - $jam * (60 * 60);
+        $menit = floor($menit / 60);
+
+        $this->db->set('tglselesai', $updatejam);
+        $this->db->set('durasi', $jam . ':' . $menit . ':00');
+        $this->db->where('id', $this->input->post('link_aktivitas'));
+        $this->db->update('lembur');
+
+        redirect('lembur/rencana_aktivitas/' . $this->input->post('link_aktivitas'));
     }
 
     public function tambah_aktivitas_realisasi()
@@ -458,7 +459,15 @@ class Lembur extends CI_Controller
 
         $lembur = $this->db->get_where('lembur', ['id' => $aktivitas['link_aktivitas']])->row_array();
         $updatejam = date('Y-m-d H:i:s', strtotime('-' . $jam . ' minute', strtotime($lembur['tglselesai'])));
+        $mulai = strtotime($lembur['tglmulai']);
+        $selesai = strtotime($updatejam);
+        $durasi = $selesai - $mulai;
+        $jam   = floor($durasi / (60 * 60));
+        $menit = $durasi - $jam * (60 * 60);
+        $menit = floor($menit / 60);
+
         $this->db->set('tglselesai', $updatejam);
+        $this->db->set('durasi', $jam . ':' . $menit . ':00');
         $this->db->where('id', $a);
         $this->db->update('lembur');
 
@@ -563,12 +572,10 @@ class Lembur extends CI_Controller
             $data['sidesubmenu'] = 'Persetujuan Rencana';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-
             $queryLembur = "SELECT *
             FROM `lembur`
             WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' or `atasan2_rencana` = '{$karyawan['inisial']}') and (`status`= '2' OR `status`= '3') ";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();
-
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

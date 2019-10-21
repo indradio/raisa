@@ -1,9 +1,9 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <?= $this->session->flashdata('message'); ?>
-      </div>
-      <div class="row">
+        <div class="col-md-12">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
         <div class="col-md-12">
           <div class="card ">
             <div class="card-header card-header-rose card-header-icon">

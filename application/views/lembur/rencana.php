@@ -29,10 +29,8 @@
                                         <th>Atasan 1</th>
                                         <th>Atasan 2</th>
                                         <th>Admin GA</th>
-                                        <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
-                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -47,10 +45,8 @@
                                         <th>Atasan 1</th>
                                         <th>Atasan 2</th>
                                         <th>Admin GA</th>
-                                        <th>Catatan</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
-                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -66,18 +62,10 @@
                                             <td><?= $l['atasan1_rencana']; ?></td>
                                             <td><?= $l['atasan2_rencana']; ?></td>
                                             <td><?= $l['admin_ga']; ?></td>
-                                            <td><?= $l['catatan']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                             <td>
                                                 <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                            </td>
-                                            <td class="text-right">
-                                                <?php if ($l['status'] == 2 or $l['status'] == 3) { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                                                <?php } else { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                                                <?php }; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -113,7 +101,7 @@
                         <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-rose">BATALKAN LEMBUR INI!</button>
+                        <button type="submit" class="btn btn-danger">BATALKAN LEMBUR INI!</button>
                     </div>
                 </form>
             </div>
