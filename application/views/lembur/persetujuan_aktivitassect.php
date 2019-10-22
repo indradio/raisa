@@ -46,15 +46,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-1 col-form-label">Status</label>
-                            <div class="col-md-3">
-                                <div class="form-group has-default">
-                                <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                    <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <label class="col-md-1 col-form-label">Total Aktivitas</label>
                             <div class="col-md-3">
                                 <div class="form-group has-default">
@@ -65,11 +56,28 @@
                                             WHERE `link_aktivitas` = '$lid' ";
                                             $totalLembur = $this->db->query($queryLembur)->row_array();
                                             $totalAktivitas = $totalLembur['COUNT(*)'];
-                                ;?>
+                                            ;?>
                                     <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                                <label class="col-md-1 col-form-label">Lama Lembur</label>
+                                <div class="col-md-2">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-1 col-form-label">Status</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                    <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <br>
                         <div class="toolbar">
@@ -78,6 +86,10 @@
                                 <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
                                     <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
+                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                                <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
+                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                                <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
                                     <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
                                 <?php  }; ?>
                         </div>
@@ -124,11 +136,11 @@
                                                 <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
                                             <?php if ($lembur['status'] !='7'){ ?>
-                                                <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-kategori="<?= $a['kategori']; ?>" data-copro="<?= $a['copro']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">dvr</i></a>
-                                                <a href="<?= base_url('lembur/hapus_sect/'). $a['id']; ?>" class="btn-bataldl"><i class="material-icons">delete</i></a> 
+                                                <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-kategori="<?= $a['kategori']; ?>" data-copro="<?= $a['copro']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">UBAH</a>
+                                                <a href="<?= base_url('lembur/hapus_sect/') . $a['id']; ?>" class="btn btn-round btn-danger btn-sm btn-bataldl">HAPUS</a> 
                                             <?php }else{ ?>
-                                                <a href="#" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>">dvr</i></a>
-                                                <a href="<?= base_url('lembur/hapus_sect/'). $a['id']; ?>" class="btn-bataldl disabled"><i class="material-icons">delete</i></a> 
+                                                <a href="#" class="btn btn-round btn-warning btn-sm disabled" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>">UBAH</a>
+                                                <a href="<?= base_url('lembur/hapus_sect/') . $a['id']; ?>" class="btn btn-round btn-danger btn-sm disabled">HAPUS</a> 
                                             <?php }; ?>   
                                             </td>
                                         </tr>
@@ -143,6 +155,13 @@
                                     <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2') { ?>
                                     <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
+                                    <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
+                                    <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php  }; ?>
                                      <a href="<?= base_url('lembur/persetujuan_lembur/') ?>" class="btn btn-default" role="button">Kembali</a>
                          </div>

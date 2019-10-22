@@ -46,8 +46,6 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
-                                    <th>Catatan</th>
-                                    <th>Status</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                     <th class="disabled-sorting"></th>
                                 </tr>
@@ -62,8 +60,6 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
-                                    <th>Catatan</th>
-                                    <th>Status</th>
                                     <th class="text-right">Actions</th>
                                     <th></th>
                                 </tr>
@@ -79,25 +75,19 @@
                                     <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
-                                    <td><?= $l['catatan']; ?></td>
-                                    <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
-                                    <td><?= $status['nama']; ?></td>
-                                    <td>
-                                        <?php if ($l['status'] == 4 or $l['status'] == 5 or $l['status'] == 6) { ?>
-                                            <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        <?php }else if ($l['status'] == 7 or $l['status'] == 9 ) { ?>
-                                            <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        <?php } else { ?>
-                                            <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        <?php }; ?>
-                                        
-                                    </td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>
                                             <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
                                         <?php } else { ?>
                                             <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons">dvr</i></a>
                                         <?php }; ?>
+                                    </td>
+                                    <td>
+                                        <!-- <?php if ($l['status'] == 9 ) { ?>
+                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
+                                        <?php } else { ?>
+                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons">dvr</i></a>
+                                        <?php }; ?> -->
                                     </td>
                                     </tr>
                                 <?php endforeach; ?>

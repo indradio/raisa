@@ -38,15 +38,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-1 col-form-label">Status</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-1 col-form-label">Total Aktivitas</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -58,6 +49,23 @@
                                         $totalLembur = $this->db->query($queryLembur)->row_array();
                                         $totalAktivitas = $totalLembur['COUNT(*)'];; ?>
                                         <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-1 col-form-label">Lama Lembur</label>
+                                <div class="col-md-2">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-1 col-form-label">Status</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
                                     </div>
                                 </div>
                             </div>

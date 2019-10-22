@@ -89,10 +89,10 @@
                             <a href="#" id="tambah_aktifvitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
                         <?php } else if ($this->session->userdata['posisi_id'] == '5' and $totalAktivitas == '0') { ?>
                             <a href="#" id="tambah_aktifvitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
-                        <?php } else if ($this->session->userdata['posisi_id'] == '7' and $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
+                        <?php } else if ($this->session->userdata['posisi_id'] == '7' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
 
-                        <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
-                            <!-- <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-default" role="button">Kembali</a> -->
+                        <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
+                           
                         <?php } else if ($lembur['status'] == '0') { ?>
 
                         <?php } else { ?>
@@ -156,9 +156,9 @@
                         <?php } else if ($this->session->userdata['posisi_id'] == '5' and $totalAktivitas == '0') { ?>
                             <!-- <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button> -->
                             <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                        <?php } else if ($this->session->userdata['posisi_id'] == '7' and $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
+                        <?php } else if ($this->session->userdata['posisi_id'] == '7' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
 
-                        <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
+                        <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
 
                         <?php } else if ($lembur['status'] == '0') { ?>
 
