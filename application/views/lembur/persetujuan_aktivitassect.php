@@ -149,19 +149,19 @@
                             </table>
                             <?php if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '3'){ ?>
                                     <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                    <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
                                     <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                    <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2') { ?>
                                     <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                    <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
                                     <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                    <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
                                     <button type="submit"  id="setujui" class="btn btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                    <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php  }; ?>
                                      <a href="<?= base_url('lembur/persetujuan_lembur/') ?>" class="btn btn-default" role="button">Kembali</a>
                          </div>
@@ -367,7 +367,7 @@
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                <input type="text" class="form-control" id="aktivitas" name="aktivitas" value="<?= $a['aktivitas']; ?>" required>
+                                <textarea rows="3" class="form-control" id="aktivitas" name="aktivitas" required><?= $a['aktivitas']; ?></textarea>
                                 </div>
                             </div>
                         </div>

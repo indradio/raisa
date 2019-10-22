@@ -662,4 +662,17 @@ class Perjalanandl extends CI_Controller
         $this->session->set_flashdata('message', 'barudl');
         redirect('perjalanandl/admindl');
     }
+
+    public function konfirmasihr()
+    {
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Konfirmasi Perjalanan Dinas';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '5'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/admindl', $data);
+        $this->load->view('templates/footer');
+    }
 }

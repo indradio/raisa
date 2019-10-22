@@ -44,7 +44,7 @@
                   <label class="col-md-2 col-form-label">Keperluan</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
-                      <textarea rows="2" class="form-control" name="keperluan" value="<?= set_value('keperluan'); ?>" required></textarea>
+                      <textarea rows="2" class="form-control" name="keperluan" required><?= $reservasi_temp['keperluan']; ?></textarea>
                     </div>
                   </div>
                 </div>
@@ -84,7 +84,7 @@
                   <label class="col-md-2 col-form-label">Catatan</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
-                      <textarea rows="3" class="form-control" name="catatan" value="<?= set_value('catatan'); ?>"></textarea>
+                      <textarea rows="3" class="form-control" name="catatan"><?= $reservasi_temp['catatan']; ?></textarea>
                     </div>
                   </div>
                 </div>
