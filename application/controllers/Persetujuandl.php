@@ -68,7 +68,7 @@ class Persetujuandl extends CI_Controller
                 $this->db->where('posisi_id', '3');
                 $this->db->where('dept_id', '21');
                 $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
                 $destination = $karyawan['phone'];
                 $message = "*PENGAJUAN PERJALANAN DINAS TA*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                     "\r\n Nama : *" . $rsv['nama'] . "*" .
@@ -88,7 +88,7 @@ class Persetujuandl extends CI_Controller
                 $this->db->where('posisi_id', '2');
                 $this->db->where('div_id', '2');
                 $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
                 $destination = $karyawan['phone'];
                 $message = "*PENGAJUAN PERJALANAN DINAS TA*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                     "\r\n Nama : *" . $rsv['nama'] . "*" .
@@ -136,7 +136,7 @@ class Persetujuandl extends CI_Controller
 
             $this->db->where('inisial', $rsv['atasan2']);
             $karyawan = $this->db->get('karyawan')->row_array();
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN PERJALANAN DINAS (Sebagai Atasan 2)*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .

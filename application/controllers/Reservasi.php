@@ -382,7 +382,7 @@ class Reservasi extends CI_Controller
 
                 $this->db->where('npk', $atasan1['npk']);
                 $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
                 $destination = $karyawan['phone'];
                 $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
                     "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
@@ -402,7 +402,7 @@ class Reservasi extends CI_Controller
 
                 $this->db->where('npk', $atasan1['npk']);
                 $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
                 $destination = $karyawan['phone'];
                 $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
                     "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
