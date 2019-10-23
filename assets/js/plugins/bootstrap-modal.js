@@ -48,6 +48,19 @@ $('#karyawanUbah').on('show.bs.modal', function (event) {
     modal.find('.modal-body select[name="posisi"]').val(posisi)
 })
 
+$('#detailRsvModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var id = button.data('id') // Extract info from data-* attributes
+    var tujuan = button.data('tujuan')
+    var peserta = button.data('peserta')
+    var keperluan = button.data('keperluan')
+    var modal = $(this)
+    modal.find('.modal-body input[name="id"]').val(id)
+    modal.find('.modal-body input[name="tujuan"]').val(tujuan)
+    modal.find('.modal-body input[name="peserta"]').val(peserta)
+    modal.find('.modal-body textarea[name="keperluan"]').val(keperluan)
+})
+
 $('#tambahPeserta').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
@@ -103,7 +116,6 @@ $('#realisasiAktivitas').on('show.bs.modal', function (event) {
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
     modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
-
 })
 
 $('#ubahAktivitas').on('show.bs.modal', function (event) {
@@ -155,6 +167,5 @@ $('#persetujuanRealisasi').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="copro"]').val(copro)
     modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
     modal.find('.modal-body input[name="durasi"]').val(durasi)
-
 })
 

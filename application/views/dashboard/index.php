@@ -113,48 +113,24 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                             <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
                                             <br />
                                             <?php
-                                        $nopol = $k['nopol'];
-                                        $queryCari = "SELECT COUNT(*)
-                                              FROM `reservasi`
-                                              WHERE `nopol` =  '$nopol' AND `tglberangkat` <= CURDATE()  AND `tglkembali` >= CURDATE() AND `status` != 0 AND `status` != 9
+                                              $nopol = $k['nopol'];
+                                              $queryPerjalanan = "SELECT *
+                                              FROM `perjalanan`
+                                              WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                               ";
-                                        $Cari = $this->db->query($queryCari)->row_array();
-                                        $total = $Cari['COUNT(*)'];
-                                        if ($total == 0) { ?>
-                                          <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
-                                        </td>
-                                        <?php } else { 
-                                            $queryPerjalanan = "SELECT *
-                                            FROM `perjalanan`
-                                            WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
-                                            ";
-                                            $p = $this->db->query($queryPerjalanan)->row_array();
-                                            if ($p['id'] != null) {
-                                            ?>
-                                              <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
-                                              <?php if ($p['status'] == 1) {?>
-                                                <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
-                                                <?php }elseif ($p['status'] == 2) {?>
-                                                <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span>
-                                                <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
-                                                <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
-                                              <?php };?>
-                                        </td>
-                                        <td><?= $p['anggota']; ?></td>
-                                        <td><?= $p['tujuan']; ?></td>
-                                        <td><?= $p['keperluan']; ?></td>
-                                        <td><?= $p['id']; ?></td>
-                                        <td><?= $p['jenis_perjalanan']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
-                                            <?php } else { 
+                                              $p = $this->db->query($queryPerjalanan)->row_array();
+                                              if ($p['id'] == null) {
                                               $queryReservasi = "SELECT *
                                               FROM `reservasi`
                                               WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                               ";
                                               $r = $this->db->query($queryReservasi)->row_array();
-                                              $rsvstatus = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
-                                                <span class="badge badge-pill badge-warning"><?= $rsvstatus['nama']; ?></span>
+                                                if ($r['id'] == null) { ?>
+                                                  <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
+                                                </td>
+                                                <?php } else { 
+                                                $rsvstatus = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
+                                        <span class="badge badge-pill badge-warning"><?= $rsvstatus['nama']; ?></span>
                                         </td>
                                         <td><?= $r['anggota']; ?></td>
                                         <td><?= $r['tujuan']; ?></td>
@@ -163,8 +139,25 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                                         <td><?= $r['jenis_perjalanan']; ?></td>
                                         <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                         <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
-                                            <?php }; ?>
-                                        <?php }; ?>
+                                                <?php };?>
+                                              <?php } else { ?>
+                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                                <?php if ($p['status'] == 1) {?>
+                                                  <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
+                                                  <?php }elseif ($p['status'] == 2) {?>
+                                                  <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span>
+                                                  <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
+                                                  <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
+                                                <?php };?>
+                                        </td>
+                                        <td><?= $p['anggota']; ?></td>
+                                        <td><?= $p['tujuan']; ?></td>
+                                        <td><?= $p['keperluan']; ?></td>
+                                        <td><?= $p['id']; ?></td>
+                                        <td><?= $p['jenis_perjalanan']; ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
+                                              <?php }; ?>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
