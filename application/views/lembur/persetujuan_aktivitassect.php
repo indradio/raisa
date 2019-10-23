@@ -367,8 +367,8 @@
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" id="aktivitas" name="aktivitas" required><?= $a['aktivitas']; ?></textarea>
-                                    <!-- <input type="text" class="form-control" id="aktivitas" name="aktivitas" value="<?= $a['aktivitas']; ?>" required> -->
+                                    <!-- <textarea rows="3" class="form-control" id="aktivitas" name="aktivitas" required><?= $a['aktivitas']; ?></textarea> -->
+                                    <input type="text" class="form-control" id="aktivitas" name="aktivitas" value="<?= $a['aktivitas']; ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -377,20 +377,6 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" value="<?= $a['durasi']; ?>" required >
-                                    <!-- <?php
-                                        $queyDurasi = "SELECT *
-                                                                    FROM `aktivitas`
-                                                                    ORDER BY `durasi` ASC
-                                                                    ";
-                                        $durasi = $this->db->query($queyDurasi)->result_array();
-                                        foreach ($durasi as $d) : 
-                                            echo '<option value="' .$d['durasi']. '"';
-                                            if ($d['copro']== $a['durasi']) {
-                                                echo 'selected';
-                                            }
-                                            echo '>' .$d['copro']. '</option>' ."\n";
-                                        endforeach; ?>   
-                                            <option value="<?= $d['durasi']; ?>" selected><?= $d['durasi']; ?></option> -->
                                             <option value="+30 minute">30:00 Menit</option>
                                             <option value="+60 minute">01:00 Jam</option>
                                             <option value="+90 minute">01:30 Jam</option>

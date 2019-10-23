@@ -414,6 +414,7 @@ class Lembur extends CI_Controller
                 'status' => '1'
             ];
             $this->db->insert('aktivitas', $data);
+
         } else {
             $data = [
                 'id' => 'AK-' . $copro . $totalAktivitas . date('s'),
@@ -430,7 +431,7 @@ class Lembur extends CI_Controller
                 'status' => '1'
             ];
             $this->db->insert('aktivitas', $data);
-
+        }
             $updatejam = date('Y-m-d H:i:s', strtotime($data['durasi_menit'], strtotime($lembur['tglselesai'])));
             $mulai = strtotime($lembur['tglmulai']);
             $selesai = strtotime($updatejam);
@@ -445,7 +446,6 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
 
             redirect('lembur/persetujuan_aktivitas_sect/' . $this->input->post('link_aktivitas'));
-        }
     }
 
     public function tambah_realisasi()
@@ -1010,17 +1010,15 @@ class Lembur extends CI_Controller
         $updatejam = date('Y-m-d H:i:s', strtotime('+' . $durasi . ' minute', strtotime($lembur['tglmulai'])));
         $mulai = strtotime($lembur['tglmulai']);
         $selesai = strtotime($updatejam);
-        $durasi = $selesai - $mulai;
-        $jam   = floor($durasi / (60 * 60));
-        $menit = $durasi - $jam * (60 * 60);
+        $durasij = $selesai - $mulai;
+        $jamd   = floor($durasi / (60 * 60));
+        $menit = $durasij - $jamd * (60 * 60);
         $menit = floor($menit / 60);
 
         $this->db->set('tglselesai', $updatejam);
-        $this->db->set('durasi', $jam . ':' . $menit . ':00');
+        $this->db->set('durasi', $jamd . ':' . $menit . ':00');
         $this->db->where('id', $this->input->post('link_aktivitas'));
         $this->db->update('lembur');
-
-       
 
         redirect('lembur/persetujuan_aktivitas_sect/' . $this->input->post('link_aktivitas'));
     }
