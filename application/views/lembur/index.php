@@ -59,7 +59,7 @@
                       <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
                       <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                       <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                          <?php if($lembur['status']= '1' or $lembur['status']= '2' or $lembur['status']= '3' or $lembur['status']= '4' ) {?>
+                          <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4') {?>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                           <?php } else { ?>
                       <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
@@ -72,7 +72,7 @@
                       <td>
                           <?php if ($l['status'] == '4' or $l['status'] == '5' or $l['status'] == '6' or $l['status'] == '12' or $l['status'] == '13') { ?>
                               <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                          <?php }else if ($l['status'] == '7' or $l['status'] == '9' or $l['status'] == '8' or $l['status'] == '0') { ?>
+                          <?php }else if ($l['status'] == '0' or $l['status'] == '7' or $l['status'] == '8' or $l['status'] == '9') { ?>
                             <a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                           <?php } else { ?>
                               <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>

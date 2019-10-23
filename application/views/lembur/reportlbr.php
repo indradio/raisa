@@ -46,8 +46,9 @@
       $pdf->Cell(44,7,'NAMA                      :   ' . $lembur['nama'],1,0,1);
       $pdf->SetFont('Arial','',5);
 
-      $pdf->Cell(40,7,'MULAI',1,0,'C',1);
-      $pdf->Cell(40,7,'SELESAI',1,0,'C',1);
+      $pdf->Cell(30,7,'MULAI',1,0,'C',1);
+      $pdf->Cell(30,7,'SELESAI',1,0,'C',1);
+      $pdf->Cell(20,7,'JML.JAM',1,0,'C',1);
       $pdf->Cell(30,7,'MULAI',1,0,'C',1);
       $pdf->Cell(30,7,'SELESAI',1,0,'C',1);
       $pdf->Cell(20,7,'JML.JAM',1,0,'C',1);
@@ -55,11 +56,12 @@
 
       $pdf->SetFont('Arial','B',6);
       $pdf->Cell(44,5,'NPK                         :   ' . $lembur['npk'],1,0,1);
-      $pdf->Cell(40,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
-      $pdf->Cell(40,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
       $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
       $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
-      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi'])),1,1,'C',0);
+      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi'])),1,0,'C',0);
+      $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglmulai_aktual'])),1,0,'C',1);
+      $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglselesai_aktual'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi_aktual'])),1,1,'C',0);
       $pdf->Cell(56,5,'',0,1,0);
 
       $pdf->SetFont('Arial','',5);
@@ -75,7 +77,6 @@
 
       foreach ($aktivitas as $a) :
             $k = $this->db->get_where('jamkerja_kategori', ['id' =>  $a['kategori']])->row_array();
-
 
       $pdf->Cell(4,5,$no++,1,0,'C',1);
       $pdf->Cell(22,5, $k['nama'],1,0,1);
@@ -101,7 +102,7 @@
       $n4 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama4['posisi_id']])->row_array();
       $nama4['nama']; 
 
-      $nama5 = $this->db->get_where('karyawan', ['inisial' => $lembur['div_id']])->row_array();
+      $nama5 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_div']])->row_array();
       $n5 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama5['posisi_id']])->row_array();
       $nama5['nama']; 
 

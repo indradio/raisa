@@ -48,7 +48,7 @@
                       <td><?= $l['tglselesai']; ?></td>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                       <td class="">
-                          <a href="<?= base_url('lembur/persetujuan_aktivitas_sect/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
+                          <a href="<?= base_url('lembur/persetujuan_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                       </td>
                     </tr>
                   <?php endforeach; ?>
