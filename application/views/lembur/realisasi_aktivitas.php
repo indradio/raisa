@@ -72,7 +72,7 @@
                             <br>
                             <div class="toolbar">
                                 <!--        Here you can write extra buttons/actions for the toolbar              -->
-                                <?php if ($lembur['status'] == '9' or $lembur['status'] == '7' or $lembur['status'] == '6' or $lembur['status'] == '5') { ?>
+                                <?php if ($lembur['status'] == '13' or $lembur['status'] == '12' or $lembur['status'] == '7' or $lembur['status'] == '6' or $lembur['status'] == '5') { ?>
                                     <!-- <a href="#" class="btn btn-rose mb disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a> -->
                                 <?php } else { ?>
                                     <a href="#" class="btn btn-rose mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
@@ -126,12 +126,12 @@
                                                 <?php $status = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
                                                 <td class="text-right">
-                                                    <?php if ($lembur['status'] == '9' or $lembur['status'] == '7' or $lembur['status'] == '6' or $lembur['status'] == '5' or $a['status'] == '0') { ?>
-                                                        <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success disabled">Ralisasi</a>
-                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger disabled">Batal dikerjakan</a>
-                                                    <?php } else if ($a['status'] == '9' or $a['status'] == '3' or $a['status'] == '2') { ?>
-                                                        <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success disabled">Ralisasi</a>
-                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger disabled">Batal dikerjakan</a>
+                                                    <?php if ($lembur['status'] == '9' OR $lembur['status'] == '7' OR $lembur['status'] == '6' OR $lembur['status'] == '5' OR $a['status'] == '0') { ?>
+                                                        <!-- <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success disabled">Ralisasi</a>
+                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger disabled">Batal dikerjakan</a> -->
+                                                    <?php } else if ($a['status'] == '9' OR $a['status'] == '3' OR $a['status'] == '2') { ?>
+                                                        <!-- <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success disabled">Ralisasi</a>
+                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger disabled">Batal dikerjakan</a> -->
                                                     <?php } else { ?>
                                                         <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success">Ralisasi</a>
                                                         <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger">Batal dikerjakan</a>
@@ -143,7 +143,7 @@
                                 </table>
                                 <?php if ($lembur['status'] == '4' and $a['status'] == '1') { ?>
                                     <button type="submit" id="ajukan" class="btn btn-success disabled">LAPORKAN</button>
-                                <?php } else if ($lembur['status'] == '5' or $lembur['status'] == '6' or $lembur['status'] == '7' or $lembur['status'] == '9') { ?>
+                                <?php } else if ($lembur['status'] == '5' OR $lembur['status'] == '6' OR $lembur['status'] == '7' OR $lembur['status'] == '9' OR $lembur['status'] == '12' OR $lembur['status'] == '13') { ?>
                                     <!-- <button type="submit"  id="ajukan" class="btn btn-success disabled">LAPORKAN</button> -->
                                 <?php } else { ?>
                                     <button type="submit" id="ajukan" class="btn btn-success">LAPORKAN</button>
