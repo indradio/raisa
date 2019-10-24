@@ -180,6 +180,7 @@ class Lembur extends CI_Controller
         $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
         $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
         $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+        $data['lembur_lokasi'] = $this->db->get_where('lembur_lokasi')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -553,35 +554,39 @@ class Lembur extends CI_Controller
         $menit = floor($menit / 60);
 
         if ($this->session->userdata('posisi_id') <= 2) {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
+            // $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '4');
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
+            $this->db->set('lokasi_id', $this->input->post('lokasi'));
             $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
         } else if ($this->session->userdata('posisi_id') == 3) {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
+            // $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '2');
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
+            $this->db->set('lokasi_id', $this->input->post('lokasi'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
         } else if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
+            // $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '2');
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
+            $this->db->set('lokasi_id', $this->input->post('lokasi'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
         } else if ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
+            // $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '2');
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
+            $this->db->set('lokasi_id', $this->input->post('lokasi'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
@@ -600,7 +605,7 @@ class Lembur extends CI_Controller
         $menit = floor($menit / 60);
 
         if ($this->session->userdata('posisi_id') <= 3) {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
+            // $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
             $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '7');
             $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
@@ -609,8 +614,8 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
 
         } else if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
+            // $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '5');
             $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
@@ -618,8 +623,8 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
             
         } elseif ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
+            // $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d 00:00:00'));
             $this->db->set('status', '5');
             $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
@@ -632,22 +637,7 @@ class Lembur extends CI_Controller
 
     public function persetujuan_lembur()
     {
-        if ($this->session->userdata('posisi_id') == 3) {
-            $data['sidemenu'] = 'Lembur';
-            $data['sidesubmenu'] = 'Persetujuan Rencana';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $queryLembur = "SELECT *
-            FROM `lembur`
-            WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' or `atasan2_rencana` = '{$karyawan['inisial']}') and (`status`= '2' OR `status`= '3') ";
-            $data['lembur'] = $this->db->query($queryLembur)->result_array();
-
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/persetujuanakt', $data);
-            $this->load->view('templates/footer');
-        } else if ($this->session->userdata('posisi_id') == 5) {
+        if ($this->session->userdata('posisi_id') == 5) {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Persetujuan Rencana';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -664,6 +654,23 @@ class Lembur extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('lembur/persetujuanakt', $data);
             $this->load->view('templates/footer');
+            
+        } else if ($this->session->userdata('posisi_id') == 3) {
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'Persetujuan Rencana';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $queryLembur = "SELECT *
+            FROM `lembur`
+            WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' OR `atasan2_rencana` = '{$karyawan['inisial']}') and (`status`= '2' OR `status`= '3') ";
+            $data['lembur'] = $this->db->query($queryLembur)->result_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/persetujuanakt', $data);
+            $this->load->view('templates/footer');
+            
         } else if ($this->session->userdata('posisi_id') == 2) {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Persetujuan Rencana';
@@ -672,7 +679,7 @@ class Lembur extends CI_Controller
 
             $queryLembur = "SELECT *
             FROM `lembur`
-            WHERE (`status`= '10') and (`durasi`>= '03:00:00') and (`div_id`= '{$karyawan['div_id']}') ";
+            WHERE (`status`= '10' OR `status`= '3' OR `status`= '2') and (`durasi`>= '03:00:00') AND (`div_id`= '{$karyawan['div_id']}') ";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();
 
             $this->load->view('templates/header', $data);
@@ -680,6 +687,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('lembur/persetujuanakt', $data);
             $this->load->view('templates/footer');
+
         } else if ($this->session->userdata('posisi_id') == 1) {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Persetujuan Rencana';
@@ -688,7 +696,7 @@ class Lembur extends CI_Controller
 
             $queryLembur = "SELECT *
             FROM `lembur`
-            WHERE (`status`= '11') and (`durasi`>= '06:00:00') ";
+            WHERE (`status`= '11' OR `status`= '3') AND (`durasi`>= '06:00:00') ";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();
 
             $this->load->view('templates/header', $data);
@@ -696,6 +704,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('lembur/persetujuanakt', $data);
             $this->load->view('templates/footer');
+
         } else {
             $this->load->view('auth/denied');
         }
@@ -722,6 +731,7 @@ class Lembur extends CI_Controller
         $data['sidemenu'] = 'HR';
         $data['sidesubmenu'] = 'Konfirmasi Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
         $queryLembur = "SELECT *
         FROM `lembur`
         WHERE (`status`= '7') ";
@@ -767,28 +777,7 @@ class Lembur extends CI_Controller
 
     public function persetujuan_realisasi()
     {
-        if ($this->session->userdata('posisi_id') == 3) {
-            $data['sidemenu'] = 'Lembur';
-            $data['sidesubmenu'] = 'Persetujuan Realisasi';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $queryLembur = "SELECT *
-            FROM `lembur`
-            WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' or `atasan2_rencana` = '{$karyawan['inisial']}') and (`status`= '5' OR `status`= '6') ";
-            $data['lembur'] = $this->db->query($queryLembur)->result_array();
-
-            $id = $this->input->post('id');
-            $queryAktivitas = "SELECT * 
-            FROM `aktivitas`
-            WHERE(`link_aktivitas` = '$id')";
-            $data['aktivitas'] = $this->db->query($queryAktivitas)->result_array();
-
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/persetujuanrls', $data);
-            $this->load->view('templates/footer');
-        } else if ($this->session->userdata('posisi_id') == 5) {
+        if ($this->session->userdata('posisi_id') == 5) {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Persetujuan Realisasi';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -809,6 +798,29 @@ class Lembur extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('lembur/persetujuanrls', $data);
             $this->load->view('templates/footer');
+
+        } else if ($this->session->userdata('posisi_id') == 3) {
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'Persetujuan Realisasi';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $queryLembur = "SELECT *
+            FROM `lembur`
+            WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' or `atasan2_rencana` = '{$karyawan['inisial']}') and (`status`= '5' OR `status`= '6') ";
+            $data['lembur'] = $this->db->query($queryLembur)->result_array();
+
+            $id = $this->input->post('id');
+            $queryAktivitas = "SELECT * 
+            FROM `aktivitas`
+            WHERE(`link_aktivitas` = '$id')";
+            $data['aktivitas'] = $this->db->query($queryAktivitas)->result_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/persetujuanrls', $data);
+            $this->load->view('templates/footer');
+
         } else if ($this->session->userdata('posisi_id') == 2) {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Persetujuan Realisasi';
@@ -824,6 +836,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('lembur/persetujuanrls', $data);
             $this->load->view('templates/footer');
+
         } else if ($this->session->userdata('posisi_id') == 1) {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Persetujuan Realisasi';
@@ -862,12 +875,21 @@ class Lembur extends CI_Controller
     public function setujui_aktivitas()
     {
         date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
         $durasi = $this->input->post('durasi');
         $admin = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         if ($this->session->userdata('posisi_id') == 5) {
             $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
             $this->db->set('status', '3');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+        } else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='5' and $durasi < '03:00:00') {
+            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
+            // $this->db->set('tgl_atasan2_rencana', date('y-m-d H:i:s'));
+            $this->db->set('status', '4');
+            $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
@@ -1092,9 +1114,9 @@ class Lembur extends CI_Controller
             redirect('lembur/realisasi/');
         } else
             $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . ", " . "Tgl" . " : " . date('y-m-d - H:i:s'));
-        $this->db->set('status', '8');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('lembur');
+            $this->db->set('status', '8');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
 
         $this->session->set_flashdata('message', 'batalbr');
         redirect('lembur/persetujuan_realisasi/');
@@ -1102,14 +1124,38 @@ class Lembur extends CI_Controller
 
     public function laporan_lembur($id)
     {
-        $data['sidemenu'] = 'Lembur';
-        $data['sidesubmenu'] = 'LemburKu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['lembur']  = $this->db->get_where('lembur', ['id' => $id])->row_array();
-        $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
-        $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+        $lbr = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+        if($lbr['durasi_aktual'] < '03:00:00'){
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'LemburKu';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['lembur']  = $this->db->get_where('lembur', ['id' => $id])->row_array();
+            $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
+            $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+    
+            $this->load->view('lembur/reportlbr2p', $data);
+            
+        }else if ($lbr['durasi_aktual'] >= '03:00:00'){
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'LemburKu';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['lembur']  = $this->db->get_where('lembur', ['id' => $id])->row_array();
+            $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
+            $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+    
+            $this->load->view('lembur/reportlbr3p', $data);
 
-        $this->load->view('lembur/reportlbr', $data);
+        }else if ($lbr['durasi_aktual'] >= '06:00:00'){
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'LemburKu';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['lembur']  = $this->db->get_where('lembur', ['id' => $id])->row_array();
+            $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
+            $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+    
+            $this->load->view('lembur/reportlbr4p', $data);
+        }
+        
     }
 
     public function cari_lembur_hr()

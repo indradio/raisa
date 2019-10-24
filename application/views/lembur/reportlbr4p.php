@@ -106,7 +106,7 @@
       $n5 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama5['posisi_id']])->row_array();
       $nama5['nama']; 
 
-      $nama6 = $this->db->get_where('karyawan', ['inisial' => $lembur['posisi_id']])->row_array();
+      $nama6 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_coo']])->row_array();
       $n6 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama6['posisi_id']])->row_array();
       $nama6['nama']; 
       
@@ -118,8 +118,8 @@
       $pdf->Cell(80,5,'DISETUJUI',1,1,'C',1);
                                                                                                                                                                                                                   
       //GA & HR
-      $pdf->Cell(22,5, $n3['nama'],1,0,'C',1);
-      $pdf->Cell(22,5, $n4['nama'],1,0,'C',1);
+      $pdf->Cell(22,5, 'GA',1,0,'C',1);
+      $pdf->Cell(22,5, 'HR',1,0,'C',1);
       //sect, dept, div, coo
       $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
       $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);

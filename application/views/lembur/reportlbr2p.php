@@ -46,8 +46,9 @@
       $pdf->Cell(56,7,'NAMA                      :   ' . $lembur['nama'],1,0,1);
       $pdf->SetFont('Arial','',5);
 
-      $pdf->Cell(36,7,'MULAI',1,0,'C',1);
-      $pdf->Cell(33,7,'SELESAI',1,0,'C',1);
+      $pdf->Cell(28,7,'MULAI',1,0,'C',1);
+      $pdf->Cell(28,7,'SELESAI',1,0,'C',1);
+      $pdf->Cell(13,7,'JML.JAM',1,0,'C',1);
       $pdf->Cell(27,7,'MULAI',1,0,'C',1);
       $pdf->Cell(28,7,'SELESAI',1,0,'C',1);
       $pdf->Cell(20,7,'JML.JAM',1,0,'C',1);
@@ -55,11 +56,12 @@
 
       $pdf->SetFont('Arial','B',6);
       $pdf->Cell(56,5,'NPK                         :   ' . $user['npk'],1,0,1);
-      $pdf->Cell(36,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
-      $pdf->Cell(33,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
-      $pdf->Cell(27,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
+      $pdf->Cell(28,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
       $pdf->Cell(28,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
-      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi'])),1,1,'C',0);
+      $pdf->Cell(13,5, date('H:i', strtotime($lembur['durasi'])),1,0,'C',1);
+      $pdf->Cell(27,5, date('H:i', strtotime($lembur['tglmulai_aktual'])),1,0,'C',1);
+      $pdf->Cell(28,5, date('H:i', strtotime($lembur['tglselesai_aktual'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi_aktual'])),1,1,'C',0);
       $pdf->Cell(56,5,'',0,1,0);
 
       $pdf->SetFont('Arial','',5);
@@ -117,10 +119,10 @@
       $pdf->Cell(56,5,'',0,0,'C',1);
       $pdf->Cell(23,5, $n1['nama'],1,0,'C',1);
       $pdf->Cell(24,5, $n2['nama'],1,0,'C',1);
-      $pdf->Cell(22,5, $n3['nama'],1,0,'C',1);
+      $pdf->Cell(22,5, 'GA',1,0,'C',1);
       $pdf->Cell(25,5, $n1['nama'],1,0,'C',1);
       $pdf->Cell(24,5, $n2['nama'],1,0,'C',1);
-      $pdf->Cell(26,5, $n4['nama'],1,1,'C',1);
+      $pdf->Cell(26,5, 'HR',1,1,'C',1);
       
       $pdf->SetFont('Arial','B',7);
       

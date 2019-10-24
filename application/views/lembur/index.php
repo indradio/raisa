@@ -59,7 +59,7 @@
                       <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
                       <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                       <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                          <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4') {?>
+                          <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4' or $l['status']== '10' or $l['status']== '11') {?>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                           <?php } else { ?>
                       <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>

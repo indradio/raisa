@@ -62,22 +62,31 @@
                             </div>
                         </div>
                         <div class="row">
-                                <label class="col-md-1 col-form-label">Lama Lembur</label>
-                                <div class="col-md-2">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?>">
-                                    </div>
+                        <label class="col-md-1 col-form-label">Lama Lembur</label>
+                            <div class="col-md-2">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?>">
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Status</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                    <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                    </div>
+                        </div>
+                        <div class="row">
+                        <label class="col-md-1 col-form-label">Lokasi Lembur</label>
+                            <div class="col-md-2">
+                                <div class="form-group has-default">
+                                    <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
+                                    <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-1 col-form-label">Status</label>
+                            <div class="col-md-3">
+                                <div class="form-group has-default">
+                                <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                                    <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                </div>
+                            </div>
+                        </div>
                         </form>
                         <br>
                         <div class="toolbar">
@@ -136,7 +145,7 @@
                                                 <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
                                             <?php if ($lembur['status'] !='7'){ ?>
-                                                <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-kategori="<?= $a['kategori']; ?>" data-copro="<?= $a['copro']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">UBAH</a>
+                                                <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">UBAH</a>
                                                 <a href="<?= base_url('lembur/hapus_sect/') . $a['id']; ?>" class="btn btn-round btn-danger btn-sm btn-bataldl">HAPUS</a> 
                                             <?php }else{ ?>
                                                 <a href="#" class="btn btn-round btn-warning btn-sm disabled" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>">UBAH</a>
@@ -316,50 +325,10 @@
                             </div>
                         </div>
                         <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">Ativitas ID</label>
+                            <label class="col-md-4 col-form-label">Lembur ID</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $a['link_aktivitas']; ?>" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">Kategori</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default disabled">
-                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="3" value="<?= $a['kategori']; ?>" required>
-                                    <?php
-                                    $kategori = $this->db->get('jamkerja_kategori')->result_array();
-                                    foreach ($kategori as $k) :
-                                        echo '<option value="' .$k['id']. '"';
-                                        if ($k['id'] == $a['kategori']) {
-                                            echo 'selected';
-                                        }
-                                        echo '>' . $k['nama'] . '</option>' . "\n";
-                                    endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">COPRO</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default disabled">
-                                    <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
-                                        <?php
-                                        $queyCopro = "SELECT *
-                                                                    FROM `project`
-                                                                    ORDER BY `status` ASC
-                                                                    ";
-                                        $copro = $this->db->query($queyCopro)->result_array();
-                                        foreach ($copro as $c) : 
-                                            echo '<option value="' .$c['copro']. '"';
-                                            if ($c['copro']== $a['copro']) {
-                                                echo 'selected';
-                                            }
-                                            echo '>' .$c['copro']. '</option>' ."\n";
-                                        endforeach; ?>   
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -416,18 +385,6 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        $('#kategori').change(function(){
-        var kategori = $('#kategori').val();
-        if(kategori==3){
-            $('#copro').prop('disabled', true);
-            }else{
-            $('#copro').prop('disabled', false);
-            }
-        });
-    });
-</script>
 <!-- Modal Batal Aktivitas-->
 <div class="modal fade" id="batalRsv" tabindex="-1" role="dialog" aria-labelledby="batalAktivitasTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">

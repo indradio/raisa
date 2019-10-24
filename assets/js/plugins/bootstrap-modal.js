@@ -121,14 +121,10 @@ $('#realisasiAktivitas').on('show.bs.modal', function (event) {
 $('#ubahAktivitas').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
-    var kategori = button.data('kategori')
-    var copro = button.data('copro')
     var aktivitas = button.data('aktivitas')
     var durasi = button.data('durasi')
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
-    modal.find('.modal-body input[name="kategori"]').val(kategori)
-    modal.find('.modal-body input[name="copro"]').val(copro)
     modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
     modal.find('.modal-body input[name="durasi"]').val(durasi)
 

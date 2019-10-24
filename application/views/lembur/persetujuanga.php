@@ -26,8 +26,8 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Jam Selesai</th>
                                         <th>Durasi/Jam</th>
+                                        <th>Lokasi lembur</th>
                                         <th class="disabled-sorting text-right">Actions</th>
-                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -39,8 +39,8 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Jam Selesai</th>
                                         <th>Durasi/Jam</th>
+                                        <th>Lokasi Lembur</th>
                                         <th class="text-right">Actions</th>
-                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -53,27 +53,11 @@
                                             <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
-                                            <?php echo form_open('lembur/setujui_ga/'); ?>
+                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $l['lokasi_id']])->row_array(); ?>
+                                            <td><?= $lokasi['nama']; ?></td>  
                                             <td>
-                                                <input type="checkbox" class='check-item' name="checkbox[]" value="<?= $l['id']; ?>" required>
+                                                <a href="<?= base_url('lembur/setujui_ga/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 
                                             </td>
-                                            <script>
-                                                 $(document).ready(function(){ 
-                                                    $("#check-all").click(function(){
-                                                        if($(this).is(":checked")) 
-                                                            $(".check-item").prop("checked", true); 
-                                                        else
-                                                            $(".check-item").prop("checked", false); 
-                                                            $("#setujuiall").prop("hidden", false);
-                                                            $("#setujui").prop("hidden", true);
-                                                        });
-                                                });
-                                            </script>
-                                            <td>
-                                                <a href="<?= base_url('lembur/setujui_all/'). $l['id']; ?>" id="setujuiall" class="badge badge-pill badge-warning" hidden>Setujui Semua</a>
-                                                <button type="submit" id="setujui" name="setujui" class="badge badge-pill badge-success">Setujui</button> 
-                                            </td>
-                                            <?php echo form_close(); ?>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

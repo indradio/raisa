@@ -62,13 +62,22 @@
                             </div>
                         </div>
                         <div class="row">
-                                <label class="col-md-1 col-form-label">Lama Lembur</label>
-                                <div class="col-md-2">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
-                                    </div>
+                            <label class="col-md-1 col-form-label">Lama Lembur</label>
+                            <div class="col-md-2">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                        <label class="col-md-1 col-form-label">Lokasi Lembur</label>
+                            <div class="col-md-2">
+                                <div class="form-group has-default">
+                                    <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
+                                    <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <label class="col-md-1 col-form-label">Status</label>
                                 <div class="col-md-3">

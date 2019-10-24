@@ -72,8 +72,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if($lembur['status']=='1'){ ?>
                             <div class="row">
-                                <label class="col-md-1 col-form-label">Status</label>
+                                <label class="col-md-1 col-form-label">Lokasi Lembur</label>
+                                    <div class="col-md-2">
+                                        <div class="form-group has-default">
+                                            <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="2" required>
+                                                <?php foreach ($lembur_lokasi as $li) : ?>
+                                                    <option value="<?= $li['id']; ?>"><?= $li['nama']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } else {?>
+                            <div class="row">
+                            <label class="col-md-1 col-form-label">Lokasi Lembur</label>
+                                <div class="col-md-2">
+                                    <div class="form-group has-default">
+                                        <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
+                                        <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <?php }; ?>
+                            <div class="row">
+                            <label class="col-md-1 col-form-label">Status</label>
                                 <div class="col-md-2">
                                     <div class="form-group has-default">
                                         <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
