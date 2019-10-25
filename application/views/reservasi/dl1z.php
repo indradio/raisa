@@ -110,7 +110,7 @@
                                                                         ";
                                                         $ketemu = $this->db->query($querySaring2)->row_array();
                                                         $total = $ketemu['COUNT(*)'];
-                                                        if ($total == 0) { } else {
+                                                        if ($total >= 1) {
                                                             $this->session->set_flashdata('message', ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                                                 <strong>Maaf!</strong> ' .  $ang['karyawan_nama'] . ' sudah ikut dalam perjalanan lain.
                                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

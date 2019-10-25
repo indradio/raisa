@@ -14,15 +14,15 @@
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('cekdl/cekkembali_proses'); ?>" method="post">
                             <div class="row">
-                                <label class="col-md-2 col-form-label">No. Perjalanan DL</label>
+                                <label for="id" class="col-md-3 col-form-label">No. Perjalanan DL</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="id" value="<?= $perjalanan['id']; ?>">
+                                        <input type="text" class="form-control disabled" id="id" name="id" value="<?= $perjalanan['id']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jenis Perjalanan DL</label>
+                                <label class="col-md-3 col-form-label">Jenis Perjalanan DL</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="jenis" value="<?= $perjalanan['jenis_perjalanan']; ?>">
@@ -30,16 +30,16 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Nama</label>
+                                <label class="col-md-3 col-form-label">Nama <i>(Pemohon)</i></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="nama" value="<?= $perjalanan['nama']; ?>">
-                                        <input type="text" class="form-control disabled" name="npk" value="<?= $perjalanan['npk']; ?>" hidden>
+                                        <input type="text" class="form-control disabled" name="nama" value="<?= $perjalanan['nama']; ?>" />
+                                        <input type="text" class="form-control disabled" name="npk" value="<?= $perjalanan['npk']; ?>" hidden="true" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Nomor Polisi</label>
+                                <label class="col-md-3 col-form-label">Nomor Polisi</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $perjalanan['nopol']; ?>">
@@ -48,47 +48,25 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
-                                <div class="col-md-3">
+                                <label class="col-md-3 col-form-label">Tanggal Keberangkatan</label>
+                                <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" id="tglberangkat" name="tglberangkat" value="<?= date('d / m / Y', strtotime($perjalanan['tglberangkat'])); ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
                                         <input type="time" class="form-control disabled" id="jamberangkat" name="jamberangkat" value="<?= $perjalanan['jamberangkat']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Awal</label>
+                                <label class="col-md-3 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control disabled" name="kmberangkat" value="<?= $perjalanan['kmberangkat']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Tanggal Kembali</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" id="tglkembali" name="tglkembali" value="<?= date('d / m / Y'); ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Jam Kembali</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
                                         <input type="time" class="form-control disabled" id="jamkembali" name="jamkembali" value="<?= date('H:i:s'); ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Peserta</label>
+                                <label class="col-md-3 col-form-label">Peserta</label>
                                 <div class="col-md-5">
                                     <div class="material-datatables">
                                         <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -117,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Pengemudi</label>
+                                <label class="col-md-3 col-form-label">Pengemudi*</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="supirkembali" data-style="select-with-transition" title="Pilih Pengemudi" data-size="7" required>
@@ -132,15 +110,26 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer Akhir*</label>
+                                <label class="col-md-3 col-form-label">Kilometer Awal</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmkembali" required>
+                                        <input type="number" class="form-control disabled" name="kmberangkat" value="<?= $perjalanan['kmberangkat']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Catatan <p><small> *Opsional</small></p></label>
+                                <label class="col-md-3 col-form-label">Kilometer Akhir*</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="number" class="form-control" name="kmkembali" name="min" min="<?= $perjalanan['kmberangkat']; ?>" required="true" />
+                                    </div>
+                                    <label class="col-sm-12 label-on-right">
+                        <code>Kilometer akhir tidak boleh kurang dari kilometer awal.</code>
+                      </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Catatan <p><small> *Opsional</small></p></label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <textarea rows="2" class="form-control" name="catatan"><?= $perjalanan['catatan_security']; ?></textarea>
@@ -149,11 +138,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"></div>
+                                <div class="col-md-3"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <button type="submit" class="btn btn-fill btn-primary">SELESAI</button>
-                                        <a href="<?= base_url('cekdl/kembali'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                                        <a href="<?= base_url('cekdl/kembali'); ?>" class="btn btn-fill btn-default">KEMBALI</a>
                                     </div>
                                 </div>
                             </div>
