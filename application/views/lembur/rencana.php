@@ -13,7 +13,8 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose" role="button" aria-disabled="false">Rencana Lembur Baru</a>
+                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
+                            <a href="#" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -93,6 +94,39 @@
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button type="submit" class="btn btn-danger">BATALKAN LEMBUR INI!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Lembur Hari Lain Aktivitas-->
+<div class="modal fade" id="tambahLembur" tabindex="-1" role="dialog" aria-labelledby="tambahLemburTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">RENCANA LEMBUR</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/tambah_harilain'); ?>">
+                    <div class="modal-body">
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Tanggal Mulai</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-primary">SELANJUTNYA</button>
+                            <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                        </div>
                     </div>
                 </form>
             </div>

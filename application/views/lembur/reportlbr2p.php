@@ -14,7 +14,7 @@
       $user = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
       $pdf->SetFont('Arial','B',8);
-      $pdf->Cell(185,15,'RENCANA / LAPORAN LEMBUR',0,1,'C');
+      $pdf->Cell(185,15,'RENCANA / 2 LAPORAN LEMBUR',0,1,'C');
       $pdf->line(75,16, 135-15, 16);
 
       $pdf->Ln(-5);
@@ -138,7 +138,7 @@
       $pdf->SetFont('Arial', 'B', 5);
       $pdf->Cell(56, 5, '', 0, 0);
       $pdf->Cell(23, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-23, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])),0, 0, 'C');
+      $pdf->Cell(-23, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])),0, 0, 'C');
       $pdf->Cell(70, 5, 'Disetujui',0, 0, 'C');
       $pdf->Cell(-70, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])), 0, 0, 'C');
       $pdf->Cell(115, 5, 'Disetujui',0, 0, 'C');

@@ -42,11 +42,11 @@
                                         <tr>
                                             <td><?= $l['id']; ?></td>
                                             <td><?= $l['nama']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                                            <td><?= date('d/m/Y', strtotime($l['tglmulai_aktual'])); ?></td>
+                                            <td><?= date('H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                                            <td><?= date('d/m/Y', strtotime($l['tglselesai_aktual'])); ?></td>
+                                            <td><?= date('H:i', strtotime($l['tglselesai_aktual'])); ?></td>
+                                            <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                             <td>
                                                 <a href="<?= base_url('lembur/setujui_hr/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 
                                             </td>

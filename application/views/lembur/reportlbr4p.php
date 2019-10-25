@@ -14,7 +14,7 @@
       $user = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
       $pdf->SetFont('Arial','B',8);
-      $pdf->Cell(185,15,'RENCANA / LAPORAN LEMBUR',0,1,'C');
+      $pdf->Cell(185,15,'RENCANA / 4 LAPORAN LEMBUR',0,1,'C');
       $pdf->line(75,16, 135-15, 16);
 
       $pdf->Ln(-5);
@@ -116,117 +116,433 @@
       $pdf->Cell(44,5,'DITERIMA',1,0,'C',1);
       $pdf->Cell(80,5,'DISETUJUI',1,0,'C',1);
       $pdf->Cell(80,5,'DISETUJUI',1,1,'C',1);
-                                                                                                                                                                                                                  
-      //GA & HR
-      $pdf->Cell(22,5, 'GA',1,0,'C',1);
-      $pdf->Cell(22,5, 'HR',1,0,'C',1);
-      //sect, dept, div, coo
-      $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
-      $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
-      $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
-      $pdf->Cell(20,5, $n6['nama'],1,0,'C',1);
-      //sect, dept, div, coo
-      $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
-      $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
-      $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
-      $pdf->Cell(20,5, $n6['nama'],1,1,'C',1);
+
       
-      $pdf->SetFont('Arial','B',5);   
-      //GA & HR
-      $pdf->Cell(22,22, $nama3['nama'],1,0,'C',1);
-      $pdf->Cell(22,22, $nama4['nama'],1,0,'C',1);
-      //sect, dept, div, coo
-      $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
-      $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
-      $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
-      $pdf->Cell(20,22, $nama6['nama'],1,0,'C',1);
-      //sect, dept, div, coo
-      $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
-      $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
-      $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
-      $pdf->Cell(20,22, $nama6['nama'],1,1,'C',1);
+/********************************************************************************************************/
+      if($lembur['durasi'] < '03:00:00' and $lembur['durasi_aktual'] >= '06:00:00')
+            {
+                   //GA & HR 
+                  $pdf->Cell(22,5, 'GA1',1,0,'C',1);
+                  $pdf->Cell(22,5, 'HR',1,0,'C',1);
+                  //sect, dept,
+                  $pdf->Cell(40,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(40,5, $n2['nama'],1,0,'C',1);            
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n6['nama'],1,1,'C',1);
+                  $pdf->SetFont('Arial','B',6);   
+                  //GA & HR 
+                  $pdf->Cell(22,22, $nama3['nama'],1,0,'C',1);
+                  $pdf->Cell(22,22, $nama4['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(40,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(40,22, $nama2['nama'],1,0,'C',1);
 
-      $pdf->Ln(-9);
-      $pdf->SetFont('Arial', 'B', 5);
-      //TGL-GA
-      $pdf->Cell(22, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-22, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_ga'])),0, 0, 'C');
-      //TGL-HR
-      $pdf->Cell(67, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-67, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_hr'])), 0, 0, 'C');
-      //TGL-sect-rencana
-      $pdf->Cell(106, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-104, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])), 110, 0, 'C');
-      //TGL-dept-rencana
-      $pdf->Cell(141, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-138, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])), 110, 0, 'C');
-      //TGL-div-rencana
-      $pdf->Cell(178, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-178, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_rencana'])), 110, 0, 'C');
-      //TGL-coo-rencana
-      $pdf->Cell(218, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-218, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_rencana'])), 110, 0, 'C');
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama6['nama'],1,1,'C',1);
 
-      //TGL-sect-realisasi
-      $pdf->Cell(258, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-258, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_realisasi'])), 110, 0, 'C');
-      //TGL-dept-realisasi
-      $pdf->Cell(298, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-298, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_realisasi'])), 110, 0, 'C');
-      //TGL-div-realisasi
-      $pdf->Cell(338, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-338, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_realisasi'])), 110, 0, 'C');
-      //TGL-coo-realisasi
-      $pdf->Cell(378, 5, 'Disetujui',0, 0, 'C');
-      $pdf->Cell(-378, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_realisasi'])), 110, 0, 'C');
-      $pdf->SetFont('Arial', '', 5);
+                  $pdf->Ln(-9);
+                  $pdf->SetFont('Arial', 'B', 5);
+                  //TGL-GA
+                  $pdf->Cell(22, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-22, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_ga'])),0, 0, 'C');
+                  //TGL-HR
+                  $pdf->Cell(67, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-67, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_hr'])), 0, 0, 'C');
+                  //TGL-sect-rencana
+                  $pdf->Cell(128, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-128, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])), 110, 0, 'C');
+                  //TGL-dept-rencana
+                  $pdf->Cell(210, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-210, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])), 110, 0, 'C');
+                  
+                  //TGL-sect-realisasi
+                  $pdf->Cell(263, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-258, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_realisasi'])), 110, 0, 'C');
+                  //TGL-dept-realisasi
+                  $pdf->Cell(298, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-298, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_realisasi'])), 110, 0, 'C');
+                  //TGL-div-realisasi
+                  $pdf->Cell(338, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-338, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_realisasi'])), 110, 0, 'C');
+                  //TGL-coo-realisasi
+                  $pdf->Cell(378, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-378, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_realisasi'])), 110, 0, 'C');
+                  $pdf->SetFont('Arial', '', 5);
 
-      $pdf->Ln(10);
+                  $pdf->Ln(10);
 
-      $pdf->Ln(-22);
-      $pdf->SetFont('arial-monospaced', '', 5);
-      $pdf->Cell(17.5, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Ln(-23);
+                  $pdf->SetFont('arial-monospaced', '', 5);
+                  $pdf->Cell(17.5, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(18, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(18, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(17, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(28, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(35, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(26, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);   
+            }
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+/********************************************************************************************************/
+      else if ($lembur['durasi'] >= '03:00:00' and $lembur['durasi_aktual'] >= '06:00:00') 
+            {
+                  //GA & HR
+                  $pdf->Cell(22,5, 'GA2',1,0,'C',1);
+                  $pdf->Cell(22,5, 'HR',1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(26,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(28,5, $n5['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n6['nama'],1,1,'C',1);
+                  
+                  $pdf->SetFont('Arial','B',6);   
+                  //GA & HR
+                  $pdf->Cell(22,22, $nama3['nama'],1,0,'C',1);
+                  $pdf->Cell(22,22, $nama4['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(26,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(26,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(28,22, $nama5['nama'],1,0,'C',1);
+ 
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama6['nama'],1,1,'C',1);
 
-      $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
-      $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-      $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+                  $pdf->Ln(-9);
+                  $pdf->SetFont('Arial', 'B', 5);
+                  //TGL-GA
+                  $pdf->Cell(22, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-22, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_ga'])),0, 0, 'C');
+                  //TGL-HR
+                  $pdf->Cell(67, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-67, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_hr'])), 0, 0, 'C');
+                  //TGL-sect-rencana
+                  $pdf->Cell(115, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-115, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])), 110, 0, 'C');
+                  //TGL-dept-rencana
+                  $pdf->Cell(165, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-165, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])), 110, 0, 'C');
+                  //TGL-div-rencana
+                  $pdf->Cell(218, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-218, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_rencana'])), 110, 0, 'C');
+                  
+                  //TGL-sect-realisasi
+                  $pdf->Cell(269, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-270, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_realisasi'])), 110, 0, 'C');
+                  //TGL-dept-realisasi
+                  $pdf->Cell(311, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-311, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_realisasi'])), 110, 0, 'C');
+                  //TGL-div-realisasi
+                  $pdf->Cell(350, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-350, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_realisasi'])), 110, 0, 'C');
+                  //TGL-coo-realisasi
+                  $pdf->Cell(390, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-390, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_realisasi'])), 110, 0, 'C');
+                  $pdf->SetFont('Arial', '', 5);
+
+                  $pdf->Ln(10);
+
+                  $pdf->Ln(-23);
+                  $pdf->SetFont('arial-monospaced', '', 5);
+                  $pdf->Cell(17.5, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(18, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(20, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(22, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(23, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(20, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+            }
+
+/********************************************************************************************************/
+      else if($lembur['durasi'] >= '06:00:00' and $lembur['durasi_aktual'] >= '06:00:00')
+            {
+                  //GA & HR
+                  $pdf->Cell(22,5, 'GA3',1,0,'C',1);
+                  $pdf->Cell(22,5, 'HR',1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n6['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n6['nama'],1,1,'C',1);
+                  
+                  $pdf->SetFont('Arial','B',6);   
+                  //GA & HR
+                  $pdf->Cell(22,22, $nama3['nama'],1,0,'C',1);
+                  $pdf->Cell(22,22, $nama4['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama6['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama6['nama'],1,1,'C',1);
+
+                  $pdf->Ln(-9);
+                  $pdf->SetFont('Arial', 'B', 5);
+                  //TGL-GA
+                  $pdf->Cell(22, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-22, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_ga'])),0, 0, 'C');
+                  //TGL-HR
+                  $pdf->Cell(67, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-67, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_hr'])), 0, 0, 'C');
+                  //TGL-sect-rencana
+                  $pdf->Cell(106, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-104, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])), 110, 0, 'C');
+                  //TGL-dept-rencana
+                  $pdf->Cell(141, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-138, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])), 110, 0, 'C');
+                  //TGL-div-rencana
+                  $pdf->Cell(178, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-178, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_rencana'])), 110, 0, 'C');
+                  //TGL-coo-rencana
+                  $pdf->Cell(218, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-218, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_rencana'])), 110, 0, 'C');
+
+                  //TGL-sect-realisasi
+                  $pdf->Cell(258, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-258, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_realisasi'])), 110, 0, 'C');
+                  //TGL-dept-realisasi
+                  $pdf->Cell(298, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-298, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_realisasi'])), 110, 0, 'C');
+                  //TGL-div-realisasi
+                  $pdf->Cell(338, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-338, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_realisasi'])), 110, 0, 'C');
+                  //TGL-coo-realisasi
+                  $pdf->Cell(378, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-378, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_realisasi'])), 110, 0, 'C');
+                  $pdf->SetFont('Arial', '', 5);
+
+                  $pdf->Ln(10);
+
+                  $pdf->Ln(-23);
+                  $pdf->SetFont('arial-monospaced', '', 5);
+                  $pdf->Cell(17.5, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(18, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(17, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+            }
 
 
+/********************************************************************************************************/
+else if($lembur['durasi'] >= '06:00:00' and $lembur['durasi_aktual'] < '06:00:00')
+            {
+                  //GA & HR
+                  $pdf->Cell(22,5,'GA4',1,0,'C',1);
+                  $pdf->Cell(22,5,'HR',1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n6['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,5, $n1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,5, $n6['nama'],1,1,'C',1);
+                  
+                  $pdf->SetFont('Arial','B',6);   
+                  //GA & HR
+                  $pdf->Cell(22,22, $nama3['nama'],1,0,'C',1);
+                  $pdf->Cell(22,22, $nama4['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama6['nama'],1,0,'C',1);
+                  //sect, dept, div, coo
+                  $pdf->Cell(20,22, $nama1['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama2['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama5['nama'],1,0,'C',1);
+                  $pdf->Cell(20,22, $nama6['nama'],1,1,'C',1);
 
+                  $pdf->Ln(-9);
+                  $pdf->SetFont('Arial', 'B', 5);
+                  //TGL-GA
+                  $pdf->Cell(22, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-22, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_ga'])),0, 0, 'C');
+                  //TGL-HR
+                  $pdf->Cell(67, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-67, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_hr'])), 0, 0, 'C');
+                  //TGL-sect-rencana
+                  $pdf->Cell(106, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-104, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])), 110, 0, 'C');
+                  //TGL-dept-rencana
+                  $pdf->Cell(141, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-138, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])), 110, 0, 'C');
+                  //TGL-div-rencana
+                  $pdf->Cell(178, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-178, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_rencana'])), 110, 0, 'C');
+                  //TGL-coo-rencana
+                  $pdf->Cell(218, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-218, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_rencana'])), 110, 0, 'C');
+
+                  //TGL-sect-realisasi
+                  $pdf->Cell(258, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-258, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_realisasi'])), 110, 0, 'C');
+                  //TGL-dept-realisasi
+                  $pdf->Cell(298, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-298, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_realisasi'])), 110, 0, 'C');
+                  //TGL-div-realisasi
+                  $pdf->Cell(338, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-338, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_divhead_realisasi'])), 110, 0, 'C');
+                  //TGL-coo-realisasi
+                  $pdf->Cell(378, 5, 'Disetujui',0, 0, 'C');
+                  $pdf->Cell(-378, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_coo_realisasi'])), 110, 0, 'C');
+                  $pdf->SetFont('Arial', '', 5);
+
+                  $pdf->Ln(10);
+
+                  $pdf->Ln(-23);
+                  $pdf->SetFont('arial-monospaced', '', 5);
+                  $pdf->Cell(17.5, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(18, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(17, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+                  $pdf->Cell(16, 5, 'form digital', 0,'C', 0);
+                  $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
+                  $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
+
+            }
+                                                                                                                                                                                                                  
       $pdf->Output('I','SURAT RENCANA / LAPORAN LEMBUR'.RAND().'.pdf');
 
       ?>
