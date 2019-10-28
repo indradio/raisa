@@ -14,7 +14,7 @@
       $user = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
       $pdf->SetFont('Arial','B',8);
-      $pdf->Cell(185,15,'RENCANA / 4 LAPORAN LEMBUR',0,1,'C');
+      $pdf->Cell(185,15,'RENCANA / LAPORAN LEMBUR',0,1,'C');
       $pdf->line(75,16, 135-15, 16);
 
       $pdf->Ln(-5);
@@ -46,22 +46,22 @@
       $pdf->Cell(44,7,'NAMA                      :   ' . $lembur['nama'],1,0,1);
       $pdf->SetFont('Arial','',5);
 
-      $pdf->Cell(30,7,'MULAI',1,0,'C',1);
-      $pdf->Cell(30,7,'SELESAI',1,0,'C',1);
-      $pdf->Cell(20,7,'JML.JAM',1,0,'C',1);
-      $pdf->Cell(30,7,'MULAI',1,0,'C',1);
-      $pdf->Cell(30,7,'SELESAI',1,0,'C',1);
-      $pdf->Cell(20,7,'JML.JAM',1,0,'C',1);
+      $pdf->Cell(33,7,'MULAI',1,0,'C',1);
+      $pdf->Cell(32,7,'SELESAI',1,0,'C',1);
+      $pdf->Cell(15,7,'JML.JAM',1,0,'C',1);
+      $pdf->Cell(33,7,'MULAI',1,0,'C',1);
+      $pdf->Cell(32,7,'SELESAI',1,0,'C',1);
+      $pdf->Cell(15,7,'JML.JAM',1,0,'C',1);
       $pdf->Cell(70,7,'',0,1,0);
 
       $pdf->SetFont('Arial','B',6);
       $pdf->Cell(44,5,'NPK                         :   ' . $lembur['npk'],1,0,1);
-      $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
-      $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
-      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi'])),1,0,'C',0);
-      $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglmulai_aktual'])),1,0,'C',1);
-      $pdf->Cell(30,5, date('H:i', strtotime($lembur['tglselesai_aktual'])),1,0,'C',1);
-      $pdf->Cell(20,5, date('H:i', strtotime($lembur['durasi_aktual'])),1,1,'C',0);
+      $pdf->Cell(33,5, date('H:i', strtotime($lembur['tglmulai'])),1,0,'C',1);
+      $pdf->Cell(32,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
+      $pdf->Cell(15,5, date('H:i', strtotime($lembur['durasi'])),1,0,'C',0);
+      $pdf->Cell(33,5, date('H:i', strtotime($lembur['tglmulai_aktual'])),1,0,'C',1);
+      $pdf->Cell(32,5, date('H:i', strtotime($lembur['tglselesai_aktual'])),1,0,'C',1);
+      $pdf->Cell(15,5, date('H:i', strtotime($lembur['durasi_aktual'])),1,1,'C',0);
       $pdf->Cell(56,5,'',0,1,0);
 
       $pdf->SetFont('Arial','',5);

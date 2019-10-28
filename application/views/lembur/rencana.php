@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
+                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-primary" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
                             <a href="#" class="btn btn-rose" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
                         </div>
                         <div class="material-datatables">

@@ -336,8 +336,7 @@
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <!-- <textarea rows="3" class="form-control" id="aktivitas" name="aktivitas" required><?= $a['aktivitas']; ?></textarea> -->
-                                    <input type="text" class="form-control" id="aktivitas" name="aktivitas" value="<?= $a['aktivitas']; ?>" required>
+                                    <textarea rows="3" class="form-control" id="aktivitas" name="aktivitas" required><?= $a['aktivitas']; ?></textarea>
                                 </div>
                             </div>
                         </div>

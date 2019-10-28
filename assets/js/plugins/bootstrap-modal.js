@@ -125,7 +125,7 @@ $('#ubahAktivitas').on('show.bs.modal', function (event) {
     var durasi = button.data('durasi')
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
-    modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
+    modal.find('.modal-body textarea[name="aktivitas"]').val(aktivitas)
     modal.find('.modal-body input[name="durasi"]').val(durasi)
 
 })
