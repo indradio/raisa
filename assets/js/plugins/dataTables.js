@@ -12,6 +12,29 @@ $(document).ready(function () {
         }
     });
 
+    $('#dtreportkr').DataTable({
+        "pagingType": "full_numbers",
+        order: [
+            [1, 'desc']
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+    $('#dtreportps').DataTable({
+        "pagingType": "full_numbers",
+        order: [
+            [1, 'desc']
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
     $('#famday').DataTable({
         "pagingType": "full_numbers",
         scrollX: true,

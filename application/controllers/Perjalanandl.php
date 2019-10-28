@@ -674,4 +674,20 @@ class Perjalanandl extends CI_Controller
         $this->load->view('perjalanandl/adminhr', $data);
         $this->load->view('templates/footer');
     }
+
+    public function laporanjarak_kr()
+    {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Laporan Perjalanan Dinas';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $queryPerjalanan = "SELECT *
+                            FROM `perjalanan`
+                            WHERE month(tglberangkat)='10' ";
+        $data['perjalanan'] = $this->db->query($queryPerjalanan)->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/laporan-jarak-kr', $data);
+        $this->load->view('templates/footer');
+    }
 }
