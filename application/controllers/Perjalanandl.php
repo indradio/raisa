@@ -579,12 +579,13 @@ class Perjalanandl extends CI_Controller
         // batalkan reservasi
         $this->db->set('status', '9');
         $this->db->set('catatan', 'Digabungkan dengan RESERVASI ' . $rsvid2);
+        $this->db->set('admin_ga' , $this->session->userdata('inisial'));
         $this->db->where('id', $rsvid1);
         $this->db->update('reservasi');
 
         $this->db->where('npk', $rsv2['npk']);
         $karyawan = $this->db->get('karyawan')->row_array();
-        $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PERJALANAN DINAS DIGABUNGKAN*\r\n \r\n No. Reservasi : *" . $rsv2['id'] . "*" .
             "\r\n Nama : *" . $rsv2['nama'] . "*" .
@@ -636,12 +637,13 @@ class Perjalanandl extends CI_Controller
         // batalkan reservasi
         $this->db->set('status', '9');
         $this->db->set('catatan', 'Digabungkan dengan PERJALANAN ' . $dlid);
+        $this->db->set('admin_ga' , $this->session->userdata('inisial'));
         $this->db->where('id', $rsvid);
         $this->db->update('reservasi');
 
         $this->db->where('npk', $dl['npk']);
         $karyawan = $this->db->get('karyawan')->row_array();
-        $my_apikey = ""; //NQXJ3HED5LW2XV440HCG
+        $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PERJALANAN DINAS DIGABUNGKAN*\r\n \r\n No. Perjalanan : *" . $dl['id'] . "*" .
             "\r\n Nama : *" . $dl['nama'] . "*" .
