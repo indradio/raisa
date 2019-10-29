@@ -10,11 +10,13 @@
         foreach ($krkategori as $k) : 
             $this->db->where('kepemilikan', $k['nama']);
             $this->db->where('month(tglberangkat)','10');
+            $this->db->where('status','9');
             $queryKategori = $this->db->get('perjalanan');
            
             $this->db->select_sum('kmtotal');
             $this->db->where('kepemilikan', $k['nama']);
             $this->db->where('month(tglberangkat)','10');
+            $this->db->where('status','9');
             $queryKm = $this->db->get('perjalanan');
             $kmtotal = $queryKm->row()->kmtotal;
         ?>
@@ -75,11 +77,13 @@
                                 foreach ($kendaraan as $k) : 
                                     $this->db->where('nopol', $k['nopol']);
                                     $this->db->where('month(tglberangkat)','10');
+                                    $this->db->where('status','9');
                                     $queryTrip = $this->db->get('perjalanan');
                                 
                                     $this->db->select_sum('kmtotal');
                                     $this->db->where('nopol', $k['nopol']);
                                     $this->db->where('month(tglberangkat)','10');
+                                    $this->db->where('status','9');
                                     $queryKm = $this->db->get('perjalanan');
                                     $kmtotal = $queryKm->row()->kmtotal;
                                     if ($kmtotal != 0){
@@ -135,11 +139,13 @@
                                 foreach ($peserta as $p) : 
                                     $this->db->like('anggota', $p['inisial']);
                                     $this->db->where('month(tglberangkat)','10');
+                                    $this->db->where('status','9');
                                     $queryTrip = $this->db->get('perjalanan');
                                 
                                     $this->db->select_sum('kmtotal');
                                     $this->db->like('anggota', $p['inisial']);
                                     $this->db->where('month(tglberangkat)','10');
+                                    $this->db->where('status','9');
                                     $queryKm = $this->db->get('perjalanan');
                                     $kmtotal = $queryKm->row()->kmtotal;
                                     if ($kmtotal != 0){
