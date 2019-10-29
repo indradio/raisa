@@ -17,10 +17,8 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Nama</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>Tanggal/Jam Mulai</th>
+                                        <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -29,10 +27,8 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Nama</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>Tanggal/Jam Mulai</th>
+                                        <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
@@ -42,10 +38,8 @@
                                         <tr>
                                             <td><?= $l['id']; ?></td>
                                             <td><?= $l['nama']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglmulai_aktual'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglselesai_aktual'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglselesai_aktual'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                             <td>
                                                 <a href="<?= base_url('lembur/setujui_hr/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 

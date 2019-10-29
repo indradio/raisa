@@ -21,10 +21,8 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Nama</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>Tanggal/Jam Mulai</th>
+                                        <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th>Lokasi lembur</th>
                                         <th class="disabled-sorting text-right">Actions</th>
@@ -32,12 +30,10 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                    <th>No. Lembur</th>
+                                        <th>No. Lembur</th>
                                         <th>Nama</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>Tanggal/Jam Mulai</th>
+                                        <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th>Lokasi Lembur</th>
                                         <th class="text-right">Actions</th>
@@ -45,13 +41,15 @@
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                        <tr>
+                                        <?php if ($l['tglmulai'] > date('Y-m-d 24:00:00')){ ?>
+                                            <tr class="text-dark bg-success">
+                                        <?php } else { ?>
+                                            <tr>
+                                        <?php }; ?>
                                             <td><?= $l['id']; ?></td>
                                             <td><?= $l['nama']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                                                 <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $l['lokasi_id']])->row_array(); ?>
                                             <td><?= $lokasi['nama']; ?></td>  

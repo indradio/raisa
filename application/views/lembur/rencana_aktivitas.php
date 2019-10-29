@@ -41,9 +41,11 @@
                                                         WHERE `link_aktivitas` = '$lid' ";
                                             $totalLembur = $this->db->query($queryLembur)->row_array();
                                             $totalAktivitas = $totalLembur['COUNT(*)'];; ?>
-                                            <?php if ($totalAktivitas == '0') { ?>
+                                            <?php if ($totalAktivitas == '0' AND $lembur['status']== '1') { ?>
                                                 <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">UBAH TANGGAL</a>
-                                            <?php } ?>
+                                            <?php } else if ($lembur['status'] == '0' AND $totalAktivitas == '0') { ?>
+
+                                            <?php }; ?>
                                         </span>
                                     </div>
                                 </div>
@@ -109,7 +111,7 @@
                     <br>
                     <div class="toolbar">
                         <!--        Here you can write extra buttons/actions for the toolbar              -->
-                        <?php if ($this->session->userdata['posisi_id'] == '7' and $totalAktivitas == '0' and $lembur['status'] == '0' or $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '4' or $lembur['status'] == '5' or $lembur['status'] == '6' or $lembur['status'] == '7' or $lembur['status'] == '8' or $lembur['status'] == '9' or $lembur['status'] == '10' or $lembur['status'] == '11' or $lembur['status'] == '12' or $lembur['status'] == '13') { ?>
+                        <?php if ($this->session->userdata['posisi_id'] == '7' and $totalAktivitas == '0' and $lembur['status'] == '0' or $lembur['status'] >= '2') { ?>
                             
                         <?php } else { ?>
                             <a href="#" id="tambah_aktifvitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>

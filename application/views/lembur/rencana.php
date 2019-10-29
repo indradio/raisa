@@ -22,10 +22,8 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Tgl Mengajukan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>Tanggal/Jam Mulai</th>
+                                        <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
@@ -35,10 +33,8 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Tgl Mengajukan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Jam Selesai</th>
+                                        <th>Tanggal/Jam Mulai</th>
+                                        <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
@@ -48,11 +44,9 @@
                                     <?php foreach ($lembur as $l) : ?>
                                         <tr>
                                             <td><?= $l['id']; ?></td>
-                                            <td><?= $l['tglpengajuan']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglpengajuan'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>

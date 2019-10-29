@@ -90,17 +90,17 @@
                         </form>
                         <br>
                         <div class="toolbar">
-                        <?php if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '3'){ ?>
-                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
-                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
-                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
-                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
-                                    <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                                <?php  }; ?>
+                            <?php if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '3'){ ?>
+                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                            <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
+                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                            <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
+                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                            <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
+                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                             <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
+                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
+                            <?php  }; ?>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover"  cellspacing="0" width="100%" style="width:100%">
@@ -113,7 +113,6 @@
                                         <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
@@ -126,7 +125,6 @@
                                         <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -141,8 +139,6 @@
                                             <!-- <td><?= $a['wbs']; ?></td> -->
                                             <td><?= $a['aktivitas']; ?></td>
                                             <td><?= $a['durasi']; ?> Jam</td>
-                                            <?php $status = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
-                                                <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
                                             <?php if ($lembur['status'] !='7'){ ?>
                                                 <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">UBAH</a>
