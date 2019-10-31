@@ -180,6 +180,14 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
+}else if (flashData == 'update') {
+  swal({
+    title: "Waktu Sudah Terlewati.!",
+    text: "Silahkan Coba Lagi Dengan Waktu Aktual.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
 }
 
 

@@ -14,7 +14,7 @@
       $user = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
       $pdf->SetFont('Arial','B',8);
-      $pdf->Cell(185,15,'RENCANA / LAPORAN LEMBUR',0,1,'C');
+      $pdf->Cell(189,15,'RENCANA / LAPORAN LEMBUR',0,1,'C');
       $pdf->line(75,16, 135-15, 16);
 
       $pdf->Ln(-5);
