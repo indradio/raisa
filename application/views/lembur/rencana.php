@@ -11,10 +11,10 @@
                         <h4 class="card-title">Rencana Lembur</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar">
+                        <div class="toolbar text-right mb-2">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose btn-round" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
-                            <a href="#" class="btn btn-primary btn-round" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
+                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
+                            <a href="#" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

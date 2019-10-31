@@ -167,14 +167,14 @@
                         </table>
                         <!-- Sederhanakan koding -->
                         <?php if ($totalAktivitas == '0') { ?>
-                            <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                            <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($totalAktivitas >= '1' and $lembur['status'] == '1') { ?>
-                            <button type="submit" id="ajukan" class="btn btn-success">AJUKAN</button>
-                            <a href="#" id="batalAktivitas" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                            <button type="submit" id="ajukan" class="btn btn-sm btn-success">AJUKAN</button>
+                            <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($totalAktivitas >= '1' and $lembur['status'] == '0' or $lembur['status'] >= '2') { ?>
 
                         <?php }; ?>
-                            <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-default" role="button">Kembali</a>
+                            <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                     </div>
                 </div>
                 <!-- end content-->

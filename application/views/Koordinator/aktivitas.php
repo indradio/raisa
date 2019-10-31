@@ -18,34 +18,24 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>COPRO</th>
-                                        <th>Deskripsi</th>
-                                        <th>Progres</th>
-                                        <th>Due Date</th>
-                                        <th>Status</th>
+                                        <th>No</th>
+                                        <th>Aktivitas</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    foreach ($project as $p) : ?>
+                                    <?php foreach ($aktivitas as $a) : ?>
                                     <tr>
-                                        <td><?= $p['copro']; ?></td>
-                                        <td><?= $p['deskripsi']; ?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>  <a href="<?= base_url('koordinator/aktivitas/') . $p['copro']; ?>" class="btn btn-sm btn-success">AKTIVITAS</a></td>
+                                        <td><?= $a['id']; ?></td>
+                                        <td><?= $p['aktivitas']; ?></td>
+                                        <td>  <a href="<?= base_url('koordinator/aktivitas_detil/') . $a['id']; ?>" class="btn btn-sm btn-round btn-success">AKTIVITAS</a></td>
                                     </tr>
                                         <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>COPRO</th>
-                                        <th>Deskripsi</th>
-                                        <th>Progres</th>
-                                        <th>Due Date</th>
-                                        <th>Status</th>
+                                        <th>No</th>
+                                        <th>Aktivitas</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
