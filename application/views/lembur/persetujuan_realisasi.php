@@ -13,7 +13,7 @@
                     </div>
                     <form class="form" method="post" action="<?= base_url('lembur/setujui_realisasi'); ?>">
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row" hidden>
                             <label class="col-md-1 col-form-label">Lembur ID</label>
                             <div class="col-md-3">
                                 <div class="form-group has-default">
