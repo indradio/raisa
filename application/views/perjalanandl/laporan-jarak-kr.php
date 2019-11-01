@@ -151,7 +151,7 @@
                                     if ($kmtotal != 0){
                                 ?>
                                     <tr>
-                                        <td class="td-name"><?= $p['nama']; ?></td>
+                                        <td class="td-name"><a href="#" class="btn btn-primary btn-link" role="button" aria-disabled="true"><?= $p['nama']; ?></a></td>
                                         <td><?= $queryTrip->num_rows(); ?></td>
                                         <td><?= $kmtotal; ?></td>
                                     </tr>
