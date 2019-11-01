@@ -227,10 +227,7 @@
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                         <?php
-                                        $queyCopro = "SELECT *
-                                                                    FROM `project`
-                                                                    ORDER BY `status` ASC
-                                                                    ";
+                                        $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
                                         $copro = $this->db->query($queyCopro)->result_array();
                                         foreach ($copro as $c) : ?>
                                             <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
