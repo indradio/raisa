@@ -630,7 +630,7 @@
                         <h4 class="card-title">Laporankan Masalah</h4>
                     </div>
                 </div>
-                <?= form_open_multipart('lapor/newbugs'); ?>
+                <?= form_open_multipart('issues/newbug'); ?>
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group">
