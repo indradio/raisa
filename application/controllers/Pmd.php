@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Koordinator extends CI_Controller
+class Pmd extends CI_Controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Koordinator extends CI_Controller
     }
     public function project()
     {
-        $data['sidemenu'] = 'Koordinator';
+        $data['sidemenu'] = 'PMD';
         $data['sidesubmenu'] = 'Project';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['project'] = $this->db->get_where('project', ['status' =>  'OPEN'])->result_array();
@@ -36,7 +36,7 @@ class Koordinator extends CI_Controller
     }
     public function aktivitas($copro)
     {
-        $data['sidemenu'] = 'Koordinator';
+        $data['sidemenu'] = 'PMD';
         $data['sidesubmenu'] = 'Project';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['aktivitas'] = $this->db->get_where('project_aktivitas', ['copro' =>  $copro])->result_array();

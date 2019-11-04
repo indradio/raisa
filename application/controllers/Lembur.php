@@ -72,7 +72,7 @@ class Lembur extends CI_Controller
 
                 $queryLembur = "SELECT COUNT(*)
                 FROM `lembur`
-                WHERE YEAR(tglpengajuan) = YEAR(CURDATE())
+                WHERE MONTH(tglmulai) = MONTH(CURDATE())
                 ";
                 $lembur = $this->db->query($queryLembur)->row_array();
                 $totalLembur = $lembur['COUNT(*)'] + 1;
@@ -117,7 +117,7 @@ class Lembur extends CI_Controller
 
                 $queryLembur = "SELECT COUNT(*)
                 FROM `lembur`
-                WHERE YEAR(tglpengajuan) = YEAR(CURDATE())
+                WHERE MONTH(tglmulai) = MONTH(CURDATE())
                 ";
                 $lembur = $this->db->query($queryLembur)->row_array();
                 $totalLembur = $lembur['COUNT(*)'] + 1;
@@ -207,7 +207,7 @@ class Lembur extends CI_Controller
 
             $queryLembur = "SELECT COUNT(*)
             FROM `lembur`
-            WHERE YEAR(tglpengajuan) = YEAR(CURDATE())
+            WHERE MONTH(tglmulai) = MONTH(CURDATE())
             ";
             $lembur = $this->db->query($queryLembur)->row_array();
             $totalLembur = $lembur['COUNT(*)'] + 1;
