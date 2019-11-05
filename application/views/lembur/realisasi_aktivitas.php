@@ -31,7 +31,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if ($lembur['status']== '4') { ?>
+                                    <?php if ($lembur['durasi_aktual']== NULL) { ?>
                                         <div class="row col-md-12">
                                             <label class="col-ml-5 col-form-label"></label>
                                             <div class="col-md-7">
@@ -503,7 +503,7 @@
     </div>
 </div>
 
-<!-- Modal Ubah tanggal-->
+<!-- Modal Ubah Jam-->
 <div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -516,7 +516,7 @@
                         <h4 class="card-title">GANTI JAM LEMBUR</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('lembur/gtJamRel'); ?>">
+                <form class="form" method="post" action="<?= base_url('lembur/gtJamRelalisai'); ?>">
                     <div class="modal-body">
                         <div class="row" hidden>
                             <label class="col-md-4 col-form-label">Lembur ID</label>
@@ -543,10 +543,3 @@
         </div>
     </div>
 </div>
-<!-- <script>
-        $(function () {
-        $('#tglmulai').datetimepicker({
-            format: 'LT'
-        });
-    });
-</script> -->

@@ -41,10 +41,8 @@
                                     <th>No. Lembur</th>
                                     <th>NPK</th>
                                     <th>Nama</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Jam Selesai</th>
+                                    <th>Tanggal/Jam Mulai</th>
+                                    <th>Tanggal/Jam Selesai</th>
                                     <th>Durasi/Jam</th>
                                     <th>Status</th>
                                     <th class="disabled-sorting text-right">Actions</th>
@@ -56,10 +54,8 @@
                                     <th>No. Lembur</th>
                                     <th>NPK</th>
                                     <th>Nama</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Jam Selesai</th>
+                                    <th>Tanggal/Jam Mulai</th>
+                                    <th>Tanggal/Jam Selesai</th>
                                     <th>Durasi/Jam</th>
                                     <th>Status</th>
                                     <th class="text-right">Actions</th>
@@ -72,22 +68,13 @@
                                     <td><?= $l['id']; ?></td>
                                     <td><?= $l['npk']; ?></td>
                                     <td><?= $l['nama']; ?></td>
-                                    <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                                    <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                                    <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                                    <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
+                                    <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
+                                    <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                                     <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                     <td><?= $status['nama']; ?></td>
                                     <td>
-                                        <?php if ($l['status'] == 4 or $l['status'] == 5 or $l['status'] == 6) { ?>
-                                            <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        <?php }else if ($l['status'] == 7 or $l['status'] == 9 ) { ?>
-                                            <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        <?php } else { ?>
-                                            <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                        <?php }; ?>
-                                        
+                                        <a href="<?= base_url('lembur/detailAktivitasGA/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                                     </td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>

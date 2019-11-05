@@ -44,7 +44,7 @@
                                     <div class="col-md-5">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
-                                                <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">UBAH TANGGAL</a>
+                                                <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">GANTI JAM</a>
                                             </span>
                                         </div>
                                     </div>
@@ -330,7 +330,7 @@
         </div>
     </div>
 </div>
-<!-- Modal Ubah tanggal-->
+<!-- Modal Ubah Jam-->
 <div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -340,10 +340,10 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">UBAH TANGGAL LEMBUR</h4>
+                        <h4 class="card-title">GANTI JAM LEMBUR</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('lembur/gantitgl_lembur'); ?>">
+                <form class="form" method="post" action="<?= base_url('lembur/gtJamRencana'); ?>">
                     <div class="modal-body">
                         <div class="row" hidden>
                             <label class="col-md-4 col-form-label">Lembur ID</label>
@@ -354,16 +354,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Tanggal Mulai</label>
+                            <label class="col-md-4 col-form-label">Jam Mulai</label>
                             <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
+                                <div class="form-group has-default" id="jammulai">
+                                    <input type="text" class="form-control timepicker" id="jammulai" name="jammulai" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-primary">Ubah Tanggal!</button>
+                        <button type="submit" class="btn btn-primary">Ganti Jam!</button>
                     </div>
                 </form>
             </div>

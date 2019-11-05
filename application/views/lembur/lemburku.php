@@ -70,14 +70,6 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="toolbar">
-                                <!--        Here you can write extra buttons/actions for the toolbar              -->
-                                <?php if ($lembur['status'] == '9' or $lembur['status'] == '7' or $lembur['status'] == '6' or $lembur['status'] == '5') { ?>
-                                    <!-- <a href="#" class="btn btn-rose mb disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a> -->
-                                <?php } else { ?>
-                                    <!-- <a href="#" class="btn btn-rose mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a> -->
-                                <?php }; ?>
-                            </div>
                             <div class="material-datatables">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                     <thead>

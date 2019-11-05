@@ -43,6 +43,7 @@
                                             <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                             <td>
                                                 <a href="<?= base_url('lembur/setujui_hr/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 
+                                                <a href="<?= base_url('lembur/detailAktivitasHR/'). $l['id']; ?>" class="badge badge-pill badge-info">Detail</i></a> 
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
