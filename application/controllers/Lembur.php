@@ -1641,25 +1641,27 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function gantitgl_lembur()
+    public function gtJamRencana()
     {
         date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('link_aktivitas')])->row_array();
+        $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai']));
         $this->db->where('tglmulai', date("Y-m-d 16:30:00"));
         $this->db->where('npk', $this->session->userdata('npk'));
         $ada = $this->db->get('lembur')->row_array();
-        $jam = $this->input->post('tglmulai');
+        $jam = $this->input->post('jammulai');
 
-        if ($jam < date('Y-m-d H:i:s'))
+        if ($jam < date('H:i:s'))
             {
                 $this->session->set_flashdata('message', 'update');
                 redirect('lembur/rencana_aktivitas/' . $this->input->post('link_aktivitas'));
             }
             
         else{
-                $this->db->set('tglmulai', $this->input->post('tglmulai'));
-                $this->db->set('tglselesai', $this->input->post('tglmulai'));
-                $this->db->set('tglmulai_aktual', $this->input->post('tglmulai'));
-                $this->db->set('tglselesai_aktual', $this->input->post('tglmulai'));
+                $this->db->set('tglmulai', $tglmulai . ' ' . $this->input->post('jammulai'));
+                $this->db->set('tglselesai',$tglmulai . ' ' . $this->input->post('jammulai'));
+                $this->db->set('tglmulai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
+                $this->db->set('tglselesai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
                 $this->db->where('id', $this->input->post('link_aktivitas'));
                 $this->db->update('lembur');
 
@@ -1667,7 +1669,7 @@ class Lembur extends CI_Controller
             }
     }
 
-    public function gtJamRel()
+    public function gtJamRelalisai()
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('link_aktivitas')])->row_array();
