@@ -1667,6 +1667,18 @@ class Lembur extends CI_Controller
             }
     }
 
+    public function gtJamRel()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->set('tglmulai_aktual', $this->input->post('tglmulai'));
+        $this->db->set('tglselesai_aktual', $this->input->post('tglmulai'));
+        $this->db->where('id', $this->input->post('link_aktivitas'));
+        $this->db->update('lembur');
+
+        redirect('lembur/realisasi_aktivitas/' . $this->input->post('link_aktivitas'));
+            
+    }
+
     public function gantitgl_lembur_sect()
     {
         $this->db->set('tglmulai', $this->input->post('tglmulai'));

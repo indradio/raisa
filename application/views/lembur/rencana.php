@@ -87,7 +87,7 @@
                         <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-danger">BATALKAN LEMBUR INI!</button>
+                        <button type="submit" class="btn btn-sm btn-danger">BATALKAN LEMBUR INI!</button>
                     </div>
                 </form>
             </div>
@@ -118,8 +118,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">SELANJUTNYA</button>
-                            <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                            <button type="submit" class="btn btn-sm btn-primary">SELANJUTNYA</button>
+                            <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-sm btn-fill btn-default">Kembali</a>
                         </div>
                     </div>
                 </form>

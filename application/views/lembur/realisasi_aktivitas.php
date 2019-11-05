@@ -13,70 +13,88 @@
                     </div>
                     <form class="form" method="post" action="<?= base_url('lembur/ajukan_realisasi'); ?>">
                         <div class="card-body">
-                            <div class="row" hidden>
-                                <label class="col-md-1 col-form-label">Lembur ID</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
+                            <div class="row col-md-12">
+                                <div class="row col-md-6">
+                                    <div class="row" hidden>
+                                        <label class="col-md-5 col-form-label">Lembur ID</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Tanggal Mulai</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control datetimepicker disabled" id="tglmulai_aktual" name="tglmulai_aktual" value="<?= $lembur['tglmulai_aktual']; ?>">
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control datetimepicker disabled" id="tglmulai_aktual" name="tglmulai_aktual" value="<?= $lembur['tglmulai_aktual']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Tanggal Selesai</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control datetimepicker disabled" id="tglselesai_aktual" name="tglselesai_aktual" value="<?= $lembur['tglselesai_aktual']; ?>">
+                                    <?php if ($lembur['status']== '4') { ?>
+                                        <div class="row col-md-12">
+                                            <label class="col-ml-5 col-form-label"></label>
+                                            <div class="col-md-7">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">GANTI JAM</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php }; ?>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Tanggal Selesai</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control datetimepicker disabled" id="tglselesai_aktual" name="tglselesai_aktual" value="<?= $lembur['tglselesai_aktual']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Total Aktivitas</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <?php
-                                        $lid = $lembur['id'];
-                                        $queryLembur = "SELECT COUNT(*)
-                                            FROM `aktivitas`
-                                            WHERE `link_aktivitas` = '$lid' ";
-                                        $totalLembur = $this->db->query($queryLembur)->row_array();
-                                        $totalAktivitas = $totalLembur['COUNT(*)'];; ?>
-                                        <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Durasi Lembur</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group has-default">
+                                                    <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                            <div class="row col-md-6">
+                                <div class="row col-md-12">
+                                    <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
+                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Lama Lembur</label>
-                                <div class="col-md-2">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php
+                                                $lid = $lembur['id'];
+                                                $queryLembur = "SELECT COUNT(*)
+                                                    FROM `aktivitas`
+                                                    WHERE `link_aktivitas` = '$lid' ";
+                                                $totalLembur = $this->db->query($queryLembur)->row_array();
+                                                $totalAktivitas = $totalLembur['COUNT(*)']; ?>
+                                                <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                            <label class="col-md-1 col-form-label">Lokasi Lembur</label>
-                                <div class="col-md-2">
-                                    <div class="form-group has-default">
-                                        <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                    <div class="row col-md-12">
+                                    <label class="col-ml-5 col-form-label">Status</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                                                <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Status</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                    </div>
-                                </div>
+                                </div> 
                             </div>
                             <br>
                             <div class="toolbar">
@@ -151,13 +169,13 @@
                                     </tbody>
                                 </table>
                                 <?php if ($lembur['status'] == '4' and $a['status'] == '1') { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-success disabled">LAPORKAN</button>
+                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">LAPORKAN</button>
                                 <?php } else if ($lembur['status'] == '5' OR $lembur['status'] == '6' OR $lembur['status'] == '7' OR $lembur['status'] == '9' OR $lembur['status'] == '12' OR $lembur['status'] == '13') { ?>
                                     <!-- <button type="submit"  id="ajukan" class="btn btn-success disabled">LAPORKAN</button> -->
                                 <?php } else { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-success">LAPORKAN</button>
+                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success">LAPORKAN</button>
                                 <?php }; ?>
-                                <a href="<?= base_url('lembur/realisasi/') ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('lembur/realisasi/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                             </div>
                         </div>
                         <!-- end content-->
@@ -484,3 +502,51 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Ubah tanggal-->
+<div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">GANTI JAM LEMBUR</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/gtJamRel'); ?>">
+                    <div class="modal-body">
+                        <div class="row" hidden>
+                            <label class="col-md-4 col-form-label">Lembur ID</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Jam Mulai</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default" id="tglmulai">
+                                    <input type="text" class="form-control timepicker" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-primary">Ganti Jam!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script>
+        $(function () {
+        $('#tglmulai').datetimepicker({
+            format: 'LT'
+        });
+    });
+</script> -->

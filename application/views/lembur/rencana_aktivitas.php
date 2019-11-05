@@ -92,7 +92,6 @@
                                 </div>
                             </div>
                             <?php }; ?>
-
                             <div class="row col-md-12">
                             <label class="col-ml-5 col-form-label">Total Aktivitas</label>
                                 <div class="col-md-5">

@@ -808,7 +808,7 @@ else if ($lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] <= '03:00:
       
 }
 //22 SECT.HEAD********************************************************************************************************/
-else if ($lembur['durasi'] > '03:00:00' and $lembur['durasi'] < '06:00:00' and $lembur['durasi_aktual'] < '06:00:00' and $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
+else if ($lembur['durasi'] > '03:00:00' and $lembur['durasi'] < '06:00:00' and $lembur['durasi_aktual'] <= '06:00:00' and $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
 {
       $pdf->SetFont('Arial','',5);
 
