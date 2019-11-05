@@ -172,6 +172,63 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
+    <!-- REALISASI -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">REALISASI - Menunggu Laporan dari Karyawan</h4>
+          </div>
+          <div class="card-body">
+          <div class="table-responsive">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2       -->
+            </div>
+            <div class="material-datatables">
+            <table id="#" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Tanggal Mulai</th>
+                    <th>Durasi/Jam</th>
+                    <th class="disabled-sorting">Actions</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                  <th>ID</th>
+                    <th>Nama</th>
+                    <th>Tanggal Mulai</th>
+                    <th>Durasi/Jam</th>
+                    <th>Actions</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <?php foreach ($realisasi as $l) : ?>
+                    <tr>
+                      <td><?= $l['id']; ?></td>
+                      <td><?= $l['nama']; ?></td>
+                      <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                      <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
+                      <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- end content-->
+        </div>
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
     <!-- REALISASI - Atasan 1 & 2 -->
     <div class="row">
       <div class="col-md-12">
@@ -208,7 +265,7 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($realisasi as $l) : ?>
+                  <?php foreach ($realisasi_ats as $l) : ?>
                     <tr>
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['nama']; ?></td>

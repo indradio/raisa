@@ -101,7 +101,7 @@
                   <li class="nav-item active">
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
-                      <p> <?= $m['menu']; ?>
+                      <p> <?= $m['menu']; ?> 
                         <b class="caret"></b>
                       </p>
                     </a>
@@ -111,7 +111,8 @@
                         <li class="nav-item">
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
-                            <p> <?= $m['menu']; ?>
+                            <p> <?= $m['menu']; ?> 
+                            <?php if ($m['menu'] == 'Lembur') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?>
                               <b class="caret"></b>
                             </p>
                           </a>
@@ -135,7 +136,7 @@
                                 <li class="nav-item">
                                 <?php endif; ?>
                                 <a class="nav-link" href="<?= base_url($sm['url']); ?>">
-                                  <span class="sidebar-mini"> <?= substr($sm['title'], 0, 1); ?> </span>
+                                  <span class="sidebar-mini"> <?= substr($sm['title'], 0, 1); ?> </span> 
                                   <span class="sidebar-normal"> <?= $sm['title']; ?> </span>
                                 </a>
                               </li>

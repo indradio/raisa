@@ -31,9 +31,10 @@ class Kadep extends CI_Controller
         $data['rencana'] = $this->db->get('lembur')->result_array();
         $data['rencana_div'] = $this->db->get_where('lembur', ['status' =>  '10'])->result_array();
         $data['rencana_coo'] = $this->db->get_where('lembur', ['status' =>  '11'])->result_array();
-        $data['realisasi'] = $this->db->where('status', '5');
-        $data['realisasi'] = $this->db->or_where('status', '6');
-        $data['realisasi'] = $this->db->get('lembur')->result_array();
+        $data['realisasi'] = $this->db->get_where('lembur', ['status' =>  '4'])->result_array();
+        $data['realisasi_ats'] = $this->db->where('status', '5');
+        $data['realisasi_ats'] = $this->db->or_where('status', '6');
+        $data['realisasi_ats'] = $this->db->get('lembur')->result_array();
         $data['realisasi_div'] = $this->db->get_where('lembur', ['status' =>  '12'])->result_array();
         $data['realisasi_coo'] = $this->db->get_where('lembur', ['status' =>  '13'])->result_array();
         $data['lembur'] = $this->db->where('status', '7');
