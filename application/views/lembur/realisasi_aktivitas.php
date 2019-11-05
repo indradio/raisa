@@ -529,8 +529,8 @@
                         <div class="row">
                             <label class="col-md-4 col-form-label">Jam Mulai</label>
                             <div class="col-md-7">
-                                <div class="form-group has-default" id="tglmulai">
-                                    <input type="text" class="form-control timepicker" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
+                                <div class="form-group has-default" id="jammulai">
+                                    <input type="text" class="form-control timepicker" id="jammulai" name="jammulai" />
                                 </div>
                             </div>
                         </div>

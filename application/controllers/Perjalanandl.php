@@ -679,7 +679,7 @@ class Perjalanandl extends CI_Controller
 
     public function laporanjarak_kr()
     {
-        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidemenu'] = 'Kepala Departemen';
         $data['sidesubmenu'] = 'Laporan Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $queryPerjalanan = "SELECT *

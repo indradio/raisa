@@ -33,7 +33,7 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
           <li class="nav-item  active ">
-            <a href="../pages/login.html" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="material-icons">fingerprint</i> Login
             </a>
           </li>
@@ -86,6 +86,11 @@
                 </div>
               </div>
             </form>
+          </div>
+          <div class="col-md-12 ml-auto mr-auto text-center">
+          <!-- <i class="material-icons">perm_phone_msg</i> -->
+            Butuh bantuan ? Hubungi <a href="https://wa.me/6281373096263" target="blank">RAISA</a> (+62813-7309-6263)
+            <br/>atau <a href="https://wa.me/6281311196988" target="blank">Dio</a> (+62813-1119-6988)
           </div>
         </div>
       </div>

@@ -1670,8 +1670,10 @@ class Lembur extends CI_Controller
     public function gtJamRel()
     {
         date_default_timezone_set('asia/jakarta');
-        $this->db->set('tglmulai_aktual', $this->input->post('tglmulai'));
-        $this->db->set('tglselesai_aktual', $this->input->post('tglmulai'));
+        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('link_aktivitas')])->row_array();
+        $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai']));
+        $this->db->set('tglmulai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
+        $this->db->set('tglselesai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
         $this->db->where('id', $this->input->post('link_aktivitas'));
         $this->db->update('lembur');
 
