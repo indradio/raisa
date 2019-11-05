@@ -31,7 +31,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if ($lembur['durasi_aktual']== NULL) { ?>
+                                    <?php if ($lembur['durasi_aktual']== '00:00:00') { ?>
                                         <div class="row col-md-12">
                                             <label class="col-ml-5 col-form-label"></label>
                                             <div class="col-md-7">

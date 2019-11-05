@@ -101,7 +101,8 @@
                   <li class="nav-item active">
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
-                      <p> <?= $m['menu']; ?> 
+                      <p> <?= $m['menu']; ?>
+                      <?php if ($m['menu'] == 'Lembur') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?> 
                         <b class="caret"></b>
                       </p>
                     </a>
