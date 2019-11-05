@@ -1328,7 +1328,7 @@ class Lembur extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         
-        } else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi > '06:00:00') {
+        } else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi >= '06:00:00') {
             $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
             $this->db->set('status', '12');
             $this->db->where('id', $this->input->post('id'));

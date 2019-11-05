@@ -9,7 +9,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan Koordinator/Section & Depthead</h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan Koordinator/Section & Depthead | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -61,7 +61,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan Division Head</h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan Division Head | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -109,7 +109,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan COO</h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan COO | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -157,7 +157,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Laporan dari Karyawan</h4>
+            <h4 class="card-title">REALISASI - Menunggu Laporan dari Karyawan | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -205,7 +205,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Persetujuan Koordinator/Section & Depthead</h4>
+            <h4 class="card-title">REALISASI - Menunggu Persetujuan Koordinator/Section & Depthead | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -257,7 +257,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Persetujuan Division Head</h4>
+            <h4 class="card-title">REALISASI - Menunggu Persetujuan Division Head | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -305,7 +305,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Persetujuan COO</h4>
+            <h4 class="card-title">REALISASI - Menunggu Persetujuan COO | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">

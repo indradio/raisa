@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php date_default_timezone_set('asia/jakarta'); ?>
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/img/apple-icon.png">
