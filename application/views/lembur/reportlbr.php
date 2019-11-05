@@ -23,7 +23,7 @@
       $pdf->setFillColor(255,255,255);
 
       $dep = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-      $d = $this->db->get_where('karyawan_dept', ['id' =>  $dep['dept_id']])->row_array();
+      $d = $this->db->get_where('karyawan_dept', ['id' =>  $lembur['dept_id']])->row_array();
 
       $pdf->SetFont('Arial','B',6);
       $pdf->Cell(10, 5, 'NO : ' . $lembur['id'], 0, 1,);
@@ -114,7 +114,7 @@
       $pdf->SetFont('Arial','',5);
 
             
-//22********************************************************************************************************/
+//1->2********************************************************************************************************/
 if($lembur['posisi_id']=='7' and $lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] <= '03:00:00' and $lembur['tgl_atasan1_rencana']== null)
 {
             $pdf->SetFont('Arial','',5);

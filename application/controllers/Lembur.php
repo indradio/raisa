@@ -294,6 +294,42 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function detailAktivitasGA($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Laporan Lembur';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+        $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
+        $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+        $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('lembur/detail_aktivitas', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detailAktivitasHR($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Konfirmasi Lembur';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+        $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
+        $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+        $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('lembur/detail_aktivitas', $data);
+        $this->load->view('templates/footer');
+    }
+
 
     public function tambah_aktivitas()
     {
