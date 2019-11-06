@@ -874,9 +874,6 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
-        $admin = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $durasi_rencana = $lembur['durasi'];
-        $durasi = $this->input->post('durasi');
         //Section->Staf
         if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
             $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));

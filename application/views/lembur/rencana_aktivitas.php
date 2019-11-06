@@ -82,35 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            <div class="row col-md-12" hidden>
-                            <label class="col-ml-5 col-form-label">Customer</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="customer" id="customer" data-style="select-with-transition" title="Pilih" data-size="3" data-live-search="true" required>
-                                        <?php
-                                        $queyCustomer = "SELECT * FROM customer";
-                                        $customer = $this->db->query($queyCustomer)->result_array();
-                                        foreach ($customer as $c) : ?>
-                                            <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <script>
-                            $(document).ready(function() {
-                                $('#lokasi').change(function() {
-                                    var lokasi = $('#lokasi').val();
-                                    if (lokasi == 1) {
-                                        $('#customer').prop('disabled', true);
-                                    } else {
-                                        $('#customer').prop('disabled', false);
-                                    }
-                                });
-                            });
-                        </script> -->
                             <?php } else {?>
-                        
                             <div class="row col-md-12">
                             <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                 <div class="col-md-7">
