@@ -68,77 +68,49 @@
                                 </div>
                             </div> 
                             
-                        <div class="row col-md-6">
-                        <?php if($lembur['status']=='1'){ ?>
-                            <div class="row col-md-12">
-                                <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="2" required>
+                            <div class="row col-md-6">
+                                <?php if($lembur['status']=='1'){ ?>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="2" required>
                                                 <?php foreach ($lembur_lokasi as $li) : ?>
                                                     <option value="<?= $li['id']; ?>"><?= $li['nama']; ?></option>
                                                 <?php endforeach; ?>
-                                            </select>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else {?>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
+                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }; ?>
+                                <div class="row col-md-12">
+                                <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                    <div class="col-md-5">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
                                         </div>
                                     </div>
                                 </div>
-                            <div class="row col-md-12" hidden>
-                            <label class="col-ml-5 col-form-label">Customer</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="customer" id="customer" data-style="select-with-transition" title="Pilih" data-size="3" data-live-search="true" required>
-                                        <?php
-                                        $queyCustomer = "SELECT * FROM customer";
-                                        $customer = $this->db->query($queyCustomer)->result_array();
-                                        foreach ($customer as $c) : ?>
-                                            <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <script>
-                            $(document).ready(function() {
-                                $('#lokasi').change(function() {
-                                    var lokasi = $('#lokasi').val();
-                                    if (lokasi == 1) {
-                                        $('#customer').prop('disabled', true);
-                                    } else {
-                                        $('#customer').prop('disabled', false);
-                                    }
-                                });
-                            });
-                        </script> -->
-                            <?php } else {?>
-                        
-                            <div class="row col-md-12">
-                            <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
-                                <div class="col-md-7">
-                                    <div class="form-group has-default">
-                                        <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                <div class="row col-md-12">
+                                <label class="col-ml-5 col-form-label">Status</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                            <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                                            <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <?php }; ?>
-                            <div class="row col-md-12">
-                            <label class="col-ml-5 col-form-label">Total Aktivitas</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row col-md-12">
-                            <label class="col-ml-5 col-form-label">Status</label>
-                                <div class="col-md-7">
-                                    <div class="form-group has-default">
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         </div>
                     </form>
                     <br>
