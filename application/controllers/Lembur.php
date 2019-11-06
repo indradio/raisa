@@ -575,7 +575,6 @@ class Lembur extends CI_Controller
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
             $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->set('customer', $this->input->post('customer'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         }       
@@ -584,10 +583,8 @@ class Lembur extends CI_Controller
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
             $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->set('customer', $this->input->post('customer'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
-
         }
         redirect('lembur/rencana/');
     }

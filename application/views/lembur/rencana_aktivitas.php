@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            <div class="row col-md-12">
+                            <div class="row col-md-12" hidden>
                             <label class="col-ml-5 col-form-label">Customer</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
