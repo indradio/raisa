@@ -17,7 +17,7 @@
                 <span class="navbar-toggler-icon icon-bar"></span>
                 <span class="navbar-toggler-icon icon-bar"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end">
+            <!-- <div class="collapse navbar-collapse justify-content-end">
                 <form class="navbar-form">
                 <div class="input-group no-border">
                     <input type="text" value="" class="form-control" placeholder="Search...">
@@ -67,7 +67,7 @@
                     </div>
                 </li>
                 </ul>
-            </div>
+            </div>  -->
         </div>
     </div>
     <!-- End Navigation bar -->
