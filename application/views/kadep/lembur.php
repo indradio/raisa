@@ -181,7 +181,7 @@
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['nama']; ?></td>
                       <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
+                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                       <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
                     </tr>
                   <?php endforeach; ?>

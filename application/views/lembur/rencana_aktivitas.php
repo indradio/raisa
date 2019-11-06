@@ -96,8 +96,8 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <script>
+                        
+                        <!-- <script>
                             $(document).ready(function() {
                                 $('#lokasi').change(function() {
                                     var lokasi = $('#lokasi').val();
@@ -108,8 +108,9 @@
                                     }
                                 });
                             });
-                        </script>
+                        </script> -->
                             <?php } else {?>
+                        </div>
                             <div class="row col-md-12">
                             <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                 <div class="col-md-7">
@@ -192,12 +193,12 @@
                         <?php if ($totalAktivitas == '0') { ?>
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($totalAktivitas >= '1' and $lembur['status'] == '1') { ?>
-                            <button type="submit" id="ajukan" class="btn btn-sm btn-success">AJUKAN</button>
+                            <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($totalAktivitas >= '1' and $lembur['status'] == '0' or $lembur['status'] >= '2') { ?>
 
                         <?php }; ?>
-                            <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
+                            <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-sm btn-default" role="button">KEMBALI</a>
                     </div>
                 </div>
                 <!-- end content-->
