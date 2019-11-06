@@ -12,7 +12,7 @@
                         <h4 class="card-title">Rencana Aktivitas Lembur</h4>
                     </div>
                     <form class="form" method="post" action="<?= base_url('lembur/ajukan_rencana'); ?>">
-                        <div class="card-body">
+                    <div class="card-body">
                         <div class="row col-md-12">
                             <div class="row col-md-6">
                                 <div class="row" hidden>
@@ -67,6 +67,7 @@
                                     </div>
                                 </div>
                             </div> 
+                            
                         <div class="row col-md-6">
                         <?php if($lembur['status']=='1'){ ?>
                             <div class="row col-md-12">

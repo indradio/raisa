@@ -13,59 +13,75 @@
                     </div>
                     <form class="form" method="post" action="<?= base_url('lembur/ajukan_realisasi'); ?>">
                         <div class="card-body">
-                            <div class="row" hidden>
-                                <label class="col-md-1 col-form-label">Lembur ID</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
+                            <div class="row col-md-12">
+                                <div class="row col-md-6">
+                                    <div class="row" hidden>
+                                        <label class="col-md-5 col-form-label">Lembur ID</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control datetimepicker disabled" id="tglmulai_aktual" name="tglmulai_aktual" value="<?= $lembur['tglmulai_aktual']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Tanggal Selesai</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control datetimepicker disabled" id="tglselesai_aktual" name="tglselesai_aktual" value="<?= $lembur['tglselesai_aktual']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php
+                                                $lid = $lembur['id'];
+                                                $queryLembur = "SELECT COUNT(*)
+                                                    FROM `aktivitas`
+                                                    WHERE `link_aktivitas` = '$lid' ";
+                                                $totalLembur = $this->db->query($queryLembur)->row_array();
+                                                $totalAktivitas = $totalLembur['COUNT(*)'];; ?>
+                                                <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Tanggal Mulai</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control datetimepicker disabled" id="tglmulai_aktual" name="tglmulai_aktual" value="<?= $lembur['tglmulai_aktual']; ?>">
+
+                            <div class="row col-md-6">
+                                <div class="row col-md-12">
+                                    <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
+                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Tanggal Selesai</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control datetimepicker disabled" id="tglselesai_aktual" name="tglselesai_aktual" value="<?= $lembur['tglselesai_aktual']; ?>">
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Durasi Lembur</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Total Aktivitas</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <?php
-                                        $lid = $lembur['id'];
-                                        $queryLembur = "SELECT COUNT(*)
-                                            FROM `aktivitas`
-                                            WHERE `link_aktivitas` = '$lid' ";
-                                        $totalLembur = $this->db->query($queryLembur)->row_array();
-                                        $totalAktivitas = $totalLembur['COUNT(*)'];; ?>
-                                        <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Lama Lembur</label>
-                                <div class="col-md-2">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-1 col-form-label">Status</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                        <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Status</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                                                <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -139,320 +155,3 @@
     </div>
 </div>
 </form>
-<!-- Modal -->
-
-<!-- Realisasi Aktivitas -->
-<div class="modal fade" id="realisasiAktivitas" tabindex="-1" role="dialog" aria-labelledby="realisasiAktivitasTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">REALISASI LEMBUR</h4>
-                    </div>
-                </div>
-                <form class="form" method="post" action="<?= base_url('lembur/tambah_realisasi'); ?>">
-                    <div class="modal-body">
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">Lembur ID</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">No Aktivitas</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="id" name="id">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Rencana aktivitas</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="aktivitas" name="aktivitas">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Deskripsi Hasil</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="deskripsi_hasil"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Durasi</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="+30 minute">00:30:00</option>
-                                        <option value="+60 minute">01:00:00</option>
-                                        <option value="+90 minute">01:30:00</option>
-                                        <option value="+120 minute">02:00:00</option>
-                                        <option value="+150 minute">02:30:00</option>
-                                        <option value="+180 minute">03:00:00</option>
-                                        <option value="+210 minute">03:30:00</option>
-                                        <option value="+240 minute">04:00:00</option>
-                                        <option value="+270 minute">04:30:00</option>
-                                        <option value="+300 minute">05:00:00</option>
-                                        <option value="+330 minute">05:30:00</option>
-                                        <option value="+360 minute">06:00:00</option>
-                                        <option value="+390 minute">06:30:00</option>
-                                        <option value="+420 minute">07:00:00</option>
-                                        <option value="+450 minute">07:30:00</option>
-                                        <option value="+480 minute">08:00:00</option>
-                                        <option value="+510 minute">08:30:00</option>
-                                        <option value="+540 minute">09:00:00</option>
-                                        <option value="+570 minute">09:30:00</option>
-                                        <option value="+600 minute">10:00:00</option>
-                                        <option value="+630 minute">10:30:00</option>
-                                        <option value="+660 minute">11:00:00</option>
-                                        <option value="+690 minute">11:30:00</option>
-                                        <option value="+620 minute">12:00:00</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Progres</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="progres_hasil" id="progres_hasil" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="10">10 %</option>
-                                        <option value="15">15 %</option>
-                                        <option value="20">20 %</option>
-                                        <option value="25">25 %</option>
-                                        <option value="30">30 %</option>
-                                        <option value="35">35 %</option>
-                                        <option value="40">40 %</option>
-                                        <option value="45">45 %</option>
-                                        <option value="50">50 %</option>
-                                        <option value="55">55 %</option>
-                                        <option value="60">60 %</option>
-                                        <option value="65">65 %</option>
-                                        <option value="70">70 %</option>
-                                        <option value="75">75 %</option>
-                                        <option value="80">80 %</option>
-                                        <option value="85">85 %</option>
-                                        <option value="90">90 %</option>
-                                        <option value="100">100 %</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">Status</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control disabled" id="status1" name="status1">
-                                <!-- <select class="selectpicker" name="status1" id="status1" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
-                                        <option value="9">Selesai</option>
-                                        <option value="3">Belom Selesai</option>
-                            </select> -->
-                            </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#progres_hasil').change(function() {
-                                    var progres_hasil = $('#progres_hasil').val();
-                                    if (progres_hasil == 100) {
-                                        $('#status1').val('9');
-                                    } else {
-                                        $('#status1').val('3');
-                                    }
-                                });
-                            });
-                        </script>
-                        <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
-                            <br>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Tambah Aktivitas -->
-<div class="modal fade" id="tambahAktivitas" tabindex="-1" role="dialog" aria-labelledby="tambahAktivitasTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">RENCANA LEMBUR</h4>
-                    </div>
-                </div>
-                <form class="form" method="post" action="<?= base_url('lembur/tambah_aktivitas_realisasi'); ?>">
-                    <div class="modal-body">
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">Lembur ID</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Kategori</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="3" required>
-                                        <?php foreach ($kategori as $k) : ?>
-                                            <option value="<?= $k['id']; ?>"><?= $k['nama']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#kategori').change(function() {
-                                    var kategori = $('#kategori').val();
-                                    if (kategori == 3) {
-                                        $('#copro').prop('disabled', true);
-                                    } else {
-                                        $('#copro').prop('disabled', false);
-                                    }
-                                });
-                            });
-                        </script>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">COPRO</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <?php
-                                        $queyCopro = "SELECT *
-                                                                    FROM `project`
-                                                                    ORDER BY `status` ASC
-                                                                    ";
-                                        $copro = $this->db->query($queyCopro)->result_array();
-                                        foreach ($copro as $c) : ?>
-                                            <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Aktivitas</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="aktivitas" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Deskripsi Hasil</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="deskripsi_hasil" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Durasi</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="+30 minute">00:30:00</option>
-                                        <option value="+60 minute">01:00:00</option>
-                                        <option value="+90 minute">01:30:00</option>
-                                        <option value="+120 minute">02:00:00</option>
-                                        <option value="+150 minute">02:30:00</option>
-                                        <option value="+180 minute">03:00:00</option>
-                                        <option value="+210 minute">03:30:00</option>
-                                        <option value="+240 minute">04:00:00</option>
-                                        <option value="+270 minute">04:30:00</option>
-                                        <option value="+300 minute">05:00:00</option>
-                                        <option value="+330 minute">05:30:00</option>
-                                        <option value="+360 minute">06:00:00</option>
-                                        <option value="+390 minute">06:30:00</option>
-                                        <option value="+420 minute">07:00:00</option>
-                                        <option value="+450 minute">07:30:00</option>
-                                        <option value="+480 minute">08:00:00</option>
-                                        <option value="+510 minute">08:30:00</option>
-                                        <option value="+540 minute">09:00:00</option>
-                                        <option value="+570 minute">09:30:00</option>
-                                        <option value="+600 minute">10:00:00</option>
-                                        <option value="+630 minute">10:30:00</option>
-                                        <option value="+660 minute">11:00:00</option>
-                                        <option value="+690 minute">11:30:00</option>
-                                        <option value="+620 minute">12:00:00</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Progres</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="progres_hasil1" id="progres_hasil1" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="10">10 %</option>
-                                        <option value="15">15 %</option>
-                                        <option value="20">20 %</option>
-                                        <option value="25">25 %</option>
-                                        <option value="30">30 %</option>
-                                        <option value="35">35 %</option>
-                                        <option value="40">40 %</option>
-                                        <option value="45">45 %</option>
-                                        <option value="50">50 %</option>
-                                        <option value="55">55 %</option>
-                                        <option value="60">60 %</option>
-                                        <option value="65">65 %</option>
-                                        <option value="70">70 %</option>
-                                        <option value="75">75 %</option>
-                                        <option value="80">80 %</option>
-                                        <option value="85">85 %</option>
-                                        <option value="90">90 %</option>
-                                        <option value="100">100 %</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">Status</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control disabled" id="status2" name="status2">
-                                <!-- <select class="selectpicker" name="status1" id="status1" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
-                                        <option value="9">Selesai</option>
-                                        <option value="3">Belom Selesai</option>
-                            </select> -->
-                            </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#progres_hasil1').change(function() {
-                                    var progres_hasil1 = $('#progres_hasil1').val();
-                                    if (progres_hasil1 == 100) {
-                                        $('#status2').val('9');
-                                    } else {
-                                        $('#status2').val('3');
-                                    }
-                                });
-                            });
-                        </script>
-                        <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
-                            <br>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

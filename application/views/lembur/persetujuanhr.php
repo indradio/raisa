@@ -21,6 +21,7 @@
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th class="disabled-sorting text-right">Actions</th>
+                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -31,6 +32,7 @@
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th class="text-right">Actions</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -41,8 +43,10 @@
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
-                                            <td>
+                                            <td class="text-right">
                                                 <a href="<?= base_url('lembur/setujui_hr/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 
+                                            </td>
+                                            <td>
                                                 <a href="<?= base_url('lembur/detailAktivitasHR/'). $l['id']; ?>" class="badge badge-pill badge-info">Detail</i></a> 
                                             </td>
                                         </tr>
