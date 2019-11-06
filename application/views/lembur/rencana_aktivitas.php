@@ -96,7 +96,7 @@
                                     </select>
                                 </div>
                             </div>
-                        
+                        </div>
                         <!-- <script>
                             $(document).ready(function() {
                                 $('#lokasi').change(function() {
@@ -110,7 +110,7 @@
                             });
                         </script> -->
                             <?php } else {?>
-                        </div>
+                        
                             <div class="row col-md-12">
                             <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                 <div class="col-md-7">
