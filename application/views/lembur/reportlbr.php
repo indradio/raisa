@@ -128,7 +128,7 @@ if($lembur['posisi_id']=='7' and $lembur['durasi'] <= '03:00:00' and $lembur['du
             //GA & HR
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(50,5, $n2['nama'],1,0,'C',1);
-            $pdf->Cell(28,5, 'GA1',1,0,'C',1);
+            $pdf->Cell(28,5, 'GA',1,0,'C',1);
             $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(26,5, $n2['nama'],1,0,'C',1);
             $pdf->Cell(26,5, 'HR',1,1,'C',1);
@@ -196,7 +196,7 @@ else if ($lembur['posisi_id']=='7' and $lembur['durasi'] <= '03:00:00' and $lemb
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(28,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(28,5, $n2['nama'],1,0,'C',1);
-            $pdf->Cell(22,5, 'GA2',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(26,5, $n2['nama'],1,0,'C',1);
             $pdf->Cell(26,5, 'HR',1,1,'C',1);
@@ -437,7 +437,7 @@ if($lembur['posisi_id']=='7' and $lembur['durasi'] > '03:00:00' and $lembur['dur
 else if ($lembur['posisi_id']=='7' and $lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] > '06:00:00') 
       {
             //GA & HR
-            $pdf->Cell(22,5, 'GA@',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(22,5, 'HR',1,0,'C',1);
             //sect, dept, 
             $pdf->Cell(39,5, $n1['nama'],1,0,'C',1);
@@ -532,7 +532,7 @@ else if ($lembur['posisi_id']=='7' and $lembur['durasi'] <= '03:00:00' and $lemb
 else if ($lembur['posisi_id']=='7' and $lembur['durasi'] > '03:00:00' and $lembur['durasi'] <= '06:00:00' and $lembur['durasi_aktual'] > '06:00:00') 
       {
             //GA & HR
-            $pdf->Cell(22,5, 'GA@2',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(22,5, 'HR',1,0,'C',1);
             //sect, dept, div, coo
             $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
@@ -758,7 +758,7 @@ else if ($lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] <= '03:00:
             //GA & HR
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(48,5, $n1['nama'],1,0,'C',1);
-            $pdf->Cell(30,5, 'GA22',1,0,'C',1);
+            $pdf->Cell(30,5, 'GA',1,0,'C',1);
 
             $pdf->Cell(48,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(30,5, 'HR',1,1,'C',1);
@@ -822,7 +822,7 @@ else if ($lembur['durasi'] > '03:00:00' and $lembur['durasi'] < '06:00:00' and $
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(28,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(28,5, $n2['nama'],1,0,'C',1);
-            $pdf->Cell(22,5, 'GA23',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(26,5, $n2['nama'],1,0,'C',1);
             $pdf->Cell(26,5, 'HR',1,1,'C',1);
@@ -886,7 +886,7 @@ else if ($lembur['durasi'] > '03:00:00' and $lembur['durasi'] < '06:00:00' and $
 else if($lembur['durasi'] > '06:00:00' and $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
 {
             //GA & HR
-            $pdf->Cell(22,5, 'GA24',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(22,5, 'HR',1,0,'C',1);
             //sect, dept, div, coo
             $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
@@ -990,7 +990,7 @@ else if ($lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] > '03:00:0
             //GA & HR
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(48,5, $n1['nama'],1,0,'C',1);
-            $pdf->Cell(30,5, 'GA25',1,0,'C',1);
+            $pdf->Cell(30,5, 'GA',1,0,'C',1);
 
            $pdf->Cell(26,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(26,5, $n5['nama'],1,0,'C',1);
@@ -1049,7 +1049,7 @@ else if ($lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] > '03:00:0
 else if($lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] > '06:00:00'  and $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
 {
             //GA & HR
-            $pdf->Cell(22,5, 'GA26',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(22,5, 'HR',1,0,'C',1);
             // dept, 
             $pdf->Cell(78,5, $n1['nama'],1,0,'C',1);
@@ -1126,7 +1126,7 @@ else if($lembur['durasi'] <= '03:00:00' and $lembur['durasi_aktual'] > '06:00:00
 else if($lembur['durasi'] <= '06:00:00' and $lembur['durasi_aktual'] > '06:00:00' and $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
 {
             //GA & HR
-            $pdf->Cell(22,5, 'GA27',1,0,'C',1);
+            $pdf->Cell(22,5, 'GA',1,0,'C',1);
             $pdf->Cell(22,5, 'HR',1,0,'C',1);
             //sect, dept, div,
             $pdf->Cell(39,5, $n1['nama'],1,0,'C',1);

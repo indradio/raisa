@@ -167,7 +167,8 @@ class Lembur extends CI_Controller
             redirect('lembur/rencana_aktivitas/' . $data['id']);
         }
         else{
-            redirect('lembur/rencana');
+            $this->session->set_flashdata('message', 'update');
+            redirect('lembur/rencana/');
         }
     }
 
