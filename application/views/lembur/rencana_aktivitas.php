@@ -82,6 +82,33 @@
                                         </div>
                                     </div>
                                 </div>
+                            <div class="row col-md-12">
+                            <label class="col-ml-5 col-form-label">Customer</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="customer" id="customer" data-style="select-with-transition" title="Pilih" data-size="3" data-live-search="true" required>
+                                        <?php
+                                        $queyCustomer = "SELECT * FROM customer";
+                                        $customer = $this->db->query($queyCustomer)->result_array();
+                                        foreach ($customer as $c) : ?>
+                                            <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#lokasi').change(function() {
+                                    var lokasi = $('#lokasi').val();
+                                    if (lokasi == 1) {
+                                        $('#customer').prop('disabled', true);
+                                    } else {
+                                        $('#customer').prop('disabled', false);
+                                    }
+                                });
+                            });
+                        </script>
                             <?php } else {?>
                             <div class="row col-md-12">
                             <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
@@ -126,11 +153,8 @@
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
                                 <tr>
-                                    <!-- <th>No. Aktivitas</th> -->
-                                    <!-- <th>jenis Aktivitas</th> -->
                                     <th>Kategori</th>
                                     <th>COPRO</th>
-                                    <!-- <th>WBS</th> -->
                                     <th>Rencana Aktivitas</th>
                                     <th>Durasi/Jam</th>
                                     <th class="disabled-sorting text-right">Actions</th>
@@ -138,11 +162,8 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <!-- <th>No. Aktivitas</th> -->
-                                    <!-- <th>jenis Aktivitas</th> -->
                                     <th>Kategori</th>
                                     <th>COPRO</th>
-                                    <!-- <th>WBS</th> -->
                                     <th>Rencana Aktivitas</th>
                                     <th>Durasi/Jam</th>
                                     <th class="disabled-sorting text-right">Actions</th>
@@ -151,12 +172,9 @@
                             <tbody>
                                 <?php foreach ($aktivitas as $a) : ?>
                                     <tr>
-                                        <!-- <td><?= $a['id']; ?></td> -->
-                                        <!-- <td><?= $a['jenis_aktivitas']; ?></td> -->
                                         <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                         <td><?= $k['nama']; ?></td>
                                         <td><?= $a['copro']; ?></td>
-                                        <!-- <td><?= $a['wbs']; ?></td> -->
                                         <td><?= $a['aktivitas']; ?></td>
                                         <td><?= $a['durasi']; ?> Jam</td>
                                         <td class="text-right">

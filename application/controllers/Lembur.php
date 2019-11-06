@@ -570,86 +570,21 @@ class Lembur extends CI_Controller
         $menit = $durasi - $jam * (60 * 60);
         $menit = floor($menit / 60);
 
-        if ($this->session->userdata('posisi_id') == '1') {
-            $this->db->set('status', '4');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 2 and $lamaLembur <= '06:00:00') {
-            $this->db->set('status', '4');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 2 and $lamaLembur > '06:00:00') {
-            $this->db->set('status', '11');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 3 and $lamaLembur <= '03:00:00') {
-            $this->db->set('admin_ga', '-');
-            $this->db->set('status', '4');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        
-        else if ($this->session->userdata('posisi_id') == 3 and $lamaLembur > '03:00:00') {
-            $this->db->set('status', '10');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
+        if($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9 or $this->session->userdata('posisi_id') == 10) {
             $this->db->set('status', '2');
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
             $this->db->set('lokasi_id', $this->input->post('lokasi'));
+            $this->db->set('customer', $this->input->post('customer'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 5 and $karyawan['dept_id'] >= 1) {
+        }       
+        else if ($this->session->userdata('posisi_id') == 7) {
             $this->db->set('status', '2');
             $this->db->set('durasi', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
             $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 5 and $karyawan['dept_id']== 0) {
-            $this->db->set('status', '10');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 7 OR $this->session->userdata('posisi_id') == 10) {
-            $this->db->set('status', '2');
-            $this->db->set('durasi', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas_rencana', $this->input->post('total_aktivitas'));
-            $this->db->set('lokasi_id', $this->input->post('lokasi'));
+            $this->db->set('customer', $this->input->post('customer'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
@@ -669,78 +604,15 @@ class Lembur extends CI_Controller
         $menit = $durasi - $jam * (60 * 60);
         $menit = floor($menit / 60);
 
-        if ($this->session->userdata('posisi_id') == 1) {
-            $this->db->set('status', '7');
+        if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9 or $this->session->userdata('posisi_id') == 10) {
+            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
+            $this->db->set('status', '5');
             $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
             $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         }
-        
-        else if ($this->session->userdata('posisi_id') == 2 and $lamaLembur <= '06:00:00' ) {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');    
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 2 and $lamaLembur > '06:00:00' ) {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '13');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 3 and $lamaLembur <= '03:00:00') {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 3 and $lamaLembur > '03:00:00') {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '5');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 5 and $karyawan['dept_id'] >= 1) {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '5');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 5 and $karyawan['dept_id']== 0) {
-            $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
-            $this->db->set('aktivitas', $this->input->post('total_aktivitas'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        
-        else if ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
+        else if ($this->session->userdata('posisi_id') == 7 ) {
             $this->db->set('tglpengajuan', date('y-m-d H:i:s'));
             $this->db->set('status', '5');
             $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
@@ -777,7 +649,7 @@ class Lembur extends CI_Controller
         else if ($this->session->userdata('posisi_id') == 2) {
             $queryLembur = "SELECT *
             FROM `lembur`
-            WHERE (`status`= '10' OR `status`= '3') AND (`durasi`> '03:00:00' OR `dept_id`= '0') AND (`div_id`= '{$karyawan['div_id']}') ";
+            WHERE (`status`= '10' OR `status`= '3' OR `status`= '2') AND (`durasi`> '03:00:00' OR `dept_id`= '0') AND (`div_id`= '{$karyawan['div_id']}') ";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();
         }
 
@@ -932,109 +804,24 @@ class Lembur extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         } 
-        //depthead->secthead
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='4' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='4' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '10');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='5' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='5' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '10');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='6' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='6' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '10');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='9' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='9' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '10');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        //dephead-> staf
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='7' and $durasi <= '03:00:00') {
+        //depthead->staf
+        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='7') {
             $this->db->set('tgl_atasan2_rencana', date('y-m-d H:i:s'));
             $this->db->set('status', '4');
             $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='7' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan2_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '10');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='10' and $durasi <= '03:00:00') {
+         //depthead->sect.head
+        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']!='7') {
             $this->db->set('tgl_atasan2_rencana', date('y-m-d H:i:s'));
             $this->db->set('status', '4');
+            $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']=='10' and $durasi > '03:00:00') {
+        else if ($this->session->userdata('posisi_id') == 2) {
             $this->db->set('tgl_atasan2_rencana', date('y-m-d H:i:s'));
-            $this->db->set('status', '10');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        //divhead->all staf
-        else if ($this->session->userdata('posisi_id') == 2 and $durasi < '06:00:00') {
-            $this->db->set('tgl_divhead_rencana', date('y-m-d H:i:s'));
-            $this->db->set('admin_div', $admin['inisial']);
-            $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');  
-        } else if ($this->session->userdata('posisi_id') == 2 and $durasi >= '06:00:00') {
-            $this->db->set('tgl_divhead_rencana', date('y-m-d H:i:s'));
-            $this->db->set('admin_div', $admin['inisial']);
-            $this->db->set('status', '11');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-         //coo->all staf
-        else if ($this->session->userdata('posisi_id') == 1 ) {
-            $this->db->set('tgl_coo_rencana', date('y-m-d H:i:s'));
-            $this->db->set('admin_coo', $admin['inisial']);
             $this->db->set('status', '4');
             $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
@@ -1100,227 +887,22 @@ class Lembur extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         } 
-        //depthead->4
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '4' and $durasi_rencana <= '03:00:00' and $durasi <= '03:00:00') {
+        //depthead->staf
+        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7') {
             $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
             $this->db->set('status', '7');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '4' and $durasi_rencana <= '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '4' and $durasi_rencana > '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '4'and $durasi_rencana > '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '4' and $durasi_rencana > '03:00:00' and $durasi < '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        //dephead->5
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '5' and $durasi_rencana <= '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '5' and $durasi_rencana <= '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '5' and $durasi_rencana > '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '5'and $durasi_rencana > '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '5' and $durasi_rencana > '03:00:00' and $durasi < '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        //dephead->6
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '6' and $durasi_rencana <= '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '6' and $durasi_rencana <= '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '6' and $durasi_rencana > '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '6'and $durasi_rencana > '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '6' and $durasi_rencana > '03:00:00' and $durasi < '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        //dephead->9
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '9' and $durasi_rencana <= '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '9' and $durasi_rencana <= '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '9' and $durasi_rencana > '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '9'and $durasi_rencana > '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '9' and $durasi_rencana > '03:00:00' and $durasi < '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-         //dephead->10
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '10' and $durasi_rencana <= '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-         //dephead->10
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '10' and $durasi_rencana <= '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '10' and $durasi_rencana > '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '10'and $durasi_rencana > '03:00:00' and $durasi > '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '10' and $durasi_rencana > '03:00:00' and $durasi < '03:00:00') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana <= '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '7');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
         //dephead->staf 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana <= '03:00:00' and $durasi > '03:00:00') {
+        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']!= '7') {
             $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi <= '03:00:00') {
-            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi >= '06:00:00') {
-
-            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        }
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi < '06:00:00') {
-            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('status', '12');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        //divhead->all lembur
-        else if ($this->session->userdata('posisi_id') == 2 and $durasi_rencana < '06:00:00' and $durasi <= '06:00:00') {
-            $this->db->set('tgl_divhead_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('admin_div', $admin['inisial']);
             $this->db->set('status', '7');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 2 and $durasi_rencana <= '06:00:00' and $durasi > '06:00:00') {
-            $this->db->set('tgl_divhead_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('admin_div', $admin['inisial']);
-            $this->db->set('status', '13');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        else if ($this->session->userdata('posisi_id') == 2 and $durasi_rencana >= '06:00:00' and $durasi < '06:00:00') {
-            $this->db->set('tgl_divhead_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('admin_div', $admin['inisial']);
-            $this->db->set('status', '13');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
         }
-        else if ($this->session->userdata('posisi_id') == 2 and $durasi_rencana > '06:00:00' and $durasi >= '06:00:00') {
-            $this->db->set('tgl_divhead_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('admin_div', $admin['inisial']);
-            $this->db->set('status', '13');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-        } 
-        //coo->all lembur
-        else if ($this->session->userdata('posisi_id') == 1 ) {
-            $this->db->set('tgl_coo_realisasi', date('y-m-d H:i:s'));
-            $this->db->set('admin_coo', $admin['inisial']);
+        else if ($this->session->userdata('posisi_id') == 2) {
+            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
             $this->db->set('status', '7');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
