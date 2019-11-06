@@ -777,11 +777,11 @@ else if ( $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
             $pdf->SetFont('Arial', 'B', 5);
             $pdf->Cell(56, 5, '', 0, 0);
             $pdf->Cell(23, 5, 'Disetujui',0, 0, 'C');
-            $pdf->Cell(-23, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_rencana'])),0, 0, 'C');
+            $pdf->Cell(-23, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_rencana'])),0, 0, 'C');
             $pdf->Cell(105, 5, 'Disetujui',0, 0, 'C');
             $pdf->Cell(-105, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_ga'])), 110, 0, 'C');
             $pdf->Cell(180, 5, 'Disetujui',0, 0, 'C');
-            $pdf->Cell(-180, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan2_realisasi'])), 110, 0, 'C');
+            $pdf->Cell(-180, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_atasan1_realisasi'])), 110, 0, 'C');
             $pdf->Cell(260, 5, 'Disetujui',0, 0, 'C');
             $pdf->Cell(-260, 10, 'pada ' . date('d/m/Y H:i', strtotime($lembur['tgl_admin_hr'])), 110, 0, 'C');
             $pdf->SetFont('Arial', '', 5);

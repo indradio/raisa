@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "INFO : Silahkan DAFTARKAN keluarga kamu untuk acara WINTEQ Family Day 2019, PENDAFTARAN akan DITUTUP pada hari KAMIS (10/10/19).",
+    text: "INFO : Persetujuan LEMBUR cuma sampai DEPTHEAD loh!. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"

@@ -814,7 +814,7 @@ class Lembur extends CI_Controller
         }
          //depthead->sect.head
         else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']!='7') {
-            $this->db->set('tgl_atasan2_rencana', date('y-m-d H:i:s'));
+            $this->db->set('tgl_atasan1_rencana', date('y-m-d H:i:s'));
             $this->db->set('status', '4');
             $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
@@ -889,14 +889,14 @@ class Lembur extends CI_Controller
         } 
         //depthead->staf
         else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7') {
-            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
+            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
             $this->db->set('status', '7');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         } 
         //dephead->staf 
         else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']!= '7') {
-            $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
+            $this->db->set('tgl_atasan1_realisasi', date('y-m-d H:i:s'));
             $this->db->set('status', '7');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');

@@ -88,7 +88,7 @@ class Auth extends CI_Controller
                     'role_id' => $karyawan['role_id']
                 ];
                 $this->session->set_userdata($data);
-                // $this->session->set_flashdata('message', 'masuk');
+                $this->session->set_flashdata('message', 'masuk');
                 redirect('dashboard');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong Password</div>');
