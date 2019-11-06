@@ -9,7 +9,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan Koordinator/Section & Depthead</h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan Koordinator/Section & Depthead | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -27,15 +27,6 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($rencana as $l) : ?>
                     <tr>
@@ -43,7 +34,11 @@
                       <td><?= $l['nama']; ?></td>
                       <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
-                      <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
+                      <?php if ($l['status']==2){ ?>
+                        <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-warning">Detail</a></td>
+                      <?php }elseif ($l['status']==3){ ?>
+                        <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
+                      <?php }; ?>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -66,7 +61,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan Division Head</h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan Division Head | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -84,15 +79,6 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($rencana_div as $l) : ?>
                     <tr>
@@ -123,7 +109,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan COO</h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan COO | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -141,15 +127,6 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($rencana_coo as $l) : ?>
                     <tr>
@@ -180,7 +157,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Laporan dari Karyawan</h4>
+            <h4 class="card-title">REALISASI - Menunggu Laporan dari Karyawan | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -198,22 +175,13 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($realisasi as $l) : ?>
                     <tr>
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['nama']; ?></td>
                       <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
+                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                       <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
                     </tr>
                   <?php endforeach; ?>
@@ -237,7 +205,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Persetujuan Koordinator/Section & Depthead</h4>
+            <h4 class="card-title">REALISASI - Menunggu Persetujuan Koordinator/Section & Depthead | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -255,15 +223,6 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($realisasi_ats as $l) : ?>
                     <tr>
@@ -271,7 +230,11 @@
                       <td><?= $l['nama']; ?></td>
                       <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
                       <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
-                      <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
+                      <?php if ($l['status']==5){ ?>
+                        <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-warning">Detail</a></td>
+                      <?php }elseif ($l['status']==6){ ?>
+                        <td><a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a></td>
+                      <?php }; ?>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -294,7 +257,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Persetujuan Division Head</h4>
+            <h4 class="card-title">REALISASI - Menunggu Persetujuan Division Head | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -312,15 +275,6 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($realisasi_div as $l) : ?>
                     <tr>
@@ -351,7 +305,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">REALISASI - Menunggu Persetujuan COO</h4>
+            <h4 class="card-title">REALISASI - Menunggu Persetujuan COO | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
@@ -369,15 +323,6 @@
                     <th class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Durasi/Jam</th>
-                    <th>Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <?php foreach ($realisasi_coo as $l) : ?>
                     <tr>

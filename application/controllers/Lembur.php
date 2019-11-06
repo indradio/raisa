@@ -1068,7 +1068,7 @@ class Lembur extends CI_Controller
         $this->session->set_flashdata('message', 'setujuilbrga');
         redirect('lembur/persetujuan_lemburga/');
     }
-    
+
     public function setujui_hr($id)
     {
         date_default_timezone_set('asia/jakarta');
@@ -1274,7 +1274,8 @@ class Lembur extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         } 
-        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi > '06:00:00') {
+        else if ($this->session->userdata('posisi_id') == 3 and $lembur['posisi_id']== '7' and $durasi_rencana > '03:00:00' and $durasi >= '06:00:00') {
+
             $this->db->set('tgl_atasan2_realisasi', date('y-m-d H:i:s'));
             $this->db->set('status', '12');
             $this->db->where('id', $this->input->post('id'));
@@ -1485,24 +1486,29 @@ class Lembur extends CI_Controller
 
     public function gtJamRencana()
     {
+        //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('link_aktivitas')])->row_array();
         $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai']));
         $this->db->where('tglmulai', date("Y-m-d 16:30:00"));
         $this->db->where('npk', $this->session->userdata('npk'));
-        $jam = $this->input->post('jammulai');
 
-        if ($jam < date('H:i:s'))
+        $tgl = date("Y-m-d", strtotime($lembur['tglmulai']));
+
+        $jam = $this->input->post('jammulai');
+        $tglmulai = $tgl .' '. $jam; //Y-m-d H:i:s
+
+        if ($tglmulai < date('Y-m-d H:i:s'))
             {
                 $this->session->set_flashdata('message', 'update');
                 redirect('lembur/rencana_aktivitas/' . $this->input->post('link_aktivitas'));
             }
-            
-        else{
-                $this->db->set('tglmulai', $tglmulai . ' ' . $this->input->post('jammulai'));
-                $this->db->set('tglselesai',$tglmulai . ' ' . $this->input->post('jammulai'));
-                $this->db->set('tglmulai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
-                $this->db->set('tglselesai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
+        else
+            {
+                $this->db->set('tglmulai', $tglmulai);
+                $this->db->set('tglselesai',$tglmulai);
+                $this->db->set('tglmulai_aktual', $tglmulai);
+                $this->db->set('tglselesai_aktual', $tglmulai);
                 $this->db->where('id', $this->input->post('link_aktivitas'));
                 $this->db->update('lembur');
 
