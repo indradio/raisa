@@ -54,7 +54,7 @@
     </div>
     <!-- end row -->
     <!-- RENCANA - Divhead -->
-    <div class="row">
+    <div class="row" hidden>
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning card-header-icon">
@@ -102,7 +102,7 @@
     </div>
     <!-- end row -->
     <!-- RENCANA - COO -->
-    <div class="row">
+    <div class="row" hidden>
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning card-header-icon">
@@ -250,7 +250,7 @@
     </div>
     <!-- end row -->
     <!-- REALISASI - Divhead -->
-    <div class="row">
+    <div class="row" hidden>
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-info card-header-icon">
@@ -298,7 +298,7 @@
     </div>
     <!-- end row -->
     <!-- REALISASI - COO -->
-    <div class="row">
+    <div class="row" hidden>
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-info card-header-icon">
