@@ -269,7 +269,7 @@ else if ( $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
             //GA & HR
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(48,5, $n1['nama'],1,0,'C',1);
-            $pdf->Cell(30,5, 'GA@',1,0,'C',1);
+            $pdf->Cell(30,5, 'GA',1,0,'C',1);
 
             $pdf->Cell(48,5, $n1['nama'],1,0,'C',1);
             $pdf->Cell(30,5, 'HR',1,1,'C',1);
