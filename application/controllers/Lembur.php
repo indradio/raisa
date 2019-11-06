@@ -71,7 +71,8 @@ class Lembur extends CI_Controller
                 AND `npk` = '$npk'
                 ";
         $ada = $this->db->query($queryLembur)->row_array();
-        if ($ada['id'] == NULL ) {
+        if ($ada['id'] == NULL ) 
+        {
                 $queryLemburBulan = "SELECT COUNT(*)
                 FROM `lembur`
                 WHERE MONTH(tglmulai) = MONTH(CURDATE())
@@ -1067,11 +1068,8 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('link_aktivitas')])->row_array();
         $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai']));
-        $this->db->where('tglmulai', date("Y-m-d 16:30:00"));
-        $this->db->where('npk', $this->session->userdata('npk'));
 
         $tgl = date("Y-m-d", strtotime($lembur['tglmulai']));
-
         $jam = $this->input->post('jammulai');
         $tglmulai = $tgl .' '. $jam; //Y-m-d H:i:s
 

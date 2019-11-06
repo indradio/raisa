@@ -75,7 +75,9 @@
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
                                                 <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="2" required>
-                                                <?php foreach ($lembur_lokasi as $li) : ?>
+                                                <?php 
+                                                $lokasi = $this->db->get_where('lembur_lokasi')->result_array();
+                                                foreach ($lokasi as $li) : ?>
                                                     <option value="<?= $li['id']; ?>"><?= $li['nama']; ?></option>
                                                 <?php endforeach; ?>
                                                 </select>
