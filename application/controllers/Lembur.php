@@ -967,11 +967,23 @@ class Lembur extends CI_Controller
         else
             $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . ", " . "Tgl" . " : " . date('y-m-d - H:i:s'));
             $this->db->set('status', '0');
+            $this->db->set('durasi', '00:00:00');
+            $this->db->set('durasi_aktual', '00:00:00');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
-            $this->session->set_flashdata('message', 'batalbr');
-            redirect('lembur/rencana/');
+            $this->db->set('aktivitas');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->delete('aktivitas');
+
+            if($lbr['status']=='1'){
+                $this->session->set_flashdata('message', 'batalbr');
+                redirect('lembur/rencana/');
+            }else if ($lbr['status']=='4'){
+                $this->session->set_flashdata('message', 'batalbr');
+                redirect('lembur/realisasi/');
+            }
+            
     }
 
     public function batalkan_realiasi()

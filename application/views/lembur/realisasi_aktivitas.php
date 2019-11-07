@@ -99,9 +99,7 @@
                             <br>
                             <div class="toolbar">
                                 <!--        Here you can write extra buttons/actions for the toolbar              -->
-                                <?php if ($lembur['status'] == '13' or $lembur['status'] == '12' or $lembur['status'] == '7' or $lembur['status'] == '6' or $lembur['status'] == '5') { ?>
-                                    <!-- <a href="#" class="btn btn-rose mb disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a> -->
-                                <?php } else { ?>
+                                <?php if ($lembur['status'] == '4') { ?>
                                     <a href="#" class="btn btn-rose mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
                                 <?php }; ?>
                             </div>
@@ -109,11 +107,9 @@
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <!-- <th>No. Aktivitas</th> -->
                                             <th>jenis Aktivitas</th>
                                             <th>Kategori</th>
                                             <th>COPRO</th>
-                                            <!-- <th>WBS</th> -->
                                             <th>Rencana Aktivitas</th>
                                             <th>Durasi/Jam</th>
                                             <th>Deskripsi Aktual</th>
@@ -124,11 +120,9 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <!-- <th>No. Aktivitas</th> -->
                                             <th>jenis Aktivitas</th>
                                             <th>Kategori</th>
                                             <th>COPRO</th>
-                                            <!-- <th>WBS</th> -->
                                             <th>Rencana Aktivitas</th>
                                             <th>Durasi/Jam</th>
                                             <th>Deskripsi Aktual</th>
@@ -140,12 +134,10 @@
                                     <tbody>
                                         <?php foreach ($aktivitas as $a) : ?>
                                             <tr>
-                                                <!-- <td><?= $a['id']; ?></td> -->
                                                 <td><?= $a['jenis_aktivitas']; ?></td>
                                                 <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                                 <td><?= $k['nama']; ?></td>
                                                 <td><?= $a['copro']; ?></td>
-                                                <!-- <td><?= $a['wbs']; ?></td> -->
                                                 <td><?= $a['aktivitas']; ?></td>
                                                 <td><?= $a['durasi']; ?> jam</td>
                                                 <td><?= $a['deskripsi_hasil']; ?></td>
@@ -153,13 +145,7 @@
                                                 <?php $status = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
                                                 <td class="text-right">
-                                                    <?php if ($lembur['status'] == '9' OR $lembur['status'] == '7' OR $lembur['status'] == '6' OR $lembur['status'] == '5' OR $a['status'] == '0') { ?>
-                                                        <!-- <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success disabled">Ralisasi</a>
-                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger disabled">Batal dikerjakan</a> -->
-                                                    <?php } else if ($a['status'] == '9' OR $a['status'] == '3' OR $a['status'] == '2') { ?>
-                                                        <!-- <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success disabled">Ralisasi</a>
-                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger disabled">Batal dikerjakan</a> -->
-                                                    <?php } else { ?>
+                                                    <?php if ($lembur['status'] == '4' and $a['status']== '1') { ?>
                                                         <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success">Realisasi</a>
                                                         <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger">Batal dikerjakan</a>
                                                     <?php }; ?>
@@ -168,12 +154,16 @@
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                <?php if ($lembur['status'] == '4' and $lembur['status'] == '1') { ?>
+                                <?php if ($lembur['status'] == '4' and $a['status'] == '1') { ?>
                                     <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
-                                <?php } else if ($lembur['status'] == '5' OR $lembur['status'] == '6' OR $lembur['status'] == '7' OR $lembur['status'] == '9' OR $lembur['status'] == '12' OR $lembur['status'] == '13') { ?>
-                                    <!-- <button type="submit"  id="ajukan" class="btn btn-success disabled">LAPORKAN</button> -->
+                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <?php } else if ($lembur['status'] == '4' and $lembur['durasi_aktual']=='00:00:00') { ?>
+                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <?php } else if ($lembur['status'] >= '5') { ?>
+                                    <!-- <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a> -->
                                 <?php } else { ?>
                                     <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }; ?>
                                 <a href="<?= base_url('lembur/realisasi/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                             </div>
@@ -301,10 +291,6 @@
                             <label class="col-md-4 col-form-label">Status</label>
                             <div class="col-md-7">
                                 <input type="text" class="form-control disabled" id="status1" name="status1">
-                                <!-- <select class="selectpicker" name="status1" id="status1" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
-                                        <option value="9">Selesai</option>
-                                        <option value="3">Belom Selesai</option>
-                            </select> -->
                             </div>
                         </div>
                         <script>
@@ -473,10 +459,6 @@
                             <label class="col-md-4 col-form-label">Status</label>
                             <div class="col-md-7">
                                 <input type="text" class="form-control disabled" id="status2" name="status2">
-                                <!-- <select class="selectpicker" name="status1" id="status1" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
-                                        <option value="9">Selesai</option>
-                                        <option value="3">Belom Selesai</option>
-                            </select> -->
                             </div>
                         </div>
                         <script>
@@ -502,7 +484,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal Ubah Jam-->
 <div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -537,6 +518,32 @@
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button type="submit" class="btn btn-primary">Ganti Jam!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Batal Aktivitas-->
+<div class="modal fade" id="batalRsv" tabindex="-1" role="dialog" aria-labelledby="batalAktivitasTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">ALASAN PEMBATALAN</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/batal_lembur'); ?>">
+                    <div class="modal-body">
+                        <input type="text" class="form-control disabled" name="id">
+                        <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger">BATALKAN LEMBUR INI!</button>
                     </div>
                 </form>
             </div>

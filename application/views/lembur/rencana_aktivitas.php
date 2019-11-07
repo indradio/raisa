@@ -164,7 +164,7 @@
                             </tbody>
                         </table>
                         <!-- Sederhanakan koding -->
-                        <?php if ($totalAktivitas == '0') { ?>
+                        <?php if ($totalAktivitas == '0'  and $lembur['status'] == '1') { ?>
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($totalAktivitas >= '1' and $lembur['status'] == '1') { ?>
                             <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
