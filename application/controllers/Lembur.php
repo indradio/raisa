@@ -71,7 +71,7 @@ class Lembur extends CI_Controller
                 AND `npk` = '$npk'
                 ";
         $ada = $this->db->query($queryLembur)->row_array();
-        if ($ada['id'] == NULL ) 
+        if ($ada['id'] == NULL OR $ada['status'] == 0) 
         {
                 $queryLemburBulan = "SELECT COUNT(*)
                 FROM `lembur`
@@ -110,7 +110,8 @@ class Lembur extends CI_Controller
                 $this->db->insert('lembur', $data);
                 redirect('lembur/rencana_aktivitas/' . $data['id']);
         }
-        else {
+        else
+        {
             $data['sidemenu'] = 'Lembur';
             $data['sidesubmenu'] = 'Rencana';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -127,7 +128,6 @@ class Lembur extends CI_Controller
 
     public function tambah_harilain()
     {  
-        //duplicate di hari lain masih bisa
         //validasi jam hari kerja dan jam hari libur BELUM
          
         date_default_timezone_set('asia/jakarta');

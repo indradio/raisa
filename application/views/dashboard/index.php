@@ -64,7 +64,7 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Perjalanan Dinas Hari Ini</h4>
+                        <h4 class="card-title">Perjalanan Dinas Hari Ini <?= date("d-M-Y"); ?></h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">

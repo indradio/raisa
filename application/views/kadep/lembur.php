@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                   <?php foreach ($rencana as $l) : ?>
-                    <tr>
+                  <tr onclick="window.location='<?= base_url('lembur/lemburku/') . $l['id']; ?>', '_blank'">
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['nama']; ?></td>
                       <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
