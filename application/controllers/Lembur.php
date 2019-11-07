@@ -59,20 +59,20 @@ class Lembur extends CI_Controller
     public function tambah()
     {
         date_default_timezone_set('asia/jakarta');
-        $hari = date("Y-m-d");
-        $npk = $this->session->userdata('npk');
+        // $hari = date("Y-m-d");
+        // $npk = $this->session->userdata('npk');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
-        $queryLembur = "SELECT *
-                FROM `lembur`
-                WHERE DATE_FORMAT(tglmulai,'%Y-%m-%d') = '$hari'
-                AND `npk` = '$npk'
-                ";
-        $ada = $this->db->query($queryLembur)->row_array();
-        if ($ada['id'] == NULL OR $ada['status'] == 0) 
-        {
+        // $queryLembur = "SELECT *
+        //         FROM `lembur`
+        //         WHERE DATE_FORMAT(tglmulai,'%Y-%m-%d') = '$hari'
+        //         AND `npk` = '$npk'
+        //         ";
+        // $ada = $this->db->query($queryLembur)->row_array();
+        // if ($ada['id'] == NULL OR $ada['status'] == 0) 
+        // {
                 $queryLemburBulan = "SELECT COUNT(*)
                 FROM `lembur`
                 WHERE MONTH(tglmulai) = MONTH(CURDATE())
@@ -109,21 +109,21 @@ class Lembur extends CI_Controller
                 ];
                 $this->db->insert('lembur', $data);
                 redirect('lembur/rencana_aktivitas/' . $data['id']);
-        }
-        else
-        {
-            $data['sidemenu'] = 'Lembur';
-            $data['sidesubmenu'] = 'Rencana';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $ada['id']])->row_array();
-            $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $ada['id']])->result_array();
-            $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/rencana_aktivitas', $data);
-            $this->load->view('templates/footer');
-        }
+        // }
+        // else
+        // {
+        //     $data['sidemenu'] = 'Lembur';
+        //     $data['sidesubmenu'] = 'Rencana';
+        //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        //     $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $ada['id']])->row_array();
+        //     $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $ada['id']])->result_array();
+        //     $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+        //     $this->load->view('templates/header', $data);
+        //     $this->load->view('templates/sidebar', $data);
+        //     $this->load->view('templates/navbar', $data);
+        //     $this->load->view('lembur/rencana_aktivitas', $data);
+        //     $this->load->view('templates/footer');
+        // }
     }
 
     public function tambah_harilain()

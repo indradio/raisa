@@ -181,6 +181,10 @@
                             </tbody>
                         </table>
                         <!-- Sederhanakan koding -->
+                        </p>
+                        Lemburan kamu belum termasuk <mark>JAM ISTIRAHAT</mark> dan <mark>PERJALANAN</mark> pada saat lembur. 
+                        <br>Silahkan tambahkan aktivitas untuk istirahat dan perjalanan.
+                        </p>
                         <?php if ($totalAktivitas == '0'  and $lembur['status'] == '1') { ?>
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                         <?php } else if ($totalAktivitas >= '1' and $lembur['status'] == '1') { ?>

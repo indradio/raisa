@@ -1,29 +1,8 @@
 <footer class="footer">
     <div class="container-fluid">
-        <!-- <nav class="float-left">
-            <ul>
-                <li>
-                    <a href="https://www.creative-tim.com">
-                        Creative Tim
-                    </a>
-                </li>
-                <li>
-                    <a href="https://creative-tim.com/presentation">
-                        About Us
-                    </a>
-                </li>
-                <li>
-                    <a href="http://blog.creative-tim.com">
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.creative-tim.com/license">
-                        Licenses
-                    </a>
-                </li>
-            </ul>
-        </nav> -->
+        <!-- <div class="copyright float-center">
+           Menemukan masalah? <a href="#" data-toggle="modal" data-target="#laporModal">LAPORKAN!</a>
+        </div> -->
         <div class="copyright float-right">
             &copy;
             <script>
@@ -44,7 +23,12 @@
             <i class="fa fa-cog fa-2x"> </i>
         </a>
         <ul class="dropdown-menu">
-            <li class="header-title"> Sidebar Filters</li>
+        <li class="header-title">Butuh Bantuan?</li>
+            <li class="button-container">
+                      <a href="https://wa.me/6281373096232?text=Tanya%20tentang%20RAISA?" target="_blank" class="btn btn-rose btn-block btn-fill">RAISA +62813-7309-6232</a>
+                      <a href="https://wa.me/6281311196988" target="_blank" class="btn btn-info btn-block btn-fill">DIO +62813-1119-6988</a>
+            </li>
+            <!-- <li class="header-title"> Sidebar Filters</li>
             <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger active-color">
                     <div class="badge-colors ml-auto mr-auto">
@@ -57,8 +41,8 @@
                     </div>
                     <div class="clearfix"></div>
                 </a>
-            </li>
-            <li class="header-title">Sidebar Background</li>
+            </li> -->
+            <!-- <li class="header-title">Sidebar Background</li>
             <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger background-color">
                     <div class="ml-auto mr-auto">
@@ -68,7 +52,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </a>
-            </li>
+            </li> -->
             <!-- <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger">
                     <p>Sidebar Mini</p>
@@ -83,7 +67,7 @@
                     <div class="clearfix"></div>
                 </a>
             </li> -->
-            <li class="adjustments-line">
+            <!-- <li class="adjustments-line">
                 <a href="javascript:void(0)" class="switch-trigger">
                     <p>Sidebar Images</p>
                     <label class="switch-mini ml-auto">
@@ -96,8 +80,8 @@
                     </label>
                     <div class="clearfix"></div>
                 </a>
-            </li>
-            <li class="header-title">Images</li>
+            </li> -->
+            <!-- <li class="header-title">Images</li>
             <li class="active">
                 <a class="img-holder switch-trigger" href="javascript:void(0)">
                     <img src="<?= base_url(); ?>assets/img/sidebar-1.jpg" alt="">
@@ -117,7 +101,7 @@
                 <a class="img-holder switch-trigger" href="javascript:void(0)">
                     <img src="<?= base_url(); ?>assets/img/sidebar-4.jpg" alt="">
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
