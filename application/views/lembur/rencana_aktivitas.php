@@ -82,7 +82,7 @@
                                                     foreach ($customer as $c) : ?>
                                                         <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
                                                     <?php endforeach; ?>
-                                                 <option data-subtext="lainnya" value="lainnya">LAINYA</option>
+                                                 <option data-subtext="Lokasi Lainnya" value="lainnya">LAINNYA</option>
                                                 </select>
                                             </div>
                                         </div>
