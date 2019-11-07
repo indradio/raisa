@@ -223,7 +223,7 @@
                 </thead>
                 <tbody>
                   <?php foreach ($realisasi_ats as $l) : ?>
-                  <tr onclick="window.location='<?= base_url('lembur/lp_lembur_detail/') . $l['id']; ?>'">
+                  <tr onclick="window.location='<?= base_url('kadep/lembur_detail/') . $l['id']; ?>'">
                       <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
                       <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
