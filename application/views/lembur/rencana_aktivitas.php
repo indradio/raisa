@@ -74,23 +74,40 @@
                                         <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
-                                                <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="2" required>
-                                                <?php 
-                                                $lokasi = $this->db->get_where('lembur_lokasi')->result_array();
-                                                foreach ($lokasi as $li) : ?>
-                                                    <option value="<?= $li['id']; ?>"><?= $li['nama']; ?></option>
-                                                <?php endforeach; ?>
+                                                <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="5" data-live-search="true" onchange="admSelectCheck(this);" required>
+                                                <option data-subtext="WORKSHOP FOR INDUSTRIAL EQUIPMENT" value="WTQ">WTQ</option>
+                                                    <?php 
+                                                    $queyCustomer = "SELECT * FROM customer ";
+                                                    $customer = $this->db->query($queyCustomer)->result_array();
+                                                    foreach ($customer as $c) : ?>
+                                                        <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
+                                                    <?php endforeach; ?>
+                                                 <option data-subtext="lainnya" value="lainnya">LAINYA</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row col-md-12" id="admDivCheck" style="display:none;">
+                                    <label class="col-ml-5 col-form-label">Lokasi Lainya</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control" id="lokasiLainya" name="lokasiLainya" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                       function admSelectCheck(nameSelect)
+                                        {
+                                            var val = nameSelect.options[nameSelect.selectedIndex].value;
+                                            document.getElementById("admDivCheck").style.display = val == 'lainnya' ? "block" : 'none';
+                                        }
+                                    </script>
                                 <?php } else {?>
                                     <div class="row col-md-12">
                                         <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
-                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
-                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +248,6 @@
                                         foreach ($copro as $c) : ?>
                                             <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
                                         <?php endforeach; ?>
-                                        <option data-subtext="aaa" value="aaa">lainnya</option>
                                     </select>
                                 </div>
                             </div>

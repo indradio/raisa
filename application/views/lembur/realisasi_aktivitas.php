@@ -65,8 +65,7 @@
                                     <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
-                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
-                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +146,10 @@
                                                 <td class="text-right">
                                                     <?php if ($lembur['status'] == '4' and $a['status']== '1') { ?>
                                                         <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success">Realisasi</a>
-                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger">Batalkan</a>
+                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
+                                                    <?php } else if($lembur['status'] == '4' and $a['status']!= '1'){ ?>
+                                                        <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-deskripsi_hasil="<?= $a['deskripsi_hasil']; ?>" class="badge badge-pill badge-info">Revisi</a>
+                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
                                                     <?php }; ?>
                                                 </td>
                                             </tr>
@@ -223,7 +225,7 @@
                             <label class="col-md-4 col-form-label">Deskripsi Hasil</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="deskripsi_hasil" required></textarea>
+                                    <textarea rows="3" class="form-control" id="deskripsi_hasil" name="deskripsi_hasil" required></textarea>
                                 </div>
                             </div>
                         </div>

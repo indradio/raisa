@@ -54,8 +54,7 @@
                                 <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
-                                            <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $lembur['lokasi_id']])->row_array(); ?>
-                                            <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lokasi['nama']; ?>">
+                                            <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
                                         </div>
                                     </div>
                                 </div>

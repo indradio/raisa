@@ -40,7 +40,7 @@
                 </tfoot>
                 <tbody>
                   <?php foreach ($lembur as $l) : ?>
-                      <tr>
+                      <tr onclick="window.location='<?= base_url('lembur/persetujuan_aktivitas/') . $l['id']; ?>'">
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['nama']; ?></td>
                       <td><?= $l['tglpengajuan']; ?></td>

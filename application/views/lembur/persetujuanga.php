@@ -51,8 +51,7 @@
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
-                                                <?php $lokasi = $this->db->get_where('lembur_lokasi', ['id' => $l['lokasi_id']])->row_array(); ?>
-                                            <td><?= $lokasi['nama']; ?></td>  
+                                            <td><?= $l['lokasi']; ?></td>  
                                             <td>
                                                 <a href="<?= base_url('lembur/setujui_ga/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 
                                             </td>
