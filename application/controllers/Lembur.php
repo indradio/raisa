@@ -640,7 +640,7 @@ class Lembur extends CI_Controller
         else if ($this->session->userdata('posisi_id') == 3) {
             $queryLembur = "SELECT *
             FROM `lembur`
-            WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' OR `atasan2_rencana` = '{$karyawan['inisial']}') and (`status`= '2' OR `status`= '3') ";
+            WHERE(`atasan1_rencana` = '{$karyawan['inisial']}' AND `status`= '2') OR (`atasan2_rencana` = '{$karyawan['inisial']}' OR `status`= '3') ";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();  
         } 
         
@@ -946,26 +946,7 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lbr = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
-        if ($lbr['atasan1_rencana'] == $this->session->userdata['inisial']) {
-            $this->db->set('catatan', "Dibatalkan oleh : " . $this->session->userdata['inisial'] . ", " . "Alasan Pembatalan : " . $this->input->post('catatan') . ", " . "Tgl" . " : " . date('y-m-d - H:i:s'));
-            $this->db->set('status', '0');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-
-            $this->session->set_flashdata('message', 'batalbr');
-            redirect('lembur/persetujuan_lembur/');
-        } 
-        elseif ($lbr['atasan2_rencana'] == $this->session->userdata['inisial']) {
-            $this->db->set('catatan', "Dibatalkan oleh : " . $this->session->userdata['inisial'] . ", " . "Alasan Pembatalan : " . $this->input->post('catatan') . ", " . "Tgl" . " : " . date('y-m-d - H:i:s'));
-            $this->db->set('status', '0');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-
-            $this->session->set_flashdata('message', 'batalbr');
-            redirect('lembur/persetujuan_lembur/');
-        }  
-        else
-            $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . ", " . "Tgl" . " : " . date('y-m-d - H:i:s'));
+            $this->db->set('catatan', "" . $this->input->post('catatan') . " - Dibatalkan oleh : " . $this->session->userdata['inisial'] ." Pada " . date('d-m-Y - H:i'));
             $this->db->set('status', '0');
             $this->db->set('durasi', '00:00:00');
             $this->db->set('durasi_aktual', '00:00:00');
@@ -983,7 +964,6 @@ class Lembur extends CI_Controller
                 $this->session->set_flashdata('message', 'batalbr');
                 redirect('lembur/realisasi/');
             }
-            
     }
 
     public function batalkan_realiasi()
@@ -1134,10 +1114,10 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $aktivitas = $this->db->get_where('aktivitas', ['id' => $id])->row_array();
         $a = $aktivitas['link_aktivitas'];
-        $this->db->set('status', '2');
+        $this->db->set('status', '0');
         $this->db->set('durasi', '0');
         $this->db->set('durasi_menit', '0');
-        $this->db->set('deskripsi_hasil', 'Tidak Jadi Dikerjakan');
+        $this->db->set('deskripsi_hasil', 'Tidak Dikerjakan');
         $this->db->where('id', $id);
         $this->db->update('aktivitas');
 

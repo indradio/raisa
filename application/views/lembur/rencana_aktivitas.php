@@ -224,12 +224,14 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <?php
+                                   
+                                    <?php
                                         $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
                                         $copro = $this->db->query($queyCopro)->result_array();
                                         foreach ($copro as $c) : ?>
                                             <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
                                         <?php endforeach; ?>
+                                        <option data-subtext="aaa" value="aaa">lainnya</option>
                                     </select>
                                 </div>
                             </div>
@@ -259,7 +261,7 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="+30 minute">30:00 Menit</option>
+                                        <option value="+30 minute">00:30 Jam</option>
                                         <option value="+60 minute">01:00 Jam</option>
                                         <option value="+90 minute">01:30 Jam</option>
                                         <option value="+120 minute">02:00 Jam</option>

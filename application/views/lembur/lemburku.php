@@ -135,13 +135,6 @@
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                <?php if ($lembur['status'] == '4' and $a['status'] == '1') { ?>
-                                    <!-- <button type="submit" id="ajukan" class="btn btn-success disabled">AJUKAN</button> -->
-                                <?php } else if ($lembur['status'] == '5' or $lembur['status'] == '6' or $lembur['status'] == '7' or $lembur['status'] == '9') { ?>
-                                    <!-- <button type="submit"  id="ajukan" class="btn btn-success disabled">AJUKAN</button> -->
-                                <?php } else { ?>
-                                    <!-- <button type="submit" id="ajukan" class="btn btn-success">AJUKAN</button> -->
-                                <?php }; ?>
                                 <a href="<?= base_url('lembur/index/') ?>" class="btn btn-default" role="button">Kembali</a>
                             </div>
                         </div>

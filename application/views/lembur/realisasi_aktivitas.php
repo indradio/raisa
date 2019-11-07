@@ -147,22 +147,22 @@
                                                 <td class="text-right">
                                                     <?php if ($lembur['status'] == '4' and $a['status']== '1') { ?>
                                                         <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success">Realisasi</a>
-                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger">Batal dikerjakan</a>
+                                                        <a href="<?= base_url('lembur/batal_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger">Batalkan</a>
                                                     <?php }; ?>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                <?php if ($lembur['status'] == '4' and $a['status'] == '1') { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php } else if ($lembur['status'] == '4' and $lembur['durasi_aktual']=='00:00:00') { ?>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php } else if ($lembur['status'] >= '5') { ?>
-                                    <!-- <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a> -->
-                                <?php } else { ?>
+                                <?php 
+                                $IDLembur = $lembur['id'];
+                                $selesai = $this->db->where('link_aktivitas', $lembur['id']);
+                                $selesai = $this->db->get_where('aktivitas', ['status' =>  '1']);
+                                if ($selesai->num_rows() == 0 AND $lembur['status'] == '4') { ?>
                                     <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
+                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <?php } else if ($selesai->num_rows() != 0 AND $lembur['status'] == '4') { ?>
+                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
                                     <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }; ?>
                                 <a href="<?= base_url('lembur/realisasi/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
@@ -232,30 +232,30 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="+30 minute">00:30:00</option>
-                                        <option value="+60 minute">01:00:00</option>
-                                        <option value="+90 minute">01:30:00</option>
-                                        <option value="+120 minute">02:00:00</option>
-                                        <option value="+150 minute">02:30:00</option>
-                                        <option value="+180 minute">03:00:00</option>
-                                        <option value="+210 minute">03:30:00</option>
-                                        <option value="+240 minute">04:00:00</option>
-                                        <option value="+270 minute">04:30:00</option>
-                                        <option value="+300 minute">05:00:00</option>
-                                        <option value="+330 minute">05:30:00</option>
-                                        <option value="+360 minute">06:00:00</option>
-                                        <option value="+390 minute">06:30:00</option>
-                                        <option value="+420 minute">07:00:00</option>
-                                        <option value="+450 minute">07:30:00</option>
-                                        <option value="+480 minute">08:00:00</option>
-                                        <option value="+510 minute">08:30:00</option>
-                                        <option value="+540 minute">09:00:00</option>
-                                        <option value="+570 minute">09:30:00</option>
-                                        <option value="+600 minute">10:00:00</option>
-                                        <option value="+630 minute">10:30:00</option>
-                                        <option value="+660 minute">11:00:00</option>
-                                        <option value="+690 minute">11:30:00</option>
-                                        <option value="+620 minute">12:00:00</option>
+                                    <option value="+30 minute">00:30 Jam</option>
+                                        <option value="+60 minute">01:00 Jam</option>
+                                        <option value="+90 minute">01:30 Jam</option>
+                                        <option value="+120 minute">02:00 Jam</option>
+                                        <option value="+150 minute">02:30 Jam</option>
+                                        <option value="+180 minute">03:00 Jam</option>
+                                        <option value="+210 minute">03:30 Jam</option>
+                                        <option value="+240 minute">04:00 Jam</option>
+                                        <option value="+270 minute">04:30 Jam</option>
+                                        <option value="+300 minute">05:00 Jam</option>
+                                        <option value="+330 minute">05:30 Jam</option>
+                                        <option value="+360 minute">06:00 Jam</option>
+                                        <option value="+390 minute">06:30 Jam</option>
+                                        <option value="+420 minute">07:00 Jam</option>
+                                        <option value="+450 minute">07:30 Jam</option>
+                                        <option value="+480 minute">08:00 Jam</option>
+                                        <option value="+510 minute">08:30 Jam</option>
+                                        <option value="+540 minute">09:00 Jam</option>
+                                        <option value="+570 minute">09:30 Jam</option>
+                                        <option value="+600 minute">10:00 Jam</option>
+                                        <option value="+630 minute">10:30 Jam</option>
+                                        <option value="+660 minute">11:00 Jam</option>
+                                        <option value="+690 minute">11:30 Jam</option>
+                                        <option value="+620 minute">12:00 Jam</option>
                                     </select>
                                 </div>
                             </div>
