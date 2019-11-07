@@ -88,10 +88,10 @@
                                         </div>
                                     </div>
                                     <div class="row col-md-12" id="admDivCheck" style="display:none;">
-                                    <label class="col-ml-5 col-form-label">Lokasi Lainya</label>
+                                    <label class="col-ml-5 col-form-label">Lokasi Lainnya</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
-                                                <input type="text" class="form-control" id="lokasiLainya" name="lokasiLainya" required>
+                                                <input type="text" class="form-control" id="lokasiLainya" name="lokasiLainya">
                                             </div>
                                         </div>
                                     </div>
