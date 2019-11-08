@@ -148,7 +148,7 @@
                                     <button type="submit"  id="setujui" class="btn btn-sm btn-success disabled">SETUJUI</button>
                                     <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <?php }; ?>
-                                <a href="<?= base_url('lembur/persetujuan_realisasi/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('lembur/persetujuan_lembur') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                             </div>
                         </div>
                     <!-- end content-->
@@ -173,7 +173,7 @@
             <h4 class="card-title">ALASAN PEMBATALAN</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('lembur/batalkan_realiasi'); ?>">
+        <form class="form" method="post" action="<?= base_url('lembur/batal_lembur'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control disabled" name="id">
             <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>

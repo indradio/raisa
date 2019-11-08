@@ -91,7 +91,7 @@
                                     <label class="col-ml-5 col-form-label">Lokasi Lainnya</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
-                                                <input type="text" class="form-control" id="lokasiLainya" name="lokasiLainya">
+                                                <input type="text" class="form-control" id="lokasi_lain" name="lokasi_lain">
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@
                         <!-- Sederhanakan koding -->
                         </p>
                         Lemburan kamu belum termasuk <mark>JAM ISTIRAHAT</mark> dan <mark>PERJALANAN</mark> pada saat lembur. 
-                        <br>Silahkan tambahkan aktivitas untuk istirahat dan perjalanan.
+                        <br>Silahkan tambahkan istirahat dan perjalanan sebagai aktivitas.
                         </p>
                         <?php if ($totalAktivitas == '0'  and $lembur['status'] == '1') { ?>
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
