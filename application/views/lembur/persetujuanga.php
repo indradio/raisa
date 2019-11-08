@@ -10,10 +10,42 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <h4 class="card-title">Konfirmasi Lembur </h4>
-                            <br>
-                            <br>
                             <div class="badge badge-rose mb-2" hidden><input type="checkbox" id="check-all" name="check-all"> Check All</div>
                         </div>
+                        <form class="form">
+                        <div class="card-body">
+                            <div class="row col-md-12">
+                                <div class="row col-md-6">
+                                    <div class="row col-md-12">
+                                        <?php 
+                                            $queryLembur = "SELECT COUNT(*)
+                                            FROM `lembur`
+                                            WHERE `lokasi` = 'WTQ' AND `tglmulai` = NOW()";
+                                            $totalLembur = $this->db->query($queryLembur)->row_array();
+                                            $totalAktivitas = $totalLembur['COUNT(*)']; 
+                                        ?>
+                                        <label class="col-ml-5 col-form-label">Total Lembur Dikantor</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $totalAktivitas; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                
+                                <div class="row col-md-6">
+                                        <div class="row col-md-12">
+                                            <label class="col-ml-5 col-form-label">Total Lembur DiLuar Kantor</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group has-default">
+                                                    <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                    </form>
                     <div class="card-body">
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

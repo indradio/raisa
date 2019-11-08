@@ -23,6 +23,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row col-md-12" hidden>
+                                    <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                        <?php
+                                            $lid = $lembur['id'];
+                                            $queryLembur = "SELECT COUNT(*)
+                                                    FROM `aktivitas`
+                                                    WHERE `link_aktivitas` = '$lid' ";
+                                                    $totalLembur = $this->db->query($queryLembur)->row_array();
+                                                    $totalAktivitas = $totalLembur['COUNT(*)'];
+                                                    ;?>
+                                            <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                    <label class="col-ml-5 col-form-label">Nama</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row col-md-12">
                                     <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
                                         <div class="col-md-7">
@@ -39,14 +63,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row col-md-12">
-                                <label class="col-ml-5 col-form-label">Durasi Lembur</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
                             </div> 
 
                             <div class="row col-md-6">
@@ -59,18 +75,10 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                <label class="col-ml-5 col-form-label">Durasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
-                                        <?php
-                                            $lid = $lembur['id'];
-                                            $queryLembur = "SELECT COUNT(*)
-                                                    FROM `aktivitas`
-                                                    WHERE `link_aktivitas` = '$lid' ";
-                                                    $totalLembur = $this->db->query($queryLembur)->row_array();
-                                                    $totalAktivitas = $totalLembur['COUNT(*)'];
-                                                    ;?>
-                                            <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -105,10 +113,7 @@
                                 <thead>
                                     <tr>
                                         <th>No. Aktivitas</th>
-                                        <!-- <th>jenis Aktivitas</th> -->
                                         <th>Kategori</th>
-                                        <th>COPRO</th>
-                                        <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
                                         <th class="disabled-sorting text-right">Actions</th>
@@ -117,10 +122,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>No. Aktivitas</th>
-                                        <!-- <th>jenis Aktivitas</th> -->
                                         <th>Kategori</th>
-                                        <th>COPRO</th>
-                                        <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
                                         <th class="disabled-sorting text-right">Actions</th>
@@ -130,20 +132,17 @@
                                     <?php foreach ($aktivitas as $a) : ?>
                                         <tr>
                                             <td><?= $a['id']; ?></td>
-                                            <!-- <td><?= $a['jenis_aktivitas']; ?></td> -->
                                             <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                            <td><?= $k['nama']; ?></td>
-                                            <td><?= $a['copro']; ?></td>
-                                            <!-- <td><?= $a['wbs']; ?></td> -->
+                                            <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
                                             <td><?= $a['aktivitas']; ?></td>
                                             <td><?= $a['durasi']; ?> Jam</td>
                                             <td class="text-right">
                                             <?php if ($lembur['status'] !='7'){ ?>
                                                 <a href="#" class="btn btn-sm btn-round btn-warning btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">UBAH</a>
-                                                <a href="<?= base_url('lembur/hapus_sect/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm btn-bataldl">HAPUS</a> 
+                                                <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm btn-bataldl">HAPUS</a> 
                                             <?php }else{ ?>
                                                 <a href="#" class="btn btn-sm btn-round btn-warning btn-sm disabled" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>">UBAH</a>
-                                                <a href="<?= base_url('lembur/hapus_sect/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm disabled">HAPUS</a> 
+                                                <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm disabled">HAPUS</a> 
                                             <?php }; ?>   
                                             </td>
                                         </tr>
@@ -191,7 +190,7 @@
                         <h4 class="card-title">RENCANA LEMBUR</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('lembur/tambah_aktivitas_sect'); ?>">
+                <form class="form" method="post" action="<?= base_url('lembur/tambah_aktivitas'); ?>">
                 <div class="modal-body">
                         <div class="row" hidden>
                             <label class="col-md-4 col-form-label">Lembur ID</label>
@@ -228,18 +227,18 @@
                                 </div>
                             </div>
                         </div>
-                            <script>
-                                $(document).ready(function(){
-                                    $('#kategori').change(function(){
+                        <script>
+                            $(document).ready(function() {
+                                $('#kategori').change(function() {
                                     var kategori = $('#kategori').val();
-                                    if(kategori==3){
+                                    if (kategori >= 3) {
                                         $('#copro').prop('disabled', true);
-                                        }else{
+                                    } else {
                                         $('#copro').prop('disabled', false);
-                                        }
-                                    });
+                                    }
                                 });
-                            </script>
+                            });
+                        </script>
                         <div class="row">
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
@@ -395,46 +394,6 @@
           </div>
           <div class="modal-footer justify-content-center">
             <button type="submit" class="btn btn-rose">BATALKAN LEMBUR INI!</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal Ubah tanggal-->
-<div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="card card-signup card-plain">
-        <div class="modal-header">
-          <div class="card-header card-header-primary text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              <i class="material-icons">clear</i>
-            </button>
-            <h4 class="card-title">GANTI TANGGAL LEMBUR</h4>
-          </div>
-        </div>
-        <form class="form" method="post" action="<?= base_url('lembur/gantitgl_lembur_sect'); ?>">
-          <div class="modal-body">
-          <div class="row" hidden>
-                <label class="col-md-4 col-form-label">Lembur ID</label>
-                <div class="col-md-7">
-                    <div class="form-group has-default">
-                        <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <label class="col-md-4 col-form-label">TGL Mulai</label>
-                <div class="col-md-7">
-                    <div class="form-group has-default">
-                    <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div class="modal-footer justify-content-center">
-            <button type="submit" class="btn btn-rose">Ganti Tanggal!</button>
           </div>
         </form>
       </div>

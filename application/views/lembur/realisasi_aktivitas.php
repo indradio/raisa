@@ -100,6 +100,7 @@
                                 <!--        Here you can write extra buttons/actions for the toolbar              -->
                                 <?php if ($lembur['status'] == '4') { ?>
                                     <a href="#" class="btn btn-rose mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
+                                    <a href="#" class="btn btn-info mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahIstirahat">Tambah Istirahat</a>
                                 <?php }; ?>
                             </div>
                             <div class="material-datatables">
@@ -358,7 +359,7 @@
                             $(document).ready(function() {
                                 $('#kategori').change(function() {
                                     var kategori = $('#kategori').val();
-                                    if (kategori == 3) {
+                                    if (kategori >= 3) {
                                         $('#copro').prop('disabled', true);
                                     } else {
                                         $('#copro').prop('disabled', false);
@@ -486,6 +487,81 @@
         </div>
     </div>
 </div>
+<!-- Tambah Istirahat -->
+<!-- <div class="modal fade" id="tambahIstirahat" tabindex="-1" role="dialog" aria-labelledby="tambahIstirahatTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Istirahat Lembur</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/tambah_aktivitas_realisasi'); ?>">
+                    <div class="modal-body">
+                        <div class="row" hidden>
+                            <label class="col-md-4 col-form-label">Lembur ID</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <label class="col-md-4 col-form-label">Waktu Istirahat</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="istirahat" id="istirahat" data-style="select-with-transition" title="Pilih" data-size="3" required>
+                                        <option value="1">Istirahat 1</option>
+                                        <option value="2">Istirahat 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <label class="col-md-4 col-form-label">Waktu Istirahat</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="istirahat" id="istirahat" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                                        <option value="+30 minute">Istirahat 1</option>
+                                        <option value="+60 minute">Istirahat 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Durasi</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control disabled" id="status3" name="status3">
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#istirahat').change(function() {
+                                    var istirahat = $('#istirahat').val();
+                                    if (istirahat == +30 minute) {
+                                        $('#status3').val('00:30 Menit');
+                                    } else if (istirahat == 2){
+                                        $('#status3').val('01:00 Jam');
+                                    }
+                                });
+                            });
+                        </script>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-info">SIMPAN</button>
+                            <br>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
 <!-- Modal Ubah Jam-->
 <div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -91,7 +91,7 @@
                                     <label class="col-ml-5 col-form-label">Lokasi Lainnya</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
-                                                <input type="text" class="form-control" id="lokasi_lain" name="lokasi_lain">
+                                                <input type="text" class="form-control" id="lokasi_lain" name="lokasi_lain" required>
                                             </div>
                                         </div>
                                     </div>
@@ -101,6 +101,17 @@
                                             var val = nameSelect.options[nameSelect.selectedIndex].value;
                                             document.getElementById("admDivCheck").style.display = val == 'lainnya' ? "block" : 'none';
                                         }
+
+                                        $(document).ready(function() {
+                                                $('#lokasi').change(function() {
+                                                    var lokasi = $('#lokasi').val();
+                                                    if (lokasi == 'lainnya') {
+                                                        $('#lokasi_lain').prop('disabled', false);
+                                                    } else {
+                                                        $('#lokasi_lain').prop('disabled', true);
+                                                    }
+                                                });
+                                            });
                                     </script>
                                 <?php } else {?>
                                     <div class="row col-md-12">
@@ -146,7 +157,6 @@
                             <thead>
                                 <tr>
                                     <th>Kategori</th>
-                                    <th>COPRO</th>
                                     <th>Rencana Aktivitas</th>
                                     <th>Durasi/Jam</th>
                                     <th class="disabled-sorting text-right">Actions</th>
@@ -155,7 +165,6 @@
                             <tfoot>
                                 <tr>
                                     <th>Kategori</th>
-                                    <th>COPRO</th>
                                     <th>Rencana Aktivitas</th>
                                     <th>Durasi/Jam</th>
                                     <th class="disabled-sorting text-right">Actions</th>
@@ -165,8 +174,7 @@
                                 <?php foreach ($aktivitas as $a) : ?>
                                     <tr>
                                         <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                        <td><?= $k['nama']; ?></td>
-                                        <td><?= $a['copro']; ?></td>
+                                        <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
                                         <td><?= $a['aktivitas']; ?></td>
                                         <td><?= $a['durasi']; ?> Jam</td>
                                         <td class="text-right">
@@ -232,7 +240,7 @@
                             <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="3" required>
+                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="4" required>
                                         <?php foreach ($kategori as $k) : ?>
                                             <option value="<?= $k['id']; ?>"><?= $k['nama']; ?></option>
                                         <?php endforeach; ?>
@@ -260,7 +268,7 @@
                             $(document).ready(function() {
                                 $('#kategori').change(function() {
                                     var kategori = $('#kategori').val();
-                                    if (kategori == 3) {
+                                    if (kategori >= 3) {
                                         $('#copro').prop('disabled', true);
                                     } else {
                                         $('#copro').prop('disabled', false);

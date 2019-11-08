@@ -20,11 +20,8 @@
                   <tr>
                     <th>No. Lembur</th>
                     <th>Tgl Mengajukan</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Jam Mulai</th>
-                    <th>Tanggal Selesai</th>
-                    <th>Jam Selesai</th>
-                    <th>Durasi/Jam</th>
+                    <th>Tanggal & Jam Mulai</th>
+                    <th>Durasi</th>
                     <th>Admin GA</th>
                     <th>Admin HR</th>
                     <th>Catatan</th>
@@ -37,11 +34,8 @@
                   <tr>
                     <th>No. Lembur</th>
                     <th>Tgl Mengajukan</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Jam Mulai</th>
-                    <th>Tanggal Selesai</th>
-                    <th>Jam Selesai</th>
-                    <th>Durasi/Jam</th>
+                    <th>Tanggal & Jam Mulai</th>
+                    <th>Durasi</th>
                     <th>Admin GA</th>
                     <th>Admin HR</th>
                     <th>Catatan</th>
@@ -55,10 +49,7 @@
                     <tr>
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['tglpengajuan']; ?></td>
-                      <td><?= date('d/m/Y', strtotime($l['tglmulai'])); ?></td>
-                      <td><?= date('H:i', strtotime($l['tglmulai'])); ?></td>
-                      <td><?= date('d/m/Y', strtotime($l['tglselesai'])); ?></td>
-                      <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
+                      <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                           <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4' or $l['status']== '10' or $l['status']== '11') {?>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                           <?php } else { ?>

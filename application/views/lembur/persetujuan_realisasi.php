@@ -23,6 +23,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row col-md-12" hidden>
+                                    <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                        <?php
+                                            $lid = $lembur['id'];
+                                            $queryLembur = "SELECT COUNT(*)
+                                                    FROM `aktivitas`
+                                                    WHERE `link_aktivitas` = '$lid' ";
+                                                    $totalLembur = $this->db->query($queryLembur)->row_array();
+                                                    $totalAktivitas = $totalLembur['COUNT(*)'];
+                                        ;?>
+                                            <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                    <label class="col-ml-5 col-form-label">Nama</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row col-md-12">
                                     <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
                                     <div class="col-md-7">
@@ -39,14 +63,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Durasi Lembur</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="row col-md-6">
@@ -59,18 +75,10 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Total Aktivitas</label>
+                                    <label class="col-ml-5 col-form-label">Durasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
-                                        <?php
-                                            $lid = $lembur['id'];
-                                            $queryLembur = "SELECT COUNT(*)
-                                                    FROM `aktivitas`
-                                                    WHERE `link_aktivitas` = '$lid' ";
-                                                    $totalLembur = $this->db->query($queryLembur)->row_array();
-                                                    $totalAktivitas = $totalLembur['COUNT(*)'];
-                                        ;?>
-                                            <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
+                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_aktual']; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -91,52 +99,35 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover"  cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <!-- <th>No. Aktivitas</th> -->
                                         <th>jenis Aktivitas</th>
                                         <th>Kategori</th>
-                                        <th>COPRO</th>
-                                        <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <!-- <th>Durasi Estimasi</th> -->
                                         <th>Hasil</th>
                                         <th>Status</th>
-                                        <!-- <th class="disabled-sorting text-right">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <!-- <th>No. Aktivitas</th> -->
                                         <th>jenis Aktivitas</th>
                                         <th>Kategori</th>
-                                        <th>COPRO</th>
-                                        <!-- <th>WBS</th> -->
                                         <th>Rencana Aktivitas</th>
                                         <th>Durasi/Jam</th>
-                                        <!-- <th>Durasi Estimasi</th> -->
                                         <th>Hasil</th>
                                         <th>Status</th>
-                                        <!-- <th class="disabled-sorting text-right">Actions</th> -->
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($aktivitas as $a) : ?>
                                         <tr>
-                                            <!-- <td><?= $a['id']; ?></td> -->
                                             <td><?= $a['jenis_aktivitas']; ?></td>
                                             <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                                <td><?= $k['nama']; ?></td>
-                                            <td><?= $a['copro']; ?></td>
-                                            <!-- <td><?= $a['wbs']; ?></td> -->
+                                            <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
                                             <td><?= $a['aktivitas']; ?></td>
                                             <td><?= $a['durasi']; ?></td>
-                                            <!-- <td><?= date('d/m/Y', strtotime($a['durasi_menit'])); ?></td> -->
                                             <td><?= $a['deskripsi_hasil']; ?></td>
                                             <?php $status = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
-                                            <!-- <td>
-                                                <a href="<?= base_url('lembur/hapus/'). $a['id']; ?>" class="btn-bataldl"><i class="material-icons">delete</i></a>
-                                            </td> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
