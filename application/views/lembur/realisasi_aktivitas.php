@@ -128,9 +128,12 @@
                                 <br>Silahkan tambahkan istirahat dan perjalanan sebagai aktivitas.
                                 </p>
                                 <!-- Button SUBMIT -->
-                                <?php if ($lembur['status'] == 4 AND $lembur['aktivitas'] == 0) { ?>
+                                <?php 
+                                $this->db->where('link_aktivitas', $lembur['id']);
+                                $belum_dikerjakan = $this->db->get_where('aktivitas', ['status' => '1'])->row_array();
+                                if ($belum_dikerjakan) { ?>
                                     <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
-                                <?php } elseif ($lembur['status'] == 4 AND $lembur['aktivitas'] >= 1) { ?>
+                                <?php } else { ?>
                                     <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
                                 <?php }; ?>
                                  <!-- Button BATALKAN & KEMBALI -->
