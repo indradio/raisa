@@ -1,6 +1,106 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
+  <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+                                <?php 
+                                    $bulan = date('m');
+                                    $this->db->where('npk', $this->session->userdata('npk'));
+                                    $this->db->where('status !=', '0');
+                                    $this->db->where('month(tglmulai)',$bulan);
+                                    $total_lembur = $this->db->get('lembur');
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-rose card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">date_range</i>
+                                </div>
+                                <p class="card-category">Total</p>
+                                <h3 class="card-title"><?= $total_lembur->num_rows(); ?></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                               TOTAL Lembur kamu di bulan ini.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <div class="col-lg-3 col-md-6 col-sm-6">
+                                <?php 
+                                    $today = date('d');
+                                    $this->db->where('status >', '2');
+                                    $this->db->where('day(tglmulai)',$today);
+                                    $this->db->where('lokasi','WTQ');
+                                    $lembur_wtq = $this->db->get('lembur');
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-warning card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">store</i>
+                                </div>
+                                <p class="card-category">Total</p>
+                                <h3 class="card-title"><?= $lembur_wtq->num_rows(); ?></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> Lembur HARI INI di WTQ
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-6 col-sm-6">
+                          <?php 
+                                  $bulan = date('m');
+                                  $this->db->select('SUM(durasi_aktual) as total');
+                                  $this->db->where('npk', $this->session->userdata('npk'));
+                                  $this->db->where('status !=', '0');
+                                  $this->db->where('month(tglmulai)',$bulan);
+                                  $this->db->from('lembur');
+                           
+                                  $totalDurasi = $this->db->get()->row()->total;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-success card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">weekend</i>
+                                </div>
+                                <p class="card-category">Total</p>
+                                <h3 class="card-title"><?= $totalDurasi; ?></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> Lembur BESOK di WTQ
+                                </div>
+                              </div>
+                            </div>
+                          </div> -->
+                          <div class="col-lg-3 col-md-6 col-sm-6">
+                          <?php 
+                                 $bulan = date('m');
+                                 $this->db->select('SUM(tul) as total');
+                                 $this->db->where('npk', $this->session->userdata('npk'));
+                                 $this->db->where('status', '9');
+                                 $this->db->where('month(tglmulai)',$bulan);
+                                 $this->db->from('lembur');
+                          
+                                 $totalTUL = $this->db->get()->row()->total;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-info card-header-icon">
+                                <div class="card-icon">
+                                <i class="material-icons">attach_money</i>
+                                </div>
+                                <p class="card-category">Total</p>
+                                <h3 class="card-title"><?= $totalTUL; ?></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                 TUL kamu di bulan ini.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+</div>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -22,6 +122,7 @@
                     <th>Tgl Mengajukan</th>
                     <th>Tanggal & Jam Mulai</th>
                     <th>Durasi</th>
+                    <th>TUL</th>
                     <th>Admin GA</th>
                     <th>Admin HR</th>
                     <th>Catatan</th>
@@ -36,6 +137,7 @@
                     <th>Tgl Mengajukan</th>
                     <th>Tanggal & Jam Mulai</th>
                     <th>Durasi</th>
+                    <th>TUL</th>
                     <th>Admin GA</th>
                     <th>Admin HR</th>
                     <th>Catatan</th>
@@ -55,6 +157,7 @@
                           <?php } else { ?>
                       <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                           <?php }; ?>
+                      <td><?= $l['tul']; ?></td>
                       <td><?= $l['admin_ga']; ?></td>
                       <td><?= $l['admin_hr']; ?></td>
                       <td><?= $l['catatan']; ?></td>

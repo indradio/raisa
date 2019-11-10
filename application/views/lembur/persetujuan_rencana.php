@@ -11,36 +11,19 @@
                         </div>
                         <h4 class="card-title">Persetujuan Rencana Lembur</h4>
                     </div>
-                    <form class="form" method="post" action="<?= base_url('lembur/setujui_aktivitas'); ?>">
-                    <div class="card-body">
-                        <div class="row col-md-12">
-                            <div class="row col-md-6">
-                                <div class="row" hidden>
-                                    <label class="col-md-5 col-form-label">Lembur ID</label>
+                    <form class="form-horizontal" method="post" action="<?= base_url('lembur/setujui_rencana'); ?>">
+                        <div class="card-body">
+                            <div class="row col-md-12">
+                                <div class="row col-md-12" hidden>
+                                    <label class="col-ml-3 col-form-label">Lembur ID</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row col-md-12" hidden>
-                                    <label class="col-ml-5 col-form-label">Total Aktivitas</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                        <?php
-                                            $lid = $lembur['id'];
-                                            $queryLembur = "SELECT COUNT(*)
-                                                    FROM `aktivitas`
-                                                    WHERE `link_aktivitas` = '$lid' ";
-                                                    $totalLembur = $this->db->query($queryLembur)->row_array();
-                                                    $totalAktivitas = $totalLembur['COUNT(*)'];
-                                                    ;?>
-                                            <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas; ?>">
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Nama</label>
+                                    <label class="col-ml-3 col-form-label">Nama</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
@@ -48,82 +31,49 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
-                                        <div class="col-md-7">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control datetimepicker disabled" placeholder="With Material Icons" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Tanggal Selesai</label>
+                                    <label class="col-ml-3 col-form-label">Tanggal Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control datetimepicker disabled" id="tglselesai" name="tglselesai" value="<?= $lembur['tglselesai']; ?>">
+                                            <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= date('d-M H:i', strtotime($lembur['tglmulai'])); ?>">
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
-
-                            <div class="row col-md-6">
                                 <div class="row col-md-12">
-                                <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                    <label class="col-ml-3 col-form-label">Durasi Lembur</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi'])).' Jam / '. $lembur['aktivitas_rencana']; ?> Aktivitas">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                <label class="col-ml-3 col-form-label">Lokasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row col-md-12">
-                                <label class="col-ml-5 col-form-label">Durasi Lembur</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Status</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                            <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                         </div> 
+                            </div> 
                         </form>
                         <br>
                         <div class="toolbar">
-                            <?php if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '3'){ ?>
-                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                            <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
-                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                            <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2' or $lembur['status'] == '3') { ?>
-                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                            <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
-                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                             <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
-                                <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
-                            <?php  }; ?>
+                            <a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover"  cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No. Aktivitas</th>
                                         <th>Kategori</th>
-                                        <th>Rencana Aktivitas</th>
+                                        <th>Aktivitas</th>
                                         <th>Durasi/Jam</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No. Aktivitas</th>
                                         <th>Kategori</th>
-                                        <th>Rencana Aktivitas</th>
+                                        <th>Aktivitas</th>
                                         <th>Durasi/Jam</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -131,7 +81,6 @@
                                 <tbody>
                                     <?php foreach ($aktivitas as $a) : ?>
                                         <tr>
-                                            <td><?= $a['id']; ?></td>
                                             <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                             <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
                                             <td><?= $a['aktivitas']; ?></td>
@@ -139,7 +88,7 @@
                                             <td class="text-right">
                                             <?php if ($lembur['status'] !='7'){ ?>
                                                 <a href="#" class="btn btn-sm btn-round btn-warning btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-durasi="<?= $a['durasi']; ?>">UBAH</a>
-                                                <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm btn-bataldl">HAPUS</a> 
+                                                <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm btn-bataldl">HAPUS</a> 
                                             <?php }else{ ?>
                                                 <a href="#" class="btn btn-sm btn-round btn-warning btn-sm disabled" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $a['id']; ?>">UBAH</a>
                                                 <a href="<?= base_url('lembur/hapus/') . $a['id']; ?>" class="btn btn-sm btn-round btn-danger btn-sm disabled">HAPUS</a> 
@@ -149,23 +98,16 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                            <?php if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '3'){ ?>
-                                    <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '5' and $lembur['status'] == '2'){ ?>
-                                    <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '3' and $lembur['status'] == '1' or $lembur['status'] == '2') { ?>
-                                    <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '2' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10') { ?>
-                                    <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php } else if ($this->session->userdata['posisi_id'] == '1' and $lembur['status'] == '2' or $lembur['status'] == '3' or $lembur['status'] == '10' or $lembur['status'] == '11') { ?>
-                                    <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
-                                    <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <?php  }; ?>
-                                     <a href="<?= base_url('lembur/persetujuan_lembur/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
+                                </p>
+                                <!-- Button SUBMIT -->
+                                <?php if ($lembur['aktivitas_rencana'] == 0) {
+                                    echo '<button type="submit"  id="setujui" class="btn btn-sm btn-success disabled">SETUJUI</button>';
+                                } else {
+                                    echo '<button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>';
+                                }; ?>
+
+                                <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <a href="<?= base_url('lembur/persetujuan_lembur/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                          </div>
                     </div>
                     <!-- end content-->
@@ -252,7 +194,7 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required >
-                                            <option value="+30 minute">30:00 Menit</option>
+                                            <option value="+30 minute">00:30 Jam</option>
                                             <option value="+60 minute">01:00 Jam</option>
                                             <option value="+90 minute">01:30 Jam</option>
                                             <option value="+120 minute">02:00 Jam</option>
@@ -335,7 +277,7 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" value="<?= $a['durasi']; ?>" required >
-                                            <option value="+30 minute">30:00 Menit</option>
+                                            <option value="+30 minute">00:30 Jam</option>
                                             <option value="+60 minute">01:00 Jam</option>
                                             <option value="+90 minute">01:30 Jam</option>
                                             <option value="+120 minute">02:00 Jam</option>

@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Persetujuan HR</h4>
+                        <h4 class="card-title">Konfirmasi Lembur</h4>
                     </div>
                     <div class="card-body">
                         <div class="material-datatables">
@@ -20,8 +20,6 @@
                                         <th>Tanggal/Jam Mulai</th>
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
-                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -31,24 +29,16 @@
                                         <th>Tanggal/Jam Mulai</th>
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
-                                        <th class="text-right">Actions</th>
-                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                        <tr>
+                                        <tr onclick="window.location='<?= base_url('lembur/konfirmasi_hr/') . $l['id']; ?>'">
                                             <td><?= $l['id']; ?></td>
                                             <td><?= $l['nama']; ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
-                                            <td class="text-right">
-                                                <a href="<?= base_url('lembur/setujui_hr/'). $l['id']; ?>" class="badge badge-pill badge-success">Setujui</i></a> 
-                                            </td>
-                                            <td>
-                                                <a href="<?= base_url('lembur/detailAktivitasHR/'). $l['id']; ?>" class="badge badge-pill badge-info">Detail</i></a> 
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

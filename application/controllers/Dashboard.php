@@ -12,7 +12,7 @@ class Dashboard extends CI_Controller
     public function index()
     {
         date_default_timezone_set('asia/jakarta');
-        //auto batalkan perjalanan
+        //Auto batalkan perjalanan
         $queryPerjalanan = "SELECT *
         FROM `perjalanan`
         WHERE `tglberangkat` <= CURDATE() AND `status` = 1
@@ -54,6 +54,36 @@ class Dashboard extends CI_Controller
                 $api_url .= "&number=" . urlencode($destination);
                 $api_url .= "&text=" . urlencode($message);
                 json_decode(file_get_contents($api_url, false));
+            }
+        endforeach;
+
+        //Auto batalkan LEMBUR
+        $this->db->where('status', '4');
+        $lembur = $this->db->get('lembur')->result_array();
+
+        foreach ($lembur as $l) :
+            // cari selisih
+            $sekarang = strtotime(date('Y-m-d H:i:s'));
+            $tempo =  strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai']))));
+
+            if ($tempo < $sekarang) {
+                $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
+                $this->db->set('status', '0');
+                $this->db->where('id', $l['id']);
+                $this->db->update('lembur');
+
+                // $this->db->where('npk', $l['npk']);
+                // $karyawan = $this->db->get('karyawan')->row_array();
+                // $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                // $destination = $karyawan['phone'];
+                // $message = "*LEMBUR DIBATALKAN*\r\n \r\n LEMBUR Kamu dengan nomor *" . $l['id'] . "* pada Tanggal Lembur : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "* dengan Durasi : " .date('H', strtotime($l['durasi'])) ." Jam " . date('i', strtotime($l['durasi']))." Menit DIBATALKAN. " .
+                //     "\r\nWaktu REALISASI LEMBUR kamu melebihi 3X24 Jam / batas waktu SELESAI LEMBUR." . 
+                //     "\r\nUntuk informasi lebih lengkap silahkan dilihat melalui portal aplikasi di link berikut https://raisa.winteq-astra.com";
+                // $api_url = "http://panel.apiwha.com/send_message.php";
+                // $api_url .= "?apikey=" . urlencode($my_apikey);
+                // $api_url .= "&number=" . urlencode($destination);
+                // $api_url .= "&text=" . urlencode($message);
+                // json_decode(file_get_contents($api_url, false));
             }
         endforeach;
 

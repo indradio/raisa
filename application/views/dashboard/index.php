@@ -15,10 +15,11 @@
         WHERE `berlaku` >= CURDATE()
         ORDER BY `id` DESC
     ";
-$layinfo = $this->db->query($queryLayInfo)->row_array();
-  $total = $layinfo['COUNT(*)'];
-  $lay = 12 / $total;
-
+    $layinfo = $this->db->query($queryLayInfo)->row_array();
+    $total = $layinfo['COUNT(*)'];
+    if ($total!=0)
+    {
+      $lay = 12 / $total;
       $queryInfo = "SELECT *
                                     FROM `informasi`
                                     WHERE `berlaku` >= CURDATE()
@@ -60,7 +61,8 @@ $layinfo = $this->db->query($queryLayInfo)->row_array();
           </div> -->
         </div>
       </div>
-      <?php endforeach; ?>
+      <?php endforeach; 
+      }?>
     </div>
     <!-- end banner -->
     <div class="row">

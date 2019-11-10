@@ -167,21 +167,29 @@
                 <thead>
                   <tr>
                     <th>Nama</th>
-                    <th>Tanggal Lembur</th>
-                    <th>Durasi/Jam</th>
-                    <th>Sejak</th>
+                    <th>Tanggal Selesai</th>
+                    <th>Durasi</th>
+                    <th>Sisa Waktu</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($realisasi as $l) : 
-                  $tglmulai = strtotime($l['tglmulai']);
-                  $sekarang = strtotime(date('Y-m-d H:i:s')); 
-                  $selisih = $sekarang - $tglmulai; ?>
+                <?php foreach ($realisasi as $l) :
+                  $tglmulai = strtotime($l['tglselesai']);
+                  $sekarang = strtotime(date('Y-m-d H:i:s'));
+                  $tempo =  strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai']))));
+                  $selisih = $tempo - $sekarang;
+                  $hari  = floor($selisih / (60 * 60 * 24));
+                  $jam = $selisih - $hari * (60 * 60 * 24);
+                  $jam   = floor($jam / (60 * 60));
+                  $menit = $selisih - $hari * (60 * 60 * 24) - $jam * (60 * 60);
+                  $menit = floor($menit / 60);
+                  ?>
                   <tr onclick="window.location='<?= base_url('kadep/lembur_detail/') . $l['id']; ?>'">
                       <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
-                      <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                      <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
                       <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
-                      <td><?= floor($selisih / (60 * 60 * 24)); ?> Hari</td>
+                      <td><?= $hari; ?> Hari <?= $jam; ?> Jam <?= $menit; ?> Menit</td>
+                      <!-- <td><?= floor($selisih / (60 * 60 * 24)); ?> Hari</td> -->
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

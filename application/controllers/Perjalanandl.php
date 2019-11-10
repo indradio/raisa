@@ -684,7 +684,7 @@ class Perjalanandl extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $queryPerjalanan = "SELECT *
                             FROM `perjalanan`
-                            WHERE month(tglberangkat)='10' ";
+                            WHERE month(tglberangkat)='11' ";
         $data['perjalanan'] = $this->db->query($queryPerjalanan)->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

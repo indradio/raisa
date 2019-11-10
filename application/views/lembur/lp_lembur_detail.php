@@ -143,7 +143,7 @@
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                <a href="<?= base_url('kadep/lembur_batalkan/'.$lembur['id']); ?>" class="btn btn-danger" role="button">BATALKAN</a>
+                                <!-- <a href="<?= base_url('kadep/lembur_batalkan/'.$lembur['id']); ?>" class="btn btn-danger" role="button">BATALKAN</a> -->
                                 <a href="<?= base_url('kadep/lembur/') ?>" class="btn btn-default" role="button">KEMBALI</a>
                             </div>
                         </div>

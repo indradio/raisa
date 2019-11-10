@@ -167,3 +167,20 @@ $('#persetujuanRealisasi').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="durasi"]').val(durasi)
 })
 
+$('#konf_lemburga').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var id = button.data('id') // Extract info from data-* attributes
+    var nama = button.data('nama') // Extract info from data-* attributes
+    var tglpengajuan = button.data('tglpengajuan')
+    var tglmulai = button.data('tglmulai')
+    var tglselesai = button.data('tglselesai')
+    var lokasi = button.data('lokasi')
+    var modal = $(this)
+    modal.find('.modal-body input[name="id"]').val(id)
+    modal.find('.modal-body input[name="nama"]').val(nama)
+    modal.find('.modal-body input[name="tglpengajuan"]').val(tglpengajuan)
+    modal.find('.modal-body input[name="tglmulai"]').val(tglmulai)
+    modal.find('.modal-body input[name="tglselesai"]').val(tglselesai)
+    modal.find('.modal-body input[name="lokasi"]').val(lokasi)
+})
+

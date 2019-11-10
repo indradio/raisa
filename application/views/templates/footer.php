@@ -20,13 +20,13 @@
 <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
         <a href="#" data-toggle="dropdown">
-            <i class="fa fa-cog fa-2x"> </i>
+            <i class="fa fa-comments fa-2x"> </i>
         </a>
         <ul class="dropdown-menu">
         <li class="header-title">Butuh Bantuan?</li>
             <li class="button-container">
-                      <a href="https://wa.me/6281373096232?text=Tanya%20tentang%20RAISA?" target="_blank" class="btn btn-rose btn-block btn-fill">RAISA +62813-7309-6232</a>
-                      <a href="https://wa.me/6281311196988" target="_blank" class="btn btn-info btn-block btn-fill">DIO +62813-1119-6988</a>
+                      <a href="https://wa.me/6281373096232?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-rose btn-block btn-fill">RAISA +62813-7309-6232</a>
+                      <a href="https://wa.me/6281311196988?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-info btn-block btn-fill">DIO +62813-1119-6988</a>
             </li>
             <!-- <li class="header-title"> Sidebar Filters</li>
             <li class="adjustments-line">

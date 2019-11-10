@@ -11,10 +11,9 @@
                         </div>
                         <h4 class="card-title">Realisasi Aktivitas Lembur</h4>
                     </div>
-                    <form class="form" method="post" action="<?= base_url('lembur/ajukan_realisasi'); ?>">
+                    <form class="form" method="post" action="<?= base_url('lembur/submit_konfirmasi_hr'); ?>">
                         <div class="card-body">
                             <div class="row col-md-12">
-                                <div class="row col-md-6">
                                     <div class="row" hidden>
                                         <label class="col-md-5 col-form-label">Lembur ID</label>
                                         <div class="col-md-7">
@@ -50,8 +49,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
-                            <div class="row col-md-6">
                                 <div class="row col-md-12">
                                     <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
@@ -60,24 +57,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> 
                                     <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Status</label>
-                                        <div class="col-md-7">
+                                    <label class="col-ml-5 col-form-label">*Estimasi TUL</label>
+                                        <div class="col-md-3">
                                             <div class="form-group has-default">
-                                                <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                                <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                                <input type="text" class="form-control" id="tul" name="tul" required>
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
-                            </div>
                             <br>
                             <div class="toolbar">
                                 <!--        Here you can write extra buttons/actions for the toolbar              -->
-                                <?php if ($lembur['status'] == '4') { ?>
-                                    <a href="#" class="btn btn-rose mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
-                                    <!-- <a href="#" class="btn btn-info mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahIstirahat">Tambah Istirahat</a> -->
-                                <?php }; ?>
+                                <a href="#" class="btn btn-rose mb" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>
                             </div>
                             <div class="material-datatables">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -112,12 +104,8 @@
                                                 <td><?= $s['nama'] .', '. $a['progres_hasil']; ?>%</td>
                                                 <td><?= $a['durasi']; ?> jam</td>
                                                 <td class="text-right">
-                                                    <?php if ($lembur['status'] == '4' and $a['status']== '1') { ?>
-                                                        <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success">Realisasi</a>
-                                                    <?php } else if($lembur['status'] == '4' and $a['status']!= '1'){ ?>
-                                                        <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-deskripsi_hasil="<?= $a['deskripsi_hasil']; ?>" class="badge badge-pill badge-info">Revisi</a>
-                                                    <?php }; ?>
-                                                        <a href="<?= base_url('lembur/hapus_aktivitas_realisasi/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
+                                                    <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-deskripsi_hasil="<?= $a['deskripsi_hasil']; ?>" class="badge badge-pill badge-info">Revisi</a>
+                                                    <a href="<?= base_url('lembur/hapus_aktivitas_realisasi/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -128,14 +116,10 @@
                                 <br>Silahkan tambahkan istirahat dan perjalanan sebagai aktivitas.
                                 </p>
                                 <!-- Button SUBMIT -->
-                                <?php if ($lembur['status'] == 4 AND $lembur['aktivitas'] == 0) { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
-                                <?php } elseif ($lembur['status'] == 4 AND $lembur['aktivitas'] >= 1) { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
-                                <?php }; ?>
-                                 <!-- Button BATALKAN & KEMBALI -->
+                                <button type="submit" id="ajukan" class="btn btn-sm btn-success">PROSES</button>
+                                <!-- Button BATALKAN & KEMBALI -->
                                 <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                                <a href="<?= base_url('lembur/realisasi/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('lembur/persetujuan_lemburhr/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                             </div>
                         </div>
                         <!-- end content-->
@@ -426,49 +410,6 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Ubah Jam-->
-<div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">UBAH JAM LEMBUR</h4>
-                    </div>
-                </div>
-                <form class="form-horizontal" method="post" action="<?= base_url('lembur/gtJamRelalisai'); ?>">
-                        <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row" hidden>
-                                <label class="col-md-5 col-form-label">Lembur ID</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-5 col-form-label">Jam Mulai</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default" id="jammulai">
-                                        <input type="text" class="form-control timepicker" id="jammulai" name="jammulai" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-success">UBAH JAM</button>
-                        </div>
-                        </div>
                 </form>
             </div>
         </div>

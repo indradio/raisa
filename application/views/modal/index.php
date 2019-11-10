@@ -566,7 +566,7 @@
                                 <label class="col-md-4 col-form-label">Tambah Peserta</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Peserta" data-size="7">
+                                        <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Peserta" data-live-search="true" data-size="7">
                                             <?php
                                             $queryKaryawan = "SELECT *
                                                 FROM `karyawan`
