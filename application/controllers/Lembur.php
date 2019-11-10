@@ -462,7 +462,7 @@ class Lembur extends CI_Controller
     public function update_aktivitas_realisasi()
     {
         date_default_timezone_set('asia/jakarta');
-        $aktivitas = $this->db->get_where('aktivitas', ['id' => $id])->row_array();
+        $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row_array();
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link_aktivitas')])->row_array();
         $durasiPost = $this->input->post('durasi');
         $jam = $durasiPost / 60;
