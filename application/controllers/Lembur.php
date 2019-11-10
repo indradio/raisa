@@ -501,6 +501,7 @@ class Lembur extends CI_Controller
 
        //Hitung total aktivitas
        $this->db->where('link_aktivitas', $this->input->post('link_aktivitas'));
+       $this->db->where('status >', '2');
        $this->db->from('aktivitas');
 
        $totalAktivitas = $this->db->get()->num_rows();
