@@ -962,7 +962,7 @@ class Lembur extends CI_Controller
         $this->db->update('lembur');
 
         //Notifikasi ke USER
-        $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['npk']])->row_array();
+        $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*YEAAYY LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
