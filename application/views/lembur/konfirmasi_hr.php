@@ -22,14 +22,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <label class="col-md-5 col-form-label">Nama</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row col-md-12">
                                     <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control datetimepicker disabled" placeholder="With Material Icons" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai_aktual']; ?>">
-                                                <?php if ($lembur['aktivitas'] == '0' AND $lembur['status'] == '4') { ?>
-                                                    <a href="#" class="badge badge-pill badge-warning" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">UBAH JAM</a>
-                                                <?php }; ?>
                                             </div>
                                         </div>
                                     </div>

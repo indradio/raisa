@@ -26,7 +26,7 @@
       $d = $this->db->get_where('karyawan_dept', ['id' =>  $lembur['dept_id']])->row_array();
 
       $pdf->SetFont('Arial','B',6);
-      $pdf->Cell(10, 5, 'NO : ' . $lembur['id'], 0, 1,);
+      $pdf->Cell(10, 5, 'NO : ' . $lembur['id'], 0, 1);
       
       $pdf->Cell(44,5,'HARI / TGL              :   '. date('d-m-Y', strtotime($lembur['tglmulai'])),1,0,1);
       $pdf->SetFont('Arial','',5);
