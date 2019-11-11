@@ -979,12 +979,12 @@ class Lembur extends CI_Controller
 
       
         $admin_hr = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $lembur = $this->db->get_where('lembur', ['id' => $id])->row_array();
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
         $l = $lembur['id'];
         $this->db->set('admin_hr', $admin_hr['inisial']);
         $this->db->set('tgl_admin_hr', date('y-m-d  H:i:s'));
         $this->db->set('status', '9');
-        $this->db->where('id', $id);
+        $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
 
         $this->session->set_flashdata('message', 'setujuilbrhr');
