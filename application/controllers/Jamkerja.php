@@ -191,4 +191,35 @@ class Jamkerja extends CI_Controller
         $this->load->view('jamkerja/kalender', $data);
         $this->load->view('templates/footer');
     }
+
+    public function lp_aktivitas_ppic()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $tglawal = $this->input->post('tglawal');
+        $tglakhir = $this->input->post('tglakhir');
+        if ($tglawal != null AND $tglakhir != null)
+        {
+            $this->db->where('day(tgl_aktivitas) >=',$tglawal);
+            $this->db->where('day(tgl_aktivitas) <=',$tglakhir);
+            $this->db->where('status >','4');
+            $this->db->order_by('npk', 'ASC');
+            $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
+        }else{
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' =>  'X'])->result_array();
+            $this->session->set_flashdata('message', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Silahkan PILIH tanggal terlebih dahulu.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>');
+        }
+        $data['sidemenu'] = 'PPIC';
+        $data['sidesubmenu'] = 'Laporan Jam Kerja';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('jamkerja/lp_aktivitas_ppic', $data);
+        $this->load->view('templates/footer');
+    }
 }

@@ -946,7 +946,7 @@ class Lembur extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('lembur/konfirmasi_hr', $data);
+        $this->load->view('lembur/konfirmasi_hr', $data);  
         $this->load->view('templates/footer');
     }
 
@@ -965,12 +965,14 @@ class Lembur extends CI_Controller
         $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
-        $message = "*YEAAYY LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
-            "\r\n \r\n*LEMBUR* kamu pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . " dengan durasi " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit.".
-            "mendapatkan *" . $this->input->post('tul') . " TUL*" .
-            "\r\nHitungan ini belum dicocokan dengan *PRESENSI* Loh.". 
+        $message = "*HOREEE LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
+            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+            "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) ."*". 
+            "\r\nDurasi : *" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit*".
+            "\r\n \r\nMendapatkan : *" . $this->input->post('tul') . " TUL*" .
+            "\r\n \r\nHitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
             "\r\n*INGET* ini masih *Estimasi* ya!" .
-            "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            "\r\n \r\nUntuk informasi lebih lengkap silahkan kunjungi RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);
