@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <?= $this->session->flashdata('message'); ?>
+                <?= $this->session->flashdata('pilihtgl'); ?>
                 <div class="card">
                     <div class="card-header card-header-primary card-header-icon">
                         <div class="card-icon">
@@ -46,7 +46,9 @@
                                             <th>Aktivitas</th>
                                             <th>Deskripsi Hasil</th>
                                             <th>Progres Hasil</th>
-                                            <th>Durasi/Jam</th>
+                                            <th>Durasi</th>
+                                            <th>Cell / Section</th>
+                                            <th>Dept</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -59,7 +61,9 @@
                                             <th>Aktivitas</th>
                                             <th>Deskripsi Hasil</th>
                                             <th>Progres Hasil</th>
-                                            <th>Durasi/Jam</th>
+                                            <th>Durasi</th>
+                                            <th>Cell / Section</th>
+                                            <th>Dept</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -77,6 +81,10 @@
                                                 <?php $s = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
                                                 <td><?= $s['nama'] .', '. $a['progres_hasil']; ?>%</td>
                                                 <td><?= $a['durasi']; ?> jam</td>
+                                                <?php $sect = $this->db->get_where('karyawan_sect', ['id' => $krywn['sect_id']])->row_array(); ?>
+                                                <td><?= $sect['nama']; ?></td>
+                                                <?php $dept = $this->db->get_where('karyawan_dept', ['id' => $krywn['dept_id']])->row_array(); ?>
+                                                <td><?= $dept['inisial']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

@@ -206,7 +206,7 @@ class Jamkerja extends CI_Controller
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         }else{
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' =>  'X'])->result_array();
-            $this->session->set_flashdata('message', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
+            $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
             Silahkan PILIH tanggal terlebih dahulu.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
