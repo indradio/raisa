@@ -967,7 +967,7 @@ class Lembur extends CI_Controller
         $destination = $karyawan['phone'];
         $message = "*YEAAYY LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
             "\r\n \r\n*LEMBUR* kamu pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . " dengan durasi " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit.".
-            "mendapatkan *" . $lembur['tul'] . " TUL*" .
+            "mendapatkan *" . $this->input->post('tul') . " TUL*" .
             "\r\nHitungan ini belum dicocokan dengan *PRESENSI* Loh.". 
             "\r\n*INGET* ini masih *Estimasi* ya!" .
             "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
