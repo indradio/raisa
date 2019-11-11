@@ -978,7 +978,7 @@ class Lembur extends CI_Controller
         json_decode(file_get_contents($api_url, false));
 
         $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/persetujuan_lemburhr/' . $l);
+        redirect('lembur/persetujuan_lemburhr');
     }
 
     public function persetujuan_rencana($id)
