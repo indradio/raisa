@@ -285,7 +285,7 @@
                                         <option value="+630 minute">10:30 Jam</option>
                                         <option value="+660 minute">11:00 Jam</option>
                                         <option value="+690 minute">11:30 Jam</option>
-                                        <option value="+620 minute">12:00 Jam</option>
+                                        <option value="+720 minute">12:00 Jam</option>
                                     </select>
                                 </div>
                             </div>
