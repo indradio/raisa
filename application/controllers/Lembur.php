@@ -372,6 +372,9 @@ class Lembur extends CI_Controller
                 $this->session->set_flashdata('message', 'hapus');
                 redirect('lembur/persetujuan_rencana/' . $aktivitas['link_aktivitas']);
             }
+            elseif ($lembur['status']=='7'){
+                redirect('lembur/konfirmasi_hr/' . $this->input->post('link_aktivitas'));
+            }
     }
 
     public function tambah_aktivitas_realisasi()
@@ -875,6 +878,9 @@ class Lembur extends CI_Controller
                 $this->session->set_flashdata('message', 'batalbr');
                 redirect('lembur/persetujuan_lembur/');
             }
+            elseif ($lembur['status']=='7'){
+                redirect('lembur/konfirmasi_hr');
+            }
     }
 
     public function persetujuan_lemburga()
@@ -1099,10 +1105,10 @@ class Lembur extends CI_Controller
 
         $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglmulai')));
         $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglselesai')));
-        $querylembur = "SELECT *
-                                    FROM `lembur`
-                                    WHERE `tglmulai` >= '$tglmulai' AND `tglselesai` <= '$tglselesai'
-                                ";
+        $querylembur =  "SELECT *
+                            FROM `lembur`
+                            WHERE `tglmulai` >= '$tglmulai' AND `tglselesai` <= '$tglselesai'
+                        ";
         $data['lembur'] = $this->db->query($querylembur)->result_array();
         $data['tglmulai'] = $tglmulai;
         $data['tglselesai'] = $tglselesai;
