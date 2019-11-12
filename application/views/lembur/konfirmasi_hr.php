@@ -11,63 +11,71 @@
                         </div>
                         <h4 class="card-title">Realisasi Aktivitas Lembur</h4>
                     </div>
-                    <form class="form" method="post" action="<?= base_url('lembur/submit_konfirmasi_hr'); ?>">
+                    <form class="form-horizontal" method="post" action="<?= base_url('lembur/submit_konfirmasi_hr'); ?>">
                         <div class="card-body">
                             <div class="row col-md-12">
                                     <div class="row" hidden>
-                                        <label class="col-md-5 col-form-label">Lembur ID</label>
-                                        <div class="col-md-7">
+                                        <label class="col-md-2 col-form-label">Lembur ID</label>
+                                        <div class="col-md-9">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-md-5 col-form-label">Nama</label>
-                                        <div class="col-md-7">
+                                    <div class="row col-12">
+                                        <label class="col-md-2 col-form-label">Nama</label>
+                                        <div class="col-md-9">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
-                                        <div class="col-md-7">
+                                    <div class="row col-12">
+                                    <label class="col-md-2 col-form-label">Tanggal Mulai</label>
+                                        <div class="col-md-9">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control datetimepicker disabled" placeholder="With Material Icons" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai_aktual']; ?>">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Tanggal Selesai</label>
-                                        <div class="col-md-7">
+                                    <div class="row col-12">
+                                        <label class="col-md-2 col-form-label">Tanggal Selesai</label>
+                                        <div class="col-md-9">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control datetimepicker disabled" id="tglselesai_aktual" name="tglselesai_aktual" value="<?= $lembur['tglselesai_aktual']; ?>">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Durasi Lembur</label>
-                                            <div class="col-md-7">
+                                    <div class="row col-12">
+                                        <label class="col-md-2 col-form-label">Durasi Lembur</label>
+                                            <div class="col-md-9">
                                                 <div class="form-group has-default">
                                                     <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi_aktual'])).' Jam / '. $lembur['aktivitas']; ?> Aktivitas">
                                                 </div>
                                             </div>
                                         </div>
-                                <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
-                                        <div class="col-md-7">
+                                    <div class="row col-12">
+                                        <label class="col-md-2 col-form-label">Lokasi Lembur</label>
+                                            <div class="col-md-9">
+                                                <div class="form-group has-default">
+                                                    <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row col-12">
+                                    <label class="col-md-2 col-form-label">*Estimasi TUL</label>
+                                        <div class="col-md-9">
                                             <div class="form-group has-default">
-                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
+                                                <input type="text" class="form-control" id="tul" name="tul" required>
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
-                                    <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">*Estimasi TUL</label>
-                                        <div class="col-md-3">
+                                    <div class="row col-12">
+                                    <label class="col-md-2 col-form-label">Catatan</label>
+                                        <div class="col-md-9">
                                             <div class="form-group has-default">
-                                                <input type="text" class="form-control" id="tul" name="tul" required>
+                                            <textarea rows="2" class="form-control" id="catatan" name="catatan"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -116,16 +124,12 @@
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                                </p>
-                                Lemburan kamu belum termasuk <mark>JAM ISTIRAHAT</mark> dan <mark>PERJALANAN</mark> pada saat lembur. 
-                                <br>Silahkan tambahkan istirahat dan perjalanan sebagai aktivitas.
-                                </p>
+                            </div>
                                 <!-- Button SUBMIT -->
                                 <button type="submit" id="ajukan" class="btn btn-sm btn-success">PROSES</button>
                                 <!-- Button BATALKAN & KEMBALI -->
                                 <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <a href="<?= base_url('lembur/persetujuan_lemburhr/') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
-                            </div>
                         </div>
                         <!-- end content-->
                 </div>

@@ -21,7 +21,7 @@ class Kadep extends CI_Controller
         $this->load->view('lembur/index', $data);
         $this->load->view('templates/footer');
     }
-    public function lembur()
+    public function lembur_status()
     {
         $data['sidemenu'] = 'Kepala Departemen';
         $data['sidesubmenu'] = 'Laporan Lembur';
@@ -49,6 +49,40 @@ class Kadep extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('lembur/lp_lembur_persetujuan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function lembur()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'Kepala Departemen';
+        $data['sidesubmenu'] = 'Laporan Lembur';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        
+        $tglawal = $this->input->post('tglawal');
+        $tglakhir = $this->input->post('tglakhir');
+        $bulan = date('m');
+        if ($tglawal != null AND $tglakhir != null)
+        {
+            $data['lembur'] = $this->db->where('day(tglmulai)', $tglawal);
+            $data['lembur'] = $this->db->where('day(tglselesai)', $tglakhir);
+            $data['lembur'] = $this->db->where('status', '9');
+            $data['lembur'] = $this->db->get('lembur')->result_array();
+        }else{
+            $data['lembur'] = $this->db->where('month(tglmulai)', $bulan);
+            $data['lembur'] = $this->db->where('status', '9');
+            $data['lembur'] = $this->db->get('lembur')->result_array();
+            $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Data yang TAMPIL adalah LEMBUR di BULAN INI. Silahkan PILIH tanggal untuk menemukan data yang dibutuhkan.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>');
+        }
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('lembur/lp_lembur', $data);
         $this->load->view('templates/footer');
     }
 
