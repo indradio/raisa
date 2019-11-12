@@ -607,8 +607,11 @@ class Lembur extends CI_Controller
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PENGAJUAN RENCANA LEMBUR*" .
-            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *RENCANA LEMBUR* pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai'])) . " dengan durasi " . date('H', strtotime($lembur['durasi'])) ." Jam " . date('i', strtotime($lembur['durasi']))." Menit.".
-            "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *RENCANA LEMBUR* dengan detil berikut :" .
+            "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
+            "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+            "\r\nDurasi :" . date('H', strtotime($lembur['durasi'])) ." Jam " . date('i', strtotime($lembur['durasi']))." Menit." .
+            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);
@@ -635,12 +638,15 @@ class Lembur extends CI_Controller
         $this->db->update('lembur');
 
         // Notification saat mengajukan REALISASI to ATASAN 1
-        $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1_rencana']])->row_array();
+        $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1_ralisasi']])->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PENGAJUAN REALISASI LEMBUR*" .
-            "\r\n \r\n*" . $lembur['nama'] . "* mengajukan *REALISASI LEMBUR* pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . " dengan durasi " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit.".
-            "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+        "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *REALISASI LEMBUR* dengan detil berikut :" .
+        "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
+        "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . 
+        "\r\nDurasi :" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
+        "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);
@@ -973,12 +979,14 @@ class Lembur extends CI_Controller
         $destination = $karyawan['phone'];
         $message = "*ASYIIK LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
             "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
-            "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) ."*". 
+            "\r\n \r\nNo LEMBUR : *" . $lembur['id'] ."*". 
+            "\r\nNama : *" . $karyawan['nama'] ."*". 
+            "\r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) ."*". 
             "\r\nDurasi : *" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit*".
             "\r\n \r\nMendapatkan : *" . $this->input->post('tul') . " TUL*" .
             "\r\n \r\nHitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
-            "\r\n*INGET* ini masih *Estimasi* ya!" .
-            "\r\n \r\nUntuk informasi lebih lengkap silahkan kunjungi RAISA di link berikut https://raisa.winteq-astra.com";
+            "\r\n*INGET* ini masih *Estimasi* ya!. Hasil final sangat mungkin lebih kecil dari ini." .
+            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);

@@ -76,9 +76,15 @@ class Dashboard extends CI_Controller
                 $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = "NQXJ3HED5LW2XV440HCG";
                 $destination = $karyawan['phone'];
-                $message = "*LEMBUR DIBATALKAN*\r\n \r\n LEMBUR Kamu dengan nomor *" . $l['id'] . "* pada Tanggal Lembur : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "* dengan Durasi : " .date('H', strtotime($l['durasi'])) ." Jam " . date('i', strtotime($l['durasi']))." Menit DIBATALKAN. " .
-                    "\r\nWaktu REALISASI LEMBUR kamu melebihi 3X24 Jam / batas waktu SELESAI LEMBUR." . 
-                    "\r\nUntuk informasi lebih lengkap silahkan dilihat melalui portal aplikasi di link berikut https://raisa.winteq-astra.com";
+                $message = "*HUHUHU LEMBUR KAMU DIBATALKAN*" .
+                            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+                            "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
+                            "\r\nNama : *" . $l['nama'] ."*". 
+                            "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_aktual'])) ."*". 
+                            "\r\nDurasi : *" . date('H', strtotime($l['durasi_aktual'])) ." Jam " . date('i', strtotime($l['durasi_aktual']))." Menit*".
+                            "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
+                            "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." . 
+                            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
                 $api_url = "http://panel.apiwha.com/send_message.php";
                 $api_url .= "?apikey=" . urlencode($my_apikey);
                 $api_url .= "&number=" . urlencode($destination);
