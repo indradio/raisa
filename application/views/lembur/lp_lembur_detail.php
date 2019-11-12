@@ -13,138 +13,74 @@
                     </div>
                     <form class="form" method="post" action="<?= base_url('lembur/ajukan_realisasi'); ?>">
                         <div class="card-body">
-                            <div class="row col-md-12">
-                                <div class="row col-md-6">
-                                    <div class="row" hidden>
-                                        <label class="col-md-5 col-form-label">Lembur ID</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                                <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Tanggal Mulai</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                            <?php if ($lembur['status']==2 OR $lembur['status']==3)
-                                            {
-                                                echo '<input type="text" class="form-control datetimepicker disabled" value="'. $lembur['tglmulai'] .'">';
-                                            }else{
-                                                echo '<input type="text" class="form-control datetimepicker disabled" value="'. $lembur['tglmulai_aktual'] .'">';
-                                            }; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Tanggal Selesai</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                            <?php if ($lembur['status']==2 OR $lembur['status']==3)
-                                            {
-                                                echo '<input type="text" class="form-control datetimepicker disabled" value="'. $lembur['tglselesai'] .'">';
-                                            }else{
-                                                echo '<input type="text" class="form-control datetimepicker disabled" value="'. $lembur['tglselesai_aktual'] .'">';
-                                            }; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Total Aktivitas</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                                <?php $totalAktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $lembur['id']]); ?>
-                                                <input type="text" class="form-control disabled" id="total_aktivitas" name="total_aktivitas" value="<?= $totalAktivitas->num_rows(); ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            <div class="row col-md-6">
+                            <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>" hidden>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Durasi Lembur</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                            <?php if ($lembur['status']==2 OR $lembur['status']==3)
-                                            {
-                                                echo '<input type="text" class="form-control timepicker disabled" value="'. $lembur['durasi'] .'">';
-                                            }else{
-                                                echo '<input type="text" class="form-control timepicker disabled" value="'. $lembur['durasi_aktual'] .'">';
-                                            }; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Status</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                                <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                                <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                            </div>
-                                        </div>
+                                    <div class="form-group has-default">
+                                        <label class="label">Nama</label>
+                                        <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
                                     </div>
                                 </div>
-                            </div>
+                                    <div class="row col-md-12">
+                                        <div class="form-group has-default">
+                                            <label class="label">Tanggal Lembur</label>
+                                            <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= date('d-M H:i', strtotime($lembur['tglmulai_aktual'])); ?>">
+                                                    </div>
+                                                    </div>
+                                                                <div class="row col-md-12">
+                                                                    <div class="form-group has-default">
+                                                                        <label class="label">Durasi Lembur</label>
+                                                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi_aktual'])).' Jam / '. $lembur['aktivitas']; ?> Aktivitas">
+                                                                    </div>
+                                                                    </div>
+                                                                                <div class="row col-md-12">
+                                        <div class="form-group has-default">
+                                                <label class="label">Lokasi Lembur</label>
+                                            <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
+                                        </div>
+                            </div> 
                             <br>
                             <div class="material-datatables">
                                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
                                             <!-- <th>No. Aktivitas</th> -->
-                                            <th>jenis Aktivitas</th>
                                             <th>Kategori</th>
-                                            <th>COPRO</th>
                                             <!-- <th>WBS</th> -->
-                                            <th>Rencana Aktivitas</th>
-                                            <th>Durasi/Jam</th>
-                                            <th>Deskripsi Aktual</th>
-                                            <th>Hasil</th>
-                                            <th>Status</th>
+                                            <th>Aktivitas</th>
+                                            <th>Deskripsi Hasil</th>
+                                            <th>Durasi <small>(Jam)</small></th>
+                                            <th>Hasil <small>(%)</small></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <!-- <th>No. Aktivitas</th> -->
-                                            <th>jenis Aktivitas</th>
                                             <th>Kategori</th>
-                                            <th>COPRO</th>
                                             <!-- <th>WBS</th> -->
-                                            <th>Rencana Aktivitas</th>
-                                            <th>Durasi/Jam</th>
-                                            <th>Deskripsi Aktual</th>
+                                            <th>Aktivitas</th>
+                                            <th>Deskripsi Hasil</th>
+                                            <th>Durasi</th>
                                             <th>Hasil</th>
-                                            <th>Status</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php foreach ($aktivitas as $a) : ?>
                                             <tr>
                                                 <!-- <td><?= $a['id']; ?></td> -->
-                                                <td><?= $a['jenis_aktivitas']; ?></td>
                                                 <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                                <td><?= $k['nama']; ?></td>
-                                                <td><?= $a['copro']; ?></td>
+                                                <td><?= $k['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
                                                 <!-- <td><?= $a['wbs']; ?></td> -->
                                                 <td><?= $a['aktivitas']; ?></td>
-                                                <td><?= $a['durasi']; ?> jam</td>
                                                 <td><?= $a['deskripsi_hasil']; ?></td>
-                                                <td><?= $a['progres_hasil']; ?> %</td>
+                                                <td><?= $a['durasi']; ?> jam</td>
                                                 <?php $status = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
-                                                <td><?= $status['nama']; ?></td>
+                                                <td><?= $status['nama'] .', '.$a['progres_hasil']; ?>%</td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
                                 <!-- <a href="<?= base_url('kadep/lembur_batalkan/'.$lembur['id']); ?>" class="btn btn-danger" role="button">BATALKAN</a> -->
-                                <a href="<?= base_url('kadep/lembur/') ?>" class="btn btn-default" role="button">KEMBALI</a>
+                                <a href="<?= base_url('kadep/lembur'); ?>" class="btn btn-default" role="button">KEMBALI</a>
                             </div>
                         </div>
                         <!-- end content-->

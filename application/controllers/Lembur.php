@@ -895,17 +895,14 @@ class Lembur extends CI_Controller
         $data['sidesubmenu'] = 'Konfirmasi Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
-        $today = date('d');
+        $today = date('Y-m-d H:i:s');
 
-        $this->db->where('status', '3');
-        $this->db->where('day(tglmulai) >=',$today);
-        $this->db->where('admin_ga','-');
-        $this->db->or_where('status', '4');
-        $this->db->where('day(tglmulai) >=',$today);
+        $this->db->or_where('status >', '2');
+        $this->db->where('tglmulai >=',$today);
         $this->db->where('admin_ga','-');
         $data['lembur'] = $this->db->get('lembur')->result_array();
         $this->db->where('status >', '2');
-        $this->db->where('day(tglmulai)',$today);
+        $this->db->where('tglmulai >=',$today);
         $this->db->where('admin_ga !=','-');
         $data['lembur_konfirmasi'] = $this->db->get('lembur')->result_array();
         $this->load->view('templates/header', $data);

@@ -24,7 +24,7 @@ class Kadep extends CI_Controller
     public function lembur_status()
     {
         $data['sidemenu'] = 'Kepala Departemen';
-        $data['sidesubmenu'] = 'Laporan Lembur';
+        $data['sidesubmenu'] = 'Laporan Status Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['rencana_ats'] = $this->db->where('status', '2');
         $data['rencana_ats'] = $this->db->or_where('status', '3');
