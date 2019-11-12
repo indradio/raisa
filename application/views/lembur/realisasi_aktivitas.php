@@ -124,17 +124,35 @@
                                     </tbody>
                                 </table>
                                 </p>
-                                Lemburan kamu belum termasuk <mark>JAM ISTIRAHAT</mark> dan <mark>PERJALANAN</mark> pada saat lembur. 
-                                <br>Silahkan tambahkan istirahat dan perjalanan sebagai aktivitas.
+                                        <p class="mb-0">Perhatikan hal-hal berikut:</p>
+                                        <p class="mb-0">1. LEMBUR ini sudah termasuk aktivitas <mark>ISTIRAHAT</mark>.</p>
+                                        <p class="mb-0">2. LEMBUR ini sudah termasuk <mark>PERJALANAN</mark> (jika dinas luar).</p>
+                                        <p class="mb-0">3. Durasi <mark>REALISASI LEMBUR</mark> sudah sesuai dengan durasi lembur aktual yang akan diproses oleh HR.</p>
+                                    </p>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" id="c" name="c" value="1" required>
+                                            Ya, Saya setuju dengan ketentuan di atas.
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
                                 </p>
                                 <!-- Button SUBMIT -->
                                 <?php 
                                 $this->db->where('link_aktivitas', $lembur['id']);
-                                $belum_dikerjakan = $this->db->get_where('aktivitas', ['status' => '1'])->row_array();
-                                if ($belum_dikerjakan) { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
+                                $ada_aktivitas = $this->db->get('aktivitas')->row_array();
+                                if ($ada_aktivitas) {
+                                    $this->db->where('link_aktivitas', $lembur['id']);
+                                    $belum_dikerjakan = $this->db->get_where('aktivitas', ['status' => '1'])->row_array();
+                                    if ($belum_dikerjakan) { ?>
+                                        <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
+                                    <?php } else { ?>
+                                        <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
+                                    <?php }; ?>
                                 <?php } else { ?>
-                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>
+                                    <button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>
                                 <?php }; ?>
                                  <!-- Button BATALKAN & KEMBALI -->
                                 <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>

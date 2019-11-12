@@ -86,6 +86,7 @@
                 </div>
               </div>
             </form>
+          <?= $this->session->flashdata('message'); ?>
           </div>
           <div class="col-md-12 ml-auto mr-auto text-center">
           <!-- <i class="material-icons">perm_phone_msg</i> -->

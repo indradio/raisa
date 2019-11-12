@@ -5,13 +5,7 @@ class Auth extends CI_Controller
 {
     public function index()
     {
-        // $this->form_validation->set_rules('id', 'ID', 'required|trim');
-        // if ($this->form_validation->run() == false) {
-        // $data['title'] = 'Login - Winteq Portal System';
         $this->load->view('auth/index');
-        // } else {
-        //     $this->_login();
-        // }
     }
 
     public function login()
@@ -91,11 +85,21 @@ class Auth extends CI_Controller
                 $this->session->set_flashdata('message', 'masuk');
                 redirect('dashboard');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong Password</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Maaf!</strong> Password kamu SALAH.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username not found</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Maaf!</strong> NPK Tidak ditemukan.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>');
             redirect('auth');
         }
     }
@@ -103,7 +107,12 @@ class Auth extends CI_Controller
     public function logout()
     {
         $this->session->unset_userdata('npk');
-        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">You have been logged out</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Terima kasih!</strong> Telah menggunakan RAISA.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>');
         redirect('auth');
     }
 

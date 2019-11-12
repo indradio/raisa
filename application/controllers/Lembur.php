@@ -638,7 +638,7 @@ class Lembur extends CI_Controller
         $this->db->update('lembur');
 
         // Notification saat mengajukan REALISASI to ATASAN 1
-        $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1_ralisasi']])->row_array();
+        $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1_realisasi']])->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PENGAJUAN REALISASI LEMBUR*" .
