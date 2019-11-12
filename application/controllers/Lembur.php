@@ -740,7 +740,7 @@ class Lembur extends CI_Controller
             }
 
             //Notifikasi ke USER
-            $karyawan = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('inisial')])->row_array();
+            $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DISETUJUI*" .
@@ -764,7 +764,7 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
 
             //Notifikasi ke USER
-            $karyawan = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('inisial')])->row_array();
+            $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DISETUJUI*" .
@@ -971,7 +971,7 @@ class Lembur extends CI_Controller
         $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
-        $message = "*HOREEE LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
+        $message = "*ASYIIK LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
             "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
             "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) ."*". 
             "\r\nDurasi : *" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit*".
