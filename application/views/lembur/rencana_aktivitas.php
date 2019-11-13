@@ -213,7 +213,7 @@
                             <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="4" required>
+                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="5" required>
                                         <?php foreach ($kategori as $k) : ?>
                                             <option value="<?= $k['id']; ?>"><?= $k['nama']; ?></option>
                                         <?php endforeach; ?>
@@ -226,7 +226,6 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                   
                                     <?php
                                         $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
                                         $copro = $this->db->query($queyCopro)->result_array();
@@ -237,18 +236,6 @@
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#kategori').change(function() {
-                                    var kategori = $('#kategori').val();
-                                    if (kategori >= 3) {
-                                        $('#copro').prop('disabled', true);
-                                    } else {
-                                        $('#copro').prop('disabled', false);
-                                    }
-                                });
-                            });
-                        </script>
                         <div class="row">
                             <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
