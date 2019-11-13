@@ -642,7 +642,7 @@
     $(document).ready(function() {
         $('#kategori').change(function() {
             var kategori = $('#kategori').val();
-            if (kategori == 3) {
+            if (kategori >= 3) {
                 // $('#copro').html('<option value="">Pilih Project</option>');
                 $('#copro').prop('disabled', true);
                 $('#copro').selectpicker('refresh');
