@@ -9,7 +9,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">RENCANA - Menunggu Persetujuan Koordinator/Section & Depthead/RDA | <?= date("d-m-Y H:i"); ?></h4>
+            <h4 class="card-title">RENCANA - Menunggu Persetujuan Koordinator/Section & Depthead | <?= date("d-m-Y H:i"); ?></h4>
           </div>
           <div class="card-body">
           <div class="table-responsive">
