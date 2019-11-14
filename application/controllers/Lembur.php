@@ -707,7 +707,6 @@ class Lembur extends CI_Controller
         if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
             $this->db->set('tgl_atasan1_rencana', date('Y-m-d H:i:s'));
             $this->db->set('status', '3');
-            $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
