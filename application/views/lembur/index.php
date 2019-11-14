@@ -5,9 +5,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
                                     $bulan = date('m');
+                                    $tahun = date('Y');
                                     $this->db->where('npk', $this->session->userdata('npk'));
                                     $this->db->where('status !=', '0');
                                     $this->db->where('month(tglmulai)',$bulan);
+                                    $this->db->where('year(tglmulai)',$tahun);
                                     $total_lembur = $this->db->get('lembur');
                                 ?>
                             <div class="card card-stats">
@@ -76,11 +78,11 @@
                           </div> -->
                           <div class="col-lg-3 col-md-6 col-sm-6">
                           <?php 
-                                 $bulan = date('m');
                                  $this->db->select('SUM(tul) as total');
                                  $this->db->where('npk', $this->session->userdata('npk'));
                                  $this->db->where('status', '9');
                                  $this->db->where('month(tglmulai)',$bulan);
+                                 $this->db->where('year(tglmulai)',$tahun);
                                  $this->db->from('lembur');
                           
                                  $totalTUL = $this->db->get()->row()->total;

@@ -8,11 +8,11 @@
                                     $today = date('d');
                                     $bulan = date('m');
                                     $tahun = date('Y');
-                                    $this->db->where('status >', '2');
                                     $this->db->where('year(tglmulai)',$tahun);
                                     $this->db->where('month(tglmulai)',$bulan);
                                     $this->db->where('day(tglmulai)',$today);
                                     $this->db->where('lokasi !=','WTQ');
+                                    $this->db->where('status >', '2');
                                     $lembur_cus = $this->db->get('lembur');
                                 ?>
                             <div class="card card-stats">
@@ -32,12 +32,11 @@
                           </div>
                           <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
-                                    $today = date('d');
-                                    $this->db->where('status >', '2');
                                     $this->db->where('year(tglmulai)',$tahun);
                                     $this->db->where('month(tglmulai)',$bulan);
                                     $this->db->where('day(tglmulai)',$today);
                                     $this->db->where('lokasi','WTQ');
+                                    $this->db->where('status >', '2');
                                     $lembur_wtq = $this->db->get('lembur');
                                 ?>
                             <div class="card card-stats">

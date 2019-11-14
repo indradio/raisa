@@ -765,7 +765,6 @@ class Lembur extends CI_Controller
         else if ($this->session->userdata('posisi_id') == 2) {
             $this->db->set('tgl_atasan2_rencana', date('Y-m-d H:i:s'));
             $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
@@ -839,8 +838,7 @@ class Lembur extends CI_Controller
         else if ($this->session->userdata('posisi_id') == 2) {
             $this->db->set('atasan2_realisasi', $this->session->userdata('inisial'));
             $this->db->set('tgl_atasan2_realisasi', date('Y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->set('admin_ga', '-');
+            $this->db->set('status', '7');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
         }
@@ -885,26 +883,36 @@ class Lembur extends CI_Controller
                 redirect('lembur/persetujuan_lembur/');
             }
             elseif ($lembur['status']=='7'){
-                redirect('lembur/konfirmasi_hr');
+                redirect('lembur/persetujuan_lemburhr');
             }
     }
 
     public function persetujuan_lemburga()
     {
+        date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Konfirmasi Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
-        $today = date('Y-m-d H:i:s');
+        $today = date('d');
+        $bulan = date('m');
+        $tahun = date('Y');
 
-        $this->db->or_where('status >', '2');
-        $this->db->where('tglmulai >=',$today);
-        $this->db->where('admin_ga','-');
-        $data['lembur'] = $this->db->get('lembur')->result_array();
+        $this->db->where('year(tglmulai)',$tahun);
+        $this->db->where('month(tglmulai)',$bulan);
+        $this->db->where('day(tglmulai) >=',$today);
+        $this->db->where('admin_ga',null);
         $this->db->where('status >', '2');
-        $this->db->where('tglmulai >=',$today);
-        $this->db->where('admin_ga !=','-');
+        $this->db->order_by('tglmulai', 'ASC');
+        $data['lembur'] = $this->db->get('lembur')->result_array();
+
+        $this->db->where('year(tglmulai)',$tahun);
+        $this->db->where('month(tglmulai)',$bulan);
+        $this->db->where('day(tglmulai) >=',$today);
+        $this->db->where('admin_ga !=',null);
+        $this->db->where('status >', '2');
         $data['lembur_konfirmasi'] = $this->db->get('lembur')->result_array();
+        
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -930,10 +938,8 @@ class Lembur extends CI_Controller
         $data['sidemenu'] = 'HR';
         $data['sidesubmenu'] = 'Konfirmasi Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $queryLembur = "SELECT *
-        FROM `lembur`
-        WHERE (`status`= '7') ";
-        $data['lembur'] = $this->db->query($queryLembur)->result_array();
+        $data['lembur'] = $this->db->get_where('lembur', ['status' => '7'])->result_array();
+        $data['lembur_ssc'] = $this->db->get_where('lembur', ['status' => '8'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -971,24 +977,24 @@ class Lembur extends CI_Controller
         $this->db->update('lembur');
 
         //Notifikasi ke USER
-        $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-        $my_apikey = "NQXJ3HED5LW2XV440HCG";
-        $destination = $karyawan['phone'];
-        $message = "*ASYIIK LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
-            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
-            "\r\n \r\nNo LEMBUR : *" . $lembur['id'] ."*". 
-            "\r\nNama : *" . $karyawan['nama'] ."*". 
-            "\r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) ."*". 
-            "\r\nDurasi : *" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit*".
-            "\r\n \r\nMendapatkan : *" . $this->input->post('tul') . " TUL*" .
-            "\r\n \r\nHitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
-            "\r\n*INGET* ini masih *Estimasi* ya!. Hasil final sangat mungkin lebih kecil dari ini." .
-            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
-        $api_url = "http://panel.apiwha.com/send_message.php";
-        $api_url .= "?apikey=" . urlencode($my_apikey);
-        $api_url .= "&number=" . urlencode($destination);
-        $api_url .= "&text=" . urlencode($message);
-        json_decode(file_get_contents($api_url, false));
+        // $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+        // $my_apikey = "NQXJ3HED5LW2XV440HCG";
+        // $destination = $karyawan['phone'];
+        // $message = "*ASYIIK LEMBUR KAMU SUDAH DIPROSES OLEH HR*" .
+        //     "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+        //     "\r\n \r\nNo LEMBUR : *" . $lembur['id'] ."*". 
+        //     "\r\nNama : *" . $karyawan['nama'] ."*". 
+        //     "\r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) ."*". 
+        //     "\r\nDurasi : *" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit*".
+        //     "\r\n \r\nMendapatkan : *" . $this->input->post('tul') . " TUL*" .
+        //     "\r\n \r\nHitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
+        //     "\r\n*INGET* ini masih *Estimasi* ya!. Hasil final sangat mungkin lebih kecil dari ini." .
+        //     "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
+        // $api_url = "http://panel.apiwha.com/send_message.php";
+        // $api_url .= "?apikey=" . urlencode($my_apikey);
+        // $api_url .= "&number=" . urlencode($destination);
+        // $api_url .= "&text=" . urlencode($message);
+        // json_decode(file_get_contents($api_url, false));
 
         $this->session->set_flashdata('message', 'setujuilbrhr');
         redirect('lembur/persetujuan_lemburhr');
