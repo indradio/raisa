@@ -6,7 +6,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
                                     $today = date('d');
+                                    $bulan = date('m');
+                                    $tahun = date('Y');
                                     $this->db->where('status >', '2');
+                                    $this->db->where('year(tglmulai)',$tahun);
+                                    $this->db->where('month(tglmulai)',$bulan);
                                     $this->db->where('day(tglmulai)',$today);
                                     $this->db->where('lokasi !=','WTQ');
                                     $lembur_cus = $this->db->get('lembur');
@@ -30,6 +34,8 @@
                                 <?php 
                                     $today = date('d');
                                     $this->db->where('status >', '2');
+                                    $this->db->where('year(tglmulai)',$tahun);
+                                    $this->db->where('month(tglmulai)',$bulan);
                                     $this->db->where('day(tglmulai)',$today);
                                     $this->db->where('lokasi','WTQ');
                                     $lembur_wtq = $this->db->get('lembur');
@@ -53,6 +59,8 @@
                           <?php 
                                     $besok = date('d', strtotime("+1 day", strtotime(date("Y-m-d"))));
                                     $this->db->where('status >', '2');
+                                    $this->db->where('year(tglmulai)',$tahun);
+                                    $this->db->where('month(tglmulai)',$bulan);
                                     $this->db->where('day(tglmulai)',$besok);
                                     $this->db->where('lokasi','WTQ');
                                     $lembur_wtq_besok = $this->db->get('lembur');
@@ -76,6 +84,8 @@
                           <?php 
                                     $lusa = date('d', strtotime("+2 day", strtotime(date("Y-m-d"))));
                                     $this->db->where('status >', '2');
+                                    $this->db->where('year(tglmulai)',$tahun);
+                                    $this->db->where('month(tglmulai)',$bulan);
                                     $this->db->where('day(tglmulai)',$lusa);
                                     $this->db->where('lokasi','WTQ');
                                     $lembur_wtq_lusa = $this->db->get('lembur');

@@ -59,16 +59,18 @@ class Kadep extends CI_Controller
         $data['sidesubmenu'] = 'Laporan Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         
-        $tglawal = $this->input->post('tglawal');
-        $tglakhir = $this->input->post('tglakhir');
+        $tglawal = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));
+        $tglakhir = date("Y-m-d 23:59:00", strtotime($this->input->post('tglakhir')));
         $bulan = date('m');
-        if ($tglawal != null AND $tglakhir != null)
+        $tahun = date('Y');
+        if ($this->input->post('tglawal') != null AND $this->input->post('tglakhir') != null)
         {
-            $data['lembur'] = $this->db->where('day(tglmulai)', $tglawal);
-            $data['lembur'] = $this->db->where('day(tglselesai)', $tglakhir);
+            $data['lembur'] = $this->db->where('tglmulai >=', $tglawal);
+            $data['lembur'] = $this->db->where('tglmulai <=', $tglakhir);
             $data['lembur'] = $this->db->where('status', '9');
             $data['lembur'] = $this->db->get('lembur')->result_array();
         }else{
+            $data['lembur'] = $this->db->where('year(tglmulai)', $tahun);
             $data['lembur'] = $this->db->where('month(tglmulai)', $bulan);
             $data['lembur'] = $this->db->where('status', '9');
             $data['lembur'] = $this->db->get('lembur')->result_array();
