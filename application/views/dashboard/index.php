@@ -180,7 +180,11 @@
                                       <tr>
                                         <td>
                                             <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/kendaraan/taksi.jpg" alt="...">
+                                            <?php if($pn['kepemilikan']=='Pribadi'){ ?>
+                                             <img src="<?= base_url(); ?>assets/img/kendaraan/inova.jpg" alt="...">
+                                            <?php }else{ ?>
+                                              <img src="<?= base_url(); ?>assets/img/kendaraan/taksi.jpg" alt="...">
+                                            <?php }; ?>
                                             </div>
                                         </td>
                                         <td class="td-name">
