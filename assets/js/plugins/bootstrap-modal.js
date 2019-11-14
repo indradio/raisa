@@ -184,3 +184,14 @@ $('#konf_lemburga').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="lokasi"]').val(lokasi)
 })
 
+$('#projectModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var copro = button.data('copro') // Extract info from data-* attributes
+    var deskripsi = button.data('deskripsi') // Extract info from data-* attributes
+    var status = button.data('status')
+    var modal = $(this)
+    modal.find('.modal-body input[name="copro"]').val(copro)
+    modal.find('.modal-body textarea[name="deskripsi"]').val(deskripsi)
+    modal.find('.modal-body input[name="status"]').val(status)
+})
+
