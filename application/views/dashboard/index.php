@@ -180,7 +180,7 @@
                                       <tr>
                                         <td>
                                             <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/kendaraan/avanza.jpg" alt="...">
+                                                <img src="<?= base_url(); ?>assets/img/kendaraan/taksi.jpg" alt="...">
                                             </div>
                                         </td>
                                         <td class="td-name">
