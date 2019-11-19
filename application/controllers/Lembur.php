@@ -679,12 +679,12 @@ class Lembur extends CI_Controller
         {
             $queryRencanaLembur = "SELECT *
             FROM `lembur`
-            WHERE `atasan2_rencana` = '{$karyawan['inisial']}' AND `status`= '3' AND `posisi_id`= 7 ";
+            WHERE `atasan2_rencana` = '{$karyawan['inisial']}' AND `status`= '3' AND `sect_id`= 200 ";
             $data['rencana'] = $this->db->query($queryRencanaLembur)->result_array();
 
             $queryLembur = "SELECT *
             FROM `lembur`
-            WHERE `atasan2_rencana` = '{$karyawan['inisial']}' AND `status`= '6' AND `posisi_id`= 7 ";
+            WHERE `atasan2_rencana` = '{$karyawan['inisial']}' AND `status`= '6' AND `sect_id`= 200 ";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();
         } 
         else 
