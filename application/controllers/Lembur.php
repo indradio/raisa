@@ -1161,12 +1161,35 @@ class Lembur extends CI_Controller
     public function gtJamRelalisai()
     {
         date_default_timezone_set('asia/jakarta');
-        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
-        $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai']));
+        $rencanalembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+        $tglmulai = date("Y-m-d", strtotime($rencanalembur['tglmulai']));
         $this->db->set('tglmulai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
-        $this->db->set('tglselesai_aktual', $tglmulai . ' ' . $this->input->post('jammulai'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
+
+        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array(); 
+        //Hitung total durasi aktivitas
+       $this->db->select('SUM(durasi_menit) as total');
+       $this->db->where('status >', '2');
+       $this->db->where('link_aktivitas', $this->input->post('id'));
+       $this->db->from('aktivitas');
+
+       $totalDMenit = $this->db->get()->row()->total;
+       $totalDJam = $totalDMenit / 60;
+       $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai_aktual'])));
+       
+       $mulai = strtotime($lembur['tglmulai_aktual']);
+       $selesai = strtotime($tglselesai);
+       $durasi = $selesai - $mulai;
+       $jam   = floor($durasi / (60 * 60));
+       $menit = $durasi - $jam * (60 * 60);
+       $menit = floor($menit / 60);
+
+       // Update data LEMBUR
+       $this->db->set('tglselesai_aktual', $tglselesai);
+       $this->db->set('durasi_aktual', $jam . ':' . $menit . ':00');
+       $this->db->where('id', $this->input->post('id'));
+       $this->db->update('lembur');
 
         redirect('lembur/realisasi_aktivitas/' . $this->input->post('id'));
     }

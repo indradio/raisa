@@ -145,8 +145,8 @@
                                         <td><?= $r['keperluan']; ?></td>
                                         <td><?= $r['id']; ?></td>
                                         <td><?= $r['jenis_perjalanan']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
+                                        <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
+                                        <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
                                                 <?php };?>
                                               <?php } else { ?>
                                                 <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
@@ -163,8 +163,8 @@
                                         <td><?= $p['keperluan']; ?></td>
                                         <td><?= $p['id']; ?></td>
                                         <td><?= $p['jenis_perjalanan']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
+                                        <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                        <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                               <?php }; ?>
                                     </tr>
                                     <?php endforeach; ?>
@@ -206,8 +206,8 @@
                                         <td><?= $pn['keperluan']; ?></td>
                                         <td><?= $pn['id']; ?></td>
                                         <td><?= $pn['jenis_perjalanan']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
+                                        <td><?= date('d-M', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
+                                        <td><?= date('d-M', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
