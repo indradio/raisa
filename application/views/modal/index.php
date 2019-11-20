@@ -98,7 +98,7 @@
                                 <label class="col-md-4 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="jamkembali">
+                                    <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
                                     </div>
                                 </div>
                             </div>

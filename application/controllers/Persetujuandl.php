@@ -32,6 +32,7 @@ class Persetujuandl extends CI_Controller
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         if ($rsv['atasan1'] == $this->session->userdata['inisial'] and $rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+            $this->db->set('jamkembali', $this->input->post('jamkembali'));
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
@@ -41,6 +42,7 @@ class Persetujuandl extends CI_Controller
         } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
             if ($rsv['status'] > 2) {
                 $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+                $this->db->set('jamkembali', $this->input->post('jamkembali'));
                 $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
@@ -49,6 +51,7 @@ class Persetujuandl extends CI_Controller
                 redirect('persetujuandl/index');
             } else {
                 $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+                $this->db->set('jamkembali', $this->input->post('jamkembali'));
                 $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
@@ -56,6 +59,7 @@ class Persetujuandl extends CI_Controller
             }
         } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
             $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+            $this->db->set('jamkembali', $this->input->post('jamkembali'));
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->where('id', $this->input->post('id'));
@@ -64,7 +68,6 @@ class Persetujuandl extends CI_Controller
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
             if ($rsv['jenis_perjalanan'] == 'TAPP' or $rsv['jenis_perjalanan'] == 'TA') {
-                $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '3');
                 $this->db->where('id', $this->input->post('id'));
@@ -110,7 +113,6 @@ class Persetujuandl extends CI_Controller
                 $api_url .= "&text=" . urlencode($message);
                 json_decode(file_get_contents($api_url, false));
             } else {
-                $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '5');
                 $this->db->where('id', $this->input->post('id'));
@@ -136,7 +138,6 @@ class Persetujuandl extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
             }
         } elseif ($this->session->userdata['posisi_id'] == '4' or $this->session->userdata['posisi_id'] == '5' or $this->session->userdata['posisi_id'] == '6') {
-            $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
             $this->db->set('status', '2');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
