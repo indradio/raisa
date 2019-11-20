@@ -41,6 +41,22 @@
                   </div>
                 </div>
                 <div class="row">
+                  <label class="col-md-2 col-form-label">COPRO</label>
+                  <div class="col-md-5">
+                    <div class="form-group has-default">
+                    <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                    <option value="NON PROJEK">Non Projek</option>
+                                    <?php
+                                        $queyCopro = "SELECT * FROM project where status != 'CLOSE'";
+                                        $copro = $this->db->query($queyCopro)->result_array();
+                                        foreach ($copro as $c) : ?>
+                                            <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <label class="col-md-2 col-form-label">Keperluan</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">

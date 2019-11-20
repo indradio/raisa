@@ -82,7 +82,7 @@
                                 <label class="col-md-4 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="jamberangkat">
+                                    <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
                                     </div>
                                 </div>
                             </div>

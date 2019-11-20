@@ -74,9 +74,9 @@ class Auth extends CI_Controller
                     'inisial' => $karyawan['inisial'],
                     'nama' => $karyawan['nama'],
                     'posisi_id' => $karyawan['posisi_id'],
-                    // 'div_id' => $karyawan['div_id'],
-                    // 'dept_id' => $karyawan['dept_id'],
-                    // 'section_id' => $karyawan['section_id'],
+                    'div_id' => $karyawan['div_id'],
+                    'dept_id' => $karyawan['dept_id'],
+                    'sect_id' => $karyawan['sect_id'],
                     'atasan1' => $atasan1['npk'],
                     'atasan2' => $atasan2['npk'],
                     'role_id' => $karyawan['role_id']
