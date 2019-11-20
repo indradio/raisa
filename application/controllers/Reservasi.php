@@ -329,7 +329,7 @@ class Reservasi extends CI_Controller
             $rsv = $this->db->query($queryRsv)->row_array();
             $totalRsv = $rsv['COUNT(*)'] + 1;
             $data = [
-                'id' => 'RSV' . date('y') . date('m') . $totalRsv,
+                'id' => 'RSV' . date('ym') . $totalRsv,
                 'tglreservasi' => date('Y-m-d H:i:s'),
                 'npk' => $reservasi_temp['npk'],
                 'nama' => $reservasi_temp['nama'],

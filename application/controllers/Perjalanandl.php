@@ -105,13 +105,13 @@ class Perjalanandl extends CI_Controller
 
         $queryDl = "SELECT COUNT(*)
         FROM `perjalanan`
-        WHERE YEAR(tglberangkat) = YEAR(CURDATE())
+        WHERE YEAR(tglberangkat) = YEAR(CURDATE()) AND MONTH(tglberangkat) = MONTH(CURDATE())
         ";
         $dl = $this->db->query($queryDl)->row_array();
         $totalDl = $dl['COUNT(*)'] + 1;
 
         $data = [
-            'id' => 'DL' . date('y') . $totalDl,
+            'id' => 'DL' . date('ym') . $totalDl,
             'npk' => $this->input->post('npk'),
             'nama' => $this->input->post('nama'),
             'copro' => $this->input->post('copro'),
