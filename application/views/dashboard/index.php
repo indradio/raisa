@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong>Hay Your RAISA!</strong> Punya pertanyaan tentang LEMBUR menggunakan RAISA? Cuss klik <a href="<?= base_url(); ?>assets/pdf/pertanyaan_lembur.pdf" target="_blank">DISINI</a>.
+  <div class="alert alert-rose alert-dismissible fade show" role="alert">
+  <strong>Hay Your RAISA!</strong> Mau dapet COFFEE MAKER? yuk isi survei kepuasan acara FAMILY DAY 2019? Klik <a href="<?= base_url('famday/survey'); ?>" target="_blank">DISINI</a>.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
