@@ -11,8 +11,7 @@
                         <h4 class="card-title">Umpan Balik Kepuasan Acara WINTEQ FAMDAY 2019</h4>
                     </div>
                     <div class="card-body"> -->
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmpm8tdaBASwXNQPpr2H4WPvGNXSRH7Ds713VtpcuzXnWEMA/viewform?embedded=true" width="640" height="3100" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
-                      
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmpm8tdaBASwXNQPpr2H4WPvGNXSRH7Ds713VtpcuzXnWEMA/viewform?embedded=true" width="640" height="3319" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
                     <!-- </div> -->
                     <!-- end content-->
                 <!-- </div> -->
