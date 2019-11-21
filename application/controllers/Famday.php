@@ -27,17 +27,17 @@ class Famday extends CI_Controller
         }
     }
 
-    public function vote()
+    public function survey()
     {
-        $data['sidemenu'] = 'Family Day';
-        $data['sidesubmenu'] = 'Hasil Vote';
+        $data['sidemenu'] = 'Dashboard';
+        $data['sidesubmenu'] = '';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['famday'] = $this->db->get_where('famday', ['npk' =>  $this->session->userdata('npk')])->result_array();
         $data['kary'] = $this->db->get_where('karyawan', ['status' =>  '1'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('famday/vote', $data);
+        $this->load->view('famday/survey', $data);
         $this->load->view('templates/footer');
     }
 

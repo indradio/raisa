@@ -137,34 +137,43 @@
                                                   <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
                                                 </td>
                                                 <?php } else { 
-                                                $rsvstatus = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); ?>
-                                        <span class="badge badge-pill badge-warning"><?= $rsvstatus['nama']; ?></span>
-                                        </td>
-                                        <td><?= $r['anggota']; ?></td>
-                                        <td><?= $r['tujuan']; ?></td>
-                                        <td><?= $r['keperluan']; ?></td>
-                                        <td><?= $r['id']; ?></td>
-                                        <td><?= $r['jenis_perjalanan']; ?></td>
-                                        <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
-                                        <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
+                                                  if ($r['status'] == 1) {?>
+                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
+                                                  <?php }elseif ($r['status'] == 2) {?>
+                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
+                                                  <?php }elseif ($r['status'] == 3) {?>
+                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan DWA</span>
+                                                  <?php }elseif ($r['status'] == 4) {?>
+                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
+                                                  <?php }elseif ($r['status'] == 5) {?>
+                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
+                                                  <?php };?>
+                                                  </td>
+                                                  <td><?= $r['anggota']; ?></td>
+                                                  <td><?= $r['tujuan']; ?></td>
+                                                  <td><?= $r['keperluan']; ?></td>
+                                                  <td><?= $r['id']; ?></td>
+                                                  <td><?= $r['jenis_perjalanan']; ?></td>
+                                                  <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
+                                                  <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
                                                 <?php };?>
                                               <?php } else { ?>
                                                 <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                                                 <?php if ($p['status'] == 1) {?>
                                                   <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
-                                                  <?php }elseif ($p['status'] == 2) {?>
+                                                <?php }elseif ($p['status'] == 2) {?>
                                                   <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span>
-                                                  <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
+                                                <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
                                                   <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
                                                 <?php };?>
-                                        </td>
-                                        <td><?= $p['anggota']; ?></td>
-                                        <td><?= $p['tujuan']; ?></td>
-                                        <td><?= $p['keperluan']; ?></td>
-                                        <td><?= $p['id']; ?></td>
-                                        <td><?= $p['jenis_perjalanan']; ?></td>
-                                        <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                        <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
+                                                </td>
+                                                <td><?= $p['anggota']; ?></td>
+                                                <td><?= $p['tujuan']; ?></td>
+                                                <td><?= $p['keperluan']; ?></td>
+                                                <td><?= $p['id']; ?></td>
+                                                <td><?= $p['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                                <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                               <?php }; ?>
                                     </tr>
                                     <?php endforeach; ?>

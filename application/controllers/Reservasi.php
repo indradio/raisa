@@ -378,7 +378,7 @@ class Reservasi extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
             } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
                 $this->db->set('atasan2', null);
-                $this->db->set('status', '2');
+                $this->db->set('status', '1');
                 $this->db->where('id', $data['id']);
                 $this->db->update('reservasi');
 

@@ -50,7 +50,7 @@
                                         <?php
                                         $queryRsv = "SELECT *
                                             FROM `reservasi`
-                                            WHERE `atasan1` = '{$karyawan['inisial']}' or `atasan2` = '{$karyawan['inisial']}' and (`status` = 1 or `status` = 2)
+                                            WHERE (`atasan1` = '{$karyawan['inisial']}' and `status` = 1) or (`atasan2` = '{$karyawan['inisial']}' and `status` = 2)
                                             ORDER BY `id` DESC
                                             ";
                                         $reservasi = $this->db->query($queryRsv)->result_array();
