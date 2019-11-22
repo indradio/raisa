@@ -50,7 +50,7 @@
                               </div>
                             </div>
                           </div> -->
-                          <div class="col-lg-3 col-md-6 col-sm-6">
+                          <!-- <div class="col-lg-3 col-md-6 col-sm-6">
                           <?php 
                                   $bulan = date('m');
                                   $this->db->select('SUM(durasi_aktual) as total');
@@ -75,7 +75,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-lg-3 col-md-6 col-sm-6">
                           <?php 
                                  $this->db->select('SUM(tul) as total');
