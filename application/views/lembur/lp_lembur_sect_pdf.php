@@ -22,17 +22,17 @@
 
 
       //Section
-      $nama1 = $this->db->get_where('karyawan_sect', ['id' => $sect_id])->row_array();
-      $nama1['nama']; 
+      // $nama1 = $this->db->get_where('karyawan_sect', ['id' => $sect_id])->row_array();
+      // $nama1['nama']; 
 
-      $sect = $this->db->get_where('karyawan', ['sect_id' => $sect_id])->row_array();
-      $sect['nama'];
-      //Dept
-      $nama2 = $this->db->get_where('karyawan_dept', ['id' => $dept_id])->row_array();
-      $nama2['nama']; 
+      // $sect = $this->db->get_where('karyawan', ['sect_id' => $sect_id])->row_array();
+      // $sect['nama'];
+      // //Dept
+      // $nama2 = $this->db->get_where('karyawan_dept', ['id' => $dept_id])->row_array();
+      // $nama2['nama']; 
 
-      $dep = $this->db->get_where('karyawan', ['dept_id' => $dept_id])->row_array();
-      $dep['nama'];
+      // $dep = $this->db->get_where('karyawan', ['dept_id' => $dept_id])->row_array();
+      // $dep['nama'];
 
 
       $pdf->SetFont('Arial','',6);
@@ -44,7 +44,7 @@
       $pdf->Cell(0,5,'',0,1,0);  
 
       $pdf->SetFont('Arial','B',6);
-      $pdf->Cell(55,5,'SEKSI : '.$nama1['nama']. ' ('.$nama2['inisial'].')',1,0,1);
+      $pdf->Cell(55,5,'SEKSI : '.$section. ' ('.$department.')',1,0,1);
       $pdf->SetFont('Arial','',5);
       $pdf->Cell(64,7,'',0,0,0);
       $pdf->Cell(75,7,'',0,0,0);
@@ -70,11 +70,15 @@
       $pdf->Cell(14,5, $l['id'],1,0,'C',1);
       $pdf->Cell(30,5, $l['nama'],1,0,1);
       $pdf->Cell(7,5, $l['npk'],1,0,'C',1);
-      $pdf->Cell(30,5, date('d-M H:i', strtotime($l['tglmulai'])),1,0,'C',1);
-      $pdf->Cell(30,5, date('d-M H:i', strtotime($l['tglselesai'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('d.M.Y', strtotime($l['tglmulai'])),1,0,'C',1);
+      $pdf->Cell(10,5, date('H:i', strtotime($l['tglmulai'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('d.M.Y', strtotime($l['tglselesai'])),1,0,'C',1);
+      $pdf->Cell(10,5, date('H:i', strtotime($l['tglselesai'])),1,0,'C',1);
       $pdf->Cell(12,5, date('H:i', strtotime($l['durasi'])),1,0,'C',0);
-      $pdf->Cell(30,5, date('d-M H:i', strtotime($l['tglmulai_aktual'])),1,0,'C',1);
-      $pdf->Cell(30,5, date('d-M H:i', strtotime($l['tglselesai_aktual'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('d.M.Y', strtotime($l['tglmulai_aktual'])),1,0,'C',1);
+      $pdf->Cell(10,5, date('H:i', strtotime($l['tglmulai_aktual'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('d.M.Y', strtotime($l['tglselesai_aktual'])),1,0,'C',1);
+      $pdf->Cell(10,5, date('H:i', strtotime($l['tglselesai_aktual'])),1,0,'C',1);
       $pdf->Cell(12,5, date('H:i', strtotime($l['durasi_aktual'])),1,1,'C',0);
 
       endforeach;
@@ -84,8 +88,8 @@
 
       
       $pdf->Cell(127,5,'',0,0,'C',1);
-      $pdf->Cell(36,5,'Section',1,0,'C',1);
-      $pdf->Cell(36,5,'Dept.head',1,1,'C',1);
+      $pdf->Cell(36,5,'Kepala Seksi / RDA',1,0,'C',1);
+      $pdf->Cell(36,5,'Kepala Departemen',1,1,'C',1);
       
 
       $pdf->Cell(127,5, '',0,0,'C',1);
@@ -95,8 +99,8 @@
       $pdf->Ln(-6);
       $pdf->SetFont('Arial','B',6);
       $pdf->Cell(127,5, '',0,0,'C',0);
-      $pdf->Cell(36,5, ''.$sect['nama'],0,0,'C',0);
-      $pdf->Cell(36,5, ''.$dep['nama'],0,0,'C',0);
+      $pdf->Cell(36,5, ''.$secthead,0,0,'C',0);
+      $pdf->Cell(36,5, ''.$depthead,0,0,'C',0);
       
 
       $pdf->Ln(-12);

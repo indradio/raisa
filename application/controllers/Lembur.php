@@ -1187,23 +1187,40 @@ class Lembur extends CI_Controller
     {
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Laporan Lembur';
+        $sect = $this->db->get_where('karyawan_sect', ['id' => $this->input->post('sect_id')])->row_array();
+        $this->db->where('sect_id', $this->input->post('sect_id'));
+        $this->db->where('posisi_id', '5');
+        $this->db->or_where('sect_id', $this->input->post('sect_id'));
+        $this->db->where('posisi_id', '6');
+        $sh = $this->db->get('karyawan')->row_array();
 
-        $section = $this->input->post('section');
-        $lembur = $this->db->get_where('lembur', ['sect_id' =>  $this->input->post('section')])->row_array();
-        $dept = $lembur['dept_id'];
+        $dept = $this->db->get_where('karyawan_dept', ['id' => $sect['dept_id']])->row_array();
+        $this->db->where('dept_id', $sect['dept_id']);
+        $this->db->where('posisi_id', '3');
+        $dh = $this->db->get('karyawan')->row_array();
 
         $tglawal = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));
         $tglakhir = date("Y-m-d 23:59:00", strtotime($this->input->post('tglakhir')));
-        $querylembur = "SELECT * 
-                        FROM `lembur` 
-                        WHERE `tglmulai` >= '$tglawal' AND `tglselesai` <= '$tglakhir' AND `sect_id` = '$section' AND `status` = '9'
-                        ORDER BY `tglmulai` ASC
-                        ";
-        $data['lembur'] = $this->db->query($querylembur)->result_array();
+        // $querylembur = "SELECT * 
+        //                 FROM `lembur` 
+        //                 WHERE `tglmulai` >= '$tglawal' AND `tglselesai` <= '$tglakhir' AND `sect_id` = '$section' AND `status` = '9'
+        //                 ORDER BY `tglmulai` ASC
+        //                 ";
+        // $data['lembur'] = $this->db->query($querylembur)->result_array();
+
+        $this->db->where('tglmulai >=',$tglawal);
+        $this->db->where('tglmulai <=',$tglakhir);
+        $this->db->where('sect_id',$this->input->post('sect_id'));
+        $this->db->where('status >', '7');
+        $this->db->order_by('tglmulai', 'ASC');
+        $data['lembur'] = $this->db->get('lembur')->result_array();
+
         $data['tglawal'] = $tglawal;
         $data['tglakhir'] = $tglakhir;
-        $data['sect_id'] = $section;
-        $data['dept_id'] = $dept;
+        $data['section'] = $sect['nama'];
+        $data['department'] = $dept['inisial'];
+        $data['secthead'] = $sh['nama'];
+        $data['depthead'] = $dh['nama'];
         
         $this->load->view('lembur/lp_lembur_sect_pdf', $data);
     }

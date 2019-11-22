@@ -137,9 +137,9 @@
                             <div class="row">
                                 <label class="col-md-4 col-form-label">Section</label>
                                 <div class="col-md-7">
-                                        <select class="selectpicker" name="section" id="section" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true">
+                                        <select class="selectpicker" name="sect_id" id="sect_id" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true">
                                         <?php
-                                            $querySection = "SELECT * FROM karyawan_sect ";
+                                            $querySection = "SELECT * FROM karyawan_sect ORDER BY id ASC";
                                             $section = $this->db->query($querySection)->result_array();
                                             foreach ($section as $s) : ?>
                                                 <option data-subtext="<?= $s['inisial']; ?>" value="<?= $s['id']; ?>"><?= $s['nama']; ?></option>
