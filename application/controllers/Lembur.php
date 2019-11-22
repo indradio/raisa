@@ -1085,6 +1085,31 @@ class Lembur extends CI_Controller
         $this->load->view('lembur/reportlbr', $data);
     }
 
+     public function report_lembur()
+    {
+        $data['sidemenu'] = 'Lembur';
+        $data['sidesubmenu'] = 'LemburKu';
+
+        $section = $this->input->post('section');
+        $lembur = $this->db->get_where('lembur', ['sect_id' =>  $this->input->post('section')])->row_array();
+        $l = $lembur['dept_id'];
+
+        $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglmulai')));
+        $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglselesai')));
+        $querylembur = "SELECT * 
+                        FROM `lembur` 
+                        WHERE `tglmulai` >= '$tglmulai' AND `tglselesai` <= '$tglselesai' AND `sect_id` = {$section} AND (`status` = '9')
+                        ";
+        $data['lembur'] = $this->db->query($querylembur)->result_array();
+        $data['tglmulai'] = $tglmulai;
+        $data['tglselesai'] = $tglselesai;
+        $data['sect_id'] = $section;
+        $data['dept_id'] = $l;
+        
+        $this->load->view('lembur/reportlbr2', $data);
+    }
+
+
     public function cari_lembur_hr()
     {
         $data['sidemenu'] = 'HR';
@@ -1093,6 +1118,7 @@ class Lembur extends CI_Controller
 
         $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglmulai')));
         $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglselesai')));
+
         $querylembur = "SELECT *
                                     FROM `lembur`
                                     WHERE `tglmulai` >= '$tglmulai' AND `tglselesai` <= '$tglselesai' AND (`status` = '9')

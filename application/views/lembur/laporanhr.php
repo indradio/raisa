@@ -17,19 +17,31 @@
                         <div class="material-datatables">
                             <form action="<?= base_url('lembur/cari_lembur_hr'); ?>" method="post">
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Dari Tanggal</label>
+                                    <label class="col-md-1 col-form-label">Dari Tanggal</label>
                                     <div class="col-md-2">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control datepicker" id="tglmulai" name="tglmulai">
                                         </div>
                                     </div>
-                                    <label class="col-md-2 col-form-label">Sampai Tanggal</label>
+                                    <label class="col-md-1 col-form-label">Sampai Tanggal</label>
                                     <div class="col-md-2">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control datepicker" id="tglselesai" name="tglselesai">
                                         </div>
                                     </div>
+                                    <!-- <label class="col-md-1 col-form-label">Section</label>
+                                    <div class="col-md-2">
+                                        <select class="selectpicker" name="section" id="section" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true">
+                                        <?php
+                                            $querySection = "SELECT * FROM karyawan_sect ";
+                                            $section = $this->db->query($querySection)->result_array();
+                                            foreach ($section as $s) : ?>
+                                                <option data-subtext="<?= $s['nama']; ?>" value="<?= $s['id']; ?>"><?= $s['inisial']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    </div> -->
                                     <div class="col-md-1"></div>
+                                    <a href="#" id="section" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#sectionModal">Pilih</a>
                                     <div class="col-md-1">
                                         <button type="submit" class="btn btn-rose">Cari</a>
                                     </div>
@@ -99,3 +111,60 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+<!-- Modal Cari Section-->
+<div class="modal fade" id="sectionModal" tabindex="-1" role="dialog" aria-labelledby="sectionModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">PILIH SECTION</h4>
+                    </div>
+                </div>
+                <form class="form-horizontal" method="post" action="<?= base_url('lembur/report_lembur'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-ml-4 col-form-label">Tgl Mulai</label>
+                                <div class="col-md-7">
+                                    <div class="form-group has-default" id="tglmulai">
+                                        <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-ml-4 col-form-label">Tgl Selesai</label>
+                                <div class="col-md-7">
+                                    <div class="form-group has-default" id="tglmulai">
+                                        <input type="text" class="form-control datetimepicker" id="tglselesai" name="tglselesai" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-ml-5 col-form-label">Pilih Section</label>
+                                <div class="col-md-5">
+                                    <div class="col-md-2">
+                                        <select class="selectpicker" name="section" id="section" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true">
+                                        <?php
+                                            $querySection = "SELECT * FROM karyawan_sect ";
+                                            $section = $this->db->query($querySection)->result_array();
+                                            foreach ($section as $s) : ?>
+                                                <option data-subtext="<?= $s['nama']; ?>" value="<?= $s['id']; ?>"><?= $s['inisial']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-success" target="_blank">Cari</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

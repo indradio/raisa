@@ -128,7 +128,7 @@ $('#ubahAktivitas').on('show.bs.modal', function (event) {
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
     modal.find('.modal-body textarea[name="aktivitas"]').val(aktivitas)
-    modal.find('.modal-body input[name="durasi"]').val(durasi)
+    modal.find('.modal-body select[name="durasi"]').val(durasi)
 
 })
 
@@ -193,5 +193,25 @@ $('#projectModal').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="copro"]').val(copro)
     modal.find('.modal-body textarea[name="deskripsi"]').val(deskripsi)
     modal.find('.modal-body input[name="status"]').val(status)
+})
+
+$('#ubahMailstone').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var id = button.data('id') 
+    var milestone = button.data('milestone') 
+    var tglmulai_wbs = button.data('tglmulai_wbs')
+    var tglselesai_wbs = button.data('tglselesai_wbs')
+    var modal = $(this)
+    modal.find('.modal-body input[name="id"]').val(id)
+    modal.find('.modal-body textarea[name="milestone"]').val(milestone)
+    modal.find('.modal-body input[name="tglmulai_wbs"]').val(tglmulai_wbs)
+    modal.find('modal-body input[name="tglselesai_wbs"]').val(tglselesai_wbs)
+})
+
+$('#hapusAktivitas').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var id = button.data('id') 
+    var modal = $(this)
+    modal.find('.modal-body input[name="id"]').val(id)
 })
 

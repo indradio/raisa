@@ -63,14 +63,21 @@
                                             <td><?= $wbs['progres']; ?></td>
                                             <td><?= $wbs['status']; ?></td>
                                             <td class="text-right">
-                                                <?php if ($wbs['tglselesai_wbs'] < date('Y-m-d')) { ?>
-                                                    <a href="#" class="btn btn-round btn-danger btn-sm disabled">LATE</a>
-                                                <?php } elseif ($wbs['tglselesai_wbs'] == date('Y-m-d')) { ?>
-                                                    <a href="#" class="btn btn-round btn-warning btn-sm disabled">LAST MINUTE</a>
-                                                <?php } else if ($wbs['tglselesai_wbs'] > date('Y-m-d')) { ?>
-                                                    <a href="#" class="btn btn-round btn-success btn-sm disabled">ON GOING</a>
-                                                <?php }; ?>
+                                            <?php if($wbs['level']=='1' AND $wbs['jumlah_aktivitas']=='0'){ ?>
+                                                <a href="#" class="btn btn-sm btn-round btn-info btn-sm" data-toggle="modal" data-target="#ubahMailstone" data-id="<?= $wbs['id']; ?>" data-milestone="<?= $wbs['milestone']; ?>" data-tglmulai="<?= $wbs['tglmulai_wbs']; ?>" data-tglselesai_wbs="<?= $wbs['tglselesai_wbs']; ?>" >UBAH</a>
+                                                <a href="" class="btn btn-round btn-danger btn-sm" data-toggle="modal" data-target="#hapusAktivitas" data-id="<?=$wbs['id']; ?>">HAPUS</a>
+                                            <?php } else if ($wbs['level']=='2'){ ?>
+                                                <a href="#" class="btn btn-sm btn-round btn-info btn-sm" data-toggle="modal" data-target="#ubahAktivitas" data-id="<?= $wbs['id']; ?>" data-aktivitas="<?= $wbs['aktivitas']; ?>" data-durasi="<?= $wbs['durasi']; ?>">UBAH</a>
+                                                <a href="" class="btn btn-round btn-danger btn-sm" data-toggle="modal" data-target="#hapusAktivitas" data-id="<?=$wbs['id']; ?>">HAPUS</a>
+                                            <?php }; ?>
                                             </td>
+                                            <!-- <?php if ($wbs['tglselesai_wbs'] < date('Y-m-d')) { ?>
+                                                <a href="#" class="btn btn-round btn-danger btn-sm disabled">LATE</a>
+                                            <?php } elseif ($wbs['tglselesai_wbs'] == date('Y-m-d')) { ?>
+                                                <a href="#" class="btn btn-round btn-warning btn-sm disabled">LAST MINUTE</a>
+                                            <?php } else if ($wbs['tglselesai_wbs'] > date('Y-m-d')) { ?>
+                                                <a href="#" class="btn btn-round btn-success btn-sm disabled">ON GOING</a>
+                                            <?php }; ?> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -120,6 +127,74 @@
                     </div>
                 </div>
                 <form class="form" method="post" action="<?= base_url('project/tmbahMilestone'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row" hidden>
+                                <label class="col-md-3 col-form-label">Copro</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="copro" name="copro" value="<?= $project['copro']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
+                                <label class="col-md-3 col-form-label">ID</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="id" name="id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Milestone</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <textarea rows="3" class="form-control" id="milestone" name="milestone" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Tgl Mulai</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Tgl Selesai</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control datetimepicker" id="tglselesai" name="tglselesai" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-success btn-round">SIMPAN</button>
+                                <br>
+                                <button type="button" class="btn btn-default btn-round" data-dismiss="modal">TUTUP</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- UBAH MAILSTONE -->
+<div class="modal fade" id="ubahMailstone" tabindex="-1" role="dialog" aria-labelledby="ubahMailstoneTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-success text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">UBAH MAILSTONE</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('project/ubahMilestone'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row" hidden>
@@ -274,6 +349,157 @@
                                 <button type="button" class="btn btn-default btn-round" data-dismiss="modal">TUTUP</button>
                             </div>
                         </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL UBAH AKTIVITAS -->
+<div class="modal fade" id="ubahAktivitas" tabindex="-1" role="dialog" aria-labelledby="ubahAktivitasTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-success text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">UBAH AKTIVITAS</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('project/ubahAkt'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row" hidden>
+                                <label class="col-md-3 col-form-label">Copro</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="copro" value="<?= $project['copro']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
+                                <label class="col-md-3 col-form-label">ID</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="id" name="id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
+                                <label class="col-md-3 col-form-label">Pilih Milestone</label>
+                                <div class="col-md-4">
+                                    <div class="form-group has-default">
+                                       <select class="selectpicker" name="milestone" id="milestone" data-style="select-with-transition" title="Pilih" data-size="4">
+                                       <?php 
+                                            $queryWbs = "SELECT * FROM wbs WHERE copro = {$project['copro']} ";
+                                            $wbs = $this->db->query($queryWbs)->result_array();
+                                            foreach ($wbs as $wbs) : ?>
+                                                <option value="<?= $wbs['id']; ?>"><?= $wbs['milestone']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Aktivitas</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <textarea rows="3" class="form-control" id="aktivitas" name="aktivitas" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Tgl Mulai</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(function () {
+                                     $('#tglmulai').datetimepicker({  
+                                     minDate:new Date(),
+                                     disabledDates: [new Date()]
+                                    });
+                                });
+                            </script>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Tgl Selesai</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control datetimepicker" id="tglselesai" name="tglselesai" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                            <label class="col-md-3 col-form-label">Durasi</label>
+                            <div class="col-md-8">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                                        <?php
+                                            $durasi = $this->db->get('jam')->result_array();
+                                            foreach ($durasi as $d) :
+                                                echo '<option value="' . $d['id'] . '"';
+                                                if ($d['id'] == $wbs['durasi']) {
+                                                    echo 'selected';
+                                                }
+                                                echo '>' . $d['jam'] . '</option>' . "\n";
+                                            endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-success btn-round">SIMPAN</button>
+                                <br>
+                                <button type="button" class="btn btn-default btn-round" data-dismiss="modal">TUTUP</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- HAPUS  -->
+<div class="modal fade" id="hapusAktivitas" tabindex="-1" role="dialog" aria-labelledby="hapusAktivitasTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">HAPUS</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('project/hapus'); ?>">
+                    <div class="modal-body">
+                        <div class="row" hidden>
+                                <label class="col-md-5 col-form-label">Copro</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="copro" value="<?= $project['copro']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
+                                <label class="col-md-5 col-form-label">ID</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="id" name="id">
+                                    </div>
+                                </div>
+                            </div>
+                        <input type="text" class="form-control disabled" value="Hapus Aktivitas ini..?">
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger btn-round">HAPUS</button>
+                        <button type="button" class="btn btn-default btn-round" data-dismiss="modal">BATAL</button>
                     </div>
                 </form>
             </div>
