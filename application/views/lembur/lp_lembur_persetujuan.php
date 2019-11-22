@@ -31,7 +31,7 @@
                   <tr>
                       <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
                       <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                      <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
                       <?php if ($l['status']==2){ ?>
                         <td><span class="badge badge-pill badge-warning">Menunggu <?= $l['atasan1_rencana']; ?></span></td>
                       <?php }elseif ($l['status']==3){ ?>
