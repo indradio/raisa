@@ -1183,28 +1183,28 @@ class Lembur extends CI_Controller
         $this->load->view('lembur/reportlbr', $data);
     }
 
-     public function report_lembur()
+     public function report_lembur_sect()
     {
         $data['sidemenu'] = 'Lembur';
-        $data['sidesubmenu'] = 'LemburKu';
+        $data['sidesubmenu'] = 'Laporan Lembur';
 
         $section = $this->input->post('section');
         $lembur = $this->db->get_where('lembur', ['sect_id' =>  $this->input->post('section')])->row_array();
-        $l = $lembur['dept_id'];
+        $dept = $lembur['dept_id'];
 
-        $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglmulai')));
-        $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglselesai')));
+        $tglawal = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));
+        $tglakhir = date("Y-m-d 23:59:00", strtotime($this->input->post('tglakhir')));
         $querylembur = "SELECT * 
                         FROM `lembur` 
-                        WHERE `tglmulai` >= '$tglmulai' AND `tglselesai` <= '$tglselesai' AND `sect_id` = {$section} AND (`status` = '9')
+                        WHERE `tglmulai` >= '$tglawal' AND `tglselesai` <= '$tglakhir' AND `sect_id` = '$section' AND `status` = '9'
                         ";
         $data['lembur'] = $this->db->query($querylembur)->result_array();
-        $data['tglmulai'] = $tglmulai;
-        $data['tglselesai'] = $tglselesai;
+        $data['tglmulai'] = $tglawal;
+        $data['tglselesai'] = $tglakhir;
         $data['sect_id'] = $section;
-        $data['dept_id'] = $l;
+        $data['dept_id'] = $dept;
         
-        $this->load->view('lembur/reportlbr2', $data);
+        $this->load->view('lembur/lp_lembur_sect_pdf', $data);
     }
 
 
@@ -1214,8 +1214,8 @@ class Lembur extends CI_Controller
         $data['sidesubmenu'] = 'Laporan Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
-        $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglmulai')));
-        $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglselesai')));
+        $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));
+        $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglakhir')));
 
         $querylembur = "SELECT *
                                     FROM `lembur`
