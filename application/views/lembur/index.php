@@ -49,7 +49,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-lg-3 col-md-6 col-sm-6">
                           <?php 
                                   $bulan = date('m');
@@ -75,7 +75,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div> -->
+                          </div>
                           <div class="col-lg-3 col-md-6 col-sm-6">
                           <?php 
                                  $this->db->select('SUM(tul) as total');
@@ -153,11 +153,12 @@
                     <tr>
                       <td><?= $l['id']; ?></td>
                       <td><?= $l['tglpengajuan']; ?></td>
-                      <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                           <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4' or $l['status']== '10' or $l['status']== '11') {?>
-                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                            <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
                           <?php } else { ?>
-                      <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
+                            <td><?= date('d-M H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                            <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                           <?php }; ?>
                       <td><?= $l['tul']; ?></td>
                       <td><?= $l['admin_ga']; ?></td>

@@ -46,7 +46,7 @@
                                     <label class="col-ml-5 col-form-label">Durasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi'])).' Jam / '. $lembur['aktivitas_rencana']; ?> Aktivitas">
+                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi_rencana'])).' Jam / '. $lembur['aktivitas_rencana']; ?> Aktivitas">
                                         </div>
                                     </div>
                                 </div>

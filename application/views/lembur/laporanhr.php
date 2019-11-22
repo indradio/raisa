@@ -66,9 +66,9 @@
                                     <td><?= $l['id']; ?></td>
                                     <td><?= $l['npk']; ?></td>
                                     <td><?= $l['nama']; ?></td>
-                                    <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
-                                    <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
-                                    <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                                    <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                                    <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktial'])); ?></td>
+                                    <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>
                                             <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>

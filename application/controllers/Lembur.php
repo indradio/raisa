@@ -33,7 +33,7 @@ class Lembur extends CI_Controller
         foreach ($rencanalembur as $l) :
             // cari selisih
             $sekarang = strtotime(date('Y-m-d H:i:s'));
-            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+1 hours', strtotime($l['tglselesai']))));
+            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+1 hours', strtotime($l['tglmulai']))));
 
             if ($tempo < $sekarang) {
                 $this->db->set('catatan', "Waktu RENCANA LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
@@ -61,6 +61,7 @@ class Lembur extends CI_Controller
                 // json_decode(file_get_contents($api_url, false));
             }
         endforeach;
+        // End Auto Batalkan LEMBUR
 
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Rencana';
@@ -68,7 +69,7 @@ class Lembur extends CI_Controller
         $npk = $this->session->userdata('npk');
         $queryLembur = "SELECT *
         FROM `lembur`
-        WHERE( `status`= '1' OR `status`= '2' OR `status`= '3' OR `status`= '10' OR `status`= '11') and `npk`= '$npk' ";
+        WHERE (`status`= '1' OR `status`= '2' OR `status`= '3') and `npk`= '$npk' ";
         $data['lembur'] = $this->db->query($queryLembur)->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -85,7 +86,7 @@ class Lembur extends CI_Controller
         $npk = $this->session->userdata('npk');
         $queryLembur = "SELECT *
         FROM `lembur`
-        WHERE( `status`= '4' OR `status`= '5' OR `status`= '6' OR `status`= '12' OR `status`= '13') and `npk`= '$npk' ";
+        WHERE (`status`= '4' OR `status`= '5' OR `status`= '6') and `npk`= '$npk' ";
         $data['lembur'] = $this->db->query($queryLembur)->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -127,7 +128,7 @@ class Lembur extends CI_Controller
                     'atasan2_rencana' => $atasan2['inisial'],
                     'atasan1_realisasi' => $atasan1['inisial'],
                     'atasan2_realisasi' => $atasan2['inisial'],
-                    'durasi' => '00:00:00',
+                    'durasi_rencana' => '00:00:00',
                     'durasi_aktual' => '00:00:00',
                     'aktivitas_rencana' => '0',
                     'aktivitas' => '0',
@@ -144,7 +145,6 @@ class Lembur extends CI_Controller
     public function tambah_harilain()
     {  
         //validasi jam hari kerja dan jam hari libur BELUM
-         
         date_default_timezone_set('asia/jakarta');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
@@ -171,8 +171,10 @@ class Lembur extends CI_Controller
                 'atasan2_rencana' => $atasan2['inisial'],
                 'atasan1_realisasi' => $atasan1['inisial'],
                 'atasan2_realisasi' => $atasan2['inisial'],
-                'durasi' => '00:00:00',
+                'durasi_rencana' => '00:00:00',
                 'durasi_aktual' => '00:00:00',
+                'aktivitas_rencana' => '0',
+                'aktivitas' => '0',
                 'status' => '1',
                 'posisi_id' => $karyawan['posisi_id'],
                 'div_id' => $karyawan['div_id'],
@@ -218,8 +220,10 @@ class Lembur extends CI_Controller
                 'atasan2_rencana' => $atasan2['inisial'],
                 'atasan1_realisasi' => $atasan1['inisial'],
                 'atasan2_realisasi' => $atasan2['inisial'],
-                'durasi' => '00:00:00',
+                'durasi_rencana' => '00:00:00',
                 'durasi_aktual' => '00:00:00',
+                'aktivitas_rencana' => '0',
+                'aktivitas' => '0',
                 'status' => '1',
                 'posisi_id' => $karyawan['posisi_id'],
                 'div_id' => $karyawan['div_id'],
@@ -350,7 +354,7 @@ class Lembur extends CI_Controller
 
         // Update data LEMBUR
         $this->db->set('tglselesai', $tglselesai);
-        $this->db->set('durasi', $jam . ':' . $menit . ':00');
+        $this->db->set('durasi_rencana', $jam . ':' . $menit . ':00');
         $this->db->set('aktivitas_rencana', $totalAktivitas);
         $this->db->where('id', $this->input->post('link_aktivitas'));
         $this->db->update('lembur');
@@ -396,7 +400,7 @@ class Lembur extends CI_Controller
 
         // Update data LEMBUR
         $this->db->set('tglselesai', $tglselesai);
-        $this->db->set('durasi', $jam . ':' . $menit . ':00');
+        $this->db->set('durasi_rencana', $jam . ':' . $menit . ':00');
         $this->db->where('id', $this->input->post('link_aktivitas'));
         $this->db->update('lembur');
 
@@ -443,7 +447,7 @@ class Lembur extends CI_Controller
 
         // Update data LEMBUR
         $this->db->set('tglselesai', $tglselesai);
-        $this->db->set('durasi', $jam . ':' . $menit . ':00');
+        $this->db->set('durasi_rencana', $jam . ':' . $menit . ':00');
         $this->db->set('aktivitas_rencana', $totalAktivitas);
         $this->db->where('id', $aktivitas['link_aktivitas']);
         $this->db->update('lembur');
@@ -694,7 +698,7 @@ class Lembur extends CI_Controller
             "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *RENCANA LEMBUR* dengan detil berikut :" .
             "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
             "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-            "\r\nDurasi :" . date('H', strtotime($lembur['durasi'])) ." Jam " . date('i', strtotime($lembur['durasi']))." Menit." .
+            "\r\nDurasi :" . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
             "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
@@ -799,9 +803,12 @@ class Lembur extends CI_Controller
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN RENCANA LEMBUR*" .
-                "\r\n \r\n*" . $lembur['nama'] . "* mengajukan *LEMBUR* pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai'])) . " dengan durasi " . date('H', strtotime($lembur['durasi'])) ." Jam " . date('i', strtotime($lembur['durasi']))." Menit.".
-                "\r\nLEMBUR ini telah disetujui oleh *" . $lembur['atasan1_rencana'] . "*" .
-                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *RENCANA LEMBUR* dengan detil berikut :" .
+            "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
+            "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+            "\r\nDurasi :" . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+            "\r\n \r\nRENCANA LEMBUR ini telah disetujui oleh *". $this->session->userdata('inisial') ."*".
+            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
             $api_url = "http://panel.apiwha.com/send_message.php";
             $api_url .= "?apikey=" . urlencode($my_apikey);
             $api_url .= "&number=" . urlencode($destination);
@@ -833,8 +840,10 @@ class Lembur extends CI_Controller
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DISETUJUI*" .
-                "\r\n \r\nRencana *LEMBUR* kamu pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai'])) . " dengan durasi " . date('H', strtotime($lembur['durasi'])) ." Jam " . date('i', strtotime($lembur['durasi']))." Menit.".
-                "\r\nTelah disetujui oleh *" . $lembur['atasan2_rencana'] . "*" .
+                "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
+                "\r\n \r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                "\r\nDurasi " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit.".
+                "\r\n \r\nTelah disetujui oleh *" . $this->session->userdata('inisial') . "*" .
                 "\r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
                 "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
@@ -856,8 +865,10 @@ class Lembur extends CI_Controller
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DISETUJUI*" .
-                "\r\n \r\nRencana *LEMBUR* kamu pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai'])) . " dengan durasi " . date('H', strtotime($lembur['durasi'])) ." Jam " . date('i', strtotime($lembur['durasi']))." Menit.".
-                "\r\nTelah disetujui oleh *" . $lembur['atasan2_rencana'] . "*" .
+                "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
+                "\r\n \r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                "\r\nDurasi " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit.".
+                "\r\n \r\nTelah disetujui oleh *" . $this->session->userdata('inisial') . "*" .
                 "\r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
                 "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
@@ -888,9 +899,12 @@ class Lembur extends CI_Controller
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN REALISASI LEMBUR*" .
-                "\r\n \r\n*" . $lembur['nama'] . "* mengajukan *REALISASI LEMBUR* pada tanggal " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . " dengan durasi " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit.".
-                "\r\nLEMBUR ini telah disetujui oleh *" . $lembur['atasan1_realisasi'] . "*" .
-                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *REALISASI LEMBUR* dengan detil berikut :" .
+            "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
+            "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . 
+            "\r\nDurasi :" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
+            "\r\n \r\nRENCANA LEMBUR ini telah disetujui oleh *". $lembur['atasan1_realisasi'] ."*".
+            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
             $api_url = "http://panel.apiwha.com/send_message.php";
             $api_url .= "?apikey=" . urlencode($my_apikey);
             $api_url .= "&number=" . urlencode($destination);
