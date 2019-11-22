@@ -91,23 +91,44 @@ class Project extends CI_Controller
             
     }
 
+    public function ubahMilestone()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $id = $this->input->post('id');
+        $copro = $this->input->post('copro');
+        $array = array('copro' => $copro, 'id' => $id);
+
+        $this->db->set('milestone', $this->input->post('milestone'));
+        $this->db->set('tglmulai_wbs', $this->input->post('tglmulai'));
+        $this->db->set('tglselesai_wbs', $this->input->post('tglselesai'));
+        $this->db->where($array);
+        $this->db->update('wbs');
+
+        redirect('project/wbs/'.$copro);
+
+    }
+
     public function tmbahAkt()
     {
         date_default_timezone_set('asia/jakarta');
-        // $wbs['wbs'] = $this->db->get_where('wbs', ['id' => $this->input->post('milestone')])->row_array();
-        // $tgl = $wbs['tglmulai_wbs'];
         $id = $this->input->post('milestone');
-        $copro = $this->input->post('copro'); 
-        $queryMailstone = "SELECT COUNT(*)
-        FROM `wbs`
-        WHERE (`copro` = {$copro}) AND (`id_milestone` = {$id} AND `level`= '2') ";
-        $mailstone = $this->db->query($queryMailstone)->row_array();
-        $totalMailstone = $mailstone['COUNT(*)'] + 1;
+        $copro = $this->input->post('copro');
+        $array = array('copro' => $copro, 'id' => $id);
 
-        $queryTGL = "SELECT * FROM `wbs` WHERE (`copro` = {$copro}) AND (`id` = {$id} AND `level`= '1')";
+        //query Mailstone
+        $queryMailstone = "SELECT *
+        FROM `wbs`
+        WHERE (`copro` = {$copro}) AND (`id` = {$id} AND `level`= '1') ";
+        $mailstone = $this->db->query($queryMailstone)->row_array();
+        $totalMailstone = $mailstone['jumlah_aktivitas'] + 1;
+
+        //query Aktivitas Mailstone
+        $queryTGL = "SELECT * 
+        FROM `wbs` 
+        WHERE (`copro` = {$copro}) AND (`id` = {$id} AND `level`= '1')";
         $tgl = $this->db->query($queryTGL)->row_array();
 
-        if(date("Y-m-d", strtotime($this->input->post('tglmulai'))) < date("Y-m-d", strtotime($tgl['tglmulai_wbs'])) OR date("Y-m-d", strtotime($this->input->post('tglselesai'))) > date("Y-m-d", strtotime($tgl['tglselesai_wbs'])) ){
+        if(date("Y-m-d", strtotime($this->input->post('tglmulai'))) < date("Y-m-d", strtotime($tgl['tglmulai_wbs'])) OR date("Y-m-d", strtotime($this->input->post('tglmulai'))) > date("Y-m-d", strtotime($tgl['tglselesai_wbs'])) OR date("Y-m-d", strtotime($this->input->post('tglselesai'))) > date("Y-m-d", strtotime($tgl['tglselesai_wbs'])) OR date("Y-m-d", strtotime($this->input->post('tglselesai'))) < date("Y-m-d", strtotime($tgl['tglmulai_wbs'])) ){
 
             $this->session->set_flashdata('message', 'update');
             redirect('project/wbs/' .$this->input->post('copro'));
@@ -116,7 +137,7 @@ class Project extends CI_Controller
             $data = [
             'id' => $id .'.' .$totalMailstone,
             'copro' => $this->input->post('copro'),
-            'id_milestone' => $this->input->post('milestone'),
+            // 'jumlah_aktivitas' => $this->input->post('milestone'),
             'aktivitas' => $this->input->post('aktivitas'),
             'tglmulai' => $this->input->post('tglmulai'),
             'tglselesai' => $this->input->post('tglselesai'),
@@ -125,18 +146,53 @@ class Project extends CI_Controller
             ];
             $this->db->insert('wbs', $data);
 
+            $this->db->set('jumlah_aktivitas',$totalMailstone);
+            $this->db->where($array);
+            $this->db->update('wbs');
             redirect('project/wbs/' .$this->input->post('copro'));
                 
         }   
     }
 
-    public function hapus_aktivitas($id)
+    public function ubahAkt()
     {
-        $Project = $this->db->get_where('project_aktivitas', ['id' => $id])->row_array();
-        $this->db->set('aktivitas');
-        $this->db->where('id',$id);
-        $this->db->delete('project_aktivitas');
+        date_default_timezone_set('asia/jakarta');
+        $id = $this->input->post('id');
+        $copro = $this->input->post('copro');
+        $array = array('copro' => $copro, 'id' => $id);
+
+        $this->db->set('aktivitas', $this->input->post('aktivitas'));
+        $this->db->set('tglmulai_wbs', $this->input->post('tglmulai'));
+        $this->db->set('tglselesai_wbs', $this->input->post('tglselesai'));
+        $this->db->set('durasi', $this->input->post('durasi'));
+        $this->db->where($array);
+        $this->db->update('wbs');
+
+        redirect('project/wbs/' .$copro);
+    }
+    // public function hapusMailstone($id)
+    // {
+    //     $wbs = $this->db->get_where('wbs', ['id' => $id])->row_array();
+    //     $copro = $wbs['copro'];
+    //     $array = array('copro' => $copro, 'id' => $id);
+
+    //     $this->db->set('wbs');
+    //     $this->db->where($array);
+    //     $this->db->delete('wbs');
+    //     $this->session->set_flashdata('message', 'hapus');
+    //     redirect('project/wbs/' .$wbs['copro']);    
+    // }
+
+    public function hapus()
+    {
+        $id = $this->input->post('id');
+        $copro = $this->input->post('copro');
+        $array = array('copro' => $copro, 'id' => $id);
+
+        $this->db->set('wbs');
+        $this->db->where($array);
+        $this->db->delete('wbs');
         $this->session->set_flashdata('message', 'hapus');
-        redirect('project/wbs/' . $Project['copro']);
+        redirect('project/wbs/' .$copro);  
     }
 }
