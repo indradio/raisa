@@ -3,45 +3,170 @@
     <div class="container-fluid">
         <!-- Start - Card summary kategory -->
         <div class="row">
-        <?php
-        $queryKrKategori = "SELECT *
-                            FROM `kendaraan_status` ";
-        $krkategori = $this->db->query($queryKrKategori)->result_array();
-        foreach ($krkategori as $k) : 
-            $this->db->where('kepemilikan', $k['nama']);
-            $this->db->where('month(tglberangkat)','11');
-            $this->db->where('status','9');
-            $queryKategori = $this->db->get('perjalanan');
-           
-            $this->db->select_sum('kmtotal');
-            $this->db->where('kepemilikan', $k['nama']);
-            $this->db->where('month(tglberangkat)','11');
-            $this->db->where('status','9');
-            $queryKm = $this->db->get('perjalanan');
-            $kmtotal = $queryKm->row()->kmtotal;
-        ?>
-        <div class="col-md-3">
-          <div class="card card-product">
-            <div class="card-header card-header-image" data-header-animation="false">
-              <img class="img" src="<?= base_url(); ?>assets/img/kendaraan/avanza.jpg">
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">
-                <?= $k['nama']; ?>
-              </h4>
-              <div class="card-description">
-                <?= $queryKategori->num_rows(); ?> Perjalanan
-              </div>
-            </div>
-            <div class="card-footer justify-content-center">
-                <a href="#" class="btn btn-primary btn-round" role="button" aria-disabled="true"><?= $kmtotal; ?> KM</a>                 
-            </div>
-          </div>
-        </div>
-        <?php 
-        endforeach; 
-        ?>
-      </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+                                <?php 
+                                    $tanggal = date('d');
+                                    $bulan = date('m');
+                                    $tahun = date('Y');
+                                    $totaltanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
+                                    $this->db->where('status','9');
+                                    $total = $this->db->get('perjalanan');
+
+                                    $this->db->select_sum('kmtotal');
+                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('status','9');
+                                    $querykm = $this->db->get('perjalanan');
+                                    $km = $querykm->row()->kmtotal;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-success card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">directions_car</i>
+                                </div>
+                                <p class="card-category">SEMUA</p>
+                                <h3 class="card-title"><?= $total->num_rows(); ?> <small>PERJALANAN</small></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> TOTAL JARAK <?= $km; ?> KM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                                <?php 
+                                    $bulan = date('m');
+                                    $tahun = date('Y');
+
+                                    $this->db->where('kepemilikan', 'Operasional');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
+                                    $this->db->where('status','9');
+                                    $totaloperasional = $this->db->get('perjalanan');
+                                    
+                                    $this->db->select_sum('kmtotal');
+                                    $this->db->where('kepemilikan', 'Operasional');
+                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('status','9');
+                                    $querykmoperasional = $this->db->get('perjalanan');
+                                    $kmoperasional = $querykmoperasional->row()->kmtotal;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-success card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">directions_car</i>
+                                </div>
+                                <p class="card-category">OPERASIONAL</p>
+                                <h3 class="card-title"><?= $totaloperasional->num_rows(); ?> <small>PERJALANAN</small></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> TOTAL JARAK <?= $kmoperasional; ?> KM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+                                <?php 
+                                    $bulan = date('m');
+                                    $tahun = date('Y');
+                                    $this->db->where('kepemilikan', 'Pribadi');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
+                                    $this->db->where('status','9');
+                                    $totalpribadi = $this->db->get('perjalanan');
+                                    
+                                    $this->db->select_sum('kmtotal');
+                                    $this->db->where('kepemilikan', 'Pribadi');
+                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('status','9');
+                                    $querykmpribadi = $this->db->get('perjalanan');
+                                    $kmpribadi = $querykmpribadi->row()->kmtotal;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-info card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">directions_car</i>
+                                </div>
+                                <p class="card-category">PRIBADI</p>
+                                <h3 class="card-title"><?= $totalpribadi->num_rows(); ?> <small>PERJALANAN</small></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> TOTAL JARAK <?= $kmpribadi; ?> KM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+                                <?php 
+                                    $bulan = date('m');
+                                    $tahun = date('Y');
+                                    $this->db->where('kepemilikan', 'Taksi');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
+                                    $this->db->where('status','9');
+                                    $totaltaksi = $this->db->get('perjalanan');
+                                    
+                                    $this->db->select_sum('kmtotal');
+                                    $this->db->where('kepemilikan', 'Taksi');
+                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('status','9');
+                                    $querykmtaksi = $this->db->get('perjalanan');
+                                    $kmtaksi = $querykmtaksi->row()->kmtotal;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-warning card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">directions_car</i>
+                                </div>
+                                <p class="card-category">TAKSI</p>
+                                <h3 class="card-title"><?= $totaltaksi->num_rows(); ?> <small>PERJALANAN</small></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> TOTAL JARAK <?= $kmtaksi; ?> KM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+                                <?php 
+                                    $bulan = date('m');
+                                    $tahun = date('Y');
+                                    $this->db->where('kepemilikan', 'Sewa');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
+                                    $this->db->where('status','9');
+                                    $totalsewa = $this->db->get('perjalanan');
+                                    
+                                    $this->db->select_sum('kmtotal');
+                                    $this->db->where('kepemilikan', 'Sewa');
+                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('status','9');
+                                    $querykmsewa = $this->db->get('perjalanan');
+                                    $kmsewa = $querykmsewa->row()->kmtotal;
+                                ?>
+                            <div class="card card-stats">
+                              <div class="card-header card-header-danger card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">directions_car</i>
+                                </div>
+                                <p class="card-category">SEWA</p>
+                                <h3 class="card-title"><?= $totalsewa->num_rows(); ?> <small>PERJALANAN</small></h3>
+                              </div>
+                              <div class="card-footer">
+                                <div class="stats">
+                                <i class="material-icons">date_range</i> TOTAL JARAK <?= $kmsewa; ?> KM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+</div>
       <!-- End - Card summary kategory -->
     <!-- Start - Card summary kendaraan -->
     <div class="row">

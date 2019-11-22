@@ -253,6 +253,7 @@ class Reservasi extends CI_Controller
 
         $this->db->set('tujuan', implode(', ', $listtujuan));
         $this->db->set('keperluan', $this->input->post('keperluan'));
+        $this->db->set('copro', $this->input->post('copro'));
         $this->db->set('anggota', implode(', ', $listpeserta));
         $this->db->set('catatan', $this->input->post('catatan'));
         $this->db->where('id', $reservasi_temp['id']);
@@ -323,16 +324,17 @@ class Reservasi extends CI_Controller
 
             $queryRsv = "SELECT COUNT(*)
         FROM `reservasi`
-        WHERE YEAR(tglreservasi) = YEAR(CURDATE())
+        WHERE YEAR(tglreservasi) = YEAR(CURDATE()) AND MONTH(tglreservasi) = MONTH(CURDATE())
         ";
             $rsv = $this->db->query($queryRsv)->row_array();
             $totalRsv = $rsv['COUNT(*)'] + 1;
             $data = [
-                'id' => 'RSV' . date('y') . $totalRsv,
+                'id' => 'RSV' . date('ym') . $totalRsv,
                 'tglreservasi' => date('Y-m-d H:i:s'),
                 'npk' => $reservasi_temp['npk'],
                 'nama' => $reservasi_temp['nama'],
                 'tujuan' => $reservasi_temp['tujuan'],
+                'copro' => $reservasi_temp['copro'],
                 'keperluan' => $reservasi_temp['keperluan'],
                 'anggota' => $reservasi_temp['anggota'],
                 'tglberangkat' => $reservasi_temp['tglberangkat'],
@@ -376,7 +378,7 @@ class Reservasi extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
             } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
                 $this->db->set('atasan2', null);
-                $this->db->set('status', '2');
+                $this->db->set('status', '1');
                 $this->db->where('id', $data['id']);
                 $this->db->update('reservasi');
 

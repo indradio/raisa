@@ -31,6 +31,8 @@ class Persetujuandl extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         if ($rsv['atasan1'] == $this->session->userdata['inisial'] and $rsv['atasan2'] == $this->session->userdata['inisial']) {
+            $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+            $this->db->set('jamkembali', $this->input->post('jamkembali'));
             $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
@@ -39,6 +41,8 @@ class Persetujuandl extends CI_Controller
             $this->db->update('reservasi');
         } elseif ($rsv['atasan1'] == $this->session->userdata['inisial']) {
             if ($rsv['status'] > 2) {
+                $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+                $this->db->set('jamkembali', $this->input->post('jamkembali'));
                 $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
@@ -46,12 +50,16 @@ class Persetujuandl extends CI_Controller
                 $this->session->set_flashdata('message', 'setujudl');
                 redirect('persetujuandl/index');
             } else {
+                $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+                $this->db->set('jamkembali', $this->input->post('jamkembali'));
                 $this->db->set('atasan1', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
             }
         } elseif ($rsv['atasan2'] == $this->session->userdata['inisial']) {
+            $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+            $this->db->set('jamkembali', $this->input->post('jamkembali'));
             $this->db->set('atasan2', "Disetujui oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             $this->db->where('id', $this->input->post('id'));

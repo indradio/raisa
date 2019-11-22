@@ -68,6 +68,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">COPRO</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="copro" value="<?= $reservasi_temp['copro']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Keperluan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">

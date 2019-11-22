@@ -64,7 +64,8 @@ class Dashboard extends CI_Controller
         foreach ($lembur as $l) :
             // cari selisih
             $sekarang = strtotime(date('Y-m-d H:i:s'));
-            $tempo =  strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai']))));
+            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai']))));
+            $kirim_notif = strtotime(date('Y-m-d H:i:s', strtotime('+64 hours', strtotime($l['tglselesai']))));
 
             if ($tempo < $sekarang) {
                 $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
@@ -91,8 +92,40 @@ class Dashboard extends CI_Controller
                 $api_url .= "&text=" . urlencode($message);
                 json_decode(file_get_contents($api_url, false));
             }
+
+            // Notifikasi REALISASI tinggal 8 JAM
+            if ($kirim_notif < $sekarang) {
+                $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
+                if ($notifikasi['id'] == null){
+                    $data = array(
+                        'id' => $l['id'],
+                        'notifikasi' => 1,
+                        'tanggal' => date('Y-m-d H:i:s')
+                    );
+                    $this->db->insert('notifikasi', $data);
+    
+                    $this->db->where('npk', $l['npk']);
+                    $karyawan = $this->db->get('karyawan')->row_array();
+                    $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                    $destination = $karyawan['phone'];
+                    $message = "*WAKTU REALISASI KAMU KURANG DARI 8 JAM*" .
+                                "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+                                "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
+                                "\r\nNama : *" . $l['nama'] ."*". 
+                                "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_aktual'])) ."*". 
+                                "\r\nDurasi : *" . date('H', strtotime($l['durasi_aktual'])) ." Jam " . date('i', strtotime($l['durasi_aktual']))." Menit*".
+                                "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." . 
+                                "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
+                    $api_url = "http://panel.apiwha.com/send_message.php";
+                    $api_url .= "?apikey=" . urlencode($my_apikey);
+                    $api_url .= "&number=" . urlencode($destination);
+                    $api_url .= "&text=" . urlencode($message);
+                    json_decode(file_get_contents($api_url, false));
+                }
+            }
         endforeach;
 
+        // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
         $data['sidesubmenu'] = '';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();

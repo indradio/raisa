@@ -105,15 +105,16 @@ class Perjalanandl extends CI_Controller
 
         $queryDl = "SELECT COUNT(*)
         FROM `perjalanan`
-        WHERE YEAR(tglberangkat) = YEAR(CURDATE())
+        WHERE YEAR(tglberangkat) = YEAR(CURDATE()) AND MONTH(tglberangkat) = MONTH(CURDATE())
         ";
         $dl = $this->db->query($queryDl)->row_array();
         $totalDl = $dl['COUNT(*)'] + 1;
 
         $data = [
-            'id' => 'DL' . date('y') . $totalDl,
+            'id' => 'DL' . date('ym') . $totalDl,
             'npk' => $this->input->post('npk'),
             'nama' => $this->input->post('nama'),
+            'copro' => $this->input->post('copro'),
             'tujuan' => $this->input->post('tujuan'),
             'keperluan' => $this->input->post('keperluan'),
             'anggota' => $this->input->post('anggota'),
@@ -492,7 +493,9 @@ class Perjalanandl extends CI_Controller
     public function aktifkan($id)
     {
         date_default_timezone_set('asia/jakarta');
-        $this->db->set('status', '11');
+        $sekarang = date('H:i:s');
+        $this->db->set('status', '1');
+        $this->db->set('jamberangkat', $sekarang);
         $this->db->set('catatan_ga', "");
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
@@ -514,7 +517,7 @@ class Perjalanandl extends CI_Controller
             "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "* _estimasi_" .
             "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "* _estimasi_" .
             "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "*" .
-            " ) \r\n \r\nPerjalanan kamu telah *DIAKTIFKAN* kembali. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+            " ) \r\n \r\nPerjalanan kamu telah *DIAKTIFKAN* kembali untuk *2 JAM* berikutnya. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);
@@ -691,5 +694,26 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('perjalanandl/laporan-jarak-kr', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function gps()
+    {
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Konfirmasi Perjalanan Dinas';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '5'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/gps', $data);
+        $this->load->view('templates/footer');
+       
+        // $api_url = "http://gps.intellitrac.co.id/apis/tracking/devices.php";
+        // // Parameter “data” value after urldecoded :
+        // $api_url .= "?username=" . urlencode('winteq');
+        // $api_url .= "&password=" . urlencode('winteq123');
+        // $api_url .= "&filter=" . urlencode('device_id');
+        // json_decode(file_get_contents($api_url, false));
+      
     }
 }
