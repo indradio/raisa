@@ -1197,10 +1197,11 @@ class Lembur extends CI_Controller
         $querylembur = "SELECT * 
                         FROM `lembur` 
                         WHERE `tglmulai` >= '$tglawal' AND `tglselesai` <= '$tglakhir' AND `sect_id` = '$section' AND `status` = '9'
+                        ORDER BY `tglmulai` ASC
                         ";
         $data['lembur'] = $this->db->query($querylembur)->result_array();
-        $data['tglmulai'] = $tglawal;
-        $data['tglselesai'] = $tglakhir;
+        $data['tglawal'] = $tglawal;
+        $data['tglakhir'] = $tglakhir;
         $data['sect_id'] = $section;
         $data['dept_id'] = $dept;
         

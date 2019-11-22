@@ -35,15 +35,16 @@
       $dep['nama'];
 
 
-      $pdf->SetFont('Arial','',5);
-      $pdf->Cell(55,5,'Dari   : '.$tglmulai.'     '. 'Sampai   : '.$tglselesai,1,0,1);
+      $pdf->SetFont('Arial','',6);
+      $pdf->Cell(55,5,'Tanggal : '.date("d M Y", strtotime($this->input->post('tglawal'))).' - '.date("d M Y", strtotime($this->input->post('tglakhir'))),1,0,1);
 
+      $pdf->SetFont('Arial','B',8);
       $pdf->Cell(72,10,'RENCANA LEMBUR',1,0,'C',1);
       $pdf->Cell(72,10,'LAPORAN LEMBUR',1,0,'C',1);
       $pdf->Cell(0,5,'',0,1,0);  
 
       $pdf->SetFont('Arial','B',6);
-      $pdf->Cell(55,5,'SECTION :  ' .$nama1['inisial'].'         '. 'DEPT  : '.$nama2['inisial'],1,0,1);
+      $pdf->Cell(55,5,'SEKSI : '.$nama1['nama']. ' ('.$nama2['inisial'].')',1,0,1);
       $pdf->SetFont('Arial','',5);
       $pdf->Cell(64,7,'',0,0,0);
       $pdf->Cell(75,7,'',0,0,0);
@@ -52,8 +53,8 @@
       $pdf->SetFont('Arial','',6);
       $no = 1;
 
-      $pdf->Cell(4,6,'NO',1,0,'C',1);
-      $pdf->Cell(14,6,'No Lembur',1,0,'C',1);
+      $pdf->Cell(4,6,'No',1,0,'C',1);
+      $pdf->Cell(14,6,'ID Lembur',1,0,'C',1);
       $pdf->Cell(30,6,'NAMA',1,0,'C',1);
       $pdf->Cell(7,6,'NPK',1,0,'C',1);
       $pdf->Cell(30,6,'TGL & JAM MULAI',1,0,'C',1);
