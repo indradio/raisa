@@ -12,7 +12,7 @@ $pdf->Image('assets/img/WINTEQ8.jpg', 20, 15, 40, 0);
 
 $pdf->Ln(20);
 $pdf->SetFont('Arial', '', 6);
-$pdf->Cell(40, 5, '', 0, 0,);
+$pdf->Cell(40, 5, '', 0, 0);
 $pdf->Cell(9, 4.5, '' , 1, 0);
 $pdf->Cell(15, 5, 'CO' , 0, 0);
 $pdf->Cell(9, 4.5, '' , 1, 0);
