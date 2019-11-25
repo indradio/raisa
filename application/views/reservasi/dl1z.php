@@ -97,6 +97,19 @@
                                             </thead>
                                             <tbody>
                                                 <?php
+
+                                                $this->db->where('reservasi_id', $reservasi_temp['id']);
+                                                $totalpeserta = $this->db->get('perjalanan_anggota');
+                                                if ($totalpeserta->num_rows()== 0){
+                                                    $this->session->set_flashdata('message', ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <strong>Maaf!</strong> Peserta perjalanan minimal 1 orang.
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>');
+                                                redirect('reservasi/dl1c1');
+                                                }
+
                                                 $queryAnggota = "SELECT *
                                                         FROM `perjalanan_anggota`
                                                         WHERE `reservasi_id` = '{$reservasi_temp['id']}'

@@ -143,7 +143,8 @@ class Lembur extends CI_Controller
                     'posisi_id' => $karyawan['posisi_id'],
                     'div_id' => $karyawan['div_id'],
                     'dept_id' => $karyawan['dept_id'],
-                    'sect_id' => $karyawan['sect_id']
+                    'sect_id' => $karyawan['sect_id'],
+                    'pemohon' => $this->session->userdata('inisial')
                 ];
                 $this->db->insert('lembur', $data);
                 redirect('lembur/rencana_aktivitas/' . $data['id']);
@@ -165,6 +166,12 @@ class Lembur extends CI_Controller
             $lembur = $this->db->query($queryLemburBulan)->row_array();
             $totalLembur = $lembur['COUNT(*)'] + 1;
 
+            if (date('D', strtotime($this->input->post('tglmulai'))) == 'Sat' OR date('D', strtotime($this->input->post('tglmulai'))) == 'Sun') {
+                $hari = 2;
+            }else{
+                $hari = 1;
+            }
+
             $data = [
                 'id' => 'OT' . date('y') . date('m') . $totalLembur,
                 'tglpengajuan' => date('Y-m-d H:i:s'),
@@ -183,10 +190,12 @@ class Lembur extends CI_Controller
                 'aktivitas_rencana' => '0',
                 'aktivitas' => '0',
                 'status' => '1',
+                'hari' => $hari,
                 'posisi_id' => $karyawan['posisi_id'],
                 'div_id' => $karyawan['div_id'],
                 'dept_id' => $karyawan['dept_id'],
-                'sect_id' => $karyawan['sect_id']
+                'sect_id' => $karyawan['sect_id'],
+                'pemohon' => $this->session->userdata('inisial')
             ];
             $this->db->insert('lembur', $data);
             redirect('lembur/rencana_aktivitas/' . $data['id']);
@@ -214,6 +223,12 @@ class Lembur extends CI_Controller
             $lembur = $this->db->query($queryLemburBulan)->row_array();
             $totalLembur = $lembur['COUNT(*)'] + 1;
 
+            if (date('D', strtotime($this->input->post('tglmulai'))) == 'Sat' OR date('D', strtotime($this->input->post('tglmulai'))) == 'Sun') {
+                $hari = 2;
+            }else{
+                $hari = 1;
+            }
+
             $data = [
                 'id' => 'OT' . date('y') . date('m') . $totalLembur,
                 'tglpengajuan' => date('Y-m-d H:i:s'),
@@ -232,6 +247,7 @@ class Lembur extends CI_Controller
                 'aktivitas_rencana' => '0',
                 'aktivitas' => '0',
                 'status' => '1',
+                'hari' => $hari,
                 'posisi_id' => $karyawan['posisi_id'],
                 'div_id' => $karyawan['div_id'],
                 'dept_id' => $karyawan['dept_id'],
@@ -702,11 +718,13 @@ class Lembur extends CI_Controller
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PENGAJUAN RENCANA LEMBUR*" .
-            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *RENCANA LEMBUR* dengan detil berikut :" .
-            "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
-            "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-            "\r\nDurasi :" . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
-            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
+            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+            "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+            "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
+            "\r\n \r\nRespon sebelum jam 4 sore agar tim kamu *dipesankan makan malamnya".
+            "\r\nKalau kamu belum respon, tim kamu tidak bisa melakukan realisasi".
+            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
         $api_url .= "&number=" . urlencode($destination);
@@ -737,10 +755,9 @@ class Lembur extends CI_Controller
         $my_apikey = "NQXJ3HED5LW2XV440HCG";
         $destination = $karyawan['phone'];
         $message = "*PENGAJUAN REALISASI LEMBUR*" .
-        "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *REALISASI LEMBUR* dengan detil berikut :" .
-        "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
-        "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . 
-        "\r\nDurasi :" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
+        "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . 
+        "\r\nDurasi : " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
         "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
@@ -810,11 +827,12 @@ class Lembur extends CI_Controller
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN RENCANA LEMBUR*" .
-            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *RENCANA LEMBUR* dengan detil berikut :" .
-            "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
-            "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-            "\r\nDurasi :" . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
-            "\r\n \r\nRENCANA LEMBUR ini telah disetujui oleh *". $this->session->userdata('inisial') ."*".
+            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+            "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+            "\r\n \r\nRENCANA LEMBUR ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
+            "\r\nHarap segera respon *Setujui/Batalkan*".
+            "\r\n \r\n*Semakin lama kamu merespon, semakin sedikit waktu tim kamu membuat realisasi*".
             "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
             $api_url = "http://panel.apiwha.com/send_message.php";
             $api_url .= "?apikey=" . urlencode($my_apikey);
@@ -906,11 +924,10 @@ class Lembur extends CI_Controller
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $karyawan['phone'];
             $message = "*PENGAJUAN REALISASI LEMBUR*" .
-            "\r\n \r\n*" . $lembur['nama'] . "* Mengajukan *REALISASI LEMBUR* dengan detil berikut :" .
-            "\r\n \r\nNo LEMBUR :" . $lembur['id'] . 
-            "\r\nTanggal :" . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . 
-            "\r\nDurasi :" . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
-            "\r\n \r\nRENCANA LEMBUR ini telah disetujui oleh *". $lembur['atasan1_realisasi'] ."*".
+            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) . 
+            "\r\nDurasi : " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
+            "\r\n \r\nREALISASI LEMBUR ini telah disetujui oleh *". $lembur['atasan1_realisasi'] ."*".
             "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
             $api_url = "http://panel.apiwha.com/send_message.php";
             $api_url .= "?apikey=" . urlencode($my_apikey);
