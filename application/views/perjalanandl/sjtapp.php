@@ -1,31 +1,17 @@
 <?php
-$pdf = new FPDF('P', 'mm', 'A4');
-$pdf->SetMargins(14, 10, 10, 14);
+$pdf = new FPDF('L', 'mm', 'A5');
+$pdf->SetMargins(15, 10, 10, 5);
 
 $pdf->AddPage();
-$pdf->line(10, 8, 208 - 8, 8);
-$pdf->line(200, 288, 210 - 10, 8);
-$pdf->line(10, 288, 20 - 10, 8);
-$pdf->line(10, 288, 210 - 10, 288);
+$pdf->line(10, 5, 210 - 10, 5);
+$pdf->line(200, 140, 210 - 10, 5);
+$pdf->line(10, 140, 20 - 10, 5);
+$pdf->line(10, 140, 210 - 10, 140);
 
-$pdf->Image('assets/img/WINTEQ8.jpg', 20, 15, 40, 0);
+$pdf->Image('assets/img/WINTEQ8.jpg', 15, 6, 40, 0);
 
-$pdf->Ln(20);
-$pdf->SetFont('Arial', '', 6);
-$pdf->Cell(40, 5, '', 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'CO' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'AN' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'NM' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'AWP ' , 0, 0);
-$pdf->Cell(9, 4.5, 'X' , 1, 0,'C');
-$pdf->Cell(10, 5, 'WI ' , 0, 0);
-$pdf->Cell(9, 5, '' , 0, 1);
+$pdf->Ln(5);
 
-$pdf->Ln(10);
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(170, 0, 'SURAT TUGAS', 0, 1, 'C');
 
@@ -43,7 +29,7 @@ $pdf->Cell(45, 6, 'Nama', 1, 0, 'C', 1);
 $pdf->Cell(14, 6, 'NRP', 1, 0, 'C', 1);
 $pdf->Cell(40, 6, 'Divisi / Departemen', 1, 0, 'C', 1);
 $pdf->Cell(30, 6, 'Jabatan', 1, 0, 'C', 1);
-$pdf->Cell(45, 6, 'Travel Dokumen', 1, 0, 'C', 1);
+$pdf->Cell(43, 6, 'Travel Dokumen', 1, 0, 'C', 1);
 $pdf->Cell(0, 6, '', 0, 1, 0);
 
 $pdf->Cell(8, 0.5, '', 1, 0, 'C', 1);
@@ -51,7 +37,7 @@ $pdf->Cell(45, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(14, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(40, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(30, 0.5, '', 1, 0, 'C', 1);
-$pdf->Cell(45, 0.5, '', 1, 0, 'C', 1);
+$pdf->Cell(43, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(0, 0.5, '', 0, 1, 0);
 
 $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $perjalanan['id']])->result_array();
@@ -66,7 +52,7 @@ foreach ($peserta as $p) :
     $posisi = $this->db->get_where('karyawan_posisi', ['id' => $user['posisi_id']])->row_array();
     $pdf->Cell(40, 5, $dept['nama'], 1, 0, 'C', 1);
     $pdf->Cell(30, 5, $posisi['nama'], 1, 0, 'C', 1);
-    $pdf->Cell(45, 5, '', 1, 0, 'C', 1);
+    $pdf->Cell(43, 5, '', 1, 0, 'C', 1);
     $pdf->Cell(0, 5, '', 0, 1, 0);
 
     $no = $no + 1;
@@ -74,147 +60,115 @@ foreach ($peserta as $p) :
 endforeach;
 
 $pdf->Ln(2);
-$pdf->SetFont('Arial', '', 6);
-$pdf->Cell(170, 5, 'Permintaan Pengurus Travel Document', 0, 1,);
 
-$pdf->Ln(4);
-$pdf->Cell(170, 5, 'Keperluan                 :', 0, 1,);
+$pdf->Cell(32, 3, 'Tujuan', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(3, 3, $perjalanan['tujuan'], 0, 1);
+
+$pdf->Cell(32, 3, 'Keperluan', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(3, 3, $perjalanan['keperluan'], 0, 1);
+
+
+$pdf->Cell(32, 3, 'Tgl. Berangkat', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['tglberangkat'], 0, 0);
+
+$pdf->Cell(9, 3, 'Jam', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['jamberangkat'], 0, 0);
+
+$pdf->Cell(9, 3, 'Km', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['kmberangkat'], 0, 0);
+
+$pdf->Cell(9, 3, 'Security', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['cekberangkat'], 0, 1);
+
+$pdf->Cell(32, 3, 'Tgl. Kembali', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['tglkembali'], 0, 0);
+
+$pdf->Cell(9, 3, 'Jam', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['jamkembali'], 0, 0);
+
+$pdf->Cell(9, 3, 'Km', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['kmkembali'], 0, 0);
+
+$pdf->Cell(9, 3, 'Security', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['cekkembali'], 0, 1);
 
 $pdf->Ln(2);
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(170, 5, 'Jadwal Perjalanan  :', 0, 1,);
-$pdf->Cell(8, 6, 'Tgl', 1, 0, 'C', 1);
-$pdf->Cell(40, 6, 'Berangkat Dari', 1, 0, 'C', 1);
-$pdf->Cell(30, 6, 'Tempat Tujuan', 1, 0, 'C', 1);
-$pdf->Cell(29, 6, 'Transportasi', 1, 0, 'C', 1);
-$pdf->Cell(18, 6, 'Waktu', 1, 0, 'C', 1);
-$pdf->Cell(25, 6, 'Kelas', 1, 0, 'C', 1);
-$pdf->Cell(32, 6, 'Keterangan', 1, 0, 'C', 1);
+
+$pdf->Cell(50, 6, 'Jenis Kendaraan', 1, 0, 'C', 1);
+$pdf->Cell(30, 6, 'No Polisi', 1, 0, 'C', 1);
+$pdf->Cell(30, 6, 'Pengemudi', 1, 0, 'C', 0);
+$pdf->Cell(30, 6, 'Bagian Umum', 1, 0, 'C', 1);
+$pdf->Cell(40, 6, 'Keterangan', 1, 0, 'C', 1);
 $pdf->Cell(0, 6, '', 0, 1, 0);
 
-$pdf->Cell(8, 0.5, '', 1, 0, 'C', 1);
-$pdf->Cell(40, 0.5, '', 1, 0, 'C', 1);
+$pdf->Cell(50, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(30, 0.5, '', 1, 0, 'C', 1);
-$pdf->Cell(29, 0.5, '', 1, 0, 'C', 1);
-$pdf->Cell(18, 0.5, '', 1, 0, 'C', 1);
-$pdf->Cell(25, 0.5, '', 1, 0, 'C', 1);
-$pdf->Cell(32, 0.5, '', 1, 0, 'C', 1);
+$pdf->Cell(30, 0.5, '', 1, 0, 'C', 1);
+$pdf->Cell(30, 0.5, '', 1, 0, 'C', 1);
+$pdf->Cell(40, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(0, 0.5, '', 0, 1, 0);
 
-$pdf->Cell(8, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(40, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(29, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(18, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(25, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(32, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, '', 0, 1, 0);
+$kend = $this->db->get_where('kendaraan', ['nopol' => $perjalanan['nopol']])->row_array();
+$pdf->Cell(50, 12, $kend['nama'] . ' / ' . $perjalanan['kepemilikan'], 1, 0, 'C', 1);
+$pdf->Cell(30, 12, $perjalanan['nopol'], 1, 0, 'C', 1);
+$pdf->Cell(30, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(30, 12, $perjalanan['admin_ga'], 1, 0, 'C', 1);
+$pdf->Cell(40, 12, $perjalanan['catatan_ga'], 1, 0, 'C', 1);
+$pdf->Cell(0, 12, '', 0, 1, 0);
 
-$pdf->Cell(8, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(40, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(29, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(18, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(25, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(32, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, '', 0, 1, 0);
+$pdf->Ln(1);
 
-$pdf->Cell(8, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(40, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(29, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(18, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(25, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(32, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, '', 0, 1, 0);
-
-$pdf->Cell(8, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(40, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(29, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(18, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(25, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(32, 5, '', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, '', 0, 1, 0);
-
-$pdf->Ln(6);
-$pdf->Cell(38, 5, 'Akomodasi                                  :', 0, 0,);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(63, 5, 'Hotel, Kelas.................................' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(63, 5, 'Lainya.................................' , 0, 0);
-$pdf->Cell(9, 5, '' , 0, 1);
+$pdf->Cell(32, 3, 'Catatan', 0, 0);
+$pdf->Cell(3, 3, ':', 0, 0);
+$pdf->Cell(25, 3, $perjalanan['catatan_security'], 0, 1);
 
 $pdf->Ln(2);
-$pdf->Cell(38, 5, 'Alokasi Pembebanan                 :', 0, 0,);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'CO' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'AN' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'NM' , 0, 0);
-$pdf->Cell(9, 4.5, '' , 1, 0);
-$pdf->Cell(15, 5, 'AWP ' , 0, 0);
-$pdf->Cell(9, 4.5, 'X' , 1, 0,'C');
-$pdf->Cell(10, 5, 'WI ' , 0, 0);
-$pdf->Cell(9, 5, '' , 0, 1);
 
-$pdf->Ln(2);
-$pdf->Cell(170, 5, 'Catatan                                        :', 0, 1,);
+$pdf->Cell(80, 5, 'Disetujui Oleh ,', 1, 0, 'C', 1);
+$pdf->Cell(50, 5, 'Diketahui ,', 1, 0, 'C', 1);
+$pdf->Cell(50, 5, 'Dibuat Oleh ,', 1, 0, 'C', 0);
+$pdf->Cell(0, 5, '', 0, 1, 0);
 
-$pdf->Ln(4);
-$pdf->Cell(140, 4, 'Disetujui Oleh ,', 1, 0, 'C', 1);
-$pdf->Cell(42, 4, 'Dibuat Oleh ,', 1, 1, 'C', 1);
-$pdf->Cell(45, 30, '', 1, 0, 1);
-$pdf->Cell(45, 30, '', 1, 0, 1);
-$pdf->Cell(50, 30, '', 1, 0, 1);
-$pdf->Cell(42, 30, '', 1, 0, 1);
-$pdf->Cell(0, 30, '', 0, 1, 0);
+$reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
 
-$pdf->Cell(45, 4, 'President Director', 1,0,'C',1);
-$pdf->Cell(45, 4, 'Chief Operator Officer',1,0,'C',1);
-$pdf->Cell(50, 4, 'Supporting & Adm. Division', 1,0,'C',1);
-$pdf->Cell(42, 4, 'Pemohon / Dept.Head', 1,0,'C',1);
-$pdf->Cell(5, 4, '', 0, 1, 0);
+$pdf->Cell(40, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(40, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(50, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(50, 12, '', 1, 0, 'C', 1);
+$pdf->Cell(0, 12, '', 0, 1, 0);
 
-$pdf->Ln(-8);
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(45, 4, '(                             )', 0,0,'C',0);
-$pdf->Cell(45, 4, '( Doni Novanda )',0,0,'C',0);
-$pdf->Cell(50, 4, '( Eko Juwono  )', 0,0,'C',0);
-$pdf->Cell(42, 4, '(                             )', 0,0,'C',0);
-$pdf->Cell(5, 4, '', 0, 1, 0);
+$pdf->Cell(40, -16, '', 0, 0, 'C', 0);
+$pdf->Cell(40, -16, '', 0, 0, 'C', 0);
+$pdf->Cell(50, -16, 'Diketahui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 0, 0, 'C', 0);
+$pdf->Cell(50, -16, '', 0, 0, 'C', 0);
+$pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 
+$pdf->Cell(40, -11, '', 0, 0, 'C', 0);
+$pdf->Cell(40, -11, '', 0, 0, 'C', 0);
+$pdf->Cell(50, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
+$pdf->Cell(50, -11, '', 0, 0, 'C', 0);
+$pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 
-$pdf->Ln(10);
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(35, 5, 'Pengembalian Prepaid               :', 0, 0,);
-$pdf->Cell(105, 5, '1.       Rp.           :', 0, 1);
-$pdf->Cell(35, 4, '',0,0);
-$pdf->Cell(105, 5, '2.       USD.        :', 0, 1);
-$pdf->Cell(35, 4, '',0,0);
-$pdf->Cell(105, 5, '3.       ........        :', 0, 1);
-$pdf->Cell(35, 4, '',0,0);
-$pdf->Cell(105, 5, '4.       ........        :', 0, 0);
+$pdf->Cell(40, -3, '( Eko Juwono )', 0, 0, 'C', 0);
+$pdf->Cell(40, -3, '( Dwi Ayu W. )', 0, 0, 'C', 0);
+$pdf->Cell(50, -3, $perjalanan['ka_dept'], 0, 0, 'C', 0);
+$pdf->Cell(50, -3, '( ' . $perjalanan['nama'] . ' )', 0, 0, 'C', 0);
+$pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 
-$pdf->Ln(-12);
-$pdf->Cell(140, 5, '', 0, 0,);
-$pdf->Cell(42, 4, 'Diketahui / Dibuat Oleh ,', 1,1,'C',1);
-$pdf->Cell(140, 5, '', 0, 0,);
-$pdf->Cell(42, 25, '', 1,1,'C',1);
-$pdf->Cell(140, 5, '', 0, 0,);
-$pdf->Cell(42, 4, 'HRDGA / Adm.Dept.Head', 1,1,'C',1);
-
-$pdf->Ln(-8);
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(140, 5, '', 0, 0,);
-$pdf->Cell(42, 4, '(  Dwi Ayu Waraswati  )', 0,0,'C',0);
-
-$pdf->Ln(2);
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(140, 4, 'Terlampir  : Rencana Biaya Perjalanan Dinas', 0, 1,);
-$pdf->Cell(140, 4, 'Cc.  :  1.  Accounting / Finance & Accounting', 0, 1,);
-$pdf->Cell(140, 5, '           2. HRDGA / Administration', 0, 1,);
+$pdf->Cell(40, 4, 'Supp & Adm.Div Head', 1, 0, 'C', 1);
+$pdf->Cell(40, 4, 'Fin & Adm.Head', 1, 0, 'C', 1);
+$pdf->Cell(50, 4, 'Dept.Head', 1, 0, 'C', 1);
+$pdf->Cell(50, 4, 'Pemohon', 1, 1, 'C', 1);
 
 
 $pdf->Output('I', 'SURAT TUGAS TA' . RAND() . '.pdf');
