@@ -293,10 +293,14 @@ class Perjalanandl extends CI_Controller
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
         $statusperjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
         $jenis = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if ($jenis['jenis_perjalanan'] == 'DLPP' or $jenis['jenis_perjalanan'] == 'TA') {
+        if ($jenis['jenis_perjalanan'] == 'DLPP') {
             $this->load->view('perjalanandl/sjdlpp', $data);
-        } else ($jenis['jenis_perjalanan'] == 'TAPP'){
-            $this->load->view('perjalanandl/sjtapp', $data)};
+        } elseif ($jenis['jenis_perjalanan'] == 'TAPP'){
+            $this->load->view('perjalanandl/sjtapp1', $data);
+        } elseif ($jenis['jenis_perjalanan'] == 'TA'){
+            $this->load->view('perjalanandl/sjdlpp', $data);
+            // $this->load->view('perjalanandl/sjtapp', $data);
+        };
     }
 
     public function ikut()
