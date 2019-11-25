@@ -112,8 +112,8 @@ class Dashboard extends CI_Controller
                                 "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
                                 "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
                                 "\r\nNama : *" . $l['nama'] ."*". 
-                                "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_aktual'])) ."*". 
-                                "\r\nDurasi : *" . date('H', strtotime($l['durasi_aktual'])) ." Jam " . date('i', strtotime($l['durasi_aktual']))." Menit*".
+                                "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) ."*". 
+                                "\r\nDurasi : *" . date('H', strtotime($l['durasi_rencana'])) ." Jam " . date('i', strtotime($l['durasi_rencana']))." Menit*".
                                 "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." . 
                                 "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
                     $api_url = "http://panel.apiwha.com/send_message.php";
@@ -124,6 +124,14 @@ class Dashboard extends CI_Controller
                 }
             }
         endforeach;
+
+        $this->db->where('year(tglmulai)',date('Y'));
+        $this->db->where('month(tglmulai)',date('m'));
+        $this->db->where('day(tglmulai)',date('d'));
+        $this->db->where('lokasi','WTQ');
+        $this->db->where('admin_ga !=',null);
+        $this->db->where('status >', '2');
+        $data['lembur_makan_malam'] = $this->db->get('lembur')->result_array();
 
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';

@@ -67,6 +67,47 @@
       }?>
     </div>
     <!-- end banner -->
+ <!-- START List Makan LEMBUR -->
+    <?php if (date('H:i') >= '17:00' AND date('H:i') <= '19:00' ){ ?>
+    <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Daftar Makan Malam HARI INI </h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <div class="material-datatables">
+                            <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($lembur_makan_malam as $lmm) : ?>
+                                        <tr>
+                                            <td><?= $lmm['nama']; ?> <small>(<?= $lmm['id']; ?>)</small></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    <?php }; ?>
+    <!-- END List Makan LEMBUR -->
+
     <div class="row">
             <div class="col-md-12">
                 <div class="card">
