@@ -129,7 +129,7 @@ class Dashboard extends CI_Controller
         $this->db->where('month(tglmulai)',date('m'));
         $this->db->where('day(tglmulai)',date('d'));
         $this->db->where('lokasi','WTQ');
-        $this->db->where('admin_ga !=',null);
+        $this->db->where('konsumsi','YA');
         $this->db->where('status >', '2');
         $data['lembur_makan_malam'] = $this->db->get('lembur')->result_array();
 
