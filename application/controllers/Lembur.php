@@ -115,6 +115,12 @@ class Lembur extends CI_Controller
                     $tglmulai = date('Y-m-d H:i:s');
                 }
 
+                if (date('D') == 'Sat' OR date('D') == 'Sun') {
+                    $hari = 2;
+                }else{
+                    $hari = 1;
+                }
+
                 $data = [
                     'id' => 'OT' . date('y') . date('m') . $totalLembur,
                     'tglpengajuan' => date('Y-m-d H:i:s'),
@@ -133,6 +139,7 @@ class Lembur extends CI_Controller
                     'aktivitas_rencana' => '0',
                     'aktivitas' => '0',
                     'status' => '1',
+                    'hari' => $hari,
                     'posisi_id' => $karyawan['posisi_id'],
                     'div_id' => $karyawan['div_id'],
                     'dept_id' => $karyawan['dept_id'],
