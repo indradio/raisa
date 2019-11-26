@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Start - Card summary kategory -->
         <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-12 col-md-6 col-sm-6">
                                 <?php 
                                     $tanggal = date('d');
                                     $bulan = date('m');
@@ -36,7 +36,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
                                     $bulan = date('m');
                                     $tahun = date('Y');
@@ -69,7 +69,7 @@
                               </div>
                             </div>
                           </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
                                     $bulan = date('m');
                                     $tahun = date('Y');
@@ -101,7 +101,7 @@
                               </div>
                             </div>
                           </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
                                     $bulan = date('m');
                                     $tahun = date('Y');
@@ -133,7 +133,7 @@
                               </div>
                             </div>
                           </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-3 col-md-6 col-sm-6">
                                 <?php 
                                     $bulan = date('m');
                                     $tahun = date('Y');
@@ -168,6 +168,85 @@
 
 </div>
       <!-- End - Card summary kategory -->
+    <!-- Start - Card summary kendaraan -->
+    <div class="row">
+        <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">directions_car</i>
+                        </div>
+                        <h4 class="card-title">Laporan Perjalanan Dinas <?= date('M-Y'); ?> </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                        <div class="material-datatables">
+                            <table id="" class="table table-striped table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                    <th>Kendaraan</th>
+                                    <?php
+                                    $tahun = date('Y'); //Mengambil tahun saat ini
+                                    $bulan = date('m'); //Mengambil bulan saat ini
+                                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                                    
+                                    for ($i=1; $i < $tanggal+1; $i++) { 
+                                        echo '<th>'. $i . '</th>';
+                                    }
+                                    ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $queryKendaraan = "SELECT *
+                                                    FROM `kendaraan_status`
+                                                    ORDER BY `id` ASC";
+                                $kendaraan = $this->db->query($queryKendaraan)->result_array();
+                                foreach ($kendaraan as $k) :
+                                ?>
+                                    <tr>
+                                        <td><?= $k['nama']; ?></td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('kepemilikan', $k['nama']);
+                                            $this->db->where('month(tglberangkat)','11');
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            echo '<td>'. $queryTrip->num_rows().'</td>';
+                                          } 
+                                        ?>
+                                    </tr>
+                                <?php 
+                                endforeach; ?>
+                                    <tr>
+                                        <td><b>TOTAL</b></td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('month(tglberangkat)','11');
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTotalTrip = $this->db->get('perjalanan');
+                                            echo '<td><b>'. $queryTotalTrip->num_rows().'</b></td>';
+                                          } 
+                                        ?>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            </div>
+            <!-- end col-md-6 -->
+        <!-- End - Card summary kendaraan -->
     <!-- Start - Card summary kendaraan -->
     <div class="row">
         <div class="col-md-6">

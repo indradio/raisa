@@ -201,11 +201,11 @@ class Jamkerja extends CI_Controller
         {
             $this->db->where('day(tgl_aktivitas) >=',$tglawal);
             $this->db->where('day(tgl_aktivitas) <=',$tglakhir);
-            $this->db->where('status >','4');
+            $this->db->where('status >','2');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         }else{
-            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' =>  'X'])->result_array();
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' => 'X'])->result_array();
             $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
             Silahkan PILIH tanggal terlebih dahulu.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

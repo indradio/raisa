@@ -122,6 +122,7 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Tanggal Mengajukan</th>
+                                        <th>Tanggal Atasan 1</th>
                                         <th>Tanggal Lembur</th>
                                         <th>Durasi</th>
                                         <th>Lokasi</th>
@@ -131,6 +132,7 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Tanggal Mengajukan</th>
+                                        <th>Tanggal Atasan 1</th>
                                         <th>Tanggal Lembur</th>
                                         <th>Durasi</th>
                                         <th>Lokasi</th>
@@ -147,6 +149,7 @@
                                         data-target="#konf_lemburga">
                                             <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
                                             <td><?= date('d-M H:i', strtotime($l['tglpengajuan'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
                                             <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
                                             <td><?= $l['lokasi']; ?></td>

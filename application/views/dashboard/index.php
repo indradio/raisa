@@ -53,14 +53,6 @@
               <?= $info['deskripsi']; ?>
             </div>
           </div>
-          <!-- <div class="card-footer">
-            <div class="price">
-              <h4></h4>
-            </div>
-            <div class="stats">
-              <p class="card-category"></p>
-            </div>
-          </div> -->
         </div>
       </div>
       <?php endforeach; 
@@ -68,7 +60,7 @@
     </div>
     <!-- end banner -->
  <!-- START List Makan LEMBUR -->
-    <?php if (date('H:i') >= '17:00' AND date('H:i') <= '19:00' ){ ?>
+    <?php if (date('H:i') >= '16:00' AND date('H:i') <= '20:00' ){ ?>
     <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -133,7 +125,7 @@
                                         <th>Keperluan</th>
                                         <th>Nomor</th>
                                         <th>Jenis</th>
-                                        <th>Keberangkatan</th>
+                                        <th>Berangkat</th>
                                         <th>Kembali</th>
                                     </tr>
                                 </thead>
@@ -205,7 +197,7 @@
                                                 <?php if ($p['status'] == 1) {?>
                                                   <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
                                                 <?php }elseif ($p['status'] == 2) {?>
-                                                  <span class="badge badge-pill badge-danger"><?= $status['nama']; ?></span>
+                                                  <span class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></span>
                                                 <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
                                                   <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
                                                 <?php };?>
@@ -370,3 +362,86 @@
   <!-- end container-fluid -->
 </div>
 <!-- end content -->
+<!-- Modal Detail -->
+<div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="detailTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">DETAIL PERJALANAN</h4>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="modal-body">
+                    <div class="row">
+                                <label class="col-md-2 col-form-label">Device ID</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="device_id" id="device_id">
+                                    </div>
+                                </div>
+                            </div>
+                    <div class="row">
+                                <label class="col-md-2 col-form-label">Nomor Polisi</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="nopol" id="nopol" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                    <div class="row">
+                                <label class="col-md-2 col-form-label">Lokasi</label>
+                                <div class="col-md-10">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="lokasi" id="lokasi" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <!-- <button type="submit" class="btn btn-primary">SELANJUTNYA</button> -->
+                            <!-- <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-default">Kembali</a> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#detail').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var modal = $(this)
+            modal.find('.modal-body input[name="device_id"]').val(id)
+        // })
+
+        // $().ready(function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", 'http://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() { // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var myObj = JSON.parse(this.responseText);
+                    // var myJSON = JSON.stringify(myObj);
+                    x = myObj.data[id]['device_info']['name'];
+                    y = myObj.data[id]['realtime']['location'];
+                    // x = myObj.response_time;
+                    document.getElementById("nopol").value = x;
+                    document.getElementById("lokasi").value = y;
+                    // Request finished. Do processing here.
+                }
+            }
+            xhr.send("username=winteq&password=winteq123&devices=2019110056%3B2019110057%3B2019110055");
+            // xhr.send(new Int8Array()); 
+            // xhr.send(element);
+        })
+    });
+</script>

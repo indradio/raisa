@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "INFO : Mulai tanggal 21/11/2019 Perjalanan Dinas diharuskan mengisi COPRO. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
+    text: "PENTING : RENCANA LEMBUR yang tidak DISUBMIT melewati 1 JAM dari waktu mulai rencana lembur maka akan DIBATALKAN. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"

@@ -15,9 +15,9 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
                             <a href="#" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
-                            <!-- <?php if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6){
-                                echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Untuk Tim</a>' ;
-                            }; ?>  -->
+                            <?php if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6){
+                                echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a>' ;
+                            }; ?> 
                            <!-- <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a> -->
                         </div>
                         <div class="material-datatables">
@@ -26,6 +26,7 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Tgl Mengajukan</th>
+                                        <th>Nama</th>
                                         <th>Tanggal/Jam Mulai</th>
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
@@ -37,6 +38,7 @@
                                     <tr>
                                         <th>No. Lembur</th>
                                         <th>Tgl Mengajukan</th>
+                                        <th>Nama</th>
                                         <th>Tanggal/Jam Mulai</th>
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
@@ -49,6 +51,7 @@
                                         <tr>
                                             <td><?= $l['id']; ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglpengajuan'])); ?></td>
+                                            <td><?= $l['nama']; ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
