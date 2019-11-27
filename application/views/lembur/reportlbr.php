@@ -1,7 +1,7 @@
 <?php
 
       $pdf = new FPDF('L','mm','A5');
-      $pdf->SetMargins(5,10);
+      $pdf->SetMargins(5,10,5,5);
       $pdf->AddFont('arial-monospaced','','arial-monospaced.php');
 
       $pdf->AddPage();
@@ -77,12 +77,187 @@
 
       foreach ($aktivitas as $a) :
             $k = $this->db->get_where('jamkerja_kategori', ['id' =>  $a['kategori']])->row_array();
+//**************************************************************************************************************************************
+ 
+      $cellWidth  = 78; //lebar sel
+      $cellHeight = 4; //tinggi sel satu baris normal
+      $textLength = strlen($a['deskripsi_hasil']); //total panjang teks
+      $errMargin  = 5;           //margin kesalahan lebar sel, untuk jaga-jaga
+      $startChar  = 0;           //posisi awal karakter untuk setiap baris
+      $maxChar    = 0;             //karakter maksimum dalam satu baris, yang akan ditambahkan nanti
+      $textArray  = array();     //untuk menampung data untuk setiap baris
+      $tmpString  = "";          //untuk menampung teks untuk setiap baris (sementara)
 
-      $pdf->Cell(4,5,$no++,1,0,'C',1);
-      $pdf->Cell(22,5, $k['nama'],1,0,1);
-      $pdf->Cell(18,5, $a['copro'],1,0,'C',1);
-      $pdf->Cell(78,5, $a['aktivitas'],1,0,'C',1);
-      $pdf->Cell(78,5, $a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',1,1,'C',1);
+      // Text Aktivitas & Deskripsi Sama2 Tidak Melebihi BATAS Cell
+      if($pdf->GetStringWidth($a['deskripsi_hasil']) < $cellWidth AND $pdf->GetStringWidth($a['aktivitas']) < $cellWidth)
+      {
+            $pdf->Cell(4,5,$no++,1,0,'C',1);
+            $pdf->Cell(22,5, $k['nama'],1,0,1);
+            $pdf->Cell(18,5, $a['copro'],1,0,'C',1);
+            $pdf->Cell(78,5, $a['aktivitas'],1);
+            $pdf->Cell(78,5, $a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',1,1,'C',1);
+      }
+      // Text Aktivitas & Deskripsi Sama2 Melibihi BATAS Cell 
+      else if ($pdf->GetStringWidth($a['deskripsi_hasil']) > $cellWidth AND $pdf->GetStringWidth($a['aktivitas']) > $cellWidth){
+            
+            while($startChar < $textLength)//perulangan sampai akhir teks
+            { 
+            //perulangan sampai karakter maksimum tercapai
+                  while ($pdf->GetStringWidth( $tmpString ) < ($cellWidth-$errMargin) &&
+                        ($startChar + $maxChar) < $textLength ) 
+                  {
+                         $maxChar++;
+                         $tmpString = substr($a['deskripsi_hasil'],$startChar,$maxChar);
+                  }
+            //pindahkan ke baris berikutnya
+            $startChar = $startChar + $maxChar;
+            //kemudian tambahkan ke dalam array sehingga kita tahu berapa banyak baris yang dibutuhkan
+            array_push($textArray,$tmpString);
+            //reset variabel penampung
+            $maxChar   = 0;
+            $tmpString = '';
+                  
+            }
+            $line = count($textArray);
+//**********
+            $textLength2 = strlen($a['aktivitas']);
+            $textArray2  = array();
+            $tmpString2  = ""; 
+            while ($startChar < $textLength2) 
+            {
+                  while ($pdf->GetStringWidth($tmpString2) < ($cellWidth-$errMargin) &&
+                        ($startChar + $maxChar) < $textLength2) 
+                  {
+                         $maxChar++;
+                         $tmpString2 = substr($a['aktivitas'],$startChar,$maxChar);
+                  }
+            $startChar = $startChar + $maxChar;
+            array_push($textArray2,$tmpString2);
+            $maxChar   = 0;
+            $tmpString2 = '';
+
+            }
+            //dapatkan jumlah baris
+            $line2 = count($textArray2);
+
+            if($line > $line2)
+            {
+                  $pdf->SetFillColor(255,255,255);
+                  $pdf->Cell(4,($line * $cellHeight),$no++,1,0,'C',1); 
+                  $pdf->Cell(22,($line * $cellHeight),$k['nama'],1,0,1); 
+                  $pdf->Cell(18,($line * $cellHeight),$a['copro'],1,0,1);
+
+                  $xPos = $pdf->GetX();
+                  $yPos = $pdf->GetY();
+                  $pdf->MultiCell($cellWidth,($line + $cellHeight),$a['aktivitas'],1,1);
+                  
+                  $pdf->SetXY($xPos + $cellWidth , $yPos);
+                  
+                  $pdf->MultiCell($cellWidth,$cellHeight,$a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',1,1); 
+            }
+            else if ($line2 > $line) {
+                  $pdf->SetFillColor(255,255,255);
+                  $pdf->Cell(4,($line2 * $cellHeight),$no++,1,0,'C',1); 
+                  $pdf->Cell(22,($line2 * $cellHeight),$k['nama'],1,0,1); 
+                  $pdf->Cell(18,($line2 * $cellHeight),$a['copro'],1,0,1);
+
+                  $xPos = $pdf->GetX();
+                  $yPos = $pdf->GetY();
+                  $pdf->MultiCell($cellWidth,$cellHeight,$a['aktivitas'],1,1);
+                  
+                  $pdf->SetXY($xPos + $cellWidth , $yPos);
+                  
+                  $pdf->MultiCell($cellWidth,($line2 + $cellHeight),$a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',1,1); 
+            }
+      }
+
+      // Text Deskripsi Melebihi Batas Cell & Text Aktivitas Kurang Dari Batas Cell 
+      else if($pdf->GetStringWidth($a['deskripsi_hasil']) > $cellWidth AND $pdf->GetStringWidth($a['aktivitas']) < $cellWidth)
+      {
+            while($startChar < $textLength){ //perulangan sampai akhir teks
+            //perulangan sampai karakter maksimum tercapai
+            while( 
+            $pdf->GetStringWidth( $tmpString ) < ($cellWidth-$errMargin) &&
+            ($startChar + $maxChar) < $textLength ) {
+                  $maxChar++;
+                  $tmpString = substr($a['deskripsi_hasil'],$startChar,$maxChar);
+            }
+            //pindahkan ke baris berikutnya
+            $startChar = $startChar + $maxChar;
+            //kemudian tambahkan ke dalam array sehingga kita tahu berapa banyak baris yang dibutuhkan
+            array_push($textArray,$tmpString);
+            //reset variabel penampung
+            $maxChar   = 0;
+            $tmpString = '';
+                  
+            }
+            //dapatkan jumlah baris
+            $line = count($textArray);
+
+             //tulis selnya
+            $pdf->SetFillColor(255,255,255);
+            $pdf->Cell(4,($line * $cellHeight),$no++,1,0,'C',1); //sesuaikan ketinggian dengan jumlah garis
+            $pdf->Cell(22,($line * $cellHeight),$k['nama'],1,0,1); 
+            $pdf->Cell(18,($line * $cellHeight),$a['copro'],1,0,1);
+            //memanfaatkan MultiCell sebagai ganti Cell
+            //atur posisi xy untuk sel berikutnya menjadi di sebelahnya.
+            //ingat posisi x dan y sebelum menulis MultiCell
+            $xPos = $pdf->GetX();
+            $yPos = $pdf->GetY();
+            $pdf->Cell(78,($line * $cellHeight),$a['aktivitas'],1,1);
+            
+            //kembalikan posisi untuk sel berikutnya di samping MultiCell 
+            //dan offset x dengan lebar MultiCell
+            $pdf->SetXY($xPos + $cellWidth , $yPos);
+            
+            $pdf->MultiCell($cellWidth,$cellHeight,$a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',1,1); //sesuaikan ketinggian dengan jumlah garis
+
+      }
+      // Text Dekripsi Kurang Dari Batas Cell & Text Aktivitas Melebihi Batas Cell
+      else if($pdf->GetStringWidth($a['deskripsi_hasil']) < $cellWidth AND $pdf->GetStringWidth($a['aktivitas']) > $cellWidth)
+      {
+            $textLength = strlen($a['aktivitas']);
+            while($startChar < $textLength){ //perulangan sampai akhir teks
+            //perulangan sampai karakter maksimum tercapai
+            while( 
+            $pdf->GetStringWidth( $tmpString ) < ($cellWidth-$errMargin) &&
+            ($startChar + $maxChar) < $textLength ) {
+                  $maxChar++;
+                  $tmpString = substr($a['aktivitas'],$startChar,$maxChar);
+            }
+            //pindahkan ke baris berikutnya
+            $startChar = $startChar + $maxChar;
+            //kemudian tambahkan ke dalam array sehingga kita tahu berapa banyak baris yang dibutuhkan
+            array_push($textArray,$tmpString);
+            //reset variabel penampung
+            $maxChar   = 0;
+            $tmpString = '';
+                  
+            }
+            //dapatkan jumlah baris
+            $line = count($textArray);
+
+             //tulis selnya
+            $pdf->SetFillColor(255,255,255);
+            $pdf->Cell(4,($line * $cellHeight),$no++,1,0,'C',1); //sesuaikan ketinggian dengan jumlah garis
+            $pdf->Cell(22,($line * $cellHeight),$k['nama'],1,0,1); 
+            $pdf->Cell(18,($line * $cellHeight),$a['copro'],1,0,1);
+            //memanfaatkan MultiCell sebagai ganti Cell
+            //atur posisi xy untuk sel berikutnya menjadi di sebelahnya.
+            //ingat posisi x dan y sebelum menulis MultiCell
+            $xPos = $pdf->GetX();
+            $yPos = $pdf->GetY();
+            $pdf->MultiCell($cellWidth,$cellHeight,$a['aktivitas'],1,1);
+            
+            //kembalikan posisi untuk sel berikutnya di samping MultiCell 
+            //dan offset x dengan lebar MultiCell
+            $pdf->SetXY($xPos + $cellWidth , $yPos);
+            
+            $pdf->Cell(78,($line * $cellHeight),$a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',1,1); //sesuaikan ketinggian dengan jumlah garis
+
+      }
+
+     
 
       endforeach;
       
@@ -315,10 +490,13 @@ else if ( $lembur['posisi_id'] <=6 or $lembur['posisi_id'] >=8)
       
             $pdf->Cell(35, 5, 'form digital', 0,'C', 0);
             $pdf->Cell(3, 10, 'Tidak memerlukan', 0,'C', 0);
-            $pdf->Cell(1, 15, 'tanda tangan basah', 0,'C', 0);
-      
+            $pdf->Cell(1, 15, 'tanda tangan basah', 1,1,'C', 1);
+
+            $pdf->Ln(-22);
+            $pdf->SetFont('arial-monospaced', '', 5);
  }
 
 $pdf->Output('I','SURAT RENCANA / LAPORAN LEMBUR'.RAND().'.pdf');
+     
 
       ?>
