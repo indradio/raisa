@@ -17108,7 +17108,8 @@ a .material-icons {
   z-index: 2;
   width: 100%;
   height: calc(100vh - 70px);
-  margin-top: 70px;
+  margin-top: 0px;
+  margin-bottom: 15px;
 }
 
 .tim-typo {

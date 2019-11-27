@@ -144,6 +144,7 @@
 <script src="<?= base_url(); ?>assets/js/plugins/arrive.min.js"></script>
 <!--  Google Maps Plugin    -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0"></script>
 <!-- Chartist JS -->
 <script src="<?= base_url(); ?>assets/js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->

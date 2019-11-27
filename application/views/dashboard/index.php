@@ -64,11 +64,11 @@
     <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-rose card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Daftar Makan Malam HARI INI </h4>
+                        <h4 class="card-title">Daftar Makan Malam Lembur </h4>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -123,7 +123,6 @@
                                         <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Nomor</th>
                                         <th>Jenis</th>
                                         <th>Berangkat</th>
                                         <th>Kembali</th>
@@ -140,21 +139,11 @@
                                     $queryKendaraan = "SELECT *
                                                                 FROM `kendaraan`
                                                                 WHERE `kontrak` >= CURDATE() AND `is_active` = 1 AND `id` != 1
-                                                                ORDER BY `id` DESC
+                                                                ORDER BY `id` ASC
                                                             ";
                                     $kendaraan = $this->db->query($queryKendaraan)->result_array();
                                     foreach ($kendaraan as $k) : ?>
                                     <tr>
-                                        <td>
-                                            <div class="img-container">
-                                                <img src="<?= base_url(); ?>assets/img/kendaraan/<?= $k['gambar']; ?>" alt="...">
-                                            </div>
-                                        </td>
-                                        <td class="td-name">
-                                            <a><?= $k['nopol']; ?></a>
-                                            <br />
-                                            <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
-                                            <br />
                                             <?php
                                               $nopol = $k['nopol'];
                                               $queryPerjalanan = "SELECT *
@@ -162,17 +151,51 @@
                                               WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                               ";
                                               $p = $this->db->query($queryPerjalanan)->row_array();
-                                              if ($p['id'] == null) {
-                                              $queryReservasi = "SELECT *
-                                              FROM `reservasi`
-                                              WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
-                                              ";
-                                              $r = $this->db->query($queryReservasi)->row_array();
-                                                if ($r['id'] == null) { ?>
-                                                  <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
+                                              if ($p['id']) { ?>
+                                                <td class="text-center">
+                                                  <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                                  <?php if ($p['status'] == 1) {?>
+                                                    <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                    </div>
+                                                    <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
+                                                  <?php }elseif ($p['status'] == 2) {?>
+                                                    <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                                                    </div>
+                                                    <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                                  <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
+                                                    <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                    </div>
+                                                    <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
+                                                  <?php };?>
                                                 </td>
-                                                <?php } else { 
-                                                  if ($r['status'] == 1) {?>
+                                                <td class="td-name">
+                                                    <a><?= $k['nopol']; ?></a>
+                                                    <br />
+                                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                                    <br />
+                                                    <small><?= $p['id']; ?></small>
+                                                </td>
+                                                <td><?= $p['anggota']; ?></td>
+                                                <td><?= $p['tujuan']; ?></td>
+                                                <td><?= $p['keperluan']; ?></td>
+                                                <td><?= $p['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                                <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
+                                              <?php }else{
+                                                $queryReservasi = "SELECT *
+                                                FROM `reservasi`
+                                                WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
+                                                ";
+                                                $r = $this->db->query($queryReservasi)->row_array();
+                                                if ($r['id']) { ?>
+                                                  <td class="text-center">
+                                                  <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
+                                                  </div>
+                                                  <?php if ($r['status'] == 1) {?>
                                                     <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
                                                   <?php }elseif ($r['status'] == 2) {?>
                                                     <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
@@ -184,71 +207,81 @@
                                                     <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
                                                   <?php };?>
                                                   </td>
+                                                  <td class="td-name">
+                                                    <a><?= $k['nopol']; ?></a>
+                                                    <br />
+                                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                                    <br />
+                                                    <small><?= $r['id']; ?></small>
+                                                  </td>
                                                   <td><?= $r['anggota']; ?></td>
                                                   <td><?= $r['tujuan']; ?></td>
                                                   <td><?= $r['keperluan']; ?></td>
-                                                  <td><?= $r['id']; ?></td>
                                                   <td><?= $r['jenis_perjalanan']; ?></td>
                                                   <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                                   <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
-                                                <?php };?>
-                                              <?php } else { ?>
-                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
-                                                <?php if ($p['status'] == 1) {?>
-                                                  <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
-                                                <?php }elseif ($p['status'] == 2) {?>
-                                                  <span class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></span>
-                                                <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
-                                                  <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
-                                                <?php };?>
+                                                <?php }else{ ?>
+                                                  <td class="text-center">
+                                                  <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan1.png" alt="...">
+                                                  </div>
+                                                  <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
+                                                    </td>
+                                                    <td class="td-name">
+                                                    <a><?= $k['nopol']; ?></a>
+                                                    <br />
+                                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
                                                 </td>
-                                                <td><?= $p['anggota']; ?></td>
-                                                <td><?= $p['tujuan']; ?></td>
-                                                <td><?= $p['keperluan']; ?></td>
-                                                <td><?= $p['id']; ?></td>
-                                                <td><?= $p['jenis_perjalanan']; ?></td>
-                                                <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                                <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
-                                              <?php }; ?>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                <?php }
+                                              } ?>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
+                                <!-- Perjalanan Non Operasional -->
                                 <tbody>
                                     <?php
                                         $queryPerjalananNon = "SELECT *
                                         FROM `perjalanan`
                                             WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9 AND `kepemilikan` != 'Operasional'
-                                            ";
+                                            ORDER BY `kepemilikan` ASC ";
                                             $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
                                             foreach ($perjalananNon as $pn) : ?>
                                       <tr>
-                                        <td>
-                                            <div class="img-container">
-                                            <?php if($pn['kepemilikan']=='Pribadi'){ ?>
-                                             <img src="<?= base_url(); ?>assets/img/kendaraan/inova.jpg" alt="...">
-                                            <?php }else{ ?>
-                                              <img src="<?= base_url(); ?>assets/img/kendaraan/taksi.jpg" alt="...">
-                                            <?php }; ?>
-                                            </div>
-                                        </td>
+                                      <td class="text-center">
+                                                  <?php $status_pn = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
+                                                  <?php if ($pn['status'] == 1) {?>
+                                                    <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                    </div>
+                                                    <span class="badge badge-pill badge-info"><?= $status_pn['nama']; ?></span>
+                                                  <?php }elseif ($pn['status'] == 2) {?>
+                                                    <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                                                    </div>
+                                                    <span class="badge badge-pill badge-danger"><?= $status_pn['nama']; ?></span>
+                                                  <?php } elseif ($pn['status'] == 8 or $pn['status'] == 11) {?>
+                                                    <div class="img-container">
+                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                    </div>
+                                                    <span class="badge badge-pill badge-warning"><?= $status_pn['nama']; ?></span>
+                                                  <?php };?>
+                                                </td>
                                         <td class="td-name">
                                             <a><?= $pn['nopol']; ?></a>
                                             <br />
                                             <small><?= $pn['kepemilikan']; ?></small>
                                             <br />
-                                            <?php $pnstatus = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
-                                            <?php if ($pn['status'] == '1') {?>
-                                              <span class="badge badge-pill badge-info"><?= $pnstatus['nama']; ?></span>
-                                              <?php } elseif ($pn['status'] == '2') {?>
-                                              <span class="badge badge-pill badge-danger"><?= $pnstatus['nama']; ?></span>
-                                              <?php } elseif ($pn['status'] == '8' or $pn['status'] == '11') {?>
-                                              <span class="badge badge-pill badge-warning"><?= $pnstatus['nama']; ?></span>
-                                            <?php };?>
+                                            <small><?= $pn['id']; ?></small>
                                         </td> 
                                         <td><?= $pn['anggota']; ?></td>
                                         <td><?= $pn['tujuan']; ?></td>
                                         <td><?= $pn['keperluan']; ?></td>
-                                        <td><?= $pn['id']; ?></td>
                                         <td><?= $pn['jenis_perjalanan']; ?></td>
                                         <td><?= date('d-M', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
                                         <td><?= date('d-M', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
@@ -377,37 +410,49 @@
                 </div>
                 <form class="form-horizontal">
                     <div class="modal-body">
-                    <div class="row">
-                                <label class="col-md-2 col-form-label">Device ID</label>
-                                <div class="col-md-5">
+                      <div class="row">
+                                <div class="col-md-12">
+                                  <div id="map" class="map" style="width:100%;height:380px;"></div>
+                                </div>
+                            </div>
+                      <div class="row">
+                                <label class="col-md-3 col-form-label">Device ID</label>
+                                <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" name="device_id" id="device_id">
+                                        <input type="text" class="form-control" name="device_id" id="device_id" disabled>
                                     </div>
                                 </div>
                             </div>
-                    <div class="row">
-                                <label class="col-md-2 col-form-label">Nomor Polisi</label>
-                                <div class="col-md-5">
+                      <div class="row">
+                                <label class="col-md-3 col-form-label">Nomor Polisi</label>
+                                <div class="col-md-9">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control" name="nopol" id="nopol" disabled>
                                     </div>
                                 </div>
                             </div>
-                    <div class="row">
-                                <label class="col-md-2 col-form-label">Lokasi</label>
-                                <div class="col-md-10">
+                      <div class="row">
+                                <label class="col-md-3 col-form-label">Lokasi</label>
+                                <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" name="lokasi" id="lokasi" disabled>
+                                    <textarea rows="3" class="form-control disabled" name="lokasi" id="lokasi" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Ignition</label>
+                                <div class="col-md-9">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" name="ignition" id="ignition" disabled>
                                     </div>
                                 </div>
                             </div>
                         <div class="modal-footer">
-                            <!-- <button type="submit" class="btn btn-primary">SELANJUTNYA</button> -->
-                            <!-- <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-default">Kembali</a> -->
+                        <button class="btn btn-default btn-link" data-dismiss="modal">TUTUP</button>
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>   
         </div>
     </div>
 </div>
@@ -418,11 +463,9 @@
             var id = button.data('id') // Extract info from data-* attributes
             var modal = $(this)
             modal.find('.modal-body input[name="device_id"]').val(id)
-        // })
-
-        // $().ready(function(){
+      
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", 'http://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
+            xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
 
             //Send the proper header information along with the request
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -430,13 +473,43 @@
             xhr.onreadystatechange = function() { // Call a function when the state changes.
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                     var myObj = JSON.parse(this.responseText);
-                    // var myJSON = JSON.stringify(myObj);
-                    x = myObj.data[id]['device_info']['name'];
-                    y = myObj.data[id]['realtime']['location'];
-                    // x = myObj.response_time;
-                    document.getElementById("nopol").value = x;
-                    document.getElementById("lokasi").value = y;
-                    // Request finished. Do processing here.
+                    
+                    if (id){
+                      x = myObj.data[id]['device_info']['name'];
+                      y = myObj.data[id]['realtime']['location'];
+                      z = myObj.data[id]['realtime']['ignition_status'];
+                      lat = myObj.data[id]['realtime']['latitude'];
+                      lng = myObj.data[id]['realtime']['longitude'];
+                      document.getElementById("nopol").value = x;
+                      document.getElementById("lokasi").value = y;
+                      document.getElementById("ignition").value = z;
+                      // Request finished. Do processing here.
+                    }else{
+                      document.getElementById("nopol").value = null;
+                      document.getElementById("lokasi").value = null;
+                      document.getElementById("ignition").value = null;
+                      lat = null;
+                      lng = null;
+                    }
+
+                    var location = new google.maps.LatLng(lat, lng);
+
+                    var mapCanvas = document.getElementById('map');
+
+                    var mapOptions = {
+                        center: location,
+                        zoom: 18,
+
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    }
+                    var map = new google.maps.Map(mapCanvas, mapOptions);
+
+                    var marker = new google.maps.Marker({
+                    position: location
+                    });
+
+                    marker.setMap(map);
+
                 }
             }
             xhr.send("username=winteq&password=winteq123&devices=2019110056%3B2019110057%3B2019110055");
