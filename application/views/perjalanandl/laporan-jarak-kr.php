@@ -217,7 +217,11 @@
                                             $this->db->where('day(tglkembali) >=',$i);
                                             $this->db->where('status','9');
                                             $queryTrip = $this->db->get('perjalanan');
-                                            echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
                                           } 
                                         ?>
                                     </tr>
@@ -232,7 +236,11 @@
                                             $this->db->where('day(tglkembali) >=',$i);
                                             $this->db->where('status','9');
                                             $queryTotalTrip = $this->db->get('perjalanan');
-                                            echo '<td><b>'. $queryTotalTrip->num_rows().'</b></td>';
+                                            if ($queryTotalTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td><b>'. $queryTotalTrip->num_rows().'</b></td>';
+                                            }
                                           } 
                                         ?>
                                     </tr>

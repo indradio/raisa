@@ -163,6 +163,9 @@ class Cekdl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $kmkembali = substr($this->input->post('kmkembali'), -3);
+        if ($kmkembali < $this->input->post('kmberangkat')){
+            $kmkembali = $kmkembali + 1000;
+        }
         $kmtotal = $kmkembali - $this->input->post('kmberangkat');
         $this->db->set('tglkembali', date("Y-m-d"));
         $this->db->set('jamkembali', date("H:i:s"));

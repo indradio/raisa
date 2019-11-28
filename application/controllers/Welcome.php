@@ -20,6 +20,25 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$tanggal = '03';
+		// $tanggal = date('d');
+		$bulan = date('m');
+		$tahun = date('Y');
+		
+		// $this->db->where('day(tglmulai)', $tanggal);
+		$this->db->where('month(tglmulai)', $bulan);
+		$this->db->where('year(tglmulai)', $tahun);
+		$this->db->where('status', '9');
+		$lembur = $this->db->get('lembur')->result_array();
+		foreach ($lembur as $l) :
+			$this->db->select('SUM(durasi) as total');
+			$this->db->where('link_aktivitas', $l['id']);
+			$this->db->from('aktivitas');
+			$durasi = $this->db->get()->row()->total;
+
+			$this->db->set('durasi', $durasi);
+			$this->db->where('id', $l['id']);
+			$this->db->update('lembur');
+		endforeach;
 	}
 }

@@ -503,9 +503,10 @@
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     }
                     var map = new google.maps.Map(mapCanvas, mapOptions);
-
+                    var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
                     var marker = new google.maps.Marker({
-                    position: location
+                    position: location,
+                    icon: image
                     });
 
                     marker.setMap(map);

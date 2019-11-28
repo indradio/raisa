@@ -1129,8 +1129,8 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
 
         $this->db->select('SUM(durasi) as total');
-        $this->db->where('status >', '2');
         $this->db->where('link_aktivitas', $lembur['id']);
+        $this->db->where('status >', '2');
         $this->db->from('aktivitas');
         $totalDurasi = $this->db->get()->row()->total;
 
