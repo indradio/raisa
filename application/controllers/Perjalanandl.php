@@ -118,7 +118,7 @@ class Perjalanandl extends CI_Controller
         $totalDl = $dl['COUNT(*)'] + 1;
 
         $data = [
-            // 'id' => 'DL' . $tahun . $bulan . $totalDl,
+            // 'id' => 'DL' . date("y", strtotime($this->input->post('tglberangkat'))) . $bulan . $totalDl,
             'id' => 'DL' . date("ym") . $totalDl,
             'npk' => $this->input->post('npk'),
             'nama' => $this->input->post('nama'),

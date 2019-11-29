@@ -130,14 +130,6 @@
       $nama4 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_hr']])->row_array();
       $n4 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama4['posisi_id']])->row_array();
       $nama4['nama']; 
-
-      $nama5 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_div']])->row_array();
-      $n5 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama5['posisi_id']])->row_array();
-      $nama5['nama']; 
-
-      $nama6 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_coo']])->row_array();
-      $n6 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama6['posisi_id']])->row_array();
-      $nama6['nama']; 
       
       $pdf->Cell(200,5,'',0,1,'C',1);
       $pdf->SetFont('Arial','',5);

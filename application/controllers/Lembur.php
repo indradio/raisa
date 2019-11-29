@@ -157,7 +157,7 @@ class Lembur extends CI_Controller
 
 
             $data = [
-                'id' => 'OT' . date('y', strtotime($this->input->post('tglmulai'))) . date('m', strtotime($this->input->post('tglmulai'))) . $totalLembur,
+                'id' => 'OT' . date('ym', strtotime($this->input->post('tglmulai'))) . $totalLembur,
                 'tglpengajuan' => date('Y-m-d H:i:s'),
                 'npk' => $this->session->userdata('npk'),
                 'nama' => $karyawan['nama'],
@@ -193,16 +193,17 @@ class Lembur extends CI_Controller
     public function tambah_tim()
     {  
         //validasi jam hari kerja dan jam hari libur BELUM
-         
         date_default_timezone_set('asia/jakarta');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+        $tahun = date("Y", strtotime($this->input->post('tglmulai')));
+        $bulan = date("m", strtotime($this->input->post('tglmulai')));
 
         if (date("Y-m-d H:i:s", strtotime($this->input->post('tglmulai'))) > date('Y-m-d H:i:s')) {
             $queryLemburBulan = "SELECT COUNT(*)
             FROM `lembur`
-            WHERE YEAR(tglmulai) = YEAR(CURDATE()) AND MONTH(tglmulai) = MONTH(CURDATE())
+            WHERE YEAR(tglmulai) = '$tahun' AND MONTH(tglmulai) = '$bulan'
             ";
             $lembur = $this->db->query($queryLemburBulan)->row_array();
             $totalLembur = $lembur['COUNT(*)'] + 1;
@@ -214,7 +215,7 @@ class Lembur extends CI_Controller
             }
 
             $data = [
-                'id' => 'OT' . date('y', strtotime($this->input->post('tglmulai'))) . date('m', strtotime($this->input->post('tglmulai'))) . $totalLembur,
+                'id' => 'OT' . date('ym', strtotime($this->input->post('tglmulai'))) . $totalLembur,
                 'tglpengajuan' => date('Y-m-d H:i:s'),
                 'npk' => $this->input->post('npk'),
                 'nama' => $karyawan['nama'],
