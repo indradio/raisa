@@ -119,7 +119,7 @@ class Perjalanandl extends CI_Controller
 
         $data = [
             // 'id' => 'DL' . $tahun . $bulan . $totalDl,
-            'id' => 'DL' . $tahun . $totalDl,
+            'id' => 'DL' . date("y") . $totalDl,
             'npk' => $this->input->post('npk'),
             'nama' => $this->input->post('nama'),
             'copro' => $this->input->post('copro'),
