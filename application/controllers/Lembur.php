@@ -138,11 +138,13 @@ class Lembur extends CI_Controller
         $karyawan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
+        $tahun = date("Y", strtotime($this->input->post('tglmulai')));
+        $bulan = date("m", strtotime($this->input->post('tglmulai')));
 
         if (date("Y-m-d", strtotime($this->input->post('tglmulai'))) > date('Y-m-d')) {
             $queryLemburBulan = "SELECT COUNT(*)
             FROM `lembur`
-            WHERE YEAR(tglmulai) = YEAR(CURDATE()) AND MONTH(tglmulai) = MONTH(CURDATE())
+            WHERE YEAR(tglmulai) = '$tahun' AND MONTH(tglmulai) = '$bulan'
             ";
             $lembur = $this->db->query($queryLemburBulan)->row_array();
             $totalLembur = $lembur['COUNT(*)'] + 1;
@@ -153,8 +155,9 @@ class Lembur extends CI_Controller
                 $hari = 1;
             }
 
+
             $data = [
-                'id' => 'OT' . date('y') . date('m') . $totalLembur,
+                'id' => 'OT' . date('y', strtotime($this->input->post('tglmulai'))) . date('m', strtotime($this->input->post('tglmulai'))) . $totalLembur,
                 'tglpengajuan' => date('Y-m-d H:i:s'),
                 'npk' => $this->session->userdata('npk'),
                 'nama' => $karyawan['nama'],
@@ -211,7 +214,7 @@ class Lembur extends CI_Controller
             }
 
             $data = [
-                'id' => 'OT' . date('y') . date('m') . $totalLembur,
+                'id' => 'OT' . date('y', strtotime($this->input->post('tglmulai'))) . date('m', strtotime($this->input->post('tglmulai'))) . $totalLembur,
                 'tglpengajuan' => date('Y-m-d H:i:s'),
                 'npk' => $this->input->post('npk'),
                 'nama' => $karyawan['nama'],
