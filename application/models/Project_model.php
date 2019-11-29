@@ -3,8 +3,8 @@
 class Project_model extends CI_Model
 {
     var $table = 'project';
-    var $column_order = array(null, 'copro', 'no_material', 'deskripsi', 'status', null); //set column field database for datatable orderable
-    var $column_search = array('copro', 'no_material', 'deskripsi', 'status'); //set column field database for datatable searchable 
+    var $column_order = array(null, 'copro','status','deskripsi', null); //set column field database for datatable orderable
+    var $column_search = array('copro','status','deskripsi'); //set column field database for datatable searchable 
     var $order = array('copro' => 'asc'); // default order 
 
     public function __construct()

@@ -215,7 +215,7 @@
                                             $this->db->where('month(tglberangkat)','11');
                                             $this->db->where('day(tglberangkat) <=',$i);
                                             $this->db->where('day(tglkembali) >=',$i);
-                                            $this->db->where('status','9');
+                                            $this->db->where('status >','0');
                                             $queryTrip = $this->db->get('perjalanan');
                                             if ($queryTrip->num_rows()==0){
                                                 echo '<td>-</td>';
@@ -234,7 +234,7 @@
                                             $this->db->where('month(tglberangkat)','11');
                                             $this->db->where('day(tglberangkat) <=',$i);
                                             $this->db->where('day(tglkembali) >=',$i);
-                                            $this->db->where('status','9');
+                                            $this->db->where('status >','0');
                                             $queryTotalTrip = $this->db->get('perjalanan');
                                             if ($queryTotalTrip->num_rows()==0){
                                                 echo '<td>-</td>';

@@ -36,7 +36,7 @@
                       <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $l['id']; ?>'" >
                       <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
                       <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                      <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

@@ -102,16 +102,24 @@ class Perjalanandl extends CI_Controller
         $this->db->where('posisi_id', '3');
         $this->db->where('dept_id', $karyawan['dept_id']);
         $ka_dept = $this->db->get('karyawan')->row_array();
+        $tahun = date("Y", strtotime($this->input->post('tglberangkat')));
+        $bulan = date("m", strtotime($this->input->post('tglberangkat')));
+
+        // $queryDl = "SELECT COUNT(*)
+        // FROM `perjalanan`
+        // WHERE YEAR(tglberangkat) = '$tahun' AND MONTH(tglberangkat) = '$bulan'
+        // ";
 
         $queryDl = "SELECT COUNT(*)
         FROM `perjalanan`
-        WHERE YEAR(tglberangkat) = YEAR(CURDATE()) AND MONTH(tglberangkat) = MONTH(CURDATE())
+        WHERE YEAR(tglberangkat) = '$tahun'
         ";
         $dl = $this->db->query($queryDl)->row_array();
         $totalDl = $dl['COUNT(*)'] + 1;
 
         $data = [
-            'id' => 'DL' . date('ym') . $totalDl,
+            // 'id' => 'DL' . $tahun . $bulan . $totalDl,
+            'id' => 'DL' . date("ym") . $totalDl,
             'npk' => $this->input->post('npk'),
             'nama' => $this->input->post('nama'),
             'copro' => $this->input->post('copro'),
@@ -698,6 +706,28 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('perjalanandl/laporan-jarak-kr', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function laporan()
+    {
+        $data['sidemenu'] = 'Kepala Departemen';
+        $data['sidesubmenu'] = 'Laporan Perjalanan Dinas';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['tahun'] = $this->input->post('tahun');
+        $data['bulan'] = $this->input->post('bulan');
+        if ($this->input->post('laporan') == 1){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('perjalanandl/lp_perjalanan_1', $data);
+            $this->load->view('templates/footer');
+        }else{
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('perjalanandl/lp_perjalanan', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function gps()

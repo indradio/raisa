@@ -201,7 +201,7 @@ class Jamkerja extends CI_Controller
         {
             $this->db->where('day(tgl_aktivitas) >=',$tglawal);
             $this->db->where('day(tgl_aktivitas) <=',$tglakhir);
-            $this->db->where('status >','2');
+            $this->db->where('status >','1');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         }else{
