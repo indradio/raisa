@@ -63,7 +63,7 @@
                                             <td><?= $wbs['progres']; ?></td>
                                             <td><?= $wbs['status']; ?></td>
                                             <td class="text-right">
-                                            <?php if($wbs['level']=='1' AND $wbs['jumlah_aktivitas']=='0'){ ?>
+                                            <?php if($wbs['level']=='1' AND $wbs['total_aktivitas']=='0'){ ?>
                                                 <a href="#" class="btn btn-sm btn-round btn-info btn-sm" data-toggle="modal" data-target="#ubahMailstone" data-id="<?= $wbs['id']; ?>" data-milestone="<?= $wbs['milestone']; ?>" data-tglmulai="<?= $wbs['tglmulai_wbs']; ?>" data-tglselesai_wbs="<?= $wbs['tglselesai_wbs']; ?>" >UBAH</a>
                                                 <a href="" class="btn btn-round btn-danger btn-sm" data-toggle="modal" data-target="#hapusAktivitas" data-id="<?=$wbs['id']; ?>">HAPUS</a>
                                             <?php } else if ($wbs['level']=='2'){ ?>

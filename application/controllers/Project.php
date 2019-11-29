@@ -120,7 +120,7 @@ class Project extends CI_Controller
         FROM `wbs`
         WHERE (`copro` = {$copro}) AND (`id` = {$id} AND `level`= '1') ";
         $mailstone = $this->db->query($queryMailstone)->row_array();
-        $totalMailstone = $mailstone['jumlah_aktivitas'] + 1;
+        $totalMailstone = $mailstone['total_aktivitas'] + 1;
 
         //query Aktivitas Mailstone
         $queryTGL = "SELECT * 
@@ -137,7 +137,7 @@ class Project extends CI_Controller
             $data = [
             'id' => $id .'.' .$totalMailstone,
             'copro' => $this->input->post('copro'),
-            // 'jumlah_aktivitas' => $this->input->post('milestone'),
+            // 'total_aktivitas' => $this->input->post('milestone'),
             'aktivitas' => $this->input->post('aktivitas'),
             'tglmulai' => $this->input->post('tglmulai'),
             'tglselesai' => $this->input->post('tglselesai'),
@@ -146,7 +146,7 @@ class Project extends CI_Controller
             ];
             $this->db->insert('wbs', $data);
 
-            $this->db->set('jumlah_aktivitas',$totalMailstone);
+            $this->db->set('total_aktivitas',$totalMailstone);
             $this->db->where($array);
             $this->db->update('wbs');
             redirect('project/wbs/' .$this->input->post('copro'));

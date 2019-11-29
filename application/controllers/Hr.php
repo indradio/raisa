@@ -102,12 +102,42 @@ class Hr extends CI_Controller
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('foto')) {
             $this->db->set('foto', $this->upload->data('file_name'));
+            $this->db->set('npk', $this->input->post('npk'));
+            $this->db->set('inisial', $this->input->post('inisial'));
+            $this->db->set('nama', $this->input->post('nama'));
+            $this->db->set('email', $this->input->post('email'));
+            $this->db->set('phone', $this->input->post('phone'));
+            $this->db->set('posisi_id', $this->input->post('posisi'));
+            $this->db->set('div_id', $this->input->post('div'));
+            $this->db->set('dept_id', $this->input->post('dept'));
+            $this->db->set('sect_id', $this->input->post('sect'));
+            $this->db->set('atasan1', $this->input->post('atasan1'));
+            $this->db->set('atasan2', $this->input->post('atasan2'));
+            $this->db->set('gol_id', $this->input->post('gol'));
+            $this->db->set('fasilitas_id', $this->input->post('fasilitas'));
+            $this->db->set('role_id', $this->input->post('role'));
             $this->db->where('npk', $this->input->post('npk'));
             $this->db->update('karyawan');
         } else {
             echo $this->upload->display_errors();
         }
-
+        $this->db->set('npk', $this->input->post('npk'));
+        $this->db->set('inisial', $this->input->post('inisial'));
+        $this->db->set('nama', $this->input->post('nama'));
+        $this->db->set('email', $this->input->post('email'));
+        $this->db->set('phone', $this->input->post('phone'));
+        $this->db->set('posisi_id', $this->input->post('posisi'));
+        $this->db->set('div_id', $this->input->post('div'));
+        $this->db->set('dept_id', $this->input->post('dept'));
+        $this->db->set('sect_id', $this->input->post('sect'));
+        $this->db->set('atasan1', $this->input->post('atasan1'));
+        $this->db->set('atasan2', $this->input->post('atasan2'));
+        $this->db->set('gol_id', $this->input->post('gol'));
+        $this->db->set('fasilitas_id', $this->input->post('fasilitas'));
+        $this->db->set('role_id', $this->input->post('role'));
+        $this->db->where('npk', $this->input->post('npk'));
+        $this->db->update('karyawan');
+        $this->session->set_flashdata('message', 'hapus');
         redirect('hr/karyawan');
     }
 
