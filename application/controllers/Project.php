@@ -33,9 +33,8 @@ class Project extends CI_Controller
             $row = array();
             $row[] = $no;
             $row[] = $project->copro;
-            $row[] = $project->no_material;
-            $row[] = $project->deskripsi;
             $row[] = $project->status;
+            $row[] = $project->deskripsi;
             $row[] = null;
 
             $data[] = $row;

@@ -1125,8 +1125,23 @@ class Lembur extends CI_Controller
 
     public function submit_konfirmasi_hr()
     {
-        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
         date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+
+        $jammulai = date('H:i', strtotime($lembur['tglmulai_aktual']));
+        $jamselesai = date('H:i', strtotime($lembur['tglselesai_aktual']));
+
+        if ($jammulai < '12:00' AND $jamselesai > '13:00'){
+            $istirahat1 = 'YA';
+        }else{
+            $istirahat1 = 'TIDAK';
+        }
+
+        if ($jammulai < '18:30' AND $jamselesai > '19:00'){
+            $istirahat2 = 'YA';
+        }else{
+            $istirahat2 = 'TIDAK';
+        }
 
         $this->db->select('SUM(durasi) as total');
         $this->db->where('link_aktivitas', $lembur['id']);
@@ -1138,6 +1153,8 @@ class Lembur extends CI_Controller
         $this->db->set('tul', $this->input->post('tul'));
         $this->db->set('admin_hr', $this->session->userdata('inisial'));
         $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
+        $this->db->set('istirahat1', $istirahat1);
+        $this->db->set('istirahat2', $istirahat2);
         $this->db->set('status', '9');
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');

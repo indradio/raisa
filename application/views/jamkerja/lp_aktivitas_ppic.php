@@ -38,9 +38,10 @@
                             <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
                                         <tr>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
                                             <th>Nama</th>
                                             <th>NPK</th>
-                                            <th>Tanggal</th>
                                             <th>Kategori</th>
                                             <th>COPRO</th>
                                             <th>Aktivitas</th>
@@ -53,9 +54,10 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                        <th>Nama</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th>Nama</th>
                                             <th>NPK</th>
-                                            <th>Tanggal</th>
                                             <th>Kategori</th>
                                             <th>COPRO</th>
                                             <th>Aktivitas</th>
@@ -67,12 +69,15 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach ($aktivitas as $a) : ?>
+                                        <?php foreach ($aktivitas as $a) : 
+                                              $lembur = $this->db->get_where('lembur', ['id' => $a['link_aktivitas']])->row_array();
+                                        ?>
                                             <tr>
+                                                <td><?= date('d-m-Y H:i', strtotime($lembur['tglmulai_aktual'])); ?></td>
+                                                <td><?= date('d-m-Y H:i', strtotime($lembur['tglselesai_aktual'])); ?></td>
                                                 <?php $krywn = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); ?>
                                                 <td><?= $krywn['nama']; ?></td>
                                                 <td><?= $a['npk']; ?></td>
-                                                <td><?= $a['tgl_aktivitas']; ?></td>
                                                 <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                                 <td><?= $k['nama']; ?> </td>
                                                 <td><?= $a['copro']; ?></td>

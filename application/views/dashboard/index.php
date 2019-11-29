@@ -60,44 +60,85 @@
     </div>
     <!-- end banner -->
  <!-- START List Makan LEMBUR -->
-    <?php if (date('H:i') >= '16:00' AND date('H:i') <= '20:00' ){ ?>
-    <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-rose card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">assignment</i>
-                        </div>
-                        <h4 class="card-title">Daftar Makan Malam Lembur </h4>
-                    </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <div class="material-datatables">
-                            <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($lembur_makan_malam as $lmm) : ?>
-                                        <tr>
-                                            <td><?= $lmm['nama']; ?> <small>(<?= $lmm['id']; ?>)</small></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+    <?php if (date('D') == 'Sat' OR date('D') == 'Sun') { ?>
+      <?php if (date('H:i') >= '10:00' AND date('H:i') <= '14:00' ){ ?>
+      <div class="row">
+              <div class="col-md-12">
+                  <div class="card">
+                      <div class="card-header card-header-rose card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">assignment</i>
+                          </div>
+                          <h4 class="card-title">Daftar Makan Lembur </h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <div class="material-datatables">
+                              <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                  <thead>
+                                      <tr>
+                                          <th>Nama</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <?php foreach ($lembur_makan_malam as $lmm) : ?>
+                                          <tr>
+                                              <td><?= $lmm['nama']; ?> <small>(<?= $lmm['id']; ?>)</small></td>
+                                          </tr>
+                                      <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- end content-->
-                </div>
-                <!--  end card  -->
-            </div>
-            <!-- end col-md-12 -->
-        </div>
-        <!-- end row -->
-    <?php }; ?>
+                      <!-- end content-->
+                  </div>
+                  <!--  end card  -->
+              </div>
+              <!-- end col-md-12 -->
+          </div>
+          <!-- end row -->
+      <?php } 
+    }else{ ?>
+      <?php if (date('H:i') >= '16:00' AND date('H:i') <= '20:00' ){ ?>
+      <div class="row">
+              <div class="col-md-12">
+                  <div class="card">
+                      <div class="card-header card-header-rose card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">assignment</i>
+                          </div>
+                          <h4 class="card-title">Daftar Makan Lembur </h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <div class="material-datatables">
+                              <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                  <thead>
+                                      <tr>
+                                          <th>Nama</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <?php foreach ($lembur_makan_malam as $lmm) : ?>
+                                          <tr>
+                                              <td><?= $lmm['nama']; ?> <small>(<?= $lmm['id']; ?>)</small></td>
+                                          </tr>
+                                      <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end content-->
+                  </div>
+                  <!--  end card  -->
+              </div>
+              <!-- end col-md-12 -->
+          </div>
+          <!-- end row -->
+      <?php } ?>
+    <?php } ?>
     <!-- END List Makan LEMBUR -->
 
     <div class="row">
