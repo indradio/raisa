@@ -323,9 +323,14 @@ class Reservasi extends CI_Controller
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
             $queryRsv = "SELECT COUNT(*)
-        FROM `reservasi`
-        WHERE YEAR(tglreservasi) = YEAR(CURDATE()) AND MONTH(tglreservasi) = MONTH(CURDATE())
-        ";
+            FROM `reservasi`
+            WHERE YEAR(tglreservasi) = YEAR(CURDATE())
+            ";
+            // $queryRsv = "SELECT COUNT(*)
+            // FROM `reservasi`
+            // WHERE YEAR(tglreservasi) = YEAR(CURDATE()) AND MONTH(tglreservasi) = MONTH(CURDATE())
+            // ";
+
             $rsv = $this->db->query($queryRsv)->row_array();
             $totalRsv = $rsv['COUNT(*)'] + 1;
             $data = [
