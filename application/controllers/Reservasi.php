@@ -326,6 +326,7 @@ class Reservasi extends CI_Controller
             FROM `reservasi`
             WHERE YEAR(tglreservasi) = YEAR(CURDATE())
             ";
+
             // $queryRsv = "SELECT COUNT(*)
             // FROM `reservasi`
             // WHERE YEAR(tglreservasi) = YEAR(CURDATE()) AND MONTH(tglreservasi) = MONTH(CURDATE())
