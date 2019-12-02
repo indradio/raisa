@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery-3.1.1.min.js'); ?>"></script>
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
@@ -105,9 +106,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-1 col-form-label">Departemen</label>
+                            <label class="col-md-1 col-form-label" for="">Departemen</label>
                             <div class="col-md-9">
-                                <select class="selectpicker" name="dept" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                <select id="dept" class="selectpicker" name="dept" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" required>
+                                    <option value="0">--Piih--</option>
                                     <?php
                                     $departemen = $this->db->get('karyawan_dept')->result_array();
                                     foreach ($departemen as $dept) :
@@ -120,6 +122,20 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="sub"></div>
+                        <script type="text/javascript">
+                            $('[name=dept]').change(function(){
+                                var dept = $('[name=dept]').val();
+                                $.ajax({
+                                    type: "POST",
+                                    url: "<?php echo site_url('hr/ajax')?>",
+                                    data: {dept:dept},
+                                    success: function(data) {
+                                        $('#sect').html(data); 
+                                    }
+                                })
+                            })
+                        </script>           
                         <div class="row">
                             <label class="col-md-1 col-form-label">Unit Organisasi</label>
                             <div class="col-md-9">

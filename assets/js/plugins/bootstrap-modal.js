@@ -215,3 +215,16 @@ $('#hapusAktivitas').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
+$('#uploadBanner').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var id = button.data('id') 
+    var judul = button.data('judul') 
+    var deskripsi = button.data('deskripsi') 
+    var berlaku = button.data('berlaku') 
+    var modal = $(this)
+    modal.find('.modal-body input[name="id"]').val(id)
+    modal.find('.modal-body input[name="judul"]').val(judul)
+    modal.find('.modal-body textarea[name="deskripsi"]').val(deskripsi)
+    modal.find('.modal-body input[name="berlaku"]').val(berlaku)
+})
+
