@@ -27166,7 +27166,7 @@ be a descendant of the grid when it is being dragged.
 .ct-chart .ct-series-a .ct-slice-pie,
 .ct-chart .ct-series-a .ct-slice-donut-solid,
 .ct-chart .ct-series-a .ct-area {
-  stroke: #00bcd4;
+  stroke: #43a047;
 }
 
 .ct-chart .ct-series-b .ct-point,
@@ -27176,7 +27176,7 @@ be a descendant of the grid when it is being dragged.
 .ct-chart .ct-series-b .ct-slice-pie,
 .ct-chart .ct-series-b .ct-slice-donut-solid,
 .ct-chart .ct-series-b .ct-area {
-  stroke: #f44336;
+  stroke: #00bcd4;
 }
 
 .ct-chart .ct-series-c .ct-point,
@@ -27187,6 +27187,16 @@ be a descendant of the grid when it is being dragged.
 .ct-chart .ct-series-c .ct-slice-donut-solid,
 .ct-chart .ct-series-c .ct-area {
   stroke: #ff9800;
+}
+
+.ct-chart .ct-series-d .ct-point,
+.ct-chart .ct-series-d .ct-line,
+.ct-chart .ct-series-d .ct-bar,
+.ct-chart .ct-series-d .ct-slice-donut,
+.ct-chart .ct-series-d .ct-slice-pie,
+.ct-chart .ct-series-d .ct-slice-donut-solid,
+.ct-chart .ct-series-d .ct-area {
+  stroke: #f44336;
 }
 
 .ct-chart .ct-bar {

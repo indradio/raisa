@@ -114,8 +114,11 @@
                                 <label class="col-md-2 col-form-label">Kilometer Awal*</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmberangkat" required>
+                                        <input type="number" class="form-control" name="kmberangkat" minLength="4" required="true" />
                                     </div>
+                                    <label class="col-sm-12 label-on-right">
+                                        <code>Kilometer yg diinput minimal 4 digit.</code>
+                                    </label>
                                 </div>
                             </div>
                             <div class="row">

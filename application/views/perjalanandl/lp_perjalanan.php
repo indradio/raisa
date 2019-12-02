@@ -9,18 +9,18 @@
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Laporan Lembur</h4>
+                        <h4 class="card-title">Laporan Perjalanan Dinas</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="<?= base_url('lembur/laporan'); ?>" method="post">
+                        <form class="form-horizontal" action="<?= base_url('perjalanandl/laporan'); ?>" method="post">
                         <div class="row">
                                 <label class="col-md-2 col-form-label">Laporan Berdasarkan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="laporan" id="laporan" data-style="select-with-transition" title="Pilih Laporan" data-size="7" required>
-                                            <option value="1">Jam & TUL</option>
-                                            <option value="2">Pelembur</option>
-                                            <!-- <option value="3">Pelembur</option> -->
+                                            <option value="1">Kategori</option>
+                                            <option value="2">Kendaraan</option>
+                                            <option value="3">Peserta</option>
                                         </select>
                                     </div>
                                 </div>

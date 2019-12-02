@@ -98,10 +98,17 @@ class Perjalanandl extends CI_Controller
     public function prosesdl2()
     {
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->input->post('npk')])->row_array();
-
+        
         $this->db->where('posisi_id', '3');
         $this->db->where('dept_id', $karyawan['dept_id']);
         $ka_dept = $this->db->get('karyawan')->row_array();
+        if ($this->input->post('kepemilikan')=='Operasional'){
+            $data_kendaraan = $this->db->get_where('kendaraan', ['nopol' => $this->input->post('nopol')])->row_array();
+            $kendaraan = $data_kendaraan['nama'];
+        }else{
+            $kendaraan = 'Non Operasional';
+        }
+
         $tahun = date("Y", strtotime($this->input->post('tglberangkat')));
         $bulan = date("m", strtotime($this->input->post('tglberangkat')));
 
@@ -136,6 +143,7 @@ class Perjalanandl extends CI_Controller
             'cekkembali' => null,
             'nopol' => $this->input->post('nopol'),
             'kepemilikan' => $this->input->post('kepemilikan'),
+            'kendaraan' => $kendaraan,
             'admin_ga' => $this->session->userdata('inisial'),
             'catatan_ga' => $this->input->post('catatan'),
             'ka_dept' => $ka_dept['nama'],
@@ -720,6 +728,18 @@ class Perjalanandl extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
             $this->load->view('perjalanandl/lp_perjalanan_1', $data);
+            $this->load->view('templates/footer');
+        }elseif ($this->input->post('laporan') == 2){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('perjalanandl/lp_perjalanan_2', $data);
+            $this->load->view('templates/footer');
+        }elseif ($this->input->post('laporan') == 3){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('perjalanandl/lp_perjalanan_3', $data);
             $this->load->view('templates/footer');
         }else{
             $this->load->view('templates/header', $data);

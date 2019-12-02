@@ -121,11 +121,11 @@
                                 <label class="col-md-3 col-form-label">Kilometer Akhir*</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" name="kmkembali" min="<?= $perjalanan['kmberangkat']; ?>" required="true" />
+                                        <input type="number" class="form-control" name="kmkembali" min="<?= $perjalanan['kmberangkat']; ?>" minLength="4" required="true" />
                                     </div>
                                     <label class="col-sm-12 label-on-right">
-                        <code>Kilometer akhir tidak boleh kurang dari kilometer awal.</code>
-                      </label>
+                                        <code>Kilometer akhir tidak boleh kurang dari kilometer awal.</code>
+                                    </label>
                                 </div>
                             </div>
                             <div class="row">
