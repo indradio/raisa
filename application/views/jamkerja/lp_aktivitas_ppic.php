@@ -73,8 +73,8 @@
                                               $lembur = $this->db->get_where('lembur', ['id' => $a['link_aktivitas']])->row_array();
                                         ?>
                                             <tr>
-                                                <td><?= date('d-m-Y H:i', strtotime($lembur['tglmulai_aktual'])); ?></td>
-                                                <td><?= date('d-m-Y H:i', strtotime($lembur['tglselesai_aktual'])); ?></td>
+                                                <td><?= date('m-d-Y H:i', strtotime($lembur['tglmulai_aktual'])); ?></td>
+                                                <td><?= date('m-d-Y H:i', strtotime($lembur['tglselesai_aktual'])); ?></td>
                                                 <?php $krywn = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); ?>
                                                 <td><?= $krywn['nama']; ?></td>
                                                 <td><?= $a['npk']; ?></td>
