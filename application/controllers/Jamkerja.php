@@ -195,12 +195,12 @@ class Jamkerja extends CI_Controller
     public function lp_aktivitas_ppic()
     {
         date_default_timezone_set('asia/jakarta');
-        $tglawal = $this->input->post('tglawal');
-        $tglakhir = $this->input->post('tglakhir');
+        $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+        $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
         if ($tglawal != null AND $tglakhir != null)
         {
-            $this->db->where('day(tgl_aktivitas) >=',$tglawal);
-            $this->db->where('day(tgl_aktivitas) <=',$tglakhir);
+            $this->db->where('tgl_aktivitas >=',$tglawal);
+            $this->db->where('tgl_aktivitas <=',$tglakhir);
             $this->db->where('status >','1');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
