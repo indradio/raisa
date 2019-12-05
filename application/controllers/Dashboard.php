@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller
         //Auto batalkan perjalanan
         $queryPerjalanan = "SELECT *
         FROM `perjalanan`
-        WHERE `tglberangkat` <= CURDATE() AND `status` = 1
+        WHERE `tglberangkat` <= CURDATE() AND (`status` = 1 OR `status` = 8)
         ";
         $perjalanan = $this->db->query($queryPerjalanan)->result_array();
         foreach ($perjalanan as $p) :
@@ -77,7 +77,7 @@ class Dashboard extends CI_Controller
                 $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = "NQXJ3HED5LW2XV440HCG";
                 $destination = $karyawan['phone'];
-                $message = "*HUHUHU LEMBUR KAMU DIBATALKAN*" .
+                $message = "*:( LEMBUR KAMU DIBATALKAN*" .
                             "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
                             "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
                             "\r\nNama : *" . $l['nama'] ."*". 
@@ -128,7 +128,6 @@ class Dashboard extends CI_Controller
         $this->db->where('year(tglmulai)',date('Y'));
         $this->db->where('month(tglmulai)',date('m'));
         $this->db->where('day(tglmulai)',date('d'));
-        $this->db->where('lokasi','WTQ');
         $this->db->where('konsumsi','YA');
         $this->db->where('status >', '2');
         $data['lembur_makan_malam'] = $this->db->get('lembur')->result_array();

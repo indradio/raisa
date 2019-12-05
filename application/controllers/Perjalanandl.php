@@ -741,6 +741,12 @@ class Perjalanandl extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('perjalanandl/lp_perjalanan_3', $data);
             $this->load->view('templates/footer');
+        }elseif ($this->input->post('laporan') == 4){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('perjalanandl/lp_perjalanan_4', $data);
+            $this->load->view('templates/footer');
         }else{
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

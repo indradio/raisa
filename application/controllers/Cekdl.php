@@ -253,6 +253,7 @@ class Cekdl extends CI_Controller
 
     public function revisi()
     {
+        date_default_timezone_set('asia/jakarta');
         $this->db->set('catatan_security', $this->input->post('catatan') . ' - Direvisi oleh ' . $this->session->userdata('inisial') . ' pada ' . date('d-m-Y H:i'));
         $this->db->set('status', '8');
         $this->db->where('id', $this->input->post('id'));

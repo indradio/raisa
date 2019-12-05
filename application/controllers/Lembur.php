@@ -12,6 +12,29 @@ class Lembur extends CI_Controller
 
     public function index()
     {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->where('status', '0');
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $lembur = $this->db->get('lembur')->result_array();
+
+        foreach ($lembur as $l) :
+            // cari selisih
+            $sekarang = strtotime(date('Y-m-d'));
+            $tempo = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($l['tglmulai']))));
+
+            if ($tempo < $sekarang) {
+
+                //Hapus Aktivitas
+                $this->db->set('aktivitas');
+                $this->db->where('link_aktivitas', $l['id']);
+                $this->db->delete('aktivitas');
+
+                $this->db->set('lembur');
+                $this->db->where('id', $l['id']);
+                $this->db->delete('lembur');
+            }
+        endforeach;
+
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'LemburKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -83,12 +106,12 @@ class Lembur extends CI_Controller
                 $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
                 $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
-                $queryLemburBulan = "SELECT COUNT(*)
-                FROM `lembur`
-                WHERE YEAR(tglmulai) = YEAR(CURDATE()) AND MONTH(tglmulai) = MONTH(CURDATE())
-                ";
-                $lembur = $this->db->query($queryLemburBulan)->row_array();
-                $totalLembur = $lembur['COUNT(*)'] + 1;
+
+                $this->db->where('year(tglmulai)', date('Y'));
+                $this->db->where('month(tglmulai)', date('m'));
+                $lembur = $this->db->get('lembur');
+                $total_lembur = $lembur->num_rows()+1;
+                $id = 'OT'.date('ym'). sprintf("%04s", $total_lembur);
 
                 if (date('H:i:s') <= date('16:30:00')) {
                     $tglmulai = date('Y-m-d 16:30:00');
@@ -103,7 +126,7 @@ class Lembur extends CI_Controller
                 }
 
                 $data = [
-                    'id' => 'OT' . date('y') . date('m') . $totalLembur,
+                    'id' => $id,
                     'tglpengajuan' => date('Y-m-d H:i:s'),
                     'npk' => $this->session->userdata('npk'),
                     'nama' => $karyawan['nama'],

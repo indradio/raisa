@@ -13,7 +13,8 @@
                                     $total = $this->db->get('perjalanan');
 
                                     $this->db->select_sum('kmtotal');
-                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
                                     $querykm = $this->db->get('perjalanan');
                                     $km = $querykm->row()->kmtotal;
@@ -43,7 +44,8 @@
                                     
                                     $this->db->select_sum('kmtotal');
                                     $this->db->where('kepemilikan', 'Operasional');
-                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
                                     $querykmoperasional = $this->db->get('perjalanan');
                                     $kmoperasional = $querykmoperasional->row()->kmtotal;
@@ -73,7 +75,8 @@
                                     
                                     $this->db->select_sum('kmtotal');
                                     $this->db->where('kepemilikan', 'Pribadi');
-                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
                                     $querykmpribadi = $this->db->get('perjalanan');
                                     $kmpribadi = $querykmpribadi->row()->kmtotal;
@@ -103,7 +106,8 @@
                                     
                                     $this->db->select_sum('kmtotal');
                                     $this->db->where('kepemilikan', 'Taksi');
-                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
                                     $querykmtaksi = $this->db->get('perjalanan');
                                     $kmtaksi = $querykmtaksi->row()->kmtotal;
@@ -133,7 +137,8 @@
                                     
                                     $this->db->select_sum('kmtotal');
                                     $this->db->where('kepemilikan', 'Sewa');
-                                    $this->db->where('month(tglberangkat)','11');
+                                    $this->db->where('year(tglberangkat)',$tahun);
+                                    $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
                                     $querykmsewa = $this->db->get('perjalanan');
                                     $kmsewa = $querykmsewa->row()->kmtotal;

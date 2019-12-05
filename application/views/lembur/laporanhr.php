@@ -69,8 +69,8 @@
                                     <td><?= $l['id']; ?></td>
                                     <td><?= $l['npk']; ?></td>
                                     <td><?= $l['nama']; ?></td>
-                                    <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                                    <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
+                                    <td><?= date('m/d/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                                    <td><?= date('m/d/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
                                     <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>

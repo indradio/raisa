@@ -19,8 +19,9 @@
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="laporan" id="laporan" data-style="select-with-transition" title="Pilih Laporan" data-size="7" required>
                                             <option value="1">Kategori</option>
-                                            <option value="2">Kendaraan</option>
-                                            <option value="3">Peserta</option>
+                                            <option value="2">Perjalanan</option>
+                                            <option value="3">Kendaraan</option>
+                                            <option value="4">Peserta</option>
                                         </select>
                                     </div>
                                 </div>
