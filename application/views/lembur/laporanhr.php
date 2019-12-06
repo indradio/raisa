@@ -44,8 +44,10 @@
                                     <th>No. Lembur</th>
                                     <th>NPK</th>
                                     <th>Nama</th>
-                                    <th>Tanggal/Jam Mulai</th>
-                                    <th>Tanggal/Jam Selesai</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Jam Mulai</th>
+                                    <th>Tanggal Selesai</th>
+                                    <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                     <th class="disabled-sorting"></th>
@@ -56,8 +58,10 @@
                                     <th>No. Lembur</th>
                                     <th>NPK</th>
                                     <th>Nama</th>
-                                    <th>Tanggal/Jam Mulai</th>
-                                    <th>Tanggal/Jam Selesai</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Jam Mulai</th>
+                                    <th>Tanggal Selesai</th>
+                                    <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
                                     <th class="text-right">Actions</th>
                                     <th></th>
@@ -69,8 +73,10 @@
                                     <td><?= $l['id']; ?></td>
                                     <td><?= $l['npk']; ?></td>
                                     <td><?= $l['nama']; ?></td>
-                                    <td><?= date('m/d/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                                    <td><?= date('m/d/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
+                                    <td><?= date('m/d/Y', strtotime($l['tglmulai_aktual'])); ?></td>
+                                    <td><?= date('H:i', strtotime($l['tglmulai_aktual'])); ?></td>
+                                    <td><?= date('m/d/Y', strtotime($l['tglselesai_aktual'])); ?></td>
+                                    <td><?= date('H:i', strtotime($l['tglselesai_aktual'])); ?></td>
                                     <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>
