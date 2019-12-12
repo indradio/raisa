@@ -499,35 +499,38 @@
         });
     });
 </script>
-<!-- script ajax -->
-<script>
-    $(document).ready(function() {
-        $('#kategori').change(function() {
+<!-- script ajax Kategori-->
+<script type="text/javascript">
+    function kategoriSelect(valueSelect)
+            {
+                var val = valueSelect.options[valueSelect.selectedIndex].value;
+                document.getElementById("admWbs").style.display = val != '1' ? "block" : 'none';
+                document.getElementById("admCopro").style.display = val != '3' ? "block" : 'none';
+            }
+        $('#kategori').change(function(){
             var kategori = $('#kategori').val();
-            if (kategori >= 3) {
-                // $('#copro').html('<option value="">Pilih Project</option>');
-                $('#copro').prop('disabled', true);
-                $('#copro').selectpicker('refresh');
-            } else {
-                $('#copro').prop('disabled', false);
-                $('#copro').selectpicker('refresh');
-            }
-        });
-
-        var checker = document.getElementById('check');
-        var sendbtn = document.getElementById('submit');
-        sendbtn.disabled = true;
-        // when unchecked or checked, run the function
-        checker.onchange = function() {
-            if (this.checked) {
-                sendbtn.disabled = false;
-            } else {
-                sendbtn.disabled = true;
-            }
-
-        }
-    });
-</script>
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('lembur/ajax')?>",
+                data: {kategori:kategori},
+                success: function(data) {
+                    // alert(data)
+                    $('#wbs').html(data); 
+                if(kategori == 1){
+                    $('#wbs').prop('disabled', true);
+                }
+                else if(kategori == 3){
+                    $('#copro').prop('disabled', true);
+                }
+                else{
+                    $('#copro').prop('disabled', false);
+                    $('#wbs').prop('disabled', false);
+                }    
+                }
+            })
+        })
+        
+    </script>
 
 </body>
 

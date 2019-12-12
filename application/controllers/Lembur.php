@@ -10,6 +10,18 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
     }
 
+    public function ajax()
+    {
+        $id = $_POST['kategori'];
+        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row();
+       
+       $getAktivitas = $this->db->query("SELECT * FROM jamkerja_lain WHERE kategori_id='$id' AND dept_id = '$karyawan->dept_id' ")->result_array();
+    //    echo $this->db->last_query();
+       foreach ($getAktivitas as $ga) {
+            echo "<option value=".$ga['kategori_id'].">".$ga['aktivitas']."</option>";   
+        }
+    }
+
     public function index()
     {
         date_default_timezone_set('asia/jakarta');
@@ -347,6 +359,7 @@ class Lembur extends CI_Controller
                 'kategori' => $this->input->post('kategori'),
                 'copro' => $this->input->post('copro'),
                 'aktivitas' => $this->input->post('aktivitas'),
+                'wbs' => $this->input->post('wbs'),
                 'durasi_menit' => $this->input->post('durasi'),
                 'durasi' => $durasi_jam,
                 'deskripsi_hasil' => '',
@@ -521,6 +534,7 @@ class Lembur extends CI_Controller
                 'kategori' => $this->input->post('kategori'),
                 'copro' => $this->input->post('copro'),
                 'aktivitas' => $this->input->post('aktivitas'),
+                'wbs' => $this->input->post('wbs'),
                 'durasi_menit' => $this->input->post('durasi'),
                 'durasi' => $durasi_jam,
                 'deskripsi_hasil' => $this->input->post('deskripsi_hasil'),

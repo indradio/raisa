@@ -218,7 +218,7 @@
                             <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="kategori" id="kategori" data-style="select-with-transition" title="Pilih" data-size="5" required>
+                                    <select class="selectpicker" name="kategori" id="kategori" title="Pilih" data-style="select-with-transition" data-size="5" data-width="fit" data-live-search="false" onchange="kategoriSelect(this);" required>
                                         <?php foreach ($kategori as $k) : ?>
                                             <option value="<?= $k['id']; ?>"><?= $k['nama']; ?></option>
                                         <?php endforeach; ?>
@@ -227,8 +227,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">COPRO</label>
-                            <div class="col-md-7">
+                            <label class="col-md-4 col-form-label">Copro</label>
+                            <div class="col-md-7" id="admCopro" >
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
@@ -238,6 +238,14 @@
                                             <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Wbs</label>
+                            <div class="col-md-7" id="admWbs" >
+                                <div class="form-group has-default">
+                                    <select class="form-control" name="wbs" id="wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
                                 </div>
                             </div>
                         </div>
@@ -361,3 +369,4 @@
         </div>
     </div>
 </div>
+    
