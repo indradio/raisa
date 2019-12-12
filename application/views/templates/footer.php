@@ -506,6 +506,7 @@
                 var val = valueSelect.options[valueSelect.selectedIndex].value;
                 document.getElementById("admWbs").style.display = val != '1' ? "block" : 'none';
                 document.getElementById("admCopro").style.display = val != '3' ? "block" : 'none';
+                document.getElementById("admAkt").style.display = val == '1' ? "block" : 'none';
             }
         $('#kategori').change(function(){
             var kategori = $('#kategori').val();
@@ -515,16 +516,21 @@
                 data: {kategori:kategori},
                 success: function(data) {
                     // alert(data)
-                    $('#wbs').html(data); 
+                    $('#akt_wbs').html(data); 
                 if(kategori == 1){
-                    $('#wbs').prop('disabled', true);
+                    $('#copro').prop('disabled', false);
+                    $('#akt_wbs').prop('disabled', true);
+                    $('#akt').prop('disabled', false);
+                }
+                else if(kategori == 2){
+                    $('#copro').prop('disabled', false);
+                    $('#akt_wbs').prop('disabled', false);
+                    $('#akt').prop('disabled', true);
                 }
                 else if(kategori == 3){
                     $('#copro').prop('disabled', true);
-                }
-                else{
-                    $('#copro').prop('disabled', false);
-                    $('#wbs').prop('disabled', false);
+                    $('#akt').prop('disabled', true);
+                    $('#akt_wbs').prop('disabled', false);
                 }    
                 }
             })

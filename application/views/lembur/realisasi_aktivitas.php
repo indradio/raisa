@@ -341,10 +341,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" >
                             <label class="col-md-4 col-form-label">Copro</label>
-                            <div class="col-md-7" id="admCopro" >
-                                <div class="form-group has-default">
+                            <div class="col-md-7" id="admCopro">
+                                <div class="form-group has-default" >
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
                                         $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
@@ -356,19 +356,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Wbs</label>
-                            <div class="col-md-7" id="admWbs" >
+                        <div class="row" >
+                            <label class="col-md-4 col-form-label">Aktivitas</label>
+                            <div class="col-md-7" id="admWbs">
                                 <div class="form-group has-default">
-                                    <select class="form-control" name="wbs" id="wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
+                                    <select class="form-control" name="akt_wbs" id="akt_wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Aktivitas</label>
-                            <div class="col-md-7">
+                            <div class="col-md-7" id="admAkt" style="display:none;">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="aktivitas" required></textarea>
+                                    <textarea rows="3" class="form-control" id="akt" name="akt" required></textarea>
                                 </div>
                             </div>
                         </div>

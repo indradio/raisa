@@ -18,7 +18,7 @@ class Lembur extends CI_Controller
        $getAktivitas = $this->db->query("SELECT * FROM jamkerja_lain WHERE kategori_id='$id' AND dept_id = '$karyawan->dept_id' ")->result_array();
     //    echo $this->db->last_query();
        foreach ($getAktivitas as $ga) {
-            echo "<option value=".$ga['kategori_id'].">".$ga['aktivitas']."</option>";   
+            echo "<option value=".$ga['aktivitas'].">".$ga['aktivitas']."</option>";   
         }
     }
 
@@ -350,6 +350,13 @@ class Lembur extends CI_Controller
             $id = date('ymd') . $lembur['npk'] . time();
         }
 
+        if ($this->input->post('kategori') == 1)
+        {
+            $aktivitas = $this->input->post('akt');
+        }else{
+            $aktivitas = $this->input->post('akt_wbs');
+        }
+
             $data = [
                 'id' => $id,
                 'npk' => $lembur['npk'],
@@ -358,8 +365,7 @@ class Lembur extends CI_Controller
                 'link_aktivitas' => $this->input->post('link_aktivitas'),
                 'kategori' => $this->input->post('kategori'),
                 'copro' => $this->input->post('copro'),
-                'aktivitas' => $this->input->post('aktivitas'),
-                'wbs' => $this->input->post('wbs'),
+                'aktivitas' => $aktivitas,
                 'durasi_menit' => $this->input->post('durasi'),
                 'durasi' => $durasi_jam,
                 'deskripsi_hasil' => '',
@@ -525,6 +531,13 @@ class Lembur extends CI_Controller
             $status = 3;
         }
 
+        if ($this->input->post('kategori') == 1)
+        {
+            $aktivitas = $this->input->post('aktivitas');
+        }else{
+            $aktivitas = $this->input->post('akt_wbs');
+        }
+
             $data = [
                 'id' => $id,
                 'npk' => $lembur['npk'],
@@ -533,8 +546,7 @@ class Lembur extends CI_Controller
                 'link_aktivitas' => $this->input->post('link_aktivitas'),
                 'kategori' => $this->input->post('kategori'),
                 'copro' => $this->input->post('copro'),
-                'aktivitas' => $this->input->post('aktivitas'),
-                'wbs' => $this->input->post('wbs'),
+                'aktivitas' => $aktivitas,
                 'durasi_menit' => $this->input->post('durasi'),
                 'durasi' => $durasi_jam,
                 'deskripsi_hasil' => $this->input->post('deskripsi_hasil'),
