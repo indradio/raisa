@@ -226,10 +226,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" >
-                            <label class="col-md-4 col-form-label">Copro</label>
-                            <div class="col-md-7" id="admCopro">
-                                <div class="form-group has-default" >
+                        <div class="row">
+                            <label class="col-md-4 col-form-label" id="lblCopro" style="display:none;">Copro</label>
+                            <div class="col-md-7" id="admCopro" style="display:none;">
+                                <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
                                         $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
@@ -241,13 +241,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" >
-                            <label class="col-md-4 col-form-label">Aktivitas</label>
-                            <div class="col-md-7" id="admWbs">
+                        <div class="row">
+                            <label class="col-md-4 col-form-label" id="lblAkt" style="display:none;">Aktivitas</label>
+                            <div class="col-md-7" id="admWbs" style="display:none;">
                                 <div class="form-group has-default">
-                                    <select class="form-control" name="akt_wbs" id="akt_wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
+                                    <select class="selectpicker" name="akt_wbs" id="akt_wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
                                 </div>
                             </div>
+                            <!-- <div class="col-md-7" id="admAkt" style="display:none;"> -->
                             <div class="col-md-7" id="admAkt" style="display:none;">
                                 <div class="form-group has-default">
                                     <textarea rows="3" class="form-control" id="akt" name="akt" required></textarea>
