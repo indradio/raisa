@@ -499,14 +499,17 @@
         });
     });
 </script>
+
 <!-- script ajax Kategori-->
 <script type="text/javascript">
     function kategoriSelect(valueSelect)
             {
                 var val = valueSelect.options[valueSelect.selectedIndex].value;
                 document.getElementById("admWbs").style.display = val != '1' ? "block" : 'none';
+                document.getElementById("lblCopro").style.display = val != '3' ? "block" : 'none';
                 document.getElementById("admCopro").style.display = val != '3' ? "block" : 'none';
                 document.getElementById("admAkt").style.display = val == '1' ? "block" : 'none';
+                document.getElementById("lblAkt").style.display = val != '0' ? "block" : 'none';
             }
         $('#kategori').change(function(){
             var kategori = $('#kategori').val();
@@ -517,21 +520,23 @@
                 success: function(data) {
                     // alert(data)
                     $('#akt_wbs').html(data); 
-                if(kategori == 1){
-                    $('#copro').prop('disabled', false);
-                    $('#akt_wbs').prop('disabled', true);
-                    $('#akt').prop('disabled', false);
-                }
-                else if(kategori == 2){
-                    $('#copro').prop('disabled', false);
-                    $('#akt_wbs').prop('disabled', false);
-                    $('#akt').prop('disabled', true);
-                }
-                else if(kategori == 3){
-                    $('#copro').prop('disabled', true);
-                    $('#akt').prop('disabled', true);
-                    $('#akt_wbs').prop('disabled', false);
-                }    
+                    if(kategori == 1){
+                        $('#copro').prop('disabled', false);
+                        $('#akt').prop('disabled', false);
+                        $('#akt_wbs').prop('disabled', true);
+                    }
+                    else if(kategori == 2){
+                        $('#copro').prop('disabled', false);
+                        $('#akt_wbs').prop('disabled', false);
+                        $('#akt_wbs').selectpicker('refresh');
+                        $('#akt').prop('disabled', true);
+                    }
+                    else if(kategori == 3){
+                        $('#copro').prop('disabled', true);
+                        $('#akt_wbs').prop('disabled', false);
+                        $('#akt_wbs').selectpicker('refresh');
+                        $('#akt').prop('disabled', true);
+                    }    
                 }
             })
         })
