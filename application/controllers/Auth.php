@@ -79,6 +79,7 @@ class Auth extends CI_Controller
                     'sect_id' => $karyawan['sect_id'],
                     'atasan1' => $atasan1['npk'],
                     'atasan2' => $atasan2['npk'],
+                    'labor' => $karyawan['work_contract'],
                     'role_id' => $karyawan['role_id']
                 ];
                 $this->session->set_userdata($data);

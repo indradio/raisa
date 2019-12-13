@@ -50,31 +50,37 @@ $pdf->Cell(32, 3, 'KEPERLUAN', 0, 0);
 $pdf->Cell(9, 3, '            : ' . $perjalanan['keperluan'], 0, 1);
 
 //BERANGKAT
-$pdf->Cell(30, 3, 'BERANGKAT', 0, 0);
-$pdf->Cell(9, 3, '' . 'Tgl', 0, 0);
-$pdf->Cell(28, 3, ': ' . date('d/m/Y', strtotime($perjalanan['tglberangkat'])), 0, 0);
+$pdf->Cell(34, 3, 'BERANGKAT', 0, 0);
+$pdf->Cell(5, 3, '' . 'Tgl', 0, 0);
+$pdf->Cell(20, 3, ': ' . date('d/m/Y', strtotime($perjalanan['tglberangkat'])), 0, 0);
 
-$pdf->Cell(9, 3, 'Jam', 0, 0);
-$pdf->Cell(28, 3, ': ' . date('H:i', strtotime($perjalanan['jamberangkat'])), 0, 0);
+$pdf->Cell(6, 3, 'Jam', 0, 0);
+$pdf->Cell(20, 3, ': ' . date('H:i', strtotime($perjalanan['jamberangkat'])), 0, 0);
 
-$pdf->Cell(9, 3, 'Km', 0, 0);
-$pdf->Cell(20, 3, ': ' . $perjalanan['kmberangkat'], 0, 0);
+$pdf->Cell(5, 3, 'Km', 0, 0);
+$pdf->Cell(15, 3, ': ' . $perjalanan['kmberangkat'], 0, 0);
 
-$pdf->Cell(15, 3, 'Security', 0, 0);
+$pdf->Cell(13, 3, 'Pengemudi', 0, 0);
+$pdf->Cell(20, 3, ': ' . $perjalanan['supirberangkat'], 0, 0);
+
+$pdf->Cell(13, 3, 'Security', 0, 0);
 $pdf->Cell(25, 3, ': ' . $perjalanan['cekberangkat'], 0, 1);
 
 //KEMBALI
-$pdf->Cell(30, 3, 'KEMBALI', 0, 0);
-$pdf->Cell(9, 3, '' . 'Tgl', 0, 0);
-$pdf->Cell(28, 3, ': ' . date('d/m/Y', strtotime($perjalanan['tglkembali'])), 0, 0);
+$pdf->Cell(34, 3, 'KEMBALI', 0, 0);
+$pdf->Cell(5, 3, '' . 'Tgl', 0, 0);
+$pdf->Cell(20, 3, ': ' . date('d/m/Y', strtotime($perjalanan['tglkembali'])), 0, 0);
 
-$pdf->Cell(9, 3, 'Jam', 0, 0);
-$pdf->Cell(28, 3, ': ' . date('H:i', strtotime($perjalanan['jamkembali'])), 0, 0);
+$pdf->Cell(6, 3, 'Jam', 0, 0);
+$pdf->Cell(20, 3, ': ' . date('H:i', strtotime($perjalanan['jamkembali'])), 0, 0);
 
-$pdf->Cell(9, 3, 'Km', 0, 0);
-$pdf->Cell(20, 3, ': ' . $perjalanan['kmkembali'], 0, 0);
+$pdf->Cell(5, 3, 'Km', 0, 0);
+$pdf->Cell(15, 3, ': ' . $perjalanan['kmkembali'], 0, 0);
 
-$pdf->Cell(15, 3, 'Security', 0, 0);
+$pdf->Cell(13, 3, 'Pengemudi', 0, 0);
+$pdf->Cell(20, 3, ': ' . $perjalanan['supirkembali'], 0, 0);
+
+$pdf->Cell(13, 3, 'Security', 0, 0);
 $pdf->Cell(25, 3, ': ' . $perjalanan['cekkembali'], 0, 1);
 
 
@@ -84,24 +90,17 @@ $pdf->setTextColor(0, 0, 0);
 $pdf->setFillColor(255, 255, 255);
 
 $pdf->SetFont('Arial', '', 7);
-$pdf->Cell(45, 4, 'Jenis Kendaraan', 1, 0, 'C', 1);
-$pdf->Cell(35, 4, 'No. Polisi', 1, 0, 'C', 1);
-$pdf->Cell(44, 4, 'Pengemudi', 1, 0, 'C', 1);
-$pdf->Cell(45, 4, 'Bagian Umum', 1, 1, 'C', 1);
+$pdf->Cell(56, 4, 'Jenis Kendaraan', 1, 0, 'C', 1);
+$pdf->Cell(56, 4, 'No. Polisi', 1, 0, 'C', 1);
+$pdf->Cell(57, 4, 'Bagian Umum', 1, 1, 'C', 1);
 
 $pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(45, 7, $perjalanan['kepemilikan'], 1, 0, 'C', 1);
-$pdf->Cell(35, 7, $perjalanan['nopol'], 1, 0, 'C', 1);
-$pdf->SetFont('Arial', 'B', 5);
-$pdf->Cell(44, 7, 'BERANGKAT : ' . $perjalanan['supirberangkat'], 1, 0, 'C', 1);
-$pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(45, 7, $perjalanan['admin_ga'], 1, 1, 'C', 1);
+$pdf->Cell(56, 7, $perjalanan['kepemilikan'], 1, 0, 'C', 1);
+$pdf->Cell(56, 7, $perjalanan['nopol'], 1, 0, 'C', 1);
+$pdf->Cell(57, 7, $perjalanan['admin_ga'], 1, 1, 'C', 1);
 
 $pdf->Cell(45, -7, '', 0, 0, 'C', 0);
 $pdf->Cell(35, -7, '', 0, 0, 'C', 0);
-$pdf->SetFont('Arial', 'B', 5);
-$pdf->Cell(44, -3, 'KEMBALI : ' . $perjalanan['supirkembali'], 0, 0, 'C', 0);
-$pdf->SetFont('Arial', 'B', 7);
 $pdf->Cell(45, -7, '', 0, 0, 'C', 0);
 
 $pdf->Ln(1);
@@ -112,87 +111,58 @@ $pdf->Cell(115, 5, ': ' . $perjalanan['catatan_ga'] . ' ' . $perjalanan['catatan
 
 // $pdf->Cell(1, 5, '', 0, 1);
 
-$pdf->Ln(7);
+$pdf->Ln(5);
 
-$pdf->SetFont('Arial', '', 6);
-$pdf->Cell(45, 4, 'Taksi*', 1, 0, 'C', 1);
-$pdf->Cell(35, 4, 'BBM*', 1, 0, 'C', 1);
-$pdf->Cell(44, 4, 'Tol*', 1, 0, 'C', 1);
-$pdf->Cell(45, 4, 'Parkir*', 1, 1, 'C', 1);
 
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(45, 5, 'Rp. 200.000', 1, 0, 'C', 1);
-$pdf->Cell(35, 5, 'Rp. 140.000', 1, 0, 'C', 1);
-$pdf->Cell(44, 5, 'Rp. 120.000', 1, 0, 'C', 1);
-$pdf->Cell(45, 5, 'Rp. 15.000', 1, 1, 'C', 1);
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->Cell(170, 5, 'TRANSPORTASI & UANG MAKAN', 0, 1, 'C');
 
-$pdf->Ln(3);
 $pdf->setTextColor(0, 0, 0);
 $pdf->setFillColor(255, 255, 255);
 
 $pdf->SetFont('Arial', '', 6);
 $pdf->Cell(7, 4, 'NO', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, 'Nama', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, 'Makan Siang', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, 'Makan Malam', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, 'Insentif Subuh', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, 'Biaya Lain', 1, 1, 'C', 1);
+$pdf->Cell(41, 4, 'Nama', 1, 0, 'C', 1);
+$pdf->Cell(21, 4, 'Makan Siang', 1, 0, 'C', 1);
+$pdf->Cell(21, 4, 'Makan Malam', 1, 0, 'C', 1);
+$pdf->Cell(21, 4, 'Insentif Subuh', 1, 0, 'C', 1);
+$pdf->Cell(21, 4, 'Biaya Lain', 1, 0, 'C', 1);
+$pdf->Cell(37, 4, 'TOTAL', 1, 1, 'C', 1);
 
-$pdf->SetFont('Arial', 'B', 8);
-$pdf->Cell(7, 4, '1', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+$pdf->SetFont('Arial', 'B', 7);
 
-$pdf->Cell(7, 4, '2', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+$peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $perjalanan['id']])->result_array();
+$no = 1;
+foreach ($peserta as $p) :
 
-$pdf->Cell(7, 4, '3', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+$pdf->Cell(7, 4, $no, 1, 0, 'C', 1);
+$pdf->Cell(41, 4, $p['karyawan_nama'], 1, 0, 'C', 1);
+$pdf->Cell(21, 4, $perjalanan['um3'], 1, 0, 'C', 1);
+$pdf->Cell(21, 4, $perjalanan['um4'], 1, 0, 'C', 1);
+$pdf->Cell(21, 4, $perjalanan['um1'], 1, 0, 'C', 1);
+$pdf->Cell(21, 4, '', 1, 0, 'C', 1);
+$pdf->Cell(37, 4, '', 1, 1, 'C', 1);
 
-$pdf->Cell(7, 4, '4', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+$no = $no + 1;
 
-$pdf->Cell(7, 4, '5', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+endforeach;
 
-$pdf->Cell(7, 4, '6', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+$pdf->Ln(3);
+$pdf->SetFont('Arial', '', 6);
+$pdf->Cell(33, 4, 'Taksi*', 1, 0, 'C', 1);
+$pdf->Cell(33, 4, 'BBM*', 1, 0, 'C', 1);
+$pdf->Cell(33, 4, 'Tol*', 1, 0, 'C', 1);
+$pdf->Cell(33, 4, 'Parkir*', 1, 0, 'C', 1);
+$pdf->Cell(37, 4, 'TOTAL', 1, 1, 'C', 1);
 
-$pdf->Cell(7, 4, '7', 1, 0, 'C', 1);
-$pdf->Cell(50, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 0, 'C', 1);
-$pdf->Cell(28, 4, '', 1, 1, 'C', 1);
+$pdf->SetFont('Arial', 'B', 6);
+$pdf->Cell(33, 5, '', 1, 0, 'C', 1);
+$pdf->Cell(33, 5, '', 1, 0, 'C', 1);
+$pdf->Cell(33, 5, '', 1, 0, 'C', 1);
+$pdf->Cell(33, 5, '', 1, 0, 'C', 1);
+$pdf->Cell(37, 5, '', 1, 1, 'C', 1);
 
-
-
-
-
-$pdf->Ln(2);
+$pdf->Ln(3);
 $pdf->setTextColor(0, 0, 0);
 $pdf->setFillColor(255, 255, 255);
 $pdf->SetFont('Arial', '', 6);

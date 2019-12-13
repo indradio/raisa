@@ -505,10 +505,10 @@
     function kategoriSelect(valueSelect)
             {
                 var val = valueSelect.options[valueSelect.selectedIndex].value;
-                document.getElementById("admWbs").style.display = val != '1' ? "block" : 'none';
-                document.getElementById("lblCopro").style.display = val != '3' ? "block" : 'none';
+                document.getElementById("admLain").style.display = val != '1' ? "block" : 'none';
                 document.getElementById("admCopro").style.display = val != '3' ? "block" : 'none';
                 document.getElementById("admAkt").style.display = val == '1' ? "block" : 'none';
+                document.getElementById("lblCopro").style.display = val != '3' ? "block" : 'none';
                 document.getElementById("lblAkt").style.display = val != '0' ? "block" : 'none';
             }
         $('#kategori').change(function(){
@@ -519,22 +519,22 @@
                 data: {kategori:kategori},
                 success: function(data) {
                     // alert(data)
-                    $('#akt_wbs').html(data); 
+                    $('#akt_lain').html(data); 
                     if(kategori == 1){
                         $('#copro').prop('disabled', false);
                         $('#akt').prop('disabled', false);
-                        $('#akt_wbs').prop('disabled', true);
+                        $('#akt_lain').prop('disabled', true);
                     }
                     else if(kategori == 2){
                         $('#copro').prop('disabled', false);
-                        $('#akt_wbs').prop('disabled', false);
-                        $('#akt_wbs').selectpicker('refresh');
+                        $('#akt_lain').prop('disabled', false);
+                        $('#akt_lain').selectpicker('refresh');
                         $('#akt').prop('disabled', true);
                     }
                     else if(kategori == 3){
                         $('#copro').prop('disabled', true);
-                        $('#akt_wbs').prop('disabled', false);
-                        $('#akt_wbs').selectpicker('refresh');
+                        $('#akt_lain').prop('disabled', false);
+                        $('#akt_lain').selectpicker('refresh');
                         $('#akt').prop('disabled', true);
                     }    
                 }

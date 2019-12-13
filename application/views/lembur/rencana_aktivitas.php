@@ -63,8 +63,10 @@
                     <br>
                     <div class="toolbar">
                         <!--        Here you can write extra buttons/actions for the toolbar              -->
-                        <?php if ($lembur['status'] == '1'){
-                            echo '<a href="#" id="tambah_aktifvitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
+                        <?php if ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Direct Labor'){
+                            echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
+                        }elseif ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Indirect Labor'){
+                            echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
                         }; ?>
                     </div>
                     <div class="material-datatables">
@@ -192,6 +194,7 @@
 </div>
 </div>
 <!-- Modal -->
+<!-- Tambah Aktivitas Direct -->
 <div class="modal fade" id="tambahAktivitas" tabindex="-1" role="dialog" aria-labelledby="tambahAktivitasTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -201,7 +204,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">RENCANA LEMBUR</h4>
+                        <h4 class="card-title">AKTIVITAS RENCANA LEMBUR</h4>
                     </div>
                 </div>
                 <form class="form" method="post" action="<?= base_url('lembur/tambah_aktivitas'); ?>">
@@ -243,15 +246,15 @@
                         </div>
                         <div class="row">
                             <label class="col-md-4 col-form-label" id="lblAkt" style="display:none;">Aktivitas</label>
-                            <div class="col-md-7" id="admWbs" style="display:none;">
+                            <div class="col-md-7" id="admLain" style="display:none;">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="akt_wbs" id="akt_wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
+                                    <select class="selectpicker" name="aktivitas" id="akt_lain" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
                                 </div>
                             </div>
                             <!-- <div class="col-md-7" id="admAkt" style="display:none;"> -->
                             <div class="col-md-7" id="admAkt" style="display:none;">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" id="akt" name="akt" required></textarea>
+                                    <textarea rows="3" class="form-control" name="aktivitas" id="akt" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -260,30 +263,76 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                        <option value="+30 minute">00:30 Jam</option>
-                                        <option value="+60 minute">01:00 Jam</option>
-                                        <option value="+90 minute">01:30 Jam</option>
-                                        <option value="+120 minute">02:00 Jam</option>
-                                        <option value="+150 minute">02:30 Jam</option>
-                                        <option value="+180 minute">03:00 Jam</option>
-                                        <option value="+210 minute">03:30 Jam</option>
-                                        <option value="+240 minute">04:00 Jam</option>
-                                        <option value="+270 minute">04:30 Jam</option>
-                                        <option value="+300 minute">05:00 Jam</option>
-                                        <option value="+330 minute">05:30 Jam</option>
-                                        <option value="+360 minute">06:00 Jam</option>
-                                        <option value="+390 minute">06:30 Jam</option>
-                                        <option value="+420 minute">07:00 Jam</option>
-                                        <option value="+450 minute">07:30 Jam</option>
-                                        <option value="+480 minute">08:00 Jam</option>
-                                        <option value="+510 minute">08:30 Jam</option>
-                                        <option value="+540 minute">09:00 Jam</option>
-                                        <option value="+570 minute">09:30 Jam</option>
-                                        <option value="+600 minute">10:00 Jam</option>
-                                        <option value="+630 minute">10:30 Jam</option>
-                                        <option value="+660 minute">11:00 Jam</option>
-                                        <option value="+690 minute">11:30 Jam</option>
-                                        <option value="+720 minute">12:00 Jam</option>
+                                    <?php
+                                        $queryJam = "SELECT * FROM `jam`";
+                                        $jam = $this->db->get_where('jam')->result_array();
+                                        foreach ($jam as $j) : ?>
+                                            <option value="+<?= $j['menit']; ?> minute"><?= $j['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-success">SIMPAN</button>
+                            <br>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tambahAktivitasIndirect" tabindex="-1" role="dialog" aria-labelledby="tambahAktivitasIndirectTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">AKTIVITAS RENCANA LEMBUR</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/tambah_aktivitas'); ?>">
+                    <div class="modal-body">
+                        <div class="row" hidden>
+                            <label class="col-md-4 col-form-label">Lembur ID</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" hidden>
+                            <label class="col-md-4 col-form-label">Kategori</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="kategori" name="kategori" value="3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Aktivitas</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <textarea rows="3" class="form-control" name="aktivitas" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Durasi</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                                    <?php
+                                        $queryJam = "SELECT * FROM `jam`";
+                                        $jam = $this->db->get_where('jam')->result_array();
+                                        foreach ($jam as $j) : ?>
+                                            <option value="+<?= $j['menit']; ?> minute"><?= $j['nama']; ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
