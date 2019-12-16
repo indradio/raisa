@@ -31,7 +31,6 @@
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th>Status</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -43,12 +42,11 @@
                                         <th>Tanggal/Jam Selesai</th>
                                         <th>Durasi/Jam</th>
                                         <th>Status</th>
-                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                        <tr>
+                                        <tr onclick="window.location='<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>'" >
                                             <td><?= $l['id']; ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglpengajuan'])); ?></td>
                                             <td><?= $l['nama']; ?></td>
@@ -57,9 +55,6 @@
                                             <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
-                                            <td>
-                                                <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

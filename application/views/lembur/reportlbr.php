@@ -111,7 +111,7 @@
       $pdf->Ln(-4);
       $pdf->SetFont('Arial','B',6);
       $pdf->Cell(43,4,'',0,0,'C',0);
-      $pdf->MultiCell(156,4, $a['deskripsi_hasil'].', ' .$a['progres_hasil'] .'%',0,'L');  //Realisasi
+      $pdf->MultiCell(156,4, $a['deskripsi_hasil'].', '.$a['progres_hasil'].'%, '.$a['durasi'].' JAM ' ,0,'L');  //Realisasi
 
       endforeach;
       

@@ -5,6 +5,29 @@ class Auth extends CI_Controller
 {
     public function index()
     {
+        date_default_timezone_set('asia/jakarta');
+        //Delete Lembur yg diBatalkan setelah 40 Hari
+        $lembur = $this->db->get_where('lembur', ['status' => '0'])->result_array();
+
+        foreach ($lembur as $l) :
+            // cari selisih
+            $sekarang = strtotime(date('Y-m-d'));
+            $tempo = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($l['tglmulai']))));
+
+            if ($tempo < $sekarang) {
+
+                //Hapus Aktivitas
+                $this->db->set('aktivitas');
+                $this->db->where('link_aktivitas', $l['id']);
+                $this->db->delete('aktivitas');
+
+                $this->db->set('lembur');
+                $this->db->where('id', $l['id']);
+                $this->db->delete('lembur');
+            }
+        endforeach;
+
+        // Halaman Login
         $this->load->view('auth/index');
     }
 

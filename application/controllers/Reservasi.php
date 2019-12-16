@@ -358,31 +358,62 @@ class Reservasi extends CI_Controller
             $this->db->insert('reservasi', $data);
 
             if ($this->session->userdata('posisi_id') <= 3) {
-                $this->db->set('atasan1', null);
-                $this->db->set('atasan2', null);
-                $this->db->set('status', '3');
-                $this->db->where('id', $data['id']);
-                $this->db->update('reservasi');
-
-                $this->db->where('sect_id', '214');
-                $ga_admin = $this->db->get('karyawan_admin')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $ga_admin['phone'];
-                $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                    "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                    "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                    "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                    "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                    "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                    "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
+                if ($reservasi_temp['jenis_perjalanan']=='DLPP'){
+                    $this->db->set('atasan1', null);
+                    $this->db->set('atasan2', null);
+                    $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+                    $this->db->set('status', '5');
+                    $this->db->where('id', $data['id']);
+                    $this->db->update('reservasi');
+    
+                    $this->db->where('sect_id', '214');
+                    $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                    $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                    $destination = $ga_admin['phone'];
+                    $message = "*PENGAJUAN PERJALANAN DINAS*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+                    $api_url = "http://panel.apiwha.com/send_message.php";
+                    $api_url .= "?apikey=" . urlencode($my_apikey);
+                    $api_url .= "&number=" . urlencode($destination);
+                    $api_url .= "&text=" . urlencode($message);
+                    json_decode(file_get_contents($api_url, false));
+                }else{
+                    $this->db->set('atasan1', null);
+                    $this->db->set('atasan2', null);
+                    $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+                    $this->db->set('status', '3');
+                    $this->db->where('id', $data['id']);
+                    $this->db->update('reservasi');
+    
+                    $this->db->where('posisi_id', '3');
+                    $this->db->where('dept_id', '21');
+                    $karyawan = $this->db->get('karyawan')->row_array();
+                    $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                    $destination = $karyawan['phone'];
+                    $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
+                    $api_url = "http://panel.apiwha.com/send_message.php";
+                    $api_url .= "?apikey=" . urlencode($my_apikey);
+                    $api_url .= "&number=" . urlencode($destination);
+                    $api_url .= "&text=" . urlencode($message);
+                    json_decode(file_get_contents($api_url, false));
+                }
             } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
+                
                 $this->db->set('atasan2', null);
                 $this->db->set('status', '1');
                 $this->db->where('id', $data['id']);
@@ -406,8 +437,9 @@ class Reservasi extends CI_Controller
                 $api_url .= "&number=" . urlencode($destination);
                 $api_url .= "&text=" . urlencode($message);
                 json_decode(file_get_contents($api_url, false));
+            
             } elseif ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
-
+            
                 $this->db->where('npk', $atasan1['npk']);
                 $karyawan = $this->db->get('karyawan')->row_array();
                 $my_apikey = ""; //NQXJ3HED5LW2XV440HCG

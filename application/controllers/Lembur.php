@@ -23,29 +23,6 @@ class Lembur extends CI_Controller
 
     public function index()
     {
-        date_default_timezone_set('asia/jakarta');
-        $this->db->where('status', '0');
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $lembur = $this->db->get('lembur')->result_array();
-
-        foreach ($lembur as $l) :
-            // cari selisih
-            $sekarang = strtotime(date('Y-m-d'));
-            $tempo = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($l['tglmulai']))));
-
-            if ($tempo < $sekarang) {
-
-                //Hapus Aktivitas
-                $this->db->set('aktivitas');
-                $this->db->where('link_aktivitas', $l['id']);
-                $this->db->delete('aktivitas');
-
-                $this->db->set('lembur');
-                $this->db->where('id', $l['id']);
-                $this->db->delete('lembur');
-            }
-        endforeach;
-
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'LemburKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -726,20 +703,26 @@ class Lembur extends CI_Controller
 
         if ($lembur['npk'] == $this->session->userdata('npk'))
         {
-
             if($this->session->userdata('posisi_id') < 4 OR $this->session->userdata('posisi_id') == 8) 
             {
                 $status = '4';
+
+                $this->db->set('status', $status);
+                $this->db->set('lokasi', $lokasi);
+                $this->db->set('catatan', $this->input->post('catatan'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('lembur');
             }else{
                 if ($lembur['atasan1_rencana'] == $lembur['pemohon']){
                     $status = '3';
 
                     $this->db->set('status', $status);
                     $this->db->set('lokasi', $lokasi);
+                    $this->db->set('catatan', $this->input->post('catatan'));
                     $this->db->where('id', $this->input->post('id'));
                     $this->db->update('lembur');
         
-                    // Notification saat mengajukan RENCANA to ATASAN 1
+                    // Notification saat mengajukan RENCANA to ATASAN 2
                     $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2_rencana']])->row_array();
                     $my_apikey = "NQXJ3HED5LW2XV440HCG";
                     $destination = $karyawan['phone'];
@@ -761,6 +744,7 @@ class Lembur extends CI_Controller
 
                     $this->db->set('status', $status);
                     $this->db->set('lokasi', $lokasi);
+                    $this->db->set('catatan', $this->input->post('catatan'));
                     $this->db->where('id', $this->input->post('id'));
                     $this->db->update('lembur');
         
@@ -787,6 +771,7 @@ class Lembur extends CI_Controller
         else
         {
             $this->db->set('lokasi', $lokasi);
+            $this->db->set('catatan', $this->input->post('catatan'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 

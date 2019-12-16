@@ -57,7 +57,7 @@ class Dashboard extends CI_Controller
             }
         endforeach;
 
-        //Auto batalkan LEMBUR
+        //Auto LEMBUR
         $this->db->where('status', '4');
         $lembur = $this->db->get('lembur')->result_array();
 
@@ -66,32 +66,6 @@ class Dashboard extends CI_Controller
             $sekarang = strtotime(date('Y-m-d H:i:s'));
             $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai']))));
             $kirim_notif = strtotime(date('Y-m-d H:i:s', strtotime('+64 hours', strtotime($l['tglselesai']))));
-
-            if ($tempo < $sekarang) {
-                $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
-                $this->db->set('status', '0');
-                $this->db->where('id', $l['id']);
-                $this->db->update('lembur');
-
-                $this->db->where('npk', $l['npk']);
-                $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $karyawan['phone'];
-                $message = "*:( LEMBUR KAMU DIBATALKAN*" .
-                            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
-                            "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
-                            "\r\nNama : *" . $l['nama'] ."*". 
-                            "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_aktual'])) ."*". 
-                            "\r\nDurasi : *" . date('H', strtotime($l['durasi_aktual'])) ." Jam " . date('i', strtotime($l['durasi_aktual']))." Menit*".
-                            "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
-                            "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." . 
-                            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
-            }
 
             // Notifikasi REALISASI tinggal 8 JAM
             if ($kirim_notif < $sekarang) {
@@ -122,6 +96,33 @@ class Dashboard extends CI_Controller
                     $api_url .= "&text=" . urlencode($message);
                     json_decode(file_get_contents($api_url, false));
                 }
+            }
+
+            // Batalkan LEMBUR
+            if ($tempo < $sekarang) {
+                $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
+                $this->db->set('status', '0');
+                $this->db->where('id', $l['id']);
+                $this->db->update('lembur');
+
+                $this->db->where('npk', $l['npk']);
+                $karyawan = $this->db->get('karyawan')->row_array();
+                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $destination = $karyawan['phone'];
+                $message = "*:( LEMBUR KAMU DIBATALKAN*" .
+                            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+                            "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
+                            "\r\nNama : *" . $l['nama'] ."*". 
+                            "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_aktual'])) ."*". 
+                            "\r\nDurasi : *" . date('H', strtotime($l['durasi_aktual'])) ." Jam " . date('i', strtotime($l['durasi_aktual']))." Menit*".
+                            "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
+                            "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." . 
+                            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
+                $api_url = "http://panel.apiwha.com/send_message.php";
+                $api_url .= "?apikey=" . urlencode($my_apikey);
+                $api_url .= "&number=" . urlencode($destination);
+                $api_url .= "&text=" . urlencode($message);
+                json_decode(file_get_contents($api_url, false));
             }
         endforeach;
 

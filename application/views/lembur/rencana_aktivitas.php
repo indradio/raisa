@@ -58,56 +58,55 @@
                                         </div>
                                     </div>
                                 </div>
+                        </div> 
+                        <br>
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <?php if ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Direct Labor'){
+                                echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
+                            }elseif ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Indirect Labor'){
+                                echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
+                            }; ?>
                         </div>
-                    
-                    <br>
-                    <div class="toolbar">
-                        <!--        Here you can write extra buttons/actions for the toolbar              -->
-                        <?php if ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Direct Labor'){
-                            echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
-                        }elseif ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Indirect Labor'){
-                            echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
-                        }; ?>
-                    </div>
-                    <div class="material-datatables">
-                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Kategori</th>
-                                    <th>Rencana Aktivitas</th>
-                                    <th>Durasi/Jam</th>
-                                    <th class="disabled-sorting text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Kategori</th>
-                                    <th>Rencana Aktivitas</th>
-                                    <th>Durasi/Jam</th>
-                                    <th class="disabled-sorting text-right">Actions</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <?php foreach ($aktivitas as $a) : ?>
+                        <div class="material-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
                                     <tr>
-                                        <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                        <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
-                                        <td><?= $a['aktivitas']; ?></td>
-                                        <td><?= $a['durasi']; ?> Jam</td>
-                                        <td class="text-right">
-                                            <?php if ($lembur['status'] == '0' or $lembur['status'] >= '2') { ?>
-                        
-                                            <?php } else { ?>
-                                                <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="btn btn-round btn-danger btn-sm btn-bataldl">HAPUS</a>
-                                            <?php }; ?>
-                                        </td>
+                                        <th>Kategori</th>
+                                        <th>Rencana Aktivitas</th>
+                                        <th>Durasi/Jam</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <?php if($lembur['status']=='1' AND $lembur['lokasi']==null){ ?>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Rencana Aktivitas</th>
+                                        <th>Durasi/Jam</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php foreach ($aktivitas as $a) : ?>
+                                        <tr>
+                                            <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
+                                            <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
+                                            <td><?= $a['aktivitas']; ?></td>
+                                            <td><?= $a['durasi']; ?> Jam</td>
+                                            <td class="text-right">
+                                                <?php if ($lembur['status'] == '0' or $lembur['status'] >= '2') { ?>
+                            
+                                                <?php } else { ?>
+                                                    <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="btn btn-round btn-danger btn-sm btn-bataldl">HAPUS</a>
+                                                <?php }; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                                <?php if($lembur['status']=='1' AND $lembur['lokasi']==null){ ?>
                                     <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                        <label class="col-md-1 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
                                                 <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="5" data-live-search="true" onchange="admSelectCheck(this);" required>
@@ -123,35 +122,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row col-md-12" id="admDivCheck" style="display:none;">
-                                        <label class="col-ml-5 col-form-label">Lokasi Lainnya</label>
-                                        <div class="col-md-7">
+                                    <div class="row col-md-12">
+                                        <label class="col-md-1 col-form-label" id="lblLokasi" style="display:none;">Lokasi Lainnya</label>
+                                        <div class="col-md-7" id="txtLokasi" style="display:none;">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control" id="lokasi_lain" name="lokasi_lain" required>
                                             </div>
                                         </div>
                                     </div>
-                                    <script>
-                                       function admSelectCheck(nameSelect)
-                                        {
-                                            var val = nameSelect.options[nameSelect.selectedIndex].value;
-                                            document.getElementById("admDivCheck").style.display = val == 'lainnya' ? "block" : 'none';
-                                        }
-
-                                        $(document).ready(function() {
-                                                $('#lokasi').change(function() {
-                                                    var lokasi = $('#lokasi').val();
-                                                    if (lokasi == 'lainnya') {
-                                                        $('#lokasi_lain').prop('disabled', false);
-                                                    } else {
-                                                        $('#lokasi_lain').prop('disabled', true);
-                                                    }
-                                                });
-                                            });
-                                    </script>
                                 <?php } else {?>
                                     <div class="row col-md-12">
-                                        <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
+                                        <label class="col-md-1 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
                                                 <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
@@ -159,7 +140,14 @@
                                         </div>
                                     </div>
                                 <?php }; ?>
-
+                                <div class="row col-md-12">
+                                    <label class="col-md-1 col-form-label">Catatan</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                            <textarea rows="3" class="form-control" name="catatan" id="catatan"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
                         </form>
                         </p>
                         Lemburan kamu sudah termasuk <mark>JAM ISTIRAHAT</mark> dan <mark>PERJALANAN</mark> pada saat lembur. 
@@ -417,3 +405,22 @@
     </div>
 </div>
     
+<script>
+                                       function admSelectCheck(nameSelect)
+                                        {
+                                            var val = nameSelect.options[nameSelect.selectedIndex].value;
+                                            document.getElementById("lblLokasi").style.display = val == 'lainnya' ? "block" : 'none';
+                                            document.getElementById("txtLokasi").style.display = val == 'lainnya' ? "block" : 'none';
+                                        }
+
+                                        $(document).ready(function() {
+                                                $('#lokasi').change(function() {
+                                                    var lokasi = $('#lokasi').val();
+                                                    if (lokasi == 'lainnya') {
+                                                        $('#lokasi_lain').prop('disabled', false);
+                                                    } else {
+                                                        $('#lokasi_lain').prop('disabled', true);
+                                                    }
+                                                });
+                                            });
+                                    </script>

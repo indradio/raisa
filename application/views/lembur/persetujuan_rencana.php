@@ -23,7 +23,7 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-3 col-form-label">Nama</label>
+                                    <label class="col-md-1 col-form-label">Nama</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= $lembur['nama']; ?>">
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-3 col-form-label">Tanggal Lembur</label>
+                                    <label class="col-md-1 col-form-label">Tanggal Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= date('d-M H:i', strtotime($lembur['tglmulai'])); ?>">
@@ -39,18 +39,26 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-3 col-form-label">Durasi Lembur</label>
+                                    <label class="col-md-1 col-form-label">Durasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi_rencana'])).' Jam / '. $lembur['aktivitas_rencana']; ?> Aktivitas">
+                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H', strtotime($lembur['durasi_rencana'])).' Jam '. date('i', strtotime($lembur['durasi_rencana'])).' Menit / ' . $lembur['aktivitas_rencana']; ?> Aktivitas">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                <label class="col-ml-3 col-form-label">Lokasi Lembur</label>
+                                <label class="col-md-1 col-form-label">Lokasi Lembur</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                <label class="col-md-1 col-form-label">Catatan</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                        <textarea rows="3" class="form-control" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -98,6 +106,16 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            </p>
+                            <?php 
+                            $this->db->distinct();
+                            $this->db->select('copro');
+                            $this->db->where('link_aktivitas', $lembur['id']);
+                            $aktivitas_copro = $this->db->get('aktivitas')->result_array();
+                            foreach ($aktivitas_copro as $ac) : 
+                             $nama = $this->db->get_where('project', ['copro' =>  $ac['copro']])->row_array();
+                            echo  $ac['copro'] . ' = '. $nama['deskripsi'] . '<br>';  
+                            endforeach; ?>
                                 </p>
                                 <!-- Button SUBMIT -->
                                 <?php if ($lembur['aktivitas_rencana'] == 0) {
@@ -154,10 +172,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" >
-                            <label class="col-md-4 col-form-label">Copro</label>
-                            <div class="col-md-7" id="admCopro">
-                                <div class="form-group has-default" >
+                        <div class="row">
+                            <label class="col-md-4 col-form-label" id="lblCopro" style="display:none;">Copro</label>
+                            <div class="col-md-7" id="admCopro" style="display:none;">
+                                <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
                                         $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
@@ -169,16 +187,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" >
-                            <label class="col-md-4 col-form-label">Aktivitas</label>
-                            <div class="col-md-7" id="admWbs">
+                        <div class="row">
+                            <label class="col-md-4 col-form-label" id="lblAkt" style="display:none;">Aktivitas</label>
+                            <div class="col-md-7" id="admLain" style="display:none;">
                                 <div class="form-group has-default">
-                                    <select class="form-control" name="akt_wbs" id="akt_wbs" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
+                                    <select class="selectpicker" name="aktivitas" id="akt_lain" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required></select>
                                 </div>
                             </div>
+                            <!-- <div class="col-md-7" id="admAkt" style="display:none;"> -->
                             <div class="col-md-7" id="admAkt" style="display:none;">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" id="akt" name="akt" required></textarea>
+                                    <textarea rows="3" class="form-control" name="aktivitas" id="akt" required></textarea>
                                 </div>
                             </div>
                         </div>
