@@ -165,3 +165,4 @@ class Hr extends CI_Controller
         redirect('hr/karyawan');
     }
 }
+ 
