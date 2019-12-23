@@ -60,6 +60,14 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'backjadwal') {
+  swal({
+    title: "Maaf!",
+    text: "Tanggal BERANGKAT harus sesuai dengan range tanggal perjalanan.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
 } else if (flashData == 'tambahwaktudl') {
   swal({
     title: "Yeaayy!!!",
