@@ -20,6 +20,7 @@
                                         <select class="selectpicker" name="laporan" id="laporan" data-style="select-with-transition" title="Pilih Laporan" data-size="7" required>
                                             <option value="1">Jam & TUL</option>
                                             <option value="2">Pelembur</option>
+                                            <option value="5">Copro</option>
                                             <!-- <option value="3">Pelembur</option> -->
                                         </select>
                                     </div>

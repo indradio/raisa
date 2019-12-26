@@ -1503,6 +1503,12 @@ class Lembur extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('lembur/lp_lembur_3', $data);
             $this->load->view('templates/footer');
+        }elseif ($this->input->post('laporan') == 5){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/lp_copro', $data);
+            $this->load->view('templates/footer');
         }else{
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
