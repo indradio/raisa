@@ -157,17 +157,4 @@ class Dashboard extends CI_Controller
         $this->load->view('dashboard/informasi', $data);
         $this->load->view('templates/footer');
     }
-
-    public function idcard()
-    {
-        $data['sidemenu'] = 'Dashboard';
-        $data['sidesubmenu'] = '';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['idcard'] = $this->db->get('idcard')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('dashboard/idcard', $data);
-        $this->load->view('templates/footer');
-    }
 }
