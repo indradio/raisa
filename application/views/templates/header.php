@@ -17,6 +17,8 @@
     <link href="<?= base_url(); ?>assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
     <!-- Plugin for tinymce  -->
     <script src="<?= base_url(); ?>assets/js/plugins/tinymce.min.js"></script>
+    <script src="<?= base_url(); ?>assets/js/plugins/jquery.mask.js"></script>
+    <script src="<?= base_url(); ?>assets/js/plugins/jquery.mask.min.js"></script>
     <!-- Plugin for jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

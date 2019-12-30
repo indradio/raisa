@@ -60,7 +60,7 @@
                                         <td><?= $p['act_selisihpersen']; ?>%</td>
                                         <td>
                                             <!-- $sect_id -->
-                                             <a href="javascript:;" 
+                                             <!-- <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
                                                     data-id="<?php echo $p['id'] ?>"
                                                     data-budget="<?php echo $p['budget'] ?>"
@@ -70,8 +70,9 @@
                                                     data-persen="<?php echo $p['act_persen'] ?>"
                                                     data-selisih="<?php echo $p['act_selisih'] ?>"
                                                     data-selisihpersen="<?php echo $p['act_selisihpersen'] ?>"
-                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Aktual Cost</a>
-                                           
+                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Aktual Cost</a> -->
+
+                                             <a href="/raisa/projectbudget/budgetpchdetail/<?= $p['copro'];?>/<?= $p['part'];?>" class="btn btn-sm btn-success">Project Budget</a>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>

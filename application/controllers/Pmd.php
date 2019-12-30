@@ -34,6 +34,55 @@ class Pmd extends CI_Controller
         $this->load->view('pmd/project', $data);
         $this->load->view('templates/footer');
     }
+    public function projectbudget()
+    {
+        $data['sidemenu'] = 'PMD';
+        $data['sidesubmenu'] = 'Project  Budget';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['project'] = $this->db->get('project_budget')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('pmd/project_budget', $data);
+        $this->load->view('templates/footer');
+    }
+    public function tmbhbudget()
+    {
+
+    $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => $this->input->post('part'),
+                'budget' => $this->input->post('budget'),
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_persen' => '0',
+                'est_selisih'=> '0',
+                'est_selisihpersen'=>'0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_persen' => '0',
+                'act_selisih'=> '0',
+                'act_selisihpersen'=> '0'
+                ];
+            $this->db->insert('project_budget', $data);
+            
+        redirect('pmd/projectbudget/');
+    }
+    public function ubahProjectbudget()
+    {
+        $this->db->set('est_cost', $this->input->post('cost'));
+        $this->db->set('est_total', $this->input->post('total'));
+        $this->db->set('est_exprod', $this->input->post('exprod'));
+        $this->db->set('est_persen', $this->input->post('persen'));
+        $this->db->set('est_selisih', $this->input->post('selisih'));
+        $this->db->set('est_selisihpersen', $this->input->post('selisihpersen'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('project_budget');
+
+        redirect('pmd/projectbudget/');
+    }
     // public function aktivitas($copro)
     // {
     //     $data['sidemenu'] = 'PMD';

@@ -61,19 +61,19 @@
                                         <td><?= $p['act_selisih']; ?></td>
                                         <td><?= $p['act_selisihpersen']; ?>%</td>
                                         <td>
-                                            <!-- $sect_id -->
+                                            <?php 
+                                            if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 ){
+                                              ?>
                                              <a href="javascript:;" 
-                                                    data-copro="<?php echo $p['copro'] ?>"
                                                     data-id="<?php echo $p['id'] ?>"
+                                                    data-copro="<?php echo $p['copro'] ?>"
+                                                    data-desk="<?php echo $project['deskripsi'] ?>"
+                                                    data-part="<?php echo $p['part'] ?>"
                                                     data-budget="<?php echo $p['budget'] ?>"
-                                                    data-cost="<?php echo $p['est_cost'] ?>"
-                                                    data-exprod="<?php echo $p['est_exprod'] ?>"
                                                     data-total="<?php echo $p['est_total'] ?>"
-                                                    data-persen="<?php echo $p['est_persen'] ?>"
-                                                    data-selisih="<?php echo $p['est_selisih'] ?>"
-                                                    data-selisihpersen="<?php echo $p['est_selisihpersen'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Estimasi Cost</a>
                                             <a href="<?= base_url('pmd/hapus_project/') . $p['id']; ?>" class="btn btn-sm btn-danger btn-sm btn-bataldl">HAPUS</a>
+                                        <?php } ?>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
@@ -134,60 +134,64 @@
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row" >
-                                <label class="col-md-3 col-form-label">Budget</label>
+                                <label class="col-md-3 col-form-label">Produk</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control disabled" id="budget" name="budget" required ><input type="text" class="form-control disabled" id="copro" name="copro" required >
+                                        <input type="text" class="form-control disabled" id="copro" name="copro" required >
+                                        <input type="text" class="form-control disabled" id="desk" name="desk" required >
+                                        <input type="hidden" class="form-control disabled" id="id" name="id" required >
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">PP</label>
+                                <label class="col-md-3 col-form-label">Part</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="cost" name="cost" required>
-                                        <input type="hidden" class="form-control disabled" id="id" name="id" required>
+                                        <input type="text" class="form-control disabled" id="part" name="part" required>
                                        
                                     </div>
                                 </div>
                             </div>
                             <div class="row" >
-                                <label class="col-md-3 col-form-label">Exprod</label>
+                                <label class="col-md-3 col-form-label">Budget Projek</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" id="exprod" name="exprod">
+                                        <input type="text" class="form-control disabled" id="budget" name="budget">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Total</label>
+                                <label class="col-md-3 col-form-label">Sisa</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="total" name="total" required>
+                                        <input type="text" class="form-control disabled" id="sisa" name="sisa" >
                                     </div>
                                 </div>
                             </div>
                             <div class="row" >
-                                <label class="col-md-3 col-form-label">%</label>
+                                <label class="col-md-3 col-form-label">Kategori</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" id="persen" name="persen">
+                                        <select name="kategori" id="kategori" class="form-control">
+                                            <option value="pp">PP</option>
+                                            <option value="exprod">Exprod</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Selisih</label>
+                                <label class="col-md-3 col-form-label">Budget</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="selisih" name="selisih" required>
+                                        <input type="number" class="form-control " id="biaya" name="biaya" required>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" >
-                                <label class="col-md-3 col-form-label">%</label>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Keterangan</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" id="selisihpersen" name="selisihpersen">
+                                        <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -205,28 +209,26 @@
  $(document).ready(function() {
     $('#projectModal').on('show.bs.modal', function (event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+           
             var modal          = $(this)
-            modal.find('#copro').attr("value",div.data('copro'));
+            sisa = (div.data('budget') - div.data('total'));
             modal.find('#id').attr("value",div.data('id'));
+            modal.find('#copro').attr("value",div.data('copro'));
+            modal.find('#desk').attr("value",div.data('desk'));
+            modal.find('#part').attr("value",div.data('part'));
             modal.find('#budget').attr("value",div.data('budget'));
             modal.find('#cost').attr("value",div.data('cost'));
             modal.find('#exprod').attr("value",div.data('exprod'));
             modal.find('#total').attr("value",div.data('total'));
-            modal.find('#persen').attr("value",div.data('persen'));
+            modal.find('#sisa').attr("value",sisa);
             modal.find('#selisih').attr("value",div.data('selisih'));
             modal.find('#selisihpersen').attr("value",div.data('selisihpersen'));
         });
- $(document).ready(function(){
-    $("#cost").on("change", function(){
-    total = parseInt($("#cost").val()) + parseInt($("#exprod").val()); 
-    $("#total").val(total);
-    selisih = parseInt($("#budget").val()) - parseInt($("#total").val());
-    $("#selisih").val(selisih);
-    persen = parseInt($("#total").val()) / (parseInt($("#budget").val())/100);
-    $("#persen").val(persen); 
-    selisihpersen = parseInt($("#selisih").val()) / (parseInt($("#budget").val())/100);
-    $("#selisihpersen").val(selisihpersen);
-        });
-    });
+    $( '.budget' ).mask('000.000.000', {reverse: true});
+
+    
 });
+                
+
+           
 </script>
