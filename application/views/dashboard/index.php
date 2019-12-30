@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="alert alert-rose alert-dismissible fade show" role="alert">
-    <strong>Hay Your RAISA!</strong> Mau lihat design ID CARD ? Klik <a href="<?= base_url('dashboard/idcard'); ?>" target="_blank">DISINI</a>. 
+    <strong>Semangat Pagi!</strong> Mau lihat design ID CARD ? Klik <a href="<?= base_url('highlight/idcard'); ?>" target="_blank">DISINI</a>. 
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

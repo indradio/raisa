@@ -176,9 +176,9 @@
             </div>
             <!--  end card  -->
         </div>
-        <!-- end col-md-12 -->
+        <!-- end row -->
     </div>
-    <!-- end row -->
+    <!-- end container-fluid -->
 </div>
 </div>
 <!-- Modal -->

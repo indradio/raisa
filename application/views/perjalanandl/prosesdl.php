@@ -145,7 +145,8 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-rose">OK!</button>
+                                        <button type="submit" class="btn btn-fill btn-success">PROSES</button>
+                                        <a href="<?= base_url('perjalanandl/admindl'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                     </div>
                                 </div>
                             </div>

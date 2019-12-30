@@ -50,7 +50,7 @@
                                         </div>
                                     </div> 
                             <div class="row col-md-6">
-                                <div class="row col-md-12">
+                                    <div class="row col-md-12">
                                     <label class="col-ml-5 col-form-label">Lokasi Lembur</label>
                                         <div class="col-md-7">
                                             <div class="form-group has-default">
@@ -64,6 +64,14 @@
                                             <div class="form-group has-default">
                                                 <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
                                                 <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Catatan</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <textarea type="text" class="form-control disabled"><?= $lembur['catatan']; ?></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'masuk') {
   swal({
     title: "Selamat Datang!",
-    text: "PENTING : RENCANA LEMBUR yang tidak DISUBMIT melewati 1 JAM dari waktu mulai rencana lembur maka akan DIBATALKAN. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
+    text: "INFO : Kamu tau gak?? Hayo kamu gak mau kan ketinggalan informasi terbaru. Makanya simpan nomor RAISA di kontak kamu, supaya RAISA bisa kasih kamu semua informasi terbaru. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
