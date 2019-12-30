@@ -219,8 +219,8 @@
                                             <td><?= $pdl['anggota']; ?></td>
                                             <td><?= $pdl['tujuan']; ?></td>
                                             <td><?= $pdl['keperluan']; ?></td>
-                                            <td><?= $pdl['tglberangkat']; ?></td>
-                                            <td><?= $pdl['jamberangkat']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])) . ' ' . date('H:i', strtotime($pdl['jamberangkat'])); ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pdl['tglkembali'])) . ' ' . date('H:i', strtotime($pdl['jamkembali'])); ?></td>
                                             <td><?= $pdl['catatan_ga']; ?></td>
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
