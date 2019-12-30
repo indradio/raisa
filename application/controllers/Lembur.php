@@ -1072,6 +1072,32 @@ class Lembur extends CI_Controller
             }
     }
 
+    public function revisi_lembur()
+    {
+        date_default_timezone_set('asia/jakarta');
+            $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+            $this->db->set('catatan', $this->input->post('catatan'));
+            $this->db->set('status', '4');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            //Planing next
+            // $this->db->set('catatan', "" . $this->input->post('catatan') . " - Dibatalkan oleh : " . $this->session->userdata['inisial'] ." Pada " . date('d-m-Y H:i'));
+            // $this->db->set('tglselesai', $lembur['tglmulai']);
+            // $this->db->set('durasi', '00:00:00');
+            // $this->db->set('tglselesai_aktual', $lembur['tglmulai_aktual']);
+            // $this->db->set('durasi_aktual', '00:00:00');
+            // $this->db->set('status', '0');
+            // $this->db->where('id', $this->input->post('id'));
+            // $this->db->update('lembur');
+
+            // $this->db->set('aktivitas');
+            // $this->db->where('link_aktivitas', $this->input->post('id'));
+            // $this->db->delete('aktivitas');
+
+            redirect('lembur/persetujuan_lembur');
+    }
+
     public function persetujuan_lemburga()
     {
         date_default_timezone_set('asia/jakarta');
