@@ -118,21 +118,16 @@ class Perjalanandl extends CI_Controller
             $tahun = date("Y", strtotime($this->input->post('tglberangkat')));
             $bulan = date("m", strtotime($this->input->post('tglberangkat')));
 
-            // $queryDl = "SELECT COUNT(*)
-            // FROM `perjalanan`
-            // WHERE YEAR(tglberangkat) = '$tahun' AND MONTH(tglberangkat) = '$bulan'
-            // ";
-
             $queryDl = "SELECT COUNT(*)
             FROM `perjalanan`
-            WHERE YEAR(tglberangkat) = '$tahun'
+            WHERE YEAR(tglberangkat) = '$tahun' AND MONTH(tglberangkat) = '$bulan'
             ";
+
             $dl = $this->db->query($queryDl)->row_array();
             $totalDl = $dl['COUNT(*)'] + 1;
 
             $data = [
-                // 'id' => 'DL' . date("y", strtotime($this->input->post('tglberangkat'))) . $bulan . $totalDl,
-                'id' => 'DL' . date("ym") . $totalDl,
+                'id' => 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . sprintf("%04s", $totalDl),
                 'npk' => $this->input->post('npk'),
                 'nama' => $this->input->post('nama'),
                 'copro' => $this->input->post('copro'),
@@ -174,12 +169,6 @@ class Perjalanandl extends CI_Controller
 
                 $this->db->insert('perjalanan', $data);
 
-                // update uangsaku
-                if ($this->input->post('jperjalanan') == 'TAPP' or $this->input->post('jperjalanan') == 'TA') {
-                    $this->db->set('uangsaku', 'YA');
-                    $this->db->where('id', $data['id']);
-                    $this->db->update('perjalanan');
-                }
                 // update table anggota perjalanan
                 $this->db->set('perjalanan_id', $data['id']);
                 $this->db->where('reservasi_id', $this->input->post('id'));
