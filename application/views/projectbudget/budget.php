@@ -62,8 +62,19 @@
                                         <td><?= $p['act_selisihpersen']; ?>%</td>
                                         <td>
                                             <!-- $sect_id -->
-                                            
-                                            <a href="<?= base_url('Projectbudget/hapus_project/') . $p['id']; ?>" class="btn btn-sm btn-danger btn-sm btn-bataldl">HAPUS</a>
+                                            <a href="javascript:;" 
+                                                    data-id="<?php echo $p['id'] ?>"
+                                                    data-part="<?php echo $p['part'] ?>"
+                                                    data-copro="<?php echo $p['copro'] ?>"
+                                                    data-cost="<?php echo $p['est_cost'] ?>"
+                                                    data-exprod="<?php echo $p['est_exprod'] ?>"
+                                                    data-part="<?php echo $p['part'] ?>"
+                                                    data-budget="<?php echo $p['budget'] ?>"
+                                                    data-total="<?php echo $p['est_total'] ?>"
+                                                    data-selisih="<?php echo $p['est_selisih'] ?>"
+                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Edit</a>
+                                            <a href="/raisa/projectbudget/budgetdetail/<?= $p['copro'];?>/<?= $p['id'];?>" class="btn btn-sm btn-warning">View Detail</a>
+                                            <a href="/raisa/projectbudget/hapus_project/<?= $p['copro'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger">HAPUS</a>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
@@ -120,32 +131,40 @@
                         <h4 class="card-title">Project Budget Estimasi</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('pmd/ubahProjectbudget'); ?>">
+                <form class="form" method="post" action="<?= base_url('Projectbudget/ubahProjectbudget'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row" >
                                 <label class="col-md-3 col-form-label">Budget</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control disabled" id="budget" name="budget" required >
+                                        <input type="hidden" class="form-control disabled" id="id" name="id" required >
+                                        <input type="number" class="form-control " id="budget" name="budget" required >
+                                        <input type="hidden" class="form-control " id="copro" name="copro" required >
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">PP</label>
+                                <label class="col-md-3 col-form-label">PART</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="cost" name="cost" required>
-                                        <input type="hidden" class="form-control disabled" id="id" name="id" required>
-                                       
+                                       <input type="text" name="part2" id="part2">
                                     </div>
                                 </div>
                             </div>
                             <div class="row" >
-                                <label class="col-md-3 col-form-label">Exprod</label>
+                                <label class="col-md-3 col-form-label">PP</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control" id="exprod" name="exprod">
+                                        <input type="number" class="form-control disabled" id="pp" name="pp">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">EXPROD</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="number" class="form-control disabled" id="exprod" name="exprod">
                                     </div>
                                 </div>
                             </div>
@@ -153,15 +172,7 @@
                                 <label class="col-md-3 col-form-label">Total</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="total" name="total" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" >
-                                <label class="col-md-3 col-form-label">%</label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <input type="number" class="form-control" id="persen" name="persen">
+                                        <input type="number" class="form-control disabled" id="total" name="total" required>
                                     </div>
                                 </div>
                             </div>
@@ -169,15 +180,7 @@
                                 <label class="col-md-3 col-form-label">Selisih</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="selisih" name="selisih" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" >
-                                <label class="col-md-3 col-form-label">%</label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <input type="number" class="form-control" id="selisihpersen" name="selisihpersen">
+                                        <input type="number" class="form-control disabled" id="selisih" name="selisih" required>
                                     </div>
                                 </div>
                             </div>
@@ -258,13 +261,13 @@
             var modal          = $(this)
 
             modal.find('#id').attr("value",div.data('id'));
+            modal.find('#copro').attr("value",div.data('copro'));
             modal.find('#budget').attr("value",div.data('budget'));
-            modal.find('#cost').attr("value",div.data('cost'));
+            modal.find('#part2').attr("value",div.data('part'));
+            modal.find('#pp').attr("value",div.data('cost'));
             modal.find('#exprod').attr("value",div.data('exprod'));
             modal.find('#total').attr("value",div.data('total'));
-            modal.find('#persen').attr("value",div.data('persen'));
             modal.find('#selisih').attr("value",div.data('selisih'));
-            modal.find('#selisihpersen').attr("value",div.data('selisihpersen'));
         });
  $(document).ready(function(){
     $("#cost").on("change", function(){
