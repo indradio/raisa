@@ -12,16 +12,68 @@ class Jamkerja extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Jam Kerja';
-        $data['sidesubmenu'] = 'Laporan Kerja Harian';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['aktivitas'] = $this->jamkerja_model->get_aktivitas();
-        $data['project'] = $this->jamkerja_model->fetch_project();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('jamkerja/index', $data);
-        $this->load->view('templates/footer');
+        if ($this->session->userdata('contract') == 'Direct Labor')
+        {
+            $data['sidemenu'] = 'Jam Kerja';
+            $data['sidesubmenu'] = 'Laporan Kerja Harian';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['jamkerja'] = $this->jamkerja_model->get_WH_TODAY();
+            $data['aktivitas'] = $this->jamkerja_model->get_ACT_TODAY();
+            $data['kategori'] = $this->jamkerja_model->fetch_kategori();
+            $data['project'] = $this->jamkerja_model->fetch_project();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/index', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('dashboard');
+        }
+        
+    }
+
+    public function add_jamkerja()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+        $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
+
+        $tglmulai = date('Y-m-d 07:30:00');
+        $tglselesai = date('Y-m-d 16:30:00');
+        
+        $this->db->where('year(tglmulai)', date('Y'));
+        $this->db->where('month(tglmulai)', date('m'));
+        $jamkerja = $this->db->get('jamkerja');
+        $total_jamkerja = $jamkerja->num_rows()+1;
+        $id = 'WH'.date('ym'). sprintf("%04s", $total_jamkerja);
+
+        $data = [
+            'id' => $id,
+            'npk' => $this->session->userdata('npk'),
+            'tglmulai' => $tglmulai,
+            'tglselesai' => $tglselesai,
+            'durasi' => '00:00:00',
+            'atasan1' => $atasan1['inisial'],
+            'atasan2' => $atasan2['inisial'],
+            'posisi_id' => $this->session->userdata('posisi_id'),
+            'div_id' => $this->session->userdata('div_id'),
+            'dept_id' => $this->session->userdata('dept_id'),
+            'sect_id' => $this->session->userdata('sect_id'),
+            'status' => '1'
+        ];
+        $this->db->insert('jamkerja', $data);
+        redirect('jamkerja');
+    }
+
+    public function ajax()
+    {
+        $kategori_id = $_POST['kategori'];
+        $dept_id = $this->session->userdata('dept_id');
+        $getAktivitas = $this->db->query("SELECT * FROM jamkerja_lain WHERE kategori_id = '$kategori_id' AND dept_id = '$dept_id' ")->result_array();
+  
+        foreach ($getAktivitas as $a) {
+            echo '<option value="'.$a['aktivitas'].'">'.$a['aktivitas'].'</option>';   
+        }
     }
 
     function fetch_project()
@@ -40,41 +92,110 @@ class Jamkerja extends CI_Controller
             $data_events[] = array(
                 "id" => $r->id,
                 "title" => $r->id,
-                "start" => $r->tanggal_mulai,
-                "end" => $r->tanggal_selesai
+                "start" => $r->tglmulai,
+                "end" => $r->tglselesai
             );
         }
         echo json_encode(array("events" => $data_events));
         exit();
     }
 
-    public function aktivitas()
+    public function add_aktivitas()
     {
         date_default_timezone_set('asia/jakarta');
+        $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
         $aktivitas = $this->input->post('aktivitas');
-        $durasi = $this->input->post('durasi');
         $durasi = $this->input->post('durasi');
         $hasil = $this->input->post('progres_hasil');
         $kategori = $this->input->post('kategori');
-        if ($kategori != 3) {
-            $copro = $this->input->post('copro');
+        $copro = $this->input->post('copro');
+        
+        if ($copro) {
+            $id = $copro . $this->session->userdata('npk') . time();
+        }else{
+            $id = date('ymd') . $this->session->userdata('npk') . time();
         }
 
         $data = [
-            'id' => time(),
+            'id' => $id,
             'npk' => $this->session->userdata('npk'),
-            'link_aktivitas' => 'JK' . date('ymd'),
+            'link_aktivitas' => $jamkerja['id'],
             'jenis_aktivitas' => 'JAMKERJA',
-            'tgl_aktivitas' => date('Y-m-d'),
+            'tgl_aktivitas' => date("Y-m-d", strtotime($jamkerja['tglmulai'])),
             'kategori' => $kategori,
             'copro' => $copro,
             'aktivitas' => $aktivitas,
+            'deskripsi_hasil' => $aktivitas,
             'durasi' => $durasi,
             'progres_hasil' => $hasil,
+            'dibuat_oleh' => $this->session->userdata('inisial'),
+            'dept_id' => $this->session->userdata('dept_id'),
+            'sect_id' => $this->session->userdata('sect_id'),
+            'contract' => $this->session->userdata('contract'),
             'status' => '9'
         ];
         $this->db->insert('aktivitas', $data);
+
+        // Update DURASI JAMKERJA
+        $this->db->select('SUM(durasi) as total');
+        $this->db->where('link_aktivitas', $jamkerja['id']);
+        $this->db->from('aktivitas');
+        $totaldurasi = $this->db->get()->row()->total;
+
+        $this->db->set('durasi', $totaldurasi);
+        $this->db->where('id', $jamkerja['id']);
+        $this->db->update('jamkerja');
+       
         redirect('jamkerja');
+    }
+
+    public function batal_aktivitas()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $id = $this->input->post('id');
+        $aktivitas = $this->db->get_where('aktivitas', ['id' => $id])->row_array();
+        $jamkerja = $this->db->get_where('jamkerja', ['id' => $aktivitas['link_aktivitas']])->row_array();
+
+        $this->db->set('aktivitas');
+        $this->db->where('id', $id);
+        $this->db->delete('aktivitas');
+
+        // Update DURASI JAMKERJA
+        $this->db->select('SUM(durasi) as total');
+        $this->db->where('link_aktivitas', $jamkerja['id']);
+        $this->db->from('aktivitas');
+        $totaldurasi = $this->db->get()->row()->total;
+
+        if ($totaldurasi >= 8)
+        {
+            $this->db->set('durasi', $totaldurasi);
+            $this->db->set('status', 2);
+            $this->db->where('id', $jamkerja['id']);
+            $this->db->update('jamkerja');
+        }else{
+            $this->db->set('durasi', $totaldurasi);
+            $this->db->set('status', 1);
+            $this->db->where('id', $jamkerja['id']);
+            $this->db->update('jamkerja');
+        }
+
+        redirect('jamkerja');
+    }
+
+    public function persetujuan()
+    {
+            $data['sidemenu'] = 'Koordinator';
+            $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['jamkerja'] = $this->jamkerja_model->get_WH_TODAY();
+            $data['aktivitas'] = $this->jamkerja_model->get_ACT_TODAY();
+            $data['kategori'] = $this->jamkerja_model->fetch_kategori();
+            $data['project'] = $this->jamkerja_model->fetch_project();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/persetujuan', $data);
+            $this->load->view('templates/footer');
     }
 
     public function aktivitas_wbs()
@@ -89,33 +210,6 @@ class Jamkerja extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('jamkerja/aktivitas_wbs', $data);
         $this->load->view('templates/footer');
-    }
-
-    public function add_jamkerja()
-    {
-        date_default_timezone_set('asia/jakarta');
-        $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
-        $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
-
-        if (date('D') != 'Fri') {
-            $tgl_mulai = date('Y-m-d 07:30:00');
-            $tgl_selesai = date('Y-m-d 16:30:00');
-        } else {
-            $tgl_mulai = date('Y-m-d 07:00:00');
-            $tgl_selesai = date('Y-m-d 16:00:00');
-        }
-        $data = [
-            'id' => 'JK' . date('ymd'),
-            'npk' => $this->session->userdata('npk'),
-            'tanggal_mulai' => $tgl_mulai,
-            'tanggal_selesai' => $tgl_selesai,
-            'durasi' => '00:00:00',
-            'atasan1' => $atasan1['inisial'],
-            'atasan2' => $atasan2['inisial'],
-            'status' => '0'
-        ];
-        $this->db->insert('jamkerja', $data);
-        redirect('jamkerja');
     }
 
     public function addAktivitas()

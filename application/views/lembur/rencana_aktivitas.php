@@ -62,9 +62,9 @@
                         <br>
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <?php if ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Direct Labor'){
+                            <?php if ($lembur['status'] == '1' AND $this->session->userdata('contract') == 'Direct Labor'){
                                 echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
-                            }elseif ($lembur['status'] == '1' AND $this->session->userdata('labor') == 'Indirect Labor'){
+                            }elseif ($lembur['status'] == '1' AND $this->session->userdata('contract') == 'Indirect Labor'){
                                 echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
                             }; ?>
                         </div>
@@ -424,3 +424,46 @@
                                                 });
                                             });
                                     </script>
+
+                                    <!-- script ajax Kategori-->
+<script type="text/javascript">
+    function kategoriSelect(valueSelect)
+            {
+                var val = valueSelect.options[valueSelect.selectedIndex].value;
+                document.getElementById("admLain").style.display = val != '1' ? "block" : 'none';
+                document.getElementById("admCopro").style.display = val != '3' ? "block" : 'none';
+                document.getElementById("admAkt").style.display = val == '1' ? "block" : 'none';
+                document.getElementById("lblCopro").style.display = val != '3' ? "block" : 'none';
+                document.getElementById("lblAkt").style.display = val != '0' ? "block" : 'none';
+            }
+        $('#kategori').change(function(){
+            var kategori = $('#kategori').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('lembur/ajax')?>",
+                data: {kategori:kategori},
+                success: function(data) {
+                    // alert(data)
+                    $('#akt_lain').html(data); 
+                    if(kategori == 1){
+                        $('#copro').prop('disabled', false);
+                        $('#akt').prop('disabled', false);
+                        $('#akt_lain').prop('disabled', true);
+                    }
+                    else if(kategori == 2){
+                        $('#copro').prop('disabled', false);
+                        $('#akt_lain').prop('disabled', false);
+                        $('#akt_lain').selectpicker('refresh');
+                        $('#akt').prop('disabled', true);
+                    }
+                    else if(kategori == 3){
+                        $('#copro').prop('disabled', true);
+                        $('#akt_lain').prop('disabled', false);
+                        $('#akt_lain').selectpicker('refresh');
+                        $('#akt').prop('disabled', true);
+                    }    
+                }
+            })
+        })
+        
+    </script>
