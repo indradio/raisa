@@ -52,7 +52,7 @@ class Lembur extends CI_Controller
                 $this->db->update('lembur');
             }
         endforeach;
-        // End Auto Batalkan LEMBUR
+        // End Auto Batalkan RENCANA LEMBUR
 
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Rencana';
@@ -1088,20 +1088,6 @@ class Lembur extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
-            //Planing next
-            // $this->db->set('catatan', "" . $this->input->post('catatan') . " - Dibatalkan oleh : " . $this->session->userdata['inisial'] ." Pada " . date('d-m-Y H:i'));
-            // $this->db->set('tglselesai', $lembur['tglmulai']);
-            // $this->db->set('durasi', '00:00:00');
-            // $this->db->set('tglselesai_aktual', $lembur['tglmulai_aktual']);
-            // $this->db->set('durasi_aktual', '00:00:00');
-            // $this->db->set('status', '0');
-            // $this->db->where('id', $this->input->post('id'));
-            // $this->db->update('lembur');
-
-            // $this->db->set('aktivitas');
-            // $this->db->where('link_aktivitas', $this->input->post('id'));
-            // $this->db->delete('aktivitas');
-
             redirect('lembur/persetujuan_lembur');
     }
 
@@ -1319,15 +1305,23 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $admin_hr = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $lembur = $this->db->get_where('lembur', ['id' => $id])->row_array();
-        $l = $lembur['id'];
+        // $l = $lembur['id'];
         $this->db->set('admin_hr', $admin_hr['inisial']);
         $this->db->set('tgl_admin_hr', date('y-m-d  H:i:s'));
         $this->db->set('status', '9');
         $this->db->where('id', $id);
         $this->db->update('lembur');
 
+        $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+        foreach($aktivitas as $a):
+            $this->db->set('tglmulai', $lembur['tglmulai']);
+            $this->db->set('tglselesai', $lembur['tglselesai']);
+            $this->db->where('id', $a['id']);
+            $this->db->update('aktivitas');
+        endforeach;
+
         $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/persetujuan_lemburhr/' . $l);
+        redirect('lembur/persetujuan_lemburhr/' . $id);
     }
 
     public function laporan_lembur($id)
