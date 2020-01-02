@@ -984,25 +984,25 @@ class Perjalanandl extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 
-                // $this->db->where('npk', $this->input->post('npk'));
-                // $karyawan = $this->db->get('karyawan')->row_array();
-                // $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                // $destination = $karyawan['phone'];
-                // $message = "*Perjalanan Dinas kamu dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
-                //     "\r\n Tujuan : *" . $this->input->post('tujuan') . "*" .
-                //     "\r\n Peserta : *" . $this->input->post('anggota') . "*" .
-                //     "\r\n Keperluan : *" . $this->input->post('keperluan') . "*" .
-                //     "\r\n Berangkat : *" . $this->input->post('tglberangkat') . "* *" . $this->input->post('jamberangkat') . "* _estimasi_" .
-                //     "\r\n Kembali : *" . $this->input->post('tglkembali') . "* *" . $this->input->post('jamkembali') . "* _estimasi_" .
-                //     "\r\n Kendaraan : *" . $this->input->post('nopol') . "* ( *" . $this->input->post('kepemilikan') . "*" .
-                //     " ) \r\n \r\nTelah siap untuk berangkat. 
-                //         \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
-                //         \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
-                // $api_url = "http://panel.apiwha.com/send_message.php";
-                // $api_url .= "?apikey=" . urlencode($my_apikey);
-                // $api_url .= "&number=" . urlencode($destination);
-                // $api_url .= "&text=" . urlencode($message);
-                // json_decode(file_get_contents($api_url, false));
+                $this->db->where($reservasi['npk']);
+                $karyawan = $this->db->get('karyawan')->row_array();
+                $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                $destination = $karyawan['phone'];
+                $message = "*Perjalanan Dinas kamu dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
+                    "\r\n Tujuan : *" . $data['tujuan'] . "*" .
+                    "\r\n Peserta : *" . $data['anggota'] . "*" .
+                    "\r\n Keperluan : *" . $data['keperluan'] . "*" .
+                    "\r\n Berangkat : *" . $data['tglberangkat'] . "* *" . $data['jamberangkat'] . "* _estimasi_" .
+                    "\r\n Kembali : *" . $data['tglkembali'] . "* *" . $data['jamkembali'] . "* _estimasi_" .
+                    "\r\n Kendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "*" .
+                    " ) \r\n \r\nTelah siap untuk berangkat. 
+                        \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
+                        \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
+                $api_url = "http://panel.apiwha.com/send_message.php";
+                $api_url .= "?apikey=" . urlencode($my_apikey);
+                $api_url .= "&number=" . urlencode($destination);
+                $api_url .= "&text=" . urlencode($message);
+                json_decode(file_get_contents($api_url, false));
 
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanandl/adminhr');

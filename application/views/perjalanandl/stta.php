@@ -76,17 +76,17 @@ endforeach;
 
 $pdf->Ln(2);
 $pdf->SetFont('Arial', '', 6);
-// $pdf->Cell(170, 5, 'Permintaan Pengurus Travel Document', 0, 1,);
+// $pdf->Cell(170, 5, 'Permintaan Pengurus Travel Document', 0, 1);
 
 $pdf->Ln(4);
-$pdf->Cell(37, 5, 'Tujuan                                            : ', 0, 0,);
-$pdf->Cell(170, 5, $perjalanan['tujuan'], 0, 1,);
-$pdf->Cell(37, 5, 'Keperluan                                      : ', 0, 0,);
-$pdf->Cell(170, 5, $perjalanan['keperluan'], 0, 1,);
+$pdf->Cell(37, 5, 'Tujuan                                            : ', 0, 0);
+$pdf->Cell(170, 5, $perjalanan['tujuan'], 0, 1);
+$pdf->Cell(37, 5, 'Keperluan                                      : ', 0, 0);
+$pdf->Cell(170, 5, $perjalanan['keperluan'], 0, 1);
 
 $pdf->Ln(2);
 $pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(170, 5, 'Jadwal Perjalanan  :', 0, 1,);
+$pdf->Cell(170, 5, 'Jadwal Perjalanan  :', 0, 1);
 $pdf->Cell(20, 6, 'Tgl', 1, 0, 'C', 1);
 $pdf->Cell(15, 6, 'Waktu', 1, 0, 'C', 1);
 $pdf->Cell(36, 6, 'Berangkat Dari', 1, 0, 'C', 1);
@@ -131,12 +131,12 @@ $pdf->Cell(36, 6, '', 1, 0, 'C', 1);
 $pdf->Cell(0, 6, '', 0, 1, 0);
 
 $pdf->Ln(6);
-$pdf->Cell(37, 5, 'Akomodasi                                  :', 0, 0,);
+$pdf->Cell(37, 5, 'Akomodasi                                  :', 0, 0);
 $pdf->Cell(63, 5, $perjalanan['akomodasi'] , 0, 0);
 $pdf->Cell(9, 5, '' , 0, 1);
 
 $pdf->Ln(2);
-$pdf->Cell(38, 5, 'Penginapan                                 :', 0, 0,);
+$pdf->Cell(38, 5, 'Penginapan                                 :', 0, 0);
 if ($perjalanan['penginapan'])
 {
     $pdf->Cell(5, 4.5, ' X' , 1, 0);
@@ -149,7 +149,7 @@ if ($perjalanan['penginapan'])
 }
 
 $pdf->Ln(2);
-$pdf->Cell(38, 5, 'Alokasi Pembebanan                 :', 0, 0,);
+$pdf->Cell(38, 5, 'Alokasi Pembebanan                 :', 0, 0);
 $pdf->Cell(9, 4.5, '' , 1, 0);
 $pdf->Cell(15, 5, 'CO' , 0, 0);
 $pdf->Cell(9, 4.5, '' , 1, 0);
@@ -163,8 +163,8 @@ $pdf->Cell(10, 5, 'WI ' , 0, 0);
 $pdf->Cell(9, 5, '' , 0, 1);
 
 $pdf->Ln(2);
-$pdf->Cell(37, 5, 'Catatan                                        :', 0, 0,);
-$pdf->Cell(170, 5, $perjalanan['catatan_ga'] , 0, 1,);
+$pdf->Cell(37, 5, 'Catatan                                        :', 0, 0);
+$pdf->Cell(170, 5, $perjalanan['catatan_ga'] , 0, 1);
 
 $reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
 $pdf->Ln(4);
@@ -206,7 +206,7 @@ $pdf->Cell(5, 4, '', 0, 1, 0);
 
 $pdf->Ln(10);
 $pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(35, 5, 'Pengembalian Prepaid               :', 0, 0,);
+$pdf->Cell(35, 5, 'Pengembalian Prepaid               :', 0, 0);
 $pdf->Cell(105, 5, '1.       Rp.           :', 0, 1);
 $pdf->Cell(35, 4, '',0,0);
 $pdf->Cell(105, 5, '2.       USD.        :', 0, 1);
@@ -216,11 +216,11 @@ $pdf->Cell(35, 4, '',0,0);
 $pdf->Cell(105, 5, '4.       ........        :', 0, 0);
 
 $pdf->Ln(-12);
-$pdf->Cell(137, 5, '', 0, 0,);
+$pdf->Cell(137, 5, '', 0, 0);
 $pdf->Cell(45, 4, '   Diketahui / Dibuat Oleh ,', 1,1,'C',1);
-$pdf->Cell(137, 5, '', 0, 0,);
+$pdf->Cell(137, 5, '', 0, 0);
 $pdf->Cell(45, 25, '', 1,1,'C',1);
-$pdf->Cell(137, 5, '', 0, 0,);
+$pdf->Cell(137, 5, '', 0, 0);
 $pdf->Cell(45, 4, '   HRDGA / Adm.Dept.Head', 1,1,'C',1);
 
 $pdf->Ln(-22);
@@ -232,14 +232,14 @@ $pdf->Cell(1, 18, date("d M Y H:i", strtotime($reservasi['tgl_fin'])), 0,'C', 0)
 
 $pdf->Ln(14);
 $pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(140, 5, '', 0, 0,);
+$pdf->Cell(140, 5, '', 0, 0);
 $pdf->Cell(42, 4, '(  Dwi Ayu Waraswati  )', 0,0,'C',0);
 
 $pdf->Ln(2);
 $pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(140, 4, 'Terlampir  : Rencana Biaya Perjalanan Dinas', 0, 1,);
-$pdf->Cell(140, 4, 'Cc.  :  1.  Accounting / Finance & Accounting', 0, 1,);
-$pdf->Cell(140, 5, '           2. HRDGA / Administration', 0, 1,);
+$pdf->Cell(140, 4, 'Terlampir  : Rencana Biaya Perjalanan Dinas', 0, 1);
+$pdf->Cell(140, 4, 'Cc.  :  1.  Accounting / Finance & Accounting', 0, 1);
+$pdf->Cell(140, 5, '           2. HRDGA / Administration', 0, 1);
 
 
 $pdf->Output('I', 'SURAT TUGAS TA' . RAND() . '.pdf');
