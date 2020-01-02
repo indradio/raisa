@@ -300,6 +300,7 @@ class Perjalanandl extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->where('jenis_perjalanan', 'TA');
         $data['perjalanan'] = $this->db->limit('100');
+        $data['perjalanan'] = $this->db->order_by('id', 'desc');
         $data['perjalanan'] = $this->db->get_where('perjalanan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -873,6 +874,7 @@ class Perjalanandl extends CI_Controller
         $data['sidesubmenu'] = 'Konfirmasi Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->where('jenis_perjalanan', "TA");
+        $data['reservasi'] = $this->db->where('status', "6");
         $data['reservasi'] = $this->db->where('status', "6");
         $data['reservasi'] = $this->db->get('reservasi')->result_array();
         $this->load->view('templates/header', $data);
