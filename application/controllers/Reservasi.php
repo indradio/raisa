@@ -695,7 +695,7 @@ class Reservasi extends CI_Controller
             $tahun = date("Y", strtotime($reservasi_temp['tglberangkat']));
             $bulan = date("m", strtotime($reservasi_temp['tglberangkat']));
             $this->db->where('year(tglberangkat)', $tahun);
-            $this->db->where('month(tglmulai)', $bulan);
+            $this->db->where('month(tglberangkat)', $bulan);
             $rsv = $this->db->get('reservasi');
             $total_rsv = $rsv->num_rows()+1;
             $id = 'RSV'.date('ym', strtotime($reservasi_temp['tglberangkat'])). sprintf("%04s", $total_rsv);
