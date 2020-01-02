@@ -1,13 +1,12 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <!-- gunakan if -->
-    <div class="alert alert-rose alert-dismissible fade show" role="alert">
-        <strong>Catatan dari atasan kamu</strong> <?= $jamkerja['catatan']; ?>
+    <!-- <div class="alert alert-rose alert-dismissible fade show" role="alert">
+        <strong>Catatan dari atasan kamu</strong> <?= floor($jamkerja['respon_create'] / (60 * 60 * 24)); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
-    </div>
-
+    </div> -->
   <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -68,7 +67,10 @@
                             <div class="material-datatables disabled">
                             <?php }; ?>
                         <?php } else { ?>
-                            <a href="<?= base_url('jamkerja/add_jamkerja'); ?>" class="btn btn-lg btn-block btn-youtube mb-2" role="button" aria-disabled="false">BUAT LAPORAN JAM KERJA</a>
+                            <form class="form" method="post" action="<?= base_url('jamkerja/add_jamkerja_tanggal'); ?>">
+                                <input type="text" id="tanggal" name="tanggal" class="form-control" value="<?php $tanggal; ?>" />
+                                <button type="submit" class="btn btn-lg btn-block btn-youtube mb-2" role="button" aria-disabled="false"><?php $tanggal; ?>BUAT LAPORAN JAM KERJA</button>
+                            </form>
                             </div>
                             <div class="material-datatables disabled">
                         <?php }; ?>
@@ -93,11 +95,12 @@
                             </tfoot>
                             <tbody>
                                 <?php
+                                $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $jamkerja['id']])->result_array();
                                 foreach ($aktivitas as $a) : ?>
                                     <tr>
                                         <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                         <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
-                                        <td><?= $a['aktivitas']; ?></td>
+                                        <td><?= $a['id']; ?></td>
                                         <td><?= $a['durasi']; ?></td>
                                         <td><?= $a['progres_hasil']; ?></td>
                                         <td class="text-right">
@@ -115,27 +118,6 @@
                             </br> 1. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 8 Jam Kerja.
                             </br> 2. Istirahat Siang hanya untuk aktivitas lembur, tidak untuk Laporan Kerja Harian.
                         <!-- </div> -->
-                    </div>
-                </div>
-                <!--  end card  -->
-            </div>
-            <!-- end col-md-12 -->
-        </div>
-        <!-- end row -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">assignment</i>
-                        </div>
-                        <h4 class="card-title">Kamu lupa melaporkan kerja kemarin?</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="toolbar">
-                            <a href="#" class="btn btn-lg btn-block btn-youtube mb-2" role="button" data-toggle="modal" data-target="#kemarinModal" aria-disabled="false">BUAT LAPORAN SEKARANG!</a>
-                        </div>
-                            
                     </div>
                 </div>
                 <!--  end card  -->
@@ -253,41 +235,6 @@
     </div>
   </div>
 </div>
-
-<!-- Modal JamKerja Kemarin-->
-<div class="modal fade" id="kemarinModal" tabindex="-1" role="dialog" aria-labelledby="kemarinModalTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-danger text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">LAPORAN KERJA HARIAN</h4>
-                    </div>
-                </div>
-                <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/lapor_jamkerja'); ?>">
-                    <div class="modal-body">
-                      <div class="form-group label-floating">
-                        <div class="input-group date">
-                          <input type="text" id="tanggal" name="tanggal" class="form-control datepicker" placeholder="Pilih Tanggal" required="true" />
-                          <div class="input-group-append">
-                            <span class="input-group-text">
-                              <span class="glyphicon glyphicon-calendar"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                      <button type="submit" class="btn btn-success">SELANJUTNYA</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
 
 <script type="text/javascript">
         function kategoriSelect(valueSelect)

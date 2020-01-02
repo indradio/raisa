@@ -273,7 +273,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                      <button type="submit" class="btn btn-success">SELANJUTNYA</button>
+                      <button type="submit" class="btn btn-success">BUAT LAPORAN</button>
                     </div>
                 </form>
             </div>
