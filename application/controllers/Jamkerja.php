@@ -119,7 +119,7 @@ class Jamkerja extends CI_Controller
             'id' => $id,
             'npk' => $this->session->userdata('npk'),
             'link_aktivitas' => $jamkerja['id'],
-            'jenis_aktivitas' => 'JAMKERJA',
+            'jenis_aktivitas' => 'JAM KERJA',
             'tgl_aktivitas' => date("Y-m-d", strtotime($jamkerja['tglmulai'])),
             'tglmulai' => $jamkerja['tglmulai'],
             'tglselesai' => $jamkerja['tglselesai'],
