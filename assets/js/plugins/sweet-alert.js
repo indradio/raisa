@@ -2,8 +2,8 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "Selamat Datang!",
-    text: "INFO : Kamu tau gak?? Hayo kamu gak mau kan ketinggalan informasi terbaru. Makanya simpan nomor RAISA di kontak kamu, supaya RAISA bisa kasih kamu semua informasi terbaru. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
+    title: "Terbaru di RAISA!",
+    text: "Perjalanan TA sudah terintegrasi dengan admin HR, jadi tidak perlu form kertas & Pengisian jam kerja mulai tanggal 2 januari 2020 diberlakukan di RAISA. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"

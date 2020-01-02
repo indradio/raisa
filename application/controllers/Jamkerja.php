@@ -29,7 +29,6 @@ class Jamkerja extends CI_Controller
         }else{
             redirect('dashboard');
         }
-        
     }
 
     public function add_jamkerja()
@@ -122,6 +121,8 @@ class Jamkerja extends CI_Controller
             'link_aktivitas' => $jamkerja['id'],
             'jenis_aktivitas' => 'JAMKERJA',
             'tgl_aktivitas' => date("Y-m-d", strtotime($jamkerja['tglmulai'])),
+            'tglmulai' => $jamkerja['tglmulai'],
+            'tglselesai' => $jamkerja['tglselesai'],
             'kategori' => $kategori,
             'copro' => $copro,
             'aktivitas' => $aktivitas,
@@ -210,50 +211,6 @@ class Jamkerja extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('jamkerja/aktivitas_wbs', $data);
         $this->load->view('templates/footer');
-    }
-
-    public function addAktivitas()
-    {
-        date_default_timezone_set('asia/jakarta');
-        $this->db->where('tanggal_mulai', date("Y-m-d 07:30:00"));
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $jamkerja = $this->db->get("jamkerja")->row_array();
-
-        if ($jamkerja['id'] == null) {
-            if (date('D') != 'Fri') {
-                $tgl_mulai = date('Y-m-d 07:30:00');
-                $tgl_selesai = date('Y-m-d 16:30:00');
-            } else {
-                $tgl_mulai = date('Y-m-d 07:00:00');
-                $tgl_selesai = date('Y-m-d 16:00:00');
-            }
-            $data_jamkerja = [
-                'id' => time(),
-                'npk' => $this->session->userdata('npk'),
-                'tanggal_mulai' => $tgl_mulai,
-                'tanggal_selesai' => $tgl_selesai,
-                'nama' => date('D'),
-                'durasi' => '08:00:00'
-            ];
-            $this->db->insert('jamkerja', $data_jamkerja);
-            redirect('jamkerja');
-        } else {
-            redirect('jamkerja/aktivitas_wbs');
-        }
-
-        // $data = [
-        //     'copro' => $this->input->post('copro'),
-        //     'wbs' => $this->input->post('id'),
-        //     'milestone' => $this->input->post('milestone'),
-        //     'aktivitas' => $this->input->post('aktivitas'),
-        //     'tglmulai' => date('Y-m-d H:i:s'),
-        //     'tglselesai' => date('Y-m-d H:i:s'),
-        //     'progres_hasil' => $this->input->post('progres_hasil'),
-        //     'deskripsi_hasil' => $this->input->post('deskripsi_hasil'),
-        //     'npk' => $this->session->userdata('npk'),
-        //     'status' => '1'
-        // ];
-        // $this->db->insert('aktivitas', $data);
     }
 
     public function do_aktivitaslain()
