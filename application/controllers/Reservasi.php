@@ -24,8 +24,24 @@ class Reservasi extends CI_Controller
 
     public function dl()
     {
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->delete('reservasi_temp');
+        $temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->result_array();
+        foreach ($temp as $t) :
+            $this->db->set('perjalanan_anggota');
+            $this->db->where('reservasi_id',$t['id']);
+            $this->db->delete('perjalanan_anggota');
+
+            $this->db->set('perjalanan_tujuan');
+            $this->db->where('reservasi_id',$t['id']);
+            $this->db->delete('perjalanan_tujuan');
+
+            $this->db->set('perjalanan_jadwal');
+            $this->db->where('reservasi_id',$t['id']);
+            $this->db->delete('perjalanan_jadwal');
+
+            $this->db->set('reservasi_temp');
+            $this->db->where('id',$t['id']);
+            $this->db->delete('reservasi_temp');
+        endforeach;
 
         $data['sidemenu'] = 'Perjalanan Dinas';
         $data['sidesubmenu'] = 'Reservasi';

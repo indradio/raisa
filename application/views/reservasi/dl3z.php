@@ -246,7 +246,14 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-success" id="submit">RESERVASI</button>
+                                    <?php
+                                         $cekjadwal = $this->db->get_where('perjalanan_jadwal', ['reservasi_id' => $reservasi_temp['id']])->row_array();
+                                        if ($cekjadwal['reservasi_id']){
+                                            echo '<button type="submit" class="btn btn-fill btn-success" id="submit">RESERVASI</button>';
+                                        }else{
+                                            echo '<button type="submit" class="btn btn-fill btn-warning disabled" id="submit">JADWAL PERJALANAN TIDAK BOLEH KOSONG</button>';
+                                        }
+                                        ?>
                                         <a href="<?= base_url('reservasi/dl1c1'); ?>" class="btn btn-fill btn-default">Kembali</a>
                                     </div>
                                 </div>
