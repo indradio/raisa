@@ -169,15 +169,15 @@ class Jamkerja extends CI_Controller
         $this->db->from('aktivitas');
         $totaldurasi = $this->db->get()->row()->total;
 
-        if ($totaldurasi >= 8)
+        if ($totaldurasi > 0)
         {
             $this->db->set('durasi', $totaldurasi);
-            $this->db->set('status', 2);
+            $this->db->set('status', 1);
             $this->db->where('id', $jamkerja['id']);
             $this->db->update('jamkerja');
         }else{
             $this->db->set('durasi', $totaldurasi);
-            $this->db->set('status', 1);
+            $this->db->set('status', 0);
             $this->db->where('id', $jamkerja['id']);
             $this->db->update('jamkerja');
         }
