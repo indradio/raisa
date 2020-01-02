@@ -244,6 +244,8 @@
                                                     <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
                                                   <?php }elseif ($r['status'] == 5) {?>
                                                     <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
+                                                  <?php }elseif ($r['status'] == 6) {?>
+                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
                                                   <?php };?>
                                                   </td>
                                                   <td class="td-name">

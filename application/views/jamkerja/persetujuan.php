@@ -1,7 +1,6 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-  <!-- RENCANA -->
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -9,7 +8,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Persetujuan Rencana Lembur</h4>
+            <h4 class="card-title">Persetujuan Jam Kerja</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -20,29 +19,41 @@
                 <thead>
                   <tr>
                     <th>Nama</th>
-                    <th>Tanggal & Jam </th>
+                    <th>Tanggal</th>
                     <th>Durasi</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Nama</th>
-                    <th>Tanggal & Jam </th>
+                    <th>Tanggal</th>
                     <th>Durasi</th>
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($rencana as $l) : ?>
-                      <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $l['id']; ?>'" >
-                      <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
-                      <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
+                  <?php foreach ($jamkerja as$jk) : ?>
+                      <tr onclick="window.location='<?= base_url('jamkerja/persetujuan_detail/') .$jk['id']; ?>'" >
+                      <td><?=$jk['nama']; ?> <small>(<?=$jk['id']; ?>)</small></td>
+                      <td><?= date('d-M H:i', strtotime($jk['tglmulai'])); ?></td>
+                      <?php if ($jk['durasi']<8){ ?>
+                        <td class="text-danger">
+                      <?php }else{ ?>
+                        <td>
+                      <?php } ?>
+                      <?= date('H', strtotime($jk['durasi'])); ?> Jam <?= date('i', strtotime($jk['durasi'])); ?> Menit</td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
               </table>
             </div>
           </div>
+          <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="fa fa-circle text-danger"></i> Durasi Jam Kerja kurang dari 8 JAM. 
+                            </div>
+                        </div>
+                    </div>
           <!-- end content-->
         </div>
         <!--  end card  -->
@@ -65,7 +76,7 @@
             <h4 class="card-title">ALASAN PEMBATALAN</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('lembur/batal_lembur'); ?>">
+        <form class="form" method="post" action="<?= base_url('jamkerja/batal'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control disabled" name="id">
             <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>

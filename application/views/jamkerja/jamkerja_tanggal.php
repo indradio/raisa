@@ -1,5 +1,13 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
+    <!-- gunakan if -->
+    <div class="alert alert-rose alert-dismissible fade show" role="alert">
+        <strong>Catatan dari atasan kamu</strong> <?= $jamkerja['catatan']; ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
   <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -259,7 +267,7 @@
                         <h4 class="card-title">LAPORAN KERJA HARIAN</h4>
                     </div>
                 </div>
-                <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/tanggal'); ?>">
+                <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/lapor_jamkerja'); ?>">
                     <div class="modal-body">
                       <div class="form-group label-floating">
                         <div class="input-group date">

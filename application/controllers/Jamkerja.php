@@ -59,7 +59,7 @@ class Jamkerja extends CI_Controller
             'div_id' => $this->session->userdata('div_id'),
             'dept_id' => $this->session->userdata('dept_id'),
             'sect_id' => $this->session->userdata('sect_id'),
-            'status' => '1'
+            'status' => '0'
         ];
         $this->db->insert('jamkerja', $data);
         redirect('jamkerja');
@@ -145,6 +145,7 @@ class Jamkerja extends CI_Controller
         $totaldurasi = $this->db->get()->row()->total;
 
         $this->db->set('durasi', $totaldurasi);
+        $this->db->set('status', 1);
         $this->db->where('id', $jamkerja['id']);
         $this->db->update('jamkerja');
        
@@ -188,10 +189,10 @@ class Jamkerja extends CI_Controller
     {
             $data['sidemenu'] = 'Koordinator';
             $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['jamkerja'] = $this->jamkerja_model->get_WH_TODAY();
-            $data['aktivitas'] = $this->jamkerja_model->get_ACT_TODAY();
-            $data['kategori'] = $this->jamkerja_model->fetch_kategori();
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['jamkerja'] = $this->db->where('sect_id', $this->session->userdata('sect_id'));
+            $data['jamkerja'] = $this->db->where('status', 1);
+            $data['jamkerja'] = $this->db->get('jamkerja')->result_array();
             $data['project'] = $this->jamkerja_model->fetch_project();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -200,12 +201,50 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/footer');
     }
 
+    public function persetujuan_detail($link_aktivitas)
+    {
+            $data['sidemenu'] = 'Koordinator';
+            $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
+            $data['project'] = $this->jamkerja_model->fetch_project();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/persetujuan_detail', $data);
+            $this->load->view('templates/footer');
+    }
+
+    public function persetujuan_approve($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->set('atasan1', 'Disetujui oleh '. $this->session->userdata('inisial'));
+        $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
+        $this->db->set('status', 9);
+        $this->db->where('id', $id);
+        $this->db->update('jamkerja');
+
+        redirect('jamkerja/persetujuan');
+    }
+
+    public function persetujuan_revisi($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->set('catatan', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
+        $this->db->set('status', 0);
+        $this->db->where('id', $id);
+        $this->db->update('jamkerja');
+
+        redirect('jamkerja/persetujuan');
+    }
+
     public function aktivitas_wbs()
     {
         $copro = $this->input->post('copro');
         $data['sidemenu'] = 'Jam Kerja';
         $data['sidesubmenu'] = 'Aktivitas';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['wbs'] = $this->jamkerja_model->get_wbs_bycopro($copro);
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
