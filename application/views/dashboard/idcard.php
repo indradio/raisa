@@ -5,7 +5,7 @@
     if ($kesempatan>0){
       echo 'Kamu memiliki '.$kesempatan.' kesempatan untuk like';
     }else{
-      echo 'Kesempatan kamu sudah habis';
+      echo 'Kesempatan like kamu sudah habis';
     }?>
     </strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

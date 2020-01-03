@@ -30,12 +30,18 @@ class Highlight extends CI_Controller
 
     public function like($design)
     {
-        $data = [
-            'npk' => $this->session->userdata('npk'),
-            'design' => $design
-        ];
-        $this->db->insert('idcard_like', $data);
-        redirect('highlight/idcard');
+        $total_like = $this->db->get_where('idcard_like', ['npk' => $this->session->userdata('npk')]);
+        if ($total_like->num_rows()<4){
+            $data = [
+                'npk' => $this->session->userdata('npk'),
+                'design' => $design
+            ];
+            $this->db->insert('idcard_like', $data);
+            redirect('highlight/idcard');
+        }else{
+            redirect('highlight/idcard');
+        }
+
     }
 
     public function wivi()
