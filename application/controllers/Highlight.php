@@ -41,7 +41,6 @@ class Highlight extends CI_Controller
         }else{
             redirect('highlight/idcard');
         }
-
     }
 
     public function wivi()
