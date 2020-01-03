@@ -52,7 +52,7 @@ class Lembur extends CI_Controller
                 $this->db->update('lembur');
             }
         endforeach;
-        // End Auto Batalkan LEMBUR
+        // End Auto Batalkan RENCANA LEMBUR
 
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Rencana';
@@ -329,6 +329,7 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link_aktivitas')])->row_array();
+        $kry = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         $copro = $this->input->post('copro');
 
         $durasiPost = $this->input->post('durasi');
@@ -339,7 +340,6 @@ class Lembur extends CI_Controller
         }else{
             $id = date('ymd') . $lembur['npk'] . time();
         }
-
             $data = [
                 'id' => $id,
                 'npk' => $lembur['npk'],
@@ -354,6 +354,9 @@ class Lembur extends CI_Controller
                 'deskripsi_hasil' => '',
                 'progres_hasil' => '0',
                 'dibuat_oleh' => $this->session->userdata('inisial'),
+                'dept_id' => $kry['dept_id'],
+                'sect_id' => $kry['sect_id'],
+                'contract' => $kry['work_contract'],
                 'status' => '1'
             ];
             $this->db->insert('aktivitas', $data);
@@ -497,6 +500,7 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link_aktivitas')])->row_array();
+        $kry = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         $copro = $this->input->post('copro');
 
         $durasiPost = $this->input->post('durasi');
@@ -528,6 +532,9 @@ class Lembur extends CI_Controller
                 'deskripsi_hasil' => $this->input->post('deskripsi_hasil'),
                 'progres_hasil' => $this->input->post('progres_hasil'),
                 'dibuat_oleh' => $this->session->userdata('inisial'),
+                'dept_id' => $kry['dept_id'],
+                'sect_id' => $kry['sect_id'],
+                'contract' => $kry['work_contract'],
                 'status' => $status
             ];
             $this->db->insert('aktivitas', $data);
@@ -1072,6 +1079,18 @@ class Lembur extends CI_Controller
             }
     }
 
+    public function revisi_lembur()
+    {
+        date_default_timezone_set('asia/jakarta');
+            $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+            $this->db->set('catatan', $this->input->post('catatan'));
+            $this->db->set('status', '4');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            redirect('lembur/persetujuan_lembur');
+    }
+
     public function persetujuan_lemburga()
     {
         date_default_timezone_set('asia/jakarta');
@@ -1286,15 +1305,23 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $admin_hr = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $lembur = $this->db->get_where('lembur', ['id' => $id])->row_array();
-        $l = $lembur['id'];
+        // $l = $lembur['id'];
         $this->db->set('admin_hr', $admin_hr['inisial']);
         $this->db->set('tgl_admin_hr', date('y-m-d  H:i:s'));
         $this->db->set('status', '9');
         $this->db->where('id', $id);
         $this->db->update('lembur');
 
+        $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+        foreach($aktivitas as $a):
+            $this->db->set('tglmulai', $lembur['tglmulai_aktual']);
+            $this->db->set('tglselesai', $lembur['tglselesai_aktual']);
+            $this->db->where('id', $a['id']);
+            $this->db->update('aktivitas');
+        endforeach;
+
         $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/persetujuan_lemburhr/' . $l);
+        redirect('lembur/persetujuan_lemburhr/' . $id);
     }
 
     public function laporan_lembur($id)

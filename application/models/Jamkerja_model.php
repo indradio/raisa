@@ -13,12 +13,30 @@ class Jamkerja_model extends CI_Model
         return $this->db->get("jamkerja");
     }
 
-    public function get_aktivitas()
+    public function GET_WH_TODAY()
+    {
+       
+
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('year(tglmulai)',date('Y'));
+        $this->db->where('month(tglmulai)',date('m'));
+        $this->db->where('day(tglmulai)',date('d'));
+        $query = $this->db->get("jamkerja");
+        return $query->row_array();
+    }
+
+    public function get_ACT_TODAY()
     {
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('tgl_aktivitas', date("Y-m-d"));
         $query = $this->db->get("aktivitas");
         return $query->result_array();
+    }
+
+    function fetch_kategori()
+    {
+        $query = $this->db->get("jamkerja_kategori");
+        return $query->result();
     }
 
     function fetch_project()

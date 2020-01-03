@@ -25,6 +25,38 @@ $(document).ready(function () {
         }
     });
 
+    $('#dtdesc').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        order: [
+            [0, 'desc']
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
+    $('#dtasc').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        order: [
+            [0, 'asc']
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
     $('#dtreportkr').DataTable({
         "pagingType": "full_numbers",
         order: [

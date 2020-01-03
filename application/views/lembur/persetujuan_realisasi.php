@@ -98,6 +98,7 @@
                                 }else{
                                     echo '<button type="submit"  id="setujui" class="btn btn-sm btn-success disabled">SETUJUI</button>';
                                 }; ?>
+                                <a href="#" id="revisiAktivitas" class="btn btn-sm btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiRealisasi" data-id="<?= $lembur['id']; ?>">REVISI</a>
                                 <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                                 <a href="<?= base_url('lembur/persetujuan_lembur') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                             </div>
@@ -137,4 +138,42 @@
     </div>
   </div>
 </div>
+<!-- Modal Revisi Realisasi-->
+<div class="modal fade" id="revisiRealisasi" tabindex="-1" role="dialog" aria-labelledby="revisiRealisasiTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-primary text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">ALASAN HARUS DIREVISI</h4>
+          </div>
+        </div>
+        <form class="form" method="post" action="<?= base_url('lembur/revisi_lembur'); ?>">
+          <div class="modal-body">
+            <input type="text" class="form-control disabled" name="id">
+            <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Revisi Lembur" required></textarea>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-rose">REVISI LEMBUR INI!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#revisiRealisasi').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        var id = button.data('id') 
+        var modal = $(this)
+        modal.find('.modal-body input[name="id"]').val(id)
+})
+
+      });
+  </script>

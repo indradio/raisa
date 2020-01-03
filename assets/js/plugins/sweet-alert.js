@@ -2,8 +2,8 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "Selamat Datang!",
-    text: "PENTING : RENCANA LEMBUR yang tidak DISUBMIT melewati 1 JAM dari waktu mulai rencana lembur maka akan DIBATALKAN. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
+    title: "Terbaru di RAISA!",
+    text: "Perjalanan TA sudah terintegrasi dengan admin HR, jadi tidak perlu form kertas & Pengisian jam kerja mulai tanggal 2 januari 2020 diberlakukan di RAISA. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
@@ -56,6 +56,14 @@ if (flashData == 'masuk') {
   swal({
     title: "Maaf!",
     text: "Tanggal BERANGKAT tidak boleh lebih kecil dari HARI INI atau tanggal KEMBALI tidak boleh lebih kecil dari tanggal BERANGKAT.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-danger",
+    type: "error"
+  }).catch(swal.noop)
+} else if (flashData == 'backjadwal') {
+  swal({
+    title: "Maaf!",
+    text: "Tanggal BERANGKAT harus sesuai dengan range tanggal perjalanan.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-danger",
     type: "error"

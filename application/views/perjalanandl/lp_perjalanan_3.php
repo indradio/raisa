@@ -33,14 +33,14 @@
                                                     ORDER BY `id` DESC";
                                 $kendaraan = $this->db->query($queryKendaraan)->result_array();
                                 foreach ($kendaraan as $k) : 
-                                    $this->db->where('nopol', $k['nopol']);
+                                    $this->db->where('kendaraan', $k['nama']);
                                     $this->db->where('year(tglberangkat)',$tahun);
                                     $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
                                     $queryTrip = $this->db->get('perjalanan');
                                 
                                     $this->db->select_sum('kmtotal');
-                                    $this->db->where('nopol', $k['nopol']);
+                                    $this->db->where('kendaraan', $k['nama']);
                                     $this->db->where('year(tglberangkat)',$tahun);
                                     $this->db->where('month(tglberangkat)',$bulan);
                                     $this->db->where('status','9');
@@ -49,7 +49,7 @@
                                     if ($kmtotal != 0){
                                 ?>
                                     <tr>
-                                        <td class="td-name"><?= $k['nopol']; ?></td>
+                                        <td class="td-name"><?= $k['nama']; ?></td>
                                         <td><?= $queryTrip->num_rows(); ?></td>
                                         <td><?= $kmtotal; ?></td>
                                     </tr>
