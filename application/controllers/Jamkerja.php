@@ -85,6 +85,7 @@ class Jamkerja extends CI_Controller
             $hari =  date("d", strtotime($tanggal));
             $strdate = strtotime($tanggal);
             $strnow =  time();
+            $strlastyear = strtotime(date('2019-12-31'));
 
             $this->db->where('year(tglmulai)',$tahun);
             $this->db->where('month(tglmulai)',$bulan);
@@ -108,7 +109,9 @@ class Jamkerja extends CI_Controller
                 $this->load->view('templates/footer');
          
             }else{
-                if ($strdate>$strnow){
+                if ($strdate>=$strnow){
+                    redirect('jamkerja');
+                }elseif ($strdate<=$strlastyear){
                     redirect('jamkerja');
                 }else{
          

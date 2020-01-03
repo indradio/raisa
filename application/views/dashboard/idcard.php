@@ -1,13 +1,17 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <!-- <div class="alert alert-rose alert-dismissible fade show" role="alert">
-    <strong>Hay Your RAISA!</strong> Buat kamu yang penikmat kopi, Mau dapet COFFEE MAKER biar gak repot nyeduh? Gampangg! 
-    </br>yuk isi survei kepuasan acara FAMILY DAY 2019 dan kamu punya kesempatan untuk mendapatkan COFFEE MAKER keren ini? Klik <a href="<?= base_url('famday/survey'); ?>" target="_blank">DISINI</a>. 
-    </br>RAISA tunggu paling lambat <b>Tanggal 22 Nov 2019 Jam 16:30</b>
+  <div class="alert alert-rose alert-dismissible fade show" role="alert">
+    <strong><?php $kesempatan = 3 - $total_like->num_rows();
+    if ($kesempatan>0){
+      echo 'Kamu memiliki '.$kesempatan.' kesempatan untuk like';
+    }else{
+      echo 'Kesempatan kamu sudah habis';
+    }?>
+    </strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div> -->
+  </div>
   <div class="container-fluid">
     <!-- Banner -->
     <div class="row">
@@ -32,9 +36,28 @@
                 <?= $ic['design']; ?>
             </div>
             <h4 class="card-title">
-                Design by <?= $ic['nama']; ?>
+            <?php 
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->where('design', $ic['design']);
+            $haslike = $this->db->get('idcard_like')->row_array(); 
+            if (!$haslike['id']){
+              if ($total_like->num_rows()<3){
+                echo '<a href="'.  base_url('highlight/like/'. $ic['design']).'" class="btn btn-rose btn-round btn-fab">
+                <i class="material-icons">favorite</i>
+                </a>';
+              }
+            }?>
             </h4>
           </div>
+          <div class="card-footer">
+                                <div class="price">
+                                  <?php $like = $this->db->get_where('idcard_like', ['design' => $ic['design']]); ?>
+                                  <h4><?= $like->num_rows(); ?> Like</h4>
+                                </div>
+                                <div class="stats">
+                                  <p class="card-category"><i class="material-icons">person_pin</i> Design by <?= $ic['nama']; ?></p>
+                                </div>
+                              </div>
         </div>
       </div>
       <?php endforeach; ?>
