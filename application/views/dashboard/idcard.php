@@ -37,15 +37,10 @@
             </div>
             <h4 class="card-title">
             <?php 
-            $this->db->where('npk', $this->session->userdata('npk'));
-            $this->db->where('design', $ic['design']);
-            $haslike = $this->db->get('idcard_like')->row_array(); 
-            if (!$haslike['id']){
               if ($total_like->num_rows()<3){
                 echo '<a href="'.  base_url('highlight/like/'. $ic['design']).'" class="btn btn-rose btn-round btn-fab">
                 <i class="material-icons">favorite</i>
                 </a>';
-              }
             }?>
             </h4>
           </div>
