@@ -99,6 +99,7 @@ class Jamkerja extends CI_Controller
                 $this->db->where('year(tglmulai)',$tahun);
                 $this->db->where('month(tglmulai)',$bulan);
                 $this->db->where('day(tglmulai)',$hari);
+                $this->db->where('npk',$this->session->userdata('npk'));
                 $data['jamkerja'] = $this->db->get('jamkerja')->row_array();
                 $data['kategori'] = $this->jamkerja_model->fetch_kategori();
                 $data['project'] = $this->jamkerja_model->fetch_project();
