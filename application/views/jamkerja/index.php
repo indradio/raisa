@@ -69,6 +69,7 @@
                                 <tr>
                                     <th>Kategori</th>
                                     <th>Aktivitas</th>
+                                    <th>Deskripsi</th>
                                     <th>Durasi (Jam)</th>
                                     <th>Hasil (%)</th>
                                     <th class="disabled-sorting text-right">Actions</th>
@@ -78,6 +79,7 @@
                                 <tr>
                                     <th>Kategori</th>
                                     <th>Aktivitas</th>
+                                    <th>Deskripsi</th>
                                     <th>Durasi</th>
                                     <th>Hasil</th>
                                     <th class="text-right">Actions</th>
@@ -90,6 +92,7 @@
                                         <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                         <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
                                         <td><?= $a['aktivitas']; ?></td>
+                                        <td><?= $a['deskripsi_hasil']; ?></td>
                                         <td><?= $a['durasi']; ?></td>
                                         <td><?= $a['progres_hasil']; ?></td>
                                         <td class="text-right">
@@ -160,7 +163,7 @@
                                 <input type="text" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="kategori">Kategori</label>
+                                <label for="kategori">Kategori*</label>
                                 <select class="form-control selectpicker" name="kategori" id="kategori" title="Pilih Kategori" data-style="btn btn-link" data-size="3" data-live-search="false" onchange="kategoriSelect(this);" required>
                                         <?php foreach ($kategori as $row) 
                                         {
@@ -170,7 +173,7 @@
                                     </select>
                             </div>
                             <div class="form-group" id="copro_0" style="display:none;">
-                                <label for="copro">Project</label>
+                                <label for="copro">Project*</label>
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="copro" name="copro" title="Pilih Project" data-size="5" data-live-search="true" required>
                                     <?php
                                     foreach ($project as $row) {
@@ -180,17 +183,21 @@
                                 </select>
                             </div>
                             <div class="form-group" id="aktivitas_23" style="display:none;">
-                                <label for="aktivitas">Aktivitas</label>
+                                <label for="aktivitas">Aktivitas*</label>
                                 <!-- Aktivitas Lain-lain Project & Non Project -->
                                 <select class="form-control selectpicker" id="aktivitas_lain" name="aktivitas" data-style="btn btn-link" title="Pilih Aktivitas" data-size="7"></select>
                             </div>
                             <div class="form-group" id="aktivitas_1" style="display:none;">
-                                <label for="aktivitas">Aktivitas</label>
+                                <label for="aktivitas">Aktivitas*</label>
                                 <!-- Aktivitas Project -->
                                 <textarea class="form-control has-success" id="aktivitas" name="aktivitas" rows="3"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="durasi">Durasi</label>
+                                <label for="deskripsi">Deskripsi <small><i>(Opsional)</i></small></label>
+                                    <textarea class="form-control has-success" id="deskripsi" name="deskripsi" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="durasi">Durasi*</label>
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="durasi" name="durasi" title="Pilih Durasi" data-size="5" required>
                                     <?php
                                     foreach ($jam as $row) {
@@ -200,7 +207,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="progres_hasil">Hasil</label>
+                                <label for="progres_hasil">Hasil*</label>
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="progres_hasil" name="progres_hasil" title="Pilih Hasil" required>
                                     <option value="100">100%</option>
                                     <option value="90">90%</option>

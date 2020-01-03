@@ -181,11 +181,16 @@ class Jamkerja extends CI_Controller
         $hasil = $this->input->post('progres_hasil');
         $kategori = $this->input->post('kategori');
         $copro = $this->input->post('copro');
+        $deskripsi = $this->input->post('deskripsi');
         
         if ($copro) {
             $id = $copro . $this->session->userdata('npk') . time();
         }else{
             $id = date("ymd", strtotime($jamkerja['tglmulai'])) . $this->session->userdata('npk') . time();
+        }
+
+        if (!$deskripsi){
+            $deskripsi = $aktivitas;
         }
 
         $data = [
@@ -199,7 +204,7 @@ class Jamkerja extends CI_Controller
             'kategori' => $kategori,
             'copro' => $copro,
             'aktivitas' => $aktivitas,
-            'deskripsi_hasil' => $aktivitas,
+            'deskripsi_hasil' => $deskripsi,
             'durasi' => $durasi,
             'progres_hasil' => $hasil,
             'dibuat_oleh' => $this->session->userdata('inisial'),

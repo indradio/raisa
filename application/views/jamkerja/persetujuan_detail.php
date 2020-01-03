@@ -20,6 +20,7 @@
                                 <tr>
                                     <th>Kategori</th>
                                     <th>Aktivitas</th>
+                                    <th>Deskripsi</th>
                                     <th>Hasil (%)</th>
                                     <th>Durasi (Jam)</th>
                                 </tr>
@@ -28,6 +29,7 @@
                                 <tr>
                                     <th>Kategori</th>
                                     <th>Aktivitas</th>
+                                    <th>Deskripsi</th>
                                     <th>Hasil</th>
                                     <th>Durasi</th>
                                 </tr>
@@ -39,6 +41,7 @@
                                         <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                         <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
                                         <td><?= $a['aktivitas']; ?></td>
+                                        <td><?= $a['deskripsi_hasil']; ?></td>
                                         <td><?= $a['progres_hasil']; ?></td>
                                         <td><?= $a['durasi']; ?></td>
                                     </tr>
