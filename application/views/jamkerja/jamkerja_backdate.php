@@ -100,7 +100,7 @@
                                     <tr>
                                         <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
                                         <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
-                                        <td><?= $a['id']; ?></td>
+                                        <td><?= $a['aktivitas']; ?></td>
                                         <td><?= $a['durasi']; ?></td>
                                         <td><?= $a['progres_hasil']; ?></td>
                                         <td class="text-right">
