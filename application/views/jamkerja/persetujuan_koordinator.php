@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-            <form class="form" method="POST" action="<?= base_url('jamkerja/koordinator'); ?>">
+            <form class="form" method="POST" action="<?= base_url('jamkerja/persetujuan'); ?>">
                       <div class="form-group label-floating">
                         <div class="input-group date">
                           <div class="input-group-append">
@@ -37,28 +37,49 @@
                   <tr>
                     <th>Tanggal</th>
                     <th>Nama</th>
-                    <th>Durasi</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Tanggal</th>
                     <th>Nama</th>
-                    <th>Durasi</th>
+                    <th>Status</th>
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($jamkerja as $jk) : ?>
-                      <tr onclick="window.location='<?= base_url('jamkerja/persetujuan_detail/') .$jk['id']; ?>'" >
-                      <td><?= date('d M Y', strtotime($jk['tglmulai'])); ?></td>
-                      <td><?=$jk['nama']; ?> <small>(<?=$jk['id']; ?>)</small></td>
-                      <?php if ($jk['durasi']<8){ ?>
-                        <td class="text-danger">
-                      <?php }else{ ?>
-                        <td>
-                      <?php } ?>
-                      <?= date('H', strtotime($jk['durasi'])); ?> Jam <?= date('i', strtotime($jk['durasi'])); ?> Menit</td>
+                  <?php 
+                  $kry = $this->db->get_where('karyawan', ['sect_id' => $this->session->userdata('sect_id')])->result_array();
+                  foreach ($kry as $k) : 
+                    $this->db->where('npk', $k['npk']);
+                    $this->db->where('tglmulai', $tanggal);
+                    $this->db->where('status >', 0);
+                    $jamkerja = $this->db->get_where('jamkerja')->row_array();
+                    if ($jamkerja['id']){
+                      if ($jamkerja['status']==1){ ?>
+                        <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jamkerja['id']); ?>'" >
+                      <?php }else{
+                        echo '<tr>';
+                      } ?>
+                      <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
+                      <td><?=$k['nama']; ?></td>
+                      <td>
+                        <?php if ($jamkerja['status']==1){
+                          echo 'Menunggu Persetujuan Koordinator <small>( '. floor($jamkerja['respon_create'] / (60 * 60 * 24)).' Hari )</small>';
+                        }elseif ($jamkerja['status']==2){
+                          echo 'Menunggu Persetujuan PPIC';
+                        }elseif ($jamkerja['status']==9){
+                          echo 'Selesai';
+                        }?>
+                       </td>
                     </tr>
+                    <?php }else{ ?>
+                      <tr>
+                        <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
+                        <td><?=$k['nama']; ?></td>
+                        <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
+                      </tr>
+                        <?php } ?>
                   <?php endforeach; ?>
                 </tbody>
               </table>
@@ -67,7 +88,7 @@
           <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12">
-                                <i class="fa fa-circle text-danger"></i> Durasi Jam Kerja kurang dari 8 JAM. 
+                                <i class="fa fa-circle text-danger"></i> Tidak ada laporan jam kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja). 
                             </div>
                         </div>
                     </div>
