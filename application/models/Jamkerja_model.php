@@ -10,13 +10,25 @@ class Jamkerja_model extends CI_Model
 
     public function get_events()
     {
+        return $this->db->get_where('lembur',['status >' => 0]);
+    }
+
+    public function GET_MY_jamkerja()
+    {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('status >', 0);
         return $this->db->get("jamkerja");
+    }
+
+    public function GET_MY_lembur()
+    {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('status >', 0);
+        return $this->db->get("lembur");
     }
 
     public function GET_WH_TODAY()
     {
-       
-
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('year(tglmulai)',date('Y'));
         $this->db->where('month(tglmulai)',date('m'));

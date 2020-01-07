@@ -18,7 +18,9 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Laporan Kerja Harian</h4>
+                        <h4 class="card-title">Laporan Kerja Harian
+                        <small> - <?= date("d M Y", strtotime($jamkerja['tglmulai'])); ?></small>
+                        </h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -33,21 +35,21 @@
                                 $query1 = $this->db->get('aktivitas');
                                 $kategori1 = $query1->row()->durasi;
                                 $bar1 = $kategori1 * 12.5;
-
+                               
                                 $this->db->select_sum('durasi');
                                 $this->db->where('link_aktivitas', $link);
                                 $this->db->where('kategori', '2');
                                 $query2 = $this->db->get('aktivitas');
                                 $kategori2 = $query2->row()->durasi;
                                 $bar2 = $kategori2 * 12.5;
-
+                               
                                 $this->db->select_sum('durasi');
                                 $this->db->where('link_aktivitas', $link);
                                 $this->db->where('kategori', '3');
                                 $query3 = $this->db->get('aktivitas');
                                 $kategori3 = $query3->row()->durasi;
                                 $bar3 = $kategori3 * 12.5;
-
+                               
                                 if ($durasi == '0') {
                                     $sisadurasi = 8;
                                 } else {
@@ -61,12 +63,12 @@
                                     <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3; ?>%" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                                 </div>
                                 <?php if ($durasi < 8.0) { ?>
-                                    <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH LAPORAN JAM KERJA</a>
+                                    <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
                                 <?php }; ?>
                             </div>
                             <div class="material-datatables">
                             <?php } else { ?>
-                                </div>
+                            </div>
                             <div class="material-datatables disabled">
                             <?php }; ?>
                         <?php } else { ?>
@@ -124,6 +126,8 @@
                             </br> 1. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 8 Jam Kerja.
                             </br> 2. Istirahat Siang hanya untuk aktivitas lembur, tidak untuk Laporan Kerja Harian.
                         <!-- </div> -->
+                                </br>
+                        <a href="<?= base_url('jamkerja'); ?>" class="btn btn-default mb-2" role="button" aria-disabled="false">KEMBALI</a>
                     </div>
                 </div>
                 <!--  end card  -->

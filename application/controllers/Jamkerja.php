@@ -130,7 +130,7 @@ class Jamkerja extends CI_Controller
                     $id = 'WH'.date('ym', strtotime($tanggal)). sprintf("%04s", $total_jamkerja);
 
                     $create = time();
-                    $due = strtotime(date('Y-m-d 16:30:00', strtotime($tanggal)));
+                    $due = strtotime(date('Y-m-d 23:59:00', strtotime($tanggal)));
                     $respon = $due - $create;
 
                     $data = [
@@ -215,7 +215,12 @@ class Jamkerja extends CI_Controller
         ];
         $this->db->insert('aktivitas', $data);
 
-        // Update DURASI JAMKERJA
+        //Update create date and create respon
+        $create = time();
+        $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['tglmulai'])));
+        $respon = $due - $create;
+
+        // Update DURASI & STATUS JAMKERJA
         $this->db->select('SUM(durasi) as total');
         $this->db->where('link_aktivitas', $jamkerja['id']);
         $this->db->from('aktivitas');
@@ -226,6 +231,9 @@ class Jamkerja extends CI_Controller
         }else{
             $this->db->set('status', 0);
         }
+
+        $this->db->set('create', date('Y-m-d H:i:s'));
+        $this->db->set('respon_create', $respon,);
         $this->db->set('durasi', $totaldurasi);
         $this->db->where('id', $jamkerja['id']);
         $this->db->update('jamkerja');
@@ -317,6 +325,7 @@ class Jamkerja extends CI_Controller
         $this->db->set('atasan1', 'Disetujui oleh '. $this->session->userdata('inisial'));
         $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
         $this->db->set('poin', $this->input->post('poin'));
+        $this->db->set('produktifitas', $this->input->post('produktifitas'));
         $this->db->set('status', 9);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('jamkerja');
@@ -335,6 +344,44 @@ class Jamkerja extends CI_Controller
 
         $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
         redirect('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
+    }
+
+    public function GET_MY_jamkerja()
+    {
+        // Our Start and End Dates
+        $events = $this->jamkerja_model->GET_MY_jamkerja();
+        $data_events = array();
+
+        foreach ($events->result() as $r) {
+
+            $data_events[] = array(
+                "id" => $r->id,
+                "title" => $r->id,
+                "start" => $r->tglmulai,
+                "end" => $r->tglselesai
+            );
+        }
+        echo json_encode(array("events" => $data_events));
+        exit();
+    }
+
+    public function GET_MY_lembur()
+    {
+        // Our Start and End Dates
+        $events = $this->jamkerja_model->GET_MY_lembur();
+        $data_events = array();
+
+        foreach ($events->result() as $r) {
+
+            $data_events[] = array(
+                "id" => $r->id,
+                "title" => $r->id,
+                "start" => $r->tglmulai,
+                "end" => $r->tglselesai
+            );
+        }
+        echo json_encode(array("events" => $data_events));
+        exit();
     }
 
     public function get_events()

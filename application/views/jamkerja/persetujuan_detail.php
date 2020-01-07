@@ -8,46 +8,84 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Persetujuan Jam Kerja</h4>
+            <h4 class="card-title"><?= $jamkerja['nama']; ?>
+            <small> - <?= date("d M Y", strtotime($jamkerja['tglmulai'])); ?></small>
+          </h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
-              <!--        Here you can write extra buttons/actions for the toolbar              -->
+              <?php
+              $link = $jamkerja['id'];
+              $durasi = $jamkerja['durasi'];
+
+              $this->db->select_sum('durasi');
+              $this->db->where('link_aktivitas', $link);
+              $this->db->where('kategori', '1');
+              $query1 = $this->db->get('aktivitas');
+              $kategori1 = $query1->row()->durasi;
+              $bar1 = $kategori1 * 12.5;
+              $produktif1 = ($kategori1 / 8) * 100;
+
+              $this->db->select_sum('durasi');
+              $this->db->where('link_aktivitas', $link);
+              $this->db->where('kategori', '2');
+              $query2 = $this->db->get('aktivitas');
+              $kategori2 = $query2->row()->durasi;
+              $bar2 = $kategori2 * 12.5;
+              $produktif2 = ($kategori2 / 8) * 100;
+
+              $this->db->select_sum('durasi');
+              $this->db->where('link_aktivitas', $link);
+              $this->db->where('kategori', '3');
+              $query3 = $this->db->get('aktivitas');
+              $kategori3 = $query3->row()->durasi;
+              $bar3 = $kategori3 * 12.5;
+              $produktif3 = ($kategori3 / 8) * 0;
+
+              $produktifitas = $produktif1 + $produktif2 + $produktif3;
+              ?>
+              <b><h3>Produktifitas : <?= $produktifitas; ?> % </h3></b>
+              
+              <div class="progress" style="width: 100%">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1; ?>%" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+                  <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2; ?>%" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+                  <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3; ?>%" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+              </div>
             </div>
             <div class="material-datatables">
-            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Kategori</th>
-                                    <th>Aktivitas</th>
-                                    <th>Deskripsi</th>
-                                    <th>Hasil (%)</th>
-                                    <th>Durasi (Jam)</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Kategori</th>
-                                    <th>Aktivitas</th>
-                                    <th>Deskripsi</th>
-                                    <th>Hasil</th>
-                                    <th>Durasi</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <?php
-                                foreach ($aktivitas as $a) : ?>
-                                    <tr>
-                                        <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                        <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
-                                        <td><?= $a['aktivitas']; ?></td>
-                                        <td><?= $a['deskripsi_hasil']; ?></td>
-                                        <td><?= $a['progres_hasil']; ?></td>
-                                        <td><?= $a['durasi']; ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Aktivitas</th>
+                        <th>Deskripsi</th>
+                        <th>Hasil (%)</th>
+                        <th>Durasi (Jam)</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Aktivitas</th>
+                        <th>Deskripsi</th>
+                        <th>Hasil</th>
+                        <th>Durasi</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <?php
+                    foreach ($aktivitas as $a) : ?>
+                        <tr>
+                            <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
+                            <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
+                            <td><?= $a['aktivitas']; ?></td>
+                            <td><?= $a['deskripsi_hasil']; ?></td>
+                            <td><?= $a['progres_hasil']; ?></td>
+                            <td><?= $a['durasi']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+              </table>
             </div>
           </div>
                     <div class="card-footer">
@@ -99,6 +137,7 @@
         <form class="form" method="post" action="<?= base_url('jamkerja/persetujuan_approve'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control" hidden="true" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+            <input type="text" class="form-control" hidden="true" id="produktifitas" name="produktifitas" value="<?= $produktifitas; ?>">
             <div class="form-check">
                           <label class="form-check-label">
                             <input class="form-check-input" type="radio" name="poin" value="1" checked><i class="material-icons">star</i>
