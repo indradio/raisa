@@ -22,6 +22,7 @@
                                     <tr>
                                         
                                         <th>Copro</th>
+                                        <th>Nama Projek</th>
                                         <th>Total Aktivitas</th>
                                         <th>Total Durasi <small>(JAM)</small></th>
                                     </tr>
@@ -50,9 +51,11 @@
                                     $durasi = $this->db->get('aktivitas');
                                     $total_durasi = $durasi->row()->durasi;
 
-                                    if ($k['copro']){ ?>
+                                    if ($k['copro']){ 
+                                        $projek = $this->db->get_where('project', ['copro' => $k['copro']])->row_array();?>
                                     <tr>
                                      <td class="td-name"><?= $k['copro']; ?></td>
+                                        <td><?= $projek['deskripsi']; ?></td>
                                         <td><?= $total_copro->num_rows(); ?></td>
                                         <td><?= $total_durasi; ?></td>
                                     </tr>
