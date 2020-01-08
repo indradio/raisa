@@ -631,6 +631,7 @@ class Reservasi extends CI_Controller
         if ($this->input->post('penginapan') == null)
         {
             $penginapan = 'TIDAK';
+            $menginap = null;
         }else{
             $penginapan = $this->input->post('penginapan');
             $menginap = $this->input->post('lama');
@@ -639,6 +640,7 @@ class Reservasi extends CI_Controller
         if ($this->input->post('checkoperasional') == null)
         {
             $kendaraan = 'Non Operasional';
+            $nopol = null;
             $kepemilikan = $this->input->post('kendaraan');
         }else{
             $kendaraan = $this->input->post('kendaraan');

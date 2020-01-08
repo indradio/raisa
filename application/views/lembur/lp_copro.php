@@ -9,7 +9,7 @@
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Laporan Lembur</h4>
+                        <h4 class="card-title">Laporan Lembur berdasarkan COPRO periode <?= $bulan.'-'.$tahun; ?></h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -22,8 +22,11 @@
                                     <tr>
                                         
                                         <th>Copro</th>
-                                        <th>Total Aktivitas</th>
-                                        <th>Total Durasi <small>(JAM)</small></th>
+                                        <th>Nama Projek</th>
+                                        <th>Man Hour <small>(JAM)</small></th>
+                                        <th>MH JAMKERJA <small>(JAM)</small></th>
+                                        <th>MH LEMBUR <small>(JAM)</small></th>
+                                        <th>Aktivitas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,6 +35,7 @@
                                 $this->db->select('copro');
                                 $this->db->where('year(tgl_aktivitas)',$tahun);
                                 $this->db->where('month(tgl_aktivitas)',$bulan);
+                                $this->db->where('month(tgl_aktivitas)',$bulan);
                                 $this->db->where('status >', '1');
                                 $aktivitas_copro = $this->db->get('aktivitas')->result_array();
                                 foreach ($aktivitas_copro as $k) : 
@@ -39,22 +43,38 @@
                                     $this->db->where('copro', $k['copro']);
                                     $this->db->where('year(tgl_aktivitas)',$tahun);
                                     $this->db->where('month(tgl_aktivitas)',$bulan);
-                                 $this->db->where('status >', '1');
+                                    $this->db->where('status >', '1');
                                     $total_copro = $this->db->get('aktivitas');
 
                                     $this->db->select_sum('durasi');
                                     $this->db->where('copro', $k['copro']);
                                     $this->db->where('year(tgl_aktivitas)',$tahun);
                                     $this->db->where('month(tgl_aktivitas)',$bulan);
-                                 $this->db->where('status >', '1'); 
-                                    $durasi = $this->db->get('aktivitas');
-                                    $total_durasi = $durasi->row()->durasi;
+                                    $this->db->where('jenis_aktivitas', 'LEMBUR'); 
+                                    $this->db->where('status >', '1'); 
+                                    $durasi_lembur = $this->db->get('aktivitas');
+                                    $total_durasi_lembur = $durasi_lembur->row()->durasi;
 
-                                    if ($k['copro']){ ?>
+                                    $this->db->select_sum('durasi');
+                                    $this->db->where('copro', $k['copro']);
+                                    $this->db->where('year(tgl_aktivitas)',$tahun);
+                                    $this->db->where('month(tgl_aktivitas)',$bulan);
+                                    $this->db->where('jenis_aktivitas', 'JAM KERJA'); 
+                                    $this->db->where('status >', '1'); 
+                                    $durasi_jamkerja = $this->db->get('aktivitas');
+                                    $total_durasi_jamkerja = $durasi_jamkerja->row()->durasi;
+
+                                    $total_durasi = $total_durasi_jamkerja + $total_durasi_lembur;
+
+                                    if ($k['copro']){ 
+                                        $projek = $this->db->get_where('project', ['copro' => $k['copro']])->row_array();?>
                                     <tr>
                                      <td class="td-name"><?= $k['copro']; ?></td>
+                                        <td><?= $projek['deskripsi']; ?></td>
+                                        <td class="td-name"><?= $total_durasi; ?></td>
+                                        <td><?= $total_durasi_jamkerja; ?></td>
+                                        <td><?= $total_durasi_lembur; ?></td>
                                         <td><?= $total_copro->num_rows(); ?></td>
-                                        <td><?= $total_durasi; ?></td>
                                     </tr>
                                 <?php 
                                 };
@@ -79,7 +99,7 @@
     $('#dtreportlb3').DataTable({
         "pagingType": "full_numbers",
         order: [
-            [1, 'desc']
+            [2, 'desc']
         ],
         scrollX: true,
         language: {

@@ -5,7 +5,7 @@
     if ($kesempatan>0){
       echo 'Kamu memiliki '.$kesempatan.' kesempatan untuk like';
     }else{
-      echo 'Kesempatan kamu sudah habis';
+      echo 'Kesempatan like kamu sudah habis';
     }?>
     </strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -35,14 +35,6 @@
             </br>
                 <?= $ic['design']; ?>
             </div>
-            <h4 class="card-title">
-            <?php 
-              if ($total_like->num_rows()<3){
-                echo '<a href="'.  base_url('highlight/like/'. $ic['design']).'" class="btn btn-rose btn-round btn-fab">
-                <i class="material-icons">favorite</i>
-                </a>';
-            }?>
-            </h4>
           </div>
           <div class="card-footer">
                                 <div class="price">
