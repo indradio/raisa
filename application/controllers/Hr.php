@@ -111,8 +111,6 @@ class Hr extends CI_Controller
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('foto')) {
             $this->db->set('foto', $this->upload->data('file_name'));
-        } else {
-            echo $this->upload->display_errors();
         }
         $this->db->set('npk', $this->input->post('npk'));
         $this->db->set('inisial', $this->input->post('inisial'));
