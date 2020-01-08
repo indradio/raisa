@@ -233,7 +233,7 @@ class Jamkerja extends CI_Controller
         }
 
         $this->db->set('create', date('Y-m-d H:i:s'));
-        $this->db->set('respon_create', $respon,);
+        $this->db->set('respon_create', $respon);
         $this->db->set('durasi', $totaldurasi);
         $this->db->where('id', $jamkerja['id']);
         $this->db->update('jamkerja');
