@@ -35,14 +35,6 @@
             </br>
                 <?= $ic['design']; ?>
             </div>
-            <h4 class="card-title">
-            <?php 
-              if ($total_like->num_rows()<3){
-                echo '<a href="'.  base_url('highlight/like/'. $ic['design']).'" class="btn btn-rose btn-round btn-fab">
-                <i class="material-icons">favorite</i>
-                </a>';
-            }?>
-            </h4>
           </div>
           <div class="card-footer">
                                 <div class="price">
