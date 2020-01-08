@@ -78,13 +78,13 @@
                                                 <td><?= $a['copro']; ?> </td>
                                                 <td><?= $a['aktivitas']; ?></td>
                                                 <td><?= $a['deskripsi_hasil']; ?></td>
+                                                <td><?= $a['durasi']; ?></td>
                                                 <?php $s = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
                                                 <td><?= $s['nama'] .', '. $a['progres_hasil']; ?>%</td>
-                                                <td><?= $a['durasi']; ?></td>
-                                                <?php $sect = $this->db->get_where('karyawan_sect', ['id' => $kry['sect_id']])->row_array(); ?>
-                                                <td><?= $sect['nama']; ?></td>
                                                 <?php $dept = $this->db->get_where('karyawan_dept', ['id' => $kry['dept_id']])->row_array(); ?>
                                                 <td><?= $dept['inisial']; ?></td>
+                                                <?php $sect = $this->db->get_where('karyawan_sect', ['id' => $kry['sect_id']])->row_array(); ?>
+                                                <td><?= $sect['nama']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

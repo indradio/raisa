@@ -46,7 +46,7 @@ class Pmd extends CI_Controller
             </div>');
         }
         $data['sidemenu'] = 'PPIC';
-        $data['sidesubmenu'] = 'Laporan Jam Kerja';
+        $data['sidesubmenu'] = 'Jam Kerja Harian';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -78,7 +78,7 @@ class Pmd extends CI_Controller
             </div>');
         }
         $data['sidemenu'] = 'PPIC';
-        $data['sidesubmenu'] = 'Laporan Jam Kerja';
+        $data['sidesubmenu'] = 'Jam Kerja Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

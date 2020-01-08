@@ -211,7 +211,7 @@ class Jamkerja extends CI_Controller
             'dept_id' => $this->session->userdata('dept_id'),
             'sect_id' => $this->session->userdata('sect_id'),
             'contract' => $this->session->userdata('contract'),
-            'status' => '9'
+            'status' => '1'
         ];
         $this->db->insert('aktivitas', $data);
 
@@ -321,6 +321,13 @@ class Jamkerja extends CI_Controller
         $this->db->set('status', 9);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('jamkerja');
+
+        $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result_array();
+        foreach($aktivitas as $a):
+            $this->db->set('status', 9);
+            $this->db->where('id', $a['id']);
+            $this->db->update('aktivitas');
+        endforeach;
 
         $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
         redirect('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
