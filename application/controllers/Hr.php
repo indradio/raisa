@@ -164,5 +164,19 @@ class Hr extends CI_Controller
         endforeach;
         redirect('hr/karyawan');
     }
+    public function presensi()
+    {
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Presensi';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['presensi'] = $this->db->get('presensi',)->result_array();
+        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+       
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('hr/presensi', $data);
+        $this->load->view('templates/footer');    
+    }
 }
  
