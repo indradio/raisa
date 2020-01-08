@@ -34,8 +34,8 @@
                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
                                         <td><?= $p['kategori']; ?></td>
-                                        <td><?= $p['biaya_est']; ?></td>
-                                        <td><?= $p['biaya_act']; ?></td>
+                                        <td>Rp <?= number_format($p['biaya_est'],0,',','.') ?></td>
+                                        <td>Rp <?= number_format($p['biaya_act'],0,',','.') ?></td>
                                         <td><?= $p['keterangan']; ?></td>
                                         <td>
                                            

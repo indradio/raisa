@@ -47,18 +47,18 @@
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
-                                        <td><?= $p['budget']; ?></td>
-                                        <td><?= $p['est_cost']; ?></td>
-                                        <td><?= $p['est_exprod']; ?></td>
-                                        <td><?= $p['est_total']; ?></td>
+                                        <td>Rp <?= number_format($p['budget'],0,',','.') ?></td>
+                                        <td>Rp <?= number_format($p['est_cost'],0,',','.') ?></td>
+                                        <td>Rp <?= number_format($p['est_exprod'],0,',','.') ?></td>
+                                        <td>Rp <?= number_format($p['est_total'],0,',','.') ?></td>
                                         <td><?= $p['est_persen']; ?>%</td>
-                                        <td><?= $p['est_selisih']; ?></td>
+                                        <td>Rp <?= number_format($p['est_selisih'],0,',','.') ?></td>
                                         <td><?= $p['est_selisihpersen']; ?>%</td>
-                                        <td><?= $p['act_cost']; ?></td>
-                                        <td><?= $p['act_exprod']; ?></td>
-                                        <td><?= $p['act_total']; ?></td>
+                                        <td>Rp <?= number_format($p['act_cost'],0,',','.') ?></td>
+                                        <td>Rp <?= number_format($p['act_exprod'],0,',','.') ?></td>
+                                        <td>Rp <?= number_format($p['act_total'],0,',','.') ?></td>
                                         <td><?= $p['act_persen']; ?>%</td>
-                                        <td><?= $p['act_selisih']; ?></td>
+                                        <td>Rp <?= number_format($p['act_selisih'],0,',','.') ?></td>
                                         <td><?= $p['act_selisihpersen']; ?>%</td>
                                         <td>
                                             <!-- $sect_id -->
