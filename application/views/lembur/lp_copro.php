@@ -82,7 +82,7 @@
     $('#dtreportlb3').DataTable({
         "pagingType": "full_numbers",
         order: [
-            [1, 'desc']
+            [3, 'desc']
         ],
         scrollX: true,
         language: {
