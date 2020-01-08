@@ -48,7 +48,7 @@
                         <h4 class="card-title">LAPORAN KERJA HARIAN</h4> -->
                     </div>
                 </div>
-                <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/tanggal'); ?>">
+                <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/pilihtanggal'); ?>">
                     <div class="modal-body">
                       <div class="form-group label-floating">
                         <div class="input-group date">

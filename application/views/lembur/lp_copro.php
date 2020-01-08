@@ -72,8 +72,8 @@
                                      <td class="td-name"><?= $k['copro']; ?></td>
                                         <td><?= $projek['deskripsi']; ?></td>
                                         <td class="td-name"><?= $total_durasi; ?></td>
-                                        <td><?= $total_durasi_lembur; ?></td>
                                         <td><?= $total_durasi_jamkerja; ?></td>
+                                        <td><?= $total_durasi_lembur; ?></td>
                                         <td><?= $total_copro->num_rows(); ?></td>
                                     </tr>
                                 <?php 

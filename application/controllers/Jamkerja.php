@@ -71,13 +71,13 @@ class Jamkerja extends CI_Controller
         redirect('jamkerja');
     }
 
-    public function tanggal()
+    public function pilihtanggal()
     {
         date_default_timezone_set('asia/jakarta');
-        redirect('jamkerja/backdate/'.$this->input->post('tanggal'));
+        redirect('jamkerja/tanggal/'.$this->input->post('tanggal'));
     }
 
-    public function backdate($tanggal)
+    public function tanggal($tanggal)
     {
             date_default_timezone_set('asia/jakarta');
             $tahun = date("Y", strtotime($tanggal));
@@ -107,7 +107,7 @@ class Jamkerja extends CI_Controller
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
                 $this->load->view('templates/navbar', $data);
-                $this->load->view('jamkerja/jamkerja_backdate', $data);
+                $this->load->view('jamkerja/jamkerja_tanggal', $data);
                 $this->load->view('templates/footer');
          
             }else{
@@ -151,7 +151,7 @@ class Jamkerja extends CI_Controller
                         'status' => '0'
                     ];
                     $this->db->insert('jamkerja', $data);
-                    redirect('jamkerja/backdate/'.$tanggal);
+                    redirect('jamkerja/tanggal/'.$tanggal);
                 }
             }
     }
@@ -238,12 +238,7 @@ class Jamkerja extends CI_Controller
         $this->db->where('id', $jamkerja['id']);
         $this->db->update('jamkerja');
        
-        if ( date('Y-m-d') == date("Y-m-d", strtotime($jamkerja['tglmulai'])))
-        {
-            redirect('jamkerja');
-        }else{
-            redirect('jamkerja/backdate/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
-        }
+        redirect('jamkerja/tanggal/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
     }
 
     public function batal_aktivitas()
@@ -272,12 +267,9 @@ class Jamkerja extends CI_Controller
         $this->db->where('id', $jamkerja['id']);
         $this->db->update('jamkerja');
 
-        if ( date('Y-m-d') == date("Y-m-d", strtotime($jamkerja['tglmulai'])))
-        {
-            redirect('jamkerja');
-        }else{
-            redirect('jamkerja/backdate/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
-        }
+        
+        redirect('jamkerja/tanggal/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
+        
     }
 
     public function persetujuan()
