@@ -55,6 +55,12 @@
                     $this->db->where('tglmulai', $tanggal);
                     $this->db->where('status >', 0);
                     $jamkerja = $this->db->get_where('jamkerja')->row_array();
+                    $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
+                    if ($respon==0){
+                      $respon = 'Tepat Waktu';
+                    }else{
+                      $respon = $respon.' Hari';
+                    }
                     if ($jamkerja['id']){
                       if ($jamkerja['status']==1){ ?>
                         <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jamkerja['id']); ?>'" >
@@ -62,10 +68,10 @@
                         echo '<tr>';
                       } ?>
                       <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
-                      <td><?=$k['nama']; ?></td>
+                      <td><?=$k['nama'].' <small>( '. $respon .' )</small>'; ?></td>
                       <td>
                         <?php if ($jamkerja['status']==1){
-                          echo 'Menunggu Persetujuan Koordinator <small>( '. floor($jamkerja['respon_create'] / (60 * 60 * 24)).' Hari )</small>';
+                          echo 'Menunggu Persetujuan Koordinator';
                         }elseif ($jamkerja['status']==2){
                           echo 'Menunggu Persetujuan PPIC';
                         }elseif ($jamkerja['status']==9){
@@ -86,12 +92,21 @@
             </div>
           </div>
           <div class="card-footer">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="fa fa-circle text-danger"></i> Tidak ada laporan jam kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja). 
-                            </div>
-                        </div>
-                    </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <i class="fa fa-circle text-danger"></i> Tidak ada laporan jam kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja). 
+                  </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <div class="col-mr-auto">
+              <a href="<?= base_url('jamkerja/koordinator/'.date('Y-m-d', strtotime("-1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SEBELUMNYA</a>
+            </div>
+          
+            <div class="col-ml-auto">
+              <a href="<?= base_url('jamkerja/koordinator/'.date('Y-m-d', strtotime("+1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SELANJUTNYA</a>
+            </div>
+          </div>
           <!-- end content-->
         </div>
         <!--  end card  -->

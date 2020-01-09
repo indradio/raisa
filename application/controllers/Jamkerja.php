@@ -237,6 +237,41 @@ class Jamkerja extends CI_Controller
         $this->db->set('durasi', $totaldurasi);
         $this->db->where('id', $jamkerja['id']);
         $this->db->update('jamkerja');
+
+        if ($this->session->userdata('posisi_id')!=7){
+            if ($totaldurasi>=8){
+                $this->db->select_sum('durasi');
+                $this->db->where('link_aktivitas', $jamkerja['id']);
+                $this->db->where('kategori', '1');
+                $query1 = $this->db->get('aktivitas');
+                $kategori1 = $query1->row()->durasi;
+                $produktif1 = ($kategori1 / 8) * 100;
+
+                $this->db->select_sum('durasi');
+                $this->db->where('link_aktivitas', $jamkerja['id']);
+                $this->db->where('kategori', '2');
+                $query2 = $this->db->get('aktivitas');
+                $kategori2 = $query2->row()->durasi;
+                $produktif2 = ($kategori2 / 8) * 100;
+
+                $produktifitas = $produktif1 + $produktif2;
+
+                $this->db->set('produktifitas', $produktifitas);
+                $this->db->set('status', 9);
+                $this->db->set('create', date('Y-m-d H:i:s'));
+                $this->db->set('respon_create', $respon);
+                $this->db->set('durasi', $totaldurasi);
+                $this->db->where('id', $jamkerja['id']);
+                $this->db->update('jamkerja');
+
+                $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $jamkerja['id']])->result_array();
+                foreach($aktivitas as $a):
+                    $this->db->set('status', 9);
+                    $this->db->where('id', $a['id']);
+                    $this->db->update('aktivitas');
+                endforeach;
+            }
+        } 
        
         redirect('jamkerja/tanggal/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
     }
@@ -314,10 +349,16 @@ class Jamkerja extends CI_Controller
     public function persetujuan_approve()
     {
         date_default_timezone_set('asia/jakarta');
+        $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->session->userdata('inisial')])->row_array();
+        $now = time();
+        $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
+        $respon = $due - $now;
+
         $this->db->set('atasan1', 'Disetujui oleh '. $this->session->userdata('inisial'));
         $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
         $this->db->set('poin', $this->input->post('poin'));
         $this->db->set('produktifitas', $this->input->post('produktifitas'));
+        $this->db->set('respon_approve', $respon);
         $this->db->set('status', 9);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('jamkerja');
