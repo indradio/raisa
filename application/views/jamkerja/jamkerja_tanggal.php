@@ -50,8 +50,8 @@
                                 $kategori3 = $query3->row()->durasi;
                                 $bar3 = $kategori3 * 12.5;
                                
-                                if ($durasi == '0') {
-                                    $sisadurasi = 8;
+                                if ($durasi <= 4) {
+                                    $sisadurasi = 4;
                                 } else {
                                     $sisadurasi = 8 - $durasi;
                                 }

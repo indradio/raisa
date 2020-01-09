@@ -1189,7 +1189,7 @@ class Lembur extends CI_Controller
             $istirahat2 = 'TIDAK';
         }
 
-        $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+        $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $lembur['id']])->result_array();
         foreach($aktivitas as $a):
             $this->db->set('tglmulai', $lembur['tglmulai_aktual']);
             $this->db->set('tglselesai', $lembur['tglselesai_aktual']);

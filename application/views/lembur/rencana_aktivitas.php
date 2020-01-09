@@ -317,7 +317,7 @@
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
                                         $queryJam = "SELECT * FROM `jam`";
-                                        $jam = $this->db->get_where('jam')->result_array();
+                                        $jam = $this->db->get_where('jam', ['id <=' => 4])->result_array();
                                         foreach ($jam as $j) : ?>
                                             <option value="+<?= $j['menit']; ?> minute"><?= $j['nama']; ?></option>
                                         <?php endforeach; ?>
@@ -406,26 +406,25 @@
 </div>
     
 <script>
-                                       function admSelectCheck(nameSelect)
-                                        {
-                                            var val = nameSelect.options[nameSelect.selectedIndex].value;
-                                            document.getElementById("lblLokasi").style.display = val == 'lainnya' ? "block" : 'none';
-                                            document.getElementById("txtLokasi").style.display = val == 'lainnya' ? "block" : 'none';
-                                        }
+    function admSelectCheck(nameSelect)
+    {
+        var val = nameSelect.options[nameSelect.selectedIndex].value;
+        document.getElementById("lblLokasi").style.display = val == 'lainnya' ? "block" : 'none';
+        document.getElementById("txtLokasi").style.display = val == 'lainnya' ? "block" : 'none';
+    }
+        $(document).ready(function() {
+            $('#lokasi').change(function() {
+                var lokasi = $('#lokasi').val();
+                if (lokasi == 'lainnya') {
+                    $('#lokasi_lain').prop('disabled', false);
+                } else {
+                    $('#lokasi_lain').prop('disabled', true);
+                }
+            });
+        });
+</script>
 
-                                        $(document).ready(function() {
-                                                $('#lokasi').change(function() {
-                                                    var lokasi = $('#lokasi').val();
-                                                    if (lokasi == 'lainnya') {
-                                                        $('#lokasi_lain').prop('disabled', false);
-                                                    } else {
-                                                        $('#lokasi_lain').prop('disabled', true);
-                                                    }
-                                                });
-                                            });
-                                    </script>
-
-                                    <!-- script ajax Kategori-->
+<!-- script ajax Kategori-->
 <script type="text/javascript">
     function kategoriSelect(valueSelect)
             {
