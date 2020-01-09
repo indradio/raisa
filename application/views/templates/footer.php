@@ -151,6 +151,8 @@
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="<?= base_url(); ?>assets/js/plugins/simple.money.format.js"></script>
 <script>
     $(document).ready(function() {
         $().ready(function() {
@@ -391,48 +393,9 @@
     });
 </script>
 
-<!-- script ajax Kategori-->
-<!-- <script type="text/javascript">
-    function kategoriSelect(valueSelect)
-            {
-                var val = valueSelect.options[valueSelect.selectedIndex].value;
-                document.getElementById("admLain").style.display = val != '1' ? "block" : 'none';
-                document.getElementById("admCopro").style.display = val != '3' ? "block" : 'none';
-                document.getElementById("admAkt").style.display = val == '1' ? "block" : 'none';
-                document.getElementById("lblCopro").style.display = val != '3' ? "block" : 'none';
-                document.getElementById("lblAkt").style.display = val != '0' ? "block" : 'none';
-            }
-        $('#kategori').change(function(){
-            var kategori = $('#kategori').val();
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('lembur/ajax')?>",
-                data: {kategori:kategori},
-                success: function(data) {
-                    // alert(data)
-                    $('#akt_lain').html(data); 
-                    if(kategori == 1){
-                        $('#copro').prop('disabled', false);
-                        $('#akt').prop('disabled', false);
-                        $('#akt_lain').prop('disabled', true);
-                    }
-                    else if(kategori == 2){
-                        $('#copro').prop('disabled', false);
-                        $('#akt_lain').prop('disabled', false);
-                        $('#akt_lain').selectpicker('refresh');
-                        $('#akt').prop('disabled', true);
-                    }
-                    else if(kategori == 3){
-                        $('#copro').prop('disabled', true);
-                        $('#akt_lain').prop('disabled', false);
-                        $('#akt_lain').selectpicker('refresh');
-                        $('#akt').prop('disabled', true);
-                    }    
-                }
-            })
-        })
-        
-    </script> -->
+<script type="text/javascript">
+	$('.money').simpleMoneyFormat();
+</script>
 
 </body>
 
