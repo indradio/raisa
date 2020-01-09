@@ -44,6 +44,21 @@ class Projectbudget extends CI_Controller
         }
         
     }
+    public function excel()
+    {
+        $data['sidemenu'] = 'Project';
+        $data['sidesubmenu'] = 'Project Budget';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['project'] = $this->db->get('project_budget_detail',)->result_array();
+        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+       
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('import/index', $data);
+        $this->load->view('templates/footer');    
+    }
+    
     public function budget($copro)
     {	
     	$data['sidemenu'] = 'Project';
@@ -132,13 +147,16 @@ class Projectbudget extends CI_Controller
         $copro = $this->input->post('copro');
         $part = $this->input->post('part');
         $kategori = $this->input->post('kategori');
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
         $data = [
             'copro' => $this->input->post('copro'),
             'part' => $this->input->post('part'),
             'kategori'=> $this->input->post('kategori'),
             'biaya_est' => $this->input->post('biaya'),
+            'no' => $this->input->post('no'),
             'biaya_act' => 0,
-            'tgl_buat' =>  date('d-m-y'),
+            'tgl_buat' =>   $now,
             'pembuat_est' => $this->session->userdata('npk'),
             'keterangan' => $this->input->post('keterangan')];
         $this->db->insert('project_budget_detail', $data);
@@ -170,7 +188,8 @@ class Projectbudget extends CI_Controller
         $kategori = $this->input->post('kategori');
         $budget = $this->db->query("SELECT budget from project_budget where copro = '$copro' and part ='$part'")->result_array();
         $this->db->set('biaya_act', $this->input->post('biaya_act'));
-        $this->db->set('keterangan', $this->input->post('keterangan'));
+        $this->db->set('pr', $this->input->post('no_pr'));
+        $this->db->set('po', $this->input->post('no_po'));
         $this->db->set('keterangan', $this->input->post('keterangan'));
         $this->db->set('pembuat_act',  $this->session->userdata('npk'));
         $this->db->where('id', $this->input->post('id'));
@@ -203,6 +222,7 @@ class Projectbudget extends CI_Controller
         $kategori = $this->input->post('kategori');
         $budget = $this->db->query("SELECT budget from project_budget where copro = '$copro' and part ='$part'")->result_array();
         $this->db->set('biaya_est', $this->input->post('biaya_est'));
+        $this->db->set('no', $this->input->post('no'));
         $this->db->set('keterangan', $this->input->post('keterangan'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('project_budget_detail');

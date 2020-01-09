@@ -19,9 +19,12 @@
                                     <tr>
                                         <th >Copro</th> 
                                         <th >Part</th> 
-                                        <th >Kategori</th> 
+                                        <th >Kategori</th>
+                                        <th>No PP/EXPROD</th>
+                                        <th>Tanggal</th>
                                         <th >Biaya Estimasi</th> 
-                                        <th >Biaya Aktual</th> 
+                                        <th >Biaya Aktual</th>  
+                                        <th>Selisih</th>
                                         <th >Keterangan</th> 
                                         <th ></th> 
                                         
@@ -34,11 +37,24 @@
                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
                                         <td><?= $p['kategori']; ?></td>
-                                        <td>Rp <?= number_format($p['biaya_est'],0,',','.') ?></td>
-                                        <td>Rp <?= number_format($p['biaya_act'],0,',','.') ?></td>
+                                        <td><?= $p['no']; ?></td>
+                                        <td><?= $p['tgl_buat'];?></td>
+                                        <td><?= number_format($p['biaya_est'],0,',','.') ?></td>
+                                        <td><?= number_format($p['biaya_act'],0,',','.') ?></td>
+                                        <td><?php 
+                                            $a=$p['biaya_est'];
+                                            $b=$p['biaya_act'];
+
+                                            $c= $a-$b;
+
+                                            echo number_format($c,0,',','.');
+                                            
+                                        ?></td>
                                         <td><?= $p['keterangan']; ?></td>
                                         <td>
-                                           
+                                              <?php 
+                                            if($p['biaya_act'] ==0){
+                                              ?>
                                              <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
                                                     data-id="<?php echo $p['id'] ?>"
@@ -47,9 +63,12 @@
                                                     data-biaya_est="<?php echo $p['biaya_est'] ?>"
                                                     data-biaya_act="<?php echo $p['biaya_act'] ?>"
                                                     data-keterangan="<?php echo $p['keterangan'] ?>"
+                                                    data-pp="<?php echo $p['no'] ?>"
                                                  
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Update Data</a>
+                                            <?php } ?>
                                             <a href="/raisa/projectbudget/hapusdetail/<?= $p['copro'];?>/<?= $p['part'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger ">HAPUS</a>
+                                            
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
@@ -59,7 +78,8 @@
                                         <th >Copro</th> 
                                         <th >Part</th> 
                                         <th >Kategori</th> 
-                                        <th >Biaya Estimasi</th> 
+                                        <th >Biaya Estimasi</th>
+                                        <th>Tanggal</th>
                                         <th >Biaya Aktual</th> 
                                         <th >Keterangan</th> 
                                         <th ></th> 
@@ -67,6 +87,7 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <a href="/raisa/projectbudget/budgeteng/<?= $project['copro'];?>" class="btn btn-sm btn-default ">Back</a>
                     </div>
                     <!-- end card-body-->
                 </div>
@@ -116,7 +137,15 @@
                                 <label class="col-md-3 col-form-label">Kategori</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control " id="kategori" name="kategori">
+                                        <input type="text" class="form-control disabled" id="kategori" name="kategori">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">No PP/Exprod</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control " id="no" name="no">
                                     </div>
                                 </div>
                             </div>
@@ -168,6 +197,7 @@
             modal.find('#biaya_act').attr("value",div.data('biaya_act'));
             modal.find('#budget').attr("value",div.data('budget'));
             modal.find('textarea#keterangan').val(div.data('keterangan'));
+            modal.find('#no').attr("value",div.data('pp'));
         });
  
 });

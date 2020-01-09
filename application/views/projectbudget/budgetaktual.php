@@ -45,18 +45,18 @@
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
-                                        <td>Rp <?= number_format($p['budget'],0,',','.')?></td>
-                                        <td>Rp <?= number_format($p['est_cost'],0,',','.') ?></td>
-                                        <td>Rp <?= number_format($p['est_exprod'],0,',','.') ?></td>
-                                        <td>Rp <?= number_format($p['est_total'],0,',','.') ?></td>
+                                        <td><?= number_format($p['budget'],0,',','.')?></td>
+                                        <td><?= number_format($p['est_cost'],0,',','.') ?></td>
+                                        <td><?= number_format($p['est_exprod'],0,',','.') ?></td>
+                                        <td><?= number_format($p['est_total'],0,',','.') ?></td>
                                         <td><?= $p['est_persen']; ?>%</td>
-                                        <td>Rp <?= number_format($p['est_selisih'],0,',','.') ?></td>
+                                        <td><?= number_format($p['est_selisih'],0,',','.') ?></td>
                                         <td><?= $p['est_selisihpersen']; ?>%</td>
-                                        <td>Rp <?= number_format($p['act_cost'],0,',','.') ?></td>
-                                        <td>Rp <?= number_format($p['act_exprod'],0,',','.') ?></td>
-                                        <td>Rp <?= number_format($p['act_total'],0,',','.') ?></td>
+                                        <td><?= number_format($p['act_cost'],0,',','.') ?></td>
+                                        <td><?= number_format($p['act_exprod'],0,',','.') ?></td>
+                                        <td><?= number_format($p['act_total'],0,',','.') ?></td>
                                         <td><?= $p['act_persen']; ?>%</td>
-                                        <td>Rp <?= number_format($p['act_selisih'],0,',','.') ?></td>
+                                        <td><?= number_format($p['act_selisih'],0,',','.') ?></td>
                                         <td><?= $p['act_selisihpersen']; ?>%</td>
                                         <td>
                                             <!-- $sect_id -->

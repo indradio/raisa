@@ -17,13 +17,19 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th >Copro</th> 
+                                      <th >Copro</th> 
                                         <th >Part</th> 
-                                        <th >Kategori</th> 
+                                        <th >Kategori</th>
+                                        <th>No PP/EXPROD</th>
+                                        <th>No PR</th>
+                                        <th>No PO</th>
+                                        <th>Tanggal</th>
                                         <th >Biaya Estimasi</th> 
-                                        <th >Biaya Aktual</th> 
+                                        <th >Biaya Aktual</th>  
+                                        <th>Selisih</th>
                                         <th >Keterangan</th> 
                                         <th ></th> 
+                                        
                                         
                                     </tr> 
                                 </thead>
@@ -31,13 +37,25 @@
                                     <?php
                                     foreach ($Projectbudget as $p) : ?>
                                     <tr>
-                                        <td><?= $p['copro']; ?></td>
+                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
                                         <td><?= $p['kategori']; ?></td>
-                                        <td>Rp <?= number_format($p['biaya_est'],0,',','.') ?></td>
-                                        <td>Rp <?= number_format($p['biaya_act'],0,',','.') ?></td>
-                                        <td><?= $p['keterangan']; ?></td>
-                                        <td>
+                                        <td><?= $p['no']; ?></td>
+                                        <td><?= $p['pr']; ?></td>
+                                        <td><?= $p['po']; ?></td>
+                                        <td><?= $p['tgl_buat'];?></td>
+                                        <td><?= number_format($p['biaya_est'],0,',','.') ?></td>
+                                        <td><?= number_format($p['biaya_act'],0,',','.') ?></td>
+                                        <td><?php 
+                                            $a=$p['biaya_est'];
+                                            $b=$p['biaya_act'];
+
+                                            $c= $a-$b;
+
+                                            echo number_format($c,0,',','.');
+                                            
+                                        ?></td>
+                                        <td><?= $p['keterangan']; ?></td>                                        <td>
                                            
                                              <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
@@ -55,17 +73,21 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th >Copro</th> 
+                                       <th >Copro</th> 
                                         <th >Part</th> 
-                                        <th >Kategori</th> 
+                                        <th >Kategori</th>
+                                        <th>No PP/EXPROD</th>
+                                        <th>Tanggal</th>
                                         <th >Biaya Estimasi</th> 
-                                        <th >Biaya Aktual</th> 
+                                        <th >Biaya Aktual</th>  
+                                        <th>Selisih</th>
                                         <th >Keterangan</th> 
                                         <th ></th> 
+                                        
                                     </tr> 
                                 </tfoot>
                             </table>
-                        </div>
+                        </div><a href="/raisa/projectbudget/budgetpch/<?= $project['copro'];?>" class="btn btn-sm btn-default ">Back</a>
                     </div>
                     <!-- end card-body-->
                 </div>
@@ -123,7 +145,7 @@
                                 <label class="col-md-3 col-form-label">Biaya Estimasi</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="biaya_est" name="biaya_est" required>
+                                        <input type="number" class="form-control disabled" id="biaya_est" name="biaya_est" required>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +153,23 @@
                                 <label class="col-md-3 col-form-label">Biaya Aktual</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" id="biaya_act" name="biaya_act">
+                                        <input type="number" class="form-control" id="biaya_act" name="biaya_act">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">No PR</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="no_pr" name="no_pr">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">No PO</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="no_p" name="no_po">
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +206,6 @@
             modal.find('#budget').attr("value",div.data('budget'));
             modal.find('textarea#keterangan').val(div.data('keterangan'));
         });
-    
  
 });
 </script>
