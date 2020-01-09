@@ -1156,9 +1156,9 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'HR';
         $data['sidesubmenu'] = 'Konfirmasi Lembur';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
-        $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        $data['lembur'] = $this->db->get_where('lembur', ['id' => $id])->row_array();
+        $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
         $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
         $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
 
@@ -1188,6 +1188,15 @@ class Lembur extends CI_Controller
         }else{
             $istirahat2 = 'TIDAK';
         }
+
+        $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $lembur['id']])->result_array();
+        foreach($aktivitas as $a):
+            $this->db->set('tglmulai', $lembur['tglmulai_aktual']);
+            $this->db->set('tglselesai', $lembur['tglselesai_aktual']);
+            $this->db->set('status', 9);
+            $this->db->where('id', $a['id']);
+            $this->db->update('aktivitas');
+        endforeach;
 
         $this->db->select('SUM(durasi) as total');
         $this->db->where('link_aktivitas', $lembur['id']);
@@ -1316,6 +1325,7 @@ class Lembur extends CI_Controller
         foreach($aktivitas as $a):
             $this->db->set('tglmulai', $lembur['tglmulai_aktual']);
             $this->db->set('tglselesai', $lembur['tglselesai_aktual']);
+            $this->db->set('status', 9);
             $this->db->where('id', $a['id']);
             $this->db->update('aktivitas');
         endforeach;

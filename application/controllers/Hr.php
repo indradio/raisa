@@ -167,7 +167,7 @@ class Hr extends CI_Controller
         $data['sidemenu'] = 'HR';
         $data['sidesubmenu'] = 'Presensi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['presensi'] = $this->db->get('presensi',)->result_array();
+        $data['presensi'] = $this->db->get('presensi')->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
        
         $this->load->view('templates/header', $data);

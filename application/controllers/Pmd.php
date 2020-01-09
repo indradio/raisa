@@ -22,6 +22,71 @@ class Pmd extends CI_Controller
         $this->load->view('jamkerja/index', $data);
         $this->load->view('templates/footer');
     }
+
+    public function jamkerja()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+        $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
+        if ($tglawal != null AND $tglakhir != null)
+        {
+            $this->db->where('tgl_aktivitas >=',$tglawal);
+            $this->db->where('tgl_aktivitas <=',$tglakhir);
+            $this->db->where('jenis_aktivitas','JAM KERJA');
+            $this->db->where('status >','1');
+            $this->db->order_by('npk', 'ASC');
+            $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
+        }else{
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' => 'X'])->result_array();
+            $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Silahkan PILIH tanggal terlebih dahulu.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>');
+        }
+        $data['sidemenu'] = 'PPIC';
+        $data['sidesubmenu'] = 'Jam Kerja Harian';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('pmd/lp_jamkerja', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function lembur()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+        $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
+        if ($tglawal != null AND $tglakhir != null)
+        {
+            $this->db->where('tgl_aktivitas >=',$tglawal);
+            $this->db->where('tgl_aktivitas <=',$tglakhir);
+            $this->db->where('jenis_aktivitas','LEMBUR');
+            $this->db->where('status >','1');
+            $this->db->order_by('npk', 'ASC');
+            $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
+        }else{
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' => 'X'])->result_array();
+            $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Silahkan PILIH tanggal terlebih dahulu.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>');
+        }
+        $data['sidemenu'] = 'PPIC';
+        $data['sidesubmenu'] = 'Jam Kerja Lembur';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('pmd/lp_lembur', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function project()
     {
         $data['sidemenu'] = 'PMD';
