@@ -1,17 +1,5 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="alert alert-rose alert-dismissible fade show" role="alert">
-    <strong><?php $kesempatan = 3 - $total_like->num_rows();
-    if ($kesempatan>0){
-      echo 'Kamu memiliki '.$kesempatan.' kesempatan untuk like';
-    }else{
-      echo 'Kesempatan like kamu sudah habis';
-    }?>
-    </strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   <div class="container-fluid">
     <!-- Banner -->
     <div class="row">
