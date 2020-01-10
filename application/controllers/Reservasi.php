@@ -603,18 +603,20 @@ class Reservasi extends CI_Controller
 
         $this->db->where('reservasi_id', $reservasi_temp['id']);
         $this->db->delete('perjalanan_tujuan');
-        foreach ($this->input->post('tujuan') as $t) :
-            $customer = $this->db->get_where('customer', ['inisial' => $t])->row_array();
-            $tujuan = [
-                'reservasi_id' => $reservasi_temp['id'],
-                'inisial' => $customer['inisial'],
-                'nama' => $customer['nama'],
-                'kota' => $customer['kota'],
-                'jarak' => $customer['jarak'],
-                'status' => '0'
-            ];
-            $this->db->insert('perjalanan_tujuan', $tujuan);
-        endforeach;
+        if ($this->input->post('tujuan')){
+            foreach ($this->input->post('tujuan') as $t) :
+                $customer = $this->db->get_where('customer', ['inisial' => $t])->row_array();
+                $tujuan = [
+                    'reservasi_id' => $reservasi_temp['id'],
+                    'inisial' => $customer['inisial'],
+                    'nama' => $customer['nama'],
+                    'kota' => $customer['kota'],
+                    'jarak' => $customer['jarak'],
+                    'status' => '0'
+                ];
+                $this->db->insert('perjalanan_tujuan', $tujuan);
+            endforeach;
+        }
 
         if ($this->input->post('tujuan_lain'))
         {
