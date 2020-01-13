@@ -65,6 +65,21 @@ class Project extends CI_Controller
         $this->load->view('project/wbs', $data);
         $this->load->view('templates/footer');
     }
+    public function tambahproject()
+    {
+        $data = [
+            'copro' => $this->input->post('copro'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'status' => $this->input->post('status'),
+            'due_date' => $this->input->post('due_date'),
+            'due_recive' => $this->input->post('due_recive'),
+            'jam_kerja' => $this->input->post('jam'),
+            'cost_amount' => $this->input->post('cost')
+        ];
+
+         $this->db->insert('project', $data);
+         redirect('projectbudget/index');
+    }
 
     public function tmbahMilestone()
     {

@@ -1,3 +1,5 @@
+
+
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
@@ -18,13 +20,15 @@
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
-                                    
+
                                     <tr>
                                         <th rowspan="2">Copro</th> 
                                         <th rowspan="2">Part</th>
                                         <th rowspan="2">Budget</th>
                                         <th colspan="6" style="text-align: center;">Estimasi Cost</th> 
+                                        <?php if ($karyawan['posisi_id']<6) {?>
                                         <th colspan="6"style="text-align: center;">Actual Cost</th>
+                                        <?php } ?>
                                         <th rowspan="2" style="text-align: center;">Action</th>
                                     </tr> 
                                     <tr>
@@ -34,13 +38,13 @@
                                         <td>%</td>
                                         <td>Selisih</td>
                                         <td>%</td>
-                                        
+                                         <?php if ($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11) {?>
                                         <td>PP</td>
                                         <td>Exprod</td>
                                         <td>Total</td>
                                         <td>%</td>
                                         <td>Selisih</td>
-                                        <td>%</td>
+                                        <td>%</td><?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,18 +67,19 @@
                                                 <td><?= number_format($p['est_selisih'],0,',','.')?></td>
                                                 
                                             <?php }; ?>
-                                            <td><?= $p['est_selisihpersen']; ?>%</td>
+                                            <td><?= $p['est_selisihpersen']; ?>%</td> 
+                                            <?php if ($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11) {?>
                                                 <td><?= number_format($p['act_cost'],0,',','.')?></td>
                                                 <td><?= number_format($p['act_exprod'],0,',','.')?></td>
                                                 <td><?= number_format($p['act_total'],0,',','.')?></td>
                                                 <td><?= $p['act_persen']; ?>%</td>
                                                 <td><?= number_format($p['act_selisih'],0,',','.')?></td>
                                                 <td><?= $p['act_selisihpersen']; ?>%</td>
-                                           
+                                           <?php } ?>
                                         
                                         <td>
                                             <?php 
-                                            if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 ){
+                                            if($karyawan['posisi_id']==6 AND $karyawan['dept_id']==11 ){
                                               ?>
                                              <a href="javascript:;" 
                                                     data-id="<?php echo $p['id'] ?>"
@@ -97,8 +102,8 @@
                                         <th rowspan="2">Copro <br></th> 
                                         <th rowspan="2">Part</th>
                                         <th rowspan="2">Budget</th>
-                                        <th colspan="6" style="text-align: center;">Estimasi Cost</th>
-                                        <th colspan="6"style="text-align: center;">Actual Cost</th>
+                                        <th colspan="6" style="text-align: center;">Estimasi Cost</th><?php if ($karyawan['posisi_id']<6) {?>
+                                        <th colspan="6"style="text-align: center;">Actual Cost</th><?php }?>
                                         <th rowspan="2" style="text-align: center;">Action <br>
                                         </th>
                                     </tr> 
@@ -108,13 +113,13 @@
                                         <td>Total</td>
                                         <td>%</td>
                                         <td>Selisih</td>
-                                        <td>%</td>
+                                        <td>%</td><?php if ($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11) {?>
                                         <td>PP</td>
                                         <td>Exprod</td>
                                         <td>Total</td>
                                         <td>%</td>
                                         <td>Selisih</td>
-                                        <td>%</td>
+                                        <td>%</td><?php }?>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -170,7 +175,7 @@
                                 <label class="col-md-3 col-form-label">Budget Part</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="budget" name="budget">
+                                        <input type="text" class=" money form-control disabled " id="budget" name="budget">
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +183,7 @@
                                 <label class="col-md-3 col-form-label">Sisa</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="sisa" name="sisa" >
+                                        <input type="text" class="money form-control disabled " id="sisa" name="sisa" >
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +210,7 @@
                                 <label class="col-md-3 col-form-label">Estimasi</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="biaya" name="biaya" required>
+                                        <input type="text" class="form-control" id="biaya" name="biaya" required>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +251,7 @@
             modal.find('#selisih').attr("value",div.data('selisih'));
             modal.find('#selisihpersen').attr("value",div.data('selisihpersen'));
         });
-    $( '.budget' ).mask('000.000.000', {reverse: true});
+    $('.biaya').mask("000,000,000,000,000", {reverse: true});
 
     
 });

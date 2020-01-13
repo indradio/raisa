@@ -8,7 +8,6 @@ use Box\Spout\Reader\ReaderFactory;
 use Box\Spout\Common\Type;
  
 class Import extends CI_Controller {
- 
     function __construct()
     {
         parent::__construct();
@@ -88,5 +87,6 @@ class Import extends CI_Controller {
  
         $this->load->view('import');
     }
+   
  
 }
