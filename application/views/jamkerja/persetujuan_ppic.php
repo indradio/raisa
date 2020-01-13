@@ -37,6 +37,7 @@
                   <tr>
                     <th>Tanggal</th>
                     <th>Nama</th>
+                    <th>Cell</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -44,12 +45,13 @@
                   <tr>
                     <th>Tanggal</th>
                     <th>Nama</th>
+                    <th>Cell</th>
                     <th>Status</th>
                   </tr>
                 </tfoot>
                 <tbody>
                   <?php 
-                  $kry = $this->db->get_where('karyawan', ['sect_id' => $this->session->userdata('sect_id')])->result_array();
+                  $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                   foreach ($kry as $k) : 
                     $this->db->where('npk', $k['npk']);
                     $this->db->where('tglmulai', $tanggal);
@@ -61,17 +63,25 @@
                     }else{
                       $respon = $respon.' Hari';
                     }
+                    $now = time();
+                    $due = strtotime($jamkerja['create']);
+                    $approve = $due - $now;
+                    $approve = floor($approve / (60 * 60 * 24));
+                    $approve = $approve.' Hari';
+                    
                     if ($jamkerja['id']){
-                      if ($jamkerja['status']==1){ ?>
+                      if ($jamkerja['status']==2){ ?>
                         <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jamkerja['id']); ?>'" >
                       <?php }else{
                         echo '<tr>';
                       } ?>
                       <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
                       <td><?=$k['nama'].' <small>( '. $respon .' )</small>'; ?></td>
+                      <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
+                      <td><?=$sect['nama']; ?></td>
                       <td>
                         <?php if ($jamkerja['status']==1){
-                          echo 'Menunggu Persetujuan Koordinator';
+                          echo 'Menunggu Persetujuan '.$jamkerja['atasan1'].' <small>( '. $approve .' )</small>';
                         }elseif ($jamkerja['status']==2){
                           echo 'Menunggu Persetujuan PPIC';
                         }elseif ($jamkerja['status']==9){
@@ -83,6 +93,8 @@
                       <tr>
                         <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
                         <td><?=$k['nama']; ?></td>
+                        <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
+                      <td><?=$sect['nama']; ?></td>
                         <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
                       </tr>
                         <?php } ?>
@@ -100,11 +112,11 @@
           </div>
           <div class="card-footer">
             <div class="col-mr-auto">
-              <a href="<?= base_url('jamkerja/koordinator/'.date('Y-m-d', strtotime("-1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SEBELUMNYA</a>
+              <a href="<?= base_url('jamkerja/ppic/'.date('Y-m-d', strtotime("-1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SEBELUMNYA</a>
             </div>
           
             <div class="col-ml-auto">
-              <a href="<?= base_url('jamkerja/koordinator/'.date('Y-m-d', strtotime("+1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SELANJUTNYA</a>
+              <a href="<?= base_url('jamkerja/ppic/'.date('Y-m-d', strtotime("+1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SELANJUTNYA</a>
             </div>
           </div>
           <!-- end content-->
@@ -146,10 +158,13 @@
 <script>
 $(document).ready(function() {
     $('#dt-persetujuan').DataTable( {
-        order: [[0, 'asc']],
+        order: [[2, 'asc']],
         rowGroup: {
-            dataSrc: 0
-        }
+            dataSrc: 2
+        },
+        "scrollY":        "500px",
+        "scrollCollapse": true,
+        "paging":         false
     } );
 } );
 </script>
