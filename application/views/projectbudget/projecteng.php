@@ -20,6 +20,8 @@
                                         <th>Deskripsi</th>
                                         <th>Progres</th>
                                         <th>Due Date</th>
+                                        <th>Date PO</th>
+                                        <th>Amount</th>
                                         <th>Status Project</th>
                                         <th>Status COPRO</th>
                                         <th>Actions</th>
@@ -29,14 +31,18 @@
                                     <?php
                                     foreach ($project as $p) : ?>
                                     <tr>
-                                        <td><?= $p['copro']; ?></td>
+                                       <td><?= $p['copro']; ?></td>
                                         <td><?= $p['deskripsi']; ?></td>
                                         <td></td>
                                         <td></td>
+                                        <td><?= $p['due_recive']; ?></td>
+                                        <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td></td>
                                         <td><?= $p['status']; ?></td>
-                                        <td>
+
+                                        <td> <?php if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 ){?>
                                             <a href="<?= base_url('projectbudget/budgeteng/') . $p['copro']; ?>" class="btn btn-sm btn-success">Project Budget</a>
+                                        <?php }?>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
