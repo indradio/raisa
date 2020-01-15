@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="alert alert-rose alert-dismissible fade show" role="alert">
-    <strong>Semangat Pagi!</strong> Mau lihat design ID CARD ? Klik <a href="<?= base_url('highlight/idcard'); ?>" target="_blank">DISINI</a>. 
+    <strong>Semangat Pagi!</strong> Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -20,11 +20,11 @@
     if ($total!=0)
     {
       $lay = 12 / $total;
-      $queryInfo = "SELECT *
-                                    FROM `informasi`
-                                    WHERE `berlaku` >= CURDATE()
-                                    ORDER BY `id` DESC
-                                ";
+      $queryInfo ="SELECT *
+                    FROM `informasi`
+                    WHERE `berlaku` >= CURDATE()
+                    ORDER BY `id` DESC
+                  ";
       $informasi = $this->db->query($queryInfo)->result_array();
       ?>
       <?php foreach ($informasi as $info) : ?>
@@ -190,7 +190,7 @@
                                               WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                               ";
                                               $p = $this->db->query($queryPerjalanan)->row_array();
-                                              if ($p['id']) { ?>
+                                              if (!empty($p)) { ?>
                                                 <td class="text-center">
                                                   <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                                                   <?php if ($p['status'] == 1) {?>
@@ -229,7 +229,7 @@
                                                 WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
                                                 ";
                                                 $r = $this->db->query($queryReservasi)->row_array();
-                                                if ($r['id']) { ?>
+                                                if (!empty($r)) { ?>
                                                   <td class="text-center">
                                                   <div class="img-container">
                                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
