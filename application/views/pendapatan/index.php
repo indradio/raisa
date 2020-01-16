@@ -21,9 +21,9 @@
                                 <h6 class="card-category"></h6>
                             </div>
                             <div class="col-md-12">
+                                <i class="fa fa-circle text-success"></i> Last Year
                                 <i class="fa fa-circle text-info"></i> Target
-                                <!-- <i class="fa fa-circle text-warning"></i> Samsung -->
-                                <i class="fa fa-circle text-danger"></i> Aktual
+                                <i class="fa fa-circle text-warning"></i> Aktual
                             </div>
                         </div>
                     </div>

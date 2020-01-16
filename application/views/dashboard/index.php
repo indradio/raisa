@@ -1,14 +1,59 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    <strong>Semangat Pagi!</strong> Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-info" role="alert">
+        <!-- Begin Content -->
+        <strong>Semangat Pagi!</strong> 
+        </br>Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there.
+        <!-- End Content -->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <!-- <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol> -->
+          <div class="carousel-inner">
+          <?php $queryInfo ="SELECT *
+                    FROM `informasi`
+                    WHERE `berlaku` >= CURDATE()
+                    ORDER BY `id` DESC
+                  ";
+          $informasi = $this->db->query($queryInfo)->result_array();
+         
+          $this->db->select_max('id','terbaru');
+          $result = $this->db->get('informasi');
+          $terbaru = $result->row()->terbaru;
+
+          foreach ($informasi as $info) : 
+          if ($info['id']==$terbaru){
+            echo '<div class="carousel-item active">';
+          }else{
+            echo '<div class="carousel-item">';
+          }?>
+              <img class="d-block w-100" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
+            </div>
+          <?php endforeach; ?>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="false"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
     <!-- Banner -->
-    <div class="row">
+    <!-- <div class="row">
       <?php
         $queryLayInfo = "SELECT COUNT(*)
         FROM `informasi`
@@ -55,134 +100,260 @@
       </div>
       <?php endforeach; 
       }?>
-    </div>
+    </div> -->
     <!-- end banner -->
- <!-- START List Makan LEMBUR -->
-    <?php if (date('D') == 'Sat' OR date('D') == 'Sun') { ?>
-      <?php if (date('H:i') >= '10:00' AND date('H:i') <= '14:00' ){ ?>
-      <div class="row">
-              <div class="col-md-12">
-                  <div class="card">
-                      <div class="card-header card-header-rose card-header-icon">
-                          <div class="card-icon">
-                              <i class="material-icons">assignment</i>
-                          </div>
-                          <h4 class="card-title">Daftar Makan Lembur </h4>
-                      </div>
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <div class="material-datatables">
-                              <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                  <thead>
-                                      <tr>
-                                          <th>Nama</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <?php foreach ($lembur_makan_malam as $lmm) : ?>
-                                          <tr>
-                                              <td><?= $lmm['nama']; ?> <small>(<?= $lmm['id']; ?>)</small></td>
-                                          </tr>
-                                      <?php endforeach; ?>
-                                  </tbody>
-                              </table>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- end content-->
-                  </div>
-                  <!--  end card  -->
-              </div>
-              <!-- end col-md-12 -->
-          </div>
-          <!-- end row -->
-      <?php } 
-    }else{ ?>
-      <?php if (date('H:i') >= '16:00' AND date('H:i') <= '20:00' ){ ?>
-      <div class="row">
-              <div class="col-md-12">
-                  <div class="card">
-                      <div class="card-header card-header-rose card-header-icon">
-                          <div class="card-icon">
-                              <i class="material-icons">assignment</i>
-                          </div>
-                          <h4 class="card-title">Daftar Makan Lembur </h4>
-                      </div>
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <div class="material-datatables">
-                              <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                  <thead>
-                                      <tr>
-                                          <th>Nama</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <?php foreach ($lembur_makan_malam as $lmm) : ?>
-                                          <tr>
-                                              <td><?= $lmm['nama']; ?> <small>(<?= $lmm['id']; ?>)</small></td>
-                                          </tr>
-                                      <?php endforeach; ?>
-                                  </tbody>
-                              </table>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- end content-->
-                  </div>
-                  <!--  end card  -->
-              </div>
-              <!-- end col-md-12 -->
-          </div>
-          <!-- end row -->
-      <?php } ?>
-    <?php } ?>
-    <!-- END List Makan LEMBUR -->
-
+    <!-- START OUTSTANDING ADMINISTRATION -->
+    </p>
     <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">directions_car</i>
-                        </div>
-                        <h4 class="card-title">Perjalanan Dinas Hari Ini <?= date("d-M-Y"); ?></h4>
+              <div class="card">
+                <div class="card-header card-header-tabs card-header-rose">
+                  <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                      <span class="nav-tabs-title">TransaksiKu:</span>
+                      <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#perjalanan" data-toggle="tab">
+                            <i class="material-icons">emoji_transportation</i> Perjalanan
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#lembur" data-toggle="tab">
+                            <i class="material-icons">update</i> Lembur
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                          <a class="nav-link" href="#jamkerja" data-toggle="tab">
+                            <i class="material-icons">emoji_transportation</i> Jam Kerja
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li> -->
+                      </ul>
                     </div>
-                    <div class="card-body">
-                        <div class="toolbar">
-                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-                        </div>
-                        <div class="table-responsive">
-                        <div class="material-datatables">
-                            <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center"></th>
-                                        <th>Kendaraan</th>
-                                        <th>Peserta</th>
-                                        <th>Tujuan</th>
-                                        <th>Keperluan</th>
-                                        <th>Jenis</th>
-                                        <th>Berangkat</th>
-                                        <th>Kembali</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th class="text-center"></th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <?php
-                                    $queryKendaraan = "SELECT *
-                                                                FROM `kendaraan`
-                                                                WHERE `kontrak` >= CURDATE() AND `is_active` = 1 AND `id` != 1
-                                                                ORDER BY `id` ASC
-                                                            ";
-                                    $kendaraan = $this->db->query($queryKendaraan)->result_array();
-                                    foreach ($kendaraan as $k) : ?>
-                                    <tr>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="perjalanan">
+                      <table class="table">
+                        <tbody>
+                        <?php
+                              $this->db->where('npk', $this->session->userdata('npk'));
+                              $this->db->where('status !=', '0');
+                              $this->db->where('status !=', '9');
+                              $reservasi = $this->db->get('reservasi')->result_array();
+                              if (!empty($reservasi)){ 
+                                $no = 1;
+                                foreach ($reservasi as $r) {
+                                $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array();
+                              ?>
+                                <tr>
+                                  <td>
+                                    <?= $no; ?>
+                                  </td>
+                                  <td>Reservasi Perjalanan kamu dengan nomor ID : <b><?= $r['id']; ?></b> saat ini dalam status <b><?= $status['nama']; ?></b></td>
+                                </tr>
+                            <?php  $no++; }
+                              }
+                          ?>
+                        <?php
+                              $this->db->where('npk', $this->session->userdata('npk'));
+                              $this->db->where('status !=', '0');
+                              $this->db->where('status !=', '9');
+                              $perjalanan = $this->db->get('perjalanan')->result_array();
+                              if (!empty($perjalanan)){ 
+                                $no = 1;
+                                foreach ($perjalanan as $p) {
+                                $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array();
+                              ?>
+                                <tr>
+                                  <td>
+                                    <?= $no; ?>
+                                  </td>
+                                  <td>Perjalanan kamu dengan nomor ID : <b><?= $p['id']; ?></b> saat ini dalam status <b><?= $status['nama']; ?></b></td>
+                                </tr>
+                            <?php  $no++; }
+                              }
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="lembur">
+                      <table class="table">
+                        <tbody>
+                          <?php
+                              $this->db->where('npk', $this->session->userdata('npk'));
+                              $this->db->where('status !=', '0');
+                              $this->db->where('status !=', '9');
+                              $lembur = $this->db->get('lembur')->result_array();
+                              if (!empty($lembur)){ 
+                                $no = 1;
+                                foreach ($lembur as $l) {
+                                $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array();
+                              ?>
+                                <tr>
+                                  <td>
+                                    <?= $no; ?>
+                                  </td>
+                                  <td>Lembur kamu dengan nomor ID : <b><?= $l['id']; ?></b> saat ini dalam status <b><?= $status['nama']; ?></b></td>
+                                  <!-- <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                      <i class="material-icons">edit</i>
+                                    </button>
+                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                      <i class="material-icons">close</i>
+                                    </button>
+                                  </td> -->
+                                </tr>
+                            <?php  $no++; }
+                              }
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- <div class="tab-pane" id="messages">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="" checked>
+                                  <span class="form-check-sign">
+                                    <span class="check"></span>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                            </td>
+                            <td class="td-actions text-right">
+                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                <i class="material-icons">close</i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="">
+                                  <span class="form-check-sign">
+                                    <span class="check"></span>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td>Sign contract for "What are conference organizers afraid of?"</td>
+                            <td class="td-actions text-right">
+                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                <i class="material-icons">close</i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<!-- END OUTSTANDING ADMINISTRATION -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-categories">
+          <!-- <h3 class="title text-center">Page Subcategories</h3> -->
+          <!-- <br /> -->
+          <ul class="nav nav-pills nav-pills-rose nav-pills-icons justify-content-center" role="tablist">
+            <!-- <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
+                <i class="material-icons">info</i> Description
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#tabperjalanan" role="tablist">
+                <i class="material-icons">emoji_transportation</i> Perjalanan
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#tablembur" role="tablist">
+                <i class="material-icons">update</i> Lembur
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
+                <i class="material-icons">help_outline</i> Help Center
+              </a>
+            </li> -->
+          </ul>
+          <div class="tab-content tab-space tab-subcategories">
+            <!-- <div class="tab-pane" id="link7">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Description about product</h4>
+                  <p class="card-category">
+                    More information here
+                  </p>
+                </div>
+                <div class="card-body">
+                  Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
+                  <br>
+                  <br> Dramatically visualize customer directed convergence without revolutionary ROI.
+                </div>
+              </div>
+            </div> -->
+            <div class="tab-pane active" id="tabperjalanan">
+            <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">directions_car</i>
+              </div>
+              <h4 class="card-title">Perjalanan Dinas Hari Ini <?= date("d-M-Y"); ?></h4>
+            </div>
+            <div class="card-body">
+              <div class="toolbar">
+                  <!--        Here you can write extra buttons/actions for the toolbar              -->
+              </div>
+              <div class="table-responsive">
+                <div class="material-datatables">
+                  <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th class="text-center"></th>
+                          <th>Kendaraan</th>
+                          <th>Peserta</th>
+                          <th>Tujuan</th>
+                          <th>Keperluan</th>
+                          <th>Jenis</th>
+                          <th>Berangkat</th>
+                          <th>Kembali</th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                          <tr>
+                              <th class="text-center"></th>
+                              <th></th>
+                          </tr>
+                      </tfoot>
+                      <tbody>
+                      <?php
+                      $queryKendaraan = "SELECT *
+                                                  FROM `kendaraan`
+                                                  WHERE `kontrak` >= CURDATE() AND `is_active` = 1 AND `id` != 1
+                                                  ORDER BY `id` ASC
+                                              ";
+                      $kendaraan = $this->db->query($queryKendaraan)->result_array();
+                      foreach ($kendaraan as $k) : ?>
+                      <tr>
                                             <?php
                                               $nopol = $k['nopol'];
                                               $queryPerjalanan = "SELECT *
@@ -331,14 +502,80 @@
                                 </tbody>
                             </table>
                         </div>
-                        </div>
+                      </div>
                     </div>
-                </div>
+                 </div>
                 <!--  end card  -->
             </div>
-            <!-- end col-md-4 -->
+            <div class="tab-pane" id="tablembur">
+              <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title">Lembur Hari Ini <?= date("d-M-Y"); ?></h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <div class="material-datatables">
+                      <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>Nama</th>
+                            <th>Lokasi</th>
+                            <th>Approved <small>(atasan1)</small></th>
+                            <th>Konsumsi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php foreach ($listlembur as $l) : ?>
+                          <tr>
+                              <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
+                              <td><?= $l['lokasi']; ?></td>
+                              <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
+                              <?php if ($l['konsumsi']=='YA'){
+                                echo '<td class="table-success"> YA </td>';
+                              }else{
+                                echo '<td class="table-danger"> TIDAK </td>';
+                              } ?>
+                          </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-md-12">
+                      *Konsumsi akan diupdate pada jam 16:00 atau lebih.
+                      </br>Pastikan Rencana Lembur kamu sudah disetujui oleh atasan1 sebelum jam 16:00.
+                    </div>
+                  </div>
+                </div>
+                <!-- end content-->
+              </div>
+              <!--  end card  -->
+            </div>
+            <!-- <div class="tab-pane" id="link10">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Help center</h4>
+                  <p class="card-category">
+                    More information here
+                  </p>
+                </div>
+                <div class="card-body">
+                  From the seamless transition of glass and metal to the streamlined profile, every detail was carefully considered to enhance your experience. So while its display is larger, the phone feels just right.
+                  <br>
+                  <br> Another Text. The first thing you notice when you hold the phone is how great it feels in your hand. The cover glass curves down around the sides to meet the anodized aluminum enclosure in a remarkable, simplified design.
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- end row -->
     <?php if ($this->session->userdata('posisi_id') == 1 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 3) { ?>
     <div class="row">
       <div class="col-md-12">
@@ -421,9 +658,9 @@
                 <h6 class="card-category"></h6>
               </div>
               <div class="col-md-12">
-                <i class="fa fa-circle text-success"></i> Target
-                <!-- <i class="fa fa-circle text-warning"></i> Samsung -->
-                <i class="fa fa-circle text-info"></i> Aktual
+                <i class="fa fa-circle text-success"></i> Last Year
+                <i class="fa fa-circle text-info"></i> Target
+                <i class="fa fa-circle text-warning"></i> Aktual
               </div>
             </div>
           </div>
@@ -499,6 +736,13 @@
 </div>
 <script>
     $(document).ready(function(){
+
+      window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+              $(this).remove(); 
+          });
+      }, 5000);
+
         $('#detail').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             var id = button.data('id') // Extract info from data-* attributes

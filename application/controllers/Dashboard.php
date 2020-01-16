@@ -133,6 +133,12 @@ class Dashboard extends CI_Controller
         $this->db->where('status >', '2');
         $data['lembur_makan_malam'] = $this->db->get('lembur')->result_array();
 
+        $this->db->where('year(tglmulai)',date('Y'));
+        $this->db->where('month(tglmulai)',date('m'));
+        $this->db->where('day(tglmulai)',date('d'));
+        $this->db->where('status >', '2');
+        $data['listlembur'] = $this->db->get('lembur')->result_array();
+
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
         $data['sidesubmenu'] = '';
