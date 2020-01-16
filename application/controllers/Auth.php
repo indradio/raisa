@@ -106,24 +106,20 @@ class Auth extends CI_Controller
                     'role_id' => $karyawan['role_id']
                 ];
                 $this->session->set_userdata($data);
-                $this->session->set_flashdata('message', 'masuk');
+                // $this->session->set_flashdata('message', 'masuk');
                 redirect('dashboard');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Maaf!</strong> Password kamu SALAH.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-rose">
+                <strong>Login Gagal</strong>
+                <span>Maaf, Password yang kamu masukan salah.</span>
+                </div> </br>');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Maaf!</strong> NPK Tidak ditemukan.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-rose">
+            <strong>Login Gagal</strong>
+            <span>Maaf, NPK Kamu tidak ditemukan.</span>
+            </div> </br>');
             redirect('auth');
         }
     }
@@ -131,12 +127,10 @@ class Auth extends CI_Controller
     public function logout()
     {
         $this->session->unset_userdata('npk');
-        $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong>Terima kasih!</strong> Telah menggunakan RAISA.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-info">
+        <strong>Terima kasih</strong>
+        <span>Sampai berjumpa lagi.</span>
+        </div> </br>');
         redirect('auth');
     }
 

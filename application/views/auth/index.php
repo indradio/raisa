@@ -53,6 +53,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+          <?= $this->session->flashdata('message'); ?>
             <form class="form" method="post" action="<?= base_url('auth/login'); ?>">
               <div class="card card-login card-hidden">
                 <div class="card-header card-header-rose text-center">
@@ -86,7 +87,6 @@
                 </div>
               </div>
             </form>
-          <?= $this->session->flashdata('message'); ?>
           </div>
           <div class="col-md-12 ml-auto mr-auto text-center">
           <!-- <i class="material-icons">perm_phone_msg</i> -->
@@ -324,7 +324,13 @@
       setTimeout(function() {
         // after 1000 ms we add the class animated to the login/register card
         $('.card').removeClass('card-hidden');
-      }, 700);
+      }, 200);
+
+      window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+              $(this).remove(); 
+          });
+      }, 2000);
     });
   </script>
 </body>
