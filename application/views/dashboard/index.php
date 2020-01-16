@@ -1,6 +1,6 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="alert alert-rose alert-dismissible fade show" role="alert">
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
     <strong>Semangat Pagi!</strong> Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
