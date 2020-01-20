@@ -1,16 +1,16 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-12">
-      <div class="alert alert-info" role="alert">
+      <div class="alert alert-info" role="alert"> -->
         <!-- Begin Content -->
-        <strong>Semangat Pagi!</strong> 
-        </br>Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there.
+        <!-- <strong>Semangat Pagi!</strong> 
+        </br>Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there. -->
         <!-- End Content -->
-      </div>
+      <!-- </div>
     </div>
-  </div>
+  </div> -->
     <!-- Banner -->
     <div class="row">
       <?php
@@ -292,7 +292,6 @@
                           <th>Peserta</th>
                           <th>Tujuan</th>
                           <th>Keperluan</th>
-                          <th>Jenis</th>
                           <th>Berangkat</th>
                           <th>Kembali</th>
                         </tr>
@@ -345,12 +344,11 @@
                                                     <br />
                                                     <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
                                                     <br />
-                                                    <small><?= $p['id']; ?></small>
+                                                    <small><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></small>
                                                 </td>
                                                 <td><?= $p['anggota']; ?></td>
                                                 <td><?= $p['tujuan']; ?></td>
                                                 <td><?= $p['keperluan']; ?></td>
-                                                <td><?= $p['jenis_perjalanan']; ?></td>
                                                 <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                                 <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
                                               <?php }else{
@@ -383,12 +381,11 @@
                                                     <br />
                                                     <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
                                                     <br />
-                                                    <small><?= $r['id']; ?></small>
+                                                    <small><?= $r['id'].' - '.$r['jenis_perjalanan']; ?></small>
                                                   </td>
                                                   <td><?= $r['anggota']; ?></td>
                                                   <td><?= $r['tujuan']; ?></td>
                                                   <td><?= $r['keperluan']; ?></td>
-                                                  <td><?= $r['jenis_perjalanan']; ?></td>
                                                   <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                                   <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
                                                 <?php }else{ ?>
@@ -448,12 +445,11 @@
                                             <br />
                                             <small><?= $pn['kepemilikan']; ?></small>
                                             <br />
-                                            <small><?= $pn['id']; ?></small>
+                                            <small><?= $pn['id'].' - '.$pn['jenis_perjalanan']; ?></small>
                                         </td> 
                                         <td><?= $pn['anggota']; ?></td>
                                         <td><?= $pn['tujuan']; ?></td>
                                         <td><?= $pn['keperluan']; ?></td>
-                                        <td><?= $pn['jenis_perjalanan']; ?></td>
                                         <td><?= date('d-M', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
                                         <td><?= date('d-M', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
                                     </tr>
@@ -497,7 +493,7 @@
                               }else if ($l['konsumsi']=='TIDAK'){
                                 echo '<td class="table-danger"> TIDAK </td>';
                               }else{
-                                echo '<td> BELUM DIKONFIRMASI GA</td>';
+                                echo '<td> BELUM/TIDAK DIKONFIRMASI GA</td>';
                               } ?>
                           </tr>
                           <?php endforeach; ?>
