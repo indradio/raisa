@@ -477,6 +477,7 @@
                         <thead>
                           <tr>
                             <th>Nama</th>
+                            <th>Jam</th>
                             <th>Lokasi</th>
                             <th>Approved <small>(atasan1)</small></th>
                             <th>Konsumsi</th>
@@ -486,6 +487,7 @@
                           <?php foreach ($listlembur as $l) : ?>
                           <tr>
                               <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
+                              <td><?= date('H:i', strtotime($l['tglmulai'])); ?> - <?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                               <td><?= $l['lokasi']; ?></td>
                               <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
                               <?php if ($l['konsumsi']=='YA'){

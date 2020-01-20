@@ -723,6 +723,7 @@ class Lembur extends CI_Controller
                 if ($lembur['atasan1_rencana'] == $lembur['pemohon']){
                     $status = '3';
 
+                    $this->db->set('tglpengajuan', date('Y-m-d H:i:s'));
                     $this->db->set('status', $status);
                     $this->db->set('lokasi', $lokasi);
                     $this->db->set('catatan', $this->input->post('catatan'));
@@ -749,6 +750,7 @@ class Lembur extends CI_Controller
                 }else{
                     $status = '2';
 
+                    $this->db->set('tglpengajuan', date('Y-m-d H:i:s'));
                     $this->db->set('status', $status);
                     $this->db->set('lokasi', $lokasi);
                     $this->db->set('catatan', $this->input->post('catatan'));
@@ -817,6 +819,7 @@ class Lembur extends CI_Controller
             $status = '5';
         }
 
+        $this->db->set('tglrealisasi', date('Y-m-d H:i:s'));
         $this->db->set('status', $status);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
@@ -843,7 +846,7 @@ class Lembur extends CI_Controller
     {
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Persetujuan Lembur';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         if ($this->session->userdata('posisi_id') >= 3 AND $this->session->userdata('posisi_id') <= 6) 
@@ -1513,11 +1516,17 @@ class Lembur extends CI_Controller
 
     public function laporan()
     {
+        date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'Kepala Departemen';
         $data['sidesubmenu'] = 'Laporan Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['tahun'] = $this->input->post('tahun');
-        $data['bulan'] = $this->input->post('bulan');
+        if($this->input->post('tahun')){
+            $data['tahun'] = $this->input->post('tahun');
+            $data['bulan'] = $this->input->post('bulan');
+        }else{
+            $data['tahun'] = date('Y');
+            $data['bulan'] = date('m');
+        }
         $data['lembur'] = $this->db->where('year(tglmulai)', $this->input->post('tahun'));
         $data['lembur'] = $this->db->where('month(tglmulai)', $this->input->post('bulan'));
         $data['lembur'] = $this->db->where('status', '9');

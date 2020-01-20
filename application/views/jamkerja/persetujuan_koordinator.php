@@ -55,13 +55,16 @@
                     $this->db->where('tglmulai', $tanggal);
                     $this->db->where('status >', 0);
                     $jamkerja = $this->db->get_where('jamkerja')->row_array();
-                    $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
-                    if ($respon==0){
-                      $respon = 'Tepat Waktu';
-                    }else{
-                      $respon = $respon.' Hari';
-                    }
-                    if ($jamkerja['id']){
+                    
+                    if (!empty($jamkerja)){
+
+                      $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
+                      if ($respon==0){
+                        $respon = 'Tepat Waktu';
+                      }else{
+                        $respon = $respon.' Hari';
+                      }
+
                       if ($jamkerja['status']==1){ ?>
                         <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jamkerja['id']); ?>'" >
                       <?php }else{

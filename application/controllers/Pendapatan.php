@@ -12,7 +12,7 @@ class Pendapatan extends CI_Controller
 
     public function index()
     {
-            $data['sidemenu'] = 'Pendapatan';
+            $data['sidemenu'] = 'Revenue';
             $data['sidesubmenu'] = 'Laporan';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['pendapatan'] = $this->db->get('pendapatan')->result_array();
@@ -25,7 +25,7 @@ class Pendapatan extends CI_Controller
 
     public function data()
     {
-            $data['sidemenu'] = 'Pendapatan';
+            $data['sidemenu'] = 'Revenue';
             $data['sidesubmenu'] = 'Data';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['pendapatan'] = $this->db->get('pendapatan')->result_array();

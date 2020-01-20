@@ -123,13 +123,13 @@
       $n2 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama2['posisi_id']])->row_array();
       $nama2['nama'];
 
-      $nama3 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_ga']])->row_array();
-      $n3 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama3['posisi_id']])->row_array();
-      $nama3['nama']; 
+      // $nama3 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_ga']])->row_array();
+      // $n3 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama3['posisi_id']])->row_array();
+      // $nama3['nama']; 
 
-      $nama4 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_hr']])->row_array();
-      $n4 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama4['posisi_id']])->row_array();
-      $nama4['nama']; 
+      // $nama4 = $this->db->get_where('karyawan', ['inisial' => $lembur['admin_hr']])->row_array();
+      // $n4 = $this->db->get_where('karyawan_posisi', ['id' =>  $nama4['posisi_id']])->row_array();
+      // $nama4['nama']; 
       
       $pdf->Cell(200,5,'',0,1,'C',1);
       $pdf->SetFont('Arial','',5);
@@ -157,10 +157,10 @@ if($lembur['posisi_id']=='7' and $lembur['tgl_atasan1_rencana']== null)
             
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(50,25, $nama2['nama'],1,0,'C',1);
-            $pdf->Cell(28,25, $nama3['nama'],1,0,'C',1);
+            // $pdf->Cell(28,25, $nama3['nama'],1,0,'C',1);
             $pdf->Cell(26,25, $nama1['nama'],1,0,'C',1);
             $pdf->Cell(26,25, $nama2['nama'],1,0,'C',1);
-            $pdf->Cell(26,25, $nama4['nama'],1,0,'C',1);
+            // $pdf->Cell(26,25, $nama4['nama'],1,0,'C',1);
       
             $pdf->Ln(15);
             $pdf->SetFont('Arial', 'B', 5);
@@ -300,10 +300,10 @@ else if ( $lembur['posisi_id'] != 7)
             $pdf->Cell(44,5,'',0,0,'C',1);
             $pdf->Cell(48,25, $nama1['nama'],1,0,'C',1);
             
-            $pdf->Cell(30,25, $nama3['nama'],1,0,'C',1);
+            // $pdf->Cell(30,25, $nama3['nama'],1,0,'C',1);
             $pdf->Cell(48,25, $nama1['nama'],1,0,'C',1);
            
-            $pdf->Cell(30,25, $nama4['nama'],1,0,'C',1);
+            // $pdf->Cell(30,25, $nama4['nama'],1,0,'C',1);
       
             $pdf->Ln(15);
             $pdf->SetFont('Arial', 'B', 5);

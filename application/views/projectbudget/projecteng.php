@@ -35,7 +35,7 @@
                                         <td><?= $p['deskripsi']; ?></td>
                                         <td></td>
                                         <td></td>
-                                        <td><?= $p['due_recive']; ?></td>
+                                        <td><?= $p['due_receive']; ?></td>
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td></td>
                                         <td><?= $p['status']; ?></td>
