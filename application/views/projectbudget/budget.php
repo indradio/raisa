@@ -148,7 +148,7 @@
                                 <label class="col-md-3 col-form-label">PART</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                       <input type="text" name="part2" id="part2">
+                                       <input type="text" class="form-control disabled" name="part2" id="part2">
                                     </div>
                                 </div>
                             </div>

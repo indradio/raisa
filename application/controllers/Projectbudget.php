@@ -267,8 +267,16 @@ class Projectbudget extends CI_Controller
                 ];
             $this->db->insert('project_budget', $data);
            
+        $this->db->select_sum('budget');
+        $this->db->where('copro', $this->input->post('copro'));
+        $query1 = $this->db->get('project_budget');
+        $budget = $query1->row()->budget;
 
-        redirect('projectbudget/budget/'.$data['copro']);
+        $this->db->set('mat_total', $budget);
+        $this->db->where('copro',$this->input->post('copro'));
+        $this->db->update('project');
+        echo $this->db->last_query();
+        // redirect('projectbudget/budget/'.$data['copro']);
     }
     public function ubahProjectbudget()
     {   
@@ -280,14 +288,32 @@ class Projectbudget extends CI_Controller
         $this->db->set('est_selisih', $selisih);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('project_budget');
+
+        $this->db->select_sum('budget');
+        $this->db->where('copro', $copro);
+        $query1 = $this->db->get('project_budget');
+        $budget = $query1->row()->budget;
+
+        $this->db->set('mat_total', $budget);
+        $this->db->where('copro', $copro);
+        $this->db->update('project');
         // echo $this->db->last_query();
-         redirect("projectbudget/budget/$copro");
+        redirect("projectbudget/budget/$copro");
     }
     public function hapus_project($copro,$id)
     {
         $query = "delete from project_budget where id='$id'";
-        $this->db->query($query);
-        redirect("projectbudget/budget/$copro");
+        $this->db->query($query);$this->db->select_sum('budget');
+        $this->db->where('copro', $copro);
+        $query1 = $this->db->get('project_budget');
+        $budget = $query1->row()->budget;
+
+        $this->db->set('mat_total', $budget);
+        $this->db->where('copro', $copro);
+        $this->db->update('project');
+        echo $this->db->last_query();
+        
+        // redirect("projectbudget/budget/$copro");
     }
     public function hapusdetail($copro,$part,$id)
     {
