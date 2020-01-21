@@ -75,13 +75,13 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '45.126.132.181',
-	'username' => 'cpwinteq_root',
-	'password' => 'admin',
+	'hostname' => 'localhost',
+	'username' => 'winr5693_root',
+	'password' => 'K0mponen1!',
 	//'hostname' => 'localhost',
 	// 'username' => 'root',
 	// 'password' => '',
-	'database' => 'cpwinteq_raisa',
+	'database' => 'winr5693_raisa',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
