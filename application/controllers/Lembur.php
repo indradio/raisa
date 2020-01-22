@@ -528,7 +528,7 @@ class Lembur extends CI_Controller
                 'copro' => $this->input->post('copro'),
                 'aktivitas' =>  $this->input->post('aktivitas'),
                 'durasi_menit' => $this->input->post('durasi'),
-                'durasi' => floatval($this->input->post('durasi')) / 60,
+                'durasi' => intval($this->input->post('durasi')) / 60,
                 'deskripsi_hasil' => $this->input->post('deskripsi_hasil'),
                 'progres_hasil' => $this->input->post('progres_hasil'),
                 'dibuat_oleh' => $this->session->userdata('inisial'),
