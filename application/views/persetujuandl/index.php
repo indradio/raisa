@@ -53,12 +53,12 @@
                                             FROM `reservasi`
                                             WHERE `status` = 1 or `status` = 2
                                             ";
-                                        }else(
+                                        }else{
                                             $queryRsv = "SELECT *
                                             FROM `reservasi`
                                             WHERE (`atasan1` = '{$karyawan['inisial']}' and `status` = 1) or (`atasan2` = '{$karyawan['inisial']}' and `status` = 2)
                                             ";
-                                        )
+                                        }
                                         
                                         $reservasi = $this->db->query($queryRsv)->result_array();
                                         foreach ($reservasi as $rsv) : ?>
