@@ -253,19 +253,12 @@ class Jamkerja extends CI_Controller
                 $produktifitas = $produktif1 + $produktif2;
 
                 $this->db->set('produktifitas', $produktifitas);
-                $this->db->set('status', 9);
+                $this->db->set('status', 2);
                 $this->db->set('create', date('Y-m-d H:i:s'));
                 $this->db->set('respon_create', $respon);
                 $this->db->set('durasi', $totaldurasi);
                 $this->db->where('id', $jamkerja['id']);
                 $this->db->update('jamkerja');
-
-                $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $jamkerja['id']])->result_array();
-                foreach($aktivitas as $a):
-                    $this->db->set('status', 9);
-                    $this->db->where('id', $a['id']);
-                    $this->db->update('aktivitas');
-                endforeach;
             }
         } 
        
