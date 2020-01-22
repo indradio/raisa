@@ -528,7 +528,7 @@ class Lembur extends CI_Controller
                 'copro' => $this->input->post('copro'),
                 'aktivitas' =>  $this->input->post('aktivitas'),
                 'durasi_menit' => $this->input->post('durasi'),
-                'durasi' => $this->input->post('durasi') / 60,
+                'durasi' => floatval($this->input->post('durasi')) / 60,
                 'deskripsi_hasil' => $this->input->post('deskripsi_hasil'),
                 'progres_hasil' => $this->input->post('progres_hasil'),
                 'dibuat_oleh' => $this->session->userdata('inisial'),
@@ -585,8 +585,8 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row_array();
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link_aktivitas')])->row_array();
-        $durasiPost = $this->input->post('durasi');
-        $jam = $durasiPost / 60;
+        // $durasiPost = $this->input->post('durasi');
+        // $jam = $durasiPost / 60;
 
         if ($this->input->post('progres_hasil') == 100){
             $status = 9;
@@ -596,7 +596,7 @@ class Lembur extends CI_Controller
 
         $this->db->set('deskripsi_hasil', $this->input->post('deskripsi_hasil'));
         $this->db->set('durasi_menit', $this->input->post('durasi'));
-        $this->db->set('durasi', $jam);
+        $this->db->set('durasi', $this->input->post('durasi')/60);
         $this->db->set('progres_hasil', $this->input->post('progres_hasil'));
         $this->db->set('status', $status);
         $this->db->set('diubah_oleh', $this->session->userdata('inisial'));
