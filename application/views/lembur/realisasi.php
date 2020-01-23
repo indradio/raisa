@@ -49,7 +49,7 @@
                                                 <?php if($l['status']== '4') {?>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H', strtotime($l['durasi'])); ?> Jam <?= date('i', strtotime($l['durasi'])); ?> Menit</td>
+                                            <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
                                                 <?php } else { ?>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>

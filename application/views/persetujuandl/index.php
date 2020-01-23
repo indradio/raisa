@@ -48,11 +48,18 @@
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        $queryRsv = "SELECT *
+                                        if ($this->session->userdata('inisial')=='ABU'){
+                                            $queryRsv = "SELECT *
+                                            FROM `reservasi`
+                                            WHERE `status` = 1 or `status` = 2
+                                            ";
+                                        }else{
+                                            $queryRsv = "SELECT *
                                             FROM `reservasi`
                                             WHERE (`atasan1` = '{$karyawan['inisial']}' and `status` = 1) or (`atasan2` = '{$karyawan['inisial']}' and `status` = 2)
-                                            ORDER BY `id` DESC
                                             ";
+                                        }
+                                        
                                         $reservasi = $this->db->query($queryRsv)->result_array();
                                         foreach ($reservasi as $rsv) : ?>
                                             <tr>

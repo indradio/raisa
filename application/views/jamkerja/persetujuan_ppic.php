@@ -50,26 +50,35 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php 
+                  <?php
+                  date_default_timezone_set('asia/jakarta');
                   $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                   foreach ($kry as $k) : 
                     $this->db->where('npk', $k['npk']);
                     $this->db->where('tglmulai', $tanggal);
                     $this->db->where('status >', 0);
                     $jamkerja = $this->db->get_where('jamkerja')->row_array();
-                    $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
-                    if ($respon==0){
-                      $respon = 'Tepat Waktu';
-                    }else{
-                      $respon = $respon.' Hari';
-                    }
-                    $now = time();
-                    $due = strtotime($jamkerja['create']);
-                    $approve = $due - $now;
-                    $approve = floor($approve / (60 * 60 * 24));
-                    $approve = $approve.' Hari';
                     
-                    if ($jamkerja['id']){
+                    if (!empty($jamkerja)){
+                      
+                      $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
+                      if ($respon==0){
+                        $respon = 'Tepat Waktu';
+                      }else{
+                        $respon = $respon.' Hari';
+                      }
+
+                      $now = time();
+                      // $due = strtotime($jamkerja['create']);
+                      $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
+                      $approve = $due - $now;
+                      $approve = floor($approve / (60 * 60 * 24));
+                      if ($approve<0){
+                        $approve = '( '.$approve.' Hari )';
+                      }else{
+                        $approve = null;
+                      }
+
                       if ($jamkerja['status']==2){ ?>
                         <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jamkerja['id']); ?>'" >
                       <?php }else{
@@ -81,7 +90,7 @@
                       <td><?=$sect['nama']; ?></td>
                       <td>
                         <?php if ($jamkerja['status']==1){
-                          echo 'Menunggu Persetujuan '.$jamkerja['atasan1'].' <small>( '. $approve .' )</small>';
+                          echo 'Menunggu Persetujuan '.$jamkerja['atasan1'].' <small>'. $approve .'</small>';
                         }elseif ($jamkerja['status']==2){
                           echo 'Menunggu Persetujuan PPIC';
                         }elseif ($jamkerja['status']==9){

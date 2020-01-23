@@ -56,7 +56,7 @@ class Kadep extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'Kepala Departemen';
-        $data['sidesubmenu'] = 'Laporan Lembur';
+        $data['sidesubmenu'] = 'Laporan MH';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         
         $tglawal = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));

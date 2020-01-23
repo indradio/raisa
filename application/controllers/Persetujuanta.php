@@ -28,6 +28,12 @@ class Persetujuanta extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('persetujuanta/index', $data);
             $this->load->view('templates/footer');
+        } else if ($this->session->userdata('inisial')=='ABU') {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('persetujuanta/index', $data);
+            $this->load->view('templates/footer');
         } else {
             $this->load->view('auth/denied');
         }
