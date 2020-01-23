@@ -3,7 +3,17 @@
     <?php if ($jamkerja['status']==0) { ?>
         <?php if ($jamkerja['catatan']) { ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Catatan dari atasan kamu,</strong>
+                <strong>Catatan dari <?= $jamkerja['atasan1']; ?>,</strong>
+                </br>
+                <?= $jamkerja['catatan']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php } ?>
+        <?php if ($jamkerja['catatan_ppic']) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Catatan dari <?= $jamkerja['ppic']; ?>,</strong>
                 </br>
                 <?= $jamkerja['catatan']; ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -23,14 +33,22 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+    <?php }elseif ($jamkerja['status']==2) { 
+        $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array(); ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
+            </br>
+            <small>Laporan Jam Kerja kamu sedang diperiksa oleh PPIC</small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     <?php }else{ 
         $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array(); ?>
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <strong>Yeayy, Laporan Jam Kerja kamu sudah disetujui</strong>
-            <?php if ($this->session->userdata('posisi_id')>6){ ?>
             </br>
-            <small>Laporan Jam Kerja kamu sudah diperiksa oleh <?= $atasan['nama']; ?></small>
-            <?php } ?>
+            <small>Laporan Jam Kerja kamu sudah diperiksa oleh Atasan & PPIC</small>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
