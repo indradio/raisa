@@ -486,11 +486,19 @@ class Jamkerja extends CI_Controller
 
             redirect('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
         }else{
-            $this->db->set('ppic', $this->session->userdata('inisial'));
-            $this->db->set('catatan_ppic', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
-            $this->db->set('status', 1);
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('jamkerja');
+            if ($jamkerja['posisi_id']==7){
+                $this->db->set('ppic', $this->session->userdata('inisial'));
+                $this->db->set('catatan_ppic', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
+                $this->db->set('status', 1);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('jamkerja');
+            }else{
+                $this->db->set('ppic', $this->session->userdata('inisial'));
+                $this->db->set('catatan_ppic', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
+                $this->db->set('status', 0);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('jamkerja');
+            }
 
             redirect('jamkerja/ppic/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
         }
