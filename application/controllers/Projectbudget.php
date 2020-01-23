@@ -15,6 +15,7 @@ class Projectbudget extends CI_Controller
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['project'] = $this->db->get_where('project', ['status' =>  'OPEN'])->result_array();
+        $data['customer'] = $this->db->get('customer')->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         if ($karyawan['sect_id'] == 222) {
         $this->load->view('templates/header', $data);
@@ -49,7 +50,7 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['project'] = $this->db->get('project_budget_detail',)->result_array();
+        $data['project'] = $this->db->get('project_material_detail',)->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
        
         $this->load->view('templates/header', $data);
@@ -64,9 +65,9 @@ class Projectbudget extends CI_Controller
     	$data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
     	$data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->get_where('project_budget', ['copro' =>  $copro])->result_array();
+        $data['Projectbudget'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
-        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_budget.part from project_budget where part_project.nama = project_budget.part AND copro ='$copro')")->result_array();
+        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
          $data['part_project'] = $this->db->get('part_project')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -79,7 +80,7 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->get_where('project_budget', ['copro' =>  $copro])->result_array();
+        $data['Projectbudget'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
        
         $this->load->view('templates/header', $data);
@@ -92,9 +93,9 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->get_where('project_budget', ['copro' =>  $copro])->result_array();
+        $data['Projectbudget'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
-        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_budget.part from project_budget where part_project.nama = project_budget.part AND copro ='$copro')")->result_array();
+        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -105,10 +106,10 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->query("SELECT * from project_budget_detail where copro = '$copro' and part ='$part'")->result_array(); 
-        $data['budget'] = $this->db->query("SELECT * from project_budget where copro = '$copro' and part ='$part'")->result_array();
+        $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
+        $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
-        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_budget.part from project_budget where part_project.nama = project_budget.part AND copro ='$copro')")->result_array();
+        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -119,8 +120,8 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->query("SELECT * from project_budget_detail where copro = '$copro' and part ='$part'")->result_array(); 
-        $data['budget'] = $this->db->query("SELECT * from project_budget where copro = '$copro' and part ='$part'")->result_array();
+        $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
+        $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -133,10 +134,10 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->query("SELECT * from project_budget_detail where copro = '$copro' and part ='$part'")->result_array(); 
-        $data['budget'] = $this->db->query("SELECT * from project_budget where copro = '$copro' and part ='$part'")->result_array();
+        $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
+        $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
-        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_budget.part from project_budget where part_project.nama = project_budget.part AND copro ='$copro')")->result_array();
+        $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -159,10 +160,10 @@ class Projectbudget extends CI_Controller
             'tgl_buat' =>   $now,
             'pembuat_est' => $this->session->userdata('npk'),
             'keterangan' => $this->input->post('keterangan')];
-        $this->db->insert('project_budget_detail', $data);
+        $this->db->insert('project_material_detail', $data);
         // echo $this->db->last_query();
-        $pp = $this->db->query("SELECT sum(biaya_est) from project_budget_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exprod = $this->db->query("SELECT sum(biaya_est) from project_budget_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $pp = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exprod = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
         $total = $pp[0]['sum(biaya_est)'] + $exprod[0]['sum(biaya_est)'] ;
         $selisih = $this->input->post('budget') - $total;
         $persen = $total / ($this->input->post('budget')/100);
@@ -175,7 +176,7 @@ class Projectbudget extends CI_Controller
         $this->db->set('est_persen',  $persen);
         $this->db->set('est_selisihpersen',  $persens);
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('project_budget');
+        $this->db->update('project_material');
             // echo $this->db->last_query();
         
 
@@ -186,18 +187,18 @@ class Projectbudget extends CI_Controller
         $copro = $this->input->post('copro');
         $part = $this->input->post('part');
         $kategori = $this->input->post('kategori');
-        $budget = $this->db->query("SELECT budget from project_budget where copro = '$copro' and part ='$part'")->result_array();
+        $budget = $this->db->query("SELECT budget from project_material where copro = '$copro' and part ='$part'")->result_array();
         $this->db->set('biaya_act', $this->input->post('biaya_act'));
         $this->db->set('pr', $this->input->post('no_pr'));
         $this->db->set('po', $this->input->post('no_po'));
         $this->db->set('keterangan', $this->input->post('keterangan'));
         $this->db->set('pembuat_act',  $this->session->userdata('npk'));
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('project_budget_detail');
+        $this->db->update('project_material_detail');
 
 
-        $pp = $this->db->query("SELECT sum(biaya_act) from project_budget_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exprod = $this->db->query("SELECT sum(biaya_act) from project_budget_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $pp = $this->db->query("SELECT sum(biaya_act) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exprod = $this->db->query("SELECT sum(biaya_act) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
         $total = $pp[0]['sum(biaya_act)'] + $exprod[0]['sum(biaya_act)'] ;
         $selisih = $budget[0]['budget'] - $total;
         $persen = $total / ($budget[0]['budget']/100);
@@ -211,7 +212,7 @@ class Projectbudget extends CI_Controller
         $this->db->set('act_selisihpersen',  $persens);
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->where('part', $this->input->post('part'));
-        $this->db->update('project_budget');
+        $this->db->update('project_material');
         // echo $this->db->last_query();
         redirect("projectbudget/budgetpchdetail/$copro/$part");
     } 
@@ -220,15 +221,15 @@ class Projectbudget extends CI_Controller
         $copro = $this->input->post('copro');
         $part = $this->input->post('part');
         $kategori = $this->input->post('kategori');
-        $budget = $this->db->query("SELECT budget from project_budget where copro = '$copro' and part ='$part'")->result_array();
+        $budget = $this->db->query("SELECT budget from project_material where copro = '$copro' and part ='$part'")->result_array();
         $this->db->set('biaya_est', $this->input->post('biaya_est'));
         $this->db->set('no', $this->input->post('no'));
         $this->db->set('keterangan', $this->input->post('keterangan'));
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('project_budget_detail');
+        $this->db->update('project_material_detail');
 
-        $pp = $this->db->query("SELECT sum(biaya_est) from project_budget_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exprod = $this->db->query("SELECT sum(biaya_act) from project_budget_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $pp = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exprod = $this->db->query("SELECT sum(biaya_act) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
         $total = $pp[0]['sum(biaya_est)'] + $exprod[0]['sum(biaya_act)'] ;
         $selisih = $budget[0]['budget'] - $total;
         $persen = $total / ($budget[0]['budget']/100);
@@ -242,7 +243,7 @@ class Projectbudget extends CI_Controller
         $this->db->set('est_selisihpersen',  $persens);
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->where('part', $this->input->post('part'));
-        $this->db->update('project_budget');
+        $this->db->update('project_material');
         // echo $this->db->last_query();
         redirect("projectbudget/budgetengdetail/$copro/$part");
     }
@@ -265,18 +266,18 @@ class Projectbudget extends CI_Controller
                 'act_selisih'=> '0',
                 'act_selisihpersen'=> '0'
                 ];
-            $this->db->insert('project_budget', $data);
+            $this->db->insert('project_material', $data);
            
         $this->db->select_sum('budget');
         $this->db->where('copro', $this->input->post('copro'));
-        $query1 = $this->db->get('project_budget');
+        $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;
 
         $this->db->set('mat_total', $budget);
         $this->db->where('copro',$this->input->post('copro'));
         $this->db->update('project');
-        echo $this->db->last_query();
-        // redirect('projectbudget/budget/'.$data['copro']);
+        // echo $this->db->last_query();
+        redirect('projectbudget/budget/'.$data['copro']);
     }
     public function ubahProjectbudget()
     {   
@@ -287,11 +288,11 @@ class Projectbudget extends CI_Controller
         $this->db->set('budget', $this->input->post('budget'));
         $this->db->set('est_selisih', $selisih);
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('project_budget');
+        $this->db->update('project_material');
 
         $this->db->select_sum('budget');
         $this->db->where('copro', $copro);
-        $query1 = $this->db->get('project_budget');
+        $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;
 
         $this->db->set('mat_total', $budget);
@@ -302,32 +303,32 @@ class Projectbudget extends CI_Controller
     }
     public function hapus_project($copro,$id)
     {
-        $query = "delete from project_budget where id='$id'";
+        $query = "delete from project_material where id='$id'";
         $this->db->query($query);$this->db->select_sum('budget');
         $this->db->where('copro', $copro);
-        $query1 = $this->db->get('project_budget');
+        $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;
 
         $this->db->set('mat_total', $budget);
         $this->db->where('copro', $copro);
         $this->db->update('project');
-        echo $this->db->last_query();
+        // echo $this->db->last_query();
         
-        // redirect("projectbudget/budget/$copro");
+        redirect("projectbudget/budget/$copro");
     }
     public function hapusdetail($copro,$part,$id)
     {
-        $query = "delete from project_budget_detail where id='$id'";
+        $query = "delete from project_material_detail where id='$id'";
         $this->db->query($query);
-        $budget = $this->db->query("SELECT budget from project_budget where copro = '$copro' and part ='$part'")->result_array();
-        $pp = $this->db->query("SELECT sum(biaya_est) from project_budget_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exprod = $this->db->query("SELECT sum(biaya_est) from project_budget_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $budget = $this->db->query("SELECT budget from project_material where copro = '$copro' and part ='$part'")->result_array();
+        $pp = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exprod = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
         $total = $pp[0]['sum(biaya_est)'] + $exprod[0]['sum(biaya_est)'] ;
         $selisih = $budget[0]['budget'] - $total;
         $persen = $total / ($budget[0]['budget']/100);
         $persens = $selisih / ($budget[0]['budget']/100);
-        $ppa = $this->db->query("SELECT sum(biaya_act) from project_budget_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exproda = $this->db->query("SELECT sum(biaya_act) from project_budget_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $ppa = $this->db->query("SELECT sum(biaya_act) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exproda = $this->db->query("SELECT sum(biaya_act) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
         $totala = $ppa[0]['sum(biaya_act)'] + $exproda[0]['sum(biaya_act)'] ;
         $selisiha = $budget[0]['budget'] - $total;
         $persena = $totala / ($budget[0]['budget']/100);
@@ -347,7 +348,7 @@ class Projectbudget extends CI_Controller
         $this->db->set('act_selisihpersen',  $persensa);
         $this->db->where('copro',$copro);
         $this->db->where('part', $part);
-        $this->db->update('project_budget');
+        $this->db->update('project_material');
         
         // echo $this->db->last_query();
         redirect("projectbudget/budgetengdetail/$copro/$part");
