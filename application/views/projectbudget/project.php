@@ -106,6 +106,20 @@
                                 </div>
                             </div>
                             <div class="row" >
+                                <label class="col-md-3 col-form-label">Customer ID</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                    <select class="selectpicker" id="inisial" name="inisial" data-style="select-with-transition" data-size="7"required>
+                                      <option value='0'>--pilih--</option>
+                                      <?php 
+                                      foreach ($customer as $c) {
+                                      echo "<option value='$c[inisial]'>$c[inisial]</option>";
+                                    } ?>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
                                 <label class="col-md-3 col-form-label">Status</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
@@ -121,7 +135,7 @@
                                 <label class="col-md-3 col-form-label">PO Recive</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="date" class="form-control " id="due_recive" name="due_recive" required>
+                                        <input type="date" class="form-control " id="due_recive" name="due_receive" required>
                                     </div>
                                 </div>
                             </div>

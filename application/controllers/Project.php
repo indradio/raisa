@@ -66,18 +66,23 @@ class Project extends CI_Controller
         $this->load->view('templates/footer');
     }
     public function tambahproject()
-    {
+    {   
+        $inisial =  $this->db->get_where('customer', ['inisial' =>  $this->input->post('inisial')])->row_array();
         $data = [
             'copro' => $this->input->post('copro'),
+            'customer_inisial' => $this->input->post('inisial'),
+            'customer_nama' => $inisial['nama'],
             'deskripsi' => $this->input->post('deskripsi'),
             'status' => $this->input->post('status'),
             'due_date' => $this->input->post('due_date'),
-            'due_recive' => $this->input->post('due_recive'),
-            'jam_kerja' => $this->input->post('jam'),
+            'due_receive' => $this->input->post('due_receive'),
+            'mh_budget' => $this->input->post('jam'),
             'cost_amount' => $this->input->post('cost')
+
         ];
 
          $this->db->insert('project', $data);
+         // echo $this->db->last_query();
          redirect('projectbudget/index');
     }
 
