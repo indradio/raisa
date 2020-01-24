@@ -253,7 +253,7 @@
                                     <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
                                         $queryJam = "SELECT * FROM `jam`";
-                                        $jam = $this->db->get_where('jam')->result_array();
+                                        $jam = $this->db->get_where('jam', ['id <=' => 4])->result_array();
                                         foreach ($jam as $j) : ?>
                                             <option value="+<?= $j['menit']; ?> minute"><?= $j['nama']; ?></option>
                                         <?php endforeach; ?>

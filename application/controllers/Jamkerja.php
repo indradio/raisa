@@ -185,6 +185,10 @@ class Jamkerja extends CI_Controller
             $id = date("ymd", strtotime($jamkerja['tglmulai'])) . $this->session->userdata('npk') . time();
         }
 
+        if($aktivitas=="DR, Konsep"){
+            $copro = null;
+        }
+
         if (!$deskripsi){
             $deskripsi = $aktivitas;
         }
@@ -281,6 +285,10 @@ class Jamkerja extends CI_Controller
             $id = $copro . $npk . time();
         }else{
             $id = date("ymd", strtotime($jamkerja['tglmulai'])) . $npk . time();
+        }
+
+        if($aktivitas=="DR, Konsep"){
+            $copro = null;
         }
 
         if (!$deskripsi){

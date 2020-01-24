@@ -21,20 +21,18 @@
                 </button>
             </div>
         <?php } ?>
-    <?php }elseif ($jamkerja['status']==1) { 
-        $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array(); ?>
+    <?php }elseif ($jamkerja['status']==1) { ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
             <?php if ($this->session->userdata('posisi_id')>6){ ?>
             </br>
-            <small>Laporan Jam Kerja kamu sedang diperiksa oleh <?= $atasan['nama']; ?></small>
+            <small>Laporan Jam Kerja kamu sedang diperiksa oleh <?= $jamkerja['atasan1']; ?></small>
             <?php } ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    <?php }elseif ($jamkerja['status']==2) { 
-        $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array(); ?>
+    <?php }elseif ($jamkerja['status']==2) { ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
             </br>
@@ -43,8 +41,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    <?php }else{ 
-        $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array(); ?>
+    <?php }else{ ?>
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <strong>Yeayy, Laporan Jam Kerja kamu sudah disetujui</strong>
             </br>

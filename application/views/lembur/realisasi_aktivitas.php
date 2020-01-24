@@ -115,13 +115,12 @@
                                                 <td><?= $k['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
                                                 <td><?= $a['aktivitas']; ?></td>
                                                 <td><?= $a['deskripsi_hasil']; ?></td>
-                                                <?php $s = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
-                                                <td><?= $s['nama'] .', '. $a['progres_hasil']; ?>%</td>
+                                                <td><?= $a['progres_hasil']; ?>%</td>
                                                 <td><?= $a['durasi']; ?> jam</td>
                                                 <td class="text-right">
                                                     <?php if ($lembur['status'] == '4' and $a['status']== '1') { ?>
                                                         <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" class="badge badge-pill badge-success">Realisasi</a>
-                                                    <?php } else if($lembur['status'] == '4' and $a['status']!= '1'){ ?>
+                                                    <?php } else if($lembur['status'] == '4' and $a['status']> '1'){ ?>
                                                         <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-deskripsi_hasil="<?= $a['deskripsi_hasil']; ?>" class="badge badge-pill badge-info">Revisi</a>
                                                     <?php }; ?>
                                                         <a href="<?= base_url('lembur/hapus_aktivitas_realisasi/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>

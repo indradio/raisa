@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-3 col-form-label">Tanggal Lembur</label>
+                                    <label class="col-ml-3 col-form-label">Tanggal</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="nama" name="nama" value="<?= date('d-M H:i', strtotime($lembur['tglmulai_aktual'])); ?>">
@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <label class="col-ml-3 col-form-label">Durasi Lembur</label>
+                                    <label class="col-ml-3 col-form-label">Durasi</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi_aktual'])).' Jam / '. $lembur['aktivitas']; ?> Aktivitas">
@@ -47,13 +47,33 @@
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                <label class="col-ml-3 col-form-label">Lokasi Lembur</label>
+                                <label class="col-ml-3 col-form-label">Lokasi</label>
                                     <div class="col-md-7">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
                                         </div>
                                     </div>
                                 </div>
+                                <?php if ($this->session->userdata('dept_id')==13) { ?>
+
+                                  <div class="row col-md-12">
+                                <label class="col-ml-3 col-form-label">Kategori</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" id="kategori" name="kategori" value="<?= $lembur['kategori']; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php } ?>
+                                <div class="row col-md-12">
+                                        <label class="col-ml-5 col-form-label">Catatan</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group has-default">
+                                                <textarea type="text" class="form-control disabled"><?= $lembur['catatan']; ?></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div> 
                         </form>
                         <div class="toolbar">
@@ -84,8 +104,7 @@
                                                 <td><?= $k['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
                                                 <td><?= $a['aktivitas']; ?></td>
                                                 <td><?= $a['deskripsi_hasil']; ?></td>
-                                                <?php $s = $this->db->get_where('aktivitas_status', ['id' => $a['status']])->row_array(); ?>
-                                                <td><?= $s['nama'] .', '. $a['progres_hasil']; ?>%</td>
+                                                <td><?= $a['progres_hasil']; ?>%</td>
                                                 <td><?= $a['durasi']; ?> jam</td>
                                             </tr>
                                         <?php endforeach; ?>
