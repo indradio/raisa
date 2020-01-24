@@ -2,8 +2,8 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <?php if ($jamkerja['status']==0) { ?>
         <?php if ($jamkerja['catatan']) { ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Catatan dari <?= $jamkerja['atasan1']; ?>,</strong>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Catatan dari ATASAN,</strong>
                 </br>
                 <?= $jamkerja['catatan']; ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,9 +13,9 @@
         <?php } ?>
         <?php if ($jamkerja['catatan_ppic']) { ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Catatan dari <?= $jamkerja['ppic']; ?>,</strong>
+                <strong>Catatan dari PPIC,</strong>
                 </br>
-                <?= $jamkerja['catatan']; ?>
+                <?= $jamkerja['catatan_ppic']; ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>

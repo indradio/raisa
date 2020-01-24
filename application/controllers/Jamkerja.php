@@ -444,6 +444,7 @@ class Jamkerja extends CI_Controller
         $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
         $respon = $due - $now;
 
+        $this->db->set('catatan', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
         $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
         $this->db->set('poin', $this->input->post('poin'));
         $this->db->set('produktifitas', $this->input->post('produktifitas'));
@@ -502,6 +503,18 @@ class Jamkerja extends CI_Controller
 
             redirect('jamkerja/ppic/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
         }
+    }
+
+    public function status()
+    {
+            $data['sidemenu'] = 'PPIC';
+            $data['sidesubmenu'] = 'Status Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/jamkerja_status', $data);
+            $this->load->view('templates/footer');
     }
 
     public function ubah_copro()

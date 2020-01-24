@@ -1,8 +1,18 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
+  <?php if ($jamkerja['catatan']) { ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Catatan dari ATASAN,</strong>
+                </br>
+                <?= $jamkerja['catatan']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php } ?>
   <?php if ($jamkerja['catatan_ppic']) { ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Catatan dari <?= $jamkerja['ppic']; ?>,</strong>
+                <strong>Catatan dari PPIC,</strong>
                 </br>
                 <?= $jamkerja['catatan_ppic']; ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -217,6 +227,9 @@
                   <span class="check"></span>
                 </span>
               </label>
+            </div>
+            <div class="form-group">
+              <textarea rows="2" class="form-control" id="catatan" name="catatan" placeholder="Berikan catatan"></textarea>
             </div>
           </div>
           <div class="modal-footer justify-content-center">
