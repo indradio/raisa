@@ -50,7 +50,7 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['project'] = $this->db->get('project_material_detail',)->result_array();
+        $data['project'] = $this->db->get('project_material_detail')->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
        
         $this->load->view('templates/header', $data);
@@ -229,14 +229,14 @@ class Projectbudget extends CI_Controller
         $this->db->update('project_material_detail');
 
         $pp = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exprod = $this->db->query("SELECT sum(biaya_act) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
-        $total = $pp[0]['sum(biaya_est)'] + $exprod[0]['sum(biaya_act)'] ;
+        $exprod = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $total = $pp[0]['sum(biaya_est)'] + $exprod[0]['sum(biaya_est)'] ;
         $selisih = $budget[0]['budget'] - $total;
         $persen = $total / ($budget[0]['budget']/100);
         $persens = $selisih / ($budget[0]['budget']/100);
             
         $this->db->set('est_cost', $pp[0]['sum(biaya_est)']);
-        $this->db->set('est_exprod', $exprod[0]['sum(biaya_act)']);
+        $this->db->set('est_exprod', $exprod[0]['sum(biaya_est)']);
         $this->db->set('est_total',  $total);
         $this->db->set('est_selisih',  $selisih);
         $this->db->set('est_persen',  $persen);

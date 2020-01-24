@@ -67,7 +67,11 @@ class Project extends CI_Controller
     }
     public function tambahproject()
     {   
+        $copro =  $this->input->post('copro'); 
         $inisial =  $this->db->get_where('customer', ['inisial' =>  $this->input->post('inisial')])->row_array();
+        $jameng = $this->input->post('jameng');
+        $jammch = $this->input->post('jammch');
+        $total = $jameng + $jammch;
         $data = [
             'copro' => $this->input->post('copro'),
             'customer_inisial' => $this->input->post('inisial'),
@@ -76,14 +80,16 @@ class Project extends CI_Controller
             'status' => $this->input->post('status'),
             'due_date' => $this->input->post('due_date'),
             'due_receive' => $this->input->post('due_receive'),
-            'mh_budget' => $this->input->post('jam'),
+            'mh_budget' => $total,
+            'mh_budget_eng' => $this->input->post('jameng'),
+            'mh_budget_mch' => $this->input->post('jammch'),
             'cost_amount' => $this->input->post('cost')
 
         ];
 
          $this->db->insert('project', $data);
          // echo $this->db->last_query();
-         redirect('projectbudget/index');
+         redirect("projectbudget/budget/$copro");
     }
 
     public function tmbahMilestone()

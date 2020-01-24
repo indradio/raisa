@@ -46,17 +46,20 @@
                                         <td><?= $p['tgl_buat'];?></td>
                                         <td><?= number_format($p['biaya_est'],0,',','.') ?></td>
                                         <td><?= number_format($p['biaya_act'],0,',','.') ?></td>
-                                        <td><?php 
-                                            $a=$p['biaya_est'];
+                                        <?php $a=$p['biaya_est'];
                                             $b=$p['biaya_act'];
-
                                             $c= $a-$b;
-
+                                            if( $c<0){?>
+                                        <td style="color:red;"><?php 
                                             echo number_format($c,0,',','.');
-                                            
                                         ?></td>
-                                        <td><?= $p['keterangan']; ?></td>                                        <td>
-                                           
+                                        <?php }else {?> 
+                                        <td><?php 
+                                            echo number_format($c,0,',','.');
+                                        ?></td>
+                                        <?php }?>
+                                        <td><?= $p['keterangan']; ?></td>
+                                        <td>
                                              <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
                                                     data-id="<?php echo $p['id'] ?>"

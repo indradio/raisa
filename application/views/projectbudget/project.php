@@ -148,10 +148,18 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Jam Kerja</label>
+                                <label class="col-md-3 col-form-label">MH ENG</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="number" class="form-control " id="jam" name="jam" required>
+                                        <input type="number" class="form-control " id="jam" name="jameng" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">MH MCH</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="number" class="form-control " id="jam" name="jammch" required>
                                     </div>
                                 </div>
                             </div>

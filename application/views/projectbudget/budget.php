@@ -73,7 +73,7 @@
                                                     data-total="<?php echo $p['est_total'] ?>"
                                                     data-selisih="<?php echo $p['est_selisih'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Edit</a>
-                                            <a href="/raisa/projectbudget/budgetdetail/<?= $p['copro'];?>/<?= $p['part'];?>" class="btn btn-sm btn-warning">View Detail</a>
+                                            
                                             <a href="/raisa/projectbudget/hapus_project/<?= $p['copro'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger">HAPUS</a>
                                         </td>
                                     </tr>
