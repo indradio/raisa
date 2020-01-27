@@ -21,9 +21,10 @@
                     <th>Tanggal</th>
                     <th>Nama</th>
                     <th>Cell</th>
-                    <th>Status</th>
                     <th>Tgl Submit</th>
                     <th>Terlambat</th>
+                    <th>Status Jam Kerja</th>
+                    <th>Status Lembur</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -31,9 +32,10 @@
                     <th>Tanggal</th>
                     <th>Nama</th>
                     <th>Cell</th>
-                    <th>Status</th>
                     <th>Tgl Submit</th>
                     <th>Terlambat</th>
+                    <th>Status Jam Kerja</th>
+                    <th>Status Lembur</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -54,6 +56,13 @@
                     $this->db->where('status >', 0);
                     $jamkerja = $this->db->get_where('jamkerja')->row_array();
                     
+                    $this->db->where('npk', $k['npk']);
+                    $this->db->where('year(tglmulai)', $tahun);
+                    $this->db->where('month(tglmulai)', $bulan);
+                    $this->db->where('day(tglmulai)', $i);
+                    $this->db->where('status >', 0);
+                    $lembur = $this->db->get_where('lembur')->row_array();
+
                     if (!empty($jamkerja)){
                       
                       $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
@@ -84,6 +93,8 @@
                        <td><?=$k['nama']; ?></td>
                        <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
                        <td><?=$sect['nama']; ?></td>
+                        <td><?= date('m-d-Y', strtotime( $jamkerja['create'])); ?></td>
+                        <td><?=$respon; ?></td>
                        <td>
                          <?php if ($jamkerja['status']==1){
                            echo 'Menunggu Persetujuan '.$jamkerja['atasan1'].' <small>'. $approve .'</small>';
@@ -93,8 +104,12 @@
                            echo 'Selesai';
                          }?>
                         </td>
-                        <td><?= date('m-d-Y', strtotime( $jamkerja['create'])); ?></td>
-                        <td><?=$respon; ?></td>
+                        <?php if (!empty($lembur)){ 
+                          $otstat = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array(); ?>
+                          <td><?=$otstat['nama']; ?></td>
+                        <?php  }else{ ?>
+                          <td class="text-danger">Tidak ada Laporan Lembur</td>
+                        <?php  } ?>
                      </tr>
                      <?php }else{ ?>
                        <tr>
@@ -102,9 +117,15 @@
                         <td><?=$k['nama']; ?></td>
                          <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
                         <td><?=$sect['nama']; ?></td>
+                        <td></td>
+                        <td></td>
                         <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
-                        <td></td>
-                        <td></td>
+                        <?php if (!empty($lembur)){
+                          $otstat = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array(); ?>
+                          <td><?=$otstat['nama']; ?></td>
+                        <?php  }else{ ?>
+                          <td class="text-danger">Tidak ada Laporan Lembur</td>
+                        <?php  } ?>
                        </tr>
                          <?php } ?>
                    <?php endforeach; 

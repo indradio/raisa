@@ -1209,7 +1209,7 @@ class Lembur extends CI_Controller
         $this->db->set('tglmulai', $lembur['tglmulai_aktual']);
         $this->db->set('tglselesai', $lembur['tglselesai_aktual']);
         $this->db->set('status', 9);
-        $this->db->where('link_aktivitas', $jamkerja['id']);
+        $this->db->where('link_aktivitas', $lembur['id']);
         $this->db->update('aktivitas');
 
         $this->db->select('SUM(durasi) as total');
