@@ -641,4 +641,31 @@ class Jamkerja extends CI_Controller
         $this->load->view('jamkerja/lp_aktivitas_ppic', $data);
         $this->load->view('templates/footer');
     }
+
+    public function lp_acc_monthly()
+    {
+        $data['sidemenu'] = 'PPIC';
+        $data['sidesubmenu'] = 'Laporan Jam Kerja';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        date_default_timezone_set('asia/jakarta');
+        if($this->input->post('tahun')){
+            $tahun = $this->input->post('tahun');
+            $bulan = $this->input->post('bulan');
+        }else{
+            $tahun = date('Y');
+            $bulan = date('m');
+        }
+
+        $this->db->where('year(tgl_aktivitas)', $tahun);
+        $this->db->where('month(tgl_aktivitas)', $bulan);
+        $this->db->where('contract', 'Direct Labor');
+        $this->db->where('status', 9);
+        $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('jamkerja/lp_acc_monthly', $data);
+        $this->load->view('templates/footer');
+    }
 }

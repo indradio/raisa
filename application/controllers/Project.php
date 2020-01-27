@@ -29,13 +29,72 @@ class Project extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $project) {
+
+            if (!empty($project->mh_budget)){
+                $mh_budget = $project->mh_budget;
+            }else{
+                $mh_budget = 1;
+            }
+
+            if (!empty($project->mt_budget)){
+                $mt_budget = $project->mt_budget;
+            }else{
+                $mt_budget = 1;
+            }
+
+            $this->db->select_sum('durasi');
+            $this->db->where('copro', $project->copro);
+            $this->db->where('status', '9'); 
+            $mh = $this->db->get('aktivitas');
+            $mh_total = $mh->row()->durasi;
+
+            $this->db->select_sum('durasi');
+            $this->db->where('copro', $project->copro);
+            $this->db->where('jenis_aktivitas', 'JAM KERJA');
+            $this->db->where('status', '9');
+            $wh = $this->db->get('aktivitas');
+            $mh_wh = $wh->row()->durasi;
+
+            $this->db->select_sum('durasi');
+            $this->db->where('copro', $project->copro);
+            $this->db->where('jenis_aktivitas', 'LEMBUR');
+            $this->db->where('status', '9');
+            $ot = $this->db->get('aktivitas');
+            $mh_ot = $ot->row()->durasi;
+
+            $this->db->select_sum('est_total');
+            $this->db->where('copro', $project->copro);
+            $est = $this->db->get('project_material');
+            $mt_est = $est->row()->est_total;
+
+            $this->db->select_sum('act_total');
+            $this->db->where('copro', $project->copro);
+            $act = $this->db->get('project_material');
+            $mt_act = $act->row()->act_total;
+
             $no++;
             $row = array();
             $row[] = $no;
             $row[] = $project->copro;
-            $row[] = $project->status;
+            $row[] = $project->customer_inisial;
             $row[] = $project->deskripsi;
             $row[] = null;
+            $row[] = null;
+            $row[] = null;
+            $row[] = $project->status;
+            $row[] = null;
+            $row[] = $project->mh_budget;
+            $row[] = $mh_wh;
+            $row[] = round($mh_wh / $mh_budget* 100,2).'%';
+            $row[] = $mh_ot;
+            $row[] = round($mh_ot / $mh_budget* 100,2).'%';
+            $row[] = $mh_total;
+            $row[] = round($mh_total / $mh_budget* 100,2).'%';
+            $row[] = $project->mt_budget;
+            $row[] = $mt_est;
+            $row[] = round($mt_est / $mt_budget* 100,2).'%';
+            $row[] = $mt_act;
+            $row[] = round($mt_act / $mt_budget* 100,2).'%';
 
             $data[] = $row;
         }
@@ -64,32 +123,6 @@ class Project extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('project/wbs', $data);
         $this->load->view('templates/footer');
-    }
-    public function tambahproject()
-    {   
-        $copro =  $this->input->post('copro'); 
-        $inisial =  $this->db->get_where('customer', ['inisial' =>  $this->input->post('inisial')])->row_array();
-        $jameng = $this->input->post('jameng');
-        $jammch = $this->input->post('jammch');
-        $total = $jameng + $jammch;
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'customer_inisial' => $this->input->post('inisial'),
-            'customer_nama' => $inisial['nama'],
-            'deskripsi' => $this->input->post('deskripsi'),
-            'status' => $this->input->post('status'),
-            'due_date' => $this->input->post('due_date'),
-            'due_receive' => $this->input->post('due_receive'),
-            'mh_budget' => $total,
-            'mh_budget_eng' => $this->input->post('jameng'),
-            'mh_budget_mch' => $this->input->post('jammch'),
-            'cost_amount' => $this->input->post('cost')
-
-        ];
-
-         $this->db->insert('project', $data);
-         // echo $this->db->last_query();
-         redirect("projectbudget/budget/$copro");
     }
 
     public function tmbahMilestone()

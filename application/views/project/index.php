@@ -18,11 +18,32 @@
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>COPRO</th>
-                                        <th>Status</th>
-                                        <th>Deskripsi</th>
-                                        <th>Actions</th>
+                                        <th rowspan="2">No</th>
+                                        <th rowspan="2">COPRO</th>
+                                        <th rowspan="2">Customer</th>
+                                        <th rowspan="2">Description</th>
+                                        <th rowspan="2">Amount</th>
+                                        <th rowspan="2">Receive</th>
+                                        <th rowspan="2">% Progress</th>
+                                        <th rowspan="2">Stat</th>
+                                        <th rowspan="2">Due Date</th>
+                                        <th colspan="7" style="text-align: center;">MAN HOUR</th>
+                                        <th colspan="5"style="text-align: center;">MATERIAL</th>
+                                        <th rowspan="2">Actions</th>
+                                    </tr> 
+                                    <tr>
+                                        <th>Budget</th>
+                                        <th>WH</th>
+                                        <th>%</th>
+                                        <th>OT</th>
+                                        <th>%</th>
+                                        <th>Actual</th>
+                                        <th>%</th>
+                                        <th>Budget</th>
+                                        <th>Estimasi</th>
+                                        <th>%</th>
+                                        <th>Actual</th>
+                                        <th>%</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,8 +52,25 @@
                                     <tr>
                                         <th>No</th>
                                         <th>COPRO</th>
-                                        <th>Status</th>
-                                        <th>Deskripsi</th>
+                                        <th>Customer</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                        <th>Receive</th>
+                                        <th>% Progress</th>
+                                        <th>Stat</th>
+                                        <th>Due Date</th>
+                                        <th>Budget</th>
+                                        <th>WH</th>
+                                        <th>%</th>
+                                        <th>OT</th>
+                                        <th>%</th>
+                                        <th>Actual</th>
+                                        <th>%</th>
+                                        <th>Budget</th>
+                                        <th>Estimasi</th>
+                                        <th>%</th>
+                                        <th>Actual</th>
+                                        <th>%</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
@@ -110,6 +148,10 @@
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            "language": {
+                "decimal": ",",
+                "thousands": "."
+            },
             scrollX: true,
             "processing": true, //Feature control the processing indicator.
             "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -124,10 +166,11 @@
             //Set column definition initialisation properties.
             "columnDefs": [{
                 "targets": [0], //first column / numbering column
+                // "targets": [0,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //first column / numbering column
                 "orderable": false, //set not orderable
-            }, ],
-            "columnDefs": [{
-                "targets": [4], //first column / numbering column
+            },
+            {
+                "targets": [21], //first column / numbering column
                 "orderable": false, //set not orderable
                 "defaultContent": "<button class='btn btn-sm btn-success btn-round'>PILIH</button>",
             }, ],

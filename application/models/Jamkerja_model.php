@@ -84,6 +84,22 @@ class Jamkerja_model extends CI_Model
         $query = $this->db->get("jamkerja_lain");
         return $query->result_array();
     }
+    
+    public function get_manhours()
+    {
+        $this->db->where('contract', 'Direct Labor');
+        $this->db->where('status', 9);
+        $query = $this->db->get("aktivitas");
+        return $query->result_array();
+    }
+
+    public function get_mh_ot()
+    {
+        $this->db->where('jenis_aktivitas', 'LEMBUR');
+        $this->db->where('contract', 'Direct Labor');
+        $this->db->where('status', 9);
+        return $this->db->get("aktivitas");
+    }
 
     // function fetch_milestone($copro)
     // {

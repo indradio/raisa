@@ -1213,7 +1213,7 @@ class Lembur extends CI_Controller
         $this->db->update('aktivitas');
 
         $this->db->select('SUM(durasi) as total');
-        $this->db->where('link_aktivitas',$this->input->post('id'));
+        $this->db->where('link_aktivitas', $lembur['id']);
         $this->db->where('status >', '1');
         $this->db->from('aktivitas');
         $totalDurasi = $this->db->get()->row()->total;
@@ -1225,7 +1225,7 @@ class Lembur extends CI_Controller
         $this->db->set('istirahat1', $istirahat1);
         $this->db->set('istirahat2', $istirahat2);
         $this->db->set('status', '9');
-        $this->db->where('id', $this->input->post('id'));
+        $this->db->where('id', $lembur['id']);
         $this->db->update('lembur');
 
         //Notifikasi ke USER
