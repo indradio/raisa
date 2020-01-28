@@ -86,6 +86,7 @@
                                             <th>Cell / Section</th>
                                             <th>Posisi</th>
                                             <th>Jenis</th>
+                                            <th>Hari</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -103,6 +104,7 @@
                                             <th>Cell / Section</th>
                                             <th>Posisi</th>
                                             <th>Jenis</th>
+                                            <th>Hari</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -130,6 +132,7 @@
                                                 <?php $posisi = $this->db->get_where('karyawan_posisi', ['id' => $kry['posisi_id']])->row_array(); ?>
                                                 <td><?= $posisi['nama']; ?></td>
                                                 <td><?= $a['jenis_aktivitas']; ?></td>
+                                                <td><?= date('D', strtotime($a['tgl_aktivitas'])); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
