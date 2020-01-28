@@ -62,7 +62,8 @@
                                         <td>
                                              <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
-                                                    data-id="<?php echo $p['id'] ?>"
+                                                    data-id="<?php echo $p['id'] ?>" 
+                                                    data-pr="<?php echo $p['pr'] ?>"
                                                     data-kategori="<?php echo $p['kategori'] ?>"
                                                     data-part="<?php echo $p['part'] ?>"
                                                     data-biaya_est="<?php echo $p['biaya_est'] ?>"
@@ -205,6 +206,7 @@
             modal.find('#kategori').attr("value",div.data('kategori'));
             modal.find('#part').attr("value",div.data('part'));
             modal.find('#biaya_est').attr("value",div.data('biaya_est'));
+            modal.find('#no_pr').attr("value",div.data('pr'));
             modal.find('#biaya_act').attr("value",div.data('biaya_act'));
             modal.find('#budget').attr("value",div.data('budget'));
             modal.find('textarea#keterangan').val(div.data('keterangan'));

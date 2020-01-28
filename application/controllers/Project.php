@@ -253,4 +253,39 @@ class Project extends CI_Controller
         $this->session->set_flashdata('message', 'hapus');
         redirect('project/wbs/' .$copro);  
     }
+    public function tambahproject()
+    {
+         $copro = $this->input->post('copro');
+         $this->db->SELECT('nama');
+         $this->db->where('inisial', $this->input->post('inisial'));
+         $query1 = $this->db->get('customer');
+         $nama = $query1->row()->nama;
+         $data = [
+            'copro' => $this->input->post('copro'),
+            'customer_inisial' => $this->input->post('inisial'),
+            'customer_nama' =>  $nama,
+            'deskripsi' => $this->input->post('deskripsi'),
+            'status' => $this->input->post('status'),
+            'po_receive' => $this->input->post('po_receive'),
+            'due_date' => $this->input->post('due_date'),
+            'mh_budget' => $this->input->post('jam'),
+            'cost_amount' => $this->input->post('cost')
+            ];
+        $this->db->insert('project', $data);
+        echo $this->db->last_query();
+        redirect("projectbudget/budget/$copro");
+
+    }
+    public function updateproject()
+    {
+       
+        $this->db->set('deskripsi', $this->input->post('deskripsi'));
+        $this->db->set('po_receive', $this->input->post('po_date'));
+        $this->db->set('due_date', $this->input->post('due_date'));
+        $this->db->set('mh_budget', $this->input->post('mh_total'));
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->update('project');
+
+        redirect("projectbudget/index");
+    }
 }

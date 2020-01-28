@@ -59,7 +59,6 @@ class Projectbudget extends CI_Controller
         $this->load->view('import/index', $data);
         $this->load->view('templates/footer');    
     }
-    
     public function budget($copro)
     {	
     	$data['sidemenu'] = 'Project';
@@ -273,7 +272,7 @@ class Projectbudget extends CI_Controller
         $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;
 
-        $this->db->set('mat_total', $budget);
+        $this->db->set('mt_budget', $budget);
         $this->db->where('copro',$this->input->post('copro'));
         $this->db->update('project');
         // echo $this->db->last_query();
@@ -295,7 +294,7 @@ class Projectbudget extends CI_Controller
         $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;
 
-        $this->db->set('mat_total', $budget);
+        $this->db->set('mt_budget', $budget);
         $this->db->where('copro', $copro);
         $this->db->update('project');
         // echo $this->db->last_query();
@@ -309,7 +308,7 @@ class Projectbudget extends CI_Controller
         $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;
 
-        $this->db->set('mat_total', $budget);
+        $this->db->set('mt_budget', $budget);
         $this->db->where('copro', $copro);
         $this->db->update('project');
         // echo $this->db->last_query();
