@@ -7,51 +7,29 @@
                         <div class="card-icon">
                             <i class="material-icons">assessment</i>
                         </div>
-                        <h4 class="card-title">Laporan Man Hour</h4>
+                        <h4 class="card-title">Laporan Jam Kerja</h4>
                     </div>
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('jamkerja/lp_acc_monthly'); ?>" method="post">
-                        <div class="row">
-                                <label class="col-md-2 col-form-label">Tahun</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" name="tahun" id="tahun" data-style="select-with-transition" title="Pilih Tahun" data-size="7" required>
-                                            <option value="2020">2020</option>
-                                            <option value="2019">2019</option>
-                                        </select>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Dari Tanggal</label>
+                                    <div class="col-md-2">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control datepicker" id="tglawal" name="tglawal">
+                                        </div>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">Sampai Tanggal</label>
+                                    <div class="col-md-2">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control datepicker" id="tglakhir" name="tglakhir">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-rose">Cari</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Bulan</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" name="bulan" id="bulan" data-style="select-with-transition" title="Pilih Bulan" data-size="7" required>
-                                            <option value="01">Januari</option>
-                                            <option value="02">Febuari</option>
-                                            <option value="03">Maret</option>
-                                            <option value="04">April</option>
-                                            <option value="05">Mei</option>
-                                            <option value="06">Juni</option>
-                                            <option value="07">Juli</option>
-                                            <option value="08">Agustus</option>
-                                            <option value="09">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-success">SUBMIT</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
                     </div>
                 </div>
             </div>

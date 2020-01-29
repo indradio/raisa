@@ -5,9 +5,6 @@
                 <strong>Catatan dari ATASAN,</strong>
                 </br>
                 <?= $jamkerja['catatan']; ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
             </div>
         <?php } ?>
   <?php if ($jamkerja['catatan_ppic']) { ?>
@@ -15,9 +12,6 @@
                 <strong>Catatan dari PPIC,</strong>
                 </br>
                 <?= $jamkerja['catatan_ppic']; ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
             </div>
         <?php } ?>
   <div class="container-fluid">
@@ -478,7 +472,7 @@
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="copro" name="copro" title="Pilih Project" data-size="7" data-live-search="true" required>
                                     <?php
                                     foreach ($listproject as $row) {
-                                        echo '<option data-subtext="' . $row->deskripsi . '" value="' . $row->copro . '">' . $row->copro . '</option>';
+                                        echo '<option value="' . $row->copro . '">' . $row->copro . ' - ' .$row->deskripsi. '</option>';
                                     }
                                     ?>
                                 </select>

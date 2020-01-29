@@ -44,7 +44,7 @@
               <button type="button" class="btn btn-info btn-link fix-broken-card">
                 <i class="material-icons">build</i> Muat Ulang!
               </button>
-              <a href="<?= base_url('dashboard/informasi/') . $info['id']; ?>" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="">
+              <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
                 Selengkapnya...
               </a>
             </div>
@@ -101,6 +101,7 @@
                         <?php
                               $this->db->where('npk', $this->session->userdata('npk'));
                               $this->db->where('status !=', '0');
+                              $this->db->where('status !=', '7');
                               $this->db->where('status !=', '9');
                               $reservasi = $this->db->get('reservasi')->result_array();
                               if (!empty($reservasi)){ 
@@ -246,6 +247,16 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#tablembur" role="tablist">
                 <i class="material-icons">update</i> Lembur
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#probudget" role="tablist">
+                <i class="material-icons">help_outline</i> Project Budget
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
+                <i class="material-icons">help_outline</i> Project <br>Schedule
               </a>
             </li>
             <!-- <li class="nav-item">
@@ -485,17 +496,23 @@
                         </thead>
                         <tbody>
                           <?php foreach ($listlembur as $l) : ?>
-                          <tr>
+                            <?php if ($l['konsumsi']=='YA'){
+                                echo '<tr class="table-success">';
+                              }else if ($l['konsumsi']=='TIDAK'){
+                                echo '<tr class="table-danger">';
+                              }else{
+                                echo '<tr>';
+                              } ?>
                               <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
                               <td><?= date('H:i', strtotime($l['tglmulai'])); ?> - <?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                               <td><?= $l['lokasi']; ?></td>
                               <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
                               <?php if ($l['konsumsi']=='YA'){
-                                echo '<td class="table-success"> YA </td>';
+                                echo '<td> YA </td>';
                               }else if ($l['konsumsi']=='TIDAK'){
-                                echo '<td class="table-danger"> TIDAK </td>';
+                                echo '<td> TIDAK </td>';
                               }else{
-                                echo '<td> BELUM/TIDAK DIKONFIRMASI GA</td>';
+                                echo '<td> BELUM/TIDAK DIKONFIRMASI GA </td>';
                               } ?>
                           </tr>
                           <?php endforeach; ?>
@@ -508,13 +525,41 @@
                   <div class="row">
                     <div class="col-md-12">
                       *Konsumsi akan diupdate pada jam 16:00 atau lebih.
-                      </br>Pastikan Rencana Lembur kamu sudah disetujui oleh atasan1 sebelum jam 16:00.
+                      </br>Pastikan Rencana Lembur kamu sudah disetujui oleh atasan1 paling lambat atau sebelum jam 16:00.
                     </div>
                   </div>
                 </div>
                 <!-- end content-->
               </div>
               <!--  end card  -->
+            </div>
+            <div class="tab-pane" id="probudget">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Help center</h4>
+                  <p class="card-category">
+                    More information here
+                  </p>
+                </div>
+                <div class="card-body">
+                  From the seamless transition of glass and metal to the streamlined profile, every detail was carefully considered to enhance your experience. So while its display is larger, the phone feels just right.
+                  <br>
+                  <br> Another Text. The first thing you notice when you hold the phone is how great it feels in your hand. The cover glass curves down around the sides to meet the anodized aluminum enclosure in a remarkable, simplified design.
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="proschedule">
+              <div class="card">
+                <!-- <div class="card-header">
+                  <h4 class="card-title">Help center</h4>
+                  <p class="card-category">
+                    More information here
+                  </p>
+                </div> -->
+                <div class="card-body text-center">
+                  <a href="#" data-toggle="modal" data-target="#scheduleModal"> <img src="<?= base_url(); ?>assets/img/info/letsdoit2020.jpg" class="img-fluid"></a>
+                </div>
+              </div>
             </div>
             <!-- <div class="tab-pane" id="link10">
               <div class="card">
@@ -693,8 +738,34 @@
         </div>
     </div>
 </div>
+
+<!-- Project Schedule Modal -->
+<div id="scheduleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <img src="<?= base_url(); ?>assets/img/info/letsdoit2020.jpg" class="img-fluid"> 
+    </div>
+  </div>
+</div>
+
+<!-- Banner Modal -->
+<div id="bannerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bannerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <img id="gambar" name="gambar" class="img-fluid" /> 
+    </div>
+  </div>
+</div>
+
 <script>
+
     $(document).ready(function(){
+
+      $('#bannerModal').on('show.bs.modal', function (event) {
+        var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+        var modal = $(this)
+        modal.find('#gambar').attr('src',div.data('gambar'));
+      });
 
       window.setTimeout(function() {
           $(".alert").fadeTo(500, 0).slideUp(500, function(){

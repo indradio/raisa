@@ -649,18 +649,18 @@ class Jamkerja extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         date_default_timezone_set('asia/jakarta');
-        if($this->input->post('tahun')){
-            $tahun = $this->input->post('tahun');
-            $bulan = $this->input->post('bulan');
+        if($this->input->post('tglawal')){
+            $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+            $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
         }else{
-            $tahun = date('Y');
-            $bulan = date('m');
+            $tglawal  = date('Y-m-1');
+            $tglakhir = date('Y-m-31');
         }
 
-        $this->db->where('year(tgl_aktivitas)', $tahun);
-        $this->db->where('month(tgl_aktivitas)', $bulan);
-        $this->db->where('contract', 'Direct Labor');
-        $this->db->where('status', 9);
+        $data['aktivitas'] = $this->db->where('tgl_aktivitas >=',$tglawal);
+        $data['aktivitas'] = $this->db->where('tgl_aktivitas <=',$tglakhir);
+        $data['aktivitas'] = $this->db->where('contract', 'Direct Labor');
+        $data['aktivitas'] = $this->db->where('status', 9);
         $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
