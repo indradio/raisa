@@ -393,9 +393,9 @@
     });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$('.money').simpleMoneyFormat();
-</script>
+</script> -->
 
 </body>
 

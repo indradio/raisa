@@ -164,7 +164,7 @@
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row" >
-                                <label class="col-md-3 col-form-label">Produk</label>
+                                <label class="col-md-3 col-form-label">Project</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" id="copro" name="copro" required >
@@ -186,7 +186,7 @@
                                 <label class="col-md-3 col-form-label">Budget Part</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class=" money form-control disabled " id="budget" name="budget">
+                                        <input type="number" class="form-control disabled" id="budget" name="budget">
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                                 <label class="col-md-3 col-form-label">Sisa</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="money form-control disabled " id="sisa" name="sisa" >
+                                        <input type="number" class="form-control disabled " id="sisa" name="sisa" >
                                     </div>
                                 </div>
                             </div>
