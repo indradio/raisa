@@ -75,6 +75,8 @@
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Edit</a>
                                             
                                             <a href="/raisa/projectbudget/hapus_project/<?= $p['copro'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger">HAPUS</a>
+                                            
+                    <button class="btn btn-rose btn-fill" onclick="demo.showSwal('warning-message-and-confirmation')">Try me!</button>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
@@ -106,6 +108,7 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <a href="/raisa/projectbudget/"  class="btn btn-sm btn-">back</a>
                     </div>
                     <!-- end card-body-->
                 </div>
@@ -282,4 +285,9 @@
         });
     });
 });
-</script>
+</script><script>
+    $(document).ready(function() {
+      // Initialise Sweet Alert library
+      demo.showSwal();
+    });
+  </script>

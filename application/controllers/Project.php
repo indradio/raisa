@@ -272,7 +272,7 @@ class Project extends CI_Controller
             'cost_amount' => $this->input->post('cost')
             ];
         $this->db->insert('project', $data);
-        echo $this->db->last_query();
+        
         redirect("projectbudget/budget/$copro");
 
     }
@@ -286,6 +286,16 @@ class Project extends CI_Controller
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->update('project');
 
+        $do = $this->db->query("SELECT copro, SUM(budget) as budget FROM project_material GROUP by copro")->result_array();
+
+        foreach ($do as $d)
+        {   
+            $this->db->set( 'mt_budget', $d['budget']);
+            $this->db->where('copro', $d['copro']);
+            $this->db->update('project');
+
+        }
+        // echo $this->db->last_query();
         redirect("projectbudget/index");
     }
 }
