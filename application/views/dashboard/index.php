@@ -66,7 +66,7 @@
     <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header card-header-tabs card-header-rose">
+                <div class="card-header card-header-tabs card-header-info">
                   <div class="nav-tabs-navigation">
                     <div class="nav-tabs-wrapper">
                       <span class="nav-tabs-title">TransaksiKu:</span>
@@ -233,7 +233,7 @@
         <div class="page-categories">
           <!-- <h3 class="title text-center">Page Subcategories</h3> -->
           <!-- <br /> -->
-          <ul class="nav nav-pills nav-pills-rose nav-pills-icons justify-content-center" role="tablist">
+          <ul class="nav nav-pills nav-pills-info nav-pills-icons justify-content-center" role="tablist">
             <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
                 <i class="material-icons">info</i> Description
@@ -283,7 +283,7 @@
             </div> -->
             <div class="tab-pane active" id="tabperjalanan">
             <div class="card">
-            <div class="card-header card-header-rose card-header-icon">
+            <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
                 <i class="material-icons">directions_car</i>
               </div>
@@ -475,7 +475,7 @@
             </div>
             <div class="tab-pane" id="tablembur">
               <div class="card">
-                <div class="card-header card-header-rose card-header-icon">
+                <div class="card-header card-header-info card-header-icon">
                     <div class="card-icon">
                         <i class="material-icons">assignment</i>
                     </div>
@@ -557,7 +557,7 @@
                   </p>
                 </div> -->
                 <div class="card-body text-center">
-                  <a href="#" data-toggle="modal" data-target="#scheduleModal"> <img src="<?= base_url(); ?>assets/img/info/letsdoit2020.jpg" class="img-fluid"></a>
+                  <a href="#" data-toggle="modal" data-target="#scheduleModal"> <img src="<?= base_url(); ?>assets/img/info/wbs.jpg" class="img-fluid"></a>
                 </div>
               </div>
             </div>
@@ -741,16 +741,16 @@
 
 <!-- Project Schedule Modal -->
 <div id="scheduleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <img src="<?= base_url(); ?>assets/img/info/letsdoit2020.jpg" class="img-fluid"> 
+      <img src="<?= base_url(); ?>assets/img/info/wbs.jpg" class="img-fluid"> 
     </div>
   </div>
 </div>
 
 <!-- Banner Modal -->
 <div id="bannerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bannerModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <img id="gambar" name="gambar" class="img-fluid" /> 
     </div>

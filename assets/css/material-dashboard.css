@@ -5639,6 +5639,12 @@ button.close {
   }
 }
 
+@media (min-width: 992px) {
+  .modal-xl {
+    max-width: 1440px;
+  }
+}
+
 .tooltip {
   position: absolute;
   z-index: 1070;
