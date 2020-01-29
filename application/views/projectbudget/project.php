@@ -17,13 +17,13 @@
                                 <thead>
                                     <tr>
                                         <th>COPRO</th>
+                                        <th>Customer</th>
                                         <th>Deskripsi</th>
-                                        <th>Progres</th>
-                                        <th>Due Date</th>
-                                        <th>Date PO</th>
                                         <th>Amount</th>
-                                        <th>Status Project</th>
-                                        <th>Status COPRO</th>
+                                        <th>Budget</th>
+                                        <th>Estimasi</th>
+                                        <th>Aktual</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -32,10 +32,10 @@
                                     foreach ($project as $p) : ?>
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
+                                        <td><?= $p['customer_inisial']; ?></td>
                                         <td><?= $p['deskripsi']; ?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><?= $p['po_receive']; ?></td>
+                                        <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
+                                        <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td></td>
                                         <td><?= $p['status']; ?></td>
@@ -55,13 +55,13 @@
                                 <tfoot>
                                     <tr>
                                         <th>COPRO</th>
+                                        <th>Customer</th>
                                         <th>Deskripsi</th>
-                                        <th>Progres</th>
-                                        <th>Due Date</th>
-                                        <th>Date PO</th>
                                         <th>Amount</th>
-                                        <th>Status Project</th>
-                                        <th>Status COPRO</th>
+                                        <th>Budget</th>
+                                        <th>Estimasi</th>
+                                        <th>Aktual</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
