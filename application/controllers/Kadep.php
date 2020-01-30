@@ -124,7 +124,7 @@ class Kadep extends CI_Controller
     public function project_budget()
     {
         $data['sidemenu'] = 'Kepala Departemen';
-        $data['sidesubmenu'] = 'Laporan Lembur ';
+        $data['sidesubmenu'] = 'Laporan Budget Project';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['project'] = $this->db->get_where('project', ['highlight' => 1])->result_array();
         $this->load->view('templates/header', $data);
