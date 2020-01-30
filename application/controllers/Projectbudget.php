@@ -14,7 +14,7 @@ class Projectbudget extends CI_Controller
     	$data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project Budget';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['project'] = $this->db->get_where('project', ['status' => 'OPEN'])->result_array();
+        $data['project'] = $this->db->query("SELECT * from project where status ='OPEN' or status='TECO' ")->result_array();
         $data['customer'] = $this->db->get('customer')->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         if ($karyawan['sect_id'] == 222) {
