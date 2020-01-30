@@ -23,9 +23,9 @@
                                         <th rowspan="2">Delivery Date</th>
                                         <th rowspan="2">Stats</th>
                                         <th colspan="9" style="text-align: center;">MAN HOUR</th>
-                                        <th colspan="7"style="text-align: center;">MATERIAL</th>
+                                        <th colspan="7" style="text-align: center;">MATERIAL</th>
                                         <th rowspan="2">Perjalanan</th>
-                                        <th rowspan="2">Actions</th>
+                                        <!-- <th rowspan="2">Actions</th> -->
                                     </tr> 
                                     <tr>
                                         <th>Budget</th>
@@ -33,7 +33,7 @@
                                         <th>%</th>
                                         <th>Remains</th>
                                         <th>%</th>
-                                        <th>WH</th>
+                                        <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
@@ -134,7 +134,7 @@
                                             <td><?= number_format($mt_est,0,',','.')?></td>
                                             <td><h6><?= intval($mt_est / $mt_budget* 100).'%'; ?></h6></td>
                                             <td><?= $dl_total; ?></td>
-                                            <td></td>
+                                            <!-- <td></td> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -149,7 +149,7 @@
                                         <th>%</th>
                                         <th>Remains</th>
                                         <th>%</th>
-                                        <th>WH</th>
+                                        <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
@@ -161,7 +161,7 @@
                                         <th>Estimasi</th>
                                         <th>%</th>
                                         <th>Perjalanan</th>
-                                        <th>Actions</th>
+                                        <!-- <th>Actions</th> -->
                                     </tr>
                                 </tfoot>
                             </table>
@@ -242,8 +242,12 @@
                 "decimal": ",",
                 "thousands": "."
             },
+            "columnDefs": [
+                { "width": "25%", "targets": 0 }
+            ],
             scrollX: true,
         });
+
         $('#dtproject tbody').on('click', 'button', function() {
             var data = tableproject.row($(this).parents('tr')).data();
             $('#projectModal').on('show.bs.modal', function() {
