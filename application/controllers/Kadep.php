@@ -120,5 +120,18 @@ class Kadep extends CI_Controller
 
         redirect('kadep/lembur/');
     }
+
+    public function project_budget()
+    {
+        $data['sidemenu'] = 'Kepala Departemen';
+        $data['sidesubmenu'] = 'Laporan Budget Project';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['project'] = $this->db->get_where('project', ['highlight' => 1])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('project/lp_project_budget', $data);
+        $this->load->view('templates/footer');
+    }
     
 }
