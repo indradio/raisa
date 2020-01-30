@@ -44,6 +44,7 @@
                                 <tbody>
                                     <?php
                                     foreach ($Projectbudget as $p) : ?>
+
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
@@ -74,10 +75,7 @@
                                                     data-selisih="<?php echo $p['est_selisih'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Edit</a>
                                             
-                                            <a href="/raisa/projectbudget/hapus_project/<?= $p['copro'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger">HAPUS</a>
-                                            
-                    <button class="btn btn-rose btn-fill" onclick="demo.showSwal('warning-message-and-confirmation')">Try me!</button>
-                                        </td>
+                                            <a href="/raisa/projectbudget/hapus_project/<?= $p['copro'];?>/<?= $p['id'];?>/<?= $p['part'];?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a></td>
                                     </tr>
                                         <?php endforeach; ?>
                                 </tbody>

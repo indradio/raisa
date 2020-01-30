@@ -300,10 +300,13 @@ class Projectbudget extends CI_Controller
         // echo $this->db->last_query();
         redirect("projectbudget/budget/$copro");
     }
-    public function hapus_project($copro,$id)
+    public function hapus_project($copro,$id,$part)
     {
         $query = "delete from project_material where id='$id'";
-        $this->db->query($query);$this->db->select_sum('budget');
+        $this->db->query($query);
+        $query2 = "delete from project_material_detail where copro='$copro' and part ='$part'";
+        $this->db->query($query2);
+        $this->db->select_sum('budget');
         $this->db->where('copro', $copro);
         $query1 = $this->db->get('project_material');
         $budget = $query1->row()->budget;

@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title"><?php echo $project['deskripsi'];?></h4>
+                        <h4 class="card-title"><?php echo $project['deskripsi'];?> (<?php echo $project['copro'];?>)</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -17,7 +17,6 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                      <th >Copro</th> 
                                         <th >Part</th> 
                                         <th >Kategori</th>
                                         <th>No PP/EXPROD</th>
@@ -37,7 +36,6 @@
                                     <?php
                                     foreach ($Projectbudget as $p) : ?>
                                     <tr>
-                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
                                         <td><?= $p['kategori']; ?></td>
                                         <td><?= $p['no']; ?></td>
@@ -77,7 +75,6 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                       <th >Copro</th> 
                                         <th >Part</th> 
                                         <th >Kategori</th>
                                         <th>No PP/EXPROD</th>

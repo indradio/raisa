@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title"><?php echo $project['deskripsi'];?></h4>
+                        <h4 class="card-title"><?php echo $project['deskripsi'];?> (<?php echo $project['copro'];?>)</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -17,7 +17,6 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th >Copro</th> 
                                         <th >Part</th> 
                                         <th >Kategori</th>
                                         <th>No PP/EXPROD</th>
@@ -34,22 +33,24 @@
                                     <?php
                                     foreach ($Projectbudget as $p) : ?>
                                     <tr>
-                                        <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
                                         <td><?= $p['kategori']; ?></td>
                                         <td><?= $p['no']; ?></td>
                                         <td><?= $p['tgl_buat'];?></td>
                                         <td><?= number_format($p['biaya_est'],0,',','.') ?></td>
                                         <td><?= number_format($p['biaya_act'],0,',','.') ?></td>
-                                        <td><?php 
-                                            $a=$p['biaya_est'];
+                                        <?php $a=$p['biaya_est'];
                                             $b=$p['biaya_act'];
-
                                             $c= $a-$b;
-
+                                            if( $c<0){?>
+                                        <td style="color:red;"><?php 
                                             echo number_format($c,0,',','.');
-                                            
                                         ?></td>
+                                        <?php }else {?> 
+                                        <td><?php 
+                                            echo number_format($c,0,',','.');
+                                        ?></td>
+                                        <?php }?>
                                         <td><?= $p['keterangan']; ?></td>
                                         <td>
                                               <?php 
@@ -66,8 +67,8 @@
                                                     data-pp="<?php echo $p['no'] ?>"
                                                  
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Update Data</a>
-                                            <?php } ?>
-                                            <a href="/raisa/projectbudget/hapusdetail/<?= $p['copro'];?>/<?= $p['part'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger ">HAPUS</a>
+                                             <a href="/raisa/projectbudget/hapusdetail/<?= $p['copro'];?>/<?= $p['part'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a><?php } ?>
+                                           
                                             
                                         </td>
                                     </tr>
@@ -75,7 +76,6 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th >Copro</th> 
                                         <th >Part</th> 
                                         <th >Kategori</th> 
                                         <th >Biaya Estimasi</th>

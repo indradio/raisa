@@ -267,9 +267,10 @@ class Project extends CI_Controller
             'deskripsi' => $this->input->post('deskripsi'),
             'status' => $this->input->post('status'),
             'po_receive' => $this->input->post('po_receive'),
-            'due_date' => $this->input->post('due_date'),
+            'delivery_date' => $this->input->post('due_date'),
             'mh_budget' => $this->input->post('jam'),
-            'cost_amount' => $this->input->post('cost')
+            'cost_amount' => $this->input->post('cost'),
+            'highlight' => $this->input->post('highlight')
             ];
         $this->db->insert('project', $data);
         
@@ -281,7 +282,7 @@ class Project extends CI_Controller
        
         $this->db->set('deskripsi', $this->input->post('deskripsi'));
         $this->db->set('po_receive', $this->input->post('po_date'));
-        $this->db->set('due_date', $this->input->post('due_date'));
+        $this->db->set('delivery_date', $this->input->post('due_date'));
         $this->db->set('mh_budget', $this->input->post('mh_total'));
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->update('project');

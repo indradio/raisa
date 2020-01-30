@@ -29,15 +29,26 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($project as $p) : ?>
+                                    foreach ($project as $p) :
+
+                                    $this->db->select_sum('est_total');
+                                    $this->db->where('copro', $p['copro']);
+                                    $mh = $this->db->get('project_material');
+                                    $est_cost = $mh->row()->est_total;
+
+                                    $this->db->select_sum('act_total');
+                                    $this->db->where('copro', $p['copro']);
+                                    $mh = $this->db->get('project_material');
+                                    $act_cost = $mh->row()->act_total;
+                                    ?>
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
                                         <td><?= $p['customer_inisial']; ?></td>
                                         <td><?= $p['deskripsi']; ?></td>
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
-                                        <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
-                                        <td></td>
+                                        <td><?= number_format($est_cost,0,',','.') ?></td>
+                                        <td><?= number_format($act_cost,0,',','.') ?></td>
                                         <td><?= $p['status']; ?></td>
                                         <td>
                                             <a href="<?= base_url('projectbudget/budget/') . $p['copro']; ?>" class="btn btn-sm btn-success">Project Budget</a>
@@ -45,8 +56,9 @@
                                                     data-copro="<?php echo $p['copro'] ?>"
                                                     data-desk="<?php echo $p['deskripsi'] ?>"
                                                     data-receive="<?php echo $p['po_receive'] ?>"
-                                                    data-duedate="<?php echo $p['due_date'] ?>"
+                                                    data-duedate="<?php echo $p['delivery_date'] ?>"
                                                     data-total="<?php echo $p['mh_budget'] ?>"
+                                                    data-amount="<?php echo $p['cost_amount'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#update" >Update Data Project</a>
                                         </td>
                                     </tr>
@@ -116,7 +128,7 @@
                                 <label class="col-md-3 col-form-label">Customer ID</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                    <select class="selectpicker" id="inisial" name="inisial" data-style="select-with-transition" data-size="7"required>
+                                    <select class="selectpicker control" id="inisial" name="inisial" data-style="select-with-transition" data-size="7"required>
                                       <option value='0'>--pilih--</option>
                                       <?php 
                                       foreach ($customer as $c) {
@@ -132,8 +144,11 @@
                                     <div class="form-group has-default">
                                         
                                         <select class="form-control" name="status">
+                                            <option>--PILIH--</option>
                                             <option>OPEN</option>
                                             <option>TECO</option>
+                                            <option>CLOSE</option>
+                                            <option>BLOCK</option>
                                         </select>
                                     </div>
                                 </div>
@@ -147,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="row" >
-                                <label class="col-md-3 col-form-label">Due Date</label>
+                                <label class="col-md-3 col-form-label">Delivery Date</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="date" class="form-control" id="due_date" name="due_date">
@@ -167,6 +182,18 @@
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="number" class="form-control" id="cost" name="cost">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">Ongoing</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        
+                                        <select class="form-control" name="highlight">
+                                            <option value="1">Ya</option>
+                                            <option value="0">Tidak</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +250,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">DUE DATE</label>
+                                <label class="col-md-3 col-form-label">Delivery DATE</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="date" class="form-control " id="due_date" name="due_date" required>
@@ -237,6 +264,41 @@
                                     <div class="form-group has-default">
                                         <input type="number" class="form-control " id="mh_total" name="mh_total" required>
                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Amount</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control " id="amount" name="amount" required>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Status</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                       <SELECT class="form-control">
+                                           <option value="1">Ya</option>
+                                           <option>tidak</option>
+                                     <!--   <?php if ($p['copro']==$data_jurusan['id_jurusan']) {
+                                        $select="selected";
+                                    }else{ $select="";}?> -->
+                                       </SELECT>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">Ongoing</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        
+                                        <select class="form-control" name="highlight">
+                                            <option value="1">Ya</option>
+                                            <option value="0">Tidak</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -262,6 +324,7 @@
             modal.find('#po_date').attr("value",div.data('receive'));
             modal.find('#due_date').attr("value",div.data('duedate'));
             modal.find('#mh_total').attr("value",div.data('total'));
+            modal.find('#amount').attr("value",div.data('amount'));
         });
     $('.biaya').mask("000,000,000,000,000", {reverse: true});
 
