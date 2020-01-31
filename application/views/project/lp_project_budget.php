@@ -18,9 +18,9 @@
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2">Project</th>
+                                        <th rowspan="2">Project____________________________</th>
                                         <th rowspan="2">Stats</th>
-                                        <th rowspan="2">Delivery</th>
+                                        <th rowspan="2">Delivery_</th>
                                         <th rowspan="2">Amount</th>
                                         <th colspan="9" style="text-align: center;">MAN HOUR</th>
                                         <th colspan="9" style="text-align: center;">MATERIAL</th>
@@ -262,7 +262,7 @@
                 "thousands": "."
             },
             "columnDefs": [
-                { "width": "25%", "targets": [0] }
+                { "width": "15%", "targets": [0] }
             ],
             scrollX: true,
         });
