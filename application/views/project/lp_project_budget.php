@@ -19,9 +19,9 @@
                                 <thead>
                                     <tr>
                                         <th rowspan="2">Project</th>
-                                        <th rowspan="2">Amount</th>
-                                        <th rowspan="2">Delivery</th>
                                         <th rowspan="2">Stats</th>
+                                        <th rowspan="2">Delivery</th>
+                                        <th rowspan="2">Amount</th>
                                         <th colspan="9" style="text-align: center;">MAN HOUR</th>
                                         <th colspan="9" style="text-align: center;">MATERIAL</th>
                                         <th rowspan="2">Perjalanan</th>
@@ -63,6 +63,12 @@
                                         }else{
                                             $mt_budget = 1;
                                         }
+
+                                        // date_default_timezone_set('asia/jakarta');
+                                        // $now = time();
+                                        // $delivery = strtotime(date('Y-m-d', strtotime($p['delivery_date'])));
+                                        // $delivery = $delivery - $now ;
+                                        // $delivery_remains = floor($delivery / (60 * 60 * 24));
                             
                                         $this->db->select_sum('durasi');
                                         $this->db->where('copro', $p['copro']);
@@ -86,17 +92,21 @@
                                         $ot = $this->db->get('aktivitas');
                                         $mh_ot = $ot->row()->durasi;
                             
-                                        $this->db->select_sum('est_total');
+                                        $this->db->select_sum('biaya_est');
                                         $this->db->where('copro', $p['copro']);
-                                        $est = $this->db->get('project_material');
-                                        $mt_est = $est->row()->est_total;
+                                        $this->db->where('biaya_act', 0);
+                                        $est = $this->db->get('project_material_detail');
+                                        $mt_est = $est->row()->biaya_est;
                             
-                                        $this->db->select_sum('act_total');
+                                        $this->db->select_sum('biaya_act');
                                         $this->db->where('copro', $p['copro']);
-                                        $act = $this->db->get('project_material');
-                                        $mt_act = $act->row()->act_total;
+                                        $this->db->where('biaya_act >', 0);
+                                        $act = $this->db->get('project_material_detail');
+                                        $mt_act = $act->row()->biaya_act;
 
-                                        $mt_remains = $p['mt_budget'] - $mt_act;
+                                        $mt_total = $mt_est + $mt_act;
+
+                                        $mt_remains = $p['mt_budget'] - $mt_total;
 
                                         $this->db->where('copro', $p['copro']);
                                         $this->db->from('perjalanan');
@@ -105,10 +115,10 @@
                                         
                                         ?>
                                         <tr>
-                                            <td><?= $p['deskripsi']; ?><small> (<?= $p['copro']; ?>) </small></td>
-                                            <td><?= number_format($p['cost_amount'],0,',','.')?></td>
-                                            <td><?= date('d M', strtotime($p['delivery_date'])); ?></td>
+                                            <td><?= substr($p['deskripsi'],0,20); ?><small> (<?= $p['copro']; ?>) </small></td>
                                             <td><?= $p['status']; ?></td>
+                                            <td><?= date('d M y', strtotime($p['delivery_date'])); ?></td>
+                                            <td><?= number_format(substr($p['cost_amount'],0,-6),0,',','.')?></td>
                                             <td><?= intval($p['mh_budget']); ?></td>
                                             <td><?= $mh_total; ?></td>
                                             <td><h6><?= intval($mh_total / $mh_budget* 100).'%'; ?></h6></td>
@@ -123,20 +133,20 @@
                                             <td><h6><?= intval($mh_wh / $mh_budget* 100).'%'; ?></h6></td>
                                             <td><?= $mh_ot; ?></td>
                                             <td><h6><?= intval($mh_ot / $mh_budget* 100).'%'; ?></h6></td>
-                                            <td class="td-name"><?= number_format(substr($p['mt_budget'],0,-6),0,',','.')?></td>
-                                            <td><?= number_format(substr($mt_act,0,-6),0,',','.')?></td>
-                                            <td><h6><?= intval($mt_act / $mt_budget* 100).'%'; ?></h6></td>
+                                            <td class="td-name"><?= substr(number_format($p['mt_budget'],0,',','.'),0,-8)?></td>
+                                            <td><?= substr(number_format($mt_total,0,',','.'),0,-8)?></td>
+                                            <td><h6><?= intval($mt_total / $mt_budget* 100).'%'; ?></h6></td>
                                             <?php if ($mt_remains>0){
-                                                echo '<td class="text-success">'.number_format(substr($mt_remains,0,-6),0,',','.').'</td>';
+                                                echo '<td class="text-success">'.substr(number_format($mt_remains,0,',','.'),0,-8).'</td>';
                                                 echo '<td class="text-success"><h6>'.intval($mt_remains / $mt_budget* 100).'%</h6></td>';
                                             }else{
-                                                echo '<td class="text-danger">'.number_format(substr($mt_remains,0,-6),0,',','.').'<i class="material-icons">arrow_drop_down</i></td>';
+                                                echo '<td class="text-danger">'.substr(number_format($mt_remains,0,',','.'),0,-8).'<i class="material-icons">arrow_drop_down</i></td>';
                                                 echo '<td class="text-danger"><h6>'.intval($mt_remains / $mt_budget* 100).'%</h6></td>';
                                             } ?>
-                                            <td><?= number_format($mt_est,0,',','.')?></td>
+                                            <td><?= substr(number_format($mt_est,0,',','.'),0,-8)?></td>
                                             <td><h6><?= intval($mt_est / $mt_budget* 100).'%'; ?></h6></td>
-                                            <td><?= number_format($mt_est,0,',','.')?></td>
-                                            <td><h6><?= intval($mt_est / $mt_budget* 100).'%'; ?></h6></td>
+                                            <td><?= substr(number_format($mt_act,0,',','.'),0,-8)?></td>
+                                            <td><h6><?= intval($mt_act / $mt_budget* 100).'%'; ?></h6></td>
                                             <td><?= $dl_total; ?></td>
                                             <!-- <td></td> -->
                                         </tr>
@@ -145,9 +155,9 @@
                                 <tfoot>
                                     <tr>
                                         <th>Project</th>
-                                        <th>Amount</th>
-                                        <th>Delivery Date</th>
                                         <th>Stats</th>
+                                        <th>Delivery</th>
+                                        <th>Amount</th>
                                         <th>Budget</th>
                                         <th>Actual</th>
                                         <th>%</th>
@@ -170,6 +180,11 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <div class="card-footer">
+                        <!-- <div class="row"> -->
+                            <p> *) Nominal Amount & Material dalam hitungan JUTA.
+                        <!-- </div> -->
+                    </div>
                     </div>
                     <!-- end card-body-->
                 </div>
@@ -247,7 +262,7 @@
                 "thousands": "."
             },
             "columnDefs": [
-                { "width": "25%", "targets": 0 }
+                { "width": "25%", "targets": [0] }
             ],
             scrollX: true,
         });
