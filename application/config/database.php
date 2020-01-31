@@ -75,12 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'hostname' => 'localhost',
-	// 'username' => 'winr5693_root',
-	// 'password' => 'K0mponen1!',
 	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+	'username' => 'winr5693_root',
+	'password' => 'K0mponen1!',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
 	'database' => 'winr5693_raisa',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
