@@ -90,7 +90,7 @@
                                                     data-total="<?php echo $p['est_total'] ?>"
                                                     data-pembuat="<?php echo $p['est_total'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Estimasi Cost</a>
-                                            <a href="/raisa/projectbudget/budgetengdetail/<?= $p['copro'];?>/<?= $p['part'];?>" class="btn btn-sm btn-success ">View Data</a>
+                                            <a href="<?= base_url('projectbudget/budgetengdetail/').$p['copro'].'/'.$p['part'];?>" class="btn btn-sm btn-success ">View Data</a>
                                             <!-- <a href="<?= base_url('pmd/hapus_project/') . $p['id']; ?>" class="btn btn-sm btn-danger btn-sm btn-bataldl">HAPUS</a> -->
                                         <?php } elseif($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11 ){?>
                                             <a href="javascript:;" 

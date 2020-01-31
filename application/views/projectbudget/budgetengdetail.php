@@ -67,7 +67,7 @@
                                                     data-pp="<?php echo $p['no'] ?>"
                                                  
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Update Data</a>
-                                             <a href="/raisa/projectbudget/hapusdetail/<?= $p['copro'];?>/<?= $p['part'];?>/<?= $p['id'];?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a><?php } ?>
+                                             <a href="<?= base_url('projectbudget/hapusdetail/').$project['copro'].'/'.$p['part'].'/'.$p['id']; ?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a><?php } ?>
                                            
                                             
                                         </td>
@@ -87,7 +87,7 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <a href="/raisa/projectbudget/budgeteng/<?= $project['copro'];?>" class="btn btn-sm btn-default ">Back</a>
+                        <a href="<?= base_url('projectbudget/budgeteng/').$project['copro']; ?>" class="btn btn-sm btn-default ">Back</a>
                     </div>
                     <!-- end card-body-->
                 </div>

@@ -74,8 +74,8 @@
                                                     data-total="<?php echo $p['est_total'] ?>"
                                                     data-selisih="<?php echo $p['est_selisih'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Edit</a>
-                                            
-                                            <a href="/raisa/projectbudget/hapus_project/<?= $p['copro'];?>/<?= $p['id'];?>/<?= $p['part'];?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a></td>
+                    
+                                            <a href="<?= base_url('projectbudget/hapus_project/') . $p['copro']. '/' .$p['id']. '/' . $p['part'] ; ?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a></td>
                                     </tr>
                                         <?php endforeach; ?>
                                 </tbody>
@@ -106,7 +106,7 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <a href="/raisa/projectbudget/"  class="btn btn-sm btn-">back</a>
+                        <a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-sm ">back</a>
                     </div>
                     <!-- end card-body-->
                 </div>
