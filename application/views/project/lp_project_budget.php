@@ -24,14 +24,14 @@
                                         <th rowspan="2">Amount</th>
                                         <th colspan="9" style="text-align: center;">MAN HOUR</th>
                                         <th colspan="9" style="text-align: center;">MATERIAL</th>
-                                        <th rowspan="2">Perjalanan</th>
+                                        <th rowspan="2">DL</th>
                                         <!-- <th rowspan="2">Actions</th> -->
                                     </tr> 
                                     <tr>
                                         <th>Budget</th>
-                                        <th>ACT</th>
+                                        <th>Total</th>
                                         <th>%</th>
-                                        <th>RMN</th>
+                                        <th>RMNs</th>
                                         <th>%</th>
                                         <th>MH</th>
                                         <th>%</th>
@@ -40,7 +40,7 @@
                                         <th>Budget</th>
                                         <th>Total</th>
                                         <th>%</th>
-                                        <th>RMN</th>
+                                        <th>RMNs</th>
                                         <th>%</th>
                                         <th>PP</th>
                                         <th>%</th>
@@ -159,22 +159,24 @@
                                         <th>Delivery</th>
                                         <th>Amount</th>
                                         <th>Budget</th>
-                                        <th>Actual</th>
+                                        <th>Total</th>
                                         <th>%</th>
-                                        <th>Remains</th>
+                                        <th>RMNs</th>
                                         <th>%</th>
                                         <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
                                         <th>Budget</th>
-                                        <th>Actual</th>
+                                        <th>Total</th>
                                         <th>%</th>
-                                        <th>Remains</th>
+                                        <th>RMNs</th>
                                         <th>%</th>
-                                        <th>Estimasi</th>
+                                        <th>PP</th>
                                         <th>%</th>
-                                        <th>Perjalanan</th>
+                                        <th>PO</th>
+                                        <th>%</th>
+                                        <th>DL</th>
                                         <!-- <th>Actions</th> -->
                                     </tr>
                                 </tfoot>
