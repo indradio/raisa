@@ -157,7 +157,9 @@ class Projectbudget extends CI_Controller
             'no' => $this->input->post('no'),
             'biaya_act' => 0,
             'tgl_buat' =>   $now,
-            'pembuat_est' => $this->session->userdata('npk'),
+            'tgl_estimasi' => $now,
+            'status' => 1,
+            'pembuat_est' => $this->session->userdata('inisial'),
             'keterangan' => $this->input->post('keterangan')];
         $this->db->insert('project_material_detail', $data);
         // echo $this->db->last_query();
@@ -187,11 +189,14 @@ class Projectbudget extends CI_Controller
         $part = $this->input->post('part');
         $kategori = $this->input->post('kategori');
         $budget = $this->db->query("SELECT budget from project_material where copro = '$copro' and part ='$part'")->result_array();
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
         $this->db->set('biaya_act', $this->input->post('biaya_act'));
         $this->db->set('pr', $this->input->post('no_pr'));
-        $this->db->set('po', $this->input->post('no_po'));
+        $this->db->set('tgl_aktual', $now);
+        $this->db->set('status', 9);
         $this->db->set('keterangan', $this->input->post('keterangan'));
-        $this->db->set('pembuat_act',  $this->session->userdata('npk'));
+        $this->db->set('pembuat_act',  $this->session->userdata('inisial'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('project_material_detail');
 

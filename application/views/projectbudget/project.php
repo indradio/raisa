@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Delivery DATE</label>
+                                <label class="col-md-3 col-form-label">Deliverry DATE</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="date" class="form-control " id="due_date" name="due_date" required>

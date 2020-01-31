@@ -88,7 +88,7 @@
                                     </tr> 
                                 </tfoot>
                             </table>
-                        </div><a href="/raisa/projectbudget/budgetpch/<?= $project['copro'];?>" class="btn btn-sm btn-default ">Back</a>
+                        </div><a href="<?= base_url('Projectbudget/budgetpch/') .$project['copro'];?>" class="btn btn-sm btn-default ">Back</a>
                     </div>
                     <!-- end card-body-->
                 </div>
