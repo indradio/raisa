@@ -44,16 +44,13 @@
               <button type="button" class="btn btn-info btn-link fix-broken-card">
                 <i class="material-icons">build</i> Muat Ulang!
               </button>
-              <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
+              <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url(); ?>assets/img/info/<?= $info['gambar_konten']; ?>">
                 Selengkapnya...
               </a>
             </div>
             <h4 class="card-title">
               <?= $info['judul']; ?>
             </h4>
-            <div class="card-description">
-              <?= $info['deskripsi']; ?>
-            </div>
           </div>
         </div>
       </div>
@@ -557,106 +554,106 @@
                   </p>
                 </div> -->
                 <div class="card-body text-center">
-
-            <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-
-              <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                <a href="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="contentUrl" data-size="1440x720">
-                    <img src="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="thumbnail" alt="Image description" />
-                </a>
-                <!-- <figcaption itemprop="caption description">Image caption  1</figcaption> -->
-                                                    
-              </figure>
-
-              <!-- <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                <a href="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_b.jpg" itemprop="contentUrl" data-size="964x1024">
-                    <img src="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_m.jpg" itemprop="thumbnail" alt="Image description" />
-                </a>
-                <figcaption itemprop="caption description">Image caption 2</figcaption>
-              </figure>
-
-              <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                <a href="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_b.jpg" itemprop="contentUrl" data-size="1024x683">
-                    <img src="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_m.jpg" itemprop="thumbnail" alt="Image description" />
-                </a>
-                <figcaption itemprop="caption description">Image caption 3</figcaption>
-              </figure>
-
-              <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                <a href="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_b.jpg" itemprop="contentUrl" data-size="1024x768">
-                    <img src="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_m.jpg" itemprop="thumbnail" alt="Image description" />
-                </a>
-                <figcaption itemprop="caption description">Image caption 4</figcaption>
-              </figure> -->
+                  <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
 
 
-            </div>
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                      <a href="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="contentUrl" data-size="1440x720">
+                          <img class="img-responsive" src="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="thumbnail" alt="Image description" />
+                      </a>
+                      <!-- <figcaption itemprop="caption description">Image caption  1</figcaption> -->
+                    </figure>
 
-          <!-- Root element of PhotoSwipe. Must have class pswp. -->
-          <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                     <!-- <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                      <a href="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_b.jpg" itemprop="contentUrl" data-size="964x1024">
+                          <img src="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_m.jpg" itemprop="thumbnail" alt="Image description" />
+                      </a>
+                      <figcaption itemprop="caption description">Image caption 2</figcaption>
+                    </figure>
 
-              <!-- Background of PhotoSwipe. 
-                  It's a separate element, as animating opacity is faster than rgba(). -->
-              <div class="pswp__bg"></div>
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                      <a href="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_b.jpg" itemprop="contentUrl" data-size="1024x683">
+                          <img src="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_m.jpg" itemprop="thumbnail" alt="Image description" />
+                      </a>
+                      <figcaption itemprop="caption description">Image caption 3</figcaption>
+                    </figure>
 
-              <!-- Slides wrapper with overflow:hidden. -->
-              <div class="pswp__scroll-wrap">
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                      <a href="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_b.jpg" itemprop="contentUrl" data-size="1024x768">
+                          <img src="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_m.jpg" itemprop="thumbnail" alt="Image description" />
+                      </a>
+                      <figcaption itemprop="caption description">Image caption 4</figcaption>
+                    </figure> -->
 
-                  <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
-                  <!-- don't modify these 3 pswp__item elements, data is added later on. -->
-                  <div class="pswp__container">
-                      <div class="pswp__item"></div>
-                      <div class="pswp__item"></div>
-                      <div class="pswp__item"></div>
+
                   </div>
 
-                  <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-                  <div class="pswp__ui pswp__ui--hidden">
+                  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+                  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-                      <div class="pswp__top-bar">
+                      <!-- Background of PhotoSwipe. 
+                          It's a separate element, as animating opacity is faster than rgba(). -->
+                      <div class="pswp__bg"></div>
 
-                          <!--  Controls are self-explanatory. Order can be changed. -->
+                      <!-- Slides wrapper with overflow:hidden. -->
+                      <div class="pswp__scroll-wrap">
 
-                          <div class="pswp__counter"></div>
-
-                          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                          <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                          <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
-                          <!-- element will get class pswp__preloader--active when preloader is running -->
-                          <div class="pswp__preloader">
-                              <div class="pswp__preloader__icn">
-                                <div class="pswp__preloader__cut">
-                                  <div class="pswp__preloader__donut"></div>
-                                </div>
-                              </div>
+                          <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+                          <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+                          <div class="pswp__container">
+                              <div class="pswp__item"></div>
+                              <div class="pswp__item"></div>
+                              <div class="pswp__item"></div>
                           </div>
+
+                          <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                          <div class="pswp__ui pswp__ui--hidden">
+
+                              <div class="pswp__top-bar">
+
+                                  <!--  Controls are self-explanatory. Order can be changed. -->
+
+                                  <div class="pswp__counter"></div>
+
+                                  <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                                  <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                                  <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                                  <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                                  <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                                  <!-- element will get class pswp__preloader--active when preloader is running -->
+                                  <div class="pswp__preloader">
+                                      <div class="pswp__preloader__icn">
+                                        <div class="pswp__preloader__cut">
+                                          <div class="pswp__preloader__donut"></div>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                                  <div class="pswp__share-tooltip"></div> 
+                              </div>
+
+                              <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                              </button>
+
+                              <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                              </button>
+
+                              <div class="pswp__caption">
+                                  <div class="pswp__caption__center"></div>
+                              </div>
+
+                          </div>
+
                       </div>
-
-                      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                          <div class="pswp__share-tooltip"></div> 
-                      </div>
-
-                      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                      </button>
-
-                      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                      </button>
-
-                      <div class="pswp__caption">
-                          <div class="pswp__caption__center"></div>
-                      </div>
-
-                    </div>
 
                   </div>
-
-                  </div>
+                  
                 </div>
               </div>
             </div>
