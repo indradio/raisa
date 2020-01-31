@@ -55,7 +55,7 @@ class Layanan extends CI_Controller
         ];
         $this->db->insert('informasi', $data);
 
-        $config['upload_path']          = './assets/img/faces/';
+        $config['upload_path']          = './assets/img/info/';
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 1024;
         $this->load->library('upload', $config);
@@ -72,7 +72,7 @@ class Layanan extends CI_Controller
 
     public function updateInformasi()
     {
-        $config['upload_path']          = './assets/img/faces/';
+        $config['upload_path']          = './assets/img/info/';
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 1024;
         $this->load->library('upload', $config);

@@ -20,29 +20,31 @@
                                     <tr>
                                         <th rowspan="2">Project</th>
                                         <th rowspan="2">Amount</th>
-                                        <th rowspan="2">Delivery Date</th>
+                                        <th rowspan="2">Delivery</th>
                                         <th rowspan="2">Stats</th>
                                         <th colspan="9" style="text-align: center;">MAN HOUR</th>
-                                        <th colspan="7" style="text-align: center;">MATERIAL</th>
+                                        <th colspan="9" style="text-align: center;">MATERIAL</th>
                                         <th rowspan="2">Perjalanan</th>
                                         <!-- <th rowspan="2">Actions</th> -->
                                     </tr> 
                                     <tr>
                                         <th>Budget</th>
-                                        <th>Actual</th>
+                                        <th>ACT</th>
                                         <th>%</th>
-                                        <th>Remains</th>
+                                        <th>RMN</th>
                                         <th>%</th>
                                         <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
                                         <th>Budget</th>
-                                        <th>Actual</th>
+                                        <th>Total</th>
                                         <th>%</th>
-                                        <th>Remains</th>
+                                        <th>RMN</th>
                                         <th>%</th>
-                                        <th>Estimasi</th>
+                                        <th>PP</th>
+                                        <th>%</th>
+                                        <th>PO</th>
                                         <th>%</th>
                                     </tr>
                                 </thead>
@@ -105,7 +107,7 @@
                                         <tr>
                                             <td><?= $p['deskripsi']; ?><small> (<?= $p['copro']; ?>) </small></td>
                                             <td><?= number_format($p['cost_amount'],0,',','.')?></td>
-                                            <td><?= $p['delivery_date']; ?></td>
+                                            <td><?= date('d M', strtotime($p['delivery_date'])); ?></td>
                                             <td><?= $p['status']; ?></td>
                                             <td><?= intval($p['mh_budget']); ?></td>
                                             <td><?= $mh_total; ?></td>
@@ -121,16 +123,18 @@
                                             <td><h6><?= intval($mh_wh / $mh_budget* 100).'%'; ?></h6></td>
                                             <td><?= $mh_ot; ?></td>
                                             <td><h6><?= intval($mh_ot / $mh_budget* 100).'%'; ?></h6></td>
-                                            <td class="td-name"><?= number_format($p['mt_budget'],0,',','.')?></td>
-                                            <td><?= number_format($mt_act,0,',','.')?></td>
+                                            <td class="td-name"><?= number_format(substr($p['mt_budget'],0,-6),0,',','.')?></td>
+                                            <td><?= number_format(substr($mt_act,0,-6),0,',','.')?></td>
                                             <td><h6><?= intval($mt_act / $mt_budget* 100).'%'; ?></h6></td>
                                             <?php if ($mt_remains>0){
-                                                echo '<td class="text-success">'.number_format($mt_remains,0,',','.').'</td>';
+                                                echo '<td class="text-success">'.number_format(substr($mt_remains,0,-6),0,',','.').'</td>';
                                                 echo '<td class="text-success"><h6>'.intval($mt_remains / $mt_budget* 100).'%</h6></td>';
                                             }else{
-                                                echo '<td class="text-danger">'.number_format($mt_remains,0,',','.').'<i class="material-icons">arrow_drop_down</i></td>';
+                                                echo '<td class="text-danger">'.number_format(substr($mt_remains,0,-6),0,',','.').'<i class="material-icons">arrow_drop_down</i></td>';
                                                 echo '<td class="text-danger"><h6>'.intval($mt_remains / $mt_budget* 100).'%</h6></td>';
                                             } ?>
+                                            <td><?= number_format($mt_est,0,',','.')?></td>
+                                            <td><h6><?= intval($mt_est / $mt_budget* 100).'%'; ?></h6></td>
                                             <td><?= number_format($mt_est,0,',','.')?></td>
                                             <td><h6><?= intval($mt_est / $mt_budget* 100).'%'; ?></h6></td>
                                             <td><?= $dl_total; ?></td>

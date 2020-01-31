@@ -33,11 +33,11 @@ class Pmd extends CI_Controller
             $this->db->where('tgl_aktivitas >=',$tglawal);
             $this->db->where('tgl_aktivitas <=',$tglakhir);
             $this->db->where('jenis_aktivitas','JAM KERJA');
-            $this->db->where('status >','1');
+            $this->db->where('status','9');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         }else{
-            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' => 'X'])->result_array();
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['id' => 'X'])->result_array();
             $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
             Silahkan PILIH tanggal terlebih dahulu.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -65,11 +65,11 @@ class Pmd extends CI_Controller
             $this->db->where('tgl_aktivitas >=',$tglawal);
             $this->db->where('tgl_aktivitas <=',$tglakhir);
             $this->db->where('jenis_aktivitas','LEMBUR');
-            $this->db->where('status >','1');
+            $this->db->where('status','9');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         }else{
-            $data['aktivitas'] = $this->db->get_where('aktivitas', ['npk' => 'X'])->result_array();
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['id' => 'X'])->result_array();
             $this->session->set_flashdata('pilihtgl', ' <div class="alert alert-info alert-dismissible fade show" role="alert">
             Silahkan PILIH tanggal terlebih dahulu.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
