@@ -224,10 +224,14 @@ class Projectbudget extends CI_Controller
     {   
         $copro = $this->input->post('copro');
         $part = $this->input->post('part');
-        $kategori = $this->input->post('kategori');
+        $kategori = $this->input->post('kategori');  
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
         $budget = $this->db->query("SELECT budget from project_material where copro = '$copro' and part ='$part'")->result_array();
         $this->db->set('biaya_est', $this->input->post('biaya_est'));
         $this->db->set('no', $this->input->post('no'));
+        $this->db->set('tgl_estimasi', $now);
+        $this->db->set('pembuat_act',  $this->session->userdata('inisial'));
         $this->db->set('keterangan', $this->input->post('keterangan'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('project_material_detail');
