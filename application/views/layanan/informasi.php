@@ -28,18 +28,18 @@
                                 <thead>
                                     <tr>
                                         <th>Banner</th>
-                                        <th>Judul</th>
+                                        <th>Title</th>
                                         <!-- <th>Deskripsi</th> -->
-                                        <th>Berlaku</th>
+                                        <th>Expired</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Banner</th>
-                                        <th>Judul</th>
+                                        <th>Title</th>
                                         <!-- <th>Deskripsi</th> -->
-                                        <th>Berlaku</th>
+                                        <th>Expired</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -54,7 +54,7 @@
                                                 </td>
                                                 <td><?= $i['judul']; ?></td>
                                                 <!-- <td><?= $i['deskripsi']; ?></td> -->
-                                                <td><?= $i['berlaku']; ?></td>
+                                                <td><?= date('d M Y', strtotime( $i['berlaku'])); ?></td>
                                                 <td class="text-right">
                                                     <a href="#" class="btn btn-sm btn-round btn-warning btn-sm" data-toggle="modal" data-target="#uploadBanner" data-id="<?= $i['id']; ?>" data-judul="<?= $i['judul']; ?>" data-deskripsi="<?= $i['deskripsi']; ?>" data-berlaku="<?= $i['berlaku']; ?>">UPDATE</a>
                                                     <a href="<?= base_url('layanan/hapusInformasi/') . $i['id']; ?>" class="btn btn-round btn-danger btn-sm">DELETE</a>
@@ -97,7 +97,7 @@
                     <div class="modal-body">
                     <?= form_open_multipart('layanan/buatInformasi'); ?>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Judul</label>
+                            <label class="col-md-4 col-form-label">Title</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <input type="text" class="form-control" id="judul" name="judul" required>
@@ -113,7 +113,7 @@
                             </div>
                         </div> -->
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Berlaku Sampai</label>
+                            <label class="col-md-4 col-form-label">Expired</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <input type="text" class="form-control datepicker" id="berlaku" name="berlaku" required>
@@ -174,7 +174,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Judul</label>
+                            <label class="col-md-4 col-form-label">Title</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <input type="text" class="form-control" id="judul" name="judul" required>
@@ -190,7 +190,7 @@
                             </div>
                         </div> -->
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Berlaku Sampai</label>
+                            <label class="col-md-4 col-form-label">Expired</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <input type="text" class="form-control datepicker" id="berlaku" name="berlaku" required>

@@ -37,21 +37,14 @@ class Layanan extends CI_Controller
     public function buatInformasi()
     {
         date_default_timezone_set('asia/jakarta');
-        $tahun = date("Y", strtotime($this->input->post('berlaku')));
-        $bulan = date("m", strtotime($this->input->post('berlaku')));
-        $queryInformasi = "SELECT COUNT(*)
-            FROM `informasi`
-            WHERE YEAR(berlaku) = '$tahun' AND MONTH(berlaku) = '$bulan'
-            ";
-            $informasi = $this->db->query($queryInformasi)->row_array();
-            $totalInformasi = $informasi['COUNT(*)'] + 1;
+       
         $data = [
-            'id' => date('ym') . $totalInformasi,
+            'id' => time(),
             'judul' => $this->input->post('judul'),
             'deskripsi' => $this->input->post('deskripsi'),
-            'gambar_banner' => 'gambar_banner.jpg',
-            'gambar_konten' => 'gambar_konten.jpg',
-            'berlaku' => $this->input->post('berlaku')
+            'gambar_banner' => 'default.jpg',
+            'gambar_konten' => 'default.jpg',
+            'berlaku' => date('Y-m-d', strtotime($this->input->post('berlaku')))
         ];
         $this->db->insert('informasi', $data);
 
@@ -72,6 +65,14 @@ class Layanan extends CI_Controller
 
     public function updateInformasi()
     {
+        date_default_timezone_set('asia/jakarta');
+
+        $this->db->set('judul', $this->input->post('judul'));
+        $this->db->set('deskripsi', $this->input->post('deskripsi'));
+        $this->db->set('berlaku', date('Y-m-d', strtotime($this->input->post('berlaku'))));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('informasi');
+
         $config['upload_path']          = './assets/img/info/';
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 1024;
@@ -79,16 +80,9 @@ class Layanan extends CI_Controller
         if ($this->upload->do_upload('gambar_banner')) {
             $this->db->set('gambar_banner', $this->upload->data('file_name'));
             $this->db->set('gambar_konten', $this->upload->data('file_name'));
-        } else {
-            echo $this->upload->display_errors();
-        }
-            $this->db->set('judul', $this->input->post('judul'));
-            $this->db->set('deskripsi', $this->input->post('deskripsi'));
-            $this->db->set('berlaku', $this->input->post('berlaku'));
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('informasi');
+        } 
 
-            redirect('layanan/informasi');
+        redirect('layanan/informasi');
     }
 
     public function hapusInformasi($id)
