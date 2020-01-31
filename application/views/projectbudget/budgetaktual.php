@@ -103,7 +103,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                        </div>
+                        </div><a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-sm ">back</a>
                     </div>
                     <!-- end card-body-->
                 </div>
