@@ -219,7 +219,7 @@ class Perjalanandl extends CI_Controller
             $hr_admin = $this->db->get('karyawan_admin')->row_array();
             $my_apikey = "NQXJ3HED5LW2XV440HCG";
             $destination = $hr_admin['phone'];
-            $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+            $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $reservasi['id'] . "*" .
                 "\r\n Nama : *" . $reservasi['nama'] . "*" .
                 "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
                 "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
