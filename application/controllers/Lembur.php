@@ -1118,16 +1118,16 @@ class Lembur extends CI_Controller
         $bulan = date('m');
         $tahun = date('Y');
 
-        $this->db->where('year(tglmulai)',$tahun);
-        $this->db->where('month(tglmulai)',$bulan);
+        $this->db->where('year(tglmulai) >=',$tahun);
+        $this->db->where('month(tglmulai) >=',$bulan);
         $this->db->where('day(tglmulai) >=',$today);
         $this->db->where('admin_ga',null);
         $this->db->where('status >', '2');
         $this->db->order_by('tglmulai', 'ASC');
         $data['lembur'] = $this->db->get('lembur')->result_array();
 
-        $this->db->where('year(tglmulai)',$tahun);
-        $this->db->where('month(tglmulai)',$bulan);
+        $this->db->where('year(tglmulai) >=',$tahun);
+        $this->db->where('month(tglmulai) >=',$bulan);
         $this->db->where('day(tglmulai) >=',$today);
         $this->db->where('admin_ga !=',null);
         $this->db->where('status >', '2');

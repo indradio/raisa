@@ -29,18 +29,18 @@
                                     </tr> 
                                     <tr>
                                         <th>Budget</th>
-                                        <th>Total</th>
+                                        <th>Act</th>
                                         <th>%</th>
-                                        <th>RMNs</th>
+                                        <th>Rmns</th>
                                         <th>%</th>
                                         <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
                                         <th>Budget</th>
-                                        <th>Total</th>
+                                        <th>Crnt</th>
                                         <th>%</th>
-                                        <th>RMNs</th>
+                                        <th>Rmns</th>
                                         <th>%</th>
                                         <th>PP</th>
                                         <th>%</th>
@@ -159,18 +159,18 @@
                                         <th>Delivery</th>
                                         <th>Amount</th>
                                         <th>Budget</th>
-                                        <th>Total</th>
+                                        <th>Act</th>
                                         <th>%</th>
-                                        <th>RMNs</th>
+                                        <th>Rmns</th>
                                         <th>%</th>
                                         <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
                                         <th>Budget</th>
-                                        <th>Total</th>
+                                        <th>Crnt</th>
                                         <th>%</th>
-                                        <th>RMNs</th>
+                                        <th>Rmns</th>
                                         <th>%</th>
                                         <th>PP</th>
                                         <th>%</th>
@@ -184,7 +184,13 @@
                         </div>
                         <div class="card-footer">
                         <!-- <div class="row"> -->
-                            <p> *) Nominal Amount & Material dalam hitungan JUTA.
+                            <p> Keterangan :
+                            </br> - Crnt (Current) : Actual + Forecast
+                            </br> - Rmns (Remains MH) : Budget - Actual
+                            </br> - Rmns (Remains Material) : Budget - Crnt
+                            </br> - PP : Forecast PP, Belum PO
+                            </br> - PO : PP yang sudah PO
+                            </br> - DL : Jumlah perjalanan Dinas Luar (Trip)
                         <!-- </div> -->
                     </div>
                     </div>

@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assessment</i>
                         </div>
-                        <h4 class="card-title">Laporan Jam Kerja</h4>
+                        <h4 class="card-title">Status Jam Kerja</h4>
                     </div>
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('jamkerja/status'); ?>" method="post">
@@ -47,7 +47,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Status Jam Kerja</h4>
+            <h4 class="card-title">Status Jam Kerja Periode <?= date('F Y', strtotime("$tahun-$bulan-01")); ?></h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -115,10 +115,15 @@
                     }else{
                       echo '<i class="fa fa-circle text-danger"></i>';
                     }
-                    // if (!empty($lembur)){
-                    //   echo '<td><i class="fa fa-circle text-warning"></i></td>';
-                    // }
-
+                    if (!empty($lembur)){
+                      if ($lembur['status']==9){
+                        echo '<i class="fa fa-circle text-success"></i>';
+                      }elseif ($lembur['status']>1 AND $lembur['status']<7){
+                        echo '<i class="fa fa-circle text-warning"></i>';
+                      }elseif ($lembur['status']==7){
+                        echo '<i class="fa fa-circle text-info"></i>';
+                      }
+                    }
                       echo '</td>';
                     } ?>
                     </tr>
@@ -132,10 +137,10 @@
           <div class="card-footer">
               <div class="row">
                   <div class="col-md-12">
-                      <i class="fa fa-circle text-success"></i> Jam Kerja telah selesai. 
-                      <i class="fa fa-circle text-info"></i> Jam Kerja Sedang diproses oleh PPIC. 
-                      <i class="fa fa-circle text-warning"></i> Jam Kerja sedang diproses oleh RDA/Koordinator. 
-                      <i class="fa fa-circle text-danger"></i> Tidak ada laporan jam kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja). 
+                      <i class="fa fa-circle text-success"></i> Laporan Jam Kerja / Lembur.
+                      <i class="fa fa-circle text-info"></i> Jam Kerja/Lembur Sedang diproses oleh PPIC/HR. 
+                      <i class="fa fa-circle text-warning"></i> Jam Kerja sedang diproses oleh RDA/Koordinator/Depthead. 
+                      <i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja). 
                   </div>
               </div>
           </div>
@@ -153,7 +158,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Status Jam Kerja</h4>
+            <h4 class="card-title">Status Jam Kerja Periode <?= date('F Y', strtotime("$tahun-$bulan-01")); ?></h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
