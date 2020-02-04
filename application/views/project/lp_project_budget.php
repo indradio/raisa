@@ -15,32 +15,32 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtproject" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th rowspan="2">Project____________________________</th>
-                                        <th rowspan="2">Stats</th>
                                         <th rowspan="2">Delivery_</th>
                                         <th rowspan="2">Amount</th>
                                         <th colspan="9" style="text-align: center;">MAN HOUR</th>
                                         <th colspan="9" style="text-align: center;">MATERIAL</th>
                                         <th rowspan="2">DL</th>
+                                        <th rowspan="2">Stats</th>
                                         <!-- <th rowspan="2">Actions</th> -->
                                     </tr> 
                                     <tr>
                                         <th>Budget</th>
-                                        <th>Act</th>
+                                        <th>EAC</th>
                                         <th>%</th>
-                                        <th>Rmns</th>
+                                        <th>RMNs</th>
                                         <th>%</th>
                                         <th>MH</th>
                                         <th>%</th>
                                         <th>OT</th>
                                         <th>%</th>
                                         <th>Budget</th>
-                                        <th>Crnt</th>
+                                        <th>EAC</th>
                                         <th>%</th>
-                                        <th>Rmns</th>
+                                        <th>RMNs</th>
                                         <th>%</th>
                                         <th>PP</th>
                                         <th>%</th>
@@ -114,40 +114,44 @@
                                         $dl_total = $this->db->get()->num_rows();
                                         
                                         ?>
-                                        <tr>
+                                        <?php if ($p['status']=='OPEN'){ ?>
+                                            <tr>
+                                        <?php }else{ ?>
+                                            <tr class="text-muted">
+                                        <?php } ?>
                                             <td><?= substr($p['deskripsi'],0,20); ?><small> (<?= $p['copro']; ?>) </small></td>
-                                            <td><?= $p['status']; ?></td>
-                                            <td><?= date('d M y', strtotime($p['delivery_date'])); ?></td>
-                                            <td><?= number_format(substr($p['cost_amount'],0,-6),0,',','.')?></td>
-                                            <td><?= intval($p['mh_budget']); ?></td>
-                                            <td><?= $mh_total; ?></td>
-                                            <td><h6><?= intval($mh_total / $mh_budget* 100).'%'; ?></h6></td>
+                                            <td class="text-center"><?= date('d M y', strtotime($p['delivery_date'])); ?></td>
+                                            <td class="text-center"><?= number_format(substr($p['cost_amount'],0,-6),0,',','.')?></td>
+                                            <td class="text-center"><?= intval($p['mh_budget']); ?></td>
+                                            <td class="text-center"><?= number_format((float)$mh_total, 1, ',', '');?></td>
+                                            <td class="text-center"><?= intval($mh_total / $mh_budget* 100).'%'; ?></td>
                                             <?php if ($mh_remains>0){
-                                                echo '<td class="text-success">'.$mh_remains.'</td>';
-                                                echo '<td class="text-success"><h6>'.intval($mh_remains / $mh_budget* 100).'%</h6></td>';
+                                                echo '<td class="text-success text-center">'.$mh_remains.'</td>';
+                                                echo '<td class="text-success text-center">'.intval($mh_remains / $mh_budget* 100).'%</td>';
                                             }else{
-                                                echo '<td class="text-danger">'.$mh_remains.'<i class="material-icons">arrow_drop_down</i></td>';
-                                                echo '<td class="text-danger"><h6>'.intval($mh_remains / $mh_budget* 100).'%</h6></td>';
+                                                echo '<td class="text-danger text-center">'.$mh_remains.'<i class="material-icons">arrow_drop_down</i></td>';
+                                                echo '<td class="text-danger text-center">'.intval($mh_remains / $mh_budget* 100).'%</td>';
                                             } ?>
-                                            <td><?= $mh_wh; ?></td>
-                                            <td><h6><?= intval($mh_wh / $mh_budget* 100).'%'; ?></h6></td>
-                                            <td><?= $mh_ot; ?></td>
-                                            <td><h6><?= intval($mh_ot / $mh_budget* 100).'%'; ?></h6></td>
-                                            <td class="td-name"><?= substr(number_format($p['mt_budget'],0,',','.'),0,-8)?></td>
-                                            <td><?= substr(number_format($mt_total,0,',','.'),0,-8)?></td>
-                                            <td><h6><?= intval($mt_total / $mt_budget* 100).'%'; ?></h6></td>
+                                            <td class="text-center"><?= number_format((float)$mh_wh, 1, ',', '');?></td>
+                                            <td class="text-center"><?= intval($mh_wh / $mh_budget* 100).'%'; ?></td>
+                                            <td class="text-center"><?= number_format((float)$mh_ot, 1, ',', '');?></td>
+                                            <td class="text-center"><?= intval($mh_ot / $mh_budget* 100).'%'; ?></td>
+                                            <td class="text-center"><?= substr(number_format($p['mt_budget'],0,',','.'),0,-8)?></td>
+                                            <td class="text-center"><?= substr(number_format($mt_total,0,',','.'),0,-8)?></td>
+                                            <td class="text-center"><?= intval($mt_total / $mt_budget* 100).'%'; ?></td>
                                             <?php if ($mt_remains>0){
-                                                echo '<td class="text-success">'.substr(number_format($mt_remains,0,',','.'),0,-8).'</td>';
-                                                echo '<td class="text-success"><h6>'.intval($mt_remains / $mt_budget* 100).'%</h6></td>';
+                                                echo '<td class="text-success text-center">'.substr(number_format($mt_remains,0,',','.'),0,-8).'</td>';
+                                                echo '<td class="text-success text-center">'.intval($mt_remains / $mt_budget* 100).'%</td>';
                                             }else{
-                                                echo '<td class="text-danger">'.substr(number_format($mt_remains,0,',','.'),0,-8).'<i class="material-icons">arrow_drop_down</i></td>';
-                                                echo '<td class="text-danger"><h6>'.intval($mt_remains / $mt_budget* 100).'%</h6></td>';
+                                                echo '<td class="text-danger text-center">'.substr(number_format($mt_remains,0,',','.'),0,-8).'<i class="material-icons">arrow_drop_down</i></td>';
+                                                echo '<td class="text-danger text-center">'.intval($mt_remains / $mt_budget* 100).'%</td>';
                                             } ?>
-                                            <td><?= substr(number_format($mt_est,0,',','.'),0,-8)?></td>
-                                            <td><h6><?= intval($mt_est / $mt_budget* 100).'%'; ?></h6></td>
-                                            <td><?= substr(number_format($mt_act,0,',','.'),0,-8)?></td>
-                                            <td><h6><?= intval($mt_act / $mt_budget* 100).'%'; ?></h6></td>
-                                            <td><?= $dl_total; ?></td>
+                                            <td class="text-center"><?= substr(number_format($mt_est,0,',','.'),0,-8)?></td>
+                                            <td class="text-center"><?= intval($mt_est / $mt_budget* 100).'%'; ?></td>
+                                            <td class="text-center"><?= substr(number_format($mt_act,0,',','.'),0,-8)?></td>
+                                            <td class="text-center"><?= intval($mt_act / $mt_budget* 100).'%'; ?></td>
+                                            <td class="text-center"><?= $dl_total; ?></td>
+                                            <td class="text-center"><?= $p['status']; ?></td>
                                             <!-- <td></td> -->
                                         </tr>
                                     <?php endforeach; ?>
@@ -155,11 +159,10 @@
                                 <tfoot>
                                     <tr>
                                         <th>Project</th>
-                                        <th>Stats</th>
                                         <th>Delivery</th>
                                         <th>Amount</th>
                                         <th>Budget</th>
-                                        <th>Act</th>
+                                        <th>Eac</th>
                                         <th>%</th>
                                         <th>Rmns</th>
                                         <th>%</th>
@@ -168,7 +171,7 @@
                                         <th>OT</th>
                                         <th>%</th>
                                         <th>Budget</th>
-                                        <th>Crnt</th>
+                                        <th>Eac</th>
                                         <th>%</th>
                                         <th>Rmns</th>
                                         <th>%</th>
@@ -177,6 +180,7 @@
                                         <th>PO</th>
                                         <th>%</th>
                                         <th>DL</th>
+                                        <th>Stats</th>
                                         <!-- <th>Actions</th> -->
                                     </tr>
                                 </tfoot>
@@ -184,15 +188,15 @@
                         </div>
                         <div class="card-footer">
                         <!-- <div class="row"> -->
-                            <p> Keterangan :
-                            </br> - Crnt (Current) : Actual + Forecast
-                            </br> - Rmns (Remains MH) : Budget - Actual
-                            </br> - Rmns (Remains Material) : Budget - Crnt
+                            <p><b> Keterangan : </b>
+                            </br> - EAC (Estimate at Completion) : Actual + Forecast
+                            </br> - Rmns (Remains MH) : Budget - EAC
+                            </br> - Rmns (Remains Material) : Budget - EAC
                             </br> - PP : Forecast PP, Belum PO
                             </br> - PO : PP yang sudah PO
-                            </br> - DL : Jumlah perjalanan Dinas Luar (Trip)
+                            </br> - DL (Trip) : Jumlah perjalanan Dinas Luar
                         <!-- </div> -->
-                    </div>
+                        </div>
                     </div>
                     <!-- end card-body-->
                 </div>

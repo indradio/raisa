@@ -94,5 +94,44 @@ class Layanan extends CI_Controller
         redirect('layanan/informasi');
     }
     
+    public function messages()
+    {
+        $data['sidemenu'] = 'Layanan';
+        $data['sidesubmenu'] = 'Kirim Pesan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['pesan'] = $this->db->get('layanan_pesan')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('layanan/messages', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function messages_send()
+    {
+        foreach ($this->input->post('penerima') as $to) :
+            date_default_timezone_set('asia/jakarta');
+            $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            $destination = $to;
+            $message = $this->input->post('pesan');
+            $api_url = "http://panel.apiwha.com/send_message.php";
+            $api_url .= "?apikey=" . urlencode($my_apikey);
+            $api_url .= "&number=" . urlencode($destination);
+            $api_url .= "&text=" . urlencode($message);
+            json_decode(file_get_contents($api_url, false));
+
+            $penerima = $this->db->get_where('karyawan', ['phone' => $to])->row_array();
+
+            $data = [
+                'create_at' => date('Y-m-d H:i:s'),
+                'pengirim' => $this->session->userdata('nama'),
+                'penerima' => $penerima['nama'],
+                'pesan' => $this->input->post('pesan')
+            ];
+            $this->db->insert('layanan_pesan', $data);
+        endforeach;
+        
+        redirect('layanan/messages');
+    }
     
 }

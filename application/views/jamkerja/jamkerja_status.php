@@ -168,6 +168,7 @@
               <table id="dt-status2" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
+                    <th>Hari</th>
                     <th>Tanggal</th>
                     <th>Nama</th>
                     <th>Cell</th>
@@ -179,6 +180,7 @@
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>Hari</th>
                     <th>Tanggal</th>
                     <th>Nama</th>
                     <th>Cell</th>
@@ -236,7 +238,7 @@
                        <?php }else{
                         echo '<tr>';
                        } ?>
-                       <!-- <td><?= date('D, d M Y', strtotime($tanggal)); ?></td> -->
+                      <td><?= date('D', strtotime($bulan .'-'. $i .'-'. $tahun)); ?></td>
                       <td><?= $bulan .'-'. $i .'-'. $tahun; ?></td>
                        <td><?=$k['nama']; ?></td>
                        <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
@@ -261,6 +263,7 @@
                      </tr>
                      <?php }else{ ?>
                        <tr>
+                       <td><?= date('D', strtotime($bulan .'-'. $i .'-'. $tahun)); ?></td>
                        <td><?= $bulan .'-'. $i .'-'. $tahun; ?></td>
                         <td><?=$k['nama']; ?></td>
                          <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
@@ -314,9 +317,9 @@ $(document).ready(function() {
     } );
 
     $('#dt-status2').DataTable( {
-        order: [[0, 'asc']],
+        order: [[1, 'asc']],
         rowGroup: {
-            dataSrc: 0
+            dataSrc: 1
         },
         dom: 'Bfrtip',
         buttons: [

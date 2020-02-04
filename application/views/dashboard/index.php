@@ -689,7 +689,7 @@
             </h4>
           </div>
           <div class="card-body">
-            <div id="revenueChart" class="ct-chart"></div>
+            <div id="revenueChartDash" class="ct-chart"></div>
             <div class="material-datatables">
               <table id="revenueTables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
@@ -758,9 +758,9 @@
                 <h6 class="card-category"></h6>
               </div>
               <div class="col-md-12">
-                <i class="fa fa-circle text-success"></i> Last Year
+                <i class="fa fa-circle text-success"></i> Aktual
                 <i class="fa fa-circle text-info"></i> Target
-                <i class="fa fa-circle text-warning"></i> Aktual
+                <i class="fa fa-circle text-warning"></i> Last Year
               </div>
             </div>
           </div>
@@ -918,6 +918,55 @@
             // xhr.send(new Int8Array()); 
             // xhr.send(element);
         })
+
+        var dataMultipleBarsChart = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        series: [
+          [
+            <?php
+              $revAct = $this->db->get_where('pendapatan', ['id' => 1])->row_array();
+              echo $revAct['januari'].','.$revAct['februari'].','.$revAct['maret'].','.$revAct['april'].','.$revAct['mei'].','.$revAct['juni'].','.$revAct['juli'].','.$revAct['agustus'].','.$revAct['september'].','.$revAct['oktober'].','.$revAct['november'].','.$revAct['desember'];
+            ?>
+          ],
+          [
+            <?php
+              $revTarget = $this->db->get_where('pendapatan', ['id' => 2])->row_array();
+              echo $revTarget['januari'].','.$revTarget['februari'].','.$revTarget['maret'].','.$revTarget['april'].','.$revTarget['mei'].','.$revTarget['juni'].','.$revTarget['juli'].','.$revTarget['agustus'].','.$revTarget['september'].','.$revTarget['oktober'].','.$revTarget['november'].','.$revTarget['desember'];
+            ?> 
+          ],
+          [
+            <?php
+              $revLast = $this->db->get_where('pendapatan', ['id' => 3])->row_array();
+              echo $revLast['januari'].','.$revLast['februari'].','.$revLast['maret'].','.$revLast['april'].','.$revLast['mei'].','.$revLast['juni'].','.$revLast['juli'].','.$revLast['agustus'].','.$revLast['september'].','.$revLast['oktober'].','.$revLast['november'].','.$revLast['desember'];  
+            ?> 
+          ]
+        ]
+      };
+
+      var optionsMultipleBarsChart = {
+        seriesBarDistance: 10,
+        axisX: {
+          showGrid: false
+        },
+        height: '300px'
+      };
+
+      var responsiveOptionsMultipleBarsChart = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+
+      var multipleBarsChart = Chartist.Bar('#revenueChartDash', dataMultipleBarsChart, optionsMultipleBarsChart, responsiveOptionsMultipleBarsChart);
+
+      //start animation for the Emails Subscription Chart
+      md.startAnimationForBarChart(multipleBarsChart);
+    
     });
 
     var initPhotoSwipeFromDOM = function(gallerySelector) {
@@ -1125,4 +1174,5 @@
 
     // execute above function
     initPhotoSwipeFromDOM('.my-gallery');
+    
   </script>
