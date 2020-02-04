@@ -284,18 +284,11 @@ class Project extends CI_Controller
         $this->db->set('po_receive', $this->input->post('po_date'));
         $this->db->set('delivery_date', $this->input->post('due_date'));
         $this->db->set('mh_budget', $this->input->post('mh_total'));
+        $this->db->set('cost_amount', $this->input->post('amount'));
+        $this->db->set('status', $this->input->post('status'));
+        $this->db->set('highlight ', $this->input->post('highlight'));
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->update('project');
-
-        $do = $this->db->query("SELECT copro, SUM(budget) as budget FROM project_material GROUP by copro")->result_array();
-
-        foreach ($do as $d)
-        {   
-            $this->db->set( 'mt_budget', $d['budget']);
-            $this->db->where('copro', $d['copro']);
-            $this->db->update('project');
-
-        }
         // echo $this->db->last_query();
         redirect("projectbudget/index");
     }

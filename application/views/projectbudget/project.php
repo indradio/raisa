@@ -51,7 +51,7 @@
                                         <td><?= number_format($act_cost,0,',','.') ?></td>
                                         <td><?= $p['status']; ?></td>
                                         <td>
-                                            <a href="<?= base_url('projectbudget/budget/') . $p['copro']; ?>" class="btn btn-sm btn-success">Project Budget</a>
+                                            <a href="<?= base_url('projectbudget/budget/') . $p['copro']; ?>" class="btn btn-sm btn-success">Budget</a>
                                             <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
                                                     data-desk="<?php echo $p['deskripsi'] ?>"
@@ -59,7 +59,7 @@
                                                     data-duedate="<?php echo $p['delivery_date'] ?>"
                                                     data-total="<?php echo $p['mh_budget'] ?>"
                                                     data-amount="<?php echo $p['cost_amount'] ?>"
-                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#update" >Update Data Project</a>
+                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#update" >Update</a>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
@@ -280,9 +280,12 @@
                                 <label class="col-md-3 col-form-label">Status</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                       <SELECT class="form-control">
-                                           <option value="1">Ya</option>
-                                           <option>tidak</option>
+                                         <select class="form-control" name="status">
+                                            <option>--PILIH--</option>
+                                            <option>OPEN</option>
+                                            <option>TECO</option>
+                                            <option>CLOSE</option>
+                                            <option>BLOCK</option>
                                      <!--   <?php if ($p['copro']==$data_jurusan['id_jurusan']) {
                                         $select="selected";
                                     }else{ $select="";}?> -->

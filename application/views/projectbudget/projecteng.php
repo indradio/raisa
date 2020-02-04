@@ -21,8 +21,6 @@
                                         <th>Deskripsi</th>
                                         <th>Amount</th>
                                         <th>Budget</th>
-                                        <th>Estimasi</th>
-                                        <th>Aktual</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -47,8 +45,6 @@
                                         <td><?= $p['deskripsi']; ?></td>
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
-                                        <td><?= number_format($est_cost,0,',','.') ?></td>
-                                        <td><?= number_format($act_cost,0,',','.') ?></td>
                                         <td><?= $p['status']; ?></td>
                                         <td> <?php if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 ){?>
                                             <a href="<?= base_url('projectbudget/budgeteng/') . $p['copro']; ?>" class="btn btn-sm btn-success">Project Budget</a>

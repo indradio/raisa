@@ -15,25 +15,36 @@
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
-                                    <tr>
+                                     <tr>
                                         <th>COPRO</th>
+                                        <th>Customer</th>
                                         <th>Deskripsi</th>
-                                        <th>Progres</th>
-                                        <th>Due Date</th>
-                                        <th>Status Project</th>
-                                        <th>Status COPRO</th>
+                                        <th>Amount</th>
+                                        <th>Budget</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($project as $p) : ?>
+                                    foreach ($project as $p) : 
+                                    $this->db->select_sum('est_total');
+                                    $this->db->where('copro', $p['copro']);
+                                    $mh = $this->db->get('project_material');
+                                    $est_cost = $mh->row()->est_total;
+
+                                    $this->db->select_sum('act_total');
+                                    $this->db->where('copro', $p['copro']);
+                                    $mh = $this->db->get('project_material');
+                                    $act_cost = $mh->row()->act_total;
+                                    ?>
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
+                                        <td><?= $p['customer_inisial']; ?></td>
                                         <td><?= $p['deskripsi']; ?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
+                                        <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
+                                        
                                         <td><?= $p['status']; ?></td>
                                         <td>
                                             <a href="<?= base_url('projectbudget/budgetpch/') . $p['copro']; ?>" class="btn btn-sm btn-success">Project Budget</a>
@@ -42,13 +53,13 @@
                                         <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                     <tr>
                                         <th>COPRO</th>
+                                        <th>Customer</th>
                                         <th>Deskripsi</th>
-                                        <th>Progres</th>
-                                        <th>Due Date</th>
-                                        <th>Status Project</th>
-                                        <th>Status COPRO</th>
+                                        <th>Amount</th>
+                                        <th>Budget</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
