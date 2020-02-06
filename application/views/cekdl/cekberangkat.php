@@ -92,7 +92,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $perjalanan['id']; ?>">Tambahkan</button>
+                                    <?php if ($perjalanan['jenis_perjalanan']!='TA'){ ?>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $perjalanan['id']; ?>">Tambah Peserta</button>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row">
