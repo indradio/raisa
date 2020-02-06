@@ -12,7 +12,7 @@ class Projectbudget extends CI_Controller
     public function index()
     {   
     	$data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['project'] = $this->db->query("SELECT * from project where status ='OPEN' or status='TECO' ")->result_array();
         $data['customer'] = $this->db->get('customer')->result_array();
@@ -29,7 +29,7 @@ class Projectbudget extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('projectbudget/project', $data);
         $this->load->view('templates/footer');
-        }elseif($karyawan['posisi_id'] < 7 AND $karyawan['dept_id'] == 11 )
+        }elseif($karyawan['posisi_id'] < 7 AND $karyawan['dept_id'] == 11  or $karyawan['sect_id'] == 140)
         {
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -48,7 +48,7 @@ class Projectbudget extends CI_Controller
     public function excel()
     {
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['project'] = $this->db->get('project_material_detail')->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -62,12 +62,13 @@ class Projectbudget extends CI_Controller
     public function budget($copro)
     {	
     	$data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
     	$data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['Projectbudget'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
         $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
-         $data['part_project'] = $this->db->get('part_project')->result_array();
+        $data['part_project'] = $this->db->get('part_project')->result_array();
+        $data['manhour'] = $this->db->get('project_manhour')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -77,7 +78,7 @@ class Projectbudget extends CI_Controller
     public function budgeteng($copro)
     {   
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['Projectbudget'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
@@ -90,7 +91,7 @@ class Projectbudget extends CI_Controller
     }
     public function budgetpch($copro){   
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['Projectbudget'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
         $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
@@ -103,7 +104,7 @@ class Projectbudget extends CI_Controller
     }
     public function budgetpchdetail($copro,$part){   
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
         $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();
@@ -117,7 +118,7 @@ class Projectbudget extends CI_Controller
     }
     public function budgetdetail($copro,$part){   
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
         $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();
@@ -131,7 +132,7 @@ class Projectbudget extends CI_Controller
     public function budgetengdetail($copro,$part)
     {
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Budget';
+        $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
         $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();

@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title"><?php echo $project['deskripsi'];?></h4>
+                        <h4 class="card-title"><?php echo $project['deskripsi'];?><small>(Budget Material)</small></h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -19,7 +19,6 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2">Copro</th> 
                                         <th rowspan="2">Part</th>
                                         <th rowspan="2">Budget</th>
                                         <th colspan="6" style="text-align: center;">Estimasi Cost</th>
@@ -46,7 +45,6 @@
                                     foreach ($Projectbudget as $p) : ?>
 
                                     <tr>
-                                        <td><?= $p['copro']; ?></td>
                                         <td><?= $p['part']; ?></td>
                                         <td>Rp <?= number_format($p['budget'],0,',','.') ?></td>
                                         <td>Rp <?= number_format($p['est_cost'],0,',','.') ?></td>
@@ -81,7 +79,6 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th rowspan="2">Copro <br></th> 
                                         <th rowspan="2">Part</th>
                                         <th rowspan="2">Budget</th>
                                         <th colspan="6" style="text-align: center;">Estimasi Cost</th>
@@ -109,8 +106,68 @@
                         <a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-sm ">back</a>
                     </div>
                     <!-- end card-body-->
+
                 </div>
                 <!--  end card  -->
+                 <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title"><?php echo $project['deskripsi'];?><SMALL>(Budget Man Hour)</SMALL></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <a href="#" id="tambah_copro" class="btn btn-info" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambaheac">Tambah EAC</a>
+                        </div>
+                        <div class="material-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                       <th>Part</th>
+                                       <th>Budget</th>
+                                       <th>EAC</th>
+                                       <th>Aktual</th>
+                                       <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($manhour as $mh) : ?>
+
+                                    <tr>
+                                        <td><?= $mh['part']; ?></td>
+                                        <td><?= $mh['budget']; ?></td>
+                                        <td><?= $mh['estimasi']; ?></td>
+                                        <?php $a=$mh['budget'];
+                                            $b=$mh['estimasi'];
+                                            $c= $a-$b; ?>
+                                        <td><?= $c; ?></td>
+                                        <td>
+                                            <!-- $sect_id -->
+                                            <a href="<?= base_url('mh/hpsmanhour/') . $mh['copro']. '/' .$mh['id']; ?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a></td>
+                                    </tr>
+                                        <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                       <th>Part</th>
+                                       <th>Budget</th>
+                                       <th>EAC</th>
+                                       <th>Aktual</th>
+                                       <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-sm ">back</a>
+                    </div>
+                    <!-- end card-body-->
+
+                </div>
+                <!--  end card  -->
+                
             </div>
             <!-- end col-md-12 -->
         </div>
@@ -240,6 +297,67 @@
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="text" rows="3" class="form-control" id="budget" name="budget" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-success btn-round">SIMPAN</button>
+                                <br>
+                                <button type="button" class="btn btn-default btn-round" data-dismiss="modal">TUTUP</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><div class="modal fade" id="tambaheac" tabindex="-1" role="dialog" aria-labelledby="tambahCoproTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-success text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Project Budget</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('mh/tmbhmanhour'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row" hidden>
+                                <label class="col-md-3 col-form-label">Copro</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" rows="3" class="form-control" id="copro" name="copro" value="<?= $project['copro']; ?>" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Part</label>
+                                <div class="col-md-4">
+                                    <div class="form-group has-default">
+                                       <select class="selectpicker" id="part" name="part" data-style="select-with-transition" data-size="7"required>
+                                            <option >ENGINEERING</option>
+                                            <option >MACHINERTY</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Budget</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" rows="3" class="form-control" id="budget" name="budget" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">EAC</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" rows="3" class="form-control" id="eac" name="eac" required>
                                     </div>
                                 </div>
                             </div>

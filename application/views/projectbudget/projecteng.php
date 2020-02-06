@@ -46,8 +46,10 @@
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
                                         <td><?= $p['status']; ?></td>
-                                        <td> <?php if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 ){?>
-                                            <a href="<?= base_url('projectbudget/budgeteng/') . $p['copro']; ?>" class="btn btn-sm btn-success">Project Budget</a>
+                                        <td> <?php if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 and $karyawan['sect_id'] ==113){?>
+                                            <a href="<?= base_url('projectbudget/budgeteng/') . $p['copro']; ?>" class="btn btn-sm btn-success">Budget Material</a>
+                                        <?php }elseif($karyawan['sect_id'] ==140) { ?>
+                                             <a href="<?= base_url('mh/manhour/') . $p['copro']; ?>" class="btn btn-sm btn-success">Budget Man Hour</a>
                                         <?php }?>
                                         </td>
                                     </tr>
@@ -60,8 +62,6 @@
                                         <th>Deskripsi</th>
                                         <th>Amount</th>
                                         <th>Budget</th>
-                                        <th>Estimasi</th>
-                                        <th>Aktual</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
