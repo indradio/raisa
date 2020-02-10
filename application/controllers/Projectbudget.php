@@ -18,30 +18,29 @@ class Projectbudget extends CI_Controller
         $data['customer'] = $this->db->get('customer')->result_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         if ($karyawan['sect_id'] == 222) {
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('projectbudget/projectaktual', $data);
-        $this->load->view('templates/footer');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('projectbudget/projectaktual', $data);
+            $this->load->view('templates/footer');
         }elseif ($karyawan['sect_id'] == 223) {
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('projectbudget/project', $data);
-        $this->load->view('templates/footer');
-        }elseif($karyawan['posisi_id'] < 7 AND $karyawan['dept_id'] == 11)
-        {
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('projectbudget/projecteng', $data);
-        $this->load->view('templates/footer');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('projectbudget/project', $data);
+            $this->load->view('templates/footer');
+        }elseif($karyawan['posisi_id'] < 7 AND $karyawan['dept_id'] == 11 OR $karyawan['sect_id'] == 140) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('projectbudget/projecteng', $data);
+            $this->load->view('templates/footer');
         }else{
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('projectbudget/projecteng', $data);
-        $this->load->view('templates/footer');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('projectbudget/projecteng', $data);
+            $this->load->view('templates/footer');
         }
         
     }
