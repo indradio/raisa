@@ -29,7 +29,7 @@ class Projectbudget extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('projectbudget/project', $data);
         $this->load->view('templates/footer');
-        }elseif($karyawan['posisi_id'] < 7 AND $karyawan['dept_id'] == 11  or $karyawan['sect_id'] == 140)
+        }elseif($karyawan['posisi_id'] < 7 AND $karyawan['dept_id'] == 11)
         {
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
