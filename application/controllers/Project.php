@@ -15,12 +15,40 @@ class Project extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['status'] = $this->project_model->fetch_status();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('project/index', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function project_list()
+    {
+        $list = $this->project->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $project) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $project->copro;
+            $row[] = $project->customer_inisial;
+            $row[] = $project->deskripsi;
+            $row[] = $project->status;
+          
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->project->count_all(),
+            "recordsFiltered" => $this->project->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
     }
 
     public function ajax_list()

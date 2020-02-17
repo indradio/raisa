@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model("dashboard_model");
     }
 
     public function index()
@@ -58,37 +59,68 @@ class Dashboard extends CI_Controller
         endforeach;
 
         //Auto LEMBUR
-        $this->db->where('status', '4');
+        // $this->db->where('status', '4');
         $lembur = $this->db->get('lembur')->result_array();
 
         foreach ($lembur as $l) :
             // cari selisih
             $sekarang = strtotime(date('Y-m-d H:i:s'));
-            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai']))));
-            $kirim_notif = strtotime(date('Y-m-d H:i:s', strtotime('+64 hours', strtotime($l['tglselesai']))));
+            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai_rencana']))));
+            $kirim_notif = strtotime(date('Y-m-d H:i:s', strtotime('+64 hours', strtotime($l['tglselesai_rencana']))));
+            $expired = strtotime($l['expired_at']);
 
-            // Notifikasi REALISASI tinggal 8 JAM
-            if ($kirim_notif < $sekarang) {
-                $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
-                if (!isset($notifikasi['id'])){
-                    $data = array(
-                        'id' => $l['id'],
-                        'notifikasi' => 1,
-                        'tanggal' => date('Y-m-d H:i:s')
-                    );
-                    $this->db->insert('notifikasi', $data);
-    
+            if ($l['status']==4){
+                // Notifikasi REALISASI tinggal 8 JAM
+                if ($kirim_notif < $sekarang) {
+                    $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
+                    if (!isset($notifikasi['id'])){
+                        $data = array(
+                            'id' => $l['id'],
+                            'notifikasi' => 1,
+                            'tanggal' => date('Y-m-d H:i:s')
+                        );
+                        $this->db->insert('notifikasi', $data);
+        
+                        $this->db->where('npk', $l['npk']);
+                        $karyawan = $this->db->get('karyawan')->row_array();
+                        $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                        $destination = $karyawan['phone'];
+                        $message = "*WAKTU REALISASI KAMU KURANG DARI 8 JAM*" .
+                                    "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
+                                    "\r\nNama : *" . $l['nama'] ."*". 
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) ."*". 
+                                    "\r\nDurasi : *" . $l['durasi_rencana'] ." Jam*" .
+                                    "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." . 
+                                    "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
+                        $api_url = "http://panel.apiwha.com/send_message.php";
+                        $api_url .= "?apikey=" . urlencode($my_apikey);
+                        $api_url .= "&number=" . urlencode($destination);
+                        $api_url .= "&text=" . urlencode($message);
+                        json_decode(file_get_contents($api_url, false));
+                    }
+                }
+
+                // Batalkan LEMBUR REALISASI
+                if ($tempo < $sekarang and $l['life']==0) {
+                    $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
+                    $this->db->set('status', '0');
+                    $this->db->set('last_status', $l['status']);
+                    $this->db->where('id', $l['id']);
+                    $this->db->update('lembur');
+
                     $this->db->where('npk', $l['npk']);
                     $karyawan = $this->db->get('karyawan')->row_array();
                     $my_apikey = "NQXJ3HED5LW2XV440HCG";
                     $destination = $karyawan['phone'];
-                    $message = "*WAKTU REALISASI KAMU KURANG DARI 8 JAM*" .
+                    $message = "*:( LEMBUR KAMU DIBATALKAN*" .
                                 "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
                                 "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
                                 "\r\nNama : *" . $l['nama'] ."*". 
                                 "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) ."*". 
-                                "\r\nDurasi : *" . date('H', strtotime($l['durasi_rencana'])) ." Jam " . date('i', strtotime($l['durasi_rencana']))." Menit*".
-                                "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." . 
+                                "\r\nDurasi : *" . $l['durasi'] ." Jam*" .
+                                "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
+                                "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." . 
                                 "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
                     $api_url = "http://panel.apiwha.com/send_message.php";
                     $api_url .= "?apikey=" . urlencode($my_apikey);
@@ -96,33 +128,34 @@ class Dashboard extends CI_Controller
                     $api_url .= "&text=" . urlencode($message);
                     json_decode(file_get_contents($api_url, false));
                 }
-            }
+            }elseif ($l['status']>4 and $l['status']<7){
+                 // Batalkan LEMBUR LEWAT 7 HARI
+                if ($expired < $sekarang) {
+                    $this->db->set('catatan', "Waktu LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
+                    $this->db->set('status', '0');
+                    $this->db->set('last_status', $l['status']);
+                    $this->db->where('id', $l['id']);
+                    $this->db->update('lembur');
 
-            // Batalkan LEMBUR
-            if ($tempo < $sekarang) {
-                $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
-                $this->db->set('status', '0');
-                $this->db->where('id', $l['id']);
-                $this->db->update('lembur');
-
-                $this->db->where('npk', $l['npk']);
-                $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $karyawan['phone'];
-                $message = "*:( LEMBUR KAMU DIBATALKAN*" .
-                            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
-                            "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
-                            "\r\nNama : *" . $l['nama'] ."*". 
-                            "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_aktual'])) ."*". 
-                            "\r\nDurasi : *" . date('H', strtotime($l['durasi_aktual'])) ." Jam " . date('i', strtotime($l['durasi_aktual']))." Menit*".
-                            "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
-                            "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." . 
-                            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
+                    $this->db->where('npk', $l['npk']);
+                    $karyawan = $this->db->get('karyawan')->row_array();
+                    $my_apikey = "NQXJ3HED5LW2XV440HCG";
+                    $destination = $karyawan['phone'];
+                    $message = "*LEMBUR KAMU DIBATALKAN :( *".
+                                "\r\n \r\n*LEMBUR* kamu dengan detil berikut :". 
+                                "\r\n \r\nNo LEMBUR : *" . $l['id'] ."*". 
+                                "\r\nNama : *" . $l['nama'] ."*". 
+                                "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) ."*". 
+                                "\r\nDurasi : *" . $l['durasi'] ." Jam*".
+                                "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
+                                "\r\n \r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." . 
+                                "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
+                    $api_url = "http://panel.apiwha.com/send_message.php";
+                    $api_url .= "?apikey=" . urlencode($my_apikey);
+                    $api_url .= "&number=" . urlencode($destination);
+                    $api_url .= "&text=" . urlencode($message);
+                    json_decode(file_get_contents($api_url, false));
+                }
             }
         endforeach;
 
@@ -138,6 +171,9 @@ class Dashboard extends CI_Controller
         $this->db->where('day(tglmulai)',date('d'));
         $this->db->where('status >', '2');
         $data['listlembur'] = $this->db->get('lembur')->result_array();
+
+        $data['listclaim'] = $this->dashboard_model->get_claim();
+        $data['listkaryawan'] = $this->dashboard_model->get_karyawan();
 
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
@@ -162,5 +198,24 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('dashboard/informasi', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function medical($action)
+    {
+        if ($action=='add'){
+            foreach ($this->input->post('karyawan') as $k) :
+                $karyawan = $this->db->get_where('karyawan', ['npk' => $k])->row_array();
+                $data = [
+                    'npk' => $k,
+                    'nama' => $karyawan['nama'],
+                    'transfer_at' => date('Y-m-d', strtotime($this->input->post('tgltransfer')))
+                ];
+                $this->db->insert('medical_claim', $data);
+            endforeach;
+            redirect('dashboard');
+        }elseif ($action=='delete'){
+            $this->dashboard_model->delete_claim($this->input->post('id'));
+            redirect('dashboard');
+        }
     }
 }

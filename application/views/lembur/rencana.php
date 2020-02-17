@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -13,50 +13,64 @@
                     <div class="card-body">
                         <div class="toolbar text-right mb-2">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('lembur/tambah'); ?>" class="btn btn-rose" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
-                            <a href="#" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
-                            <?php if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6){
-                                echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a>' ;
-                            }; ?> 
+                            <a href="<?= base_url('lembur/tambah_hariini'); ?>" class="btn btn-facebook" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
+                            <a href="#" class="btn btn-linkedin" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
+                            <?php // if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6){
+                                //echo '<a href="#" class="btn btn-twitter" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a>' ;
+                              // }; 
+                            ?> 
                            <!-- <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a> -->
                         </div>
                         <div class="material-datatables">
-                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No. Lembur</th>
-                                        <th>Tgl Mengajukan</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal/Jam Mulai</th>
-                                        <th>Tanggal/Jam Selesai</th>
-                                        <th>Durasi/Jam</th>
+                                        <th>Tanggal Pengajuan</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Selesai</th>
+                                        <th>Durasi <small>(Jam)</small></th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No. Lembur</th>
-                                        <th>Tgl Mengajukan</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal/Jam Mulai</th>
-                                        <th>Tanggal/Jam Selesai</th>
-                                        <th>Durasi/Jam</th>
+                                        <th>Tgl Pengajuan</th>
+                                        <th>Mulai</th>
+                                        <th>Selesai</th>
+                                        <th>Durasi <small>(Jam)</small></th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php foreach ($lembur as $l) : ?>
+                                    <?php foreach ($lembur as $l) : 
+                                        if ($l['status']>=1 AND $l['status']<=3){ ?>
                                         <tr onclick="window.location='<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>'" >
-                                            <td><?= $l['id']; ?></td>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglpengajuan'])); ?></td>
-                                            <td><?= $l['nama']; ?></td>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
+                                            <td><?= $l['id'].' - '.$l['kategori']; ?></td>
+                                            <td><?= date('d M H:i', strtotime($l['tglpengajuan_rencana'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tglmulai_rencana'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tglselesai_rencana'])); ?></td>
+                                            <td><?= $l['durasi_rencana']; ?></td>
+                                            <td><?= $l['lokasi']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                         </tr>
-                                    <?php endforeach; ?>
+                                        <?php }elseif ($l['status']>=4 AND $l['status']<=6){ ?>
+                                        <tr onclick="window.location='<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>'" >
+                                            <td><?= $l['id'].' - '.$l['kategori']; ?></td>
+                                            <td><?= date('d M H:i', strtotime($l['tglpengajuan_realisasi'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= $l['durasi']; ?></td>
+                                            <td><?= $l['lokasi']; ?></td>
+                                            <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
+                                            <td><?= $status['nama']; ?></td>
+                                        </tr>
+                                        <?php }
+                                    endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -102,7 +116,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
@@ -120,7 +134,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">SELANJUTNYA</button>
+                            <button type="submit" class="btn btn-success">SELANJUTNYA</button>
                             <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-default">Kembali</a>
                         </div>
                     </div>
@@ -135,7 +149,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>

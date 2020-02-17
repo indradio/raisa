@@ -106,7 +106,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
@@ -152,13 +152,13 @@
                   <?php foreach ($lembur as $l) : ?>
                     <tr>
                       <td><?= $l['id']; ?></td>
-                      <td><?= $l['tglpengajuan']; ?></td>
+                      <td><?= $l['tglpengajuan_rencana']; ?></td>
                           <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4' or $l['status']== '10' or $l['status']== '11') {?>
-                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                            <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
+                            <td><?= date('d-M H:i', strtotime($l['tglmulai_rencana'])); ?></td>
+                            <td><?= $l['durasi_rencana']; ?> Jam</td>
                           <?php } else { ?>
-                            <td><?= date('d-M H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                            <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
+                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                            <td><?= $l['durasi']; ?> Jam</td>
                           <?php }; ?>
                       <td><?= $l['tul']; ?></td>
                       <td><?= $l['admin_ga']; ?></td>
@@ -175,9 +175,9 @@
                               <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                           <?php }; ?>
                               <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#historyLembur"
-                              data-tglmengajukan="<?= date('d M Y H:i', strtotime($l['tglpengajuan'])); ?>"
-                              data-atasan1="<?= $l['atasan1_rencana']; ?>"
-                              data-atasan2="<?= $l['atasan2_rencana']; ?>"
+                              data-tglmengajukan="<?= date('d M Y H:i', strtotime($l['tglpengajuan_rencana'])); ?>"
+                              data-atasan1="<?= $l['atasan1']; ?>"
+                              data-atasan2="<?= $l['atasan2']; ?>"
                               data-tgl1_rencana="<?= date('d M Y H:i', strtotime($l['tgl_atasan1_rencana'])); ?>"
                               data-tgl2_rencana="<?= date('d M Y H:i', strtotime($l['tgl_atasan2_rencana'])); ?>"
                               data-tgl1_realisasi="<?= date('d M Y H:i', strtotime($l['tgl_atasan1_realisasi'])); ?>"

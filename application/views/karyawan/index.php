@@ -88,7 +88,11 @@
                                             <td><?= $kry['inisial']; ?></td>
                                             <td><?= $kry['email']; ?></td>
                                             <td><?= $kry['phone']; ?></td>
-                                            <td><?= $golongan['nama']; ?></td>
+                                            <?php if (!empty($golongan)){
+                                            echo '<td>'. $golongan['nama'].'</td>';
+                                        }else{
+                                            echo '<td> Tidak ada</td>';
+                                            } ?>
                                             <td><?= $fasilitas['nama']; ?></td>
                                             <td><?= $posisi['nama']; ?></td>
                                             <td><?= $divisi['nama']; ?></td>

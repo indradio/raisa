@@ -341,7 +341,7 @@ class Perjalanandl extends CI_Controller
         $tglakhir = date("Y-m-d", strtotime($this->input->post('tglakhir')));
         $queryPerjalanan = "SELECT *
                                     FROM `perjalanan`
-                                    WHERE `tglberangkat` >= '$tglawal' AND `tglberangkat` <= '$tglakhir' AND `jenis_perjalanan` = 'TA'
+                                    WHERE `tglberangkat` >= '{$tglawal}' AND `tglberangkat` <= '{$tglakhir}' AND `jenis_perjalanan` = 'TA'
                                 ";
         $data['perjalanan'] = $this->db->query($queryPerjalanan)->result_array();
         $data['tglawal'] = $tglawal;

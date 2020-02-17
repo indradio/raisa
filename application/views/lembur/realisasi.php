@@ -20,44 +20,37 @@
                                 <thead>
                                     <tr>
                                         <th>No. Lembur</th>
-                                        <th>Tgl Mengajukan</th>
-                                        <th>Tanggal/Jam Mulai</th>
-                                        <th>Tanggal/Jam Selesai</th>
-                                        <th>Durasi/Jam</th>
+                                        <th>Tanggal Pengajuan</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Selesai</th>
+                                        <th>Durasi <small>(Jam)</small></th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
-                                        <th class="disabled-sorting"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No. Lembur</th>
-                                        <th>Tgl Mengajukan</th>
-                                        <th>Tanggal/Jam Mulai</th>
-                                        <th>Tanggal/Jam Selesai</th>
-                                        <th>Durasi/Jam</th>
+                                        <th>Tgl Pengajuan</th>
+                                        <th>Mulai</th>
+                                        <th>Selesai</th>
+                                        <th>Durasi <small>(Jam)</small></th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
-                                        <th class="text-right">Actions</th>
-                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                        <tr>
+                                        <tr onclick="window.location='<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>'" >
                                             <td><?= $l['id']; ?></td>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglpengajuan'])); ?></td>
-                                                <?php if($l['status']== '4') {?>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
-                                                <?php } else { ?>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                                            <td><?= date('d/m/Y H:i', strtotime($l['tglselesai_aktual'])); ?></td>
-                                            <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
-                                                <?php }; ?>
+                                            <td><?= date('d-M H:i', strtotime($l['tglpengajuan_realisasi'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                                            <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
+                                            <td><?= $l['durasi']; ?></td>
+                                            <td><?= $l['lokasi']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
-                                            <td>
+                                            <!-- <td>
                                                 <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
                                             </td>
                                             <td class="text-right">
@@ -66,7 +59,7 @@
                                                 <?php } else { ?>
                                                     <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
                                                 <?php }; ?>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

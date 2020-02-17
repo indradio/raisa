@@ -1,71 +1,23 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 align-content-start">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">update</i>
                         </div>
-                        <h4 class="card-title">Rencana Aktivitas Lembur</h4>
+                        <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
+                        <h4 class="card-title">Rencana - <?= $lembur['id'].' <small>('.$status['nama'].')</small>'; ?></h4>
                     </div>
-                    <form class="form-horizontal" method="post" action="<?= base_url('lembur/ajukan_rencana'); ?>">
                     <div class="card-body">
-                        <div class="row">
-                                <div class="row col-md-12" hidden>
-                                    <label class="col-md-1 col-form-label">Lembur ID</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="id" name="id" value="<?= $lembur['id']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <label class="col-md-1 col-form-label">Tanggal Mulai</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control datetimepicker disabled" placeholder="With Material Icons" id="tglmulai" name="tglmulai" value="<?= $lembur['tglmulai']; ?>">
-                                            <?php if ($lembur['aktivitas_rencana'] == '0' AND $lembur['status'] == '1') { ?>
-                                                <a href="#" class="badge badge-pill badge-warning" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">UBAH JAM</a>
-                                            <?php }; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <label class="col-md-1 col-form-label">Tanggal Selesai</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control datetimepicker disabled" id="tglselesai" name="tglselesai" value="<?= $lembur['tglselesai']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <label class="col-md-1 col-form-label">Durasi Lembur</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= date('H:i', strtotime($lembur['durasi_rencana'])).' Jam / '. $lembur['aktivitas_rencana']; ?> Aktivitas">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                <label class="col-md-1 col-form-label">Status</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <?php $status = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                                            <input type="text" class="form-control disabled" id="status" name="status" value="<?= $status['nama']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                        </div> 
-                        <br>
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <?php if ($lembur['status'] == '1' AND $this->session->userdata('contract') == 'Direct Labor'){
-                                echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
+                                echo '<a href="#" id="tambah_aktivitas" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
                             }elseif ($lembur['status'] == '1' AND $this->session->userdata('contract') == 'Indirect Labor'){
-                                echo '<a href="#" id="tambah_aktivitas" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
+                                echo '<a href="#" id="tambah_aktivitas" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
                             }; ?>
                         </div>
                         <div class="material-datatables">
@@ -73,17 +25,21 @@
                                 <thead>
                                     <tr>
                                         <th>Kategori</th>
-                                        <th>Rencana Aktivitas</th>
-                                        <th>Durasi/Jam</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
+                                        <th>Aktivitas</th>
+                                        <th>Durasi <small>(Jam)</small></th>
+                                        <?php if ($lembur['status'] == '1') { ?>
+                                            <th class="disabled-sorting text-right">Actions</th>
+                                        <?php }; ?>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Kategori</th>
-                                        <th>Rencana Aktivitas</th>
-                                        <th>Durasi/Jam</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
+                                        <th>Aktivitas</th>
+                                        <th>Durasi <small>(Jam)</small></th>
+                                        <?php if ($lembur['status'] == '1') { ?>
+                                            <th class="disabled-sorting text-right">Actions</th>
+                                        <?php }; ?>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -93,65 +49,106 @@
                                             <td><?= $k['nama']; ?>  <small>(<?= $a['copro']; ?>)</small></td>
                                             <td><?= $a['aktivitas']; ?></td>
                                             <td><?= $a['durasi']; ?> Jam</td>
-                                            <td class="text-right">
-                                                <?php if ($lembur['status'] == '0' or $lembur['status'] >= '2') { ?>
-                            
-                                                <?php } else { ?>
-                                                    <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="btn btn-round btn-danger btn-sm btn-bataldl">HAPUS</a>
-                                                <?php }; ?>
-                                            </td>
+                                            <?php if ($lembur['status'] == '1') { ?>
+                                                <td class="text-right">
+                                                    <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
+                                                </td>
+                                            <?php }; ?>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                                <?php if($lembur['status']=='1' AND $lembur['lokasi']==null){ ?>
-                                    <div class="row col-md-12">
-                                        <label class="col-md-1 col-form-label">Lokasi Lembur</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                                <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="5" data-live-search="true" onchange="admSelectCheck(this);" required>
-                                                <option data-subtext="WORKSHOP FOR INDUSTRIAL EQUIPMENT" value="WTQ">WTQ</option>
-                                                    <?php 
-                                                    $queyCustomer = "SELECT * FROM customer ";
-                                                    $customer = $this->db->query($queyCustomer)->result_array();
-                                                    foreach ($customer as $c) : ?>
-                                                        <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
-                                                    <?php endforeach; ?>
-                                                 <option data-subtext="Lokasi Lainnya" value="lainnya">LAINNYA</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                        </div> 
+                            </br>
+                            <form class="form-horizontal" method="post" action="<?= base_url('lembur/ajukan_rencana'); ?>">
+                            <!-- <div class="row"> -->
+                                <?php if(empty($lembur['lokasi'])){ ?>
+                                    <div class="form-group has-default">
+                                        <input type="hidden" class="form-control" id="id" name="id" value="<?= $lembur['id']; ?>">
                                     </div>
-                                    <div class="row col-md-12">
-                                        <label class="col-md-1 col-form-label" id="lblLokasi" style="display:none;">Lokasi Lainnya</label>
-                                        <div class="col-md-7" id="txtLokasi" style="display:none;">
-                                            <div class="form-group has-default">
-                                                <input type="text" class="form-control" id="lokasi_lain" name="lokasi_lain" required>
-                                            </div>
-                                        </div>
+                                    <label class="col-form-label">Tanggal & Jam</label>   
+                                    <div class="form-group has-default form-inline">
+                                        <input type="text" class="form-control disabled" id="tglmulai" name="tglmulai" value="<?= date('d M H:i', strtotime($lembur['tglmulai_rencana'])).date(' - H:i', strtotime($lembur['tglselesai_rencana'])); ?>">
+                                        <a href="#" class="badge badge-pill badge-warning" data-toggle="modal" data-target="#ubhTanggal" data-id="<?= $lembur['id']; ?>">UBAH JAM</a>
+                                    </div>
+                                    <label class="col-form-label">Durasi</label>   
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_rencana']; ?> Jam">
+                                    </div>
+
+                                    <label class="col-form-label">Kategori</label>
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="kategori_lembur" id="kategori_lembur" data-style="select-with-transition" title="Pilih Kategori" data-size="7" required>
+                                            <?php if ($this->session->userdata('posisi_id') > 4){
+                                                echo '<option value="OT">Lembur</option>';
+                                            } ?>
+                                            <option value="GH">Ganti Hari</option>
+                                            <option value="TC">Tabungan Cuti</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="col-form-label">Lokasi</label>   
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="5" data-live-search="true" onchange="admSelectCheck(this);" required>
+                                            <option data-subtext="WORKSHOP FOR INDUSTRIAL EQUIPMENT" value="WTQ">WTQ</option>
+                                            <?php 
+                                            $queyCustomer = "SELECT * FROM customer ";
+                                            $customer = $this->db->query($queyCustomer)->result_array();
+                                            foreach ($customer as $c) : ?>
+                                                <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
+                                            <?php endforeach; ?>
+                                            <option data-subtext="Lokasi Lainnya" value="lainnya">LAINNYA</option>
+                                        </select>
+                                    </div>
+                                
+                                    <div class="form-group has-default" id="txtLokasi" style="display:none;">
+                                        <input type="text" class="form-control" id="lokasi_lain" name="lokasi_lain" required>
+                                    </div>
+
+                                    <label class="col-form-label">Catatan</label>
+                                    <div class="form-group has-default">
+                                        <textarea rows="3" class="form-control" name="catatan" id="catatan"></textarea>
                                     </div>
                                 <?php } else {?>
-                                    <div class="row col-md-12">
-                                        <label class="col-md-1 col-form-label">Lokasi Lembur</label>
-                                        <div class="col-md-7">
-                                            <div class="form-group has-default">
-                                                <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
-                                            </div>
-                                        </div>
+                                    <div class="form-group" hidden>
+                                        <label for="exampleID" class="bmd-label-floating">ID</label>
+                                        <input type="text" class="form-control" id="id" name="id" value="<?= $lembur['id']; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleDate" class="bmd-label-floating">Tanggal & Jam</label>
+                                        <input type="text" class="form-control disabled" id="tglmulai" name="tglmulai" value="<?= date('d M H:i', strtotime($lembur['tglmulai_rencana'])).date(' - H:i', strtotime($lembur['tglselesai_rencana'])); ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleDurasi" class="bmd-label-floating">Durasi</label>
+                                        <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_rencana']; ?> Jam">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleLokasi" class="bmd-label-floating">Lokasi</label>
+                                        <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleKategori" class="bmd-label-floating">Kategori</label>
+                                        <?php if ($lembur['kategori']=='OT'){
+                                            echo '<input type="text" class="form-control disabled" id="kategori_lembur" name="kategori_lembur" value="LEMBUR">';
+                                        } elseif ($lembur['kategori']=='GH'){
+                                            echo '<input type="text" class="form-control disabled" id="kategori_lembur" name="kategori_lembur" value="GANTI HARI">';
+                                        } elseif ($lembur['kategori']=='TC'){
+                                            echo '<input type="text" class="form-control disabled" id="kategori_lembur" name="kategori_lembur" value="TABUNGAN CUTI">';
+                                        } ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleCatatan" class="bmd-label-floating">Catatan</label>
+                                        <textarea rows="3" class="form-control disabled" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
                                     </div>
                                 <?php }; ?>
-                                <div class="row col-md-12">
-                                    <label class="col-md-1 col-form-label">Catatan</label>
-                                    <div class="col-md-7">
-                                        <div class="form-group has-default">
-                                            <textarea rows="3" class="form-control" name="catatan" id="catatan"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                        </form>
+                            
+                        
                         </p>
-                        Lemburan kamu sudah termasuk <mark>JAM ISTIRAHAT</mark> dan <mark>PERJALANAN</mark> pada saat lembur. 
-                        <br>Silahkan tambahkan istirahat dan perjalanan sebagai aktivitas.
+                        <h4>Penting : </h4>
+                        1. Durasi LEMBUR kamu termasuk <mark><b>JAM ISTIRAHAT</b></mark> pada saat lembur. 
+                        <br>2. Untuk kamu <mark><b> DIRECT LABOR</b></mark>, Silahkan tambahkan istirahat ke dalam aktivitas <mark>(NON PROJEK -> Istirahat Siang / Malam)</mark>
+                        <br>3. Untuk <b>GANTI HARI</b> atau <b>TABUNGAN CUTI</b> pastikan <b>DURASI 9 JAM</b> (Termasuk Istirahat) jika KURANG atau LEBIH maka tidak bisa dilakukan REALISASI!.
+                        <br>4. Pastikan <b>JAM LEMBUR</b> kamu sesuai dengan <b>JAM PRESENSI</b> kamu ya!.
                         </p>
                         <!-- Button SUBMIT -->
                         <?php if ($lembur['status'] == 1 AND $lembur['aktivitas_rencana'] >= 1) {
@@ -170,7 +167,7 @@
                         <!-- Button BATALKAN & KEMBALI -->
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                             <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-sm btn-default" role="button">KEMBALI</a>
-                    </div>
+                        </form>
                 </div>
                 <!-- end content-->
             </div>
@@ -188,7 +185,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
@@ -223,7 +220,7 @@
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                     <?php
-                                        $queyCopro = "SELECT * FROM project where status='open' or status='teco' ";
+                                        $queyCopro = "SELECT * FROM project where status ='open' or status='teco' ";
                                         $copro = $this->db->query($queyCopro)->result_array();
                                         foreach ($copro as $c) : ?>
                                             <option data-subtext="<?= $c['deskripsi']; ?>" value="<?= $c['copro']; ?>"><?= $c['copro']; ?></option>
@@ -277,7 +274,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
@@ -326,7 +323,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-success">SIMPAN</button>
+                            <button type="submit" class="btn btn-success">TAMBAH</button>
                             <br>
                             <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
                         </div>
@@ -342,20 +339,21 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">ALASAN PEMBATALAN</h4>
+                        <h4 class="card-title">PEMBATALAN LEMBUR</h4>
                     </div>
                 </div>
                 <form class="form" method="post" action="<?= base_url('lembur/batal_lembur'); ?>">
                     <div class="modal-body">
-                        <input type="text" class="form-control disabled" name="id">
-                        <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Keterangan Pembatalan Lembur" required></textarea>
+                        <input type="hidden" class="form-control disabled" name="id">
+                        <textarea rows="2" class="form-control" name="catatan" id="catatan" placeholder="Berikan penjelasan untuk membatalkan" required></textarea>
                     </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-danger">BATALKAN LEMBUR INI!</button>
+                    <div class="modal-footer justify-content-right">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                        <button type="submit" class="btn btn-success">SUBMIT PEMBATALAN</button>
                     </div>
                 </form>
             </div>
@@ -364,15 +362,15 @@
 </div>
 <!-- Modal Ubah Jam-->
 <div class="modal fade" id="ubhTanggal" tabindex="-1" role="dialog" aria-labelledby="ubhTanggalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">UBAH JAM LEMBUR</h4>
+                        <h4 class="card-title">UBAH JAM</h4>
                     </div>
                 </div>
                 <form class="form-horizontal" method="post" action="<?= base_url('lembur/gtJamRencana'); ?>">
@@ -395,8 +393,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-success">UBAH JAM</button>
+                        <div class="modal-footer justify-content-right">
+                            <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                            <button type="submit" class="btn btn-success">SUBMIT</button>
                         </div>
                     </div>
                 </form>
@@ -409,7 +408,7 @@
     function admSelectCheck(nameSelect)
     {
         var val = nameSelect.options[nameSelect.selectedIndex].value;
-        document.getElementById("lblLokasi").style.display = val == 'lainnya' ? "block" : 'none';
+        // document.getElementById("lblLokasi").style.display = val == 'lainnya' ? "block" : 'none';
         document.getElementById("txtLokasi").style.display = val == 'lainnya' ? "block" : 'none';
     }
         $(document).ready(function() {

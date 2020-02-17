@@ -207,6 +207,15 @@ $pdf->Cell(20, 5, 'Dibuat pada ' . date('d/m/Y H:i', strtotime($reservasi['tglre
 $pdf->Ln(8.5);
 $pdf->SetFont('Arial', '', 6);
 $pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
+$pdf->SetFont('Arial', '', 4);
+$pdf->Ln(1);
+$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
+$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
+$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
+$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
+$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
+
+
 
 
 //$pdf->Output();

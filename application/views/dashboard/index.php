@@ -246,11 +246,11 @@
                 <i class="material-icons">update</i> Lembur
               </a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#probudget" role="tablist">
-                <i class="material-icons">help_outline</i> Project Budget
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#tabmedical" role="tablist">
+                <i class="material-icons">local_hospital</i> Claim <br>Medical
               </a>
-            </li> -->
+            </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
                 <i class="material-icons">help_outline</i> Project <br>Schedule
@@ -279,196 +279,196 @@
               </div>
             </div> -->
             <div class="tab-pane active" id="tabperjalanan">
-            <div class="card">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">directions_car</i>
-              </div>
-              <h4 class="card-title">Perjalanan Dinas Hari Ini <?= date("d-M-Y"); ?></h4>
-            </div>
-            <div class="card-body">
-              <div class="toolbar">
-                  <!--        Here you can write extra buttons/actions for the toolbar              -->
-              </div>
-              <div class="table-responsive">
-                <div class="material-datatables">
-                  <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
-                      <thead>
-                        <tr>
-                          <th class="text-center"></th>
-                          <th>Kendaraan</th>
-                          <th>Peserta</th>
-                          <th>Tujuan</th>
-                          <th>Keperluan</th>
-                          <th>Berangkat</th>
-                          <th>Kembali</th>
-                        </tr>
-                      </thead>
-                      <tfoot>
-                          <tr>
+              <div class="card">
+                <div class="card-header card-header-info card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">directions_car</i>
+                  </div>
+                  <h4 class="card-title">Perjalanan Dinas Hari Ini <?= date("d-M-Y"); ?></h4>
+                </div>
+                <div class="card-body">
+                  <div class="toolbar">
+                      <!--        Here you can write extra buttons/actions for the toolbar              -->
+                  </div>
+                  <div class="table-responsive">
+                    <div class="material-datatables">
+                      <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                          <thead>
+                            <tr>
                               <th class="text-center"></th>
-                              <th></th>
-                          </tr>
-                      </tfoot>
-                      <tbody>
-                      <?php
-                      $queryKendaraan = "SELECT *
-                                                  FROM `kendaraan`
-                                                  WHERE `kontrak` >= CURDATE() AND `is_active` = 1 AND `id` != 1
-                                                  ORDER BY `id` ASC
-                                              ";
-                      $kendaraan = $this->db->query($queryKendaraan)->result_array();
-                      foreach ($kendaraan as $k) : ?>
-                      <tr>
-                                            <?php
-                                              $nopol = $k['nopol'];
-                                              $queryPerjalanan = "SELECT *
-                                              FROM `perjalanan`
-                                              WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
-                                              ";
-                                              $p = $this->db->query($queryPerjalanan)->row_array();
-                                              if (!empty($p)) { ?>
-                                                <td class="text-center">
-                                                  <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
-                                                  <?php if ($p['status'] == 1) {?>
-                                                    <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
-                                                    </div>
-                                                    <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
-                                                  <?php }elseif ($p['status'] == 2) {?>
-                                                    <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
-                                                    </div>
-                                                    <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
-                                                  <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
-                                                    <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
-                                                    </div>
-                                                    <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
-                                                  <?php };?>
-                                                </td>
-                                                <td class="td-name">
-                                                    <a><?= $k['nopol']; ?></a>
-                                                    <br />
-                                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
-                                                    <br />
-                                                    <small><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></small>
-                                                </td>
-                                                <td><?= $p['anggota']; ?></td>
-                                                <td><?= $p['tujuan']; ?></td>
-                                                <td><?= $p['keperluan']; ?></td>
-                                                <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                                <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
-                                              <?php }else{
-                                                $queryReservasi = "SELECT *
-                                                FROM `reservasi`
-                                                WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
-                                                ";
-                                                $r = $this->db->query($queryReservasi)->row_array();
-                                                if (!empty($r)) { ?>
-                                                  <td class="text-center">
-                                                  <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
-                                                  </div>
-                                                  <?php if ($r['status'] == 1) {?>
-                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
-                                                  <?php }elseif ($r['status'] == 2) {?>
-                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
-                                                  <?php }elseif ($r['status'] == 3) {?>
-                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan DWA</span>
-                                                  <?php }elseif ($r['status'] == 4) {?>
-                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
-                                                  <?php }elseif ($r['status'] == 5) {?>
-                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
-                                                  <?php }elseif ($r['status'] == 6) {?>
-                                                    <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
-                                                  <?php };?>
-                                                  </td>
-                                                  <td class="td-name">
-                                                    <a><?= $k['nopol']; ?></a>
-                                                    <br />
-                                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
-                                                    <br />
-                                                    <small><?= $r['id'].' - '.$r['jenis_perjalanan']; ?></small>
-                                                  </td>
-                                                  <td><?= $r['anggota']; ?></td>
-                                                  <td><?= $r['tujuan']; ?></td>
-                                                  <td><?= $r['keperluan']; ?></td>
-                                                  <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
-                                                  <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
-                                                <?php }else{ ?>
-                                                  <td class="text-center">
-                                                  <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan1.png" alt="...">
-                                                  </div>
-                                                  <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
+                              <th>Kendaraan</th>
+                              <th>Peserta</th>
+                              <th>Tujuan</th>
+                              <th>Keperluan</th>
+                              <th>Berangkat</th>
+                              <th>Kembali</th>
+                            </tr>
+                          </thead>
+                          <tfoot>
+                              <tr>
+                                  <th class="text-center"></th>
+                                  <th></th>
+                              </tr>
+                          </tfoot>
+                          <tbody>
+                          <?php
+                          $queryKendaraan = "SELECT *
+                                                      FROM `kendaraan`
+                                                      WHERE `kontrak` >= CURDATE() AND `is_active` = 1 AND `id` != 1
+                                                      ORDER BY `id` ASC
+                                                  ";
+                          $kendaraan = $this->db->query($queryKendaraan)->result_array();
+                          foreach ($kendaraan as $k) : ?>
+                          <tr>
+                                                <?php
+                                                  $nopol = $k['nopol'];
+                                                  $queryPerjalanan = "SELECT *
+                                                  FROM `perjalanan`
+                                                  WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
+                                                  ";
+                                                  $p = $this->db->query($queryPerjalanan)->row_array();
+                                                  if (!empty($p)) { ?>
+                                                    <td class="text-center">
+                                                      <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
+                                                      <?php if ($p['status'] == 1) {?>
+                                                        <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                        </div>
+                                                        <span class="badge badge-pill badge-info"><?= $status['nama']; ?></span>
+                                                      <?php }elseif ($p['status'] == 2) {?>
+                                                        <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                                                        </div>
+                                                        <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                                      <?php } elseif ($p['status'] == 8 or $p['status'] == 11) {?>
+                                                        <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                        </div>
+                                                        <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
+                                                      <?php };?>
                                                     </td>
                                                     <td class="td-name">
-                                                    <a><?= $k['nopol']; ?></a>
-                                                    <br />
-                                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
-                                                </td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                <?php }
-                                              } ?>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                                <!-- Perjalanan Non Operasional -->
-                                <tbody>
-                                    <?php
-                                        $queryPerjalananNon = "SELECT *
-                                        FROM `perjalanan`
-                                            WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9 AND `kepemilikan` != 'Operasional'
-                                            ORDER BY `kepemilikan` ASC ";
-                                            $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
-                                            foreach ($perjalananNon as $pn) : ?>
-                                      <tr>
-                                      <td class="text-center">
-                                                  <?php $status_pn = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
-                                                  <?php if ($pn['status'] == 1) {?>
-                                                    <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
-                                                    </div>
-                                                    <span class="badge badge-pill badge-info"><?= $status_pn['nama']; ?></span>
-                                                  <?php }elseif ($pn['status'] == 2) {?>
-                                                    <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
-                                                    </div>
-                                                    <span class="badge badge-pill badge-danger"><?= $status_pn['nama']; ?></span>
-                                                  <?php } elseif ($pn['status'] == 8 or $pn['status'] == 11) {?>
-                                                    <div class="img-container">
-                                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
-                                                    </div>
-                                                    <span class="badge badge-pill badge-warning"><?= $status_pn['nama']; ?></span>
-                                                  <?php };?>
-                                                </td>
-                                        <td class="td-name">
-                                            <a><?= $pn['nopol']; ?></a>
-                                            <br />
-                                            <small><?= $pn['kepemilikan']; ?></small>
-                                            <br />
-                                            <small><?= $pn['id'].' - '.$pn['jenis_perjalanan']; ?></small>
-                                        </td> 
-                                        <td><?= $pn['anggota']; ?></td>
-                                        <td><?= $pn['tujuan']; ?></td>
-                                        <td><?= $pn['keperluan']; ?></td>
-                                        <td><?= date('d-M', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
-                                        <td><?= date('d-M', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                                        <a><?= $k['nopol']; ?></a>
+                                                        <br />
+                                                        <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                                        <br />
+                                                        <small><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></small>
+                                                    </td>
+                                                    <td><?= $p['anggota']; ?></td>
+                                                    <td><?= $p['tujuan']; ?></td>
+                                                    <td><?= $p['keperluan']; ?></td>
+                                                    <td><?= date('d-M', strtotime($p['tglberangkat'])). ' ' .date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                                    <td><?= date('d-M', strtotime($p['tglkembali'])). ' ' .date('H:i', strtotime($p['jamkembali'])); ?></td>
+                                                  <?php }else{
+                                                    $queryReservasi = "SELECT *
+                                                    FROM `reservasi`
+                                                    WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
+                                                    ";
+                                                    $r = $this->db->query($queryReservasi)->row_array();
+                                                    if (!empty($r)) { ?>
+                                                      <td class="text-center">
+                                                      <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
+                                                      </div>
+                                                      <?php if ($r['status'] == 1) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
+                                                      <?php }elseif ($r['status'] == 2) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
+                                                      <?php }elseif ($r['status'] == 3) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan DWA</span>
+                                                      <?php }elseif ($r['status'] == 4) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
+                                                      <?php }elseif ($r['status'] == 5) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
+                                                      <?php }elseif ($r['status'] == 6) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
+                                                      <?php };?>
+                                                      </td>
+                                                      <td class="td-name">
+                                                        <a><?= $k['nopol']; ?></a>
+                                                        <br />
+                                                        <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                                        <br />
+                                                        <small><?= $r['id'].' - '.$r['jenis_perjalanan']; ?></small>
+                                                      </td>
+                                                      <td><?= $r['anggota']; ?></td>
+                                                      <td><?= $r['tujuan']; ?></td>
+                                                      <td><?= $r['keperluan']; ?></td>
+                                                      <td><?= date('d-M', strtotime($r['tglberangkat'])). ' ' .date('H:i', strtotime($r['jamberangkat'])); ?></td>
+                                                      <td><?= date('d-M', strtotime($r['tglkembali'])). ' ' .date('H:i', strtotime($r['jamkembali'])); ?></td>
+                                                    <?php }else{ ?>
+                                                      <td class="text-center">
+                                                      <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan1.png" alt="...">
+                                                      </div>
+                                                      <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
+                                                        </td>
+                                                        <td class="td-name">
+                                                        <a><?= $k['nopol']; ?></a>
+                                                        <br />
+                                                        <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                                    </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    <?php }
+                                                  } ?>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                    <!-- Perjalanan Non Operasional -->
+                                    <tbody>
+                                        <?php
+                                            $queryPerjalananNon = "SELECT *
+                                            FROM `perjalanan`
+                                                WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9 AND `kepemilikan` != 'Operasional'
+                                                ORDER BY `kepemilikan` ASC ";
+                                                $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
+                                                foreach ($perjalananNon as $pn) : ?>
+                                          <tr>
+                                          <td class="text-center">
+                                                      <?php $status_pn = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
+                                                      <?php if ($pn['status'] == 1) {?>
+                                                        <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                        </div>
+                                                        <span class="badge badge-pill badge-info"><?= $status_pn['nama']; ?></span>
+                                                      <?php }elseif ($pn['status'] == 2) {?>
+                                                        <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                                                        </div>
+                                                        <span class="badge badge-pill badge-danger"><?= $status_pn['nama']; ?></span>
+                                                      <?php } elseif ($pn['status'] == 8 or $pn['status'] == 11) {?>
+                                                        <div class="img-container">
+                                                          <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                                        </div>
+                                                        <span class="badge badge-pill badge-warning"><?= $status_pn['nama']; ?></span>
+                                                      <?php };?>
+                                                    </td>
+                                            <td class="td-name">
+                                                <a><?= $pn['nopol']; ?></a>
+                                                <br />
+                                                <small><?= $pn['kepemilikan']; ?></small>
+                                                <br />
+                                                <small><?= $pn['id'].' - '.$pn['jenis_perjalanan']; ?></small>
+                                            </td> 
+                                            <td><?= $pn['anggota']; ?></td>
+                                            <td><?= $pn['tujuan']; ?></td>
+                                            <td><?= $pn['keperluan']; ?></td>
+                                            <td><?= date('d-M', strtotime($pn['tglberangkat'])). ' ' .date('H:i', strtotime($pn['jamberangkat'])); ?></td>
+                                            <td><?= date('d-M', strtotime($pn['tglkembali'])). ' ' .date('H:i', strtotime($pn['jamkembali'])); ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
                         </div>
-                      </div>
                     </div>
-                 </div>
-                <!--  end card  -->
+                    <!--  end card  -->
             </div>
             <div class="tab-pane" id="tablembur">
               <div class="card">
@@ -493,9 +493,9 @@
                         </thead>
                         <tbody>
                           <?php foreach ($listlembur as $l) : ?>
-                            <?php if ($l['konsumsi']=='YA'){
+                            <?php if ($l['konsumsi']>0){
                                 echo '<tr class="table-success">';
-                              }else if ($l['konsumsi']=='TIDAK'){
+                              }else if ($l['konsumsi']=='0'){
                                 echo '<tr class="table-danger">';
                               }else{
                                 echo '<tr>';
@@ -504,13 +504,8 @@
                               <td><?= date('H:i', strtotime($l['tglmulai'])); ?> - <?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                               <td><?= $l['lokasi']; ?></td>
                               <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
-                              <?php if ($l['konsumsi']=='YA'){
-                                echo '<td> YA </td>';
-                              }else if ($l['konsumsi']=='TIDAK'){
-                                echo '<td> TIDAK </td>';
-                              }else{
-                                echo '<td> BELUM/TIDAK DIKONFIRMASI GA </td>';
-                              } ?>
+                              <?php $konsumsi = $this->db->get_where('lembur_konsumsi',['id'=>$l['konsumsi']])->row_array(); ?>
+                              <td><?= $konsumsi['nama']; ?></td>
                           </tr>
                           <?php endforeach; ?>
                         </tbody>
@@ -530,20 +525,59 @@
               </div>
               <!--  end card  -->
             </div>
-            <div class="tab-pane" id="probudget">
+            <div class="tab-pane" id="tabmedical">
               <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title">Help center</h4>
-                  <p class="card-category">
-                    More information here
-                  </p>
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title">Claim Medical</h4>
                 </div>
                 <div class="card-body">
-                  From the seamless transition of glass and metal to the streamlined profile, every detail was carefully considered to enhance your experience. So while its display is larger, the phone feels just right.
-                  <br>
-                  <br> Another Text. The first thing you notice when you hold the phone is how great it feels in your hand. The cover glass curves down around the sides to meet the anodized aluminum enclosure in a remarkable, simplified design.
+                  <div class="toolbar text-right mb-2">
+                    <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    <?php if ($this->session->userdata('sect_id') == 212){
+                          echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahClaim">Rencana Lembur Tim</a>' ;
+                          } 
+                    ?> 
+                  </div>
+                  <div class="table-responsive">
+                    <div class="material-datatables">
+                      <table id="medical" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Tanggal Transfer</th>
+                            <?php if ($this->session->userdata('sect_id') == 212){
+                              echo '<th>Actions</th>';
+                                  } 
+                            ?> 
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php 
+                          $no = 1;
+
+                          foreach ($listclaim as $row) : ?>
+                            <tr>
+                              <td><?= $no++; ?></td>
+                              <td><?= $row->nama ?></td>
+                              <td><?= date('d M Y', strtotime($row->transfer_at)) ?></td>
+                              <?php if ($this->session->userdata('sect_id') == 212){
+                                      echo '<td><a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="modal" data-target="#hapusClaim" data-id="'.$row->id.'"><i class="material-icons">close</i></a></td>';
+                                    } 
+                              ?> 
+                          </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
+                <!-- end content-->
               </div>
+              <!--  end card  -->
             </div>
             <div class="tab-pane" id="proschedule">
               <div class="card">
@@ -836,7 +870,7 @@
 </div>
 
 <!-- Banner Modal -->
-<div id="bannerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bannerModalLabel" aria-hidden="true">
+<div class="modal fade" id="bannerModal" tabindex="-1" role="dialog" aria-labelledby="bannerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <img id="gambar" name="gambar" class="img-fluid" /> 
@@ -844,9 +878,101 @@
   </div>
 </div>
 
+<!-- Add Claim Medical Modal -->
+<div class="modal fade" id="tambahClaim" tabindex="-1" role="dialog" aria-labelledby="#tambahClaimTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">CLAIM MEDICAL</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('dashboard/medical/add'); ?>">
+                    <div class="modal-body">
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Karyawan</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                  <select class="selectpicker" data-style="select-with-transition" id="karyawan" name="karyawan[]" multiple title="Pilih Karyawan" data-size="7" data-live-search="true" required>
+                                      <?php
+                                      foreach ($listkaryawan as $row) {
+                                          echo '<option value="' . $row->npk . '">' . $row->nama . '</option>';
+                                      }
+                                      ?>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Transfer</label>
+                            <div class="col-md-7">
+                              <input type="text" class="form-control datepicker" id="tgltransfer" name="tgltransfer" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-right">
+                            <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                            <button type="submit" class="btn btn-success">SUBMIT MEDICAL</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Claim Medical Modal -->
+<div class="modal fade" id="hapusClaim" tabindex="-1" role="dialog" aria-labelledby="hapusClaimLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Kamu yakin mau menghapus ini?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form" method="post" action="<?= base_url('dashboard/medical/delete'); ?>">
+      <div class="modal-body">
+      <input type="hidden" class="form-control" id="id" name="id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+        <button type="submit" class="btn btn-danger">YA, HAPUS!</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
     $(document).ready(function(){
 
+      $('#hapusClaim').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var id = button.data('id') // Extract info from data-* attributes
+          var modal = $(this)
+          modal.find('.modal-body input[name="id"]').val(id)
+      });
+
+      // $('#btn_delete').on('click',function(){
+      //     var id = $('#id').val();
+      //     $.ajax({
+      //         type : "POST",
+      //         url  : "<?php echo site_url('dashboard/medical/delete')?>",
+      //         dataType : "JSON",
+      //         data : {id:id},
+      //         success: function(data){
+                  // $('[name="id"]').val("");
+                  // $('#hapusClaim').modal('hide');
+                  // window.location.reload();
+          //  }
+          // });
+          // return false;
+      // });
+      
       $('#bannerModal').on('show.bs.modal', function (event) {
         var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
         var modal = $(this)
