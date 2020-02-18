@@ -1292,7 +1292,7 @@ class Lembur extends CI_Controller
     public function submit_konfirmasi_ga()
     {
         date_default_timezone_set('asia/jakarta');
-        $this->db->set('admin_ga', 'Diproses oleh '.$this->session->userdata('inisial'));
+        $this->db->set('admin_ga', $this->session->userdata('inisial'));
         $this->db->set('tgl_admin_ga', date('Y-m-d  H:i:s'));
         $this->db->set('konsumsi', $this->input->post('konsumsi'));
         $this->db->where('id', $this->input->post('id'));
@@ -1322,7 +1322,7 @@ class Lembur extends CI_Controller
         $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         if ($user['work_contract']=='Direct Labor'){ 
             $this->db->set('tul', $this->input->post('tul'));
-            $this->db->set('admin_hr', 'Diproses oleh '.$this->session->userdata('inisial'));
+            $this->db->set('admin_hr', $this->session->userdata('inisial'));
             $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
             $this->db->set('istirahat1', $istirahat1);
             $this->db->set('istirahat2', $istirahat2);
@@ -1331,7 +1331,7 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
         }else{
             $this->db->set('tul', $this->input->post('tul'));
-            $this->db->set('admin_hr', 'Diproses oleh '.$this->session->userdata('inisial'));
+            $this->db->set('admin_hr', $this->session->userdata('inisial'));
             $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
             $this->db->set('istirahat1', $istirahat1);
             $this->db->set('istirahat2', $istirahat2);
@@ -1394,7 +1394,7 @@ class Lembur extends CI_Controller
         $this->db->where('link_aktivitas', $this->input->post('id'));
         $this->db->update('aktivitas');
 
-        $this->db->set('admin_ppic', 'Diproses oleh '.$this->session->userdata('inisial'));
+        $this->db->set('admin_ppic', $this->session->userdata('inisial'));
         $this->db->set('tgl_admin_ppic', date('Y-m-d H:i:s'));
         $this->db->set('status', '9');
         $this->db->where('id', $this->input->post('id'));
