@@ -79,15 +79,13 @@
                                     <label class="col-form-label">Kategori</label>
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="kategori_lembur" id="kategori_lembur" data-style="select-with-transition" title="Pilih Kategori" data-size="7" required>
-                                            <?php if ($this->session->userdata('posisi_id') > 4){
-                                                echo '<option value="OT">Lembur</option>';
-                                            } ?>
+                                            <option value="OT">Lembur</option>
                                             <option value="GH">Ganti Hari</option>
                                             <option value="TC">Tabungan Cuti</option>
                                         </select>
                                     </div>
 
-                                    <label class="col-form-label">Lokasi</label>   
+                                    <label class="col-form-label">Lokasi</label>
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="lokasi" id="lokasi" data-style="select-with-transition" title="Pilih" data-size="5" data-live-search="true" onchange="admSelectCheck(this);" required>
                                             <option data-subtext="WORKSHOP FOR INDUSTRIAL EQUIPMENT" value="WTQ">WTQ</option>
