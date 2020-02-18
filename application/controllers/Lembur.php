@@ -845,8 +845,8 @@ class Lembur extends CI_Controller
         $destination = $karyawan['phone'];
         $message = "*PENGAJUAN REALISASI LEMBUR*" .
         "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai_aktual'])) .
-        "\r\nDurasi : " . date('H', strtotime($lembur['durasi_aktual'])) ." Jam " . date('i', strtotime($lembur['durasi_aktual']))." Menit." .
+        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) .
+        "\r\nDurasi : " . $lembur['durasi'] ." Jam" .
         "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com";
         $api_url = "http://panel.apiwha.com/send_message.php";
         $api_url .= "?apikey=" . urlencode($my_apikey);
