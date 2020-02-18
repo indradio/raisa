@@ -71,7 +71,7 @@ class Dashboard extends CI_Controller
 
             if ($l['status']==4){
                 // Notifikasi REALISASI tinggal 8 JAM
-                if ($kirim_notif < $sekarang) {
+                if ($kirim_notif < $sekarang and $l['life']==0) {
                     $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
                     if (!isset($notifikasi['id'])){
                         $data = array(

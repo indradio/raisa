@@ -95,8 +95,8 @@ class Lembur extends CI_Controller
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
 
-        $this->db->where('year(tglmulai)', date('Y'));
-        $this->db->where('month(tglmulai)', date('m'));
+        $this->db->where('year(tglmulai_rencana)', date('Y'));
+        $this->db->where('month(tglmulai_rencana)', date('m'));
         $lembur = $this->db->get('lembur');
         $total_lembur = $lembur->num_rows()+1;
         $id = 'OT'.date('ym'). sprintf("%04s", $total_lembur);
@@ -150,8 +150,8 @@ class Lembur extends CI_Controller
         $bulan = date("m", strtotime($this->input->post('tglmulai')));
 
         if (date("Y-m-d", strtotime($this->input->post('tglmulai'))) > date('Y-m-d')) {
-            $this->db->where('year(tglmulai)', $tahun);
-            $this->db->where('month(tglmulai)', $bulan);
+            $this->db->where('year(tglmulai_rencana)', $tahun);
+            $this->db->where('month(tglmulai_rencana)', $bulan);
             $lembur = $this->db->get('lembur');
             $total_lembur = $lembur->num_rows()+1;
             $id = 'OT'.date('ym', strtotime($this->input->post('tglmulai'))). sprintf("%04s", $total_lembur);
