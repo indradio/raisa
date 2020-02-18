@@ -171,7 +171,6 @@ class Dashboard extends CI_Controller
         $this->db->where('day(tglmulai)',date('d'));
         $this->db->where('status >', '2');
         $data['listlembur'] = $this->db->get('lembur')->result_array();
-
         $data['listclaim'] = $this->dashboard_model->get_claim();
         $data['listkaryawan'] = $this->dashboard_model->get_karyawan();
 

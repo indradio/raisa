@@ -132,6 +132,7 @@ class Lembur extends CI_Controller
             'dept_id' => $karyawan['dept_id'],
             'sect_id' => $karyawan['sect_id'],
             'pemohon' => $this->session->userdata('inisial'),
+            'contract' => $this->session->userdata('contract'),
             'status' => '1',
             'life' => '0'
         ];
@@ -181,6 +182,7 @@ class Lembur extends CI_Controller
                 'dept_id' => $karyawan['dept_id'],
                 'sect_id' => $karyawan['sect_id'],
                 'pemohon' => $this->session->userdata('inisial'),
+                'contract' => $this->session->userdata('contract'),
                 'status' => '1',
                 'life' => '0'
             ];
