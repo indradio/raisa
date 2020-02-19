@@ -209,14 +209,11 @@ $pdf->SetFont('Arial', '', 6);
 $pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
 $pdf->SetFont('Arial', '', 4);
 $pdf->Ln(1);
-$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
-$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
-$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
-$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
-$pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
-
-
-
+$pdf->Cell(32, 2, '1. Mengemudilah dengan aman dan gunakan selalu sabuk keselamatan.', 0, 1);
+$pdf->Cell(32, 2, '2. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.', 0, 1);
+$pdf->Cell(32, 2, '3. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.', 0, 1);
+$pdf->Cell(32, 2, '4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.', 0, 1);
+$pdf->Cell(32, 2, '5. Patuhi peraturan GA yang berlaku.', 0, 1);
 
 //$pdf->Output();
 //OUTPUT SET FILENAME DOWNLOAD
