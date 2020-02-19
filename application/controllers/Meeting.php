@@ -11,6 +11,6 @@ class Meeting extends CI_Controller
 
     public function index()
     {
-        redirect('https://winteq-astra.id/meeting');
+        redirect('https://winteq-astra.com/meeting');
     }
 }

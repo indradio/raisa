@@ -15,7 +15,7 @@ class Project extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['status'] = $this->project_model->fetch_status();
+        // $data['status'] = $this->project_model->fetch_status();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
