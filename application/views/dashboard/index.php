@@ -251,11 +251,11 @@
                 <i class="material-icons">local_hospital</i> Claim <br>Medical
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
                 <i class="material-icons">help_outline</i> Project <br>Schedule
               </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
                 <i class="material-icons">help_outline</i> Help Center
@@ -537,7 +537,8 @@
                   <div class="toolbar text-right mb-2">
                     <!--        Here you can write extra buttons/actions for the toolbar              -->
                     <?php if ($this->session->userdata('sect_id') == 212){
-                          echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahClaim">Rencana Lembur Tim</a>' ;
+                          echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahClaim">Tambah Claim Medical</a>' ;
+                          echo '<a href="#" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#emptyClaim">Hapus Semua Medical</a>' ;
                           } 
                     ?> 
                   </div>
@@ -935,6 +936,29 @@
         </button>
       </div>
       <form class="form" method="post" action="<?= base_url('dashboard/medical/delete'); ?>">
+      <div class="modal-body">
+      <input type="hidden" class="form-control" id="id" name="id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+        <button type="submit" class="btn btn-danger">YA, HAPUS!</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Claim Medical Modal -->
+<div class="modal fade" id="emptyClaim" tabindex="-1" role="dialog" aria-labelledby="emptyClaimLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Kamu yakin mau menghapus semua data ini?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form" method="post" action="<?= base_url('dashboard/medical/empty'); ?>">
       <div class="modal-body">
       <input type="hidden" class="form-control" id="id" name="id">
       </div>

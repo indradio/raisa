@@ -19,6 +19,11 @@ class Dashboard_model extends CI_Model
         $query = $this->db->delete('medical_claim');
     }
 
+    public function empty_claim()
+    {
+        $query = $this->db->empty_table('medical_claim');
+    }
+
     public function get_karyawan()
     {
         return $this->db->get_where('karyawan',['status'=>1])->result();

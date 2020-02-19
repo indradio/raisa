@@ -215,6 +215,9 @@ class Dashboard extends CI_Controller
         }elseif ($action=='delete'){
             $this->dashboard_model->delete_claim($this->input->post('id'));
             redirect('dashboard');
+        }elseif ($action=='empty'){
+            $this->dashboard_model->empty_claim();
+            redirect('dashboard');
         }
     }
 }
