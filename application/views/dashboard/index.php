@@ -626,7 +626,7 @@
                     </figure> -->
 
 
-                  </div>
+                  <!-- </div> -->
 
                   <!-- Root element of PhotoSwipe. Must have class pswp. -->
                   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
