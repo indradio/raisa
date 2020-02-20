@@ -138,12 +138,22 @@
                                 <label class="col-md-3 col-form-label">Status</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
-                                    <select class="selectpicker" name="konsumsi" id="konsumsi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
+                                    <select class="selectpicker" name="status" id="status" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
                                     <?php
-                                        $status = $this->db->get('lembur_konsumsi')->result_array();
-                                        foreach ($status as $s) : ?>
-                                            <option value="<?= $s['nama']; ?>"><?= $s['nama']; ?></option>
+                                        foreach ($liststatus as $s) : ?>
+                                            <option value="<?= $s->nama; ?>"><?= $s->nama; ?></option>
                                     <?php endforeach; ?>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Highlight</label>
+                                <div class="col-md-9">
+                                    <div class="form-group has-default">
+                                    <select class="selectpicker" name="highlight" id="highlight" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
+                                            <option value="1">SHOW</option>
+                                            <option value="0">HIDE</option>
                                     </select>
                                     </div>
                                 </div>

@@ -119,7 +119,7 @@
                                         <?php }else{ ?>
                                             <tr class="text-muted">
                                         <?php } ?>
-                                            <td><?= substr($p['deskripsi'],0,20); ?><small> (<?= $p['copro']; ?>) </small></td>
+                                            <td><?= substr($p['deskripsi'],0,25); ?><small> (<?= $p['copro']; ?>) </small></td>
                                             <td class="text-center"><?= date('d M y', strtotime($p['delivery_date'])); ?></td>
                                             <td class="text-center"><?= number_format(substr($p['cost_amount'],0,-6),0,',','.')?></td>
                                             <td class="text-center"><?= intval($p['mh_budget']); ?></td>

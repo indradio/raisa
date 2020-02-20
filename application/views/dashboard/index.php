@@ -251,11 +251,11 @@
                 <i class="material-icons">local_hospital</i> Claim <br>Medical
               </a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
-                <i class="material-icons">help_outline</i> Project <br>Schedule
+                <i class="material-icons">event_note</i> Project <br>Schedule
               </a>
-            </li> -->
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
                 <i class="material-icons">help_outline</i> Help Center
@@ -589,15 +589,20 @@
                   </p>
                 </div> -->
                 <div class="card-body text-center">
-                  <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                  <!-- 16:9 aspect ratio -->
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/wbs.pdf"></iframe>
+                  </div>
+
+                  <!-- <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery"> -->
 
 
-                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                    <!-- <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                       <a href="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="contentUrl" data-size="1440x720">
                           <img class="img-responsive" src="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="thumbnail" alt="Image description" />
                       </a>
-                      <!-- <figcaption itemprop="caption description">Image caption  1</figcaption> -->
-                    </figure>
+                      <figcaption itemprop="caption description">Image caption  1</figcaption>
+                    </figure> -->
 
                      <!-- <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                       <a href="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_b.jpg" itemprop="contentUrl" data-size="964x1024">

@@ -33,6 +33,7 @@ class Pmd extends CI_Controller
             $this->db->where('tgl_aktivitas >=',$tglawal);
             $this->db->where('tgl_aktivitas <=',$tglakhir);
             $this->db->where('jenis_aktivitas','JAM KERJA');
+            $this->db->where('contract','Direct Labor');
             $this->db->where('status','9');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
@@ -65,6 +66,7 @@ class Pmd extends CI_Controller
             $this->db->where('tgl_aktivitas >=',$tglawal);
             $this->db->where('tgl_aktivitas <=',$tglakhir);
             $this->db->where('jenis_aktivitas','LEMBUR');
+            $this->db->where('contract','Direct Labor');
             $this->db->where('status','9');
             $this->db->order_by('npk', 'ASC');
             $data['aktivitas'] = $this->db->get('aktivitas')->result_array();

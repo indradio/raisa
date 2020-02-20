@@ -622,7 +622,7 @@ class Lembur extends CI_Controller
             redirect('lembur/persetujuan_realisasi/' . $this->input->post('link_aktivitas'));
         }
         elseif ($lembur['status']=='7'){
-            redirect('lembur/konfirmasi/hr/' . $this->input->post('link_aktivitas'));
+            redirect('lembur/proses/hr/' . $this->input->post('link_aktivitas'));
         }
     }
 
@@ -676,7 +676,7 @@ class Lembur extends CI_Controller
         if ($lembur['status']=='4'){
             redirect('lembur/realisasi_aktivitas/' . $this->input->post('link_aktivitas'));
         } elseif ($lembur['status']=='7'){
-            redirect('lembur/konfirmasi/hr/' . $this->input->post('link_aktivitas'));
+            redirect('lembur/proses/hr/' . $this->input->post('link_aktivitas'));
         }
     }
 
@@ -719,7 +719,7 @@ class Lembur extends CI_Controller
             redirect('lembur/realisasi_aktivitas/' . $lembur['id']);
         } elseif ($lembur['status']=='7'){
             $this->session->set_flashdata('message', 'hapus');
-            redirect('lembur/konfirmasi/hr/' . $lembur['id']);
+            redirect('lembur/proses/hr/' . $lembur['id']);
         }
     }
 
