@@ -114,7 +114,7 @@ class Persetujuandl extends CI_Controller
                 json_decode(file_get_contents($api_url, false));
             } else {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
-                $this->db->set('status', '5');
+                $this->db->set('status', '6');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 

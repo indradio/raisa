@@ -102,7 +102,7 @@
                                                     data-total="<?php echo $p['est_total'] ?>"
                                                     data-pembuat="<?php echo $p['est_total'] ?>"
                                             class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Estimasi Cost</a>
-                                            <a href="/raisa/projectbudget/budgetengdetail/<?= $p['copro'];?>/<?= $p['part'];?>" class="btn btn-sm btn-success ">View Data</a>
+                                            <a href="projectbudget/budgetengdetail/<?= $p['copro'];?>/<?= $p['part'];?>" class="btn btn-sm btn-success ">View Data</a>
                                         <?php }?>
                                         </td>
                                     </tr>

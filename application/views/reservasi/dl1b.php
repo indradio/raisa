@@ -2,12 +2,23 @@
     <div class="container-fluid">
       <!-- Start Card -->
       <div class="row">
+        <div class="col-md-12">
+          Tanggal : <?= date('d-m-Y ', strtotime($reservasi_temp['tglberangkat'])).date('H:i - ', strtotime($reservasi_temp['jamberangkat'])).date('H:i ', strtotime($reservasi_temp['jamkembali'])); ?>
+          <?php 
+          if ($reservasi_temp['jenis_perjalanan']=='DLPP'){
+            echo '<a href="#" class="badge badge-warning badge-pill" role="button" aria-disabled="true" data-toggle="modal" data-target="#dlpp">Ganti Tanggal</a>';
+          }elseif ($reservasi_temp['jenis_perjalanan']=='TAPP'){
+            echo '<a href="#" class="badge badge-warning badge-pill" role="button" aria-disabled="true" data-toggle="modal" data-target="#tapp">Ganti Tanggal</a>';
+          } ?>
+        </div>
+      </div>
+      <div class="row">
         <?php
         $queryKendaraan = "SELECT *
-                                    FROM `kendaraan`
-                                    WHERE `kontrak` >= CURDATE() AND `is_active` = 1
-                                    ORDER BY `id` DESC
-                                ";
+                              FROM `kendaraan`
+                              WHERE `kontrak` >= CURDATE() AND `is_active` = 1
+                              ORDER BY `id` DESC
+                          ";
         $kendaraan = $this->db->query($queryKendaraan)->result_array();
         ?>
         <?php foreach ($kendaraan as $kend) : ?>
@@ -58,6 +69,11 @@
         <?php endforeach; ?>
       </div>
       <!-- End Card -->
+      <div class="row">
+        <div class="col-md-12">
+          <a href="<?= base_url('reservasi/dl/'); ?>" class="btn btn-github" role="button" aria-disabled="false">Kembali</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -101,3 +117,99 @@
   </div>
 </div>
 <!-- End Modal -->
+<!-- Modal Tambah Perjalanan-->
+<div class="modal fade" id="dlpp" tabindex="-1" role="dialog" aria-labelledby="dlppTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">PERJALANAN DINAS DLPP</h4>
+                    </div>
+                </div>
+                <form class="form-horizontal" method="post" action="<?= base_url('reservasi/dl1a_proses'); ?>">
+                    <div class="modal-body">
+                      <div class="row col-md-12">
+                        <label class="col-md-5 col-form-label">Tanggal</label>
+                        <div class="col-md-6">
+                          <div class="form-group has-default">
+                            <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row col-md-12">
+                        <label class="col-md-5 col-form-label">jam Berangkat</label>
+                        <div class="col-md-6">
+                          <div class="form-group has-default">
+                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                         </div>
+                        </div>
+                      </div>
+                      <div class="row col-md-12">
+                        <label class="col-md-5 col-form-label">jam Kembali</label>
+                        <div class="col-md-6">
+                          <div class="form-group has-default">
+                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                      <button type="submit" class="btn btn-success">SELANJUTNYA</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Modal Tambah Perjalanan-->
+  <div class="modal fade" id="tapp" tabindex="-1" role="dialog" aria-labelledby="tappTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">PERJALANAN DINAS TAPP</h4>
+                    </div>
+                </div>
+                <form class="form-horizontal" method="post" action="<?= base_url('reservasi/dl2a_proses'); ?>">
+                    <div class="modal-body">
+                      <div class="row col-md-12">
+                        <label class="col-md-5 col-form-label">Tanggal</label>
+                        <div class="col-md-6">
+                          <div class="form-group has-default">
+                            <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row col-md-12">
+                        <label class="col-md-5 col-form-label">jam Berangkat</label>
+                        <div class="col-md-6">
+                          <div class="form-group has-default">
+                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                         </div>
+                        </div>
+                      </div>
+                      <div class="row col-md-12">
+                        <label class="col-md-5 col-form-label">jam Kembali</label>
+                        <div class="col-md-6">
+                          <div class="form-group has-default">
+                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                      <button type="submit" class="btn btn-success">SELANJUTNYA</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>

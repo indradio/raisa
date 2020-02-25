@@ -174,7 +174,7 @@
                                       endforeach; ?>
                                           <option value="Taksi">Taksi</option>
                                           <option value="Sewa">Sewa</option>
-                                          <option value="Pribadi">Kendaraan Pribadi</option>
+                                          <option value="Pribadi">Pribadi</option>
                                     </select>
                                 </div>
                             </div>

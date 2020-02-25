@@ -109,7 +109,7 @@ $pdf->Cell(18, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(36, 0.5, '', 1, 0, 'C', 1);
 $pdf->Cell(0, 0.5, '', 0, 1, 0);
 
-$jadwal = $this->db->get_where('perjalanan_jadwal', ['perjalanan_id' => $reservasi['id']])->result_array();
+$jadwal = $this->db->get_where('perjalanan_jadwal', ['reservasi_id' => $reservasi['id']])->result_array();
 $nomor = 1;
 foreach ($jadwal as $j) :
     $pdf->Cell(20, 6, date("d M Y", strtotime($j['waktu'])), 1, 0, 'C', 1);

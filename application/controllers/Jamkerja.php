@@ -508,7 +508,6 @@ class Jamkerja extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('jamkerja');
             }
-
             redirect('jamkerja/ppic/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
         }
     }
