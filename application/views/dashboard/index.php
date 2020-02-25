@@ -61,6 +61,85 @@
     <!-- START OUTSTANDING ADMINISTRATION -->
     </p>
     <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <?php $tahun = date('Y');
+            $bulan = date('m'); ?>
+            <h4 class="card-title">Status Jam Kerja Periode <?= date('F Y', strtotime("$tahun-$bulan-01")); ?></h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <div class="material-datatables">
+            <div class="table-responsive">
+              <table id="dt-status" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <?php
+                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                    for ($i=1; $i < $tanggal+1; $i++) { 
+                      echo '<th>'. date('D, d', strtotime($tahun.'-'.$bulan.'-'.$i)) .'</th>';
+                    } ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  for ($i=1; $i < $tanggal+1; $i++) { 
+                    echo '<td>';
+                    $this->db->where('npk', $this->session->userdata('npk'));
+                    $this->db->where('year(tglmulai)', $tahun);
+                    $this->db->where('month(tglmulai)', $bulan);
+                    $this->db->where('day(tglmulai)', $i);
+                    $this->db->where('status >', 0);
+                    $jamkerja = $this->db->get_where('jamkerja')->row_array();
+                                   
+                    if (date('D', strtotime($tahun.'-'.$bulan.'-'.$i))=='Sat' or date('D', strtotime($tahun.'-'.$bulan.'-'.$i))=='Sun'){
+                      echo '<i class="fa fa-circle text-default"></i>';
+                    }else{
+                      if (!empty($jamkerja)){
+                        if ($jamkerja['status']==9){
+                          echo '<i class="fa fa-circle text-success"></i>';
+                        }elseif ($jamkerja['status']==1){
+                          echo '<i class="fa fa-circle text-warning"></i>';
+                        }elseif ($jamkerja['status']==2){
+                          echo '<i class="fa fa-circle text-info"></i>';
+                        }
+                      }else{
+                        echo '<i class="fa fa-circle text-danger"></i>';
+                      }
+                    }
+                  } ?>
+                    </tr>
+                </tbody>
+               
+              </table>
+            </div>
+            </div>
+          </div>
+          <div class="card-footer">
+              <div class="row">
+                  <div class="col-md-12">
+                    <i class="fa fa-circle text-success"></i> Laporan Jam Kerja Selesai. | <i class="fa fa-circle text-warning"></i> Laporan Jam Kerja sedang diproses oleh RDA/Koordinator. 
+                    | <i class="fa fa-circle text-info"></i> Laporan Jam Kerja Sedang diproses oleh PPIC. 
+                    | <i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan). 
+                    | <i class="fa fa-circle text-default"></i> Hari libur akhir pekan. 
+                  </div>
+              </div>
+          </div>
+          <!-- end content-->
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+    
+    <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-tabs card-header-info">

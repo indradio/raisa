@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
@@ -12,23 +12,6 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-            <form class="form" method="POST" action="<?= base_url('jamkerja/persetujuan'); ?>">
-                      <div class="form-group label-floating">
-                        <div class="input-group date">
-                          <div class="input-group-append">
-                            <span class="input-group-text">
-                              <span class="glyphicon glyphicon-calendar"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                            </span>
-                          </div>
-                          <input type="text" id="tanggal" name="tanggal" class="form-control datepicker" placeholder="Pilih Tanggal" required="true" />
-                            <div class="input-group-append">
-                              <span class="input-group-text">
-                              <button type="submit" class="btn btn-success">CARI</button>
-                              </span>
-                            </div>
-                        </div>
-                      </div>
-                  </form>
               <!--        Here you can write extra buttons/actions for the toolbar              -->
             </div>
             <div class="material-datatables">
@@ -38,7 +21,6 @@
                     <th>Tanggal</th>
                     <th>Nama</th>
                     <th>Cell</th>
-                    <th>Status</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -46,22 +28,17 @@
                     <th>Tanggal</th>
                     <th>Nama</th>
                     <th>Cell</th>
-                    <th>Status</th>
                   </tr>
                 </tfoot>
                 <tbody>
                   <?php
                   date_default_timezone_set('asia/jakarta');
                   $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
-                  foreach ($kry as $k) : 
-                    $this->db->where('npk', $k['npk']);
-                    $this->db->where('tglmulai', $tanggal);
-                    $this->db->where('status >', 0);
-                    $jamkerja = $this->db->get_where('jamkerja')->row_array();
-                    
-                    if (!empty($jamkerja)){
-                      
-                      $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
+                  $this->db->where('status', 2);
+                  $jamkerja = $this->db->get_where('jamkerja')->result_array();
+                  foreach ($jamkerja as $jk) : 
+                                         
+                      $respon = floor($jk['respon_create'] / (60 * 60 * 24));
                       if ($respon==0){
                         $respon = 'Tepat Waktu';
                       }else{
@@ -69,44 +46,102 @@
                       }
 
                       $now = time();
-                      // $due = strtotime($jamkerja['create']);
-                      $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
+                      // $due = strtotime($jk['create']);
+                      $due = strtotime(date('Y-m-d 23:59:00', strtotime($jk['create'])));
                       $approve = $due - $now;
                       $approve = floor($approve / (60 * 60 * 24));
                       if ($approve<0){
                         $approve = '( '.$approve.' Hari )';
                       }else{
                         $approve = null;
-                      }
-
-                      if ($jamkerja['status']==2){ ?>
-                        <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jamkerja['id']); ?>'" >
-                      <?php }else{
-                        echo '<tr>';
                       } ?>
-                      <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
-                      <td><?=$k['nama'].' <small>( '. $respon .' )</small>'; ?></td>
-                      <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
+
+                    
+                    <tr onclick="window.location='<?= base_url('jamkerja/detail/'. $jk['id']); ?>'" >
+                    
+                      <td><?= date('D, d M Y', strtotime($jk['tglmulai'])); ?></td>
+                      <td><?=$jk['nama'].' <small>( '. $respon .' )</small>'; ?></td>
+                      <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $jk['sect_id']])->row_array(); ?>
                       <td><?=$sect['nama']; ?></td>
-                      <td>
-                        <?php if ($jamkerja['status']==1){
-                          echo 'Menunggu Persetujuan '.$jamkerja['atasan1'].' <small>'. $approve .'</small>';
-                        }elseif ($jamkerja['status']==2){
-                          echo 'Menunggu Persetujuan PPIC';
-                        }elseif ($jamkerja['status']==9){
-                          echo 'Selesai';
-                        }?>
-                       </td>
                     </tr>
-                    <?php }else{ ?>
-                      <tr>
-                        <td><?= date('D, d M Y', strtotime($tanggal)); ?></td>
-                        <td><?=$k['nama']; ?></td>
-                        <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
-                      <td><?=$sect['nama']; ?></td>
-                        <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
-                      </tr>
-                        <?php } ?>
+                   
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer">
+           
+          </div>
+          <!-- end content-->
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Status Jam Kerja Periode <?= date('F Y', strtotime("$tahun-$bulan-01")); ?></h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <div class="material-datatables">
+              <table id="dt-status" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Cell</th>
+                    <?php
+                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                    for ($i=1; $i < $tanggal+1; $i++) { 
+                      echo '<th>'. date('D, d', strtotime($tahun.'-'.$bulan.'-'.$i)) .'</th>';
+                    } ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php 
+                  $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+                  foreach ($kry as $k) : 
+                  $sect = $this->db->get_where('karyawan_sect', ['id' => $k['sect_id']])->row_array();?>
+                  <tr>
+                    <td><?=$k['nama']; ?></td>
+                    <td><?= $sect['nama']; ?></td>
+                  <?php
+                  for ($i=1; $i < $tanggal+1; $i++) { 
+                    echo '<td>';
+                    $this->db->where('npk', $k['npk']);
+                    $this->db->where('year(tglmulai)', $tahun);
+                    $this->db->where('month(tglmulai)', $bulan);
+                    $this->db->where('day(tglmulai)', $i);
+                    $this->db->where('status >', 0);
+                    $jamkerja = $this->db->get_where('jamkerja')->row_array();
+                                
+                    
+                      if (date('D', strtotime($tahun.'-'.$bulan.'-'.$i))=='Sat' or date('D', strtotime($tahun.'-'.$bulan.'-'.$i))=='Sun'){
+                        echo '<i class="fa fa-circle text-default"></i>';
+                      }else{
+                        if (!empty($jamkerja)){
+                          if ($jamkerja['status']==9){
+                            echo '<i class="fa fa-circle text-success"></i>';
+                          }elseif ($jamkerja['status']==1){
+                            echo '<i class="fa fa-circle text-warning"></i>';
+                          }elseif ($jamkerja['status']==2){
+                            echo '<i class="fa fa-circle text-info"></i>';
+                          }
+                        }else{
+                          echo '<i class="fa fa-circle text-danger"></i>';
+                        }
+                      }
+                  } ?>
+                  </tr>
                   <?php endforeach; ?>
                 </tbody>
               </table>
@@ -115,18 +150,13 @@
           <div class="card-footer">
               <div class="row">
                   <div class="col-md-12">
-                      <i class="fa fa-circle text-danger"></i> Tidak ada laporan jam kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja). 
+                      <i class="fa fa-circle text-success"></i> Laporan Jam Kerja.
+                      </br><i class="fa fa-circle text-warning"></i> Jam Kerja sedang diproses oleh RDA/Koordinator.
+                      </br><i class="fa fa-circle text-info"></i> Jam Kerja Sedang diproses oleh PPIC. 
+                      </br><i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan, Cuti atau Tidak masuk kerja). 
+                      </br><i class="fa fa-circle text-default"></i> Hari libur Pekan. 
                   </div>
               </div>
-          </div>
-          <div class="card-footer">
-            <div class="col-mr-auto">
-              <a href="<?= base_url('jamkerja/ppic/'.date('Y-m-d', strtotime("-1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SEBELUMNYA</a>
-            </div>
-          
-            <div class="col-ml-auto">
-              <a href="<?= base_url('jamkerja/ppic/'.date('Y-m-d', strtotime("+1 day", strtotime($tanggal)))); ?>" class="btn btn-primary">SELANJUTNYA</a>
-            </div>
           </div>
           <!-- end content-->
         </div>
@@ -166,12 +196,22 @@
 
 <script>
 $(document).ready(function() {
-    $('#dt-persetujuan').DataTable( {
-        order: [[2, 'asc']],
+    $('#dt-status').DataTable( {
+      order: [[1, 'asc']],
         rowGroup: {
-            dataSrc: 2
+            dataSrc: 1
         },
-        "scrollY":        "500px",
+        "scrollY":        "512px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+
+    $('#dt-persetujuan').DataTable( {
+        order: [[0, 'asc']],
+        rowGroup: {
+            dataSrc: 0
+        },
+        "scrollY":        "512px",
         "scrollCollapse": true,
         "paging":         false
     } );

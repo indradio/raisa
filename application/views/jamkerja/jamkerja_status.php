@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="container-fluid">
-  <div class="row">
+        <div class="container-fluid">
+          <div class="row">
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header card-header-rose card-header-icon">
@@ -11,7 +11,7 @@
                         <h4 class="card-title">Status Jam Kerja</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="<?= base_url('jamkerja/status'); ?>" method="post">
+                              <form class="form-horizontal" action="<?= base_url('jamkerja/status'); ?>" method="post">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group has-default">

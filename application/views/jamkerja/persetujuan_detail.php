@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
@@ -140,17 +140,17 @@
                                 <!-- Button SUBMIT -->
                                 <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#acceptJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/ppic/'.date("Y-m-d", strtotime($jamkerja['tglmulai']))) ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-default" role="button">Kembali</a>
                             <?php }else{ ?>
                                 <!-- Button SUBMIT -->
                                 <?php if($jamkerja['durasi']<8){ ?>
                                 <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai']))) ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
                                   <?php }else{ ?>
                                 <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai']))) ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
                                     <?php } ?>
                             <?php } ?>
                             </div>
@@ -178,7 +178,7 @@
             <h4 class="card-title">BERIKAN PENILAIAN</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('jamkerja/persetujuan_approve'); ?>">
+        <form class="form" method="post" action="<?= base_url('jamkerja/approve/koordinator'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control" hidden="true" id="id" name="id" value="<?= $jamkerja['id']; ?>">
             <input type="text" class="form-control" hidden="true" id="produktifitas" name="produktifitas" value="<?= $produktifitas; ?>">
@@ -248,7 +248,7 @@
             <h4 class="card-title">BERIKAN PENILAIAN</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('jamkerja/persetujuan_accept'); ?>">
+        <form class="form" method="post" action="<?= base_url('jamkerja/approve/ppic'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control" hidden="true" id="id" name="id" value="<?= $jamkerja['id']; ?>">
             <div class="form-check">

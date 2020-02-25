@@ -72,7 +72,11 @@ class Jamkerja extends CI_Controller
     public function pilihtanggal()
     {
         date_default_timezone_set('asia/jakarta');
-        redirect('jamkerja/tanggal/'.$this->input->post('tanggal'));
+        if (date('D', strtotime($this->input->post('tanggal')))=='Sat' or date('D', strtotime($this->input->post('tanggal')))=='Sun'){
+            redirect('jamkerja');
+        }else{
+            redirect('jamkerja/tanggal/'.$this->input->post('tanggal'));
+        }
     }
 
     public function tanggal($tanggal)
@@ -371,25 +375,12 @@ class Jamkerja extends CI_Controller
         
     }
 
-    public function persetujuan()
+    public function persetujuan($role)
     {
-        date_default_timezone_set('asia/jakarta');
-        if($this->input->post('tanggal')){
-            $tanggal = $this->input->post('tanggal');
-        }else{
-            $tanggal = date("Y-m-d");
-        }
-
-        if ($this->session->userdata('dept_id')==14 AND $this->session->userdata('sect_id')==143){
-            redirect('jamkerja/ppic/'.$tanggal);
-        }else{
-            redirect('jamkerja/koordinator/'.$tanggal);
-        }
-    }
-
-    public function koordinator($tanggal)
-    {
-            $data['tanggal'] = date("Y-m-d 07:30:00", strtotime($tanggal));
+        if ($role=='koordinator'){
+            date_default_timezone_set('asia/jakarta');
+            $data['bulan'] = date('m');
+            $data['tahun'] = date('Y');
             $data['sidemenu'] = 'Koordinator';
             $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -398,11 +389,10 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/persetujuan_koordinator', $data);
             $this->load->view('templates/footer');
-    }
-
-    public function ppic($tanggal)
-    {
-            $data['tanggal'] = date("Y-m-d 07:30:00", strtotime($tanggal));
+        }elseif ($role=='ppic'){
+            date_default_timezone_set('asia/jakarta');
+            $data['bulan'] = date('m');
+            $data['tahun'] = date('Y');
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -411,7 +401,35 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/persetujuan_ppic', $data);
             $this->load->view('templates/footer');
+        }
+     
     }
+
+    // public function koordinator($tanggal)
+    // {
+    //         $data['tanggal'] = date("Y-m-d 07:30:00", strtotime($tanggal));
+    //         $data['sidemenu'] = 'Koordinator';
+    //         $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
+    //         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+    //         $this->load->view('templates/header', $data);
+    //         $this->load->view('templates/sidebar', $data);
+    //         $this->load->view('templates/navbar', $data);
+    //         $this->load->view('jamkerja/persetujuan_koordinator', $data);
+    //         $this->load->view('templates/footer');
+    // }
+
+    // public function ppic($tanggal)
+    // {
+    //         $data['tanggal'] = date("Y-m-d 07:30:00", strtotime($tanggal));
+    //         $data['sidemenu'] = 'PPIC';
+    //         $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
+    //         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+    //         $this->load->view('templates/header', $data);
+    //         $this->load->view('templates/sidebar', $data);
+    //         $this->load->view('templates/navbar', $data);
+    //         $this->load->view('jamkerja/persetujuan_ppic', $data);
+    //         $this->load->view('templates/footer');
+    // }
 
     public function detail($link_aktivitas)
     {
@@ -444,42 +462,47 @@ class Jamkerja extends CI_Controller
         
     }
 
-    public function persetujuan_approve()
+    public function approve($role)
     {
         date_default_timezone_set('asia/jakarta');
-        $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
-        $now = time();
-        $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
-        $respon = $due - $now;
+        if ($role=='koordinator'){
+            $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
+            $now = time();
+            $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
+            $respon = $due - $now;
+            if ($this->input->post('catatan')){
+                $this->db->set('catatan', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
+                }
+            $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
+            $this->db->set('poin', $this->input->post('poin'));
+            $this->db->set('produktifitas', $this->input->post('produktifitas'));
+            $this->db->set('respon_approve', $respon);
+            $this->db->set('status', 2);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('jamkerja');
 
-        $this->db->set('catatan', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
-        $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
-        $this->db->set('poin', $this->input->post('poin'));
-        $this->db->set('produktifitas', $this->input->post('produktifitas'));
-        $this->db->set('respon_approve', $respon);
-        $this->db->set('status', 2);
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('jamkerja');
-
-        redirect('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
+            redirect('jamkerja/persetujuan/koordinator');
+        }elseif ($role=='ppic'){    
+            $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
+            $this->db->set('ppic', $this->session->userdata('inisial'));
+            $this->db->set('tgl_ppic', date("Y-m-d H:i:s"));
+            $this->db->set('poin_ppic', $this->input->post('poin'));
+            $this->db->set('status', 9);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('jamkerja');
+    
+            $this->db->set('status', 9);
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->update('aktivitas');
+    
+            redirect('jamkerja/persetujuan/ppic');
+        }
     }
 
     public function persetujuan_accept()
     {
         date_default_timezone_set('asia/jakarta');
-        $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
-        $this->db->set('ppic', $this->session->userdata('inisial'));
-        $this->db->set('tgl_ppic', date("Y-m-d H:i:s"));
-        $this->db->set('poin_ppic', $this->input->post('poin'));
-        $this->db->set('status', 9);
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('jamkerja');
-
-        $this->db->set('status', 9);
-        $this->db->where('link_aktivitas', $this->input->post('id'));
-        $this->db->update('aktivitas');
-
-        redirect('jamkerja/ppic/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
+       
     }
 
     public function persetujuan_revisi()
