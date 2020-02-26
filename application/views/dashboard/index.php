@@ -58,7 +58,8 @@
       }?>
     </div>
     <!-- end banner -->
-    <!-- START OUTSTANDING ADMINISTRATION -->
+    <?php if ($this->session->userdata('contract') == 'Direct Labor') { ?>
+    <!-- START OUTSTANDING JAM KERJA -->
     </p>
     <div class="row">
       <div class="col-md-12">
@@ -138,7 +139,8 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
-    
+    <!-- END OUTSTANDING JAM KERJA -->
+    <?php }?>
     <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -458,9 +460,9 @@
                                                       <?php }elseif ($r['status'] == 4) {?>
                                                         <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
                                                       <?php }elseif ($r['status'] == 5) {?>
-                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
-                                                      <?php }elseif ($r['status'] == 6) {?>
                                                         <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
+                                                      <?php }elseif ($r['status'] == 6) {?>
+                                                        <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
                                                       <?php };?>
                                                       </td>
                                                       <td class="td-name">
@@ -495,6 +497,49 @@
                                                         <td></td>
                                                     <?php }
                                                   } ?>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                    <!-- Reservasi Non Operasional -->
+                                    <tbody>
+                                        <?php
+                                          $queryReservasiNon = "SELECT *
+                                              FROM `reservasi`
+                                              WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` < 7 AND `kepemilikan` != 'Operasional'
+                                              ORDER BY `kepemilikan` ASC ";
+                                              $reservasiNon = $this->db->query($queryReservasiNon)->result_array();
+                                        foreach ($reservasiNon as $rn) : ?>
+                                        <tr>
+                                          <td class="text-center">
+                                            <div class="img-container">
+                                                <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
+                                            </div>
+                                            <?php if ($rn['status'] == 1) {?>
+                                              <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $rn['atasan1']; ?></span>
+                                            <?php }elseif ($rn['status'] == 2) {?>
+                                              <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $rn['atasan2']; ?></span>
+                                            <?php }elseif ($rn['status'] == 3) {?>
+                                              <span class="badge badge-pill badge-warning">Menunggu Persetujuan DWA</span>
+                                            <?php }elseif ($rn['status'] == 4) {?>
+                                              <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
+                                            <?php }elseif ($rn['status'] == 5) {?>
+                                              <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
+                                            <?php }elseif ($rn['status'] == 6) {?>
+                                              <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
+                                            <?php };?>
+                                          </td>
+                                          <td class="td-name">
+                                              <a><?= $rn['nopol']; ?></a>
+                                              <br />
+                                              <small><?= $rn['kepemilikan']; ?></small>
+                                              <br />
+                                              <small><?= $rn['id'].' - '.$rn['jenis_perjalanan']; ?></small>
+                                          </td> 
+                                          <td><?= $rn['anggota']; ?></td>
+                                          <td><?= $rn['tujuan']; ?></td>
+                                          <td><?= $rn['keperluan']; ?></td>
+                                          <td><?= date('d-M', strtotime($rn['tglberangkat'])). ' ' .date('H:i', strtotime($rn['jamberangkat'])); ?></td>
+                                          <td><?= date('d-M', strtotime($rn['tglkembali'])). ' ' .date('H:i', strtotime($rn['jamkembali'])); ?></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
