@@ -200,7 +200,11 @@ $(document).ready(function() {
   $('#dt-status').DataTable( {
         "scrollX": true,
         "scrollCollapse": true,
-        "paging":         false
+        "paging":         false,
+        fixedColumns: {
+            leftColumns: 1,
+            rightColumns: 0
+        }
     } );
 
     $('#dt-persetujuan').DataTable( {

@@ -201,7 +201,8 @@ $(document).ready(function() {
         rowGroup: {
             dataSrc: 1
         },
-        "scrollY":        "512px",
+        "scrollY": "512px",
+        "scrollX": true,
         "scrollCollapse": true,
         "paging":         false
     } );

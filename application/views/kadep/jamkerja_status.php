@@ -33,6 +33,7 @@
                 </form>
             </div>
             <div class="material-datatables">
+            <div class="table-responsive">
               <table id="dt-status" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
@@ -86,6 +87,7 @@
               </table>
             </div>
           </div>
+          </div>
           <div class="card-footer">
               <div class="row">
                   <div class="col-md-12">
@@ -115,6 +117,7 @@ $(document).ready(function() {
             dataSrc: 1
         },
         "scrollY":        "512px",
+        "scrollX": true,
         "scrollCollapse": true,
         "paging":         false
     } );
