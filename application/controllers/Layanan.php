@@ -111,15 +111,71 @@ class Layanan extends CI_Controller
     {
         foreach ($this->input->post('penerima') as $to) :
             date_default_timezone_set('asia/jakarta');
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $to;
-            $message = $this->input->post('pesan');
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
+            // $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            // $destination = $to;
+            // $message = $this->input->post('pesan');
+            // $api_url = "http://panel.apiwha.com/send_message.php";
+            // $api_url .= "?apikey=" . urlencode($my_apikey);
+            // $api_url .= "&number=" . urlencode($destination);
+            // $api_url .= "&text=" . urlencode($message);
+            // json_decode(file_get_contents($api_url, false));
 
+            $postData = array(
+                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                'number' => $to,
+                'message' => $this->input->post('pesan')
+            );
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
+            // if (curl_errno($ch)) {
+            //     echo 'Error:' . curl_error($ch);
+            // }
+            // curl_close($ch);
+            
+            // print_r($result);
+ 
+            // //API Url
+            // $url = 'https://api.chat-api.com/instance102675/sendMessage?token=2c1ikyz9fbk25kew';
+            
+            // //Initiate cURL.
+            // $ch = curl_init($url);
+            
+            // //The JSON data.
+            // $jsonData = array(
+            //     'phone'=> $to,
+            //     'body'=> $this->input->post('pesan')
+            // );
+            
+            // //Encode the array into JSON.
+            // $jsonDataEncoded = json_encode($jsonData);
+            
+            // //Tell cURL that we want to send a POST request.
+            // curl_setopt($ch, CURLOPT_POST, 1);
+            
+            // //Attach our encoded JSON string to the POST fields.
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+            
+            // //Set the content type to application/json
+            // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+            
+            // //Execute the request
+            // $result = curl_exec($ch);
+
+            // Record History
             $penerima = $this->db->get_where('karyawan', ['phone' => $to])->row_array();
 
             $data = [
@@ -129,6 +185,7 @@ class Layanan extends CI_Controller
                 'pesan' => $this->input->post('pesan')
             ];
             $this->db->insert('layanan_pesan', $data);
+
         endforeach;
         
         redirect('layanan/messages');

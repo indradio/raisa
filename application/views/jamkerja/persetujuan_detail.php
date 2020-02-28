@@ -1,5 +1,11 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
+  <?php if ($jamkerja['rev']==1) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>LAPORAN JAM KERJA ini membutuhkan REVISI,</strong>
+                </br>
+            </div>
+        <?php } ?>
   <?php if ($jamkerja['catatan']) { ?>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Catatan dari ATASAN,</strong>
@@ -8,7 +14,7 @@
             </div>
         <?php } ?>
   <?php if ($jamkerja['catatan_ppic']) { ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Catatan dari PPIC,</strong>
                 </br>
                 <?= $jamkerja['catatan_ppic']; ?>
@@ -58,7 +64,7 @@
 
               $produktifitas = $produktif1 + $produktif2 + $produktif3;
               ?>
-              <b><h3>Produktifitas : <?= $produktifitas; ?> % </h3></b>
+              <b><h3>Porsi ke COPRO : <?= $produktifitas; ?> % </h3></b>
               
               <div class="progress" style="width: 100%">
                   <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1; ?>%" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>

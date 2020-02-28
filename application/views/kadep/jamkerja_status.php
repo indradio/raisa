@@ -44,6 +44,7 @@
                     for ($i=1; $i < $tanggal+1; $i++) { 
                       echo '<th>'. date('D, d', strtotime($tahun.'-'.$bulan.'-'.$i)) .'</th>';
                     } ?>
+                    <th>Nama__________</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -80,7 +81,9 @@
                           echo '<i class="fa fa-circle text-danger"></i>';
                         }
                       }
-                  } ?>
+                      echo '</td>';
+                      } ?>
+                  <td><?=$k['nama']; ?></td>
                   </tr>
                   <?php endforeach; ?>
                 </tbody>

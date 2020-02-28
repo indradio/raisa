@@ -140,7 +140,7 @@
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                        <tr data-toggle="modal" data-target="#submitLembur" data-id="<?= $l['id']; ?>" data-tglpengajuan="<?= date('d M H:i', strtotime($l['tglpengajuan_rencana'])); ?>" data-nama="<?= $l['nama']; ?>" data-tglmulai="<?= date('d M H:i', strtotime($l['tglmulai_rencana'])).date(' - H:i', strtotime($l['tglselesai_rencana'])); ?>" data-durasi="<?= $l['durasi']; ?>" data-lokasi="<?= $l['lokasi']; ?>" >
+                                        <tr data-toggle="modal" data-target="#submitLembur" data-id="<?= $l['id']; ?>" data-tglpengajuan="<?= date('d M H:i', strtotime($l['tglpengajuan_rencana'])); ?>" data-nama="<?= $l['nama']; ?>" data-tglmulai="<?= date('d M H:i', strtotime($l['tglmulai_rencana'])).date(' - H:i', strtotime($l['tglselesai_rencana'])); ?>" data-durasi="<?= $l['durasi_rencana']; ?>" data-lokasi="<?= $l['lokasi']; ?>" >
                                             <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
                                             <td><?= date('d M H:i', strtotime($l['tglpengajuan_rencana'])); ?></td>
                                             <td><?= date('d M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>

@@ -1,6 +1,12 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <?php if ($jamkerja['status']==0) { ?>
+        <?php if ($jamkerja['rev']==1) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>LAPORAN JAM KERJA ini membutuhkan REVISI,</strong>
+                </br>
+            </div>
+        <?php } ?>
         <?php if ($jamkerja['catatan']) { ?>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Catatan dari ATASAN,</strong>
@@ -12,7 +18,7 @@
             </div>
         <?php } ?>
         <?php if ($jamkerja['catatan_ppic']) { ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Catatan dari PPIC,</strong>
                 </br>
                 <?= $jamkerja['catatan_ppic']; ?>

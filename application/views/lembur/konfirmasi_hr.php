@@ -191,7 +191,7 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <?php if ($jammulai < '12:00' AND $jamselesai > '13:00'){
+                                    <?php if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
                                             echo '<input class="form-check-input" type="checkbox" id="istirahat1" name="istirahat1" value="1" checked>';
                                     }else{
                                             echo '<input class="form-check-input" type="checkbox" id="istirahat1" name="istirahat1" value="1">';
@@ -204,10 +204,10 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <?php if ($jammulai < '18:30' AND $jamselesai > '19:00'){
-                                        echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="1" checked>';
+                                    <?php if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                                        echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="0.5" checked>';
                                     }else{
-                                        echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="1">';
+                                        echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="0.5">';
                                     } ?>
                                     Istirahat 18:30 - 19:00
                                     <span class="form-check-sign">

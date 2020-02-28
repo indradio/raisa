@@ -82,7 +82,7 @@
 
                             $produktifitas = $produktif1 + $produktif2 + $produktif3;
                             ?>
-                            <b><h3>Produktifitas : <?= number_format((float)$produktifitas, 2, ',', ''); ?> % </h3></b>
+                            <b><h3>Porsi ke COPRO : <?= number_format((float)$produktifitas, 2, ',', ''); ?> % </h3></b>
                             
                             <div class="progress" style="width: 100%">
                                 <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1; ?>%" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
