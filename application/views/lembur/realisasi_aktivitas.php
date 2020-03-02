@@ -131,6 +131,8 @@
                                         echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>';
                                     }elseif ($lembur['kategori']!='OT' AND $lembur['durasi']==9){
                                         echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>';
+                                    }elseif ($lembur['kategori']!='OT' AND $lembur['durasi']==18){
+                                        echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>';
                                     }else{
                                         echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>';
                                     }
