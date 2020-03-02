@@ -100,6 +100,7 @@ class Layanan extends CI_Controller
         $data['sidesubmenu'] = 'Kirim Pesan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['pesan'] = $this->db->get('layanan_pesan')->result_array();
+        $data['notifikasi'] = $this->db->get('layanan_notifikasi')->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -190,5 +191,13 @@ class Layanan extends CI_Controller
         
         redirect('layanan/messages');
     }
-    
+
+    public function notifikasi()
+    {
+        $this->db->set('pesan', $this->input->post('notifikasi'));
+        $this->db->where('id', '1');
+        $this->db->update('layanan_notifikasi');
+
+        redirect('layanan/messages');
+    }
 }

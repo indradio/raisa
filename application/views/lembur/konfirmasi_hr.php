@@ -196,7 +196,7 @@
                                     }else{
                                             echo '<input class="form-check-input" type="checkbox" id="istirahat1" name="istirahat1" value="1">';
                                     } ?>
-                                    Istirahat 12:00 - 13:00
+                                    Istirahat Siang 1 JAM (12:00 - 13:00)
                                     <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
@@ -209,7 +209,16 @@
                                     }else{
                                         echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="0.5">';
                                     } ?>
-                                    Istirahat 18:30 - 19:00
+                                    Istirahat Malam 0,5 JAM (18:30 - 19:00)
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="istirahat3" name="istirahat3" value="1">
+                                    Istirahat Malam 1 JAM
                                     <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>

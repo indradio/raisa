@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -59,6 +59,38 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Pesan Notifikasi</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal" method="post" action="<?= base_url('layanan/notifikasi'); ?>">
+                        <div class="row">
+                            <label class="col-md-1 col-form-label">Pesan :</label>
+                            <div class="col-md-11">
+                                <div class="form-group has-default">
+                                    <textarea rows="10" class="form-control" name="notifikasi" id="notifikasi"><?= $notifikasi['pesan']; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-1 col-form-label"></label>
+                            <div class="col-md-11">
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">UPDATE</button>
+                                </div>
+                            </div>
+                        </div>
+                         </form>
                     </div>
                 </div>
                 <!--  end card  -->
