@@ -142,39 +142,6 @@ class Layanan extends CI_Controller
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             
             $result = curl_exec($ch);
-            // if (curl_errno($ch)) {
-            //     echo 'Error:' . curl_error($ch);
-            // }
-            // curl_close($ch);
-            
-            // print_r($result);
- 
-            // //API Url
-            // $url = 'https://api.chat-api.com/instance102675/sendMessage?token=2c1ikyz9fbk25kew';
-            
-            // //Initiate cURL.
-            // $ch = curl_init($url);
-            
-            // //The JSON data.
-            // $jsonData = array(
-            //     'phone'=> $to,
-            //     'body'=> $this->input->post('pesan')
-            // );
-            
-            // //Encode the array into JSON.
-            // $jsonDataEncoded = json_encode($jsonData);
-            
-            // //Tell cURL that we want to send a POST request.
-            // curl_setopt($ch, CURLOPT_POST, 1);
-            
-            // //Attach our encoded JSON string to the POST fields.
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-            
-            // //Set the content type to application/json
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
-            
-            // //Execute the request
-            // $result = curl_exec($ch);
 
             // Record History
             $penerima = $this->db->get_where('karyawan', ['phone' => $to])->row_array();
