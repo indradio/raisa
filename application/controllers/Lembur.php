@@ -1059,6 +1059,7 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         // Persetujuan Koordinator / Section Head 
         if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
             $this->db->set('atasan1_realisasi', 'Disetujui oleh '.$this->session->userdata('inisial'));

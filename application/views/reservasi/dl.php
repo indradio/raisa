@@ -73,7 +73,7 @@
                         <label class="col-md-5 col-form-label">Tanggal</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" required>
+                            <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" value="<?= date('d-m-Y'); ?>" required>
                           </div>
                         </div>
                       </div>
@@ -81,7 +81,7 @@
                         <label class="col-md-5 col-form-label">jam Berangkat</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="07:30" required>
                          </div>
                         </div>
                       </div>
@@ -89,7 +89,7 @@
                         <label class="col-md-5 col-form-label">jam Kembali</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" value="16:30" required>
                           </div>
                         </div>
                       </div>
@@ -121,7 +121,7 @@
                         <label class="col-md-5 col-form-label">Tanggal</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" required>
+                            <input type="text" class="form-control datepicker" id="tglberangkat" name="tglberangkat" value="<?= date('d-m-Y'); ?>" required>
                           </div>
                         </div>
                       </div>
@@ -129,7 +129,7 @@
                         <label class="col-md-5 col-form-label">jam Berangkat</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" required>
+                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="07:30" required>
                          </div>
                         </div>
                       </div>
@@ -137,7 +137,7 @@
                         <label class="col-md-5 col-form-label">jam Kembali</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" value="16:30" required>
                           </div>
                         </div>
                       </div>
