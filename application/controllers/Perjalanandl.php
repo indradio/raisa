@@ -1027,25 +1027,40 @@ class Perjalanandl extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 
-                $this->db->where($reservasi['npk']);
-                $karyawan = $this->db->get('karyawan')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $karyawan['phone'];
-                $message = "*Perjalanan Dinas kamu dengan detail berikut :*\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
+                $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
+                $user = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $user['phone'],
+                    'message' => "*PERJALANAN DINAS TA SUDAH SIAP*" .
+                    "\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
                     "\r\n Tujuan : *" . $data['tujuan'] . "*" .
                     "\r\n Peserta : *" . $data['anggota'] . "*" .
                     "\r\n Keperluan : *" . $data['keperluan'] . "*" .
                     "\r\n Berangkat : *" . $data['tglberangkat'] . "* *" . $data['jamberangkat'] . "* _estimasi_" .
                     "\r\n Kembali : *" . $data['tglkembali'] . "* *" . $data['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "*" .
-                    " ) \r\n \r\nTelah siap untuk berangkat. 
-                        \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.
-                        \r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
+                    "\r\n Kendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "* )" .
+                    "\r\n \r\nTelah siap untuk berangkat.".
+                    "\r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal.".
+                    "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas.".
+                    "\r\n \r\n" . $notifikasi['pesan']
+                );
+                
+                $ch = curl_init();
+                
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                
+                $result = curl_exec($ch);
 
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanandl/adminhr');
@@ -1058,22 +1073,36 @@ class Perjalanandl extends CI_Controller
 
                 $this->db->where('sect_id', '214');
                 $ga_admin = $this->db->get('karyawan_admin')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $ga_admin['phone'];
-                $message = "*PENGAJUAN PERJALANAN DINAS TA*\r\n \r\n No. Reservasi : *" . $reservasi['id'] . "*" .
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $ga_admin['phone'],
+                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
+                    "\r\n \r\n No. Reservasi : *" . $reservasi['id'] . "*" .
                     "\r\n Nama : *" . $reservasi['nama'] . "*" .
                     "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
                     "\r\n Keperluan : *" . $reservasi['keperluan'] . "*" .
                     "\r\n Peserta : *" . $reservasi['anggota'] . "*" .
                     "\r\n Berangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
                     "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "*" .
-                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
+                    "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "* )" .
+                    "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                );
+                
+                $ch = curl_init();
+                
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                
+                $result = curl_exec($ch);
 
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanandl/adminhr');

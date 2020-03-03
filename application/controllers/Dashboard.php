@@ -30,6 +30,7 @@ class Dashboard extends CI_Controller
 
             if ($jam >= 2) {
                 $this->db->set('status', '0');
+                $this->db->set('last_status', $p['status']);
                 $this->db->set('catatan_ga', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
                 $this->db->where('id', $p['id']);
                 $this->db->update('perjalanan');

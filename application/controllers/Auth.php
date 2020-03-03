@@ -8,7 +8,6 @@ class Auth extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         //Delete Lembur yg diBatalkan setelah 40 Hari
         $lembur = $this->db->get_where('lembur', ['status' => '0'])->result_array();
-
         foreach ($lembur as $l) :
             // cari selisih
             $sekarang = strtotime(date('Y-m-d'));
@@ -36,8 +35,7 @@ class Auth extends CI_Controller
         $npk = $this->input->post('npk');
         $password = $this->input->post('pwd');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
-        //die;
-
+      
         if ($karyawan) {
             if (password_verify($password, $karyawan['password'])) {
                 //cari atasan 1
@@ -66,7 +64,7 @@ class Auth extends CI_Controller
                     $this->db->where('sect_id', $karyawan['sect_id']);
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 };
-                //cari atasan 1
+                //cari atasan 2
                 if ($karyawan['atasan2'] == 0) {
                     $atasan2 = $atasan2 = $this->db->get_where('karyawan', ['posisi_id' =>  '0'])->row_array();
                 } elseif ($karyawan['atasan2'] == 1) {
