@@ -180,10 +180,10 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
-} else if (flashData == 'famday') {
+} else if (flashData == 'terimakasih') {
   swal({
     title: "Terimakasih!",
-    text: "Anda telah melakukan pendaftaran untuk acara Family Day 2019",
+    text: "Data sudah diproses",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
