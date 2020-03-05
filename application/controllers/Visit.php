@@ -41,7 +41,13 @@ class Visit extends CI_Controller
     public function check()
     {
         date_default_timezone_set('asia/jakarta');
+        if ($this->input->post('kategori')=='LAINNYA'){
+            $kategori = $this->input->post('kategori_lain');
+        }else{
+            $kategori = $this->input->post('kategori');
+        }
         $this->db->set('pic', $this->input->post('pic'));
+        $this->db->set('kategori', $kategori);
         $this->db->set('suhu', $this->input->post('suhu'));
         $this->db->set('hasil', $this->input->post('hasil'));
         $this->db->set('check_by', $this->session->userdata('inisial'));

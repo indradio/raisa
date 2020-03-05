@@ -125,7 +125,7 @@
                             <label class="col-md-4 col-form-label">No. Identitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="identitas" name="identitas">
+                                    <input type="text" class="form-control" id="identitas" name="identitas">
                                 </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                             <label class="col-md-4 col-form-label">Perusahaan</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="perusahaan" name="perusahaan">
+                                    <input type="text" class="form-control" id="perusahaan" name="perusahaan">
                                 </div>
                             </div>
                         </div>
@@ -212,7 +212,29 @@
                                         foreach ($krywn as $k) : ?>
                                             <option value="<?= $k['inisial']; ?>"><?= $k['nama']; ?></option>
                                         <?php endforeach; ?>
+                                            <option value="WH">WAREHOUSE</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Kategori</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <select class="selectpicker" name="kategori" id="kategori" onchange="kategoriSelect(this);" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                                        <option value="CUSTOMER">CUSTOMER</option>
+                                        <option value="SUPPLIER">SUPPLIER / KURIR</option>
+                                        <option value="VENDOR">VENDOR</option>
+                                        <option value="LAINNYA">LAINNYA</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label" id="k1_lain" style="display:none;"></label>
+                            <div class="col-md-7" id="k2_lain" style="display:none;">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control" id="kategori_lain" name="kategori_lain">
                                 </div>
                             </div>
                         </div>
@@ -289,4 +311,22 @@
       
         });
     })
+
+    function kategoriSelect(valueSelect)
+    {
+        var ktgr = valueSelect.options[valueSelect.selectedIndex].value;
+        document.getElementById("k1_lain").style.display = ktgr == 'LAINNYA' ? "block" : 'none';
+        document.getElementById("k2_lain").style.display = ktgr == 'LAINNYA' ? "block" : 'none';
+    }
+
+    $(document).ready(function() {
+        $('#kategori').change(function() {
+            var kategori = $('#kategori').val();
+            if (kategori == 'LAINNYA') {
+                $('#kategori_lain').prop('required', true);
+            } else {
+                $('#kategori_lain').prop('required', false);
+            }
+        });
+    });
 </script>
