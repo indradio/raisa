@@ -206,13 +206,14 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="pic" id="pic" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                                    <option value="WH">WAREHOUSE</option>
+                                    <option value="KOP">KOPERASI</option>
                                         <?php
                                         $this->db->where('is_active', '1');
                                         $krywn = $this->db->get_where('karyawan', ['status' => '1'])->result_array();
                                         foreach ($krywn as $k) : ?>
                                             <option value="<?= $k['inisial']; ?>"><?= $k['nama']; ?></option>
                                         <?php endforeach; ?>
-                                            <option value="WH">WAREHOUSE</option>
                                     </select>
                                 </div>
                             </div>
@@ -221,7 +222,7 @@
                             <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <select class="selectpicker" name="kategori" id="kategori" onchange="kategoriSelect(this);" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
+                                    <select class="selectpicker" name="kategori" id="kategori" onchange="kategoriSelect(this);" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
                                         <option value="CUSTOMER">CUSTOMER</option>
                                         <option value="TRAINING">TRAINING</option>
                                         <option value="SUPPLIER">SUPPLIER/KURIR</option>
@@ -243,7 +244,7 @@
                             <label class="col-md-4 col-form-label">Suhu Tubuh</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="number" class="form-control" id="suhu" name="suhu" required>
+                                    <input type="text" class="form-control" id="suhu" name="suhu" required>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +253,7 @@
                       <div class="col-sm-9 checkbox-radios">
                         <div class="form-check form-check-inline">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="hasil" value="TERIMA" checked> TERIMA
+                            <input class="form-check-input" type="radio" name="hasil" value="TERIMA"> TERIMA
                             <span class="circle">
                               <span class="check"></span>
                             </span>
