@@ -12,21 +12,21 @@ class Visit extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Security';
-        $data['sidesubmenu'] = 'Perjalanan Dinas';
+        $data['sidemenu'] = 'Highlight';
+        $data['sidesubmenu'] = 'Kunjungan Tamu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
+        $data['visit'] = $this->db->get('visit')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('cekdl/index', $data);
+        $this->load->view('visit/index', $data);
         $this->load->view('templates/footer');
     }
 
     public function guest()
     {
         $data['sidemenu'] = 'Security';
-        $data['sidesubmenu'] = 'Tamu';
+        $data['sidesubmenu'] = 'Kunjungan Tamu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->where('status', '1');
         $data['visit'] = $this->db->get('visit')->result_array();

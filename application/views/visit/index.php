@@ -12,43 +12,85 @@
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
-                            <a href="<?= base_url('visit/guest'); ?>" class="btn btn-lg btn-block btn-facebook mb-2" role="button" aria-disabled="false">KLIK UNTUK REFRESH</a>
-                        <p>
+                          
                         </div>
                         <div class="material-datatables">
-                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="exportdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
+                                        <th>No. Identitas</th>
+                                        <th>No. HP</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
-                                        <th>PIC yg dituju</th>
-                                        <th>Waktu Kunjungan</th>
-                                        <th class="disabled-sorting">Actions</th>
+                                        <th>PIC</th>
+                                        <th>Kategori</th>
+                                        <th>Point1</th>
+                                        <th>Point2</th>
+                                        <th>Point3</th>
+                                        <th>Point4</th>
+                                        <th>Point5</th>
+                                        <th>Point6</th>
+                                        <th>Suhu</th>
+                                        <th>Hasil</th>
+                                        <th>Pemeriksa</th>
+                                        <th>Tgl Pemeriksaan</th>
+                                        <th>Status</th>
+                                        <!-- <th class="disabled-sorting">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                    <th>ID</th>
+                                        <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
+                                        <th>No. Identitas</th>
+                                        <th>No. HP</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
-                                        <th>PIC yg dituju</th>
-                                        <th>Waktu Kunjungan</th>
-                                        <th>Actions</th>
+                                        <th>PIC</th>
+                                        <th>Kategori</th>
+                                        <th>Point1</th>
+                                        <th>Point2</th>
+                                        <th>Point3</th>
+                                        <th>Point4</th>
+                                        <th>Point5</th>
+                                        <th>Point6</th>
+                                        <th>Suhu</th>
+                                        <th>Hasil</th>
+                                        <th>Pemeriksa</th>
+                                        <th>Tgl Pemeriksaan</th>
+                                        <th>Status</th>
+                                        <!-- <th>Actions</th> -->
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($visit as $v) : ?>
-                                            <td><?= $v['id']; ?></td>
+                                            <td><?= date('Y-m-d H:i', strtotime($v['waktu_kunjungan'])); ?></td>
                                             <td><?= $v['nama']; ?></td>
+                                            <td><?= $v['identitas']; ?></td>
+                                            <td><?= $v['phone']; ?></td>
                                             <td><?= $v['perusahaan']; ?></td>
                                             <td><?= $v['keperluan']; ?></td>
                                             <td><?= $v['pic']; ?></td>
-                                            <td><?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?></td>
-                                            <td>
+                                            <td><?= $v['kategori']; ?></td>
+                                            <td><?= $v['point1']; ?></td>
+                                            <td><?= $v['point2']; ?></td>
+                                            <td><?= $v['point3']; ?></td>
+                                            <td><?= $v['point4']; ?></td>
+                                            <td><?= $v['point5']; ?></td>
+                                            <td><?= $v['point6']; ?></td>
+                                            <td><?= $v['suhu']; ?></td>
+                                            <td>DI<?= $v['hasil']; ?></td>
+                                            <td><?= $v['check_by']; ?></td>
+                                            <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
+                                            <td><?php if ($v['status']==1){
+                                                echo 'Belum Berkunjung';
+                                            }else{
+                                                echo 'Sudah/Sedang Berkunjung';
+                                            } ?></td>
+                                            <!-- <td>
                                                 <a href="#" class="btn btn-round btn-success" data-toggle="modal" data-target="#cekVisit" 
                                                 data-id="<?= $v['id']; ?>"
                                                 data-kunjungan="<?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?>"
@@ -64,7 +106,7 @@
                                                 data-point5="<?= $v['point5']; ?>"
                                                 data-point6="<?= $v['point6']; ?>"
                                                 >Proses</a>
-                                            </td>
+                                            </td> -->
                                             </tr>
                                         <?php endforeach; ?>
                                 </tbody>
@@ -72,6 +114,17 @@
                         </div>
                     </div>
                     <div class="card-footer">
+                    Point 1 : Apakah dalam 14 hari terakhir anda memiliki riwayat perjalanan ke Cina atau negara/wilayah terjangkit virus corona?
+                    </br>
+                    Point 2 : Dalam 14 hari terakhir pernah melakukan interaksi dengan Warga Negara Asing dari negara/wilayah terjangkit virus corona?
+                    </br>
+                    Point 3 : Pernah melakukan interaksi dengan keluarga/kerabat yang menjadi suspect bahkan positif terjangkit virus corona?
+                    </br>
+                    Point 4 : Dalam 3 hari terakhir mengalami demam dengan suhu tubuh >38°C?
+                    </br>
+                    Point 5 : Sedang batuk/pilek/nyeri tenggorokan?
+                    </br>
+                    Point 6 : Sedang pneumonia (sesak nafas) ringan hingga berat?
                     </div>
                 </div>
                 <!--  end card  -->
@@ -223,8 +276,7 @@
                                 <div class="form-group has-default">
                                     <select class="selectpicker" name="kategori" id="kategori" onchange="kategoriSelect(this);" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
                                         <option value="CUSTOMER">CUSTOMER</option>
-                                        <option value="TRAINING">TRAINING</option>
-                                        <option value="SUPPLIER">SUPPLIER/KURIR</option>
+                                        <option value="SUPPLIER">SUPPLIER / KURIR</option>
                                         <option value="VENDOR">VENDOR</option>
                                         <option value="LAINNYA">LAINNYA</option>
                                     </select>
@@ -280,6 +332,27 @@
 </div>
 <script>
     $(document).ready(function(){
+
+        $('#exportdesc').DataTable({
+        "pagingType": "full_numbers",
+        scrollX: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'print'
+        ],
+        order: [
+            [0, 'desc']
+        ],
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+        });
+
       $('#cekVisit').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id') // Extract info from data-* attributes
