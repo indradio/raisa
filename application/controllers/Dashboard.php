@@ -175,7 +175,7 @@ class Dashboard extends CI_Controller
                     
                     $result = curl_exec($ch);
                 }
-            }elseif ($l['status']>0 and $l['status']<7){
+            }elseif ($l['status']>1 and $l['status']<7){
                  // Batalkan LEMBUR LEWAT 7 HARI
                 if ($expired < $sekarang) {
                     $this->db->set('catatan', "Waktu LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
