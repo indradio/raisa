@@ -81,32 +81,19 @@
                                             <td><?= $v['point4']; ?></td>
                                             <td><?= $v['point5']; ?></td>
                                             <td><?= $v['point6']; ?></td>
-                                            <td><?= $v['suhu']; ?></td>
-                                            <td>DI<?= $v['hasil']; ?></td>
-                                            <td><?= $v['check_by']; ?></td>
-                                            <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
-                                            <td><?php if ($v['status']==1){
-                                                echo 'Belum Berkunjung';
-                                            }else{
-                                                echo 'Sudah/Sedang Berkunjung';
-                                            } ?></td>
-                                            <!-- <td>
-                                                <a href="#" class="btn btn-round btn-success" data-toggle="modal" data-target="#cekVisit" 
-                                                data-id="<?= $v['id']; ?>"
-                                                data-kunjungan="<?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?>"
-                                                data-nama="<?= $v['nama']; ?>"
-                                                data-identitas="<?= $v['identitas']; ?>"
-                                                data-perusahaan="<?= $v['perusahaan']; ?>"
-                                                data-keperluan="<?= $v['keperluan']; ?>"
-                                                data-pic="<?= $v['pic']; ?>"
-                                                data-point1="<?= $v['point1']; ?>"
-                                                data-point2="<?= $v['point2']; ?>"
-                                                data-point3="<?= $v['point3']; ?>"
-                                                data-point4="<?= $v['point4']; ?>"
-                                                data-point5="<?= $v['point5']; ?>"
-                                                data-point6="<?= $v['point6']; ?>"
-                                                >Proses</a>
-                                            </td> -->
+                                            <?php if ($v['status']==1){ ?>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>Belum Berkunjung</td>
+                                            <?php }else{ ?>
+                                                <td><?= $v['suhu']; ?></td>
+                                                <td>DI<?= $v['hasil']; ?></td>
+                                                <td><?= $v['check_by']; ?></td>
+                                                <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
+                                                <td>Sedang/Sudah Berkunjung</td>
+                                            <?php } ?>
                                             </tr>
                                         <?php endforeach; ?>
                                 </tbody>
