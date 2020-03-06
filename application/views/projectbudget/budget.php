@@ -4,16 +4,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title"><?php echo $project['deskripsi'];?><small>(Budget Material)</small></h4>
+                        <h4 class="card-title"><?php echo $project['deskripsi'];?> <small>(Material)</small></h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="#" id="tambah_copro" class="btn btn-info" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahCopro">Tambah Project Budget</a>
+                            <!-- <a href="#" id="tambah_copro" class="btn btn-info" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahCopro">Tambah Project Budget</a> -->
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -22,7 +22,7 @@
                                         <th rowspan="2">Part</th>
                                         <th rowspan="2">Budget</th>
                                         <th colspan="6" style="text-align: center;">Estimasi Cost</th>
-                                        <th colspan="6"style="text-align: center;">Actual Cost</th>
+                                        <th colspan="6" style="text-align: center;">Actual Cost</th>
                                         <th rowspan="2" style="text-align: center;">Action</th>
                                     </tr> 
                                     <tr>
@@ -30,13 +30,13 @@
                                         <td>Exprod</td> 
                                         <td>Total</td>
                                         <td>%</td>
-                                        <td>Selisih</td>
+                                        <td>Remains</td>
                                         <td>%</td>
                                         <td>PP</td>
                                         <td>Exprod</td>
                                         <td>Total</td>
                                         <td>%</td>
-                                        <td>Selisih</td>
+                                        <td>Remains</td>
                                         <td>%</td>
                                     </tr>
                                 </thead>
@@ -59,7 +59,7 @@
                                         <td><?= $p['act_persen']; ?>%</td>
                                         <td>Rp <?= number_format($p['act_selisih'],0,',','.') ?></td>
                                         <td><?= $p['act_selisihpersen']; ?>%</td>
-                                        <td>
+                                        <td class="text-center">
                                             <!-- $sect_id -->
                                             <a href="javascript:;" 
                                                     data-id="<?php echo $p['id'] ?>"
@@ -71,22 +71,16 @@
                                                     data-budget="<?php echo $p['budget'] ?>"
                                                     data-total="<?php echo $p['est_total'] ?>"
                                                     data-selisih="<?php echo $p['est_selisih'] ?>"
-                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Edit</a>
+                                            class="btn btn-sm btn-reddit btn-round" data-toggle="modal" data-target="#projectModal" >Edit</a>
                     
-                                            <a href="<?= base_url('projectbudget/hapus_project/') . $p['copro']. '/' .$p['id']. '/' . $p['part'] ; ?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a></td>
+                                            <!-- <a href="<?= base_url('projectbudget/hapus_project/') . $p['copro']. '/' .$p['id']. '/' . $p['part'] ; ?>" class="btn btn-sm btn-danger btn-batalhps">HAPUS</a></td> -->
                                     </tr>
                                         <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th rowspan="2">Part</th>
-                                        <th rowspan="2">Budget</th>
-                                        <th colspan="6" style="text-align: center;">Estimasi Cost</th>
-                                        <th colspan="6"style="text-align: center;">Actual Cost</th>
-                                        <th rowspan="2" style="text-align: center;">Action <br>
-                                        </th>
-                                    </tr> 
-                                    <tr>
+                                        <td>Part</td>
+                                        <td>Budget</td>
                                         <td>PP</td>
                                         <td>Exprod</td> 
                                         <td>Total</td>
@@ -99,17 +93,18 @@
                                         <td>%</td>
                                         <td>Selisih</td>
                                         <td>%</td>
+                                        <td>Actions</td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
-                        <a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-sm ">back</a>
+                        <a href="<?= base_url('projectbudget'); ?>"  class="btn btn-github">KEMBALI</a>
                     </div>
                     <!-- end card-body-->
-
                 </div>
                 <!--  end card  -->
-                 <div class="card">
+
+                 <div class="card" hidden>
                     <div class="card-header card-header-primary card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
@@ -197,8 +192,8 @@
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="hidden" class="form-control disabled" id="id" name="id" required >
-                                        <input type="number" class="form-control " id="budget" name="budget" required >
-                                        <input type="hidden" class="form-control " id="copro" name="copro" required >
+                                        <input type="number" class="form-control" id="budget" name="budget" required >
+                                        <input type="hidden" class="form-control" id="copro" name="copro" required >
                                     </div>
                                 </div>
                             </div>

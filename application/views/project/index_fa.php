@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
-
+                            <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#addProject">Project Baru</a>
                         </div>
                         <div class="material-datatables">
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -77,10 +77,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Customer</label>
+                                <label class="col-md-3 col-form-label">Status</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="customer">
+                                        <input type="text" class="form-control disabled" name="status">
                                     </div>
                                 </div>
                             </div>
@@ -92,13 +92,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Status</label>
-                                <div class="col-md-9">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="status">
-                                    </div>
-                                </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-danger btn-round">DELETE</button>
                             </div>
                         </div>
                     </div>
@@ -215,9 +210,8 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 modal.find('.modal-body input[name="copro"]').val(data[1])
-                modal.find('.modal-body input[name="customer"]').val(data[2])
+                modal.find('.modal-body input[name="status"]').val(data[2])
                 modal.find('.modal-body textarea[name="deskripsi"]').val(data[3])
-                modal.find('.modal-body input[name="status"]').val(data[4])
             })
             $('#projectModal').modal("show");
         });

@@ -11,7 +11,7 @@
                         <h4 class="card-title">Daftar Project SE</h4>
                     </div>
                     <div class="card-body">
-                       <a href="#" id="tambah_copro" class="btn btn-info" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahCopro">Tambah Project</a>
+                        <!-- <a href="#" id="tambah_copro" class="btn btn-info" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahCopro">Tambah Project</a> -->
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -43,7 +43,7 @@
                                     ?>
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
-                                        <td><?= $p['customer_inisial']; ?></td>
+                                        <td><?= $p['customer_nama']; ?></td>
                                         <td><?= $p['deskripsi']; ?></td>
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
@@ -52,14 +52,14 @@
                                         <td><?= $p['status']; ?></td>
                                         <td>
                                             <a href="<?= base_url('projectbudget/budget/') . $p['copro']; ?>" class="btn btn-sm btn-success">Budget</a>
-                                            <a href="javascript:;" 
+                                            <!-- <a href="javascript:;" 
                                                     data-copro="<?php echo $p['copro'] ?>"
                                                     data-desk="<?php echo $p['deskripsi'] ?>"
                                                     data-receive="<?php echo $p['po_receive'] ?>"
                                                     data-duedate="<?php echo $p['delivery_date'] ?>"
                                                     data-total="<?php echo $p['mh_budget'] ?>"
                                                     data-amount="<?php echo $p['cost_amount'] ?>"
-                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#update" >Update</a>
+                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#update" >Update</a> -->
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>

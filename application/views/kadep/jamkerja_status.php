@@ -44,6 +44,7 @@
                     for ($i=1; $i < $tanggal+1; $i++) { 
                       echo '<th>'. date('D, d', strtotime($tahun.'-'.$bulan.'-'.$i)) .'</th>';
                     } ?>
+                    <th>Terlambat <small>(Hari) </small></th>
                     <th>Nama__________</th>
                   </tr>
                 </thead>
@@ -51,6 +52,16 @@
                   <?php 
                   $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                   foreach ($kry as $k) : 
+                      $this->db->select('SUM(respon_create) as total');
+                      $this->db->where('npk', $k['npk']);
+                      $this->db->where('year(tglmulai)',$tahun);
+                      $this->db->where('month(tglmulai)',$bulan);
+                      $this->db->where('respon_create <', '0');
+                      $this->db->from('jamkerja');
+                
+                      $totalTelat = $this->db->get()->row()->total;
+                      $telat = floor($totalTelat / (60 * 60 * 24));
+
                   $sect = $this->db->get_where('karyawan_sect', ['id' => $k['sect_id']])->row_array();?>
                   <tr>
                     <td><?=$k['nama']; ?></td>
@@ -81,8 +92,20 @@
                           echo '<i class="fa fa-circle text-danger"></i>';
                         }
                       }
+
+                      $this->db->where('npk', $k['npk']);
+                      $this->db->where('year(tglmulai)',$tahun);
+                      $this->db->where('month(tglmulai)',$bulan);
+                      $this->db->where('day(tglmulai)', $i);
+                      // $this->db->where('respon_create <', '0');
+                      $respon = $this->db->get_where('jamkerja')->row_array();
+                      if (!empty($respon)){
+                        $telatUser = floor($respon['respon_create'] / (60 * 60 * 24));
+                        echo '</br>'.$telatUser;
+                      }
                       echo '</td>';
                       } ?>
+                  <td><?=$telat; ?></td>
                   <td><?=$k['nama']; ?></td>
                   </tr>
                   <?php endforeach; ?>
@@ -99,6 +122,7 @@
                       </br><i class="fa fa-circle text-info"></i> Jam Kerja Sedang diproses oleh PPIC. 
                       </br><i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan, Cuti atau Tidak masuk kerja). 
                       </br><i class="fa fa-circle text-default"></i> Hari libur Pekan. 
+                      </br> -X Hari Keterlambatan. 
                   </div>
               </div>
           </div>

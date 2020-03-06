@@ -41,13 +41,13 @@
                                     ?>
                                     <tr>
                                         <td><?= $p['copro']; ?></td>
-                                        <td><?= $p['customer_inisial']; ?></td>
+                                        <td><?= $p['customer_nama']; ?></td>
                                         <td><?= $p['deskripsi']; ?></td>
                                         <td><?= number_format($p['cost_amount'],0,',','.') ?></td>
                                         <td><?= number_format($p['mt_budget'],0,',','.') ?></td>
                                         <td><?= $p['status']; ?></td>
                                         <td> <?php if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11){?>
-                                            <a href="<?= base_url('projectbudget/budgeteng/') . $p['copro']; ?>" class="btn btn-sm btn-success">Budget Material</a>
+                                            <a href="<?= base_url('projectbudget/budgeteng/') . $p['copro']; ?>" class="btn btn-sm btn-success">ESTIMASI COST</a>
                                         <?php }elseif($karyawan['sect_id'] ==140) { ?>
                                              <a href="<?= base_url('mh/manhour/') . $p['copro']; ?>" class="btn btn-sm btn-success">Budget Man Hour</a>
                                         <?php }?>
