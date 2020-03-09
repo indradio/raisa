@@ -1655,7 +1655,7 @@ class Lembur extends CI_Controller
 
         $querylembur = "SELECT *
                         FROM `lembur`
-                        WHERE `tglmulai` >= '$tglmulai' AND `tglselesai` <= '$tglselesai' AND (`status` = '9')
+                        WHERE `tglmulai` >= '$tglmulai' AND `tglmulai` <= '$tglselesai' AND (`status` = '9')
                         ";
         $data['lembur'] = $this->db->query($querylembur)->result_array();
         $data['tglmulai'] = $tglmulai;
@@ -1766,7 +1766,7 @@ class Lembur extends CI_Controller
         redirect('lembur/persetujuan_aktivitas/' . $this->input->post('link_aktivitas'));
     }
 
-    public function laporan()
+    public function laporan($dept)
     {
         date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'Kepala Departemen';
@@ -1779,40 +1779,63 @@ class Lembur extends CI_Controller
             $data['tahun'] = date('Y');
             $data['bulan'] = date('m');
         }
-        $data['lembur'] = $this->db->where('year(tglmulai)', $this->input->post('tahun'));
-        $data['lembur'] = $this->db->where('month(tglmulai)', $this->input->post('bulan'));
-        $data['lembur'] = $this->db->where('status', '9');
-        $data['lembur'] = $this->db->get('lembur')->result_array();
-        if ($this->input->post('laporan') == 1){
+
+        if ($dept=='mch'){
+            $data['lembur'] = $this->db->where('dept_id','13');
+            $data['lembur'] = $this->db->where('year(tglmulai)', $this->input->post('tahun'));
+            $data['lembur'] = $this->db->where('month(tglmulai)', $this->input->post('bulan'));
+            $data['lembur'] = $this->db->where('status', '9');
+            $data['lembur'] = $this->db->get('lembur')->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/lp_lembur_1', $data);
-            $this->load->view('templates/footer');
-        }elseif ($this->input->post('laporan') == 2){
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/lp_lembur_2', $data);
-            $this->load->view('templates/footer');
-        }elseif ($this->input->post('laporan') == 3){
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/lp_lembur_3', $data);
-            $this->load->view('templates/footer');
-        }elseif ($this->input->post('laporan') == 5){
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/lp_copro', $data);
+            $this->load->view('lembur/lp_lembur_mch', $data);
             $this->load->view('templates/footer');
         }else{
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/lp_lembur', $data);
-            $this->load->view('templates/footer');
+            $data['lembur'] = $this->db->where('year(tglmulai)', $this->input->post('tahun'));
+            $data['lembur'] = $this->db->where('month(tglmulai)', $this->input->post('bulan'));
+            $data['lembur'] = $this->db->where('status', '9');
+            $data['lembur'] = $this->db->get('lembur')->result_array();
+            if ($this->input->post('laporan') == 1){
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('lembur/lp_lembur_1', $data);
+                $this->load->view('templates/footer');
+            }elseif ($this->input->post('laporan') == 2){
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('lembur/lp_lembur_2', $data);
+                $this->load->view('templates/footer');
+            }elseif ($this->input->post('laporan') == 3){
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('lembur/lp_lembur_3', $data);
+                $this->load->view('templates/footer');
+            }elseif ($this->input->post('laporan') == 5){
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('lembur/lp_copro', $data);
+                $this->load->view('templates/footer');
+            }else{
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('lembur/lp_lembur', $data);
+                $this->load->view('templates/footer');
+            }
         }
+    }
+
+    public function cetak($id)
+    {
+        $data['lembur']  = $this->db->get_where('lembur', ['id' => $id])->row_array();
+        $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
+        $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+
+        $this->load->view('lembur/reportlbr', $data);
     }
 }

@@ -70,16 +70,16 @@
       $pdf->Cell(14,5, $l['id'],1,0,'C',1);
       $pdf->Cell(30,5, $l['nama'],1,0,1);
       $pdf->Cell(7,5, $l['npk'],1,0,'C',1);
+      $pdf->Cell(20,5, date('d-M-Y', strtotime($l['tglmulai_rencana'])),1,0,'C',1);
+      $pdf->Cell(10,5, date('H:i', strtotime($l['tglmulai_rencana'])),1,0,'C',1);
+      $pdf->Cell(20,5, date('d-M-Y', strtotime($l['tglselesai_rencana'])),1,0,'C',1);
+      $pdf->Cell(10,5, date('H:i', strtotime($l['tglselesai_rencana'])),1,0,'C',1);
+      $pdf->Cell(12,5, $l['durasi_rencana'],1,0,'C',0);
       $pdf->Cell(20,5, date('d-M-Y', strtotime($l['tglmulai'])),1,0,'C',1);
       $pdf->Cell(10,5, date('H:i', strtotime($l['tglmulai'])),1,0,'C',1);
       $pdf->Cell(20,5, date('d-M-Y', strtotime($l['tglselesai'])),1,0,'C',1);
       $pdf->Cell(10,5, date('H:i', strtotime($l['tglselesai'])),1,0,'C',1);
-      $pdf->Cell(12,5, date('H:i', strtotime($l['durasi'])),1,0,'C',0);
-      $pdf->Cell(20,5, date('d-M-Y', strtotime($l['tglmulai_aktual'])),1,0,'C',1);
-      $pdf->Cell(10,5, date('H:i', strtotime($l['tglmulai_aktual'])),1,0,'C',1);
-      $pdf->Cell(20,5, date('d-M-Y', strtotime($l['tglselesai_aktual'])),1,0,'C',1);
-      $pdf->Cell(10,5, date('H:i', strtotime($l['tglselesai_aktual'])),1,0,'C',1);
-      $pdf->Cell(12,5, date('H:i', strtotime($l['durasi_aktual'])),1,1,'C',0);
+      $pdf->Cell(12,5, $l['durasi'],1,1,'C',0);
 
       endforeach;
 
