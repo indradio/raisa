@@ -76,8 +76,9 @@ class Project extends CI_Controller
             'copro' => $this->input->post('copro'),
             'customer_inisial' => $this->input->post('customer'),
             'customer_nama' => $customer['nama'],
-            'deskripsi' => strtoupper($this->input->post('deskripsi')),
-            'status' => $this->input->post('status'),
+            'deskripsi' => strtoupper($this->input->post('customer').' - '.$this->input->post('deskripsi')),
+            'status' => 'OPEN',
+            'tglopen' => date("Y-m-d", strtotime($this->input->post('tanggal'))),
             'highlight' => 1
         ];
         $this->db->insert('project', $data);
@@ -89,15 +90,11 @@ class Project extends CI_Controller
             'est_cost' => '0',
             'est_exprod'=> '0',
             'est_total' =>'0',
-            'est_persen' => '0',
             'est_selisih'=> '0',
-            'est_selisihpersen'=>'0',
             'act_cost' => '0',
             'act_exprod'=> '0',
             'act_total' =>'0',
-            'act_persen' => '0',
-            'act_selisih'=> '0',
-            'act_selisihpersen'=> '0'
+            'act_selisih'=> '0'
             ];
         $this->db->insert('project_material', $data);
 
@@ -108,15 +105,11 @@ class Project extends CI_Controller
             'est_cost' => '0',
             'est_exprod'=> '0',
             'est_total' =>'0',
-            'est_persen' => '0',
             'est_selisih'=> '0',
-            'est_selisihpersen'=>'0',
             'act_cost' => '0',
             'act_exprod'=> '0',
             'act_total' =>'0',
-            'act_persen' => '0',
-            'act_selisih'=> '0',
-            'act_selisihpersen'=> '0'
+            'act_selisih'=> '0'
             ];
         $this->db->insert('project_material', $data);
 
@@ -127,15 +120,11 @@ class Project extends CI_Controller
             'est_cost' => '0',
             'est_exprod'=> '0',
             'est_total' =>'0',
-            'est_persen' => '0',
             'est_selisih'=> '0',
-            'est_selisihpersen'=>'0',
             'act_cost' => '0',
             'act_exprod'=> '0',
             'act_total' =>'0',
-            'act_persen' => '0',
-            'act_selisih'=> '0',
-            'act_selisihpersen'=> '0'
+            'act_selisih'=> '0'
             ];
         $this->db->insert('project_material', $data);
 
@@ -146,15 +135,11 @@ class Project extends CI_Controller
             'est_cost' => '0',
             'est_exprod'=> '0',
             'est_total' =>'0',
-            'est_persen' => '0',
             'est_selisih'=> '0',
-            'est_selisihpersen'=>'0',
             'act_cost' => '0',
             'act_exprod'=> '0',
             'act_total' =>'0',
-            'act_persen' => '0',
-            'act_selisih'=> '0',
-            'act_selisihpersen'=> '0'
+            'act_selisih'=> '0'
             ];
         $this->db->insert('project_material', $data);
 
@@ -165,15 +150,11 @@ class Project extends CI_Controller
             'est_cost' => '0',
             'est_exprod'=> '0',
             'est_total' =>'0',
-            'est_persen' => '0',
             'est_selisih'=> '0',
-            'est_selisihpersen'=>'0',
             'act_cost' => '0',
             'act_exprod'=> '0',
             'act_total' =>'0',
-            'act_persen' => '0',
-            'act_selisih'=> '0',
-            'act_selisihpersen'=> '0'
+            'act_selisih'=> '0'
             ];
         $this->db->insert('project_material', $data);
 
@@ -184,18 +165,38 @@ class Project extends CI_Controller
             'est_cost' => '0',
             'est_exprod'=> '0',
             'est_total' =>'0',
-            'est_persen' => '0',
             'est_selisih'=> '0',
-            'est_selisihpersen'=>'0',
             'act_cost' => '0',
             'act_exprod'=> '0',
             'act_total' =>'0',
-            'act_persen' => '0',
-            'act_selisih'=> '0',
-            'act_selisihpersen'=> '0'
+            'act_selisih'=> '0'
             ];
         $this->db->insert('project_material', $data);
-        redirect('project');
+        redirect('project/project/fa');
+    }
+
+    public function updateProject()
+    {
+        if ($this->input->post('status')=='TECO'){
+            $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
+            $this->db->set('status', 'TECO');
+            $this->db->set('tglteco', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->where('copro', $this->input->post('copro'));
+            $this->db->update('project');
+        }elseif ($this->input->post('status')=='CLOSE'){
+            $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
+            $this->db->set('status', 'CLOSE');
+            $this->db->set('tglclose', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->where('copro', $this->input->post('copro'));
+            $this->db->update('project');
+        }elseif ($this->input->post('status')=='BLOCK'){
+            $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
+            $this->db->set('status', 'BLOCK');
+            $this->db->set('tglblock', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->where('copro', $this->input->post('copro'));
+            $this->db->update('project');
+        }
+        redirect('project/project/fa');
     }
 
     public function delProject()
@@ -465,19 +466,19 @@ class Project extends CI_Controller
         redirect("projectbudget/budget/$copro");
 
     }
-    public function updateproject()
-    {
-       
-        $this->db->set('deskripsi', $this->input->post('deskripsi'));
-        $this->db->set('po_receive', $this->input->post('po_date'));
-        $this->db->set('delivery_date', $this->input->post('due_date'));
-        $this->db->set('mh_budget', $this->input->post('mh_total'));
-        $this->db->set('cost_amount', $this->input->post('amount'));
-        $this->db->set('status', $this->input->post('status'));
-        $this->db->set('highlight ', $this->input->post('highlight'));
-        $this->db->where('copro', $this->input->post('copro'));
-        $this->db->update('project');
-        // echo $this->db->last_query();
-        redirect("projectbudget/index");
-    }
+
+    // public function updateproject()
+    // {
+    //     $this->db->set('deskripsi', $this->input->post('deskripsi'));
+    //     $this->db->set('po_receive', $this->input->post('po_date'));
+    //     $this->db->set('delivery_date', $this->input->post('due_date'));
+    //     $this->db->set('mh_budget', $this->input->post('mh_total'));
+    //     $this->db->set('cost_amount', $this->input->post('amount'));
+    //     $this->db->set('status', $this->input->post('status'));
+    //     $this->db->set('highlight ', $this->input->post('highlight'));
+    //     $this->db->where('copro', $this->input->post('copro'));
+    //     $this->db->update('project');
+    //     // echo $this->db->last_query();
+    //     redirect("projectbudget/index");
+    // }
 }

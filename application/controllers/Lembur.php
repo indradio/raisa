@@ -1339,41 +1339,44 @@ class Lembur extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
 
-        //Notifikasi ke USER
-        $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
-        $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $this->input->post('konsumsi')])->row_array();
-        $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-        $postData = array(
-            'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-            'number' => $user['phone'],
-            'message' => "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DIKONFIRMASI OLEH GA*" .
-            "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
-            "\r\n \r\nID *" . $lembur['id'] .'*'. 
-            "\r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
-            "\r\nDurasi " . $lembur['durasi_rencana'] ." Jam " . 
-            "\r\nKonsumsi " . $konsumsi['nama'] . 
-            "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
-            "\r\n \r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
-            "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
-            "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-            "\r\n \r\n" . $notifikasi['pesan']
-        );
-        
-        $ch = curl_init();
-        
-        curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        
-        $headers = array();
-        $headers[] = 'Accept: application/json';
-        $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        
-        $result = curl_exec($ch);
+        if ($this->input->post('konsumsi')!=0)
+        {
+            //Notifikasi ke USER
+            $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
+            $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $this->input->post('konsumsi')])->row_array();
+            $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+            $postData = array(
+                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                'number' => $user['phone'],
+                'message' => "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DIKONFIRMASI OLEH GA*" .
+                "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
+                "\r\n \r\nID *" . $lembur['id'] .'*'. 
+                "\r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
+                "\r\nDurasi " . $lembur['durasi_rencana'] ." Jam " . 
+                "\r\nKonsumsi " . $konsumsi['nama'] . 
+                "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
+                "\r\n \r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
+                "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
+                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
+                "\r\n \r\n" . $notifikasi['pesan']
+            );
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
+        }
 
         $this->session->set_flashdata('message', 'setujuilbrga');
         redirect('lembur/konfirmasi/ga');

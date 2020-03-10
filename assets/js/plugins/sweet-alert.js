@@ -2,8 +2,8 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "Terbaru di RAISA!",
-    text: "Perjalanan TA sudah terintegrasi dengan admin HR, jadi tidak perlu form kertas & Pengisian jam kerja mulai tanggal 2 januari 2020 diberlakukan di RAISA. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
+    title: "INFO di RAISA!",
+    text: "",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"

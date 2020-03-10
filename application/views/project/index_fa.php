@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -65,7 +65,7 @@
                         <h4 class="card-title">Project</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('project/delProject'); ?>">
+                <form class="form" method="post" action="<?= base_url('project/updateProject'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row">
@@ -88,12 +88,33 @@
                                 <label class="col-md-3 col-form-label">Deskripsi</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control disabled" name="deskripsi"></textarea>
+                                    <textarea rows="3" class="form-control" name="deskripsi"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Status</label>
+                                <div class="col-md-9">
+                                    <div class="form-group has-default">
+                                    <select class="selectpicker" name="status" id="status" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
+                                    <?php
+                                        foreach ($liststatus as $s) : ?>
+                                            <option value="<?= $s->nama; ?>"><?= $s->nama; ?></option>
+                                    <?php endforeach; ?>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Tanggal</label>
+                                <div class="col-md-9">
+                                    <div class="form-group has-default">
+                                    <input type="text" class="form-control datepicker" id="tanggal" name="tanggal" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-center">
-                                <button type="submit" class="btn btn-danger btn-round">DELETE</button>
+                                <button type="submit" class="btn btn-warning btn-round">UPDATE</button>
                             </div>
                         </div>
                     </div>
@@ -147,19 +168,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Status</label>
-                                <div class="col-md-9">
-                                    <div class="form-group has-default">
-                                    <select class="selectpicker" name="status" id="status" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
-                                    <?php
-                                        foreach ($liststatus as $s) : ?>
-                                            <option value="<?= $s->nama; ?>"><?= $s->nama; ?></option>
-                                    <?php endforeach; ?>
-                                    </select>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="modal-footer justify-content-center">
                                 <button type="submit" class="btn btn-success btn-round">Tambah</button>
                             </div>
@@ -200,7 +208,7 @@
             {
                 "targets": [5], //first column / numbering column
                 "orderable": false, //set not orderable
-                "defaultContent": "<button class='btn btn-sm btn-success btn-round'>PILIH</button>",
+                "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>UPDATE</button>",
             }, 
         ],
         });

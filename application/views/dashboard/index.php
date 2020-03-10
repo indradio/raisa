@@ -1,16 +1,18 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-md-12">
-      <div class="alert alert-info" role="alert"> -->
+      <div class="alert alert-danger" role="alert">
         <!-- Begin Content -->
-        <!-- <strong>Semangat Pagi!</strong> 
-        </br>Foto session untuk id card dimulai pada hari rabu dan kamis jam 8:00 - 9:00, dan di hari jum'at jam 7:00-8:00 Di Ruang Training 2. See you there. -->
-        <!-- End Content -->
-      <!-- </div>
+        <strong>Semangat Pagi!</strong> 
+        </br>Berikut prosedur untuk mengaktifkan kembali Lembur yang dibatalkan :
+        </br> 1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi
+        </br>2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi
+       <!-- End Content -->
+      </div>
     </div>
-  </div> -->
+  </div>
     <!-- Banner -->
     <div class="row">
       <?php
@@ -1136,7 +1138,7 @@
           $(".alert").fadeTo(500, 0).slideUp(500, function(){
               $(this).remove(); 
           });
-      }, 5000);
+      }, 10000);
 
         $('#detail').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
