@@ -58,7 +58,7 @@ class Project extends CI_Controller
             $data['sidemenu'] = 'FA';
             $data['sidesubmenu'] = 'Project';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-            $data['liststatus'] = $this->db->get("project_status")->result();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
             $data['listcustomer'] = $this->db->get("customer")->result();
             $this->load->helper('url');
             $this->load->view('templates/header', $data);
@@ -71,107 +71,113 @@ class Project extends CI_Controller
 
     public function addProject()
     {
+        $project = $this->db->get_where('project', ['copro' => $this->input->post('copro')])->row_array();
         $customer = $this->db->get_where('customer', ['inisial' => $this->input->post('customer')])->row_array();
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'customer_inisial' => $this->input->post('customer'),
-            'customer_nama' => $customer['nama'],
-            'deskripsi' => strtoupper($this->input->post('customer').' - '.$this->input->post('deskripsi')),
-            'status' => 'OPEN',
-            'tglopen' => date("Y-m-d", strtotime($this->input->post('tanggal'))),
-            'highlight' => 1
-        ];
-        $this->db->insert('project', $data);
-
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'part' => 'MANUFACTURE',
-            'budget' => '0',
-            'est_cost' => '0',
-            'est_exprod'=> '0',
-            'est_total' =>'0',
-            'est_selisih'=> '0',
-            'act_cost' => '0',
-            'act_exprod'=> '0',
-            'act_total' =>'0',
-            'act_selisih'=> '0'
+        if (empty($project))
+        {
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'customer_inisial' => $this->input->post('customer'),
+                'customer_nama' => $customer['nama'],
+                'deskripsi' => strtoupper($this->input->post('customer').' - '.$this->input->post('deskripsi')),
+                'status' => 'OPEN',
+                'tglopen' => date("Y-m-d", strtotime($this->input->post('tanggal'))),
+                'highlight' => 1
             ];
-        $this->db->insert('project_material', $data);
+            $this->db->insert('project', $data);
 
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'part' => 'STANDARD',
-            'budget' => '0',
-            'est_cost' => '0',
-            'est_exprod'=> '0',
-            'est_total' =>'0',
-            'est_selisih'=> '0',
-            'act_cost' => '0',
-            'act_exprod'=> '0',
-            'act_total' =>'0',
-            'act_selisih'=> '0'
-            ];
-        $this->db->insert('project_material', $data);
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'MANUFACTURE',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
 
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'part' => 'ELECTRIC',
-            'budget' => '0',
-            'est_cost' => '0',
-            'est_exprod'=> '0',
-            'est_total' =>'0',
-            'est_selisih'=> '0',
-            'act_cost' => '0',
-            'act_exprod'=> '0',
-            'act_total' =>'0',
-            'act_selisih'=> '0'
-            ];
-        $this->db->insert('project_material', $data);
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'STANDARD',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
 
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'part' => 'PNEUMATIC',
-            'budget' => '0',
-            'est_cost' => '0',
-            'est_exprod'=> '0',
-            'est_total' =>'0',
-            'est_selisih'=> '0',
-            'act_cost' => '0',
-            'act_exprod'=> '0',
-            'act_total' =>'0',
-            'act_selisih'=> '0'
-            ];
-        $this->db->insert('project_material', $data);
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'ELECTRIC',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
 
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'part' => 'HYDRAULIC',
-            'budget' => '0',
-            'est_cost' => '0',
-            'est_exprod'=> '0',
-            'est_total' =>'0',
-            'est_selisih'=> '0',
-            'act_cost' => '0',
-            'act_exprod'=> '0',
-            'act_total' =>'0',
-            'act_selisih'=> '0'
-            ];
-        $this->db->insert('project_material', $data);
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'PNEUMATIC',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
 
-        $data = [
-            'copro' => $this->input->post('copro'),
-            'part' => 'OTHERS',
-            'budget' => '0',
-            'est_cost' => '0',
-            'est_exprod'=> '0',
-            'est_total' =>'0',
-            'est_selisih'=> '0',
-            'act_cost' => '0',
-            'act_exprod'=> '0',
-            'act_total' =>'0',
-            'act_selisih'=> '0'
-            ];
-        $this->db->insert('project_material', $data);
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'HYDRAULIC',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'OTHERS',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+        }else{
+            //sweet-alert
+        }
         redirect('project/project/fa');
     }
 
@@ -186,7 +192,7 @@ class Project extends CI_Controller
         }elseif ($this->input->post('status')=='CLOSE'){
             $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
             $this->db->set('status', 'CLOSE');
-            $this->db->set('tglclose', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->set('tglclosed', date("Y-m-d", strtotime($this->input->post('tanggal'))));
             $this->db->where('copro', $this->input->post('copro'));
             $this->db->update('project');
         }elseif ($this->input->post('status')=='BLOCK'){

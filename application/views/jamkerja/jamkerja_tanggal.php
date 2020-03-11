@@ -304,7 +304,13 @@
         function kategoriSelect(valueSelect)
             {
                 var val = valueSelect.options[valueSelect.selectedIndex].value;
-                document.getElementById("aktivitas_1").style.display = val == '1' ? "block" : 'none';
+
+                // document.getElementById("aktivitas_1").style.display = val == '1' ? "block" : 'none';
+                if (val === '1') {
+                    document.getElementById("aktivitas_1").style.display = "block"; 
+                } else {
+                    document.getElementById("aktivitas_1").style.display = "none"; 
+                }
                 document.getElementById("aktivitas_23").style.display = val != '1' ? "block" : 'none';
                 document.getElementById("copro_0").style.display = val != '3' ? "block" : 'none';
             }

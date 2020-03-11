@@ -42,6 +42,7 @@
                                 <thead>
                                 <tr>
                                     <th>No. Lembur</th>
+                                    <th>Kategori</th>
                                     <th>NPK</th>
                                     <th>Nama</th>
                                     <th>Tanggal Mulai</th>
@@ -56,6 +57,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>No. Lembur</th>
+                                    <th>Kategori</th>
                                     <th>NPK</th>
                                     <th>Nama</th>
                                     <th>Tanggal Mulai</th>
@@ -71,6 +73,11 @@
                                 <?php foreach ($lembur as $l) : ?>
                                     <tr>
                                     <td><?= $l['id']; ?></td>
+                                    <?php 
+                                        $kategori = $this->db->get_where('lembur_kategori', ['id' => $l['kategori']])->row_array(); 
+                                        echo '<td>'.$kategori['nama'].'</td>';
+                                    ?>
+                                    
                                     <td><?= $l['npk']; ?></td>
                                     <td><?= $l['nama']; ?></td>
                                     <td><?= date('m/d/Y', strtotime($l['tglmulai'])); ?></td>
