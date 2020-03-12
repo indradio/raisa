@@ -14,7 +14,7 @@
                 <div class="modal-body">
                     <form class="form" method="post" action="<?= base_url('persetujuandl/setujudl'); ?>">
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Nomor Reservasi</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -22,7 +22,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Nama</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -31,10 +31,18 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-4 col-form-label">Peserta</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled font-weight-bold" id="anggota" name="anggota">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Tujuan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="tujuan">
+                                        <input type="text" class="form-control font-weight-bold disabled" name="tujuan">
                                     </div>
                                 </div>
                             </div>
@@ -42,19 +50,11 @@
                                 <label class="col-md-4 col-form-label">Keperluan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <textarea rows="2" class="form-control disabled" name="keperluan"></textarea>
+                                        <textarea rows="2" class="form-control font-weight-bold disabled" name="keperluan"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-4 col-form-label">Peserta</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="anggota">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Nomor Polisi</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -71,6 +71,22 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-4 col-form-label">Waktu Keberangkatan</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="berangkat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Waktu Kembali</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="kembali">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -78,7 +94,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -86,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -94,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">

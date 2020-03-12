@@ -75,7 +75,7 @@
                                         $this->db->where('status', '9'); 
                                         $mh = $this->db->get('aktivitas');
                                         $mh_total = $mh->row()->durasi;
-
+                                      
                                         $mh_remains = $p['mh_budget'] - $mh_total;
                             
                                         $this->db->select_sum('durasi');
@@ -119,23 +119,40 @@
                                         <?php }else{ ?>
                                             <tr class="text-muted">
                                         <?php } ?>
-                                            <td><?= substr($p['deskripsi'],0,20); ?><small> (<?= $p['copro']; ?>) </small></td>
+                                            <td><?= substr($p['deskripsi'],0,25); ?><small> (<?= $p['copro']; ?>) </small></td>
                                             <td class="text-center"><?= date('d M y', strtotime($p['delivery_date'])); ?></td>
                                             <td class="text-center"><?= number_format(substr($p['cost_amount'],0,-6),0,',','.')?></td>
                                             <td class="text-center"><?= intval($p['mh_budget']); ?></td>
                                             <td class="text-center"><?= number_format((float)$mh_total, 1, ',', '');?></td>
-                                            <td class="text-center"><?= intval($mh_total / $mh_budget* 100).'%'; ?></td>
+                                            <?php if ($mh_total!=0){
+                                            echo '<td class="text-center">'.intval($mh_total / $mh_budget* 100).'%</td>';
+                                            }else{
+                                            echo '<td class="text-center">0%</td>';
+                                            } ?>
                                             <?php if ($mh_remains>0){
                                                 echo '<td class="text-success text-center">'.$mh_remains.'</td>';
                                                 echo '<td class="text-success text-center">'.intval($mh_remains / $mh_budget* 100).'%</td>';
-                                            }else{
+                                            }elseif ($mh_remains<0){
                                                 echo '<td class="text-danger text-center">'.$mh_remains.'<i class="material-icons">arrow_drop_down</i></td>';
                                                 echo '<td class="text-danger text-center">'.intval($mh_remains / $mh_budget* 100).'%</td>';
+                                            }elseif ($mh_remains==0){
+                                                echo '<td class="text-danger text-center">0<i class="material-icons">arrow_drop_down</i></td>';
+                                                echo '<td class="text-danger text-center">0%</td>';
                                             } ?>
                                             <td class="text-center"><?= number_format((float)$mh_wh, 1, ',', '');?></td>
-                                            <td class="text-center"><?= intval($mh_wh / $mh_budget* 100).'%'; ?></td>
+                                            <?php if ($mh_wh!=0){
+                                            echo '<td class="text-center">'.intval($mh_wh / $mh_budget* 100).'%</td>';
+                                            }else{
+                                            echo '<td class="text-center">0%</td>';
+                                            } ?>
+                                            <!-- <td class="text-center"><?= intval($mh_wh / $mh_budget* 100).'%'; ?></td> -->
                                             <td class="text-center"><?= number_format((float)$mh_ot, 1, ',', '');?></td>
-                                            <td class="text-center"><?= intval($mh_ot / $mh_budget* 100).'%'; ?></td>
+                                            <?php if ($mh_ot!=0){
+                                            echo '<td class="text-center">'.intval($mh_ot / $mh_budget* 100).'%</td>';
+                                            }else{
+                                            echo '<td class="text-center">0%</td>';
+                                            } ?>
+                                            <!-- <td class="text-center"><?= intval($mh_ot / $mh_budget* 100).'%'; ?></td> -->
                                             <td class="text-center"><?= substr(number_format($p['mt_budget'],0,',','.'),0,-8)?></td>
                                             <td class="text-center"><?= substr(number_format($mt_total,0,',','.'),0,-8)?></td>
                                             <td class="text-center"><?= intval($mt_total / $mt_budget* 100).'%'; ?></td>

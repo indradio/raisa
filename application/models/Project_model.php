@@ -3,8 +3,8 @@
 class Project_model extends CI_Model
 {
     var $table = 'project';
-    var $column_order = array(null,'copro','customer_inisial','deskripsi','cost_amount','po_receive',null,'status',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null); //set column field database for datatable orderable
-    var $column_search = array('copro','customer_inisial','status','deskripsi'); //set column field database for datatable searchable 
+    var $column_order = array(null,'copro','customer_nama','deskripsi','status',null); //set column field database for datatable orderable
+    var $column_search = array('copro','customer_nama','deskripsi','status'); //set column field database for datatable searchable 
     var $order = array('copro' => 'asc'); // default order 
 
     public function __construct()
@@ -68,5 +68,18 @@ class Project_model extends CI_Model
     {
         $this->db->from($this->table);
         return $this->db->count_all_results();
+    }
+
+    function fetch_project()
+    {
+        $this->db->order_by("copro", "ASC");
+        $query = $this->db->get("project");
+        return $query->result();
+    }
+
+    function fetch_status()
+    {
+        $query = $this->db->get("project_status");
+        return $query->result();
     }
 }

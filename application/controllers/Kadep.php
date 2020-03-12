@@ -133,5 +133,26 @@ class Kadep extends CI_Controller
         $this->load->view('project/lp_project_budget', $data);
         $this->load->view('templates/footer');
     }
+
+    public function status($menu)
+    {
+        if ($menu=='jamkerja'){
+            date_default_timezone_set('asia/jakarta');
+            if (empty($this->input->post('month'))){
+                $data['bulan'] = date('m');
+            }else{
+                $data['bulan'] = $this->input->post('month');
+            }
+            $data['tahun'] = date('Y');
+            $data['sidemenu'] = 'Kepala Departemen';
+            $data['sidesubmenu'] = 'Laporan Status JK';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('kadep/jamkerja_status', $data);
+            $this->load->view('templates/footer');
+        }
+    }
     
 }

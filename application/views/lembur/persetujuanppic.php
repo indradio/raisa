@@ -33,7 +33,7 @@
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($lembur as $l) : ?>
-                                        <tr onclick="window.location='<?= base_url('lembur/proses/hr/') . $l['id']; ?>'">
+                                        <tr onclick="window.location='<?= base_url('lembur/proses/ppic/') . $l['id']; ?>'">
                                             <td><?= $l['id']; ?></td>
                                             <td><?= $l['nama']; ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($l['tglmulai'])); ?></td>

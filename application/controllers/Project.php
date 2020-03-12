@@ -15,12 +15,207 @@ class Project extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['liststatus'] = $this->db->get("project_status")->result();
+        $data['listcustomer'] = $this->db->get("customer")->result();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('project/index', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function project_list()
+    {
+        $list = $this->project->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $project) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $project->copro;
+            $row[] = $project->customer_nama;
+            $row[] = $project->deskripsi;
+            $row[] = $project->status;
+          
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->project->count_all(),
+            "recordsFiltered" => $this->project->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+
+    public function project($sect)
+    {
+        if ($sect=='fa'){
+            $data['sidemenu'] = 'FA';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_fa', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function addProject()
+    {
+        $project = $this->db->get_where('project', ['copro' => $this->input->post('copro')])->row_array();
+        $customer = $this->db->get_where('customer', ['inisial' => $this->input->post('customer')])->row_array();
+        if (empty($project))
+        {
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'customer_inisial' => $this->input->post('customer'),
+                'customer_nama' => $customer['nama'],
+                'deskripsi' => strtoupper($this->input->post('customer').' - '.$this->input->post('deskripsi')),
+                'status' => 'OPEN',
+                'tglopen' => date("Y-m-d", strtotime($this->input->post('tanggal'))),
+                'highlight' => 1
+            ];
+            $this->db->insert('project', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'MANUFACTURE',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'STANDARD',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'ELECTRIC',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'PNEUMATIC',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'HYDRAULIC',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'OTHERS',
+                'budget' => '0',
+                'est_cost' => '0',
+                'est_exprod'=> '0',
+                'est_total' =>'0',
+                'est_selisih'=> '0',
+                'act_cost' => '0',
+                'act_exprod'=> '0',
+                'act_total' =>'0',
+                'act_selisih'=> '0'
+                ];
+            $this->db->insert('project_material', $data);
+        }else{
+            //sweet-alert
+        }
+        redirect('project/project/fa');
+    }
+
+    public function updateProject()
+    {
+        if ($this->input->post('status')=='TECO'){
+            $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
+            $this->db->set('status', 'TECO');
+            $this->db->set('tglteco', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->where('copro', $this->input->post('copro'));
+            $this->db->update('project');
+        }elseif ($this->input->post('status')=='CLOSE'){
+            $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
+            $this->db->set('status', 'CLOSE');
+            $this->db->set('tglclosed', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->where('copro', $this->input->post('copro'));
+            $this->db->update('project');
+        }elseif ($this->input->post('status')=='BLOCK'){
+            $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
+            $this->db->set('status', 'BLOCK');
+            $this->db->set('tglblock', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->where('copro', $this->input->post('copro'));
+            $this->db->update('project');
+        }
+        redirect('project/project/fa');
+    }
+
+    public function delProject()
+    {
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->delete('project');
+
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->delete('project_material');
+
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->delete('project_material_detail');
+        redirect('project');
     }
 
     public function ajax_list()
@@ -277,19 +472,19 @@ class Project extends CI_Controller
         redirect("projectbudget/budget/$copro");
 
     }
-    public function updateproject()
-    {
-       
-        $this->db->set('deskripsi', $this->input->post('deskripsi'));
-        $this->db->set('po_receive', $this->input->post('po_date'));
-        $this->db->set('delivery_date', $this->input->post('due_date'));
-        $this->db->set('mh_budget', $this->input->post('mh_total'));
-        $this->db->set('cost_amount', $this->input->post('amount'));
-        $this->db->set('status', $this->input->post('status'));
-        $this->db->set('highlight ', $this->input->post('highlight'));
-        $this->db->where('copro', $this->input->post('copro'));
-        $this->db->update('project');
-        // echo $this->db->last_query();
-        redirect("projectbudget/index");
-    }
+
+    // public function updateproject()
+    // {
+    //     $this->db->set('deskripsi', $this->input->post('deskripsi'));
+    //     $this->db->set('po_receive', $this->input->post('po_date'));
+    //     $this->db->set('delivery_date', $this->input->post('due_date'));
+    //     $this->db->set('mh_budget', $this->input->post('mh_total'));
+    //     $this->db->set('cost_amount', $this->input->post('amount'));
+    //     $this->db->set('status', $this->input->post('status'));
+    //     $this->db->set('highlight ', $this->input->post('highlight'));
+    //     $this->db->where('copro', $this->input->post('copro'));
+    //     $this->db->update('project');
+    //     // echo $this->db->last_query();
+    //     redirect("projectbudget/index");
+    // }
 }

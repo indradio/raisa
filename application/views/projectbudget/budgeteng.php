@@ -58,51 +58,33 @@
                                         <td><?= number_format($p['est_exprod'],0,',','.')?></td>
                                         <td><?= number_format($p['est_total'],0,',','.')?></td>
                                         <td><?= $p['est_persen']; ?>%</td>
-                                        <?php 
-                                            if($p['est_selisih']<0 ){
-                                              ?>
-                                                <td class=" bg-danger text-white"><?= number_format($p['est_selisih'],0,',','.')?></td>
-                                               
-                                            <?php } else { ?>
-                                                <td><?= number_format($p['est_selisih'],0,',','.')?></td>
-                                                
-                                            <?php }; ?>
-                                            <td><?= $p['est_selisihpersen']; ?>%</td> 
-                                            <?php if ($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11) {?>
-                                                <td><?= number_format($p['act_cost'],0,',','.')?></td>
-                                                <td><?= number_format($p['act_exprod'],0,',','.')?></td>
-                                                <td><?= number_format($p['act_total'],0,',','.')?></td>
-                                                <td><?= $p['act_persen']; ?>%</td>
-                                                <td><?= number_format($p['act_selisih'],0,',','.')?></td>
-                                                <td><?= $p['act_selisihpersen']; ?>%</td>
-                                           <?php } ?>
-                                        
+                                        <?php if($p['est_selisih']<0 ){?>
+                                            <td class=" bg-danger text-white"><?= number_format($p['est_selisih'],0,',','.')?></td>
+                                        <?php } else { ?>
+                                            <td><?= number_format($p['est_selisih'],0,',','.')?></td>
+                                        <?php }; ?>
+                                        <td><?= $p['est_selisihpersen']; ?>%</td> 
+                                        <?php if ($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11) {?>
+                                            <td><?= number_format($p['act_cost'],0,',','.')?></td>
+                                            <td><?= number_format($p['act_exprod'],0,',','.')?></td>
+                                            <td><?= number_format($p['act_total'],0,',','.')?></td>
+                                            <td><?= $p['act_persen']; ?>%</td>
+                                            <td><?= number_format($p['act_selisih'],0,',','.')?></td>
+                                            <td><?= $p['act_selisihpersen']; ?>%</td>
+                                        <?php } ?>
                                         <td>
-                                            <?php 
-                                            if($karyawan['posisi_id']==6 AND $karyawan['dept_id']==11 ){
-                                              ?>
-                                             <a href="javascript:;" 
-                                                    data-id="<?php echo $p['id'] ?>"
-                                                    data-copro="<?php echo $p['copro'] ?>"
-                                                    data-desk="<?php echo $project['deskripsi'] ?>"
-                                                    data-part="<?php echo $p['part'] ?>"
-                                                    data-budget="<?php echo $p['budget'] ?>"
-                                                    data-total="<?php echo $p['est_total'] ?>"
-                                                    data-pembuat="<?php echo $p['est_total'] ?>"
-                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Estimasi Cost</a>
+                                        <?php if($karyawan['posisi_id']<7 AND $karyawan['dept_id']==11 ){?>
+                                            <a href="javascript:;" 
+                                                data-id="<?php echo $p['id'] ?>"
+                                                data-copro="<?php echo $p['copro'] ?>"
+                                                data-desk="<?php echo $project['deskripsi'] ?>"
+                                                data-part="<?php echo $p['part'] ?>"
+                                                data-budget="<?php echo $p['budget'] ?>"
+                                                data-total="<?php echo $p['est_total'] ?>"
+                                                data-pembuat="<?php echo $p['est_total'] ?>"
+                                                class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Estimasi Cost</a>
                                             <a href="<?= base_url('projectbudget/budgetengdetail/').$p['copro'].'/'.$p['part'];?>" class="btn btn-sm btn-success ">View Data</a>
                                             <!-- <a href="<?= base_url('pmd/hapus_project/') . $p['id']; ?>" class="btn btn-sm btn-danger btn-sm btn-bataldl">HAPUS</a> -->
-                                        <?php } elseif($karyawan['posisi_id']<6 AND $karyawan['dept_id']==11 ){?>
-                                            <a href="javascript:;" 
-                                                    data-id="<?php echo $p['id'] ?>"
-                                                    data-copro="<?php echo $p['copro'] ?>"
-                                                    data-desk="<?php echo $project['deskripsi'] ?>"
-                                                    data-part="<?php echo $p['part'] ?>"
-                                                    data-budget="<?php echo $p['budget'] ?>"
-                                                    data-total="<?php echo $p['est_total'] ?>"
-                                                    data-pembuat="<?php echo $p['est_total'] ?>"
-                                            class="btn btn-sm btn-info" data-toggle="modal" data-target="#projectModal" >Estimasi Cost</a>
-                                            <a href="/raisa/projectbudget/budgetengdetail/<?= $p['copro'];?>/<?= $p['part'];?>" class="btn btn-sm btn-success ">View Data</a>
                                         <?php }?>
                                         </td>
                                     </tr>
@@ -135,7 +117,7 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-sm ">back</a>
+                        <a href="<?= base_url('projectbudget/'); ?>"  class="btn btn-github">KEMBALI</a>
                     </div>
                     <!-- end card-body-->
                 </div>

@@ -44,45 +44,20 @@ class Persetujuanta extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         if ($this->session->userdata('posisi_id') == '2') {
-            if ($rsv['kepemilikan']=='Non Operasional')
-            {
-                $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
-                $this->db->set('tgl_div', date('Y-m-d H:i:s'));
-                $this->db->set('status', '6');
-                $this->db->where('id', $this->input->post('id'));
-                $this->db->update('reservasi');
-
-                $this->db->where('sect_id', '215');
-                $hr_admin = $this->db->get('karyawan_admin')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $hr_admin['phone'];
-                $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
-                    "\r\n Nama : *" . $rsv['nama'] . "*" .
-                    "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
-                    "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
-                    "\r\n Peserta : *" . $rsv['anggota'] . "*" .
-                    "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
-                    "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
-
-            }else{
+            if ($rsv['jenis_perjalanan']=='TA'){
                 $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_div', date('Y-m-d H:i:s'));
                 $this->db->set('status', '5');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
     
-                $this->db->where('sect_id', '214');
+                $this->db->where('sect_id', '215');
                 $hr_admin = $this->db->get('karyawan_admin')->row_array();
-                $my_apikey = "NQXJ3HED5LW2XV440HCG";
-                $destination = $hr_admin['phone'];
-                $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $hr_admin['phone'],
+                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
+                    "\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                     "\r\n Nama : *" . $rsv['nama'] . "*" .
                     "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
                     "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
@@ -90,12 +65,62 @@ class Persetujuanta extends CI_Controller
                     "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
                     "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
                     "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-                $api_url = "http://panel.apiwha.com/send_message.php";
-                $api_url .= "?apikey=" . urlencode($my_apikey);
-                $api_url .= "&number=" . urlencode($destination);
-                $api_url .= "&text=" . urlencode($message);
-                json_decode(file_get_contents($api_url, false));
+                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                );
+                
+                $ch = curl_init();
+                
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                
+                $result = curl_exec($ch);
+            }elseif ($rsv['jenis_perjalanan']=='TAPP'){
+                $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
+                $this->db->set('tgl_div', date('Y-m-d H:i:s'));
+                $this->db->set('status', '6');
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('reservasi');
+    
+                $this->db->where('sect_id', '214');
+                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $ga_admin['phone'],
+                    'message' => "*PENGAJUAN PERJALANAN DINAS TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+                    "\r\n Nama : *" . $rsv['nama'] . "*" .
+                    "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
+                    "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
+                    "\r\n Peserta : *" . $rsv['anggota'] . "*" .
+                    "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
+                    "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
+                    "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
+                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                );
+                
+                $ch = curl_init();
+                
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                
+                $result = curl_exec($ch);
             }
         } elseif ($this->session->userdata('posisi_id') == '3') {
             $this->db->set('fin_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
@@ -106,10 +131,11 @@ class Persetujuanta extends CI_Controller
 
             $this->db->where('posisi_id', '2');
             $this->db->where('div_id', '2');
-            $karyawan = $this->db->get('karyawan')->row_array();
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $karyawan['phone'];
-            $message = "*PENGAJUAN PERJALANAN DINAS TA (Telah disetujui FIN)*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+            $div_head = $this->db->get('karyawan')->row_array();
+            $postData = array(
+                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                'number' => $div_head['phone'],
+                'message' => "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .
                 "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
                 "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
@@ -117,12 +143,24 @@ class Persetujuanta extends CI_Controller
                 "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
                 "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
                 "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
+                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            );
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
         }
         $this->session->set_flashdata('message', 'setujudl');
         redirect('persetujuanta/index');
@@ -131,7 +169,7 @@ class Persetujuanta extends CI_Controller
     public function batalta()
     {
         date_default_timezone_set('asia/jakarta');
-        $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
+        $rsv = $this->db->get_where('reservasi', ['id' => $this->input->post('id')])->row_array();
         if ($this->session->userdata('posisi_id') == '2') {
             $this->db->set('div_ttd', "Dibatalkan oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_div', date('Y-m-d H:i:s'));
@@ -139,25 +177,6 @@ class Persetujuanta extends CI_Controller
             $this->db->set('status', '0');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
-
-            $this->db->where('npk', $rsv['npk']);
-            $karyawan = $this->db->get('karyawan')->row_array();
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $karyawan['phone'];
-            $message = "*PERJALANAN DINAS TA ANDA DIBATALKAN*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
-                "\r\n Nama : *" . $rsv['nama'] . "*" .
-                "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
-                "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
-                "\r\n Peserta : *" . $rsv['anggota'] . "*" .
-                "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
-                "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
-                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                " ) \r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
         } elseif ($this->session->userdata('posisi_id') == '3') {
             $this->db->set('fin_ttd', "Dibatalkan oleh " . $this->session->userdata['inisial']);
             $this->db->set('tgl_fin', date('Y-m-d H:i:s'));
@@ -165,26 +184,39 @@ class Persetujuanta extends CI_Controller
             $this->db->set('status', '0');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
-
-            $this->db->where('npk', $rsv['npk']);
-            $karyawan = $this->db->get('karyawan')->row_array();
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $karyawan['phone'];
-            $message = "*PERJALANAN DINAS TA ANDA DIBATALKAN*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
-                "\r\n Nama : *" . $rsv['nama'] . "*" .
-                "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
-                "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
-                "\r\n Peserta : *" . $rsv['anggota'] . "*" .
-                "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
-                "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
-                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                " ) \r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
         }
+        
+        $user = $this->db->get_where('karyawan', ['npk' => $rsv['npk']])->row_array();
+        $postData = array(
+            'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+            'number' => $user['phone'],
+            'message' => "*PERJALANAN DINAS ANDA DIBATALKAN*" .
+            "\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+            "\r\n Nama : *" . $rsv['nama'] . "*" .
+            "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
+            "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
+            "\r\n Peserta : *" . $rsv['anggota'] . "*" .
+            "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
+            "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
+            "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+        );
+        
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+        $headers = array();
+        $headers[] = 'Accept: application/json';
+        $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        
+        $result = curl_exec($ch);
 
         $this->session->set_flashdata('message', 'bataldl');
         redirect('persetujuanta/index');
@@ -195,57 +227,85 @@ class Persetujuanta extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         
-        if ($rsv['kepemilikan']=="Lainnya")
+        if ($rsv['kepemilikan']=='Non Operasional' AND $rsv['kendaraan']=='Non Operasional')
         {
             $this->db->set('admin_hr', $this->session->userdata['inisial']);
             $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
-            $this->db->set('status', '5');
+            $this->db->set('status', '9');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
 
             $this->db->where('sect_id', '214');
             $ga_admin = $this->db->get('karyawan_admin')->row_array();
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $ga_admin['phone'];
-            $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+            $postData = array(
+                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                'number' => $ga_admin['phone'],
+                'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
+                "\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .
                 "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
                 "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
                 "\r\n Peserta : *" . $rsv['anggota'] . "*" .
                 "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
                 "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
-                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
+                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+                "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            );
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
         }else{
             $this->db->set('admin_hr', $this->session->userdata['inisial']);
             $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
-            $this->db->set('status', '5');
+            $this->db->set('status', '6');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
 
             $this->db->where('sect_id', '214');
             $ga_admin = $this->db->get('karyawan_admin')->row_array();
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $ga_admin['phone'];
-            $message = "*PENGAJUAN PERJALANAN DINAS TA/TAPP*\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
+            $postData = array(
+                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                'number' => $ga_admin['phone'],
+                'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
+                "\r\n \r\n No. Reservasi : *" . $rsv['id'] . "*" .
                 "\r\n Nama : *" . $rsv['nama'] . "*" .
                 "\r\n Tujuan : *" . $rsv['tujuan'] . "*" .
                 "\r\n Keperluan : *" . $rsv['keperluan'] . "*" .
                 "\r\n Peserta : *" . $rsv['anggota'] . "*" .
                 "\r\n Berangkat : *" . $rsv['tglberangkat'] . "* *" . $rsv['jamberangkat'] . "* _estimasi_" .
                 "\r\n Kembali : *" . $rsv['tglkembali'] . "* *" . $rsv['jamkembali'] . "* _estimasi_" .
-                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "*" .
-                " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
+                "\r\n Kendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+                "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            );
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
         }
 
         $this->session->set_flashdata('message', 'setujudl');

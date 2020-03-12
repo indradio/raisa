@@ -207,7 +207,14 @@ $pdf->Cell(20, 5, 'Dibuat pada ' . date('d/m/Y H:i', strtotime($reservasi['tglre
 $pdf->Ln(8.5);
 $pdf->SetFont('Arial', '', 6);
 $pdf->Cell(32, 2, '(*) Di isi Manual', 0, 1);
-
+$pdf->SetFont('Arial', '', 4);
+$pdf->Ln(1);
+$pdf->Cell(32, 2, 'Dengan melakukan perjalanan ini, saya setuju untuk:', 0, 1);
+$pdf->Cell(32, 2, '1. Mengemudi dengan aman dan selalu menggunakan sabuk keselamatan', 0, 1);
+$pdf->Cell(32, 2, '2. Tidak menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag', 0, 1);
+$pdf->Cell(32, 2, '3. Menjaga kebersihan kendaraan dan tidak meninggalkan sampah dan barang-barang lainnya', 0, 1);
+$pdf->Cell(32, 2, '4. Menghargai pengguna berikutnya dengan mengembalikan kendaraan dalam kondisi bersih dan rapih', 0, 1);
+$pdf->Cell(32, 2, '5. Mematuhi peraturan perusahaan yang berlaku', 0, 1);
 
 //$pdf->Output();
 //OUTPUT SET FILENAME DOWNLOAD

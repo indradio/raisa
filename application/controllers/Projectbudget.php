@@ -133,9 +133,9 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Budget Material';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array(); 
+        $data['Projectbudget'] = $this->db->query("SELECT * from project_material_detail where copro = '$copro' and part ='$part'")->result_array();
         $data['budget'] = $this->db->query("SELECT * from project_material where copro = '$copro' and part ='$part'")->result_array();
-        $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
+        $data['project'] = $this->db->get_where('project', ['copro' => $copro])->row_array();
         $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -156,7 +156,7 @@ class Projectbudget extends CI_Controller
             'biaya_est' => $this->input->post('biaya'),
             'no' => $this->input->post('no'),
             'biaya_act' => 0,
-            'tgl_buat' =>   $now,
+            'tgl_buat' => $now,
             'tgl_estimasi' => $now,
             'status' => 1,
             'pembuat_est' => $this->session->userdata('inisial'),
@@ -293,8 +293,10 @@ class Projectbudget extends CI_Controller
         $total = $this->input->post('total');
         $budget = $this->input->post('budget');
         $selisih =  $budget - $total;
+        $selisih_persen = ($selisih / $budget) * 100;
         $this->db->set('budget', $this->input->post('budget'));
         $this->db->set('est_selisih', $selisih);
+        $this->db->set('est_selisihpersen', $selisih_persen);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('project_material');
 

@@ -9,7 +9,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Persetujuan Rencana Lembur</h4>
+            <h4 class="card-title">Persetujuan Rencana</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -35,8 +35,8 @@
                   <?php foreach ($rencana as $l) : ?>
                       <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $l['id']; ?>'" >
                       <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
-                      <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi_rencana'])); ?> Jam <?= date('i', strtotime($l['durasi_rencana'])); ?> Menit</td>
+                      <td><?= date('d-M H:i', strtotime($l['tglmulai_rencana'])); ?></td>
+                      <td><?= $l['durasi_rencana']; ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -58,7 +58,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Persetujuan Realisasi Lembur</h4>
+            <h4 class="card-title">Persetujuan Realisasi</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -81,11 +81,11 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($lembur as $l) : ?>
+                  <?php foreach ($realisasi as $l) : ?>
                   <tr onclick="window.location='<?= base_url('lembur/persetujuan_realisasi/') . $l['id']; ?>'" >
                       <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
-                      <td><?= date('d-M H:i', strtotime($l['tglmulai_aktual'])); ?></td>
-                      <td><?= date('H', strtotime($l['durasi_aktual'])); ?> Jam <?= date('i', strtotime($l['durasi_aktual'])); ?> Menit</td>
+                      <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                      <td><?= $l['durasi']; ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

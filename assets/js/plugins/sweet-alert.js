@@ -2,8 +2,8 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "Terbaru di RAISA!",
-    text: "Perjalanan TA sudah terintegrasi dengan admin HR, jadi tidak perlu form kertas & Pengisian jam kerja mulai tanggal 2 januari 2020 diberlakukan di RAISA. Butuh bantuan? Hubungi RAISA +62-813-7309-6232",
+    title: "INFO di RAISA!",
+    text: "",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-primary",
     type: "info"
@@ -180,10 +180,10 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
-} else if (flashData == 'famday') {
+} else if (flashData == 'terimakasih') {
   swal({
     title: "Terimakasih!",
-    text: "Anda telah melakukan pendaftaran untuk acara Family Day 2019",
+    text: "Data sudah diproses",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"

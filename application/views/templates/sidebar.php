@@ -131,7 +131,7 @@
 
                             $Submenu = $this->db->query($querySubMenu)->result_array();
                             foreach ($Submenu as $sm) : ?>
-                              <?php if ($sidesubmenu == $sm['title']) : ?>
+                              <?php if ($sidemenu == $m['menu'] and $sidesubmenu == $sm['title']) : ?>
                                 <li class="nav-item active">
                                 <?php else : ?>
                                 <li class="nav-item">

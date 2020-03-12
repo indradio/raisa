@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
-
+                            <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#addProject">Project Baru</a>
                         </div>
                         <div class="material-datatables">
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -65,7 +65,7 @@
                         <h4 class="card-title">Project</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('project/delProject'); ?>">
+                <form class="form" method="post" action="<?= base_url('project/updateProject'); ?>">
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row">
@@ -77,10 +77,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Customer</label>
+                                <label class="col-md-3 col-form-label">Status</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="customer">
+                                        <input type="text" class="form-control disabled" name="status">
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 <label class="col-md-3 col-form-label">Deskripsi</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control disabled" name="deskripsi"></textarea>
+                                    <textarea rows="3" class="form-control" name="deskripsi"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -96,9 +96,25 @@
                                 <label class="col-md-3 col-form-label">Status</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="status">
+                                    <select class="selectpicker" name="status" id="status" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
+                                    <?php
+                                        foreach ($liststatus as $s) : ?>
+                                            <option value="<?= $s->nama; ?>"><?= $s->nama; ?></option>
+                                    <?php endforeach; ?>
+                                    </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Tanggal</label>
+                                <div class="col-md-9">
+                                    <div class="form-group has-default">
+                                    <input type="text" class="form-control datepicker" id="tanggal" name="tanggal" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-warning btn-round">UPDATE</button>
                             </div>
                         </div>
                     </div>
@@ -152,19 +168,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Status</label>
-                                <div class="col-md-9">
-                                    <div class="form-group has-default">
-                                    <select class="selectpicker" name="status" id="status" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" required>
-                                    <?php
-                                        foreach ($liststatus as $s) : ?>
-                                            <option value="<?= $s->nama; ?>"><?= $s->nama; ?></option>
-                                    <?php endforeach; ?>
-                                    </select>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="modal-footer justify-content-center">
                                 <button type="submit" class="btn btn-success btn-round">Tambah</button>
                             </div>
@@ -205,7 +208,7 @@
             {
                 "targets": [5], //first column / numbering column
                 "orderable": false, //set not orderable
-                "defaultContent": "<button class='btn btn-sm btn-success btn-round'>PILIH</button>",
+                "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>UPDATE</button>",
             }, 
         ],
         });
@@ -215,9 +218,8 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 modal.find('.modal-body input[name="copro"]').val(data[1])
-                modal.find('.modal-body input[name="customer"]').val(data[2])
+                modal.find('.modal-body input[name="status"]').val(data[2])
                 modal.find('.modal-body textarea[name="deskripsi"]').val(data[3])
-                modal.find('.modal-body input[name="status"]').val(data[4])
             })
             $('#projectModal').modal("show");
         });

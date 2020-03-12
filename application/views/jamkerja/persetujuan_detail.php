@@ -1,5 +1,11 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
+  <?php if ($jamkerja['rev']==1) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>LAPORAN JAM KERJA ini membutuhkan REVISI,</strong>
+                </br>
+            </div>
+        <?php } ?>
   <?php if ($jamkerja['catatan']) { ?>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Catatan dari ATASAN,</strong>
@@ -8,7 +14,7 @@
             </div>
         <?php } ?>
   <?php if ($jamkerja['catatan_ppic']) { ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Catatan dari PPIC,</strong>
                 </br>
                 <?= $jamkerja['catatan_ppic']; ?>
@@ -18,7 +24,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
@@ -58,7 +64,7 @@
 
               $produktifitas = $produktif1 + $produktif2 + $produktif3;
               ?>
-              <b><h3>Produktifitas : <?= $produktifitas; ?> % </h3></b>
+              <b><h3>Porsi ke COPRO : <?= $produktifitas; ?> % </h3></b>
               
               <div class="progress" style="width: 100%">
                   <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1; ?>%" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
@@ -140,17 +146,17 @@
                                 <!-- Button SUBMIT -->
                                 <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#acceptJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/ppic/'.date("Y-m-d", strtotime($jamkerja['tglmulai']))) ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-default" role="button">Kembali</a>
                             <?php }else{ ?>
                                 <!-- Button SUBMIT -->
                                 <?php if($jamkerja['durasi']<8){ ?>
                                 <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai']))) ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
                                   <?php }else{ ?>
                                 <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/koordinator/'.date("Y-m-d", strtotime($jamkerja['tglmulai']))) ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
                                     <?php } ?>
                             <?php } ?>
                             </div>
@@ -178,7 +184,7 @@
             <h4 class="card-title">BERIKAN PENILAIAN</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('jamkerja/persetujuan_approve'); ?>">
+        <form class="form" method="post" action="<?= base_url('jamkerja/approve/koordinator'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control" hidden="true" id="id" name="id" value="<?= $jamkerja['id']; ?>">
             <input type="text" class="form-control" hidden="true" id="produktifitas" name="produktifitas" value="<?= $produktifitas; ?>">
@@ -248,7 +254,7 @@
             <h4 class="card-title">BERIKAN PENILAIAN</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('jamkerja/persetujuan_accept'); ?>">
+        <form class="form" method="post" action="<?= base_url('jamkerja/approve/ppic'); ?>">
           <div class="modal-body">
             <input type="text" class="form-control" hidden="true" id="id" name="id" value="<?= $jamkerja['id']; ?>">
             <div class="form-check">

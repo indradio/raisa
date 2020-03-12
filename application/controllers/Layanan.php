@@ -100,6 +100,7 @@ class Layanan extends CI_Controller
         $data['sidesubmenu'] = 'Kirim Pesan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['pesan'] = $this->db->get('layanan_pesan')->result_array();
+        $data['notifikasi'] = $this->db->get('layanan_notifikasi')->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -111,15 +112,38 @@ class Layanan extends CI_Controller
     {
         foreach ($this->input->post('penerima') as $to) :
             date_default_timezone_set('asia/jakarta');
-            $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            $destination = $to;
-            $message = $this->input->post('pesan');
-            $api_url = "http://panel.apiwha.com/send_message.php";
-            $api_url .= "?apikey=" . urlencode($my_apikey);
-            $api_url .= "&number=" . urlencode($destination);
-            $api_url .= "&text=" . urlencode($message);
-            json_decode(file_get_contents($api_url, false));
+            // $my_apikey = "NQXJ3HED5LW2XV440HCG";
+            // $destination = $to;
+            // $message = $this->input->post('pesan');
+            // $api_url = "http://panel.apiwha.com/send_message.php";
+            // $api_url .= "?apikey=" . urlencode($my_apikey);
+            // $api_url .= "&number=" . urlencode($destination);
+            // $api_url .= "&text=" . urlencode($message);
+            // json_decode(file_get_contents($api_url, false));
 
+            $postData = array(
+                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                'number' => $to,
+                'message' => $this->input->post('pesan')
+            );
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
+
+            // Record History
             $penerima = $this->db->get_where('karyawan', ['phone' => $to])->row_array();
 
             $data = [
@@ -129,9 +153,18 @@ class Layanan extends CI_Controller
                 'pesan' => $this->input->post('pesan')
             ];
             $this->db->insert('layanan_pesan', $data);
+
         endforeach;
         
         redirect('layanan/messages');
     }
-    
+
+    public function notifikasi()
+    {
+        $this->db->set('pesan', $this->input->post('notifikasi'));
+        $this->db->where('id', '1');
+        $this->db->update('layanan_notifikasi');
+
+        redirect('layanan/messages');
+    }
 }

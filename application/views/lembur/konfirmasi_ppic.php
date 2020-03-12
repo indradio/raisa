@@ -13,16 +13,7 @@
     }else{
         $tul = 0;
     }
-    
-    if ($lembur['kategori']!='OT' AND $lembur['durasi']!=9) { ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Durasi harus 9 JAM untuk Ganti Hari atau Tabungan Cuti</strong>
-            </br>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php } ?>
+    ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 align-content-start">
@@ -31,7 +22,7 @@
                         <div class="card-icon">
                             <i class="material-icons">update</i>
                         </div>
-                        <h4 class="card-title">Persetujuan HR - <?= $lembur['id']; ?></h4>
+                        <h4 class="card-title">Konfirmasi Lembur oleh PPIC - <?= $lembur['id']; ?></h4>
                     </div>
                     <form class="form-horizontal" method="post" action="<?= base_url('lembur/submit_konfirmasi_hr'); ?>">
                         <div class="card-body">
@@ -106,20 +97,34 @@
                                                 <td><?= $a['progres_hasil']; ?>%</td>
                                                 <td><?= $a['durasi']; ?> jam</td>
                                                 <td class="text-right">
-                                                    <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-deskripsi_hasil="<?= $a['deskripsi_hasil']; ?>" data-progres_hasil="<?= $a['progres_hasil']; ?>" class="badge badge-pill badge-info">Revisi</a>
-                                                    <a href="<?= base_url('lembur/hapus_aktivitas_realisasi/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
+                                                <?php if ($a['copro']){
+                                                    echo '<a href="#" data-toggle="modal" data-target="#ubahCopro" data-id="'. $a['id'].'" data-link="'. $a['link_aktivitas'].'" data-kategori="'. $k['nama'].'" data-aktivitas="'. $a['aktivitas'].'" data-deskripsi_hasil="'. $a['deskripsi_hasil'].'" data-progres_hasil="'. $a['progres_hasil'].'" data-durasi="'. $a['durasi'].' JAM" class="badge badge-pill badge-info">Revisi</a>';
+                                                }?>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
+                            </p>
+                            <?php 
+                            $this->db->distinct();
+                            $this->db->select('copro');
+                            $this->db->where('link_aktivitas', $lembur['id']);
+                            $aktivitas_copro = $this->db->get('aktivitas')->result_array();
+                            foreach ($aktivitas_copro as $ac) : 
+                                if (!empty($ac['copro'])){
+                                    $prj = $this->db->get_where('project', ['copro' =>  $ac['copro']])->row_array();
+
+                                    echo  '<b>'.$ac['copro'] . '</b> : '. $prj['deskripsi'] . '<br>';  
+                                }
+                            endforeach; ?>
+                            </p>
                             <!-- Button SUBMIT -->
                             <a href="#" class="btn btn-sm btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#submitLembur" data-id="<?= $lembur['id']; ?>">SUBMIT</a>
                             <!-- <button type="submit" id="ajukan" class="btn btn-sm btn-success">PROSES</button> -->
                             <!-- Button BATALKAN & KEMBALI -->
-                            <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                            <a href="<?= base_url('lembur/konfirmasi/hr') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
+                            <a href="<?= base_url('lembur/konfirmasi/ppic') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                         </div>
                         <!-- end content-->
                     </form>
@@ -151,7 +156,7 @@
                         } ?>
                     </div>
                 </div>
-                <form class="form-horizontal" method="post" action="<?= base_url('lembur/submit_konfirmasi_hr'); ?>">
+                <form class="form-horizontal" method="post" action="<?= base_url('lembur/submit_konfirmasi_ppic'); ?>">
                     <div class="card-body">
                         <div class="col-md-12 align-content-start">
                             </br>
@@ -185,45 +190,6 @@
                                 <label for="exampleLokasi" class="bmd-label-floating">Lokasi</label>
                                 <input type="text" class="form-control disabled" id="lokasi" name="lokasi" value="<?= $lembur['lokasi']; ?>">
                             </div>
-                            <div class="form-group">
-                                <label for="exampleTul" class="bmd-label-floating">Estimasi TUL</label>
-                                <input type="text" class="form-control" id="tul" name="tul" value="<?= $tul; ?>">
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <?php if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
-                                            echo '<input class="form-check-input" type="checkbox" id="istirahat1" name="istirahat1" value="1" checked>';
-                                    }else{
-                                            echo '<input class="form-check-input" type="checkbox" id="istirahat1" name="istirahat1" value="1">';
-                                    } ?>
-                                    Istirahat Siang 1 JAM (12:00 - 13:00)
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <?php if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
-                                        echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="0.5" checked>';
-                                    }else{
-                                        echo '<input class="form-check-input" type="checkbox" id="istirahat2" name="istirahat2" value="0.5">';
-                                    } ?>
-                                    Istirahat Malam 0,5 JAM (18:30 - 19:00)
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" id="istirahat3" name="istirahat3" value="1">
-                                    Istirahat Malam 1 JAM
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
-                            </div>
                             <div class="modal-footer justify-content-right">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
                                 <button type="submit" class="btn btn-success">PROSES</button>
@@ -236,8 +202,8 @@
     </div>
 </div>
 
-<!-- Realisasi Aktivitas -->
-<div class="modal fade" id="realisasiAktivitas" tabindex="-1" role="dialog" aria-labelledby="realisasiAktivitasTitle" aria-hidden="true">
+<!-- Ubah COPRO -->
+<div class="modal fade" id="ubahCopro" tabindex="-1" role="dialog" aria-labelledby="ubahCoproTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="card card-signup card-plain">
@@ -246,54 +212,69 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">UPDATE AKTIVITAS</h4>
+                        <h4 class="card-title">AKTIVITAS</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('lembur/update_aktivitas_realisasi'); ?>">
+                <form class="form" method="post" action="<?= base_url('lembur/copro'); ?>">
                     <div class="modal-body">
                         <div class="row" hidden>
                             <label class="col-md-4 col-form-label">Lembur ID</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="link_aktivitas" name="link_aktivitas" value="<?= $lembur['id']; ?>">
+                                    <input type="text" class="form-control" id="link" name="link">
                                 </div>
                             </div>
                         </div>
                         <div class="row" hidden>
-                            <label class="col-md-4 col-form-label">No Aktivitas</label>
+                            <label class="col-md-4 col-form-label">Aktivitas ID</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="id" name="id">
+                                    <input type="text" class="form-control" id="id" name="id">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Rencana aktivitas</label>
+                            <label class="col-md-4 col-form-label">Kategori</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" id="aktivitas" name="aktivitas">
+                                    <input type="text" class="form-control disabled" id="kategori" name="kategori">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4 col-form-label">Deskripsi Hasil</label>
+                            <label class="col-md-4 col-form-label">Aktivitas</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" id="deskripsi_hasil" name="deskripsi_hasil" required></textarea>
+                                    <textarea rows="3" class="form-control disabled" id="aktivitas" name="aktivitas"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Deskripsi</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <textarea rows="3" class="form-control disabled" id="deskripsi_hasil" name="deskripsi_hasil"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-md-4 col-form-label">Durasi</label>
                             <div class="col-md-7">
+                            <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="durasi" name="durasi">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">COPRO</label>
+                            <div class="col-md-7">
                                 <div class="form-group has-default">
-                                <select class="selectpicker" name="durasi" id="durasi" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                                <?php
-                                    $queryJam = "SELECT * FROM `jam`";
-                                    $jam = $this->db->get_where('jam', ['id <=' => 4])->result_array();
-                                    foreach ($jam as $j) : ?>
-                                        <option value="+<?= $j['menit']; ?> minute"><?= $j['nama']; ?></option>
-                                    <?php endforeach; ?>
+                                <select class="selectpicker" data-style="select-with-transition" id="copro" name="copro" title="Pilih Project" data-size="7" data-live-search="true" required>
+                                    <?php
+                                    foreach ($listproject as $row) {
+                                        echo '<option value="' . $row->copro . '">' . $row->copro . ' [' .$row->deskripsi. ']</option>';
+                                    }
+                                    ?>
                                 </select>
                                 </div>
                             </div>
@@ -304,10 +285,9 @@
                                 <input type="text" class="form-control" id="progres_hasil" name="progres_hasil">
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-success">SIMPAN</button>
-                            <br>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</a>
+                        <div class="modal-footer justify-content-right">
+                            <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                            <button type="submit" class="btn btn-success">SUBMIT COPRO</button>
                         </div>
                     </div>
                 </form>
@@ -473,17 +453,23 @@
 
 <script>
     $(document).ready(function(){
-      $('#submitLembur').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var id = button.data('id') // Extract info from data-* attributes
-        var aktivitas = button.data('aktivitas') // Extract info from data-* attributes
-        var deskripsi_hasil = button.data('deskripsi_hasil') 
-        var progres_hasil = button.data('progres_hasil') 
-        var modal = $(this)
-        modal.find('.modal-body input[name="id"]').val(id)
-        modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
-        modal.find('.modal-body textarea[name="deskripsi_hasil"]').val(deskripsi_hasil)
-        modal.find('.modal-body input[name="progres_hasil"]').val(progres_hasil)
+      $('#ubahCopro').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var link = button.data('link') // Extract info from data-* attributes
+            var kategori = button.data('kategori') // Extract info from data-* attributes
+            var aktivitas = button.data('aktivitas') // Extract info from data-* attributes
+            var deskripsi_hasil = button.data('deskripsi_hasil') 
+            var progres_hasil = button.data('progres_hasil') 
+            var durasi = button.data('durasi') 
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+            modal.find('.modal-body input[name="link"]').val(link)
+            modal.find('.modal-body input[name="kategori"]').val(kategori)
+            modal.find('.modal-body textarea[name="aktivitas"]').val(aktivitas)
+            modal.find('.modal-body textarea[name="deskripsi_hasil"]').val(deskripsi_hasil)
+            modal.find('.modal-body input[name="progres_hasil"]').val(progres_hasil)
+            modal.find('.modal-body input[name="durasi"]').val(durasi)
         });
     })
 </script>
