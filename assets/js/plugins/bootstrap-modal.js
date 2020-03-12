@@ -227,4 +227,32 @@ $('#uploadBanner').on('show.bs.modal', function (event) {
     modal.find('.modal-body textarea[name="deskripsi"]').val(deskripsi)
     modal.find('.modal-body input[name="berlaku"]').val(berlaku)
 })
+$('#detail').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var no_order = button.data('no_order') 
+    var nama_pekerjaan = button.data('nama_pekerjaan')
+    var jenis_material = button.data('jenis_material') 
+    var jumlah = button.data('jumlah')
+    var keperluan = button.data('keperluan')
+    var nama_kategori = button.data('nama_kategori') 
+    var estimasi_selesai = button.data('estimasi_selesai')    
+    var ket_lain = button.data('ket_lain') 
+    var status = button.data('status') 
+    // var atasan1 = button.data('atasan1') 
+    // var atasan2 = button.data('atasan2')
+
+
+    var modal = $(this)
+    modal.find('.modal-body input[name="no_order"]').val(no_order)
+    modal.find('.modal-body input[name="nama_pekerjaan"]').val(nama_pekerjaan)
+    modal.find('.modal-body input[name="jenis_material"]').val(jenis_material)
+    modal.find('.modal-body input[name="jumlah"]').val(jumlah)
+    modal.find('.modal-body input[name="keperluan"]').val(keperluan)
+    modal.find('.modal-body input[name="nama_kategori"]').val(nama_kategori)
+    modal.find('.modal-body input[name="estimasi_selesai"]').val(estimasi_selesai)
+    modal.find('.modal-body input[name="ket_lain"]').val(ket_lain)
+    modal.find('.modal-body input[name="status"]').val(status)
+
+  
+})
 
