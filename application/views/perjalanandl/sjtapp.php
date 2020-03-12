@@ -190,7 +190,7 @@ $pdf->Image('assets/img/WINTEQ8.jpg', 15, 6, 40, 0);
 $pdf->Ln(5);
 
 $pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(170, 0, 'SURAT TUGAS', 0, 1, 'C');
+$pdf->Cell(170, 0, 'PENGAJUAN BIAYA', 0, 1, 'C');
 
 $pdf->Ln(2);
 $pdf->SetFont('Arial', 'B', 6);

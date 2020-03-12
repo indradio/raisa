@@ -11,9 +11,7 @@
                         <h4 class="card-title">Daftar Project</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar">
-                            <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#addProject">Project Baru</a>
-                        </div>
+                        <div class="toolbar"></div>
                         <div class="material-datatables">
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -208,7 +206,7 @@
             {
                 "targets": [5], //first column / numbering column
                 "orderable": false, //set not orderable
-                "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>UPDATE</button> <a href='<?= base_url('project/details'); ?>' class='btn btn-sm btn-info btn-round'>DETAIL</a>",
+                "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>BUDGET</button> <a href='<?= base_url('project/details'); ?>' class='btn btn-sm btn-info btn-round'>DETAIL</a>",
             }, 
         ],
         });

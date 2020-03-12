@@ -49,10 +49,30 @@
                                     ";
                         $tujuan = $this->db->query($queryTujuan)->result_array();
                         foreach ($tujuan as $tjn) : ?>
-                          <option data-subtext="<?= $tjn['nama']; ?>" value="<?= $tjn['inisial']; ?>"><?= $tjn['inisial']; ?></option>
+                          <option data-subtext="<?= substr($tjn['nama'],0,15); ?>" value="<?= $tjn['inisial']; ?>"><?= $tjn['inisial']; ?></option>
                         <?php endforeach; ?>
                       </select>
-                      <input type="text" class="form-control" id="tujuan_lain" name="tujuan_lain" placeholder="Tuliskan di sini jika tujuan kamu tidak ditemukan.">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-md-2 col-form-label"></label>
+                  <div class="col-md-5">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" id="checktujuan"> Punya Tujuan Lainnya?
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                      </label>
+                    </div>    
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-md-2 col-form-label" id="lbllain" style="display:none;"></label>
+                  <div class="col-md-5" id="tlain" style="display:none;">
+                    <div class="form-group has-default">
+                      <input type="text" class="form-control" id="tujuan_lain" name="tujuan_lain" placeholder="Tujuan Lainnya">
                     </div>
                   </div>
                 </div>
@@ -198,6 +218,23 @@
   <script type="text/javascript">
     $(document).ready(function() {
 
+      var checktujuan = document.getElementById('checktujuan');
+      // when unchecked or checked, run the function
+      checktujuan.onchange = function() {
+          if (this.checked) {
+            document.getElementById("lbllain").style.display = "block";
+            document.getElementById("tlain").style.display = "block";
+          } else {
+            document.getElementById("lbllain").style.display = "none";
+            document.getElementById("tlain").style.display = "none";
+            // document.getElementById("lblPenginapan").style.display = "none";
+            // document.getElementById("lblLama").style.display = "none";
+            // document.getElementById("lblMalam").style.display = "none";
+            // $('#penginapan').prop('disabled', true);
+            // $('#lama').prop('disabled', true);
+          }
+      }
+      
           if(tujuan_lain.value == ""){
             $('#tujuan').prop('required', true);
           }

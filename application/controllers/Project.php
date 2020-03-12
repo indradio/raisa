@@ -67,6 +67,19 @@ class Project extends CI_Controller
             $this->load->view('project/index_fa', $data);
             $this->load->view('templates/footer');
         }
+        elseif ($sect=='se'){
+            $data['sidemenu'] = 'Sales Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_se', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function addProject()

@@ -26,26 +26,40 @@
                                     ";
                         $tujuan = $this->db->query($queryTujuan)->result_array();
                         foreach ($tujuan as $tjn) : ?>
-                          <option data-subtext="<?= $tjn['nama']; ?>" value="<?= $tjn['inisial']; ?>"><?= $tjn['inisial']; ?></option>
+                          <small><option data-subtext="<?= substr($tjn['nama'],0,15); ?>" value="<?= $tjn['inisial']; ?>"><?= $tjn['inisial']; ?></option></small>
                         <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-md-2 col-form-label">Tujuan Lainnya</label>
+                  <label class="col-md-2 col-form-label"></label>
                   <div class="col-md-5">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" id="checktujuan"> Punya Tujuan Lainnya?
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                      </label>
+                    </div>    
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-md-2 col-form-label" id="lbllain" style="display:none;"></label>
+                  <div class="col-md-5" id="tlain" style="display:none;">
                     <div class="form-group has-default">
-                      <input type="text" class="form-control" name="tlainnya">
+                      <input type="text" class="form-control" name="tlainnya" id="tlainnya" placeholder="Tujuan Lainnya">
                     </div>
                   </div>
                 </div>
+                <p>
                 <div class="row">
                   <label class="col-md-2 col-form-label">COPRO</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
                     <select class="selectpicker" name="copro" id="copro" data-style="select-with-transition" title="Pilih" data-size="7" data-width="fit" data-live-search="true" required>
-                    <option value="NON PROJEK">Non Projek</option>
+                    <option value="NON PROJEK">NON PROJEK</option>
                                     <?php
                                         $queyCopro = "SELECT * FROM project where status != 'CLOSE'";
                                         $copro = $this->db->query($queyCopro)->result_array();
@@ -119,3 +133,23 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var checktujuan = document.getElementById('checktujuan');
+      // when unchecked or checked, run the function
+      checktujuan.onchange = function() {
+          if (this.checked) {
+            document.getElementById("lbllain").style.display = "block";
+            document.getElementById("tlain").style.display = "block";
+          } else {
+            document.getElementById("lbllain").style.display = "none";
+            document.getElementById("tlain").style.display = "none";
+            // document.getElementById("lblPenginapan").style.display = "none";
+            // document.getElementById("lblLama").style.display = "none";
+            // document.getElementById("lblMalam").style.display = "none";
+            // $('#penginapan').prop('disabled', true);
+            // $('#lama').prop('disabled', true);
+          }
+      }
+    });
+  </script>
