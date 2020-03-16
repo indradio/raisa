@@ -102,7 +102,7 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                      <?php if ($m['menu'] == 'Jam Kerja') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?> 
+                      <?php if ($m['menu'] == 'Info COVID-19') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?> 
                         <b class="caret"></b>
                       </p>
                     </a>
@@ -113,7 +113,7 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?> 
-                            <?php if ($m['menu'] == 'Jam Kerja') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?>
+                            <?php if ($m['menu'] == 'Info COVID-19') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?>
                               <b class="caret"></b>
                             </p>
                           </a>

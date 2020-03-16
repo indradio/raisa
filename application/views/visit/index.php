@@ -11,9 +11,7 @@
                         <h4 class="card-title">Daftar Tamu</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar">
-                          
-                        </div>
+                        <div class="toolbar"></div>
                         <div class="material-datatables">
                             <table id="exportdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -21,8 +19,6 @@
                                         <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
                                         <th>Warga Negara</th>
-                                        <th>No. Identitas</th>
-                                        <th>No. HP</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
                                         <th>PIC</th>
@@ -46,8 +42,6 @@
                                         <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
                                         <th>Warga Negara</th>
-                                        <th>No. Identitas</th>
-                                        <th>No. HP</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
                                         <th>PIC</th>
@@ -79,8 +73,6 @@
                                             <td><?= date('Y-m-d H:i', strtotime($v['waktu_kunjungan'])); ?></td>
                                             <td><?= $v['nama']; ?></td>
                                             <td><?= $v['warganegara'].' - '.$v['negara']; ?></td>
-                                            <td><?= $v['identitas']; ?></td>
-                                            <td><?= $v['phone']; ?></td>
                                             <td><?= $v['perusahaan']; ?></td>
                                             <td><?= $v['keperluan']; ?></td>
                                             <td><?= $v['pic']; ?></td>
@@ -109,8 +101,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer">
                     Point 1 : Apakah dalam 14 hari terakhir anda memiliki riwayat perjalanan ke Cina atau negara/wilayah terjangkit virus corona?
                     </br>
                     Point 2 : Dalam 14 hari terakhir pernah melakukan interaksi dengan Warga Negara Asing dari negara/wilayah terjangkit virus corona?

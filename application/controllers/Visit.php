@@ -12,8 +12,8 @@ class Visit extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Highlight';
-        $data['sidesubmenu'] = 'Kunjungan Tamu';
+        $data['sidemenu'] = 'Info COVID-19';
+        $data['sidesubmenu'] = 'Daftar Tamu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();
         $this->load->view('templates/header', $data);
