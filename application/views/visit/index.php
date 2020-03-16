@@ -20,6 +20,7 @@
                                     <tr>
                                         <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
+                                        <th>Warga Negara</th>
                                         <th>No. Identitas</th>
                                         <th>No. HP</th>
                                         <th>Perusahaan</th>
@@ -44,6 +45,7 @@
                                     <tr>
                                         <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
+                                        <th>Warga Negara</th>
                                         <th>No. Identitas</th>
                                         <th>No. HP</th>
                                         <th>Perusahaan</th>
@@ -66,9 +68,17 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($visit as $v) : ?>
+                                    foreach ($visit as $v) : 
+                                    if ($v['warganegara']=='WNA' or $v['point1']=='YA' or $v['point2']=='YA' or $v['point3']=='YA' or $v['point4']=='YA' or $v['point5']=='YA' or $v['point6']=='YA')
+                                    {
+                                        echo '<tr class="text-white bg-danger">';
+                                    }else{
+                                        echo '<tr>';
+                                    }
+                                        ?>
                                             <td><?= date('Y-m-d H:i', strtotime($v['waktu_kunjungan'])); ?></td>
                                             <td><?= $v['nama']; ?></td>
+                                            <td><?= $v['warganegara'].' - '.$v['negara']; ?></td>
                                             <td><?= $v['identitas']; ?></td>
                                             <td><?= $v['phone']; ?></td>
                                             <td><?= $v['perusahaan']; ?></td>
