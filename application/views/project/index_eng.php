@@ -213,7 +213,7 @@
         });
         $('#dtproject tbody').on('click', 'button', function() {
             var data = tableproject.row($(this).parents('tr')).data();
-            window.location.href = "<?= base_url('project/budget/'); ?>"+data[1];
+            window.location.href = "<?= base_url('project/est/'); ?>"+data[1];
             // $('#projectModal').on('show.bs.modal', function() {
             //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             //     var modal = $(this)

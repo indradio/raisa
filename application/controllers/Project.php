@@ -80,8 +80,58 @@ class Project extends CI_Controller
             $this->load->view('project/index_se', $data);
             $this->load->view('templates/footer');
         }
+        elseif ($sect=='eng'){
+            $data['sidemenu'] = 'Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_eng', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
+    public function budget($copro)
+    {
+        $project = $this->db->get_where('project', ['copro' => $copro])->row_array();
+        if (!empty($project)){
+            $data['sidemenu'] = 'Sales Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['material'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
+            $data['manhour'] = $this->db->get_where('project_manhour', ['copro' =>  $copro])->result_array();
+            $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/budget', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function est($copro)
+    {
+        $project = $this->db->get_where('project', ['copro' => $copro])->row_array();
+        if (!empty($project)){
+            $data['sidemenu'] = 'Sales Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['material'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
+            $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('projectbudget/est_cost', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+    
     public function addProject()
     {
         $project = $this->db->get_where('project', ['copro' => $this->input->post('copro')])->row_array();
@@ -101,6 +151,26 @@ class Project extends CI_Controller
 
             $data = [
                 'copro' => $this->input->post('copro'),
+                'part' => 'ENGINEERING',
+                'budget' => '0',
+                'wbs' => '0',
+                'dept_id' => '11',
+                'update_at'=> date("Y-m-d H:i:s")
+                ];
+            $this->db->insert('project_manhour', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
+                'part' => 'MACHINERY',
+                'budget' => '0',
+                'wbs' => '0',
+                'dept_id' => '13',
+                'update_at'=> date("Y-m-d H:i:s")
+                ];
+            $this->db->insert('project_manhour', $data);
+
+            $data = [
+                'copro' => $this->input->post('copro'),
                 'part' => 'MANUFACTURE',
                 'budget' => '0',
                 'est_cost' => '0',
@@ -110,7 +180,8 @@ class Project extends CI_Controller
                 'act_cost' => '0',
                 'act_exprod'=> '0',
                 'act_total' =>'0',
-                'act_selisih'=> '0'
+                'act_selisih'=> '0',
+                'update_at'=> date("Y-m-d H:i:s")
                 ];
             $this->db->insert('project_material', $data);
 
@@ -125,7 +196,8 @@ class Project extends CI_Controller
                 'act_cost' => '0',
                 'act_exprod'=> '0',
                 'act_total' =>'0',
-                'act_selisih'=> '0'
+                'act_selisih'=> '0',
+                'update_at'=> date("Y-m-d H:i:s")
                 ];
             $this->db->insert('project_material', $data);
 
@@ -140,7 +212,8 @@ class Project extends CI_Controller
                 'act_cost' => '0',
                 'act_exprod'=> '0',
                 'act_total' =>'0',
-                'act_selisih'=> '0'
+                'act_selisih'=> '0',
+                'update_at'=> date("Y-m-d H:i:s")
                 ];
             $this->db->insert('project_material', $data);
 
@@ -155,7 +228,8 @@ class Project extends CI_Controller
                 'act_cost' => '0',
                 'act_exprod'=> '0',
                 'act_total' =>'0',
-                'act_selisih'=> '0'
+                'act_selisih'=> '0',
+                'update_at'=> date("Y-m-d H:i:s")
                 ];
             $this->db->insert('project_material', $data);
 
@@ -170,7 +244,8 @@ class Project extends CI_Controller
                 'act_cost' => '0',
                 'act_exprod'=> '0',
                 'act_total' =>'0',
-                'act_selisih'=> '0'
+                'act_selisih'=> '0',
+                'update_at'=> date("Y-m-d H:i:s")
                 ];
             $this->db->insert('project_material', $data);
 
@@ -185,7 +260,8 @@ class Project extends CI_Controller
                 'act_cost' => '0',
                 'act_exprod'=> '0',
                 'act_total' =>'0',
-                'act_selisih'=> '0'
+                'act_selisih'=> '0',
+                'update_at'=> date("Y-m-d H:i:s")
                 ];
             $this->db->insert('project_material', $data);
         }else{
@@ -218,16 +294,31 @@ class Project extends CI_Controller
         redirect('project/project/fa');
     }
 
+    public function updateProjectSE()
+    {
+        $this->db->set('delivery_date', date("Y-m-d", strtotime($this->input->post('delivery_date'))));
+        $this->db->set('po_date', date("Y-m-d", strtotime($this->input->post('po_date'))));
+        $this->db->set('cost_amount', $this->input->post('cost_amount'));
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->update('project');
+       
+        redirect('project/budget/'.$this->input->post('copro'));
+    }
+
     public function delProject()
     {
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->delete('project');
 
         $this->db->where('copro', $this->input->post('copro'));
+        $this->db->delete('project_manhour');
+        
+        $this->db->where('copro', $this->input->post('copro'));
         $this->db->delete('project_material');
 
         $this->db->where('copro', $this->input->post('copro'));
         $this->db->delete('project_material_detail');
+        
         redirect('project');
     }
 

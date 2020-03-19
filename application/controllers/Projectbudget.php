@@ -44,6 +44,67 @@ class Projectbudget extends CI_Controller
         }
         
     }
+
+    public function updatebudget()
+    {   
+        date_default_timezone_set('asia/jakarta');
+        $copro = $this->input->post('copro');
+        $part = $this->input->post('part');
+        $budget = $this->input->post('budget');
+        $this->db->where('copro', $copro);
+        $this->db->where('part', $part);
+        $material = $this->db->get('project_material')->row_array();
+        $est_selisih = $budget - $material['est_total'];
+        $act_selisih = $budget - $material['act_total'];
+      
+        $this->db->set('budget', $budget);
+        $this->db->set('est_selisih', $est_selisih);
+        $this->db->set('act_selisih', $act_selisih);
+        $this->db->set('update_at', date('Y-m-d H:i:s'));
+        $this->db->where('copro', $copro);
+        $this->db->where('part', $part);
+        $this->db->update('project_material');
+
+        $this->db->select_sum('budget');
+        $this->db->where('copro', $copro);
+        $query = $this->db->get('project_material');
+        $total_budget = $query->row()->budget;
+
+        $this->db->set('mt_budget', $total_budget);
+        $this->db->where('copro', $copro);
+        $this->db->update('project');
+ 
+        redirect("project/budget/$copro");
+    }
+
+    public function updatemanhour()
+    {   
+        date_default_timezone_set('asia/jakarta');
+        $copro = $this->input->post('copro');
+        $part = $this->input->post('part');
+        $budget = $this->input->post('budget');
+        $this->db->where('copro', $copro);
+        $this->db->where('part', $part);
+        $manhour = $this->db->get('project_manhour')->row_array();
+      
+        $this->db->set('budget', $budget);
+        $this->db->set('update_at', date('Y-m-d H:i:s'));
+        $this->db->where('copro', $copro);
+        $this->db->where('part', $part);
+        $this->db->update('project_manhour');
+
+        $this->db->select_sum('budget');
+        $this->db->where('copro', $copro);
+        $query = $this->db->get('project_manhour');
+        $total_budget = $query->row()->budget;
+
+        $this->db->set('mh_budget', $total_budget);
+        $this->db->where('copro', $copro);
+        $this->db->update('project');
+ 
+        redirect("project/budget/$copro");
+    }
+    
     public function excel()
     {
         $data['sidemenu'] = 'Project';
