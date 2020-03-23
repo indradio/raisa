@@ -151,26 +151,6 @@ class Project extends CI_Controller
 
             $data = [
                 'copro' => $this->input->post('copro'),
-                'part' => 'ENGINEERING',
-                'budget' => '0',
-                'wbs' => '0',
-                'dept_id' => '11',
-                'update_at'=> date("Y-m-d H:i:s")
-                ];
-            $this->db->insert('project_manhour', $data);
-
-            $data = [
-                'copro' => $this->input->post('copro'),
-                'part' => 'MACHINERY',
-                'budget' => '0',
-                'wbs' => '0',
-                'dept_id' => '13',
-                'update_at'=> date("Y-m-d H:i:s")
-                ];
-            $this->db->insert('project_manhour', $data);
-
-            $data = [
-                'copro' => $this->input->post('copro'),
                 'part' => 'MANUFACTURE',
                 'budget' => '0',
                 'est_cost' => '0',
