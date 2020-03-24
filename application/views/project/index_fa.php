@@ -168,6 +168,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">OPEN</label>
+                                <div class="col-md-9">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control datepicker" id="tanggal" name="tanggal" required>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="modal-footer justify-content-center">
                                 <button type="submit" class="btn btn-success btn-round">Tambah</button>
                             </div>
