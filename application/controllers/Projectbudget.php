@@ -200,6 +200,21 @@ class Projectbudget extends CI_Controller
         $this->load->view('projectbudget/budgeteng', $data);
         $this->load->view('templates/footer');
     }
+
+    public function listcost(){
+        $data['sidemenu'] = 'Purchase';
+        $data['sidesubmenu'] = 'List Cost';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['projectcost'] = $this->db->get_where('project_material_detail', ['status >=' => '1'])->result_array();
+        // $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
+        // $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('projectbudget/list_cost', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function budgetpch($copro){   
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Budget Material';
@@ -256,44 +271,71 @@ class Projectbudget extends CI_Controller
         $this->load->view('templates/footer');
     }
     public function estimasicost(){
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $copro = $this->input->post('copro');
         $part = $this->input->post('part');
         $kategori = $this->input->post('kategori');
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
+
         $data = [
             'copro' => $this->input->post('copro'),
             'part' => $this->input->post('part'),
             'kategori'=> $this->input->post('kategori'),
-            'biaya_est' => $this->input->post('biaya'),
             'no' => $this->input->post('no'),
-            'biaya_act' => 0,
-            'tgl_buat' => $now,
-            'tgl_estimasi' => $now,
+            'est_cost' => $this->input->post('cost'),
+            'act_cost' => 0,
+            'est_by' => $this->session->userdata('inisial'),
+            'est_date' => $now,
             'status' => 1,
-            'pembuat_est' => $this->session->userdata('inisial'),
-            'keterangan' => $this->input->post('keterangan')];
+            'keterangan' => $this->input->post('keterangan')
+        ];
         $this->db->insert('project_material_detail', $data);
-        // echo $this->db->last_query();
-        $pp = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
-        $exprod = $this->db->query("SELECT sum(biaya_est) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
-        $total = $pp[0]['sum(biaya_est)'] + $exprod[0]['sum(biaya_est)'] ;
-        $selisih = $this->input->post('budget') - $total;
-        $persen = $total / ($this->input->post('budget')/100);
-        $persens = $selisih / ($this->input->post('budget')/100);
-
-        $this->db->set('est_cost', $pp[0]['sum(biaya_est)']);
-        $this->db->set('est_exprod', $exprod[0]['sum(biaya_est)']);
-        $this->db->set('est_total',  $total);
-        $this->db->set('est_selisih',  $selisih);
-        $this->db->set('est_persen',  $persen);
-        $this->db->set('est_selisihpersen',  $persens);
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('project_material');
-            // echo $this->db->last_query();
         
+        $pp = $this->db->query("SELECT sum(est_cost) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exprod = $this->db->query("SELECT sum(est_cost) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $total = $pp[0]['sum(est_cost)'] + $exprod[0]['sum(est_cost)'] ;
+        $selisih = $this->input->post('budget') - $total;
 
-      redirect('projectbudget/budgeteng/'.$this->input->post('copro'));
+        $this->db->set('est_cost', $pp[0]['sum(est_cost)']);
+        $this->db->set('est_exprod', $exprod[0]['sum(est_cost)']);
+        $this->db->set('est_total', $total);
+        $this->db->set('est_selisih', $selisih);
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->where('part', $this->input->post('part'));
+        $this->db->update('project_material');
+        
+      redirect('project/est/'.$this->input->post('copro'));
+    }
+
+    public function actualcost(){
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $copro = $this->input->post('copro');
+        $part = $this->input->post('part');
+        $kategori = $this->input->post('kategori');
+        $now = date('Y-m-d H:i:s');
+
+        $this->db->set('act_cost', $this->input->post('act_cost'));
+        $this->db->set('act_by', $this->session->userdata('inisial'));
+        $this->db->set('act_date', $now);
+        $this->db->set('status', '9');
+        $this->db->set('keterangan', $this->input->post('keterangan'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('project_material_detail');
+        
+        $pp = $this->db->query("SELECT sum(act_cost) from project_material_detail where part = '$part' and kategori = 'pp' and copro =".$copro)->result_array();
+        $exprod = $this->db->query("SELECT sum(act_cost) from project_material_detail where part = '$part' and kategori = 'exprod' and copro =".$copro)->result_array();
+        $total = $pp[0]['sum(act_cost)'] + $exprod[0]['sum(act_cost)'] ;
+        $selisih = $this->input->post('budget') - $total;
+
+        $this->db->set('act_cost', $pp[0]['sum(act_cost)']);
+        $this->db->set('act_exprod', $exprod[0]['sum(act_cost)']);
+        $this->db->set('act_total', $total);
+        $this->db->set('act_selisih', $selisih);
+        $this->db->where('copro', $this->input->post('copro'));
+        $this->db->where('part', $this->input->post('part'));
+        $this->db->update('project_material');
+        
+      redirect('project/act/'.$this->input->post('copro'));
     }
     public function aktualcost()
     {   

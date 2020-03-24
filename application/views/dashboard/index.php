@@ -5,10 +5,8 @@
     <div class="col-md-12">
       <div class="alert alert-danger" role="alert">
         <!-- Begin Content -->
-        <strong>Semangat Pagi!</strong> 
-        </br>Berikut prosedur untuk mengaktifkan kembali Lembur yang dibatalkan :
-        </br>1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan fin & adm dept (bu dwi)
-        </br>2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan fin & adm dept (bu dwi)
+        <strong>WASPADA COVID-19</strong> 
+        </br>Jaga jarak interaksi dengan orang lain minimal 1,5 meter saat diskusi, ngobrol, istirahat, meeting, dll
        <!-- End Content -->
       </div>
     </div>
@@ -1135,7 +1133,7 @@
       });
 
       window.setTimeout(function() {
-          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(".alert").fadeTo(200, 0).slideUp(200, function(){
               $(this).remove(); 
           });
       }, 10000);

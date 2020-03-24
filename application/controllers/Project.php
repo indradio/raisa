@@ -93,6 +93,19 @@ class Project extends CI_Controller
             $this->load->view('project/index_eng', $data);
             $this->load->view('templates/footer');
         }
+        elseif ($sect=='pch'){
+            $data['sidemenu'] = 'Purchase';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_pch', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function budget($copro)
@@ -118,16 +131,36 @@ class Project extends CI_Controller
     {
         $project = $this->db->get_where('project', ['copro' => $copro])->row_array();
         if (!empty($project)){
-            $data['sidemenu'] = 'Sales Engineering';
+            $data['sidemenu'] = 'Engineering';
             $data['sidesubmenu'] = 'Project';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['material'] = $this->db->get_where('project_material', ['copro' =>  $copro])->result_array();
             $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
+            $data['projectcost'] = $this->db->get_where('project_material_detail', ['copro' => $copro])->result_array();
             $this->load->helper('url');
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
             $this->load->view('projectbudget/est_cost', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function act($copro)
+    {
+        $project = $this->db->get_where('project', ['copro' => $copro])->row_array();
+        if (!empty($project)){
+            $data['sidemenu'] = 'Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['material'] = $this->db->get_where('project_material', ['copro' => $copro])->result_array();
+            $data['project'] = $this->db->get_where('project', ['copro' => $copro])->row_array();
+            $data['projectcost'] = $this->db->get_where('project_material_detail', ['copro' => $copro])->result_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('projectbudget/act_cost', $data);
             $this->load->view('templates/footer');
         }
     }

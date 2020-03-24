@@ -24,8 +24,7 @@
                                     <tr>
                                         <th rowspan="2">Part</th>
                                         <th rowspan="2">Budget</th>
-                                        <th colspan="6" style="text-align: center;">Estimasi Cost</th> 
-                                        <th rowspan="2" style="text-align: center;">Action</th>
+                                        <th colspan="6" style="text-align: center;">Actual Cost</th> 
                                     </tr> 
                                     <tr>
                                         <td>PP</td>
@@ -40,7 +39,7 @@
                                     <?php
                                     foreach ($material as $p) : 
                                         if ($p['budget']==0){
-                                            if ($p['est_total']==0){
+                                            if ($p['act_total']==0){
                                                 $totalpersen = 0;
                                                 $selisihpersen = 0;
                                             }else{
@@ -48,8 +47,8 @@
                                                 $selisihpersen = -100;
                                             }
                                         }else{
-                                            if ($p['est_total']!=0){
-                                                $totalpersen = ($p['est_total']/$p['budget'])*100;
+                                            if ($p['act_total']!=0){
+                                                $totalpersen = ($p['act_total']/$p['budget'])*100;
                                                 $selisihpersen = 100-$totalpersen;
                                             }else{
                                                 $totalpersen = 0;
@@ -60,29 +59,16 @@
                                     <tr>
                                         <td><?= $p['part']; ?></td>
                                         <td><?= number_format($p['budget'],0,',','.')?></td>
-                                        <td><?= number_format($p['est_cost'],0,',','.')?></td>
-                                        <td><?= number_format($p['est_exprod'],0,',','.')?></td>
-                                        <td><?= number_format($p['est_total'],0,',','.')?></td>
+                                        <td><?= number_format($p['act_cost'],0,',','.')?></td>
+                                        <td><?= number_format($p['act_exprod'],0,',','.')?></td>
+                                        <td><?= number_format($p['act_total'],0,',','.')?></td>
                                         <td><?= $totalpersen; ?>%</td>
-                                        <?php if($p['est_selisih']<0 ){?>
-                                            <td class="text-danger"><?= number_format($p['est_selisih'],0,',','.')?></td>
+                                        <?php if($p['act_selisih']<0 ){?>
+                                            <td class="text-danger"><?= number_format($p['act_selisih'],0,',','.')?></td>
                                         <?php } else { ?>
-                                            <td><?= number_format($p['est_selisih'],0,',','.')?></td>
+                                            <td><?= number_format($p['act_selisih'],0,',','.')?></td>
                                         <?php }; ?>
                                         <td><?= $selisihpersen; ?>%</td>
-                                        <td class="text-center">
-                                            <a href="javascript:;" 
-                                                data-id="<?php echo $p['id'] ?>"
-                                                data-copro="<?php echo $p['copro'] ?>"
-                                                data-desk="<?php echo $project['deskripsi'] ?>"
-                                                data-part="<?php echo $p['part'] ?>"
-                                                data-budget="<?php echo $p['budget'] ?>"
-                                                data-budget_sh="<?php echo number_format($p['budget'],0,',','.') ?>"
-                                                data-selisih="<?php echo number_format($p['est_selisih'],0,',','.') ?>"
-                                                data-total="<?php echo $p['est_total'] ?>"
-                                                data-pembuat="<?php echo $p['est_total'] ?>"
-                                                class="btn btn-sm btn-round btn-success" data-toggle="modal" data-target="#projectModal">ADD COST</a>
-                                        </td>
                                     </tr>
                                         <?php endforeach; ?>
                                 </tbody>
@@ -96,7 +82,6 @@
                                         <td>%</td>
                                         <td>Selisih</td>
                                         <td>%</td>
-                                        <td>Actions</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -123,8 +108,10 @@
                                         <th>Kategori</th> 
                                         <th>No PP/BPB</th> 
                                         <th>Estimate <small><i>(ENG)</i></small></th> 
+                                        <th>Actual <small><i>(PCH)</i></small></th> 
+                                        <th>Remains</th> 
                                         <th>Keterangan</th> 
-                                        <th class="disabled-sorting">Actions</th> 
+                                        <th>Actions</th> 
                                     </tr> 
                                 </thead>
                                 <tbody>
@@ -139,8 +126,10 @@
                                         <td><?= $p['kategori']; ?></td>
                                         <td><?= $p['no']; ?></td>
                                         <td><?= number_format($p['est_cost'],0,',','.') ?></td>
+                                        <td><?= number_format($p['act_cost'],0,',','.') ?></td>
+                                        <td><?= number_format($remains,0,',','.') ?></td>
                                         <td><?= $p['keterangan']; ?></td>
-                                        <td class="text-center">
+                                        <td>
                                              <a href="javascript:;" 
                                                 data-id="<?php echo $p['id'] ?>"
                                                 data-copro="<?php echo $p['copro'] ?>"
@@ -151,7 +140,7 @@
                                                 data-est_cost="<?php echo $p['est_cost'] ?>"
                                                 data-act_cost="<?php echo $p['act_cost'] ?>"
                                                 data-keterangan="<?php echo $p['keterangan'] ?>"
-                                                class="btn btn-sm btn-round btn-warning disabled" data-toggle="modal" data-target="#actCost">Revisi Cost</a>
+                                                class="btn btn-sm btn-round btn-success" data-toggle="modal" data-target="#actCost">Actual Cost</a>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
@@ -162,13 +151,15 @@
                                         <th>Kategori</th> 
                                         <th>No PP/BPB</th> 
                                         <th>Estimate</th> 
+                                        <th>Actual</th> 
+                                        <th>Remains</th> 
                                         <th>Keterangan</th> 
                                         <th>Actions</th> 
                                     </tr> 
                                 </tfoot>
                             </table>
                             </br>
-                            <a href="<?= base_url('project/project/eng'); ?>" class="btn btn-reddit">BACK</a>
+                            <a href="<?= base_url('project/project/pch'); ?>" class="btn btn-reddit">BACK</a>
                         </div>
                     </div>
                     <!-- end card-body-->
@@ -280,11 +271,88 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="actCost" tabindex="-1" role="dialog" aria-labelledby="actCostTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Project Actual Cost</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('projectbudget/actualcost'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">Copro</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="hidden" class="form-control disabled" id="id" name="id" required>
+                                        <input type="hidden" class="form-control disabled" id="budget" name="budget" required>
+                                        <input type="text" class="form-control disabled" id="copro" name="copro" required>
+                                        <input type="text" class="form-control disabled" id="project" name="project" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Part</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled " id="part" name="part" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Kategori</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="kategori" name="kategori" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Calculation Cost</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="est_cost" name="est_cost" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <label class="col-md-3 col-form-label">Actual Cost</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="act_cost" name="act_cost">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Keterangan </label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                       <textarea id="keterangan " name="keterangan" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-right">
+                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</a>
+                                <button type="submit" class="btn btn-success btn-round">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
  $(document).ready(function() {
     $('#projectModal').on('show.bs.modal', function (event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
-            var modal          = $(this)
+            var modal = $(this)
             sisa = (div.data('budget') - div.data('total'));
             modal.find('#id').attr("value",div.data('id'));
             modal.find('#copro').attr("value",div.data('copro'));
@@ -298,7 +366,23 @@
             modal.find('#sisa').attr("value",div.data('selisih'));
             modal.find('#selisihpersen').attr("value",div.data('selisihpersen'));
         });
-        $('#dt-cost').DataTable( {
+    // $('.biaya').mask("000,000,000,000,000", {reverse: true});
+    $('#actCost').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+            modal.find('#id').attr("value",div.data('id'));
+            modal.find('#copro').attr("value",div.data('copro'));
+            modal.find('#project').attr("value",div.data('project'));
+            modal.find('#budget').attr("value",div.data('budget'));
+            modal.find('#kategori').attr("value",div.data('kategori'));
+            modal.find('#part').attr("value",div.data('part'));
+            modal.find('#est_cost').attr("value",div.data('est_cost'));
+            modal.find('#act_cost').attr("value",div.data('act_cost'));
+            modal.find('#budget').attr("value",div.data('budget'));
+            modal.find('textarea#keterangan').val(div.data('keterangan'));
+        });
+
+    $('#dt-cost').DataTable( {
         order: [[0, 'asc']],
             rowGroup: {
                 dataSrc: 0

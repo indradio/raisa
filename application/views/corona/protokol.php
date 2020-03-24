@@ -6,7 +6,7 @@
               <div class="page-categories">
                 <h3 class="title text-center">Protokol Pencegahan COVID-19</h3>
                 <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#link8" role="tablist">
                         <i class="material-icons">verified_user</i> Keamanan
                     </a>
@@ -20,10 +20,10 @@
                     <a class="nav-link" data-toggle="tab" href="#link11" role="tablist">
                       <i class="material-icons">local_hospital</i> Kesehatan
                     </a>
-                  </li>
+                  </li> -->
                   <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-                      <i class="material-icons">gavel</i> Legal Info
+                    <a class="nav-link active" data-toggle="tab" href="#link9" role="tablist">
+                      <i class="material-icons">home_work</i> Work From Home (WFH)
                     </a>
                   </li>
                   <li class="nav-item">
@@ -79,18 +79,18 @@
                     </div>
                   </div>
                   <div class="tab-pane" id="link9">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4 class="card-title">Legal info of the product</h4>
-                        <p class="card-category">
-                          More information here
-                        </p>
-                      </div>
-                      <div class="card-body">
-                        Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas.
-                        <br>
-                        <br>Dynamically innovate resource-leveling customer service for state of the art customer service.
-                      </div>
+                  <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Protokol WFH</h4>
+                            <p class="card-category">
+                            Prosedur Pelaksanaan WFH
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/wfh.pdf"></iframe>
+                            </div>
+                        </div>
                     </div>
                   </div>
                   <div class="tab-pane" id="link10">

@@ -11,9 +11,7 @@
                         <h4 class="card-title">Daftar Project</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar">
-                            <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#addProject">Project Baru</a>
-                        </div>
+                        <div class="toolbar"></div>
                         <div class="material-datatables">
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -161,18 +159,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Description</label>
+                                <label class="col-md-3 col-form-label">Deskripsi</label>
                                 <div class="col-md-9">
                                     <div class="form-group has-default">
                                     <textarea rows="3" class="form-control" name="deskripsi" style="text-transform: uppercase"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" >
-                                <label class="col-md-3 col-form-label">Create Date</label>
-                                <div class="col-md-9">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control datepicker" id="tanggal" name="tanggal" required>
                                     </div>
                                 </div>
                             </div>
@@ -208,142 +198,30 @@
             },
 
             //Set column definition initialisation properties.
-            "columnDefs": [{
-                "targets": [0], //first column / numbering column
-                // "targets": [0,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //first column / numbering column
-                "orderable": false, //set not orderable
-            },
-            {
-                "targets": [5], //first column / numbering column
-                "orderable": false, //set not orderable
-                "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>UPDATE</button> <a href='<?= base_url('project/details'); ?>' class='btn btn-sm btn-info btn-round'>DETAIL</a>",
-            }, 
-        ],
+            "columnDefs": [
+                {
+                    "targets": [0], //first column / numbering column
+                    // "targets": [0,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //first column / numbering column
+                    "orderable": false, //set not orderable
+                },
+                {
+                    "targets": [5], //first column / numbering column
+                    "orderable": false, //set not orderable
+                    "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>BUDGET</button> <a href='<?= base_url('project/details'); ?>' class='btn btn-sm btn-info btn-round'>DETAIL</a>",
+                }, 
+            ],
         });
         $('#dtproject tbody').on('click', 'button', function() {
             var data = tableproject.row($(this).parents('tr')).data();
-            $('#projectModal').on('show.bs.modal', function() {
-                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                var modal = $(this)
-                modal.find('.modal-body input[name="copro"]').val(data[1])
-                modal.find('.modal-body input[name="customer"]').val(data[2])
-                modal.find('.modal-body textarea[name="deskripsi"]').val(data[3])
-            })
-            $('#projectModal').modal("show");
-        });
-
-        // $('#btn_add').on('click',function(){
-        //     var copro = $('#copro').val();
-        //     var deskripsi = $('#deskripsi').val();
-        //     // var customer_inisial = $('#customer').val();
-        //     var status = $('#status').val();
-        //     var highlight = $('#highlight').val();
-        //     $.ajax({
-        //         type : "POST",
-        //         url  : "<?php echo site_url('project/addProject')?>",
-        //         dataType : "JSON",
-        //         data : {copro:copro, deskripsi:deskripsi, status:status, highlight:highlight},
-        //         success: function(data){
-        //             $('[name="copro"]').val("");
-        //             $('[name="deskripsi"]').val("");
-        //             $('[name="status"]').val("");
-        //             $('[name="highlight"]').val("");
-        //             $('#addProject').modal("hide");
-        //         }
-        //     });
-        //     return false;
-        // });
-
-        var groupColumn = 1;
-        var tablewbs = $('#dtwbs').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [-1],
-                ["All"]
-            ],
-            scrollX: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            },
-            //Set column definition initialisation properties.
-            "columnDefs": [{
-                "visible": false,
-                "targets": groupColumn
-            }, ],
-            "columnDefs": [{
-                "targets": [12], //first column / numbering column
-                "orderable": false, //set not orderable
-            }, ],
-            "order": [
-                [0, 'asc']
-            ],
-            "displayLength": -1,
-            "drawCallback": function(settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
-
-                api.column(groupColumn, {
-                    page: 'current'
-                }).data().each(function(group, i) {
-                    if (last !== group) {
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td colspan="13">' + group + '</td></tr>'
-                        );
-
-                        last = group;
-                    }
-                });
-            }
-        });
-
-        // var groupColumn = 1;
-        var tableakwbs = $('#dtakwbs').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [-1],
-                ["All"]
-            ],
-            scrollX: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            },
-            //Set column definition initialisation properties.
-            "columnDefs": [{
-                "visible": false,
-                "targets": groupColumn
-            }, ],
-            "columnDefs": [{
-                "targets": [8], //first column / numbering column
-                "orderable": false, //set not orderable
-            }, ],
-            "order": [
-                [0, 'asc']
-            ],
-            "displayLength": -1,
-            "drawCallback": function(settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
-
-                api.column(groupColumn, {
-                    page: 'current'
-                }).data().each(function(group, i) {
-                    if (last !== group) {
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td colspan="9">' + group + '</td></tr>'
-                        );
-
-                        last = group;
-                    }
-                });
-            }
+            window.location.href = "<?= base_url('project/act/'); ?>"+data[1];
+            // $('#projectModal').on('show.bs.modal', function() {
+            //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            //     var modal = $(this)
+            //     modal.find('.modal-body input[name="copro"]').val(data[1])
+            //     modal.find('.modal-body input[name="customer"]').val(data[2])
+            //     modal.find('.modal-body textarea[name="deskripsi"]').val(data[3])
+            // })
+            // $('#projectModal').modal("show");
         });
     });
 </script>

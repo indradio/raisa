@@ -329,11 +329,7 @@
             modal.find('#mh_total').attr("value",div.data('total'));
             modal.find('#amount').attr("value",div.data('amount'));
         });
-    $('.biaya').mask("000,000,000,000,000", {reverse: true});
-
-    
+    $('.biaya').mask("000,000,000,000,000", {reverse: true});    
 });
-                
-
-           
+                 
 </script>
