@@ -48,7 +48,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane active" id="link8">
+                  <div class="tab-pane" id="link8">
                     <div class="card">
                       <div class="card-header">
                         <h4 class="card-title">Location of the product</h4>
@@ -78,12 +78,12 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane" id="link9">
+                  <div class="tab-pane active" id="link9">
                   <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Protokol WFH</h4>
                             <p class="card-category">
-                            Prosedur Pelaksanaan WFH
+                              Prosedur Pelaksanaan WFH
                             </p>
                         </div>
                         <div class="card-body">

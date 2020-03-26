@@ -183,7 +183,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">Project Estimation Cost</h4>
+                        <h4 class="card-title">Project Actual Cost</h4>
                     </div>
                 </div>
                 <form class="form" method="post" action="<?= base_url('Projectbudget/estimasicost'); ?>">
@@ -330,7 +330,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Keterangan </label>
+                                <label class="col-md-3 col-form-label">Note</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                        <textarea id="keterangan " name="keterangan" class="form-control"></textarea>

@@ -131,8 +131,6 @@
                                 </tfoot>
                             </table>
                         </div>
-                        </br>
-                        <a href="<?= base_url('project/project/se'); ?>" class="btn btn-reddit">BACK</a>
                     </div>
                     <!-- end card-body-->
                 </div>
@@ -270,10 +268,33 @@
                             <input type="hidden" class="form-control" id="id" name="id" required>
                             <input type="hidden" class="form-control" id="copro" name="copro" required>
                             <div class="row">
+                                <label class="col-md-3 col-form-label">Dept</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="dept_id" id="dept_id" data-style="select-with-transition" title="Pilih" data-size="2" data-width="fit" required>
+                                            <option value="11">ENGINEERING</option>
+                                            <option value="13">MACHINERY</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-3 col-form-label">Part</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" id="part" name="part" style="text-transform: uppercase" required>
+                                        <input type="text" class="form-control" id="part" name="part" list="listpart" style="text-transform: uppercase" required>
+                                        <datalist id="listpart">
+                                            <option value="MECHANICAL DESIGN">MECHANICAL DESIGN</option>
+                                            <option value="ELECTRICAL DESIGN">ELECTRICAL DESIGN</option>
+                                            <option value="ROBOTIC DESIGN">ROBOTIC DESIGN</option>
+                                            <option value="MECHANICAL ASSEMBLY">MECHANICAL ASSEMBLY</option>
+                                            <option value="ELECTRICAL ASSEMBLY">ELECTRICAL ASSEMBLY</option>
+                                            <option value="PROGRAMMING">PROGRAMMING</option>
+                                            <option value="TRIAL @ WINTEQ">TRIAL @ WINTEQ</option>
+                                            <option value="INSTALLATION & TRIAL @ CUSTOMER">INSTALLATION & TRIAL @ CUSTOMER</option>
+                                            <option value="COMMISSIONING">COMMISSIONING</option>
+                                            <option value="TRAINING">TRAINING</option>
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
@@ -282,17 +303,6 @@
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control" id="budget" name="budget" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Dept</label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" name="dept_id" id="dept_id" data-style="select-with-transition" title="Pilih" data-size="2" data-width="fit" required>
-                                            <option value="11">ENGINEERING</option>
-                                            <option value="13">MACHINERY</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>

@@ -254,7 +254,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Est Cost</label>
+                                <label class="col-md-3 col-form-label">Cost</label>
                                 <div class="col-md-8">
                                     <div class="form-group has-default">
                                         <input type="number" class="form-control" id="cost" name="cost" required>

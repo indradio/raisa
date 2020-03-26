@@ -175,7 +175,7 @@ class Project extends CI_Controller
                 'copro' => $this->input->post('copro'),
                 'customer_inisial' => $this->input->post('customer'),
                 'customer_nama' => $customer['nama'],
-                'deskripsi' => strtoupper($this->input->post('customer').' - '.$this->input->post('deskripsi')),
+                'deskripsi' => strtoupper($this->input->post('deskripsi')),
                 'status' => 'OPEN',
                 'tglopen' => date("Y-m-d", strtotime($this->input->post('tanggal'))),
                 'highlight' => 1

@@ -307,7 +307,8 @@ class Projectbudget extends CI_Controller
       redirect('project/est/'.$this->input->post('copro'));
     }
 
-    public function actualcost(){
+    public function actualcost()
+    {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $copro = $this->input->post('copro');
         $part = $this->input->post('part');
@@ -318,7 +319,7 @@ class Projectbudget extends CI_Controller
         $this->db->set('act_by', $this->session->userdata('inisial'));
         $this->db->set('act_date', $now);
         $this->db->set('status', '9');
-        $this->db->set('keterangan', $this->input->post('keterangan'));
+        $this->db->set('keterangan_pch', $this->input->post('keterangan'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('project_material_detail');
         
@@ -335,7 +336,7 @@ class Projectbudget extends CI_Controller
         $this->db->where('part', $this->input->post('part'));
         $this->db->update('project_material');
         
-      redirect('project/act/'.$this->input->post('copro'));
+        redirect('project/act/'.$this->input->post('copro'));
     }
     public function aktualcost()
     {   
