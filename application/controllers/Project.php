@@ -342,9 +342,9 @@ class Project extends CI_Controller
             $this->db->set('tglteco', date("Y-m-d", strtotime($this->input->post('tanggal'))));
             $this->db->where('copro', $this->input->post('copro'));
             $this->db->update('project');
-        }elseif ($this->input->post('status')=='CLOSE'){
+        }elseif ($this->input->post('status')=='CLOSED'){
             $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
-            $this->db->set('status', 'CLOSE');
+            $this->db->set('status', 'CLOSED');
             $this->db->set('tglclosed', date("Y-m-d", strtotime($this->input->post('tanggal'))));
             $this->db->where('copro', $this->input->post('copro'));
             $this->db->update('project');
