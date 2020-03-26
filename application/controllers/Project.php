@@ -52,6 +52,57 @@ class Project extends CI_Controller
         echo json_encode($output);
     }
 
+    public function project_list_fa()
+    {
+        $list = $this->project->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $project) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $project->copro;
+            $row[] = $project->customer_nama;
+            $row[] = $project->deskripsi;
+            if ($project->tglopen)
+            {
+                $row[] = date("d.m.Y", strtotime($project->tglopen));
+            }else{
+                $row[] = '';
+            }
+            if ($project->tglteco)
+            {
+                $row[] = date("d.m.Y", strtotime($project->tglteco));
+            }else{
+                $row[] = '';
+            }
+            if ($project->tglclosed)
+            {
+                $row[] = date("d.m.Y", strtotime($project->tglclosed));
+            }else{
+                $row[] = '';
+            }
+            if ($project->tglblock)
+            {
+                $row[] = date("d.m.Y", strtotime($project->tglblock));
+            }else{
+                $row[] = '';
+            }
+            $row[] = $project->status;
+          
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->project->count_all(),
+            "recordsFiltered" => $this->project->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+
     public function project($sect)
     {
         if ($sect=='fa'){

@@ -22,6 +22,10 @@
                                         <th>COPRO</th>
                                         <th>Customer</th>
                                         <th>Description</th>
+                                        <th>OPEN</th>
+                                        <th>TECO</th>
+                                        <th>CLOSED</th>
+                                        <th>BLOCKED</th>
                                         <th>Stats</th>
                                         <th>Actions</th>
                                     </tr>
@@ -34,6 +38,10 @@
                                         <th>COPRO</th>
                                         <th>Customer</th>
                                         <th>Description</th>
+                                        <th>OPEN</th>
+                                        <th>TECO</th>
+                                        <th>CLOSED</th>
+                                        <th>BLOCKED</th>
                                         <th>Stats</th>
                                         <th>Actions</th>
                                     </tr>
@@ -203,18 +211,18 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('project/project_list') ?>",
+                "url": "<?php echo site_url('project/project_list_fa') ?>",
                 "type": "POST"
             },
 
             //Set column definition initialisation properties.
             "columnDefs": [{
-                "targets": [0], //first column / numbering column
+                "targets": [0,4,5,6,7,8], //first column / numbering column
                 // "targets": [0,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //first column / numbering column
                 "orderable": false, //set not orderable
             },
             {
-                "targets": [5], //first column / numbering column
+                "targets": [9], //first column / numbering column
                 "orderable": false, //set not orderable
                 "defaultContent": "<button class='btn btn-sm btn-warning btn-round'>UPDATE</button> <a href='<?= base_url('project/details'); ?>' class='btn btn-sm btn-info btn-round'>DETAIL</a>",
             }, 
@@ -231,28 +239,6 @@
             })
             $('#projectModal').modal("show");
         });
-
-        // $('#btn_add').on('click',function(){
-        //     var copro = $('#copro').val();
-        //     var deskripsi = $('#deskripsi').val();
-        //     // var customer_inisial = $('#customer').val();
-        //     var status = $('#status').val();
-        //     var highlight = $('#highlight').val();
-        //     $.ajax({
-        //         type : "POST",
-        //         url  : "<?php echo site_url('project/addProject')?>",
-        //         dataType : "JSON",
-        //         data : {copro:copro, deskripsi:deskripsi, status:status, highlight:highlight},
-        //         success: function(data){
-        //             $('[name="copro"]').val("");
-        //             $('[name="deskripsi"]').val("");
-        //             $('[name="status"]').val("");
-        //             $('[name="highlight"]').val("");
-        //             $('#addProject').modal("hide");
-        //         }
-        //     });
-        //     return false;
-        // });
 
         var groupColumn = 1;
         var tablewbs = $('#dtwbs').DataTable({

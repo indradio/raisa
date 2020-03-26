@@ -92,17 +92,17 @@
                                         $ot = $this->db->get('aktivitas');
                                         $mh_ot = $ot->row()->durasi;
                             
-                                        $this->db->select_sum('biaya_est');
+                                        $this->db->select_sum('est_cost');
                                         $this->db->where('copro', $p['copro']);
-                                        $this->db->where('biaya_act', 0);
+                                        $this->db->where('act_cost', 0);
                                         $est = $this->db->get('project_material_detail');
-                                        $mt_est = $est->row()->biaya_est;
+                                        $mt_est = $est->row()->est_cost;
                             
-                                        $this->db->select_sum('biaya_act');
+                                        $this->db->select_sum('act_cost');
                                         $this->db->where('copro', $p['copro']);
-                                        $this->db->where('biaya_act >', 0);
+                                        $this->db->where('act_cost >', 0);
                                         $act = $this->db->get('project_material_detail');
-                                        $mt_act = $act->row()->biaya_act;
+                                        $mt_act = $act->row()->act_cost;
 
                                         $mt_total = $mt_est + $mt_act;
 

@@ -44,7 +44,7 @@
                                         <td><?= number_format($remains,0,',','.') ?></td>
                                         <td><?= $p['keterangan']; ?></td>
                                         <td>
-                                            <a href="<?= base_url('project/act/'.$p['copro']); ?>" class="btn btn-sm btn-round btn-warning">GO TO PROJECT</a>
+                                            <a href="<?= base_url('project/act/'.$p['copro']); ?>" class="btn btn-sm btn-round btn-warning" target="_blank">GO TO PROJECT</a>
                                         </td>
                                     </tr>
                                         <?php endforeach; ?>
