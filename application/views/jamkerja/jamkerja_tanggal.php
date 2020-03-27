@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -177,7 +177,8 @@
                             </br> 2. Istirahat Siang hanya untuk aktivitas lembur, tidak untuk Laporan Kerja Harian.
                         <!-- </div> -->
                                 </br>
-                        <a href="<?= base_url('jamkerja'); ?>" class="btn btn-default mb-2" role="button" aria-disabled="false">KEMBALI</a>
+                                </br>
+                        <a href="<?= base_url('jamkerja'); ?>" class="btn btn-reddit mb-2" role="button" aria-disabled="false">KEMBALI</a>
                     </div>
                 </div>
                 <!--  end card  -->
@@ -195,7 +196,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
@@ -224,7 +225,7 @@
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="copro" name="copro" title="Pilih Project" data-size="5" data-live-search="true" required>
                                     <?php
                                     foreach ($project as $row) {
-                                        echo '<option data-subtext="' . $row->deskripsi . '" value="' . $row->copro . '">' . $row->copro . '</option>';
+                                        echo '<option value="' . $row->copro . '">' . $row->copro .' - '. substr($row->deskripsi,-25) .'</option>'; 
                                     }
                                     ?>
                                 </select>

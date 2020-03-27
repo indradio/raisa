@@ -125,7 +125,7 @@
                                             <td class="text-center"><?= intval($p['mh_budget']); ?></td>
                                             <td class="text-center"><?= number_format((float)$mh_total, 1, ',', '');?></td>
                                             <?php if ($mh_total!=0){
-                                            echo '<td class="text-center">'.intval($mh_total / $mh_budget* 100).'%</td>';
+                                            echo '<td class="text-center">'.intval(($mh_total / $mh_budget)* 100).'%</td>';
                                             }else{
                                             echo '<td class="text-center">0%</td>';
                                             } ?>

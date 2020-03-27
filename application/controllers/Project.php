@@ -218,6 +218,7 @@ class Project extends CI_Controller
     
     public function addProject()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $project = $this->db->get_where('project', ['copro' => $this->input->post('copro')])->row_array();
         $customer = $this->db->get_where('customer', ['inisial' => $this->input->post('customer')])->row_array();
         if (empty($project))
@@ -229,6 +230,7 @@ class Project extends CI_Controller
                 'deskripsi' => strtoupper($this->input->post('deskripsi')),
                 'status' => 'OPEN',
                 'tglopen' => date("Y-m-d", strtotime($this->input->post('tanggal'))),
+                'update_at' => date("Y-m-d"),
                 'highlight' => 1
             ];
             $this->db->insert('project', $data);
@@ -346,6 +348,7 @@ class Project extends CI_Controller
             $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
             $this->db->set('status', 'CLOSED');
             $this->db->set('tglclosed', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->set('highlight', '0');
             $this->db->where('copro', $this->input->post('copro'));
             $this->db->update('project');
         }elseif ($this->input->post('status')=='BLOCK'){

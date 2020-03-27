@@ -22,7 +22,6 @@
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
                                         <th>PIC</th>
-                                        <th>Kategori</th>
                                         <th>Point1</th>
                                         <th>Point2</th>
                                         <th>Point3</th>
@@ -33,6 +32,7 @@
                                         <th>Hasil</th>
                                         <th>Pemeriksa</th>
                                         <th>Tgl Pemeriksaan</th>
+                                        <th>Kategori</th>
                                         <th>Status</th>
                                         <!-- <th class="disabled-sorting">Actions</th> -->
                                     </tr>
@@ -45,7 +45,6 @@
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
                                         <th>PIC</th>
-                                        <th>Kategori</th>
                                         <th>Point1</th>
                                         <th>Point2</th>
                                         <th>Point3</th>
@@ -56,6 +55,7 @@
                                         <th>Hasil</th>
                                         <th>Pemeriksa</th>
                                         <th>Tgl Pemeriksaan</th>
+                                        <th>Kategori</th>
                                         <th>Status</th>
                                         <!-- <th>Actions</th> -->
                                     </tr>
@@ -76,7 +76,6 @@
                                             <td><?= $v['perusahaan']; ?></td>
                                             <td><?= $v['keperluan']; ?></td>
                                             <td><?= $v['pic']; ?></td>
-                                            <td><?= $v['kategori']; ?></td>
                                             <td><?= $v['point1']; ?></td>
                                             <td><?= $v['point2']; ?></td>
                                             <td><?= $v['point3']; ?></td>
@@ -88,12 +87,14 @@
                                                 <td>-</td>
                                                 <td>-</td>
                                                 <td>-</td>
+                                                <td>-</td>
                                                 <td>Belum Berkunjung</td>
                                             <?php }else{ ?>
                                                 <td><?= $v['suhu']; ?></td>
                                                 <td>DI<?= $v['hasil']; ?></td>
                                                 <td><?= $v['check_by']; ?></td>
                                                 <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
+                                                <td><?= $v['kategori']; ?></td>
                                                 <td>Sedang/Sudah Berkunjung</td>
                                             <?php } ?>
                                             </tr>

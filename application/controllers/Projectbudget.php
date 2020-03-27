@@ -205,7 +205,7 @@ class Projectbudget extends CI_Controller
         $data['sidemenu'] = 'Purchase';
         $data['sidesubmenu'] = 'List Cost';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['projectcost'] = $this->db->get_where('project_material_detail', ['status >=' => '1'])->result_array();
+        $data['projectcost'] = $this->db->get_where('project_material_detail', ['status' => '1'])->result_array();
         // $data['project'] = $this->db->get_where('project', ['copro' =>  $copro])->row_array();
         // $data['query'] = $this->db->query("SELECT part_project.nama from part_project where not exists (SELECT project_material.part from project_material where part_project.nama = project_material.part AND copro ='$copro')")->result_array();
         $this->load->view('templates/header', $data);

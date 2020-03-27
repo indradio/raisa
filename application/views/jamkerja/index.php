@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
-                            <a href="#" class="btn btn-lg btn-block btn-youtube mb-2" role="button" data-toggle="modal" data-target="#jamkerjaModal" aria-disabled="false">LAPORKAN SEKARANG!</a>
+                            <a href="#" class="btn btn-lg btn-block btn-youtube mb-2 disabled" role="button" data-toggle="modal" data-target="#jamkerjaModal" aria-disabled="false">LANGSUNG KLIK SAJA PADA TANGGAL DI KALENDER!</a>
                         </div>
                     </div>
                 </div>
@@ -154,36 +154,37 @@
             //     alert('Date: ' + info.dateStr);
             //     alert('Resource ID: ' + info.resource.id);
             // },
-
-            select: function(start, end) {
-
+            
+            select: function(start, end, info) {
+                
+                window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
                 // on select we show the Sweet Alert modal with an input
-                swal({
-                        title: 'Maaf, Fitur ini masih dalam pengembangan.',
-                        // html: '<div class="form-group">' +
-                        //     '<input class="form-control" placeholder="Event Title" id="input-field">' +
-                        //     '</div>',
-                        html: 'Silahkan gunakan tombol "laporkan sekarang!" di atas untuk memilih tanggal yang kamu inginkan.',
-                        showCancelButton: false,
-                        confirmButtonClass: 'btn btn-success',
-                        cancelButtonClass: 'btn btn-danger',
-                        buttonsStyling: false
-                    }).then(function(result) {
+                // swal({
+                //         title: 'Maaf, Fitur ini masih dalam pengembangan.',
+                //         // html: '<div class="form-group">' +
+                //         //     '<input class="form-control" placeholder="Event Title" id="input-field">' +
+                //         //     '</div>',
+                //         html: 'Silahkan gunakan tombol "laporkan sekarang!" di atas untuk memilih tanggal yang kamu inginkan.'+y,
+                //         showCancelButton: false,
+                //         confirmButtonClass: 'btn btn-success',
+                //         cancelButtonClass: 'btn btn-danger',
+                //         buttonsStyling: false
+                //     }).then(function(result) {
 
-                        var eventData;
-                        event_title = $('#input-field').val();
+                //         var eventData;
+                //         event_title = $('#input-field').val();
 
-                        if (event_title) {
-                            eventData = {
-                                title: event_title,
-                                start: start,
-                                end: end
-                            };
-                            $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
-                        }
-                        $calendar.fullCalendar('unselect');
-                    })
-                    .catch(swal.noop);
+                //         if (event_title) {
+                //             eventData = {
+                //                 title: event_title,
+                //                 start: start,
+                //                 end: end
+                //             };
+                //             $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
+                //         }
+                //         $calendar.fullCalendar('unselect');
+                //     })
+                //     .catch(swal.noop);
             },
             
             // eventClick: function(info) {

@@ -25,7 +25,7 @@
                                         <th>OPEN</th>
                                         <th>TECO</th>
                                         <th>CLOSED</th>
-                                        <th>BLOCKED</th>
+                                        <th>BLOCK</th>
                                         <th>Stats</th>
                                         <th>Actions</th>
                                     </tr>
@@ -41,7 +41,7 @@
                                         <th>OPEN</th>
                                         <th>TECO</th>
                                         <th>CLOSED</th>
-                                        <th>BLOCKED</th>
+                                        <th>BLOCK</th>
                                         <th>Stats</th>
                                         <th>Actions</th>
                                     </tr>

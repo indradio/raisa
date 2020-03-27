@@ -26,11 +26,11 @@
                       <i class="material-icons">home_work</i> Work From Home (WFH)
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
                       <i class="material-icons">computer</i> IT
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="tab-content tab-space tab-subcategories">
                   <div class="tab-pane" id="link7">
