@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
-                            <a href="#" class="btn btn-lg btn-block btn-youtube mb-2 disabled" role="button" data-toggle="modal" data-target="#jamkerjaModal" aria-disabled="false">LANGSUNG KLIK SAJA PADA TANGGAL DI KALENDER!</a>
+                            <a href="#" class="btn btn-lg btn-block btn-youtube mb-2" role="button" data-toggle="modal" data-target="#jamkerjaModal" aria-disabled="false">KLIK DI SINI / DI KALENDER!</a>
                         </div>
                     </div>
                 </div>
