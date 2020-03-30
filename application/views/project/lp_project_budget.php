@@ -79,8 +79,6 @@
                                         
                                         $mh_remains = $p['mh_budget'] - $mh_total;
                                         $mh_remains_persen = @ (($mh_remains/$p['mh_budget'])*100);
-
-
                             
                                         $this->db->select_sum('durasi');
                                         $this->db->where('copro', $p['copro']);
@@ -88,6 +86,7 @@
                                         $this->db->where('status', '9');
                                         $wh = $this->db->get('aktivitas');
                                         $mh_wh = $wh->row()->durasi;
+                                        $mh_wh_persen = @ (($mh_wh/$p['mh_budget'])*100);
                             
                                         $this->db->select_sum('durasi');
                                         $this->db->where('copro', $p['copro']);
@@ -95,6 +94,7 @@
                                         $this->db->where('status', '9');
                                         $ot = $this->db->get('aktivitas');
                                         $mh_ot = $ot->row()->durasi;
+                                        $mh_ot_persen = @ (($mh_ot/$p['mh_budget'])*100);
                             
                                         $this->db->select_sum('est_cost');
                                         $this->db->where('copro', $p['copro']);
@@ -136,18 +136,18 @@
                                                 echo '<td class="text-danger text-center">'.number_format((float)$mh_remains, 1, ',', '').'<i class="material-icons">arrow_drop_down</i></td>';
                                                 echo '<td class="text-danger text-center">'.number_format((float)$mh_remains_persen, 1, ',', '').'%</td>';
                                             }elseif ($mh_remains==0){
-                                                echo '<td text-center">0</td>';
-                                                echo '<td text-center">0%</td>';
+                                                echo '<td class="text-center">0</td>';
+                                                echo '<td class="text-center">0%</td>';
                                             } ?>
                                             <td class="text-center"><?= number_format((float)$mh_wh, 1, ',', '');?></td>
                                             <?php if ($mh_wh!=0){
-                                                echo '<td class="text-center">'.intval($mh_wh / $mh_budget* 100).'%</td>';
+                                                echo '<td class="text-center">'.number_format((float)$mh_wh_persen, 1, ',', '').'%</td>';
                                             }else{
                                                 echo '<td class="text-center">0%</td>';
                                             } ?>
                                             <td class="text-center"><?= number_format((float)$mh_ot, 1, ',', '');?></td>
                                             <?php if ($mh_ot!=0){
-                                                echo '<td class="text-center">'.intval($mh_ot / $mh_budget* 100).'%</td>';
+                                                echo '<td class="text-center">'.number_format((float)$mh_ot_persen, 1, ',', '').'%</td>';
                                             }else{
                                                 echo '<td class="text-center">0%</td>';
                                             } ?>
