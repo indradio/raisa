@@ -2,6 +2,58 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">near_me</i>
+                        </div>
+                        <p class="card-category">OPEN</p>
+                        <h3 class="card-title"><?= $this->db->get_where('project', ['status' => 'OPEN'])->num_rows(); ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">exposure_neg_1</i>
+                        </div>
+                        <p class="card-category">TECO</p>
+                        <h3 class="card-title"><?= $this->db->get_where('project', ['status' => 'TECO'])->num_rows(); ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">emoji_events</i>
+                        </div>
+                        <p class="card-category">CLOSED</p>
+                        <h3 class="card-title"><?= $this->db->get_where('project', ['status' => 'CLOSED'])->num_rows(); ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">report</i>
+                        </div>
+                        <p class="card-category">BLOCK</p>
+                        <h3 class="card-title"><?= $this->db->get_where('project', ['status' => 'BLOCK'])->num_rows(); ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-info card-header-icon">

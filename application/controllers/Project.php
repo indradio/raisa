@@ -358,6 +358,7 @@ class Project extends CI_Controller
             $this->db->set('deskripsi', strtoupper($this->input->post('deskripsi')));
             $this->db->set('status', 'BLOCK');
             $this->db->set('tglblock', date("Y-m-d", strtotime($this->input->post('tanggal'))));
+            $this->db->set('highlight', '0');
             $this->db->where('copro', $this->input->post('copro'));
             $this->db->update('project');
         }
