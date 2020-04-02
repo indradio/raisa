@@ -6,7 +6,9 @@
       <div class="alert alert-danger" role="alert">
         <!-- Begin Content -->
         <strong>WASPADA COVID-19</strong> 
-        </br>Jaga jarak interaksi dengan orang lain minimal 1,5 meter saat diskusi, ngobrol, istirahat, meeting, dll
+        </br>Jaga jarak interaksi dengan orang lain minimal 1,5 meter saat diskusi, ngobrol, istirahat, meeting, dll.
+        </br>---
+        </br>Untuk Project Schedule kini pindah ke MENU Project > Schedule.
        <!-- End Content -->
       </div>
     </div>
@@ -58,7 +60,11 @@
       }?>
     </div>
     <!-- end banner -->
-    <?php if ($this->session->userdata('contract') == 'Direct Labor') { ?>
+   <!-- 16:9 aspect ratio -->
+   <div class="embed-responsive embed-responsive-16by9">
+    <iframe src="https://experience.arcgis.com/experience/57237ebe9c5b4b1caa1b93e79c920338"></iframe>
+      </div>
+      <?php if ($this->session->userdata('contract') == 'Direct Labor') { ?>
     <!-- START OUTSTANDING JAM KERJA -->
     </p>
     <div class="row">
@@ -142,7 +148,53 @@
     <!-- END OUTSTANDING JAM KERJA -->
     <?php }?>
     <div class="row">
-            <div class="col-md-12">
+    <!-- <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-text card-header-warning">
+                  <div class="card-text">
+                    <h4 class="card-title">Employees Stats</h4>
+                    <p class="card-category">New employees on 15th September, 2016</p>
+                  </div>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-warning">
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Salary</th>
+                      <th>Country</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Dakota Rice</td>
+                        <td>$36,738</td>
+                        <td>Niger</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Minerva Hooper</td>
+                        <td>$23,789</td>
+                        <td>Curaçao</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>Sage Rodriguez</td>
+                        <td>$56,142</td>
+                        <td>Netherlands</td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>Philip Chaney</td>
+                        <td>$38,735</td>
+                        <td>Korea, South</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-lg-12 col-md-12">
               <div class="card">
                 <div class="card-header card-header-tabs card-header-info">
                   <div class="nav-tabs-navigation">
@@ -332,12 +384,12 @@
                 <i class="material-icons">local_hospital</i> Claim <br>Medical
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
                 <i class="material-icons">event_note</i> Project <br>Schedule
               </a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
                 <i class="material-icons">help_outline</i> Help Center
               </a>
@@ -713,10 +765,6 @@
                   </p>
                 </div> -->
                 <div class="card-body text-center">
-                  <!-- 16:9 aspect ratio -->
-                  <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/wbs.pdf"></iframe>
-                  </div>
 
                   <!-- <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery"> -->
 

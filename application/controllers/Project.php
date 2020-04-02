@@ -25,6 +25,18 @@ class Project extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function schedule()
+    {
+        $data['sidemenu'] = 'Project';
+        $data['sidesubmenu'] = 'Project Schedule';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('project/schedule', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function project_list()
     {
         $list = $this->project->get_datatables();

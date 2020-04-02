@@ -12,8 +12,8 @@ class Corona extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Info COVID-19';
-        $data['sidesubmenu'] = 'Daftar Tamu';
+        $data['sidemenu'] = 'COVID-19';
+        $data['sidesubmenu'] = 'Informasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();
         $this->load->view('templates/header', $data);
@@ -25,7 +25,7 @@ class Corona extends CI_Controller
 
     public function protokol()
     {
-        $data['sidemenu'] = 'Info COVID-19';
+        $data['sidemenu'] = 'COVID-19';
         $data['sidesubmenu'] = 'Protokol';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();
@@ -38,7 +38,7 @@ class Corona extends CI_Controller
     
     public function tamu()
     {
-        $data['sidemenu'] = 'Info COVID-19';
+        $data['sidemenu'] = 'COVID-19';
         $data['sidesubmenu'] = 'Daftar Tamu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();

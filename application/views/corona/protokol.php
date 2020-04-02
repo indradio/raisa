@@ -5,7 +5,7 @@
             <div class="col-md-12 ml-auto mr-auto">
               <div class="page-categories">
                 <h3 class="title text-center">Protokol Pencegahan COVID-19</h3>
-                <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
+                <ul class="nav nav-pills nav-pills-info nav-pills-icons justify-content-center" role="tablist">
                 <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#link8" role="tablist">
                         <i class="material-icons">verified_user</i> Keamanan
