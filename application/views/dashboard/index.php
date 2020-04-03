@@ -64,6 +64,7 @@
    <div class="embed-responsive embed-responsive-16by9">
     <iframe src="https://experience.arcgis.com/experience/57237ebe9c5b4b1caa1b93e79c920338"></iframe>
       </div>
+      </br>
       <?php if ($this->session->userdata('contract') == 'Direct Labor') { ?>
     <!-- START OUTSTANDING JAM KERJA -->
     </p>

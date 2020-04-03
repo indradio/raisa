@@ -28,7 +28,7 @@ class Project extends CI_Controller
     public function schedule()
     {
         $data['sidemenu'] = 'Project';
-        $data['sidesubmenu'] = 'Project Schedule';
+        $data['sidesubmenu'] = 'Schedule';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
