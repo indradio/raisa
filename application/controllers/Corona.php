@@ -26,7 +26,7 @@ class Corona extends CI_Controller
     public function tes()
     {
         $data['sidemenu'] = 'COVID-19';
-        $data['sidesubmenu'] = 'Tes';
+        $data['sidesubmenu'] = 'Tes Risiko';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
