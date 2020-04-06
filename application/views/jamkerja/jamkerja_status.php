@@ -80,7 +80,8 @@
                 <tbody>
                 
                   <?php
-                  $kar = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+                    $this->db->where('is_active','1');
+                    $kar = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                   foreach ($kar as $k) : 
                     $sect = $this->db->get_where('karyawan_sect', ['id' => $k['sect_id']])->row_array();
                   ?>
