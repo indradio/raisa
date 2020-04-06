@@ -297,63 +297,6 @@
     
         xhr.send("username=winteq&password=winteq123&devices=2019110056%3B2019110057%3B2019110055");
     
-        setInterval(function() { 
-            var id = document.getElementById("k4_device_id").value // Extract info from data-* attributes
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
-
-            //Send the proper header information along with the request
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            xhr.onreadystatechange = function() { // Call a function when the state changes.
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    var myObj = JSON.parse(this.responseText);
-                    
-                    if (id){
-                    x = myObj.data[id]['device_info']['name'];
-                    y = myObj.data[id]['realtime']['location'];
-                    z = myObj.data[id]['realtime']['ignition_status'];
-                    lat = myObj.data[id]['realtime']['latitude'];
-                    lng = myObj.data[id]['realtime']['longitude'];
-                    document.getElementById("k4_nopol").value = x;
-                    document.getElementById("k4_lokasi").value = y;
-                    document.getElementById("k4_ignition").value = z;
-                    // Request finished. Do processing here.
-                    }else{
-                    document.getElementById("k4_nopol").value = null;
-                    document.getElementById("k4_lokasi").value = null;
-                    document.getElementById("k4_ignition").value = null;
-                    lat = null;
-                    lng = null;
-                    }
-
-                    var location = new google.maps.LatLng(lat, lng);
-
-                    var mapCanvas = document.getElementById('k4_map');
-
-                    var mapOptions = {
-                        center: location,
-                        zoom: 18,
-
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
-                    var map = new google.maps.Map(mapCanvas, mapOptions);
-                    var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
-                    var marker = new google.maps.Marker({
-                    position: location,
-                    icon: image
-                    });
-
-                    marker.setMap(map);
-
-                }
-            }
-        
-            xhr.send("username=winteq&password=winteq123&devices=2019110056%3B2019110057%3B2019110055");
-            // xhr.send(new Int8Array()); 
-            // xhr.send(element);
-        }, 5000);
     });
 </script>
 <!-- JS K5-->
