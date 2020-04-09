@@ -47,8 +47,12 @@
                 <input type="text" class="form-control" id="platform" name="platform" value=" " required="true" disabled="true" />
               </div>
               <div class="form-group">
-                <label for="platform" class="bmd-label-floating"> Platform *</label>
-                <input type="text" class="form-control RealServerTime" id="state" name="state" value=" " required="true" disabled="true" />
+                <label for="state" class="bmd-label-floating"> State *</label>
+                <input type="text" class="form-control" id="state" name="state" value="aaa<?= $state; ?>" required="true" disabled="true" />
+              </div>
+              <div class="form-group">
+                <label for="time" class="bmd-label-floating"> Time *</label>
+                <input type="text" class="form-control" id="time" name="time" value=" " required="true" disabled="true" />
               </div>
               <div class="form-check mr-auto">
                 <label class="form-check-label">
@@ -150,9 +154,6 @@
 
 <script>
   $(document).ready(function() {
-
-    // document.getElementById("state").value = dt;
-
     var x = document.getElementById("loc");
 
     if (navigator.geolocation) {
@@ -213,63 +214,36 @@
     }
   });
 
-  var SyncTimeframe = 1000 * 60 * 60 * 3; // 3 Hours
-  var LastSyncKey = 'LastSyncWithTimeServer';
-  var TimeDiffKey = 'Local-Server-TimeDiff';
+  var xmlHttp;
 
-  var RetryMax = 3;
-  var RetryCount = 0;
-  var AcceptedDelay = 500;
-
-  if (window.localStorage.getItem(LastSyncKey) == null) {
-    window.localStorage.setItem(LastSyncKey, '' + (new Date(0)));
-  }
-
-  LastSync = new Date(window.localStorage.getItem(LastSyncKey));
-
-  if (Math.abs((new Date()) - LastSync) > SyncTimeframe) {
-    SyncTime();
-  } else {
-    ShowTime();
-  }
-
-  function SyncTime() {
-    var StartTime = new Date();
-
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("HEAD", "http://www.googleapis.com", true);
-    xmlhttp.onreadystatechange = function() {
-
-      if (xmlhttp.readyState == 4) {
-        TimeDiff = new Date(xmlhttp.getResponseHeader("Date")) - (new Date()) + ((new Date()) - StartTime) / 2;
-
-        if (++RetryCount < 3 && (new Date()) - StartTime > AcceptedDelay) {
-          SyncTime();
-        } else {
-          window.localStorage.setItem(LastSyncKey, '' + (new Date()));
-          window.localStorage.setItem(TimeDiffKey, TimeDiff);
-          ShowTime();
+  function srvTime() {
+    try {
+      //FF, Opera, Safari, Chrome
+      xmlHttp = new XMLHttpRequest();
+    } catch (err1) {
+      //IE
+      try {
+        xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+      } catch (err2) {
+        try {
+          xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+        } catch (eerr3) {
+          //AJAX not supported, use CPU time.
+          alert("AJAX not supported");
         }
-
       }
     }
-    xmlhttp.send(null);
+    xmlHttp.open('HEAD', window.location.href.toString(), false);
+    xmlHttp.setRequestHeader("Content-Type", "text/html");
+    xmlHttp.send('');
+    return xmlHttp.getResponseHeader("Date");
   }
-
-  function ShowTime() {
-    // var AllNodes = document.getElementsByClassName("RealServerTime");
-    var AllNodes = document.getElementById("state").value;
-
-    var diff = parseInt(window.localStorage.getItem(TimeDiffKey), 10);
-
-    // format Date and Time 
-    var TimeToString = (new Date(Date.now() + diff)).toTimeString().split(' ')[0];
-
-    for (var ipos = 0; ipos < AllNodes.length; ipos++) {
-      AllNodes[ipos].innerHTML = TimeToString;
-    }
-
-    window.setTimeout(ShowTime, 1000);
-
-  }
+  $(document).ready(function() {
+    setInterval(function() {
+      srvTime(st);
+      var st = srvTime();
+      var date = new Date(st);
+      document.getElementById("time").value = date;
+    }, 1000);
+  });
 </script>

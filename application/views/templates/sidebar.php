@@ -43,32 +43,32 @@
                         <span class="sidebar-mini"> P </span>
                         <span class="sidebar-normal"> Profil </span>
                       </a>
-                    </li>
-                    <?php if ($sidesubmenu == 'Ubah Password') : ?>
-                      <li class="nav-item active">
-                      <?php else : ?>
-                      <li class="nav-item">
-                      <?php endif; ?>
-                      <a class="nav-link" href="<?= base_url('profil/ubahpwd'); ?>">
-                        <span class="sidebar-mini"> U </span>
-                        <span class="sidebar-normal"> Ubah Password </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
-                        <span class="sidebar-mini"> K </span>
-                        <span class="sidebar-normal"> Keluar </span>
-                      </a>
-                    </li>
-                    <!-- <li class="nav-item">
+                      </li>
+                      <?php if ($sidesubmenu == 'Ubah Password') : ?>
+                        <li class="nav-item active">
+                        <?php else : ?>
+                        <li class="nav-item">
+                        <?php endif; ?>
+                        <a class="nav-link" href="<?= base_url('profil/ubahpwd'); ?>">
+                          <span class="sidebar-mini"> U </span>
+                          <span class="sidebar-normal"> Ubah Password </span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
+                            <span class="sidebar-mini"> K </span>
+                            <span class="sidebar-normal"> Keluar </span>
+                          </a>
+                        </li>
+                        <!-- <li class="nav-item">
                   <a class="nav-link" href="#">
                     <span class="sidebar-mini"> EP </span>
                     <span class="sidebar-normal"> Edit Profile </span>
                   </a>
                 </li> -->
-                  </ul>
-                </div>
-            </div>
+                    </ul>
+                  </div>
+              </div>
           </div>
           <ul class="nav active">
             <!-- QUERY ROLE MENU -->
@@ -102,9 +102,13 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'COVID-19') {echo '<span class="badge badge-danger badge-sm">+</span>'; }?>
-                        <?php if ($m['menu'] == 'Presensi') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?>
-                      <b class="caret"></b>
+                        <?php if ($m['menu'] == 'COVID-19') {
+                          echo '<span class="badge badge-danger badge-sm">+</span>';
+                        } ?>
+                        <?php if ($m['menu'] == 'Kehadiran') {
+                          echo '<span class="badge badge-success badge-sm">Baru</span>';
+                        } ?>
+                        <b class="caret"></b>
                       </p>
                     </a>
                     <div class="collapse show" id="<?= $m['menu']; ?>">
@@ -113,9 +117,13 @@
                         <li class="nav-item">
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
-                            <p> <?= $m['menu']; ?> 
-                            <?php if ($m['menu'] == 'COVID-19') {echo '<span class="badge badge-danger badge-sm">+</span>'; }?>
-                            <?php if ($m['menu'] == 'Presensi') {echo '<span class="badge badge-success badge-sm">Baru</span>'; }?>
+                            <p> <?= $m['menu']; ?>
+                              <?php if ($m['menu'] == 'COVID-19') {
+                                echo '<span class="badge badge-danger badge-sm">+</span>';
+                              } ?>
+                              <?php if ($m['menu'] == 'Kehadiran') {
+                                echo '<span class="badge badge-success badge-sm">Baru</span>';
+                              } ?>
                               <b class="caret"></b>
                             </p>
                           </a>
@@ -139,16 +147,16 @@
                                 <li class="nav-item">
                                 <?php endif; ?>
                                 <a class="nav-link" href="<?= base_url($sm['url']); ?>">
-                                  <span class="sidebar-mini"> <?= substr($sm['title'], 0, 1); ?> </span> 
+                                  <span class="sidebar-mini"> <?= substr($sm['title'], 0, 1); ?> </span>
                                   <span class="sidebar-normal"> <?= $sm['title']; ?> </span>
                                 </a>
-                              </li>
-                            <?php endforeach; ?>
-                          </ul>
-                        </div>
-                      </li>
-                    <?php }; ?>
-                  <?php endforeach; ?>
-                </ul>
-              </div>
+                                </li>
+                              <?php endforeach; ?>
+                            </ul>
+                          </div>
+                        </li>
+                      <?php }; ?>
+                    <?php endforeach; ?>
+                      </ul>
+                    </div>
         </div>
