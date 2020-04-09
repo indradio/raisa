@@ -5,7 +5,7 @@
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <!-- Begin Content -->
-          </br>Sesuai dengan aturan pemerintah terkait situasi darurat nasional mengatasi pandemi Covid-19, karyawan yang tidak ke kantor diharapkan <b>untuk tetap di rumah, tidak keluar rumah atau bahkan mudik</b>.
+          Sesuai dengan aturan pemerintah terkait situasi darurat nasional mengatasi pandemi Covid-19, karyawan yang tidak ke kantor diharapkan <strong>untuk tetap di rumah, tidak keluar rumah atau bahkan mudik</strong>.
           </br>
           </br>Untuk itu WINTEQ akan memantau dan memastikan karyawan mengikuti himbauan pemerintah. Karyawan diwajibkan melakukan absen yang mengirimkan lokasi realtime di 3 jendela waktu berikut:
           </br>
@@ -28,7 +28,7 @@
                 <i class="material-icons">touch_app</i>
               </div>
               <!-- <h4 class="card-title">Your Location</h4> -->
-              <h4 class="card-title">Presensi</h4>
+              <h4 class="card-title">Kehadiran</h4>
             </div>
             <div class="card-body ">
               <div id="map" class="map" style="width:100%;height:240px;"></div>
@@ -46,20 +46,25 @@
                 <label for="platform" class="bmd-label-floating"> Platform *</label>
                 <input type="text" class="form-control" id="platform" name="platform" value=" " required="true" disabled="true" />
               </div>
-              <div class="category form-category">* <i>Dengan ini saya menyatakan telah memberikan lokasi dan waktu yang sesuai.</br>
-                  Saya siap diproses secara aturan perusahaan atau negara jika terbukti memanipulasi data yang saya berikan</i>
+              <div class="form-group">
+                <label for="platform" class="bmd-label-floating"> Platform *</label>
+                <input type="text" class="form-control RealServerTime" id="state" name="state" value=" " required="true" disabled="true" />
               </div>
-            </div>
-            <div class="card-footer text-right">
               <div class="form-check mr-auto">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="" required> YA!, Saya Setuju.
+                  <input class="form-check-input" type="checkbox" id="check" value="" required>
                   <span class="form-check-sign">
                     <span class="check"></span>
                   </span>
+                  <i>Dengan ini saya menyatakan telah memberikan lokasi dan waktu yang sesuai.</br>
+                    Saya siap diproses secara hukum yang berlaku jika terbukti memanipulasi data yang saya berikan</i>
                 </label>
               </div>
-              <button type="submit" class="btn btn-success">Clock In</button>
+              <div class="category form-category">
+              </div>
+            </div>
+            <div class="card-footer ml-auto">
+              <button type="submit" id="submit" class="btn btn-success">Clock In</button>
             </div>
           </div>
         </form>
@@ -145,6 +150,9 @@
 
 <script>
   $(document).ready(function() {
+
+    // document.getElementById("state").value = dt;
+
     var x = document.getElementById("loc");
 
     if (navigator.geolocation) {
@@ -190,6 +198,78 @@
       $(".alert").fadeTo(200, 0).slideUp(200, function() {
         $(this).remove();
       });
-    }, 30000);
+    }, 60000);
+
+    var checker = document.getElementById('check');
+    var sendbtn = document.getElementById('submit');
+    sendbtn.disabled = true;
+    // when unchecked or checked, run the function
+    checker.onchange = function() {
+      if (this.checked) {
+        sendbtn.disabled = false;
+      } else {
+        sendbtn.disabled = true;
+      }
+    }
   });
+
+  var SyncTimeframe = 1000 * 60 * 60 * 3; // 3 Hours
+  var LastSyncKey = 'LastSyncWithTimeServer';
+  var TimeDiffKey = 'Local-Server-TimeDiff';
+
+  var RetryMax = 3;
+  var RetryCount = 0;
+  var AcceptedDelay = 500;
+
+  if (window.localStorage.getItem(LastSyncKey) == null) {
+    window.localStorage.setItem(LastSyncKey, '' + (new Date(0)));
+  }
+
+  LastSync = new Date(window.localStorage.getItem(LastSyncKey));
+
+  if (Math.abs((new Date()) - LastSync) > SyncTimeframe) {
+    SyncTime();
+  } else {
+    ShowTime();
+  }
+
+  function SyncTime() {
+    var StartTime = new Date();
+
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("HEAD", "http://www.googleapis.com", true);
+    xmlhttp.onreadystatechange = function() {
+
+      if (xmlhttp.readyState == 4) {
+        TimeDiff = new Date(xmlhttp.getResponseHeader("Date")) - (new Date()) + ((new Date()) - StartTime) / 2;
+
+        if (++RetryCount < 3 && (new Date()) - StartTime > AcceptedDelay) {
+          SyncTime();
+        } else {
+          window.localStorage.setItem(LastSyncKey, '' + (new Date()));
+          window.localStorage.setItem(TimeDiffKey, TimeDiff);
+          ShowTime();
+        }
+
+      }
+    }
+    xmlhttp.send(null);
+  }
+
+  function ShowTime() {
+    // var AllNodes = document.getElementsByClassName("RealServerTime");
+    var AllNodes = document.getElementById("state").value;
+
+    var diff = parseInt(window.localStorage.getItem(TimeDiffKey), 10);
+
+    // format Date and Time 
+    var TimeToString = (new Date(Date.now() + diff)).toTimeString().split(' ')[0];
+
+    for (var ipos = 0; ipos < AllNodes.length; ipos++) {
+      AllNodes[ipos].innerHTML = TimeToString;
+    }
+
+    window.setTimeout(ShowTime, 1000);
+
+  }
 </script>
