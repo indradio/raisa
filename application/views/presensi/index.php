@@ -7,7 +7,7 @@
           <!-- Begin Content -->
           </br>Sesuai dengan aturan pemerintah terkait situasi darurat nasional mengatasi pandemi Covid-19, karyawan yang tidak ke kantor diharapkan <b>untuk tetap di rumah, tidak keluar rumah atau bahkan mudik</b>.
           </br>
-          </br>Untuk itu WINTEQ akan memantau dan memastikan karyawan mengikuti himbauan pemerintah. Karyawan diwajibkan malakukan absen yang mengirimkan lokasi realtime di 3 jendela waktu berikut:
+          </br>Untuk itu WINTEQ akan memantau dan memastikan karyawan mengikuti himbauan pemerintah. Karyawan diwajibkan melakukan absen yang mengirimkan lokasi realtime di 3 jendela waktu berikut:
           </br>
           </br>1. Check in antara 7.00-7.30
           </br>2. Istirahat antara 11.30-12.00
@@ -53,7 +53,7 @@
             <div class="card-footer text-right">
               <div class="form-check mr-auto">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="" required> YA, Saya Setuju
+                  <input class="form-check-input" type="checkbox" value="" required> YA!, Saya Setuju.
                   <span class="form-check-sign">
                     <span class="check"></span>
                   </span>
@@ -70,7 +70,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title ">History</h4>
+            <h4 class="card-title">Today History</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">

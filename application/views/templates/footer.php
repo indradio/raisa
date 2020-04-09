@@ -23,10 +23,10 @@
             <i class="fa fa-comments fa-2x"> </i>
         </a>
         <ul class="dropdown-menu">
-        <li class="header-title">Butuh Bantuan?</li>
+            <li class="header-title">Butuh Bantuan?</li>
             <li class="button-container">
-                      <a href="https://wa.me/6281373096232?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-rose btn-block btn-fill">RAISA +62813-7309-6232</a>
-                      <a href="https://wa.me/6281311196988?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-info btn-block btn-fill">DIO +62813-1119-6988</a>
+                <a href="https://wa.me/6281373096232?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-rose btn-block btn-fill">RAISA +62813-7309-6232</a>
+                <a href="https://wa.me/6281311196988?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-info btn-block btn-fill">DIO +62813-1119-6988</a>
             </li>
             <!-- <li class="header-title"> Sidebar Filters</li>
             <li class="adjustments-line">
@@ -143,8 +143,8 @@
 <!-- Library for adding dinamically elements -->
 <script src="<?= base_url(); ?>assets/js/plugins/arrive.min.js"></script>
 <!--  Google Maps Plugin    -->
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0"></script> -->
 <!-- Chartist JS -->
 <script src="<?= base_url(); ?>assets/js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->
