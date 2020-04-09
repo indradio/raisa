@@ -2,109 +2,129 @@
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
-        <div class="card">
+      <div class="col-md-6">
+        <form id="RegisterValidation" action="" method="">
+          <div class="card ">
             <div class="card-header card-header-info card-header-icon">
-                <div class="card-text">
-                    <h4 class="card-title">Presensi</h4>
-                    <p class="card-category">Periode <?= date('F Y', strtotime("$tahun-$bulan-01")); ?></p>
-                </div>
+              <div class="card-icon">
+                <!-- <i class="material-icons">location_on</i> -->
+                <i class="material-icons">touch_app</i>
+              </div>
+              <!-- <h4 class="card-title">Your Location</h4> -->
+              <h4 class="card-title">Presensi</h4>
             </div>
-            <div class="card-body">
-            <div class="toolbar">
-                <form class="form" method="post" action="<?= base_url('presensi'); ?>">
-                    <div class="form-group">
-                        <!-- <label for="copro">Project*</label> -->
-                        <select class="selectpicker" data-style="btn btn-link" id="month" name="month" title="Pilih Bulan" onchange='this.form.submit()' data-size="7" data-live-search="true" required>
-                            <option value="01">Januari</option>
-                            <option value="02">Februari</option>
-                            <option value="03">Maret</option>
-                            <option value="04">April</option>
-                            <option value="05">Mei</option>
-                            <option value="06">Juni</option>
-                            <option value="07">Juli</option>
-                            <option value="08">Agustus</option>
-                            <option value="09">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
-                        </select>
-                    </div>
-                </form>
+            <div class="card-body ">
+              <div id="map" class="map" style="width:100%;height:380px;"></div>
+              <p id="loc"></p>
+              </br>
+              <div class="form-group">
+                <label for="exampleEmail" class="bmd-label-floating"> Nama *</label>
+                <input type="text" class="form-control" id="exampleEmail" value="<?= $karyawan['nama']; ?>" required="true">
+              </div>
+              <div class="form-group">
+                <label for="examplePassword" class="bmd-label-floating"> Tanggal *</label>
+                <input type="text" class="form-control" id="examplePassword" value="<?= date('d M Y'); ?>" required="true" name="password">
+              </div>
+              <div class="form-group">
+                <label for="examplePassword1" class="bmd-label-floating"> Jam *</label>
+                <input type="text" class="form-control" id="examplePassword1" value="<?= date('h:i'); ?>" required="true" equalTo="#examplePassword" name="password_confirmation">
+              </div>
+              <div class="category form-category">* Required fields</div>
             </div>
-            <div class="material-datatables">
-            <div class="table-responsive">
-              <table id="dt-status" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Tanggal</th>
-                    <th>Masuk</th>
-                    <th>Pulang</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-                    for ($i=1; $i < $tanggal+1; $i++) { 
-
-                        //clock in
-                       $this->db->where('npk',$this->session->userdata('npk'));
-                       $this->db->where('year(time)', $tahun);
-                       $this->db->where('month(time)', $bulan);
-                       $this->db->where('day(time)', $i);
-                       $this->db->where('state', 'C/In');
-                       $in = $this->db->get('presensi')->row_array();
-
-                       //clock out
-                       $this->db->where('npk',$this->session->userdata('npk'));
-                       $this->db->where('year(time)', $tahun);
-                       $this->db->where('month(time)', $bulan);
-                       $this->db->where('day(time)', $i);
-                       $this->db->where('state', 'C/Out');
-                       $out = $this->db->get('presensi')->row_array();
-                       if (date('D', strtotime($tahun.'-'.$bulan.'-'.$i))=='Sat' or date('D', strtotime($tahun.'-'.$bulan.'-'.$i))=='Sun'){
-                      echo '<tr class="table-danger">';
-                    }else{
-                        echo '<tr>';
-                       }
-                      echo '<th>'. date('D, d', strtotime($tahun.'-'.$bulan.'-'.$i)) .'</th>';
-                      if (!empty($in)){
-                          echo '<th>'. date('H:i', strtotime($in['time'])) .'</th>';
-                        }else{
-                            echo '<th></th>';
-                      }
-                      if (!empty($out)){
-                          echo '<th>'. date('H:i', strtotime($out['time'])) .'</th>';
-                        }else{
-                            echo '<th></th>';
-                      }
-                      echo '</tr>';
-                    } ?>
-                </tbody>
-              </table>
+            <div class="card-footer text-right">
+              <div class="form-check mr-auto">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="" required> Presensi saya bukan tipu-tipu
+                  <span class="form-check-sign">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-rose">Clock In</button>
             </div>
           </div>
-          </div>
-          <div class="card-footer">
-          </div>
-          <!-- end content-->
-        </div>
-        <!--  end card  -->
+        </form>
       </div>
-      <!-- end col-md-12 -->
+      <!-- <div class="col-md-6">
+        <form id="RegisterValidation" action="" method="">
+          <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">touch_app</i>
+              </div>
+              <h4 class="card-title">Presensi</h4>
+            </div>
+            <div class="card-body ">
+              <div class="form-group">
+                <label for="exampleEmail" class="bmd-label-floating"> Nama *</label>
+                <input type="text" class="form-control" id="exampleEmail" value="<?= $karyawan['nama']; ?>" required="true">
+              </div>
+              <div class="form-group">
+                <label for="examplePassword" class="bmd-label-floating"> Tanggal *</label>
+                <input type="text" class="form-control" id="examplePassword" value="<?= date('d M Y'); ?>" required="true" name="password">
+              </div>
+              <div class="form-group">
+                <label for="examplePassword1" class="bmd-label-floating"> Jam *</label>
+                <input type="text" class="form-control" id="examplePassword1" value="<?= date('h:i'); ?>" required="true" equalTo="#examplePassword" name="password_confirmation">
+              </div>
+              <div class="category form-category">* Required fields</div>
+            </div>
+            <div class="card-footer text-right">
+              <div class="form-check mr-auto">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="" required> Presensi saya bukan tipu-tipu
+                  <span class="form-check-sign">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-rose">Clock In</button>
+            </div>
+          </div>
+        </form>
+      </div> -->
     </div>
     <!-- end row -->
   </div>
 </div>
 
 <script>
-$(document).ready(function() {
-    $('#dt-status').DataTable( {
-        "scrollY":        "512px",
-        "scrollX": true,
-        "scrollCollapse": true,
-        "ordering": false
-        "paging":         false
-    } );
-} );
+  $(document).ready(function() {
+    var x = document.getElementById("loc");
+
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+    function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+
+
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+
+      var location = new google.maps.LatLng(lat, lng);
+
+      var mapCanvas = document.getElementById('map');
+
+      var mapOptions = {
+        center: location,
+        zoom: 16,
+
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      var map = new google.maps.Map(mapCanvas, mapOptions);
+      var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
+      var marker = new google.maps.Marker({
+        position: location,
+        icon: image
+      });
+
+      marker.setMap(map);
+    }
+  });
 </script>
