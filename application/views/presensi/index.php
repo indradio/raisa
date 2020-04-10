@@ -20,7 +20,7 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <form id="RegisterValidation" action="" method="">
+        <form id="timePrecense" class="form" method="post" action="<?= base_url('presensi/submit'); ?>">
           <div class="card ">
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
@@ -35,24 +35,26 @@
               <p id="loc"></p>
               </br>
               <div class="form-group">
-                <label for="lat" class="bmd-label-floating"> Latitude *</label>
-                <input type="text" class="form-control" id="lat" name="lat" value=" " required="true" disabled="true" />
+                <label for="vLat" class="bmd-label-floating"> Latitude *</label>
+                <input type="text" class="form-control" id="vLat" name="vLat" value=" " required="true" disabled="true" />
               </div>
               <div class="form-group">
-                <label for="long" class="bmd-label-floating"> Longitude *</label>
-                <input type="text" class="form-control" id="long" name="long" value=" " required="true" disabled="true" />
+                <label for="vLong" class="bmd-label-floating"> Longitude *</label>
+                <input type="text" class="form-control" id="vLong" name="vLong" value=" " required="true" disabled="true" />
               </div>
               <div class="form-group">
-                <label for="platform" class="bmd-label-floating"> Platform *</label>
-                <input type="text" class="form-control" id="platform" name="platform" value=" " required="true" disabled="true" />
-              </div>
-              <div class="form-group">
-                <label for="state" class="bmd-label-floating"> State *</label>
-                <input type="text" class="form-control" id="state" name="state" value="aaa<?= $state; ?>" required="true" disabled="true" />
+                <label for="vState" class="bmd-label-floating"> State *</label>
+                <input type="text" class="form-control" id="vState" name="vState" value="<?= $state; ?>" required="true" disabled="true" />
               </div>
               <div class="form-group">
                 <label for="time" class="bmd-label-floating"> Time *</label>
                 <input type="text" class="form-control" id="time" name="time" value=" " required="true" disabled="true" />
+              </div>
+              <div class="form-group" hidden="true">
+                <input type="text" class="form-control" id="platform" name="platform" required="true" />
+                <input type="text" class="form-control" id="lat" name="lat" required="true" />
+                <input type="text" class="form-control" id="long" name="long" required="true" />
+                <input type="text" class="form-control" id="state" name="state" value="<?= $state; ?>" required="true" />
               </div>
               <div class="form-check mr-auto">
                 <label class="form-check-label">
@@ -68,7 +70,18 @@
               </div>
             </div>
             <div class="card-footer ml-auto">
-              <button type="submit" id="submit" class="btn btn-success">Clock In</button>
+              <?php
+              if (date('H:i') >= '07:00' and date('H:i') <= '07:30') {
+                echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
+              } elseif (date('H:i') >= '11:30' and date('H:i') <= '12:00') {
+                echo '<button type="submit" id="submit" class="btn btn-success">Rest Time</button>';
+              } elseif (date('H:i') >= '16:30' and date('H:i') <= '17:00') {
+                echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
+              } else {
+                echo '<button type="submit" class="btn btn-default" disabled="false">No Time</button>';
+                echo '</div><div class="card-footer mr-auto">Kamu hanya bisa Clock In/Out di jendela waktu yang telah ditentukan.';
+              }
+              ?>
             </div>
           </div>
         </form>
@@ -79,7 +92,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Today History</h4>
+            <h4 class="card-title">Hari Ini</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -99,48 +112,27 @@
                   </th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      07:22
-                    </td>
-                    <td>
-                      C/In
-                    </td>
-                    <td>
-                      View
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      2
-                    </td>
-                    <td>
-                      11:58
-                    </td>
-                    <td>
-                      C/Rest
-                    </td>
-                    <td>
-                      View
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      3
-                    </td>
-                    <td>
-                      16:42
-                    </td>
-                    <td>
-                      C/Out
-                    </td>
-                    <td>
-                      View
-                    </td>
-                  </tr>
+                  <?php
+                  $this->db->where('year(time)', date('Y'));
+                  $this->db->where('month(time)', date('m'));
+                  $this->db->where('day(time)', date('d'));
+                  $presenceToday = $this->db->get('presensi')->result_array();
+                  foreach ($presenceToday as $i) : ?>
+                    <tr>
+                      <td>
+                        <?= $i['id']; ?>
+                      </td>
+                      <td>
+                        <?= date('H:i', strtotime($i['time'])); ?>
+                      </td>
+                      <td>
+                        <?= $i['state']; ?>
+                      </td>
+                      <td>
+                        <a href="https://www.google.com/maps/search/?api=1&query=<?= $i['lat'] . ',' . $i['long']; ?>" target="_blank">View</a>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table>
             </div>
@@ -167,6 +159,8 @@
       //   "<br>Longitude: " + position.coords.longitude;
       document.getElementById("lat").value = position.coords.latitude;
       document.getElementById("long").value = position.coords.longitude;
+      document.getElementById("vLat").value = position.coords.latitude;
+      document.getElementById("vLong").value = position.coords.longitude;
 
 
       lat = position.coords.latitude;

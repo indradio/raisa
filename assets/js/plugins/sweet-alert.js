@@ -164,14 +164,6 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
-} else if (flashData == 'vote') {
-  swal({
-    title: "Terimakasih!",
-    text: "Anda telah melakukan vote untuk acara Family Day 2019",
-    buttonsStyling: false,
-    confirmButtonClass: "btn btn-success",
-    type: "success"
-  }).catch(swal.noop)
 } else if (flashData == 'setujuilbrga') {
   swal({
     title: "Terimakasih!",
@@ -179,6 +171,30 @@ if (flashData == 'masuk') {
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'clockSuccess') {
+  swal({
+    title: "Terimakasih!",
+    text: "Kehadiraan kamu berhasil. \n Tetap #diRumahAja dan jangan kemana-mana ya!",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
+} else if (flashData == 'clockSuccess2') {
+  swal({
+    title: "Terimakasih!",
+    text: "Submit Kehadiraan kamu cukup 1x aja. \n Tetap #diRumahAja dan jangan kemana-mana ya!",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "info"
+  }).catch(swal.noop)
+} else if (flashData == 'clockFailed') {
+  swal({
+    title: "Maaf!",
+    text: "Kehadiraan kamu gagal. \n Sabar dan tunggu sampai RAISA menemukan kamu di peta ya! (Kalo peta tidak muncul, hubungi DIO segera!)",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "error"
   }).catch(swal.noop)
 } else if (flashData == 'terimakasih') {
   swal({
@@ -188,7 +204,7 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-success",
     type: "success"
   }).catch(swal.noop)
-}else if (flashData == 'update') {
+} else if (flashData == 'update') {
   swal({
     title: "Waktu Sudah Terlewati.!",
     text: "Silahkan Coba Lagi Dengan Waktu Aktual.",
