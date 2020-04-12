@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Hr extends CI_Controller
+class Karyawan extends CI_Controller
 {
     public function __construct()
     {
@@ -10,7 +10,7 @@ class Hr extends CI_Controller
         $this->load->model("Karyawan_model");
     }
 
-    public function karyawan()
+    public function index()
     {
         $data['sidemenu'] = 'HR';
         $data['sidesubmenu'] = 'Data Karyawan';
@@ -22,6 +22,19 @@ class Hr extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('karyawan/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function update($inisial)
+    {
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Data Karyawan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['dataKar'] = $this->db->get_where('karyawan', ['inisial' => $inisial])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('karyawan/update', $data);
         $this->load->view('templates/footer');
     }
 
