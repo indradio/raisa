@@ -9,8 +9,8 @@
           </br>
           </br>Untuk itu WINTEQ akan memantau dan memastikan karyawan mengikuti himbauan pemerintah. Karyawan diwajibkan melakukan absen yang mengirimkan lokasi realtime di 3 jendela waktu berikut:
           </br>
-          </br>1. Check in antara 7.00-7.30
-          </br>2. Istirahat antara 11.30-12.00
+          </br>1. Check in antara 7.30-9.00
+          </br>2. Istirahat antara 11.30-13.00
           </br>3. Check out antara 16.00-17.30
           </br>
           </br>Harap mengijinkan browser mengakses lokasi perangkat tiap kali diminta.
