@@ -85,8 +85,8 @@ class Presensi extends CI_Controller
             $data['bulan'] = $this->input->post('month');
         }
         $data['tahun'] = date('Y');
-        $data['sidemenu'] = 'Presensi';
-        $data['sidesubmenu'] = 'Presensi';
+        $data['sidemenu'] = 'Kehadiran';
+        $data['sidesubmenu'] = 'Data';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
