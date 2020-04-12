@@ -15,13 +15,13 @@ class Presensi extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'Kehadiran';
         $data['sidesubmenu'] = 'Kehadiran';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
-        if (date('H:i') >= '07:00' and date('H:i') <= '07:30') {
+        if (date('H:i') >= '07:30' and date('H:i') <= '09:00') {
             $data['state'] = 'C/In';
-        } elseif (date('H:i') >= '11:30' and date('H:i') <= '12:00') {
+        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $data['state'] = 'C/Rest';
-        } elseif (date('H:i') >= '16:30' and date('H:i') <= '17:00') {
+        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
             $data['state'] = 'C/Out';
         } else {
             $data['state'] = 'No State for this time';
@@ -56,8 +56,9 @@ class Presensi extends CI_Controller
                     'time' => date('Y-m-d H:i:s'),
                     'state' => $this->input->post('state'),
                     'new_state' => 'WFH',
+                    'loc' => $this->input->post('loc'),
                     'lat' => $this->input->post('lat'),
-                    'long' => $this->input->post('long'),
+                    'lng' => $this->input->post('lng'),
                     'platform' => $this->input->post('platform'),
                     'div_id' => $this->session->userdata('div_id'),
                     'dept_id' => $this->session->userdata('dept_id'),

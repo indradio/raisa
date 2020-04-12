@@ -11,7 +11,7 @@
           </br>
           </br>1. Check in antara 7.00-7.30
           </br>2. Istirahat antara 11.30-12.00
-          </br>3. Check out antara 16.30-17.00
+          </br>3. Check out antara 16.00-17.30
           </br>
           </br>Harap mengijinkan browser mengakses lokasi perangkat tiap kali diminta.
           <!-- End Content -->
@@ -32,15 +32,19 @@
             </div>
             <div class="card-body ">
               <div id="map" class="map" style="width:100%;height:240px;"></div>
-              <p id="loc"></p>
+              <p id="location"></p>
               </br>
+              <div class="form-group">
+                <label for="vLoc" class="bmd-label-floating"> Location *</label>
+                <textarea rows="3" class="form-control disabled" id="vLoc" name="vLoc" disabled> </textarea>
+              </div>
               <div class="form-group">
                 <label for="vLat" class="bmd-label-floating"> Latitude *</label>
                 <input type="text" class="form-control" id="vLat" name="vLat" value=" " required="true" disabled="true" />
               </div>
               <div class="form-group">
-                <label for="vLong" class="bmd-label-floating"> Longitude *</label>
-                <input type="text" class="form-control" id="vLong" name="vLong" value=" " required="true" disabled="true" />
+                <label for="vLng" class="bmd-label-floating"> Longitude *</label>
+                <input type="text" class="form-control" id="vLng" name="vLng" value=" " required="true" disabled="true" />
               </div>
               <div class="form-group">
                 <label for="vState" class="bmd-label-floating"> State *</label>
@@ -51,10 +55,11 @@
                 <input type="text" class="form-control" id="time" name="time" value=" " required="true" disabled="true" />
               </div>
               <div class="form-group" hidden="true">
-                <input type="text" class="form-control" id="platform" name="platform" required="true" />
+                <textarea rows="3" class="form-control" id="loc" name="loc"></textarea>
                 <input type="text" class="form-control" id="lat" name="lat" required="true" />
-                <input type="text" class="form-control" id="long" name="long" required="true" />
+                <input type="text" class="form-control" id="lng" name="lng" required="true" />
                 <input type="text" class="form-control" id="state" name="state" value="<?= $state; ?>" required="true" />
+                <input type="text" class="form-control" id="platform" name="platform" required="true" />
               </div>
               <div class="form-check mr-auto">
                 <label class="form-check-label">
@@ -71,11 +76,11 @@
             </div>
             <div class="card-footer ml-auto">
               <?php
-              if (date('H:i') >= '07:00' and date('H:i') <= '07:30') {
+              if (date('H:i') >= '07:30' and date('H:i') <= '09:00') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
-              } elseif (date('H:i') >= '11:30' and date('H:i') <= '12:00') {
+              } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Rest Time</button>';
-              } elseif (date('H:i') >= '16:30' and date('H:i') <= '17:00') {
+              } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
               } else {
                 echo '<button type="submit" class="btn btn-default" disabled="false">No Time</button>';
@@ -116,6 +121,7 @@
                   $this->db->where('year(time)', date('Y'));
                   $this->db->where('month(time)', date('m'));
                   $this->db->where('day(time)', date('d'));
+                  $this->db->where('npk', $this->session->userdata('npk'));
                   $presenceToday = $this->db->get('presensi')->result_array();
                   foreach ($presenceToday as $i) : ?>
                     <tr>
@@ -129,7 +135,7 @@
                         <?= $i['state']; ?>
                       </td>
                       <td>
-                        <a href="https://www.google.com/maps/search/?api=1&query=<?= $i['lat'] . ',' . $i['long']; ?>" target="_blank">View</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=<?= $i['lat'] . ',' . $i['lng']; ?>" target="_blank">View</a>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -146,7 +152,7 @@
 
 <script>
   $(document).ready(function() {
-    var x = document.getElementById("loc");
+    var x = document.getElementById("location");
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
@@ -158,16 +164,33 @@
       // x.innerHTML = "Latitude: " + position.coords.latitude +
       //   "<br>Longitude: " + position.coords.longitude;
       document.getElementById("lat").value = position.coords.latitude;
-      document.getElementById("long").value = position.coords.longitude;
+      document.getElementById("lng").value = position.coords.longitude;
       document.getElementById("vLat").value = position.coords.latitude;
-      document.getElementById("vLong").value = position.coords.longitude;
+      document.getElementById("vLng").value = position.coords.longitude;
 
 
       lat = position.coords.latitude;
       lng = position.coords.longitude;
 
-      var location = new google.maps.LatLng(lat, lng);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
 
+      //Send the proper header information along with the request
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          var myObj = JSON.parse(this.responseText);
+          loc = myObj.results['0']['formatted_address'];
+          document.getElementById("vLoc").value = loc;
+          document.getElementById("loc").value = myObj.results['0']['formatted_address'];
+        }
+      }
+      xhr.send();
+      // xhr.send(new Int8Array()); 
+      // xhr.send(element);
+
+      var location = new google.maps.LatLng(lat, lng);
       var mapCanvas = document.getElementById('map');
 
       var mapOptions = {
@@ -177,23 +200,15 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
       var map = new google.maps.Map(mapCanvas, mapOptions);
-      var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
       var marker = new google.maps.Marker({
         position: location,
         map: map
-        // icon: image
       });
 
       marker.setMap(map);
-    }
+    };
 
     document.getElementById("platform").value = navigator.platform;
-
-    window.setTimeout(function() {
-      $(".alert").fadeTo(200, 0).slideUp(200, function() {
-        $(this).remove();
-      });
-    }, 60000);
 
     var checker = document.getElementById('check');
     var sendbtn = document.getElementById('submit');
@@ -239,5 +254,11 @@
       var date = new Date(st);
       document.getElementById("time").value = date;
     }, 1000);
+
+    window.setTimeout(function() {
+      $(".alert").fadeTo(200, 0).slideUp(200, function() {
+        $(this).remove();
+      });
+    }, 60000);
   });
 </script>
