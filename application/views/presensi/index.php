@@ -25,20 +25,19 @@
     ?>
     <div class="row">
       <div class="col-md-12">
-          <div class="card">
-            <div class="card-header card-header-icon card-header-danger">
-              <div class="card-icon">
-                <i class="material-icons">notification_important</i>
-              </div>
-              <h4 class="card-title">PAKTA INTEGRITAS KARYAWAN</h4>
+        <div class="card">
+          <div class="card-header card-header-icon card-header-danger">
+            <div class="card-icon">
+              <i class="material-icons">notification_important</i>
             </div>
-            <div class="card-body">
-            Sudahkah kamu mengisi <strong>PAKTA INTEGRITAS KARYAWAN</strong>.
-            </br>Jika belum, Klik link berikut : <a href="https://bit.ly/PaktaIntegritasWinteq" target="_blank">FORMULIR PAKTA INTEGRITAS KARYAWAN</a>
-            </br>
-            </br>
-            <a href="<?= base_url('presensi/pik'); ?>" class="badge badge-warning">Jangan tampilkan lagi</a>
-            </div>
+            <h4 class="card-title">PAKTA INTEGRITAS KARYAWAN</h4>
+          </div>
+          <div class="card-body">
+          Sudahkah kamu mengisi <strong>PAKTA INTEGRITAS KARYAWAN</strong>.
+          </br>Jika belum, Klik link berikut : <a href="https://bit.ly/PaktaIntegritasWinteq" target="_blank">FORMULIR PAKTA INTEGRITAS KARYAWAN</a>
+          </br>
+          </br>
+          <a href="<?= base_url('presensi/pik'); ?>" class="badge badge-warning">Jangan tampilkan lagi</a>
           </div>
         </div>
       </div>
