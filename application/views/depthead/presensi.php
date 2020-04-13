@@ -51,7 +51,6 @@
                     <?php
                       $this->db->where('year(time)', $tahun);
                       $this->db->where('month(time)', $bulan);
-                      $this->db->where('dept_id', $this->session->userdata('dept_id'));
                       $presensi = $this->db->get('presensi')->result_array();
                       foreach ($presensi as $p) :
                       if (date('D', strtotime($p['time'])) == 'Sat' or date('D', strtotime($p['time'])) == 'Sun') {

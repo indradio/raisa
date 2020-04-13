@@ -94,7 +94,7 @@ class Koordinator extends CI_Controller
         }
         $data['tahun'] = date('Y');
         $data['sidemenu'] = 'Koordinator';
-        $data['sidesubmenu'] = 'Kehadiran';
+        $data['sidesubmenu'] = 'Laporan Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
