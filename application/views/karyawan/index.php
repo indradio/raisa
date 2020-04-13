@@ -13,7 +13,6 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!-- Here you can write extra buttons/actions for the toolbar -->
-                            <a href="<?= base_url('karyawan/add'); ?>" class="btn btn-facebook mb-2" role="button" aria-disabled="false">Tambah Karyawan Baru</a>
                             <a href="#" class="btn btn-facebook mb-2" role="button" aria-disabled="false" data-toggle="modal" data-target="#karyawanAdd">Tambah Karyawan Baru</a>
                             <a href="<?= base_url('hr/qrc/'); ?>" class="btn btn-warning disabled">Generate QR CODE</a>
                         </div>

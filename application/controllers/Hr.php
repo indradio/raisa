@@ -186,16 +186,42 @@ class Hr extends CI_Controller
     }
     public function presensi()
     {
+        date_default_timezone_set('asia/jakarta');
+        if (empty($this->input->post('month'))) {
+            $data['bulan'] = date('m');
+        } else {
+            $data['bulan'] = $this->input->post('month');
+        }
+        $data['tahun'] = date('Y');
         $data['sidemenu'] = 'HR';
-        $data['sidesubmenu'] = 'Presensi';
+        $data['sidesubmenu'] = 'Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['presensi'] = $this->db->get('presensi')->result_array();
-        $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('hr/presensi', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function download($menu)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if ($menu=='presensi'){
+            if (empty($this->input->post('month'))) {
+                $data['bulan'] = date('m');
+            } else {
+                $data['bulan'] = $this->input->post('month');
+            }
+            $data['tahun'] = date('Y');
+            $data['sidemenu'] = 'HR';
+            $data['sidesubmenu'] = 'Kehadiran';
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/presensi_download', $data);
+            $this->load->view('templates/footer');
+        }
     }
 }

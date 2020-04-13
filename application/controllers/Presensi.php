@@ -75,6 +75,17 @@ class Presensi extends CI_Controller
         }
         redirect('presensi');
     }
+    public function pik()
+    {
+        date_default_timezone_set('asia/jakarta');
+
+        $data = [
+            'npk' => $this->session->userdata('npk'),
+            'nama' => $this->session->userdata('nama')
+        ];
+        $this->db->insert('idcard', $data);
+        redirect('presensi');
+    }
 
     public function data()
     {

@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-              <form class="form" method="post" action="<?= base_url('hr/presensi'); ?>">
+              <form class="form" method="post" action="<?= base_url('hr/download/presensi'); ?>">
                 <div class="form-group">
                   <!-- <label for="copro">Project*</label> -->
                   <select class="selectpicker" data-style="btn btn-link" id="month" name="month" title="Pilih Bulan" onchange='this.form.submit()' data-size="7" data-live-search="true" required>
@@ -34,7 +34,7 @@
             </div>
             <div class="material-datatables">
               <div class="table-responsive">
-                <table id="dt-presensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
                       <th>Tanggal</th>
@@ -43,6 +43,8 @@
                       <th>Jam</th>
                       <th>State</th>
                       <th>New State</th>
+                      <th>Section</th>
+                      <th>Dept</th>
                       <th>Lokasi</th>
                       <th>Device</th>
                     </tr>
@@ -53,32 +55,30 @@
                       $this->db->where('month(time)', $bulan);
                       $presensi = $this->db->get('presensi')->result_array();
                       foreach ($presensi as $p) :
+                        $dept = $this->db->get_where('karyawan_dept', ['id' => $p['dept_id']])->row_array();
+                        $sect = $this->db->get_where('karyawan_sect', ['id' => $p['sect_id']])->row_array();
                       if (date('D', strtotime($p['time'])) == 'Sat' or date('D', strtotime($p['time'])) == 'Sun') {
                         echo '<tr class="table-danger">';
                       } else {
                         echo '<tr>';
                       }
-                      echo '<th>' . date('d M Y', strtotime($p['time'])) . '</th>';
+                      echo '<th>' . date('m-d-Y', strtotime($p['time'])) . '</th>';
                       echo '<th>' . $p['npk'] . '</th>';
                       echo '<th>' . $p['nama'] . '</th>';
                       echo '<th>' . date('H:i', strtotime($p['time'])) . '</th>';
-
-                        if ($p['state']=='C/In'){
-                            echo '<th><a href="#" class="badge badge-success">' . $p['state'] . '</a></th>';
-                        }elseif($p['state']=='C/Rest'){
-                            echo '<th><a href="#" class="badge badge-warning">' . $p['state'] . '</a></th>';
-                        }elseif($p['state']=='C/Out'){
-                            echo '<th><a href="#" class="badge badge-danger">' . $p['state'] . '</a></th>';
-                        }else{
-                            echo '<th></th>';
-                        }
-
+                      echo '<th>' . $p['state'] . '</th>';
                       echo '<th>' . $p['new_state'] . '</th>';
-                        if ($p['loc']){
-                            echo '<th><a href="https://www.google.com/maps/search/?api=1&query='. $p['lat'] . ',' . $p['lng'] .'" class="text-secondary" target="_blank"><u>' . $p['loc'] . '</u></a></th>';
+                      if ($sect){
+                          echo '<th>' . $sect['nama'] . '</th>';
                         }else{
                             echo '<th></th>';
                         }
+                        if ($dept){
+                            echo '<th>' . $dept['nama'] . '</th>';
+                        }else{
+                            echo '<th></th>';
+                        }
+                        echo '<th>' . $p['loc'] . '</th>';
                         echo '<th>' . $p['platform'] . '</th>';
                     endforeach;
                     ?>
@@ -88,12 +88,6 @@
             </div>
           </div>
           <div class="card-footer">
-            <a href="<?= base_url('hr/download/presensi'); ?>" class="btn btn-linkedin" target="_blank">
-                <span class="btn-label">
-                    <i class="material-icons">cloud_download</i>
-                </span>
-            RAW DATA FOR DOWNLOAD
-            </a>
           </div>
           <!-- end content-->
         </div>
@@ -104,46 +98,3 @@
     <!-- end row -->
   </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-    var groupColumn = 0;
-    var table = $('#dt-presensi').DataTable({
-        "columnDefs": [
-            { "visible": false, "targets": groupColumn }
-        ],
-        "orderFixed": [[ groupColumn, 'asc' ]],
-        "scrollY": "867px",
-        "scrollX": true,
-        "scrollCollapse": true,
-        "paging": false,
-        // "displayLength": 25,
-        "drawCallback": function ( settings ) {
-            var api = this.api();
-            var rows = api.rows( {page:'current'} ).nodes();
-            var last=null;
- 
-            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-                if ( last !== group ) {
-                    $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="9">'+group+'</td></tr>'
-                    );
- 
-                    last = group;
-                }
-            } );
-        }
-
-    // $('#').DataTable({
-    //     order: [[0, 'asc']],
-    //     rowGroup: {
-    //         dataSrc: 0
-    //     },
-    //   "scrollY": "512px",
-    //   "scrollX": true,
-    //   "scrollCollapse": true,
-    //   "ordering": true,
-    //   "paging": false
-    });
-  });
-</script>
