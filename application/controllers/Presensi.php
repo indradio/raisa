@@ -106,4 +106,60 @@ class Presensi extends CI_Controller
         $this->load->view('presensi/data', $data);
         $this->load->view('templates/footer');
     }
+
+    public function notifikasi($menu)
+    {
+        date_default_timezone_set('asia/jakarta');
+
+        if ($menu == 'index') {
+            $data['sidemenu'] = 'Kehadiran';
+            $data['sidesubmenu'] = 'Data';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('presensi/notifikasi', $data);
+            $this->load->view('templates/footer');
+        } elseif ($menu == 'clin') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            // $this->db->where('role_id', '1');
+            $karyawan = $this->db->get('karyawan')->result_array();
+            foreach ($karyawan as $k) :
+                //Notifikasi ke USER
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $k['phone'],
+                    'message' => "*Semangat Pagi, Hai " . $k['nama'] . "*" .
+                        "\r\n \r\n---Harap absen ONLINE sekarang---" .
+                        "\r\n \r\nRAISA cuma bakal ingetin kamu sampe *kamis* yah." .
+                        "\r\nSetelah kamis kamu harus inget sendiri untuk absen di waktu-waktu ini:" .
+                        "\r\n \r\n*1. Check in antara 7.30-9.00*" .
+                        "\r\n2. Istirahat antara 11.30-13.00" .
+                        "\r\n3. Check out antara 16.00-17.30" .
+                        "\r\n \r\nPastikan GPS smartphone kamu aktif dan ijinkan akses saat browser kamu memintanya ya" .
+                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                );
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($ch);
+            endforeach;
+        } elseif ($menu == 'clrest') {
+        } elseif ($menu == 'clout') {
+        }
+    }
 }
