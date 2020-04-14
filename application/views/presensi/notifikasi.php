@@ -16,6 +16,11 @@
             <a href="<?= base_url('presensi/notifikasi/clrest'); ?>" class="btn btn-warning">Notifikasi Clock Rest</a>
             </br>
             <a href="<?= base_url('presensi/notifikasi/clout'); ?>" class="btn btn-danger">Notifikasi Clock Out</a>
+            </br>
+            </br>
+            <a href="<?= base_url('presensi/notifikasi/sect'); ?>" class="btn btn-info">Notifikasi for Sect/RDA</a>
+            </br>
+            <a href="<?= base_url('presensi/notifikasi/dept'); ?>" class="btn btn-info">Notifikasi for Dept</a>
           </div>
         </div>
       </div>
