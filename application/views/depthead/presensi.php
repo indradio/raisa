@@ -14,20 +14,20 @@
             <div class="toolbar">
               <form class="form" action="<?= base_url('depthead/presensi'); ?>" method="post">
                 <div class="row">
-                  <label class="col-md-1 col-form-label">Dari</label>
+                  <label class="col-md-1 col-form-label">From</label>
                   <div class="col-md-2">
                     <div class="form-group has-default">
                       <input type="text" class="form-control datepicker" id="datefr" name="datefr" required="true" />
                     </div>
                   </div>
-                  <label class="col-md-1 col-form-label">Sampai</label>
+                  <label class="col-md-1 col-form-label">To</label>
                   <div class="col-md-2">
                     <div class="form-group has-default">
                       <input type="text" class="form-control datepicker" id="dateto" name="dateto" onchange='this.form.submit()' required="true" />
                     </div>
                   </div>
                   <div class="col-md-1">
-                    <button type="submit" class="btn btn-twitter"><i class="material-icons">search</i> Cari</button>
+                    <button type="submit" class="btn btn-twitter"><i class="material-icons">search</i> Search</button>
                   </div>
                   <div class="col-md-5"></div>
                 </div>
