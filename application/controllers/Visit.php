@@ -12,7 +12,7 @@ class Visit extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Info COVID-19';
+        $data['sidemenu'] = 'COVID-19';
         $data['sidesubmenu'] = 'Daftar Tamu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();
@@ -35,15 +35,14 @@ class Visit extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('cekdl/visit', $data);
         $this->load->view('templates/footer');
-        
     }
 
     public function check()
     {
         date_default_timezone_set('asia/jakarta');
-        if ($this->input->post('kategori')=='LAINNYA'){
+        if ($this->input->post('kategori') == 'LAINNYA') {
             $kategori = $this->input->post('kategori_lain');
-        }else{
+        } else {
             $kategori = $this->input->post('kategori');
         }
         $this->db->set('pic', $this->input->post('pic'));
@@ -56,35 +55,35 @@ class Visit extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('visit');
 
-        if ($this->input->post('pic')!='WH'){
-            $pic = $this->db->get_where('karyawan', ['inisial' => $this->input->post('pic')])->row_array(); 
+        if ($this->input->post('pic') != 'WH') {
+            $pic = $this->db->get_where('karyawan', ['inisial' => $this->input->post('pic')])->row_array();
             $postData = array(
                 'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                 'number' => $pic['phone'],
                 'message' => "*TAMU KAMU SUDAH TIBA DI WINTEQ*" .
-                "\r\n \r\nNama: *" . $this->input->post('nama') . "*" .
-                "\r\nPerusahaan : *" . $this->input->post('perusahaan') . "*" .
-                "\r\nKeperluan : *" . $this->input->post('keperluan') . "*" .
-                "\r\nHasil Permeriksaan" . 
-                "\r\nSuhu Tubuh: *" . $this->input->post('suhu') . "°C*" .
-                "\r\nHasil : *DI" . $this->input->post('hasil') . "*" .
-                "\r\n \r\nTetap jaga kesehatan kamu ya!"
+                    "\r\n \r\nNama: *" . $this->input->post('nama') . "*" .
+                    "\r\nPerusahaan : *" . $this->input->post('perusahaan') . "*" .
+                    "\r\nKeperluan : *" . $this->input->post('keperluan') . "*" .
+                    "\r\nHasil Permeriksaan" .
+                    "\r\nSuhu Tubuh: *" . $this->input->post('suhu') . "°C*" .
+                    "\r\nHasil : *DI" . $this->input->post('hasil') . "*" .
+                    "\r\n \r\nTetap jaga kesehatan kamu ya!"
             );
 
             $ch = curl_init();
-        
+
             curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            
+
             $headers = array();
             $headers[] = 'Accept: application/json';
             $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
+
             $result = curl_exec($ch);
         }
 

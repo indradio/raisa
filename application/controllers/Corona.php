@@ -23,6 +23,19 @@ class Corona extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function penyebaran()
+    {
+        $data['sidemenu'] = 'COVID-19';
+        $data['sidesubmenu'] = 'Info Penyebaran';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['visit'] = $this->db->get('visit')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('corona/penyebaran', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function tes()
     {
         $data['sidemenu'] = 'COVID-19';
@@ -47,7 +60,7 @@ class Corona extends CI_Controller
         $this->load->view('corona/protokol', $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function tamu()
     {
         $data['sidemenu'] = 'COVID-19';
@@ -60,5 +73,4 @@ class Corona extends CI_Controller
         $this->load->view('corona/tamu', $data);
         $this->load->view('templates/footer');
     }
-    
 }
