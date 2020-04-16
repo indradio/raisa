@@ -56,7 +56,7 @@ class Presensi extends CI_Controller
             $state = 'notime';
         }
         if ($state != 'notime') {
-            if ($this->input->post('lat')) {
+            if ($this->input->post('loc') == "" or $this->input->post('lat') == "" or $this->input->post('lng') == "") {
                 $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
                 if (empty($presensi)) {
                     $data = [
