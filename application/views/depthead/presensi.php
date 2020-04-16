@@ -27,12 +27,13 @@
                     </div>
                   </div>
                   <div class="col-md-1">
-                    <button type="submit" class="btn btn-twitter"><i class="material-icons">search</i> Search</button>
+                    <button type="submit" class="btn btn-twitter"><i class="material-icons">search</i> Search by Date</button>
                   </div>
                   <div class="col-md-5"></div>
                 </div>
               </form>
 
+              <!-- Script Filter per Bulan -->
               <!-- <form class="form" method="post" action="<?= base_url('depthead/presensi'); ?>">
                 <div class="form-group">
                   <label for="copro">Project*</label>
@@ -60,11 +61,11 @@
                     <tr>
                       <th>Tanggal</th>
                       <th>NPK</th>
-                      <th>Nama</th>
-                      <th>Jam</th>
+                      <th>Name</th>
+                      <th>Time</th>
                       <th>State</th>
                       <th>New State</th>
-                      <th>Lokasi</th>
+                      <th>Location</th>
                       <th>Device</th>
                     </tr>
                   </thead>

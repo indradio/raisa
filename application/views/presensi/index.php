@@ -18,30 +18,29 @@
         </div>
       </div>
     </div>
-    <?php 
+    <?php
     $sudahIsi = $this->db->get_where('idcard', ['npk' => $this->session->userdata('npk')])->row_array();
-    if (empty($sudahIsi))
-    {
+    if (empty($sudahIsi)) {
     ?>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-icon card-header-danger">
-            <div class="card-icon">
-              <i class="material-icons">notification_important</i>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-icon card-header-danger">
+              <div class="card-icon">
+                <i class="material-icons">notification_important</i>
+              </div>
+              <h4 class="card-title">PAKTA INTEGRITAS KARYAWAN</h4>
             </div>
-            <h4 class="card-title">PAKTA INTEGRITAS KARYAWAN</h4>
-          </div>
-          <div class="card-body">
-          Sudahkah kamu mengisi <strong>PAKTA INTEGRITAS KARYAWAN</strong>.
-          </br>Jika belum, Klik link berikut : <a href="https://bit.ly/PaktaIntegritasWinteq" target="_blank">FORMULIR PAKTA INTEGRITAS KARYAWAN</a>
-          </br>
-          </br>
-          <a href="<?= base_url('presensi/pik'); ?>" class="badge badge-warning">Jangan tampilkan lagi</a>
+            <div class="card-body">
+              Sudahkah kamu mengisi <strong>PAKTA INTEGRITAS KARYAWAN</strong>.
+              </br>Jika belum, Klik link berikut : <a href="https://bit.ly/PaktaIntegritasWinteq" target="_blank">FORMULIR PAKTA INTEGRITAS KARYAWAN</a>
+              </br>
+              </br>
+              <a href="<?= base_url('presensi/pik'); ?>" class="badge badge-warning">Jangan tampilkan lagi</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     <?php } ?>
     <div class="row">
       <div class="col-md-6">
@@ -108,7 +107,7 @@
               } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
               } else {
-                echo '<button type="submit" class="btn btn-default" disabled="false">No Time</button>';
+                echo '<button type="submit" class="btn btn-default" disabled="false">Belum Waktunya</button>';
                 echo '</div><div class="card-footer mr-auto">Kamu hanya bisa Clock In/Out di jendela waktu yang telah ditentukan.';
               }
               ?>
