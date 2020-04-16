@@ -55,11 +55,19 @@
                 <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
-                      <th>Nama</th>
-                      <th>Tanggal</th>
-                      <th>Masuk</th>
-                      <th>Istirahat</th>
-                      <th>Pulang</th>
+                      <th rowspan="2">Nama</th>
+                      <th rowspan="2">Tanggal</th>
+                      <th colspan="2" style="text-align: center;">MASUK</th>
+                      <th colspan="2" style="text-align: center;">ISTIRAHAT</th>
+                      <th colspan="2" style="text-align: center;">KELUAR</th>
+                    </tr>
+                    <tr>
+                      <th>Waktu</th>
+                      <th>Lokasi</th>
+                      <th>Waktu</th>
+                      <th>Lokasi</th>
+                      <th>Waktu</th>
+                      <th>Lokasi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -98,17 +106,23 @@
                       echo '<th>' . date('d M Y', strtotime("$tahun-$bulan-$hari")) . '</th>';
                       if (!empty($in)) {
                         echo '<th>' . date('H:i', strtotime($in['time'])) . '</th>';
+                        echo '<th>' . $in['loc'] . '</th>';
                       } else {
+                        echo '<th class="bg-danger"></th>';
                         echo '<th class="bg-danger"></th>';
                       }
                       if (!empty($rest)) {
                         echo '<th>' . date('H:i', strtotime($rest['time'])) . '</th>';
+                        echo '<th>' . $rest['loc'] . '</th>';
                       } else {
+                        echo '<th class="bg-danger"></th>';
                         echo '<th class="bg-danger"></th>';
                       }
                       if (!empty($out)) {
                         echo '<th>' . date('H:i', strtotime($out['time'])) . '</th>';
+                        echo '<th>' . $out['loc'] . '</th>';
                       } else {
+                        echo '<th class="bg-danger"></th>';
                         echo '<th class="bg-danger"></th>';
                       }
                       echo '</tr>';

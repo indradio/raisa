@@ -191,7 +191,7 @@ if (flashData == 'masuk') {
 } else if (flashData == 'clockFailed') {
   swal({
     title: "Maaf!",
-    text: "Kehadiraan kamu gagal. \n Sabar dan tunggu sampai RAISA menemukan kamu di peta ya! (Kalo peta tidak muncul, hubungi DIO segera!)",
+    text: "Kehadiraan kamu gagal. \n Sabar dan tunggu sesuai jendela waktu yang telah ditentukan ya! \n (Kalo peta tidak muncul, hubungi RAISA/DIO segera!)",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "error"

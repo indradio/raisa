@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-              <form class="form" method="post" action="<?= base_url('presensi'); ?>">
+              <form class="form" method="post" action="<?= base_url('presensi/data'); ?>">
                 <div class="form-group">
                   <!-- <label for="copro">Project*</label> -->
                   <select class="selectpicker" data-style="btn btn-link" id="month" name="month" title="Pilih Bulan" onchange='this.form.submit()' data-size="7" data-live-search="true" required>
@@ -39,6 +39,7 @@
                     <tr>
                       <th>Tanggal</th>
                       <th>Masuk</th>
+                      <th>Istirahat</th>
                       <th>Pulang</th>
                     </tr>
                   </thead>
@@ -55,6 +56,14 @@
                       $this->db->where('state', 'C/In');
                       $in = $this->db->get('presensi')->row_array();
 
+                      //clock rest
+                      $this->db->where('npk', $this->session->userdata('npk'));
+                      $this->db->where('year(time)', $tahun);
+                      $this->db->where('month(time)', $bulan);
+                      $this->db->where('day(time)', $i);
+                      $this->db->where('state', 'C/Rest');
+                      $rest = $this->db->get('presensi')->row_array();
+
                       //clock out
                       $this->db->where('npk', $this->session->userdata('npk'));
                       $this->db->where('year(time)', $tahun);
@@ -70,6 +79,11 @@
                       echo '<th>' . date('D, d', strtotime($tahun . '-' . $bulan . '-' . $i)) . '</th>';
                       if (!empty($in)) {
                         echo '<th>' . date('H:i', strtotime($in['time'])) . '</th>';
+                      } else {
+                        echo '<th></th>';
+                      }
+                      if (!empty($rest)) {
+                        echo '<th>' . date('H:i', strtotime($rest['time'])) . '</th>';
                       } else {
                         echo '<th></th>';
                       }

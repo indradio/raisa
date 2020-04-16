@@ -46,29 +46,42 @@ class Presensi extends CI_Controller
         } else {
             $day = 'WorkDay';
         }
-        if ($this->input->post('lat')) {
-            $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
-            if (empty($presensi)) {
-                $data = [
-                    'id' => $id,
-                    'npk' => $this->session->userdata('npk'),
-                    'nama' => $this->session->userdata('nama'),
-                    'time' => date('Y-m-d H:i:s'),
-                    'state' => $this->input->post('state'),
-                    'new_state' => 'WFH',
-                    'loc' => $this->input->post('loc'),
-                    'lat' => $this->input->post('lat'),
-                    'lng' => $this->input->post('lng'),
-                    'platform' => $this->input->post('platform'),
-                    'div_id' => $this->session->userdata('div_id'),
-                    'dept_id' => $this->session->userdata('dept_id'),
-                    'sect_id' => $this->session->userdata('sect_id'),
-                    'day_state' => $day
-                ];
-                $this->db->insert('presensi', $data);
-                $this->session->set_flashdata('message', 'clockSuccess');
+        if (date('H:i') >= '07:30' and date('H:i') <= '09:00') {
+            $state = 'C/In';
+        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+            $state = 'C/Rest';
+        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+            $state = 'C/Out';
+        } else {
+            $state = 'notime';
+        }
+        if ($state != 'notime') {
+            if ($this->input->post('lat')) {
+                $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
+                if (empty($presensi)) {
+                    $data = [
+                        'id' => $id,
+                        'npk' => $this->session->userdata('npk'),
+                        'nama' => $this->session->userdata('nama'),
+                        'time' => date('Y-m-d H:i:s'),
+                        'state' => $this->input->post('state'),
+                        'new_state' => 'WFH',
+                        'loc' => $this->input->post('loc'),
+                        'lat' => $this->input->post('lat'),
+                        'lng' => $this->input->post('lng'),
+                        'platform' => $this->input->post('platform'),
+                        'div_id' => $this->session->userdata('div_id'),
+                        'dept_id' => $this->session->userdata('dept_id'),
+                        'sect_id' => $this->session->userdata('sect_id'),
+                        'day_state' => $day
+                    ];
+                    $this->db->insert('presensi', $data);
+                    $this->session->set_flashdata('message', 'clockSuccess');
+                } else {
+                    $this->session->set_flashdata('message', 'clockSuccess2');
+                }
             } else {
-                $this->session->set_flashdata('message', 'clockSuccess2');
+                $this->session->set_flashdata('message', 'clockFailed');
             }
         } else {
             $this->session->set_flashdata('message', 'clockFailed');
@@ -209,10 +222,12 @@ class Presensi extends CI_Controller
                         "\r\n \r\n---Harap absen ONLINE sekarang---" .
                         "\r\n \r\nRAISA cuma bakal ingetin kamu sampe *kamis* yah." .
                         "\r\nSetelah kamis kamu harus inget sendiri untuk absen di waktu-waktu ini:" .
-                        "\r\n \r\n*1. Check in antara 7.30-9.00*" .
+                        "\r\n \r\n1. Check in antara 7.30-9.00" .
                         "\r\n2. Istirahat antara 11.30-13.00" .
                         "\r\n*3. Check out antara 16.00-17.30*" .
                         "\r\n \r\nPastikan GPS smartphone kamu aktif dan ijinkan akses saat browser kamu memintanya ya" .
+                        "\r\n \r\n*INFO : Winteq punya IG baru loh! @astra_winteq.*" .
+                        "\r\n*Di follow ya! Biar tetep hits dan gak ketinggalan info tentang winteq.*" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 
