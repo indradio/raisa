@@ -198,7 +198,7 @@ class Hr extends CI_Controller
             }
             $data['tahun'] = date('Y');
             $data['sidemenu'] = 'HR';
-            $data['sidesubmenu'] = 'Kehadiran';
+            $data['sidesubmenu'] = 'Laporan Kehadiran perbulan';
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -215,7 +215,7 @@ class Hr extends CI_Controller
                 $data['hari'] = date('d', strtotime($this->input->post('prdate')));
             }
             $data['sidemenu'] = 'HR';
-            $data['sidesubmenu'] = 'Kehadiran';
+            $data['sidesubmenu'] = 'Laporan Kehadiran perhari';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -245,24 +245,5 @@ class Hr extends CI_Controller
             $this->load->view('hr/presensi_download', $data);
             $this->load->view('templates/footer');
         }
-    }
-
-    public function presensi_data()
-    {
-        date_default_timezone_set('asia/jakarta');
-        if (empty($this->input->post('month'))) {
-            $data['bulan'] = date('m');
-        } else {
-            $data['bulan'] = $this->input->post('month');
-        }
-        $data['tahun'] = date('Y');
-        $data['sidemenu'] = 'HR';
-        $data['sidesubmenu'] = 'Kehadiran';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('hr/presensi_data', $data);
-        $this->load->view('templates/footer');
     }
 }
