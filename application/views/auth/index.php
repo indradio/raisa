@@ -53,10 +53,10 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-          <?= $this->session->flashdata('message'); ?>
+            <?= $this->session->flashdata('message'); ?>
             <form class="form" method="post" action="<?= base_url('auth/login'); ?>">
               <div class="card card-login card-hidden">
-                <div class="card-header card-header-rose text-center">
+                <div class="card-header card-header-info text-center">
                   <h4 class="card-title">Login</h4>
                 </div>
                 <div class="card-body ">
@@ -89,9 +89,9 @@
             </form>
           </div>
           <div class="col-md-12 ml-auto mr-auto text-center">
-          <!-- <i class="material-icons">perm_phone_msg</i> -->
+            <!-- <i class="material-icons">perm_phone_msg</i> -->
             Butuh bantuan ? Hubungi <a href="https://wa.me/6281373096232?text=Tanya%20tentang%20RAISA?" target="blank">RAISA</a> (+62813-7309-6263)
-            <br/>atau <a href="https://wa.me/6281311196988" target="blank">Dio</a> (+62813-1119-6988)
+            <br />atau <a href="https://wa.me/6281311196988" target="blank">Dio</a> (+62813-1119-6988)
           </div>
         </div>
       </div>
@@ -327,9 +327,9 @@
       }, 200);
 
       window.setTimeout(function() {
-          $(".alert").fadeTo(500, 0).slideUp(500, function(){
-              $(this).remove(); 
-          });
+        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+          $(this).remove();
+        });
       }, 2000);
     });
   </script>
