@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-              <form class="form" method="post" action="<?= base_url('hr/presensi'); ?>">
+              <form class="form" method="post" action="<?= base_url('hr/presensi/bulan'); ?>">
                 <div class="form-group">
                   <!-- <label for="month" class="bmd-label-floating">Select Month *</label> -->
                   <select class="selectpicker" data-style="btn btn-link" id="month" name="month" title="Pilih Bulan" onchange='this.form.submit()' data-size="7" data-live-search="true" required>
@@ -31,7 +31,7 @@
                   </select>
                 </div>
               </form>
-              <a href="<?= base_url('hr/presensi/hari'); ?>" class="btn btn-facebook">
+              <a href="<?= base_url('hr/presensi/tanggal'); ?>" class="btn btn-facebook">
                 <span class="btn-label">
                   <i class="material-icons">today</i>
                 </span>

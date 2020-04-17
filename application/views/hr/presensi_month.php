@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-              <form class="form" id="formDate" method="post" action="<?= base_url('hr/presensi/hari'); ?>">
+              <form class="form" id="formDate" method="post" action="<?= base_url('hr/presensi/tanggal'); ?>">
                 <div class="row">
                   <div class="col-md-3">
                     <label for="prdate" class="bmd-label-floating">Select Date *</label>
@@ -106,21 +106,21 @@
                       echo '<th>' . date('d M Y', strtotime("$tahun-$bulan-$hari")) . '</th>';
                       if (!empty($in)) {
                         echo '<th>' . date('H:i', strtotime($in['time'])) . '</th>';
-                        echo '<th>' . $in['loc'] . '</th>';
+                        echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $in['lat'] . ',' . $in['lng'] . '" class="text-secondary" target="_blank"><u>' . $in['loc'] . '</u></a></th>';
                       } else {
                         echo '<th class="bg-danger"></th>';
                         echo '<th class="bg-danger"></th>';
                       }
                       if (!empty($rest)) {
                         echo '<th>' . date('H:i', strtotime($rest['time'])) . '</th>';
-                        echo '<th>' . $rest['loc'] . '</th>';
+                        echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $rest['lat'] . ',' . $rest['lng'] . '" class="text-secondary" target="_blank"><u>' . $rest['loc'] . '</u></a></th>';
                       } else {
                         echo '<th class="bg-danger"></th>';
                         echo '<th class="bg-danger"></th>';
                       }
                       if (!empty($out)) {
                         echo '<th>' . date('H:i', strtotime($out['time'])) . '</th>';
-                        echo '<th>' . $out['loc'] . '</th>';
+                        echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $out['lat'] . ',' . $out['lng'] . '" class="text-secondary" target="_blank"><u>' . $out['loc'] . '</u></a></th>';
                       } else {
                         echo '<th class="bg-danger"></th>';
                         echo '<th class="bg-danger"></th>';
@@ -146,11 +146,6 @@
 
 <script>
   $(document).ready(function() {
-    $('#prdate').datepicker()
-      .on(changeDate, function() {
-        $('#formDate').submit(); // `e` here contains the extra attributes
-      });
-
     $('#dt-status').DataTable({
       "scrollY": "512px",
       "scrollX": true,
@@ -158,6 +153,5 @@
       "ordering": false,
       "paging": false
     });
-
   });
 </script>

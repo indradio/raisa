@@ -181,15 +181,17 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*Semangat Pagi, Hai " . $k['nama'] . "*" .
-                        "\r\n \r\n---Harap absen ONLINE sekarang---" .
-                        "\r\n \r\nRAISA cuma bakal ingetin kamu sampe *kamis* yah." .
-                        "\r\nSetelah kamis kamu harus inget sendiri untuk absen di waktu-waktu ini:" .
-                        "\r\n \r\n1. Check in antara 7.30-9.00" .
+                    'message' => "*HARI SABTU DAN MINGGU WAJIB LAPOR KEHADIRAN*" .
+                        "\r\n \r\nSemangat Pagi, Hai " . $k['nama'] . "*" .
+                        "\r\nMasih terkait dengan mengikuti himbauan pemerintah agar kita semua di rumah aja, hari *sabtu dan minggu* karyawan tetap harus absen online melaporkan lokasinya di RAISA yah." .
+                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu rumah dan tempat kerja saja, tidak interaksi dengan orang di luar lingkungan itu." .
+                        "\r\n \r\nIni semua dilakukan sebagai ikhtiar agar pandemi Covid-19 di negeri kita bisa segera berakhir." .
+                        "\r\n \r\n*1. Check in antara 7.30-9.00*" .
                         "\r\n*2. Istirahat antara 11.30-13.00*" .
-                        "\r\n3. Check out antara 16.00-17.30" .
+                        "\r\n*3. Check out antara 16.00-17.30*" .
                         "\r\n \r\nPastikan GPS smartphone kamu aktif dan ijinkan akses saat browser kamu memintanya ya" .
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        "\r\n \r\n====Selalu gunakan masker non medis jika interaksi dengan orang====" .
+                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 
                 $ch = curl_init();
