@@ -182,7 +182,7 @@ class Presensi extends CI_Controller
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
                     'message' => "*HARI SABTU DAN MINGGU WAJIB LAPOR KEHADIRAN*" .
-                        "\r\n \r\nSemangat Pagi, Hai " . $k['nama'] . "*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
                         "\r\nMasih terkait dengan mengikuti himbauan pemerintah agar kita semua di rumah aja, hari *sabtu dan minggu* karyawan tetap harus absen online melaporkan lokasinya di RAISA yah." .
                         "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu rumah dan tempat kerja saja, tidak interaksi dengan orang di luar lingkungan itu." .
                         "\r\n \r\nIni semua dilakukan sebagai ikhtiar agar pandemi Covid-19 di negeri kita bisa segera berakhir." .
