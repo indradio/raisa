@@ -12,7 +12,7 @@
                         <h4 class="card-title">Laporan Man Hour</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="<?= base_url('lembur/laporan'); ?>" method="post">
+                        <form class="form-horizontal" action="<?= base_url('lembur/laporan/depthead'); ?>" method="post">
                         <!-- <div class="row">
                                 <label class="col-md-2 col-form-label">Laporan Berdasarkan</label>
                                 <div class="col-md-5">
