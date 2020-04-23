@@ -17,11 +17,12 @@ class Presensi extends CI_Controller
         $data['sidesubmenu'] = 'Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
-        if (date('H:i') >= '07:30' and date('H:i') <= '09:00') {
+        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
+        if (date('H:i') >= '06:30' and date('H:i') <= '09:00') {
             $data['state'] = 'C/In';
         } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $data['state'] = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+        } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
             $data['state'] = 'C/Out';
         } else {
             $data['state'] = 'No State for this time';
@@ -46,11 +47,12 @@ class Presensi extends CI_Controller
         } else {
             $day = 'WorkDay';
         }
-        if (date('H:i') >= '07:30' and date('H:i') <= '09:00') {
+        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
+        if (date('H:i') >= '06:30' and date('H:i') <= '09:00') {
             $state = 'C/In';
         } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $state = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+        } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
             $state = 'C/Out';
         } else {
             $state = 'notime';
@@ -137,21 +139,27 @@ class Presensi extends CI_Controller
         } elseif ($menu == 'clin') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            // $this->db->where('role_id', '1');
+            $this->db->where('work_contract', 'Indirect Labor');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*Semangat Pagi, Hai " . $k['nama'] . "*" .
-                        "\r\n \r\n---Harap absen ONLINE sekarang---" .
-                        "\r\n \r\nRAISA cuma bakal ingetin kamu sampe *kamis* yah." .
-                        "\r\nSetelah kamis kamu harus inget sendiri untuk absen di waktu-waktu ini:" .
-                        "\r\n \r\n*1. Check in antara 7.30-9.00*" .
-                        "\r\n2. Istirahat antara 11.30-13.00" .
-                        "\r\n3. Check out antara 16.00-17.30" .
-                        "\r\n \r\nPastikan GPS smartphone kamu aktif dan ijinkan akses saat browser kamu memintanya ya" .
+                    'message' => "*INFO PENTING! Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
+                        "\r\n \r\n*Semangat Pagi, Hai " . $k['nama'] . "*" .
+                        "\r\n \r\nSehubungan dengan datangnya Bulan Suci Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Suci Ramadan 1441 H" .
+                        "\r\nJam Kerja ini berlaku dari hari *senin-jumat* dan efektif mulai tanggal *27 April 2020*." .
+                        "\r\n \r\n*Bagi karyawan yang kerja di kantor/winteq*" .
+                        "\r\n1. Masuk Jam *07:00*" .
+                        "\r\n2. Istirahat Jam *12:00-13:00*" .
+                        "\r\n3. Pulang Jam *16:00*" .
+                        "\r\n \r\n*Bagi karyawan yang kerja dari rumah (RAISA)*" .
+                        "\r\n1. Check In antara *06:30-07:30*" .
+                        "\r\n2. Istirahat antara *11:30-13:00*" .
+                        "\r\n3. Check Out antara *16:00-18:00*" .
+                        "\r\nPastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!" .
+                        "\r\n \r\nKamu juga dapat melihat Surat Keputusan tersebut melalui link berikut https://raisa.winteq-astra.com/assets/pdf/jam_kerja_ramadan.pdf" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 
@@ -213,23 +221,27 @@ class Presensi extends CI_Controller
         } elseif ($menu == 'clout') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            // $this->db->where('role_id', '1');
+            $this->db->where('work_contract', 'Direct Labor');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*Semangat Pagi, Hai " . $k['nama'] . "*" .
-                        "\r\n \r\n---Harap absen ONLINE sekarang---" .
-                        "\r\n \r\nRAISA cuma bakal ingetin kamu sampe *kamis* yah." .
-                        "\r\nSetelah kamis kamu harus inget sendiri untuk absen di waktu-waktu ini:" .
-                        "\r\n \r\n1. Check in antara 7.30-9.00" .
-                        "\r\n2. Istirahat antara 11.30-13.00" .
-                        "\r\n*3. Check out antara 16.00-17.30*" .
-                        "\r\n \r\nPastikan GPS smartphone kamu aktif dan ijinkan akses saat browser kamu memintanya ya" .
-                        "\r\n \r\n*INFO : Winteq punya IG baru loh! @astra_winteq.*" .
-                        "\r\n*Di follow ya! Biar tetep hits dan gak ketinggalan info tentang winteq.*" .
+                    'message' => "*INFO PENTING! Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
+                        "\r\n \r\n*Semangat Pagi, Hai " . $k['nama'] . "*" .
+                        "\r\n \r\nSehubungan dengan datangnya Bulan Suci Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Suci Ramadan 1441 H" .
+                        "\r\nJam Kerja ini berlaku dari hari *senin-jumat* dan efektif mulai tanggal *27 April 2020*." .
+                        "\r\n \r\n*Bagi karyawan yang kerja di kantor/winteq*" .
+                        "\r\n1. Masuk Jam *07:00*" .
+                        "\r\n2. Istirahat Jam *12:00-13:00*" .
+                        "\r\n3. Pulang Jam *16:00*" .
+                        "\r\n \r\n*Bagi karyawan yang kerja dari rumah (RAISA)*" .
+                        "\r\n1. Check In antara *06:30-07:30*" .
+                        "\r\n2. Istirahat antara *11:30-13:00*" .
+                        "\r\n3. Check Out antara *16:00-18:00*" .
+                        "\r\nPastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!" .
+                        "\r\n \r\nKamu juga dapat melihat Surat Keputusan tersebut melalui link berikut https://raisa.winteq-astra.com/assets/pdf/jam_kerja_ramadan.pdf" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 

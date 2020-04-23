@@ -24,17 +24,17 @@
                         <div class="tab-content tab-space">
                             <div class="tab-pane active" id="link1">
                                 <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/Dispensasi Kemenperin.pdf"></iframe>
+                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/dispensasi_kemenperin.pdf"></iframe>
                                 </div>
                                 </br>
-                                <a href="<?= base_url(); ?>assets/pdf/Dispensasi Kemenperin.pdf" target="_blank">Klik Disini untuk download</a>
+                                <a href="<?= base_url(); ?>assets/pdf/dispensasi_kemenperin.pdf" target="_blank">Klik Disini untuk download</a>
                             </div>
                             <div class="tab-pane" id="link2">
                                 <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/Dispensasi Winteq.pdf"></iframe>
+                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/dispensasi_winteq.pdf"></iframe>
                                 </div>
                                 </br>
-                                <a href="<?= base_url(); ?>assets/pdf/Dispensasi Winteq.pdf" target="_blank">Klik Disini untuk download</a>
+                                <a href="<?= base_url(); ?>assets/pdf/dispensasi_winteq.pdf" target="_blank">Klik Disini untuk download</a>
                             </div>
                         </div>
                     </div>

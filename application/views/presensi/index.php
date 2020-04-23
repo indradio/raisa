@@ -5,15 +5,14 @@
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <!-- Begin Content -->
-          Sesuai dengan aturan pemerintah terkait situasi darurat nasional mengatasi pandemi Covid-19, karyawan yang tidak ke kantor diharapkan <strong>untuk tetap di rumah, tidak keluar rumah atau bahkan mudik</strong>.
+          Sesuai dengan Surat Keputusan No <strong>OO4/WTQ-HR/IV/2020</strong> tentang <strong>"Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H"</strong>.
+          </br>Berikut adalah perubahan jadwal absensi melalui RAISA.
           </br>
-          </br>Untuk itu WINTEQ akan memantau dan memastikan karyawan mengikuti himbauan pemerintah. Karyawan diwajibkan melakukan absen yang mengirimkan lokasi realtime di 3 jendela waktu berikut:
+          </br><strong>1. Check in antara 06:30 - 07.30</strong>
+          </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
+          </br><strong>3. Check out antara 16.00 - 18.00</strong>
           </br>
-          </br>1. Check in antara 7.30-9.00
-          </br>2. Istirahat antara 11.30-13.00
-          </br>3. Check out antara 16.00-17.30
-          </br>
-          </br>Harap mengijinkan browser mengakses lokasi perangkat tiap kali diminta.
+          </br>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.
           <!-- End Content -->
         </div>
       </div>
@@ -100,11 +99,12 @@
             </div>
             <div class="card-footer ml-auto">
               <?php
-              if (date('H:i') >= '07:30' and date('H:i') <= '09:00') {
+              // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
+              if (date('H:i') >= '06:30' and date('H:i') <= '09:00') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
               } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Rest Time</button>';
-              } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+              } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
               } else {
                 echo '<button type="submit" class="btn btn-default" disabled="false">Belum Waktunya</button>';

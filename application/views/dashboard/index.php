@@ -1,24 +1,25 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-info" role="alert"> -->
-    <!-- Begin Content -->
-    <!-- Sesuai dengan aturan pemerintah terkait situasi darurat nasional mengatasi pandemi Covid-19, karyawan yang tidak ke kantor diharapkan <strong>untuk tetap di rumah, tidak keluar rumah atau bahkan mudik</strong>.
+        <div class="alert alert-danger" role="alert">
+          <!-- Begin Content -->
+          <strong>INFO PENTING! PERUBAHAN JAM KEHADIRAN</strong>
           </br>
-          </br>Untuk itu WINTEQ akan memantau dan memastikan karyawan mengikuti himbauan pemerintah. Karyawan diwajibkan melakukan absen yang mengirimkan lokasi realtime di 3 jendela waktu berikut:
+          </br>Sesuai dengan Surat Keputusan No <strong>OO4/WTQ-HR/IV/2020</strong> tentang <strong>"Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H"</strong>.
+          </br>Berikut adalah perubahan jadwal absensi melalui RAISA.
           </br>
-          </br>1. Check in antara 7.30-9.00
-          </br>2. Istirahat antara 11.30-13.00
-          </br>3. Check out antara 16.00-17.30
+          </br><strong>1. Check in antara 06:30 - 07.30</strong>
+          </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
+          </br><strong>3. Check out antara 16.00 - 18.00</strong>
           </br>
-          </br>Pilih Menu KEHADIRAN atau klik <a href="<?= base_url(); ?>presensi">KEHADIRAN DISINI</a>
-          </br>Harap mengijinkan browser mengakses lokasi perangkat tiap kali diminta. -->
-    <!-- End Content -->
-    <!-- </div>
+          </br><a href="<?= base_url(); ?>presensi" class="btn btn-success">KLIK DISINI UNTUK ABSENSI</a>
+          </br><small>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.</small>
+          <!-- End Content -->
+        </div>
       </div>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -34,8 +35,23 @@
             </br>Oleh karena itu, Kegiatan Operasional WINTEQ tetap dijalankan dengan mengikuti aturan yang telah ditetapkan oleh pemerintah.
             </br>Bagi teman-teman yang membutuhkan surat keterangan/izin tersebut dapat dilihat melalui link berikut :
             </br>
-            </br>Surat Keterangan/Izin Kemenperin <a href="<?= base_url(); ?>corona/izin">LIHAT</a> atau <a href="<?= base_url(); ?>assets/pdf/Dispensasi Kemenperin.pdf" target="_blank">DOWNLOAD</a>
-            </br>Surat Keterangan/Izin Winteq <a href="<?= base_url(); ?>corona/izin">LIHAT</a> atau <a href="<?= base_url(); ?>assets/pdf/Dispensasi Winteq.pdf" target="_blank">DOWNLOAD</a>
+            </br><a href="<?= base_url('assets/pdf/dispensasi_kemenperin.pdf'); ?>" class="btn btn-linkedin" target="_blank">
+              <span class="btn-label">
+                <i class="material-icons">cloud_download</i>
+              </span>
+              DOWNLOAD SK KEMENPERIN
+            </a>
+            </br><small>*Surat Keterangan/Izin dari Kemenperin</small>
+            </br>
+            </br><a href="<?= base_url('assets/pdf/dispensasi_winteq.pdf'); ?>" class="btn btn-linkedin" target="_blank">
+              <span class="btn-label">
+                <i class="material-icons">cloud_download</i>
+              </span>
+              DOWNLOAD SK WINTEQ
+            </a>
+            </br><small>*Surat Keterangan/Izin internal winteq</small>
+            </br>
+            </br>Surat Keterangan/Izin tersebut dapat juga akses pada halaman berikut : <a href="<?= base_url(); ?>corona/izin">SK OPERASIONAL</a>
             <!-- End Content -->
           </div>
         </div>
