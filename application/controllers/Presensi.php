@@ -146,9 +146,10 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFO PENTING! Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
-                        "\r\n \r\n*Semangat Pagi, Hai " . $k['nama'] . "*" .
-                        "\r\n \r\nSehubungan dengan datangnya Bulan Suci Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Suci Ramadan 1441 H" .
+                    'message' => "*INFO PENTING!*" .
+                        "\r\n*Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\nSehubungan dengan datangnya Bulan Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Ramadan 1441 H" .
                         "\r\nJam Kerja ini berlaku dari hari *senin-jumat* dan efektif mulai tanggal *27 April 2020*." .
                         "\r\n \r\n*Bagi karyawan yang kerja di kantor/winteq*" .
                         "\r\n1. Masuk Jam *07:00*" .
@@ -158,7 +159,7 @@ class Presensi extends CI_Controller
                         "\r\n1. Check In antara *06:30-07:30*" .
                         "\r\n2. Istirahat antara *11:30-13:00*" .
                         "\r\n3. Check Out antara *16:00-18:00*" .
-                        "\r\nPastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!" .
+                        "\r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nKamu juga dapat melihat Surat Keputusan tersebut melalui link berikut https://raisa.winteq-astra.com/assets/pdf/jam_kerja_ramadan.pdf" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
@@ -228,9 +229,10 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFO PENTING! Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
-                        "\r\n \r\n*Semangat Pagi, Hai " . $k['nama'] . "*" .
-                        "\r\n \r\nSehubungan dengan datangnya Bulan Suci Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Suci Ramadan 1441 H" .
+                    'message' => "*INFO PENTING!*" .
+                        "\r\n*Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\nSehubungan dengan datangnya Bulan Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Ramadan 1441 H" .
                         "\r\nJam Kerja ini berlaku dari hari *senin-jumat* dan efektif mulai tanggal *27 April 2020*." .
                         "\r\n \r\n*Bagi karyawan yang kerja di kantor/winteq*" .
                         "\r\n1. Masuk Jam *07:00*" .
@@ -240,7 +242,7 @@ class Presensi extends CI_Controller
                         "\r\n1. Check In antara *06:30-07:30*" .
                         "\r\n2. Istirahat antara *11:30-13:00*" .
                         "\r\n3. Check Out antara *16:00-18:00*" .
-                        "\r\nPastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!" .
+                        "\r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nKamu juga dapat melihat Surat Keputusan tersebut melalui link berikut https://raisa.winteq-astra.com/assets/pdf/jam_kerja_ramadan.pdf" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
