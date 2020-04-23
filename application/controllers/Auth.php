@@ -35,7 +35,7 @@ class Auth extends CI_Controller
         $npk = $this->input->post('npk');
         $password = $this->input->post('pwd');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
-      
+
         if ($karyawan) {
             if (password_verify($password, $karyawan['password'])) {
                 //cari atasan 1
@@ -104,7 +104,7 @@ class Auth extends CI_Controller
                     'role_id' => $karyawan['role_id']
                 ];
                 $this->session->set_userdata($data);
-                // $this->session->set_flashdata('message', 'masuk');
+                $this->session->set_flashdata('message', 'masuk');
                 redirect('dashboard');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-rose">

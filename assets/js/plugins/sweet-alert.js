@@ -2,10 +2,10 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "INFO di RAISA!",
-    text: "",
+    title: "Hai Sobat RAISA!",
+    text: "Sudah absen (melaporkan kehadiran) hari ini? Jangan sampai lupa ya!",
     buttonsStyling: false,
-    confirmButtonClass: "btn btn-primary",
+    confirmButtonClass: "btn btn-info",
     type: "info"
   }).catch(swal.noop)
 } else if (flashData == 'setujudl') {

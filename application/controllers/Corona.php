@@ -23,6 +23,19 @@ class Corona extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function izin()
+    {
+        $data['sidemenu'] = 'COVID-19';
+        $data['sidesubmenu'] = 'Izin Operasional';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['visit'] = $this->db->get('visit')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('corona/suratizin', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function penyebaran()
     {
         $data['sidemenu'] = 'COVID-19';
