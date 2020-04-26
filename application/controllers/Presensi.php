@@ -17,8 +17,7 @@ class Presensi extends CI_Controller
         $data['sidesubmenu'] = 'Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
-        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-        if (date('H:i') >= '06:30' and date('H:i') <= '09:00') {
+        if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
             $data['state'] = 'C/In';
         } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $data['state'] = 'C/Rest';
@@ -47,8 +46,7 @@ class Presensi extends CI_Controller
         } else {
             $day = 'WorkDay';
         }
-        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-        if (date('H:i') >= '06:30' and date('H:i') <= '09:00') {
+        if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
             $state = 'C/In';
         } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $state = 'C/Rest';
