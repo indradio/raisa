@@ -52,11 +52,11 @@
             </div>
             <div class="material-datatables">
               <div class="table-responsive">
-                <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <table id="dt-presensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
-                      <th rowspan="2">Nama</th>
                       <th rowspan="2">Tanggal</th>
+                      <th rowspan="2">Nama</th>
                       <th colspan="2" style="text-align: center;">MASUK</th>
                       <th colspan="2" style="text-align: center;">ISTIRAHAT</th>
                       <th colspan="2" style="text-align: center;">KELUAR</th>
@@ -102,8 +102,8 @@
                       $out = $this->db->get('presensi')->row_array();
 
                       echo '<tr>';
+                      echo '<th>' . date('m-d-Y', strtotime("$tahun-$bulan-$tanggal")) . '</th>';
                       echo '<th><a href="' . base_url('hr/presensi/' . $k['inisial']) . '" class="text-primary"><u>' . $k['nama'] . '</u></a></th>';
-                      echo '<th>' . date('d M Y', strtotime("$tahun-$bulan-$tanggal")) . '</th>';
                       if (!empty($in)) {
                         echo '<th>' . date('H:i', strtotime($in['time'])) . '</th>';
                         echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $in['lat'] . ',' . $in['lng'] . '" class="text-secondary" target="_blank"><u>' . $in['loc'] . '</u></a></th>';
@@ -146,18 +146,22 @@
 
 <script>
   $(document).ready(function() {
-    $('#prdate').datepicker()
-      .on(changeDate, function() {
-        $('#formDate').submit(); // `e` here contains the extra attributes
-      });
-
-    $('#dt-status').DataTable({
-      "scrollY": "512px",
-      "scrollX": true,
-      "scrollCollapse": true,
-      "ordering": false,
-      "paging": false
+      $('#dt-presensi').DataTable({
+      "pagingType": "full_numbers",
+        scrollX: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'print'
+        ],
+        "lengthMenu": [
+            [25, 50, 100, -1],
+            [25, 50, 100, "All"]
+        ],
+         "displayLength": 25,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
     });
-
   });
 </script>

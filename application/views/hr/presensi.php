@@ -48,51 +48,85 @@
               <div class="table-responsive">
                 <table id="dt-presensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
+                  <tr>
+                      <th rowspan="2">Nama</th>
+                      <th rowspan="2">Tanggal</th>
+                      <th colspan="2" style="text-align: center;">MASUK</th>
+                      <th colspan="2" style="text-align: center;">ISTIRAHAT</th>
+                      <th colspan="2" style="text-align: center;">KELUAR</th>
+                    </tr>
                     <tr>
-                      <th>Tanggal</th>
-                      <th>NPK</th>
-                      <th>Nama</th>
-                      <th>Jam</th>
-                      <th>State</th>
-                      <th>New State</th>
+                      <th>Waktu</th>
                       <th>Lokasi</th>
-                      <th>Device</th>
+                      <th>Waktu</th>
+                      <th>Lokasi</th>
+                      <th>Waktu</th>
+                      <th>Lokasi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $this->db->where('year(time)', $tahun);
-                    $this->db->where('month(time)', $bulan);
-                    $presensi = $this->db->get('presensi')->result_array();
-                    foreach ($presensi as $p) :
-                      if (date('D', strtotime($p['time'])) == 'Sat' or date('D', strtotime($p['time'])) == 'Sun') {
-                        echo '<tr class="table-danger">';
-                      } else {
+                     $this->db->where('is_active', '1');
+                     $this->db->where('status', '1');
+                     $users_wtq = $this->db->get('karyawan')->result_array();
+                     foreach ($users_wtq as $k) {
+                      $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                      for ($i = 1; $i < $tanggal + 1; $i++) {
+  
+                        //clock in
+                        $this->db->where('npk', $k['npk']);
+                        $this->db->where('year(time)', $tahun);
+                        $this->db->where('month(time)', $bulan);
+                        $this->db->where('day(time)', $i);
+                        $this->db->where('state', 'C/In');
+                        $in = $this->db->get('presensi')->row_array();
+  
+                        //clock Rest
+                        $this->db->where('npk', $k['npk']);
+                        $this->db->where('year(time)', $tahun);
+                        $this->db->where('month(time)', $bulan);
+                        $this->db->where('day(time)', $i);
+                        $this->db->where('state', 'C/Rest');
+                        $rest = $this->db->get('presensi')->row_array();
+  
+                        //clock out
+                        $this->db->where('npk', $k['npk']);
+                        $this->db->where('year(time)', $tahun);
+                        $this->db->where('month(time)', $bulan);
+                        $this->db->where('day(time)', $i);
+                        $this->db->where('state', 'C/Out');
+                        $out = $this->db->get('presensi')->row_array();
                         echo '<tr>';
+                        echo '<th>' . $k['nama'] . '</th>';
+                          if (date('D', strtotime($tahun . '-' . $bulan . '-' . $i)) == 'Sat' or date('D', strtotime($tahun . '-' . $bulan . '-' . $i)) == 'Sun') {
+                            echo '<th class="table-warning">' . date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)) . '</th>';
+                          } else {
+                            echo '<th>' . date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)) . '</th>';
+                          }
+                        if (!empty($in)) {
+                          echo '<th>' . date('H:i', strtotime($in['time'])) . '</th>';
+                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $in['lat'] . ',' . $in['lng'] . '" class="text-secondary" target="_blank"><u>' . $in['loc'] . '</u></a></th>';
+                        } else {
+                          echo '<th class="table-danger"></th>';
+                          echo '<th class="table-danger"></th>';
+                        }
+                        if (!empty($rest)) {
+                          echo '<th>' . date('H:i', strtotime($rest['time'])) . '</th>';
+                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $rest['lat'] . ',' . $rest['lng'] . '" class="text-secondary" target="_blank"><u>' . $rest['loc'] . '</u></a></th>';
+                        } else {
+                          echo '<th class="table-danger"></th>';
+                          echo '<th class="table-danger"></th>';
+                        }
+                        if (!empty($out)) {
+                          echo '<th>' . date('H:i', strtotime($out['time'])) . '</th>';
+                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $out['lat'] . ',' . $out['lng'] . '" class="text-secondary" target="_blank"><u>' . $out['loc'] . '</u></a></th>';
+                        } else {
+                          echo '<th class="table-danger"></th>';
+                          echo '<th class="table-danger"></th>';
+                        }
+                        echo '</tr>';
                       }
-                      echo '<th>' . date('d M Y', strtotime($p['time'])) . '</th>';
-                      echo '<th>' . $p['npk'] . '</th>';
-                      echo '<th>' . $p['nama'] . '</th>';
-                      echo '<th>' . date('H:i', strtotime($p['time'])) . '</th>';
-
-                      if ($p['state'] == 'C/In') {
-                        echo '<th><a href="#" class="badge badge-success">' . $p['state'] . '</a></th>';
-                      } elseif ($p['state'] == 'C/Rest') {
-                        echo '<th><a href="#" class="badge badge-warning">' . $p['state'] . '</a></th>';
-                      } elseif ($p['state'] == 'C/Out') {
-                        echo '<th><a href="#" class="badge badge-danger">' . $p['state'] . '</a></th>';
-                      } else {
-                        echo '<th></th>';
-                      }
-
-                      echo '<th>' . $p['new_state'] . '</th>';
-                      if ($p['loc']) {
-                        echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $p['lat'] . ',' . $p['lng'] . '" class="text-secondary" target="_blank"><u>' . $p['loc'] . '</u></a></th>';
-                      } else {
-                        echo '<th></th>';
-                      }
-                      echo '<th>' . $p['platform'] . '</th>';
-                    endforeach;
+                    }
                     ?>
                   </tbody>
                 </table>
@@ -115,18 +149,34 @@
   $(document).ready(function() {
     var groupColumn = 0;
     var table = $('#dt-presensi').DataTable({
-      "columnDefs": [{
-        "visible": false,
-        "targets": groupColumn
-      }],
-      "orderFixed": [
-        [groupColumn, 'asc']
-      ],
-      "scrollY": "867px",
-      "scrollX": true,
-      "scrollCollapse": true,
-      "paging": false,
+      // "columnDefs": [{
+      //   "visible": false,
+      //   "targets": groupColumn
+      // }],
+      // "orderFixed": [
+      //   [groupColumn, 'asc']
+      // ],
+      // "scrollY": "867px",
+      // "scrollX": true,
+      // "scrollCollapse": true,
+      // "paging": false,
       // "displayLength": 25,
+
+      "pagingType": "full_numbers",
+        scrollX: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'print'
+        ],
+        "lengthMenu": [
+            [25, 50, 100, -1],
+            [25, 50, 100, "All"]
+        ],
+         "displayLength": <?= $tanggal; ?>,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        },
       "drawCallback": function(settings) {
         var api = this.api();
         var rows = api.rows({
