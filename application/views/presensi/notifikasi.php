@@ -11,16 +11,16 @@
             <h4 class="card-title">Notifikasi</h4>
           </div>
           <div class="card-body">
-            <a href="<?= base_url('presensi/notifikasi/clin'); ?>" class="btn btn-success">Notifikasi Clock In</a>
+            <a href="<?= base_url('presensi/notifikasi/clin'); ?>" class="btn btn-success">Notifikasi A</a>
             </br>
-            <a href="<?= base_url('presensi/notifikasi/clrest'); ?>" class="btn btn-warning">Notifikasi Clock Rest</a>
+            <a href="<?= base_url('presensi/notifikasi/clrest'); ?>" class="btn btn-warning">Notifikasi B</a>
             </br>
-            <a href="<?= base_url('presensi/notifikasi/clout'); ?>" class="btn btn-danger">Notifikasi Clock Out</a>
+            <a href="<?= base_url('presensi/notifikasi/clout'); ?>" class="btn btn-danger">Notifikasi C</a>
             </br>
-            </br>
+            <!-- </br>
             <a href="<?= base_url('presensi/notifikasi/sect'); ?>" class="btn btn-info">Notifikasi for Sect/RDA</a>
             </br>
-            <a href="<?= base_url('presensi/notifikasi/dept'); ?>" class="btn btn-info">Notifikasi for Dept</a>
+            <a href="<?= base_url('presensi/notifikasi/dept'); ?>" class="btn btn-info">Notifikasi for Dept</a> -->
           </div>
         </div>
       </div>
