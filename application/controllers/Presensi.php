@@ -137,28 +137,19 @@ class Presensi extends CI_Controller
         } elseif ($menu == 'clin') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('work_contract', 'Indirect Labor');
+            $this->db->where('group', 'A');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFO PENTING!*" .
-                        "\r\n*Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
+                    'message' => "*INFORMASI : ABSENSI DI HARI LIBUR HANYA 1 KALI*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSehubungan dengan datangnya Bulan Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Ramadan 1441 H" .
-                        "\r\nJam Kerja ini berlaku dari hari *senin-jumat* dan efektif mulai tanggal *27 April 2020*." .
-                        "\r\n \r\n*Bagi karyawan yang kerja di kantor/winteq*" .
-                        "\r\n1. Masuk Jam *07:00*" .
-                        "\r\n2. Istirahat Jam *12:00-13:00*" .
-                        "\r\n3. Pulang Jam *16:00*" .
-                        "\r\n \r\n*Bagi karyawan yang kerja dari rumah (RAISA)*" .
-                        "\r\n1. Check In antara *06:30-07:30*" .
-                        "\r\n2. Istirahat antara *11:30-13:00*" .
-                        "\r\n3. Check Out antara *16:00-18:00*" .
-                        "\r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
-                        "\r\n \r\nKamu juga dapat melihat Surat Keputusan tersebut melalui link berikut https://raisa.winteq-astra.com/assets/pdf/jam_kerja_ramadan.pdf" .
+                        "\r\nLaporan kehadiran (Absensi) di hari libur (Sabtu dan Minggu atau libur nasional) hanya dilakukan 1 kali" .
+                        "\r\n*Absensi dilakukan pada waktu Istirahat antara pukul 11:30-13:00*" .
+                        "\r\n \r\nAdapun untuk di hari kerja tetap dilakukan sebanyak 3 kali yakni masuk, istirahat, dan keluar" .
+                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 
@@ -178,70 +169,23 @@ class Presensi extends CI_Controller
 
                 $result = curl_exec($ch);
             endforeach;
+            redirect('presensi/notifikasi/index');
         } elseif ($menu == 'clrest') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            // $this->db->where('role_id', '1');
+            $this->db->where('group', 'B');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*HARI SABTU DAN MINGGU WAJIB LAPOR KEHADIRAN*" .
+                    'message' => "*INFORMASI : ABSENSI DI HARI LIBUR HANYA 1 KALI*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nMasih terkait dengan mengikuti himbauan pemerintah agar kita semua di rumah aja, hari *sabtu dan minggu* karyawan tetap harus absen online melaporkan lokasinya di RAISA yah." .
-                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu rumah dan tempat kerja saja, tidak interaksi dengan orang di luar lingkungan itu." .
-                        "\r\n \r\nIni semua dilakukan sebagai ikhtiar agar pandemi Covid-19 di negeri kita bisa segera berakhir." .
-                        "\r\n \r\n*1. Check in antara 7.30-9.00*" .
-                        "\r\n*2. Istirahat antara 11.30-13.00*" .
-                        "\r\n*3. Check out antara 16.00-17.30*" .
-                        "\r\n \r\nPastikan GPS smartphone kamu aktif dan ijinkan akses saat browser kamu memintanya ya" .
-                        "\r\n \r\n====Selalu gunakan masker non medis jika interaksi dengan orang====" .
-                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
-            endforeach;
-        } elseif ($menu == 'clout') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('work_contract', 'Direct Labor');
-            $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
-                //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFO PENTING!*" .
-                        "\r\n*Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSehubungan dengan datangnya Bulan Ramadan 1441 H, Berikut ini adalah jadwal jam kerja selama Bulan Ramadan 1441 H" .
-                        "\r\nJam Kerja ini berlaku dari hari *senin-jumat* dan efektif mulai tanggal *27 April 2020*." .
-                        "\r\n \r\n*Bagi karyawan yang kerja di kantor/winteq*" .
-                        "\r\n1. Masuk Jam *07:00*" .
-                        "\r\n2. Istirahat Jam *12:00-13:00*" .
-                        "\r\n3. Pulang Jam *16:00*" .
-                        "\r\n \r\n*Bagi karyawan yang kerja dari rumah (RAISA)*" .
-                        "\r\n1. Check In antara *06:30-07:30*" .
-                        "\r\n2. Istirahat antara *11:30-13:00*" .
-                        "\r\n3. Check Out antara *16:00-18:00*" .
-                        "\r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
-                        "\r\n \r\nKamu juga dapat melihat Surat Keputusan tersebut melalui link berikut https://raisa.winteq-astra.com/assets/pdf/jam_kerja_ramadan.pdf" .
+                        "\r\nLaporan kehadiran (Absensi) di hari libur (Sabtu dan Minggu atau libur nasional) hanya dilakukan 1 kali" .
+                        "\r\n*Absensi dilakukan pada waktu Istirahat antara pukul 11:30-13:00*" .
+                        "\r\n \r\nAdapun untuk di hari kerja tetap dilakukan sebanyak 3 kali yakni masuk, istirahat, dan keluar" .
+                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 
@@ -261,6 +205,43 @@ class Presensi extends CI_Controller
 
                 $result = curl_exec($ch);
             endforeach;
+            redirect('presensi/notifikasi/index');
+        } elseif ($menu == 'clout') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'C');
+            $karyawan = $this->db->get('karyawan')->result_array();
+            foreach ($karyawan as $k) :
+                //Notifikasi ke USER
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $k['phone'],
+                    'message' => "*INFORMASI : ABSENSI DI HARI LIBUR HANYA 1 KALI*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\nLaporan kehadiran (Absensi) di hari libur (Sabtu dan Minggu atau libur nasional) hanya dilakukan 1 kali" .
+                        "\r\n*Absensi dilakukan pada waktu Istirahat antara pukul 11:30-13:00*" .
+                        "\r\n \r\nAdapun untuk di hari kerja tetap dilakukan sebanyak 3 kali yakni masuk, istirahat, dan keluar" .
+                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
+                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                );
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($ch);
+            endforeach;
+            redirect('presensi/notifikasi/index');
         }
     }
 }
