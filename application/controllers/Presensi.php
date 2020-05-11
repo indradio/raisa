@@ -66,7 +66,7 @@ class Presensi extends CI_Controller
                         'nama' => $this->session->userdata('nama'),
                         'time' => date('Y-m-d H:i:s'),
                         'state' => $this->input->post('state'),
-                        'new_state' => 'WFH',
+                        'new_state' => $this->input->post('newstate'),
                         'loc' => $this->input->post('loc'),
                         'lat' => $this->input->post('lat'),
                         'lng' => $this->input->post('lng'),
@@ -78,7 +78,7 @@ class Presensi extends CI_Controller
                     ];
                     $this->db->insert('presensi', $data);
 
-                    //Work Contarct Check
+                    //Work Contract Check
                     if ($this->session->userdata('contract') == 'Direct Labor') {
                         //Presensi 3X Check
                         $tahun = date("Y");
@@ -177,6 +177,7 @@ class Presensi extends CI_Controller
         }
         redirect('presensi');
     }
+
     public function pik()
     {
         date_default_timezone_set('asia/jakarta');
@@ -233,11 +234,13 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : ABSENSI DI HARI LIBUR HANYA 1 KALI*" .
+                    'message' => "*INFORMASI : PENGISIAN JAM KERJA OTOMATIS SAAT OFF DAY*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nLaporan kehadiran (Absensi) di hari libur (Sabtu dan Minggu atau libur nasional) hanya dilakukan 1 kali" .
-                        "\r\n*Absensi dilakukan pada waktu Istirahat antara pukul 11:30-13:00*" .
-                        "\r\n \r\nAdapun untuk di hari kerja tetap dilakukan sebanyak 3 kali yakni masuk, istirahat, dan keluar" .
+                        "\r\nBuat kamu yang mengisi Laporan Jam Kerja, mulai hari ini Laporan Jam Kerja saat *Off Day* akan secara otomatis tersubmit." .
+                        "\r\n \r\n*Laporan Jam Kerja akan otomatis tersubmit jika :*" .
+                        "\r\n1. Melakukan Absensi sebanyak *3x* yakni Masuk, Istirahat, dan Keluar" .
+                        "\r\n2. Pada saat Absensi pastikan kamu memilih *OFF DAY* pada pilihan Work State" .
+                        "\r\n3. Kamu belum membuat Laporan Jam Kerja pada tanggal tersebut" .
                         "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
@@ -269,11 +272,13 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : ABSENSI DI HARI LIBUR HANYA 1 KALI*" .
+                    'message' => "*INFORMASI : PENGISIAN JAM KERJA OTOMATIS SAAT OFF DAY*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nLaporan kehadiran (Absensi) di hari libur (Sabtu dan Minggu atau libur nasional) hanya dilakukan 1 kali" .
-                        "\r\n*Absensi dilakukan pada waktu Istirahat antara pukul 11:30-13:00*" .
-                        "\r\n \r\nAdapun untuk di hari kerja tetap dilakukan sebanyak 3 kali yakni masuk, istirahat, dan keluar" .
+                        "\r\nBuat kamu yang mengisi Laporan Jam Kerja, mulai hari ini Laporan Jam Kerja saat *Off Day* akan secara otomatis tersubmit." .
+                        "\r\n \r\n*Laporan Jam Kerja akan otomatis tersubmit jika :*" .
+                        "\r\n1. Melakukan Absensi sebanyak *3x* yakni Masuk, Istirahat, dan Keluar" .
+                        "\r\n2. Pada saat Absensi pastikan kamu memilih *OFF DAY* pada pilihan Work State" .
+                        "\r\n3. Kamu belum membuat Laporan Jam Kerja pada tanggal tersebut" .
                         "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
@@ -299,17 +304,20 @@ class Presensi extends CI_Controller
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
+            $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : ABSENSI DI HARI LIBUR HANYA 1 KALI*" .
+                    'message' => "*INFORMASI : PENGISIAN JAM KERJA OTOMATIS SAAT OFF DAY*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nLaporan kehadiran (Absensi) di hari libur (Sabtu dan Minggu atau libur nasional) hanya dilakukan 1 kali" .
-                        "\r\n*Absensi dilakukan pada waktu Istirahat antara pukul 11:30-13:00*" .
-                        "\r\n \r\nAdapun untuk di hari kerja tetap dilakukan sebanyak 3 kali yakni masuk, istirahat, dan keluar" .
+                        "\r\nBuat kamu yang mengisi Laporan Jam Kerja, mulai hari ini Laporan Jam Kerja saat *Off Day* akan secara otomatis tersubmit." .
+                        "\r\n \r\n*Laporan Jam Kerja akan otomatis tersubmit jika :*" .
+                        "\r\n1. Melakukan Absensi sebanyak *3x* yakni Masuk, Istirahat, dan Keluar" .
+                        "\r\n2. Pada saat Absensi pastikan kamu memilih *OFF DAY* pada pilihan Work State" .
+                        "\r\n3. Kamu belum membuat Laporan Jam Kerja pada tanggal tersebut" .
                         "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );

@@ -74,6 +74,13 @@
                 <input type="text" class="form-control" id="vState" name="vState" value="<?= $state; ?>" required="true" disabled="true" />
               </div>
               <div class="form-group">
+                <label for="newstate" class="bmd-label-floating"> Work State *</label>
+                <select class="form-control selectpicker" data-style="btn btn-link" id="newstate" name="newstate" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
+                    <option value="WFH">WFH</option>
+                    <option value="OFFDAY">OFF DAY</option>
+                  </select>
+              </div>
+              <div class="form-group">
                 <label for="time" class="bmd-label-floating"> Time *</label>
                 <input type="text" class="form-control" id="time" name="time" value=" " required="true" disabled="true" />
               </div>
