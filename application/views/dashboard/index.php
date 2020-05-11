@@ -26,7 +26,7 @@
       <?php
       $url = file_get_contents('https://api.covid19api.com/summary');
       $data = json_decode($url, true);
-      $data_update = $data['Countries'][102]['Date'];
+      $data_update = $data['Countries'][77]['Date'];
       $last_update = date('d M Y', strtotime(substr($data_update, 0, 10)));
       ?>
       <div class="col-lg-4 col-md-6 col-sm-6">
@@ -36,7 +36,7 @@
               <i class="material-icons">local_hospital</i>
             </div>
             <p class="card-category">Positif</p>
-            <h3 class="card-title"><?= number_format($data['Countries'][102]['TotalConfirmed'], 0, ',', '.'); ?></h3>
+            <h3 class="card-title"><?= number_format($data['Countries'][77]['TotalConfirmed'], 0, ',', '.'); ?></h3>
           </div>
           <div class="card-footer">
             <div class="stats">
@@ -52,7 +52,7 @@
               <i class="material-icons">emoji_people</i>
             </div>
             <p class="card-category">Sembuh</p>
-            <h3 class="card-title"><?= number_format($data['Countries'][102]['TotalRecovered'], 0, ',', '.'); ?></h3>
+            <h3 class="card-title"><?= number_format($data['Countries'][77]['TotalRecovered'], 0, ',', '.'); ?></h3>
           </div>
           <div class="card-footer">
             <div class="stats">
@@ -68,7 +68,7 @@
               <i class="material-icons">airline_seat_individual_suite</i>
             </div>
             <p class="card-category">Meninggal</p>
-            <h3 class="card-title"><?= number_format($data['Countries'][102]['TotalDeaths'], 0, ',', '.'); ?></h3>
+            <h3 class="card-title"><?= number_format($data['Countries'][77]['TotalDeaths'], 0, ',', '.'); ?></h3>
           </div>
           <div class="card-footer">
             <div class="stats">
