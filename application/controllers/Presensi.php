@@ -304,7 +304,6 @@ class Presensi extends CI_Controller
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
-            $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
