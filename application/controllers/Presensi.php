@@ -235,15 +235,14 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : PENGISIAN JAM KERJA OTOMATIS SAAT OFF DAY*" .
+                    'message' => "*INFORMASI : REIMBURSE PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nBuat kamu yang mengisi Laporan Jam Kerja, mulai hari ini Laporan Jam Kerja saat *Off Day* akan secara otomatis tersubmit." .
-                        "\r\n \r\n*Laporan Jam Kerja akan otomatis tersubmit jika :*" .
-                        "\r\n1. Melakukan Absensi sebanyak *3x* yakni Masuk, Istirahat, dan Keluar" .
-                        "\r\n2. Pada saat Absensi pastikan kamu memilih *OFF DAY* pada pilihan Work State" .
-                        "\r\n3. Kamu belum membuat Laporan Jam Kerja pada tanggal tersebut" .
-                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        "\r\nSelain berkunjung ke klinik atau rumah sakit terdekat, mulai Sekarang kamu bisa melakukan pengobatan (berobat) secara online melalui aplikasi kesehatan seperti halodoc, alodokter, Grab Health dan lainnya." .
+                        "\r\n \r\nBiaya akan direimburse oleh *GARDA MEDIKA* dengan prosedur yang mirip seperti berobat di klinik/rs umum." .
+                        "\r\nMasih bingung? Syarat dan ketentuan kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
+                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
+                        "\r\n#DiRumahAja"
                 );
 
                 $ch = curl_init();
@@ -273,15 +272,14 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : PENGISIAN JAM KERJA OTOMATIS SAAT OFF DAY*" .
+                    'message' => "*INFORMASI : REIMBURSE PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nBuat kamu yang mengisi Laporan Jam Kerja, mulai hari ini Laporan Jam Kerja saat *Off Day* akan secara otomatis tersubmit." .
-                        "\r\n \r\n*Laporan Jam Kerja akan otomatis tersubmit jika :*" .
-                        "\r\n1. Melakukan Absensi sebanyak *3x* yakni Masuk, Istirahat, dan Keluar" .
-                        "\r\n2. Pada saat Absensi pastikan kamu memilih *OFF DAY* pada pilihan Work State" .
-                        "\r\n3. Kamu belum membuat Laporan Jam Kerja pada tanggal tersebut" .
-                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        "\r\nSelain berkunjung ke klinik atau rumah sakit terdekat, mulai Sekarang kamu bisa melakukan pengobatan (berobat) secara online melalui aplikasi kesehatan seperti halodoc, alodokter, Grab Health dan lainnya." .
+                        "\r\n \r\nBiaya akan direimburse oleh *GARDA MEDIKA* dengan prosedur yang mirip seperti berobat di klinik/rs umum." .
+                        "\r\nMasih bingung? Syarat dan ketentuan kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
+                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
+                        "\r\n#DiRumahAja"
                 );
 
                 $ch = curl_init();
@@ -311,15 +309,14 @@ class Presensi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : PENGISIAN JAM KERJA OTOMATIS SAAT OFF DAY*" .
+                    'message' => "*INFORMASI : REIMBURSE PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nBuat kamu yang mengisi Laporan Jam Kerja, mulai hari ini Laporan Jam Kerja saat *Off Day* akan secara otomatis tersubmit." .
-                        "\r\n \r\n*Laporan Jam Kerja akan otomatis tersubmit jika :*" .
-                        "\r\n1. Melakukan Absensi sebanyak *3x* yakni Masuk, Istirahat, dan Keluar" .
-                        "\r\n2. Pada saat Absensi pastikan kamu memilih *OFF DAY* pada pilihan Work State" .
-                        "\r\n3. Kamu belum membuat Laporan Jam Kerja pada tanggal tersebut" .
-                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan izinkan jika muncul peringatan saat kamu membuka halamannya ya!_" .
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        "\r\nSelain berkunjung ke klinik atau rumah sakit terdekat, mulai Sekarang kamu bisa melakukan pengobatan (berobat) secara online melalui aplikasi kesehatan seperti halodoc, alodokter, Grab Health dan lainnya." .
+                        "\r\n \r\nBiaya akan direimburse oleh *GARDA MEDIKA* dengan prosedur yang mirip seperti berobat di klinik/rs umum." .
+                        "\r\nMasih bingung? Syarat dan ketentuan kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
+                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
+                        "\r\n#DiRumahAja"
                 );
 
                 $ch = curl_init();
