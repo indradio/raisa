@@ -3,21 +3,30 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-default" role="alert">
           <!-- Begin Content -->
-          <strong>INFO PENTING! PERUBAHAN JAM KEHADIRAN</strong>
+          <strong>PENGUMUMAN LIBUR RESMI, CUTI BERSAMA DAN COMPANY EVENT</strong>
           </br>
-          </br>Sesuai dengan Surat Keputusan No <strong>OO4/WTQ-HR/IV/2020</strong> tentang <strong>"Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H"</strong>.
-          </br>Berikut adalah perubahan jadwal absensi melalui RAISA.
+          </br>Sehubungan dengan telah dikeluarkannya revisi SKB 3 mentri, maka dengan ini Manajemen PT Astra Otoparts Divisi Winteq menetapkan untuk jadwal libur resmi, cuti bersama, event company tahun 2020 tetap dengan menggunakan Calendar of Event yang sudah ditetapkan sebelumnya. 
           </br>
-          </br><strong>1. Check in antara 06:30 - 07.30</strong>
-          </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
-          </br><strong>3. Check out antara 16.00 - 18.00</strong>
+          </br>Perlu diketahui bersama bahwa
+          </br><strong>1. Libur nasional yang ditetapkan pemerintah tidak ada perubahan sehingga masih sesuai dengan COE 2020 yang sudah ditetapkan sebelumnya.</strong>
+          </br><strong>2. Cuti bersama bersifat fakultatif(dapat ditentukan oleh perusahaan).</strong>
           </br>
-          </br><strong>Untuk hari libur (Sabtu dan Minggu atau Hari Libur Nasional), Absensi hanya dilakukan 1 kali yakni pada waktu Istirahat</strong>.
+          </br>Demikian yang dapat kami sampaikan kiranya informasi ini dapat bermanfaat untuk kita semua. 
           </br>
-          </br><a href="<?= base_url(); ?>presensi" class="btn btn-success">KLIK DISINI UNTUK ABSENSI</a>
-          </br><small>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.</small>
+          </br>Regards,
+          </br>PT Astra Otoparts. Tbk - Divisi Winteq
+          </br>
+          </br><a href="<?= base_url(); ?>assets/pdf/COE 2020 - R2.pdf" target="_blank" class="btn btn-success text-light">Download Calendar of Event</a>
+          <!-- </br><small>Download Calendar of Event</small> -->
+          </div>
+          <div class="alert alert-info" role="alert">
+          <strong>PANDUAN E-CLAIM REIMBURSEMENT GARDA MEDIKA - MEDCARE</strong>
+          </br>
+          </br>Informasi lebih lengkap Panduan E-Claim Reimbursement Garda Medika
+          </br><a href="<?= base_url(); ?>corona/medcare" class="btn btn-success">KLIK DISINI</a>
+          </br>
           <!-- End Content -->
         </div>
       </div>
@@ -86,13 +95,15 @@
               $tahun = date('Y');
               $bulan = date('m');
               ?>
-              <h4 class="card-title">Status Jam Kerja Periode <?= date('F Y', strtotime("$tahun-$bulan-01")); ?></h4>
+              <h4 class="card-title">Laporan Jam Kerja</h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
-                <a href="<?= base_url('jamkerja/tanggal/' . date('Y-m-d')); ?>" class="btn btn-facebook" role="button" aria-disabled="false">Laporkan Jam Kerja</a>
+                <!-- <a href="<?= base_url('jamkerja/tanggal/' . date('Y-m-d')); ?>" class="btn btn-facebook" role="button" aria-disabled="false">Laporkan Jam Kerja</a> -->
               </div>
-              <div class="material-datatables">
+              <div id="calendarJamkerja"></div>
+
+              <!-- <div class="material-datatables">
                 <div class="table-responsive">
                   <table id="dt-status" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                     <thead>
@@ -136,17 +147,17 @@
 
                   </table>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="card-footer">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-md-12">
                   <i class="fa fa-circle text-success"></i> Laporan Jam Kerja Selesai. | <i class="fa fa-circle text-warning"></i> Laporan Jam Kerja sedang diproses oleh RDA/Koordinator.
                   | <i class="fa fa-circle text-info"></i> Laporan Jam Kerja Sedang diproses oleh PPIC.
                   | <i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan).
                   | <i class="fa fa-circle text-default"></i> Hari libur akhir pekan.
                 </div>
-              </div>
+              </div> -->
             </div>
             <!-- end content-->
           </div>
@@ -967,7 +978,7 @@
       $(".alert").fadeTo(200, 0).slideUp(200, function() {
         $(this).remove();
       });
-    }, 30000);
+    }, 60000);
 
     $('#detail').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
@@ -1288,4 +1299,87 @@
 
   // execute above function
   initPhotoSwipeFromDOM('.my-gallery');
+
+  $(document).ready(function() {
+        var cJamkerja = $('#calendarJamkerja');
+
+        today = new Date();
+        y = today.getFullYear();
+        m = today.getMonth();
+        d = today.getDate();
+
+        cJamkerja.fullCalendar({
+            timeZone: 'asia/jakarta', // the default (unnecessary to specify)
+            viewRender: function(view, element) {
+                // We make sure that we activate the perfect scrollbar when the view isn't on Month
+                if (view.name != 'month') {
+                    $(element).find('.fc-scroller').perfectScrollbar();
+                }
+            },
+            header: {
+                left: 'month',
+                center: 'title',
+                right: 'prev,next,today'
+            },
+
+            firstDay: 1,
+            defaultDate: today,
+            businessHours: [{
+                default: false,
+                // days of week. an array of zero-based day of week integers (0=Sunday)
+                dow: [1, 2, 3, 4, 5], // Monday - Friday
+                start: '07:30', // a start time 
+                end: '16:30' // an end time 
+            }],
+
+            views: {
+                month: { // name of view
+                    titleFormat: 'MMMM YYYY'
+                    // other view-specific options here
+                },
+                week: {
+                    titleFormat: " MMMM D YYYY"
+                },
+                day: {
+                    titleFormat: 'D MMM, YYYY'
+                }
+            },
+
+            selectable: true,
+            selectHelper: true,
+            editable: true,
+
+            eventSources: [{
+                    events: function(start, end, timezone, callback) {
+                        $.ajax({
+                            url: '<?php echo base_url() ?>jamkerja/GET_MY_jamkerja',
+                            dataType: 'json',
+                            success: function(msg) {
+                                var events = msg.events;
+                                callback(events);
+                            }
+                        });
+                    }
+                },
+                {
+                    events: function(start, end, timezone, callback) {
+                        $.ajax({
+                            url: '<?php echo base_url() ?>jamkerja/GET_MY_lembur',
+                            dataType: 'json',
+                            success: function(msg) {
+                                var events = msg.events;
+                                callback(events);
+                            }
+                        });
+                    },
+                    color: 'red' // an option!
+                },
+            ],
+            eventLimit: true, // allow "more" link when too many events
+
+            select: function(start, end, info) {
+                window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
+            },
+        });
+    });
 </script>

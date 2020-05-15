@@ -17,7 +17,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">
-                                    Winteq
+                                    Video
                                 </a>
                             </li>
                         </ul>
