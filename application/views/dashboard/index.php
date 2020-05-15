@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-info" role="alert">
           <!-- Begin Content -->
           <strong>INFO PENTING! PERUBAHAN JAM KEHADIRAN</strong>
           </br>
@@ -19,62 +19,6 @@
           </br><a href="<?= base_url(); ?>presensi" class="btn btn-success">KLIK DISINI UNTUK ABSENSI</a>
           </br><small>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.</small>
           <!-- End Content -->
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <?php
-      $url = file_get_contents('https://api.covid19api.com/summary');
-      $data = json_decode($url, true);
-      $data_update = $data['Countries'][77]['Date'];
-      $last_update = date('d M Y', strtotime(substr($data_update, 0, 10)));
-      ?>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-          <div class="card-header card-header-info card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">local_hospital</i>
-            </div>
-            <p class="card-category">Positif</p>
-            <h3 class="card-title"><?= number_format($data['Countries'][77]['TotalConfirmed'], 0, ',', '.'); ?></h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="material-icons">date_range</i> Indonesia, (Update : <?= $last_update; ?>)
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-          <div class="card-header card-header-success card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">emoji_people</i>
-            </div>
-            <p class="card-category">Sembuh</p>
-            <h3 class="card-title"><?= number_format($data['Countries'][77]['TotalRecovered'], 0, ',', '.'); ?></h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="material-icons">date_range</i> Indonesia, (Update : <?= $last_update; ?>)
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-          <div class="card-header card-header-danger card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">airline_seat_individual_suite</i>
-            </div>
-            <p class="card-category">Meninggal</p>
-            <h3 class="card-title"><?= number_format($data['Countries'][77]['TotalDeaths'], 0, ',', '.'); ?></h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="material-icons">date_range</i> Indonesia, (Update : <?= $last_update; ?>)
-            </div>
-          </div>
         </div>
       </div>
     </div>

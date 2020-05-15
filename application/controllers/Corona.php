@@ -36,20 +36,20 @@ class Corona extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function penyebaran()
+    public function informasi()
     {
         $data['sidemenu'] = 'COVID-19';
-        $data['sidesubmenu'] = 'Info Penyebaran';
+        $data['sidesubmenu'] = 'Informasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('corona/penyebaran', $data);
+        $this->load->view('corona/informasi', $data);
         $this->load->view('templates/footer');
     }
 
-    public function tes()
+    public function medcare()
     {
         $data['sidemenu'] = 'COVID-19';
         $data['sidesubmenu'] = 'Tes Risiko';
@@ -57,7 +57,7 @@ class Corona extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('corona/tes', $data);
+        $this->load->view('corona/medcare', $data);
         $this->load->view('templates/footer');
     }
 
