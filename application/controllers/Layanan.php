@@ -37,7 +37,7 @@ class Layanan extends CI_Controller
     public function buatInformasi()
     {
         date_default_timezone_set('asia/jakarta');
-       
+
         $data = [
             'id' => time(),
             'judul' => $this->input->post('judul'),
@@ -60,7 +60,6 @@ class Layanan extends CI_Controller
         }
 
         redirect('layanan/informasi');
-
     }
 
     public function updateInformasi()
@@ -80,7 +79,7 @@ class Layanan extends CI_Controller
         if ($this->upload->do_upload('gambar_banner')) {
             $this->db->set('gambar_banner', $this->upload->data('file_name'));
             $this->db->set('gambar_konten', $this->upload->data('file_name'));
-        } 
+        }
 
         redirect('layanan/informasi');
     }
@@ -93,7 +92,7 @@ class Layanan extends CI_Controller
 
         redirect('layanan/informasi');
     }
-    
+
     public function messages()
     {
         $data['sidemenu'] = 'Layanan';
@@ -126,21 +125,21 @@ class Layanan extends CI_Controller
                 'number' => $to,
                 'message' => $this->input->post('pesan')
             );
-            
+
             $ch = curl_init();
-            
+
             curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            
+
             $headers = array();
             $headers[] = 'Accept: application/json';
             $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
+
             $result = curl_exec($ch);
 
             // Record History
@@ -155,7 +154,7 @@ class Layanan extends CI_Controller
             $this->db->insert('layanan_pesan', $data);
 
         endforeach;
-        
+
         redirect('layanan/messages');
     }
 
@@ -166,5 +165,140 @@ class Layanan extends CI_Controller
         $this->db->update('layanan_notifikasi');
 
         redirect('layanan/messages');
+    }
+
+    public function broadcast()
+    {
+        $data['sidemenu'] = 'Kehadiran';
+        $data['sidesubmenu'] = 'Data';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->helper('url');
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('layanan/broadcast', $data);
+        $this->load->view('templates/footer');
+    }
+    public function broadcast_send($parameter)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($parameter == 'A') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'A');
+            $karyawan = $this->db->get('karyawan')->result_array();
+            foreach ($karyawan as $k) :
+                //Notifikasi ke USER
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $k['phone'],
+                    'message' => "*INFORMASI : KETENTUAN DAN TATACARA KLAIM PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\nSesuai dengan informasi sebelumnya dalam rangka mendukung program pencegahan penyebaran COVID-19, maka per tanggal 18 Mei 2020 ini, untuk pelayanan klaim Rawat Jalan bisa menggunakan Aplikasi Kesehatan Online seperti Alodokter, halodoc, Grab Health, dll." .
+                        "\r\n \r\nAdapun ketentuan dan tatacara klaimnya dapat di lihat melalui link berikut." .
+                        "\r\nhttps://raisa.winteq-astra.com/corona/medcare" .
+                        "\r\n \r\n*Yang perlu temen ingat bahwa kebijakan ini hanya berlaku selama masa Pandemic COVID 19, dan hanya berlaku untuk Klaim Rawat Jalan saja. (Baca catatan Penting yang ada didalam File Ketentuan Klaim Aplikasi Konsultasi Online)*." .
+                        "\r\n \r\nMasih bingung? kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
+                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
+                        "\r\n#DiRumahAja"
+                );
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($ch);
+            endforeach;
+            redirect('layanan/broadcast');
+        } elseif ($parameter == 'B') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'B');
+            $karyawan = $this->db->get('karyawan')->result_array();
+            foreach ($karyawan as $k) :
+                //Notifikasi ke USER
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $k['phone'],
+                    'message' => "*INFORMASI : KETENTUAN DAN TATACARA KLAIM PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\nSesuai dengan informasi sebelumnya dalam rangka mendukung program pencegahan penyebaran COVID-19, maka per tanggal 18 Mei 2020 ini, untuk pelayanan klaim Rawat Jalan bisa menggunakan Aplikasi Kesehatan Online seperti Alodokter, halodoc, Grab Health, dll." .
+                        "\r\n \r\nAdapun ketentuan dan tatacara klaimnya dapat di lihat melalui link berikut." .
+                        "\r\nhttps://raisa.winteq-astra.com/corona/medcare" .
+                        "\r\n \r\n*Yang perlu temen ingat bahwa kebijakan ini hanya berlaku selama masa Pandemic COVID 19, dan hanya berlaku untuk Klaim Rawat Jalan saja. (Baca catatan Penting yang ada didalam File Ketentuan Klaim Aplikasi Konsultasi Online)*." .
+                        "\r\n \r\nMasih bingung? kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
+                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
+                        "\r\n#DiRumahAja"
+                );
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($ch);
+            endforeach;
+            redirect('layanan/broadcast');
+        } elseif ($parameter == 'C') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'C');
+            $karyawan = $this->db->get('karyawan')->result_array();
+            foreach ($karyawan as $k) :
+                //Notifikasi ke USER
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $k['phone'],
+                    'message' => "*INFORMASI : KETENTUAN DAN TATACARA KLAIM PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\nSesuai dengan informasi sebelumnya dalam rangka mendukung program pencegahan penyebaran COVID-19, maka per tanggal 18 Mei 2020 ini, untuk pelayanan klaim Rawat Jalan bisa menggunakan Aplikasi Kesehatan Online seperti Alodokter, halodoc, Grab Health, dll." .
+                        "\r\n \r\nAdapun ketentuan dan tatacara klaimnya dapat di lihat melalui link berikut." .
+                        "\r\nhttps://raisa.winteq-astra.com/corona/medcare" .
+                        "\r\n \r\n*Yang perlu temen ingat bahwa kebijakan ini hanya berlaku selama masa Pandemic COVID 19, dan hanya berlaku untuk Klaim Rawat Jalan saja. (Baca catatan Penting yang ada didalam File Ketentuan Klaim Aplikasi Konsultasi Online)*." .
+                        "\r\n \r\nMasih bingung? kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
+                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
+                        "\r\n#DiRumahAja"
+                );
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($ch);
+            endforeach;
+            redirect('layanan/broadcast');
+        }
     }
 }

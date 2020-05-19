@@ -12,7 +12,13 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-              <form class="form" method="post" action="<?= base_url('hr/presensi/bulan'); ?>">
+              <a href="<?= base_url('koordinator/presensi/tanggal'); ?>" class="btn btn-facebook">
+                <span class="btn-label">
+                  <i class="material-icons">today</i>
+                </span>
+                PRESENSI TANGGAL
+              </a>
+              <form class="form" method="post" action="<?= base_url('koordinator/presensi/bulan'); ?>">
                 <div class="form-group">
                   <!-- <label for="month" class="bmd-label-floating">Select Month *</label> -->
                   <select class="selectpicker" data-style="btn btn-link" id="month" name="month" title="Pilih Bulan" onchange='this.form.submit()' data-size="7" data-live-search="true" required>
@@ -31,18 +37,6 @@
                   </select>
                 </div>
               </form>
-              <a href="<?= base_url('hr/presensi/tanggal'); ?>" class="btn btn-facebook">
-                <span class="btn-label">
-                  <i class="material-icons">today</i>
-                </span>
-                PRESENSI PER HARI
-              </a>
-              <a href="<?= base_url('hr/download/presensi'); ?>" class="btn btn-linkedin" target="_blank">
-                <span class="btn-label">
-                  <i class="material-icons">cloud_download</i>
-                </span>
-                RAW DATA FOR DOWNLOAD
-              </a>
             </div>
             <div class="material-datatables">
               <div class="table-responsive">
@@ -68,6 +62,7 @@
                     <?php
                     $this->db->where('is_active', '1');
                     $this->db->where('status', '1');
+                    $this->db->where('sect_id', $this->session->userdata('sect_id'));
                     $users_wtq = $this->db->get('karyawan')->result_array();
                     foreach ($users_wtq as $k) {
                       $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);

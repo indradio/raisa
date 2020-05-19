@@ -84,22 +84,45 @@ class Koordinator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function presensi()
+    public function presensi($parameter)
     {
         date_default_timezone_set('asia/jakarta');
-        if (empty($this->input->post('month'))) {
-            $data['bulan'] = date('m');
-        } else {
-            $data['bulan'] = $this->input->post('month');
-        }
-        $data['tahun'] = date('Y');
-        $data['sidemenu'] = 'Koordinator';
-        $data['sidesubmenu'] = 'Laporan Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('koordinator/presensi', $data);
-        $this->load->view('templates/footer');
+
+        if ($parameter == 'tanggal') {
+            if (empty($this->input->post('prdate'))) {
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+                $data['tanggal'] = date('d');
+            } else {
+                $data['tahun'] = date('Y', strtotime($this->input->post('prdate')));
+                $data['bulan'] = date('m', strtotime($this->input->post('prdate')));
+                $data['tanggal'] = date('d', strtotime($this->input->post('prdate')));
+            }
+            $data['sidemenu'] = 'Koordinator';
+            $data['sidesubmenu'] = 'Laporan Kehadiran';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('presensi/presensi_koor_tanggal', $data);
+            $this->load->view('templates/footer');
+        } elseif ($parameter == 'bulan') {
+            if (empty($this->input->post('month'))) {
+                $data['bulan'] = date('m');
+            } else {
+                $data['bulan'] = $this->input->post('month');
+            }
+            $data['tahun'] = date('Y');
+            $data['sidemenu'] = 'Koordinator';
+            $data['sidesubmenu'] = 'Laporan Kehadiran';
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('presensi/presensi_koor_bulan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('koordinator/presensi/tanggal');
+        }
     }
 }
