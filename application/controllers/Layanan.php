@@ -186,22 +186,25 @@ class Layanan extends CI_Controller
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'A');
+            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : ABSENSI SELAMA LIBUR LEBARAN*" .
+                    'message' => "*INFORMASI PENTING!!*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nTinggal sebentar lagi *PSBB* yang sudah membuahkan hasil ini akan berakhir, tapi butuh disiplin kita semua." .
-                        "\r\n \r\nTetap terus berkontribusi mengurangi penyebaran wabah ini. Maka dari itu, selama libur lebaran (21 Mei - 1 Juni) kamu tetap *HARUS* #dirumahaja dan melaporkan kehadiran (ABSENSI) melalui aplikasi RAISA." .
-                        "\r\n \r\nAbsensi dilakukan hanya 1 kali, yaitu pada waktu *Istirahat* antara pukul *11:30-13:00*." .
-                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja, tidak interaksi dengan orang di luar lingkungan itu *baik dalam kota maupun luar kota*." .
-                        "\r\n  \r\n_Tetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan_". 
-                        "\r\n*#DIRumahAja*".
-                        "\r\n*#TundaMudik*".
-                        "\r\n*#TundaPiknik*"
+                        "\r\n \r\nDalam rangka mensukseskan anjuran pemerintah pada program pencegahan penyebaran COVID 19, dan demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan, maka dengan ini kami informasikan bahwa Pimpinan Perusahaan PT Astra Otoparts Divisi Winteq memutuskan bahwa para karyawan *Tidak dianjurkan untuk Bepergian (keluar meninggalkan area tempat tinggal ke daerah yang berpotensi terjadinya penularan wabah virus atau keluar wilayah kabupaten atau dengan jarak maksimum 20 KM dari tempat tinggal)* pada libur dan cuti bersama lebaran tahun 2020 ini." .
+                        "\r\n \r\nAdapun konsekuensi yang akan diberikan kepada karyawan yang tidak mematuhi anjuran tersebut adalah pihak perusahaan berhak mengeluarkan :" .
+                        "\r\n \r\n• Surat Peringatan Pertama (SP 1) kepada karyawan yang bersangkutan dan untuk selanjutnya sebelum memulai aktivitas pekerjaan di Winteq, karyawan tersebut harus menyerahkan hasil rapid test mandiri kepada perusahaan selambat lambatnya pada tanggal 2 Juni 2020" .
+                        "\r\n \r\n• Surat Peringatan Kedua (SP 2) kepada karyawan yang tetap bepergian dan tidak menyerahkan hasil rapid test mandiri pada tanggal 2 Juni 2020" .
+                        "\r\n \r\n• Surat Peringatan Ketiga (SP 3) kepada karyawan yang tetap bepergian dan tidak menyerahkan hasil rapid test mandiri hingga tanggal 7 Juni 2020" .
+                        "\r\n \r\nSelain itu karyawan diwajibkan melakukan karantina mandiri selama 14 hari setelah bepergian terhitung mulai dari tanggal rapid test dengan memotong cuti pribadi karyawan." .
+                        "\r\n \r\nTerkait dengan kondisi tertentu yang diatur dalam PPOP seperti pernikahan, kelahiran, ataupun musibah yang dialami oleh keluarga karyawan yang meliputi isteri, anak, orang tua maupun saudara kandung tidak serumah, maka dikecualikan atas pemberlakuan aturan tersebut." .
+                        "\r\n \r\nDemikian informasi yang kami sampaikan. Atas perhatian dan pengertiannya kami ucapkan terima kasih." .
+                        "\r\n \r\n \r\nHormat kami," .
+                        "\r\n \r\n \r\nPT Astra Otoparts Tbk Divisi Winteq"
                 );
 
                 $ch = curl_init();
@@ -231,16 +234,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : ABSENSI SELAMA LIBUR LEBARAN*" .
+                    'message' => "*INFORMASI PENTING!!*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nTinggal sebentar lagi *PSBB* yang sudah membuahkan hasil ini akan berakhir, tapi butuh disiplin kita semua." .
-                        "\r\n \r\nTetap terus berkontribusi mengurangi penyebaran wabah ini. Maka dari itu, selama libur lebaran (21 Mei - 1 Juni) kamu tetap *HARUS* #dirumahaja dan melaporkan kehadiran (ABSENSI) melalui aplikasi RAISA." .
-                        "\r\n \r\nAbsensi dilakukan hanya 1 kali, yaitu pada waktu *Istirahat* antara pukul *11:30-13:00*." .
-                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja, tidak interaksi dengan orang di luar lingkungan itu *baik dalam kota maupun luar kota*." .
-                        "\r\n  \r\n_Tetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan_". 
-                        "\r\n*#DIRumahAja*".
-                        "\r\n*#TundaMudik*".
-                        "\r\n*#TundaPiknik*"
+                        "\r\n \r\nDalam rangka mensukseskan anjuran pemerintah pada program pencegahan penyebaran COVID 19, dan demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan, maka dengan ini kami informasikan bahwa Pimpinan Perusahaan PT Astra Otoparts Divisi Winteq memutuskan bahwa para karyawan *Tidak dianjurkan untuk Bepergian (keluar meninggalkan area tempat tinggal ke daerah yang berpotensi terjadinya penularan wabah virus atau keluar wilayah kabupaten atau dengan jarak maksimum 20 KM dari tempat tinggal)* pada libur dan cuti bersama lebaran tahun 2020 ini." .
+                        "\r\n \r\nAdapun konsekuensi yang akan diberikan kepada karyawan yang tidak mematuhi anjuran tersebut adalah pihak perusahaan berhak mengeluarkan :" .
+                        "\r\n \r\n• Surat Peringatan Pertama (SP 1) kepada karyawan yang bersangkutan dan untuk selanjutnya sebelum memulai aktivitas pekerjaan di Winteq, karyawan tersebut harus menyerahkan hasil rapid test mandiri kepada perusahaan selambat lambatnya pada tanggal 2 Juni 2020" .
+                        "\r\n \r\n• Surat Peringatan Kedua (SP 2) kepada karyawan yang tetap bepergian dan tidak menyerahkan hasil rapid test mandiri pada tanggal 2 Juni 2020" .
+                        "\r\n \r\n• Surat Peringatan Ketiga (SP 3) kepada karyawan yang tetap bepergian dan tidak menyerahkan hasil rapid test mandiri hingga tanggal 7 Juni 2020" .
+                        "\r\n \r\nSelain itu karyawan diwajibkan melakukan karantina mandiri selama 14 hari setelah bepergian terhitung mulai dari tanggal rapid test dengan memotong cuti pribadi karyawan." .
+                        "\r\n \r\nTerkait dengan kondisi tertentu yang diatur dalam PPOP seperti pernikahan, kelahiran, ataupun musibah yang dialami oleh keluarga karyawan yang meliputi isteri, anak, orang tua maupun saudara kandung tidak serumah, maka dikecualikan atas pemberlakuan aturan tersebut." .
+                        "\r\n \r\nDemikian informasi yang kami sampaikan. Atas perhatian dan pengertiannya kami ucapkan terima kasih." .
+                        "\r\n \r\n \r\nHormat kami," .
+                        "\r\n \r\n \r\nPT Astra Otoparts Tbk Divisi Winteq"
                 );
 
                 $ch = curl_init();
@@ -270,16 +275,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : ABSENSI SELAMA LIBUR LEBARAN*" .
+                    'message' => "*INFORMASI PENTING!!*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nTinggal sebentar lagi *PSBB* yang sudah membuahkan hasil ini akan berakhir, tapi butuh disiplin kita semua." .
-                        "\r\n \r\nTetap terus berkontribusi mengurangi penyebaran wabah ini. Maka dari itu, selama libur lebaran (21 Mei - 1 Juni) kamu tetap *HARUS* #dirumahaja dan melaporkan kehadiran (ABSENSI) melalui aplikasi RAISA." .
-                        "\r\n \r\nAbsensi dilakukan hanya 1 kali, yaitu pada waktu *Istirahat* antara pukul *11:30-13:00*." .
-                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja, tidak interaksi dengan orang di luar lingkungan itu *baik dalam kota maupun luar kota*." .
-                        "\r\n  \r\n_Tetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan_". 
-                        "\r\n*#DIRumahAja*".
-                        "\r\n*#TundaMudik*".
-                        "\r\n*#TundaPiknik*"
+                        "\r\n \r\nDalam rangka mensukseskan anjuran pemerintah pada program pencegahan penyebaran COVID 19, dan demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan, maka dengan ini kami informasikan bahwa Pimpinan Perusahaan PT Astra Otoparts Divisi Winteq memutuskan bahwa para karyawan *Tidak dianjurkan untuk Bepergian (keluar meninggalkan area tempat tinggal ke daerah yang berpotensi terjadinya penularan wabah virus atau keluar wilayah kabupaten atau dengan jarak maksimum 20 KM dari tempat tinggal)* pada libur dan cuti bersama lebaran tahun 2020 ini." .
+                        "\r\n \r\nAdapun konsekuensi yang akan diberikan kepada karyawan yang tidak mematuhi anjuran tersebut adalah pihak perusahaan berhak mengeluarkan :" .
+                        "\r\n \r\n• Surat Peringatan Pertama (SP 1) kepada karyawan yang bersangkutan dan untuk selanjutnya sebelum memulai aktivitas pekerjaan di Winteq, karyawan tersebut harus menyerahkan hasil rapid test mandiri kepada perusahaan selambat lambatnya pada tanggal 2 Juni 2020" .
+                        "\r\n \r\n• Surat Peringatan Kedua (SP 2) kepada karyawan yang tetap bepergian dan tidak menyerahkan hasil rapid test mandiri pada tanggal 2 Juni 2020" .
+                        "\r\n \r\n• Surat Peringatan Ketiga (SP 3) kepada karyawan yang tetap bepergian dan tidak menyerahkan hasil rapid test mandiri hingga tanggal 7 Juni 2020" .
+                        "\r\n \r\nSelain itu karyawan diwajibkan melakukan karantina mandiri selama 14 hari setelah bepergian terhitung mulai dari tanggal rapid test dengan memotong cuti pribadi karyawan." .
+                        "\r\n \r\nTerkait dengan kondisi tertentu yang diatur dalam PPOP seperti pernikahan, kelahiran, ataupun musibah yang dialami oleh keluarga karyawan yang meliputi isteri, anak, orang tua maupun saudara kandung tidak serumah, maka dikecualikan atas pemberlakuan aturan tersebut." .
+                        "\r\n \r\nDemikian informasi yang kami sampaikan. Atas perhatian dan pengertiannya kami ucapkan terima kasih." .
+                        "\r\n \r\n \r\nHormat kami," .
+                        "\r\n \r\n \r\nPT Astra Otoparts Tbk Divisi Winteq"
                 );
 
                 $ch = curl_init();
