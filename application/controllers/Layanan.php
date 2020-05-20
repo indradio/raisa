@@ -192,16 +192,16 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : KETENTUAN DAN TATACARA KLAIM PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
+                    'message' => "*INFORMASI : ABSENSI SELAMA LIBUR LEBARAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSesuai dengan informasi sebelumnya dalam rangka mendukung program pencegahan penyebaran COVID-19, maka per tanggal 18 Mei 2020 ini, untuk pelayanan klaim Rawat Jalan bisa menggunakan Aplikasi Kesehatan Online seperti Alodokter, halodoc, Grab Health, dll." .
-                        "\r\n \r\nAdapun ketentuan dan tatacara klaimnya dapat di lihat melalui link berikut." .
-                        "\r\nhttps://raisa.winteq-astra.com/corona/medcare" .
-                        "\r\n \r\n*Yang perlu temen ingat bahwa kebijakan ini hanya berlaku selama masa Pandemic COVID 19, dan hanya berlaku untuk Klaim Rawat Jalan saja. (Baca catatan Penting yang ada didalam File Ketentuan Klaim Aplikasi Konsultasi Online)*." .
-                        "\r\n \r\nMasih bingung? kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
-                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
-                        "\r\n#DiRumahAja"
+                        "\r\n \r\nTinggal sebentar lagi *PSBB* yang sudah membuahkan hasil ini akan berakhir, tapi butuh disiplin kita semua." .
+                        "\r\n \r\nTetap terus berkontribusi mengurangi penyebaran wabah ini. Maka dari itu, selama libur lebaran (21 Mei - 1 Juni) kamu tetap *HARUS* #dirumahaja dan melaporkan kehadiran (ABSENSI) melalui aplikasi RAISA." .
+                        "\r\n \r\nAbsensi dilakukan hanya 1 kali, yaitu pada waktu *Istirahat* antara pukul *11:30-13:00*." .
+                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja, tidak interaksi dengan orang di luar lingkungan itu *baik dalam kota maupun luar kota*." .
+                        "\r\n  \r\n_Tetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan_". 
+                        "\r\n*#DIRumahAja*".
+                        "\r\n*#TundaMudik*".
+                        "\r\n*#TundaPiknik*"
                 );
 
                 $ch = curl_init();
@@ -231,16 +231,16 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : KETENTUAN DAN TATACARA KLAIM PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
+                    'message' => "*INFORMASI : ABSENSI SELAMA LIBUR LEBARAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSesuai dengan informasi sebelumnya dalam rangka mendukung program pencegahan penyebaran COVID-19, maka per tanggal 18 Mei 2020 ini, untuk pelayanan klaim Rawat Jalan bisa menggunakan Aplikasi Kesehatan Online seperti Alodokter, halodoc, Grab Health, dll." .
-                        "\r\n \r\nAdapun ketentuan dan tatacara klaimnya dapat di lihat melalui link berikut." .
-                        "\r\nhttps://raisa.winteq-astra.com/corona/medcare" .
-                        "\r\n \r\n*Yang perlu temen ingat bahwa kebijakan ini hanya berlaku selama masa Pandemic COVID 19, dan hanya berlaku untuk Klaim Rawat Jalan saja. (Baca catatan Penting yang ada didalam File Ketentuan Klaim Aplikasi Konsultasi Online)*." .
-                        "\r\n \r\nMasih bingung? kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
-                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
-                        "\r\n#DiRumahAja"
+                        "\r\n \r\nTinggal sebentar lagi *PSBB* yang sudah membuahkan hasil ini akan berakhir, tapi butuh disiplin kita semua." .
+                        "\r\n \r\nTetap terus berkontribusi mengurangi penyebaran wabah ini. Maka dari itu, selama libur lebaran (21 Mei - 1 Juni) kamu tetap *HARUS* #dirumahaja dan melaporkan kehadiran (ABSENSI) melalui aplikasi RAISA." .
+                        "\r\n \r\nAbsensi dilakukan hanya 1 kali, yaitu pada waktu *Istirahat* antara pukul *11:30-13:00*." .
+                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja, tidak interaksi dengan orang di luar lingkungan itu *baik dalam kota maupun luar kota*." .
+                        "\r\n  \r\n_Tetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan_". 
+                        "\r\n*#DIRumahAja*".
+                        "\r\n*#TundaMudik*".
+                        "\r\n*#TundaPiknik*"
                 );
 
                 $ch = curl_init();
@@ -270,16 +270,16 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : KETENTUAN DAN TATACARA KLAIM PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
+                    'message' => "*INFORMASI : ABSENSI SELAMA LIBUR LEBARAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSesuai dengan informasi sebelumnya dalam rangka mendukung program pencegahan penyebaran COVID-19, maka per tanggal 18 Mei 2020 ini, untuk pelayanan klaim Rawat Jalan bisa menggunakan Aplikasi Kesehatan Online seperti Alodokter, halodoc, Grab Health, dll." .
-                        "\r\n \r\nAdapun ketentuan dan tatacara klaimnya dapat di lihat melalui link berikut." .
-                        "\r\nhttps://raisa.winteq-astra.com/corona/medcare" .
-                        "\r\n \r\n*Yang perlu temen ingat bahwa kebijakan ini hanya berlaku selama masa Pandemic COVID 19, dan hanya berlaku untuk Klaim Rawat Jalan saja. (Baca catatan Penting yang ada didalam File Ketentuan Klaim Aplikasi Konsultasi Online)*." .
-                        "\r\n \r\nMasih bingung? kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
-                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
-                        "\r\n#DiRumahAja"
+                        "\r\n \r\nTinggal sebentar lagi *PSBB* yang sudah membuahkan hasil ini akan berakhir, tapi butuh disiplin kita semua." .
+                        "\r\n \r\nTetap terus berkontribusi mengurangi penyebaran wabah ini. Maka dari itu, selama libur lebaran (21 Mei - 1 Juni) kamu tetap *HARUS* #dirumahaja dan melaporkan kehadiran (ABSENSI) melalui aplikasi RAISA." .
+                        "\r\n \r\nAbsensi dilakukan hanya 1 kali, yaitu pada waktu *Istirahat* antara pukul *11:30-13:00*." .
+                        "\r\n \r\nKaryawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja, tidak interaksi dengan orang di luar lingkungan itu *baik dalam kota maupun luar kota*." .
+                        "\r\n  \r\n_Tetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan_". 
+                        "\r\n*#DIRumahAja*".
+                        "\r\n*#TundaMudik*".
+                        "\r\n*#TundaPiknik*"
                 );
 
                 $ch = curl_init();
