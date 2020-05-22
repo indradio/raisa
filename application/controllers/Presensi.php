@@ -17,12 +17,13 @@ class Presensi extends CI_Controller
         $data['sidesubmenu'] = 'Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
-        if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-            $data['state'] = 'C/In';
-        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
+        //     $data['state'] = 'C/In';
+        // } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+        if (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $data['state'] = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
-            $data['state'] = 'C/Out';
+            // } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
+            //     $data['state'] = 'C/Out';
         } else {
             $data['state'] = 'No State for this time';
         }
@@ -46,12 +47,13 @@ class Presensi extends CI_Controller
         } else {
             $day = 'WorkDay';
         }
-        if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-            $state = 'C/In';
-        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
+        //     $state = 'C/In';
+        // } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+        if (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $state = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
-            $state = 'C/Out';
+            // } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
+            //     $state = 'C/Out';
         } else {
             $state = 'notime';
         }
