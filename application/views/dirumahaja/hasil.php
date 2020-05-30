@@ -10,21 +10,13 @@
           </p><strong>Pernyataan A1-A3 (Kondisi Kesehatan)</strong>
           </br>1. Periksa ke klinik tingkat pertama, ikuti protokol klinik.
           </br>2. Lapor ke Atasan sampai Manager.
-          </p><strong>Pernyataan B1-B5 (Risiko Penularan)</strong>
+          </p><strong>Pernyataan B1-B7 (Risiko Penularan)</strong>
           </br>1. Lapor ke Atasan sampai Manager.
           </br>2. Jangan masuk kerja di tanggal 2 Juni 2020 sampai ada instruksi dari Managernya.
           </p><strong>Catatan</strong>
           </br>1. Bila ada yang terisi "Ya" dari quesionare ini, maka Karyawan harus segera menginformasikan ke atasannya (sampai Manager) di hari tersebut.
           </br>2. Form ini berlaku untuk semua orang yang bekerja di lingkungan WINTEQ.
           </br>3. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.
-          <!-- Sesuai dengan Surat Keputusan No <strong>OO4/WTQ-HR/IV/2020</strong> tentang <strong>"Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H"</strong>.
-          </br>Berikut adalah perubahan jadwal absensi melalui RAISA.
-          </br>
-          </br><strong>1. Check in antara 06:30 - 07.30</strong>
-          </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
-          </br><strong>3. Check out antara 16.00 - 18.00</strong>
-          </br>
-          </br>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman. -->
           <!-- End Content -->
         </div>
       </div>
@@ -35,16 +27,11 @@
           <div class="card ">
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
-                <!-- <i class="material-icons">location_on</i> -->
                 <i class="material-icons">local_hospital</i>
               </div>
-              <!-- <h4 class="card-title">Your Location</h4> -->
               <h4 class="card-title">FORM PEDULI KESEHATAN KARYAWAN WINTEQ SELAMA LIBUR LEBARAN</h4>
             </div>
             <div class="card-body ">
-              <!-- <div id="map" class="map" style="width:100%;height:240px;"></div>
-              <p id="location"></p>
-              </br> -->
               <div class="progress" style="width: 100%">
                 <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
               </div>
@@ -98,6 +85,16 @@
               <label for="b5" class="bmd-label-floating">B5. Mengikuti pemerikasaan Rapid Test, PCR, ataupun Tes Kesehatan lainnya dengan hasil <b>"kemungkinan terinfeksi COVID-19"</b></label>
               <div class="form-group">
                 <input type="text" class="form-control" id="b5" name="b5" value="<?= $kesehatan['b5']; ?>" disabled="true" />
+              </div>
+
+              <label for="b6" class="bmd-label-floating">B6. Pergi dan kembali dari <b>luar kota / Kab</b></label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="b6" name="b6" value="<?= $kesehatan['b6']; ?>" disabled="true" />
+              </div>
+
+              <label for="b7" class="bmd-label-floating">B7. Beraktivitas jauh <b>(lebih dari 20KM)</b> dari rumah kediaman</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="b7" name="b7" value="<?= $kesehatan['b7']; ?>" disabled="true" />
               </div>
               </p>
               <div class="form-group">

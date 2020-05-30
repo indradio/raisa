@@ -212,6 +212,14 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-danger",
     type: "error"
   }).catch(swal.noop)
+} else if (flashData == 'dirumahaja') {
+  swal({
+    title: "INGAT!",
+    text: "Jawablah dengan penuh kejujuran. Karena kejujuran kamu menentukan keselamatan karyawan lainnya",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-warning",
+    type: "warning"
+  }).catch(swal.noop)
 }
 
 

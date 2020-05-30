@@ -17,6 +17,7 @@ class Dirumahaja extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $kesehatan = $this->db->get_where('kesehatan', ['npk' => $this->session->userdata('npk')])->row_array();
         if (empty($kesehatan)) {
+            $this->session->set_flashdata('message', 'dirumahaja');
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -35,8 +36,68 @@ class Dirumahaja extends CI_Controller
     public function submit()
     {
         date_default_timezone_set('asia/jakarta');
-        $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+        if ($this->input->post('a1') == 'YA') {
+            $a1 = 1;
+        } else {
+            $a1 = 0;
+        }
+        if ($this->input->post('a2') == 'YA') {
+            $a2 = 1;
+        } else {
+            $a2 = 0;
+        }
+        if ($this->input->post('a3') == 'YA') {
+            $a3 = 1;
+        } else {
+            $a3 = 0;
+        }
+        if ($this->input->post('b1') == 'YA') {
+            $b1 = 4;
+        } else {
+            $b1 = 0;
+        }
+        if ($this->input->post('b2') == 'YA') {
+            $b2 = 2;
+        } else {
+            $b2 = 0;
+        }
+        if ($this->input->post('b3') == 'YA') {
+            $b3 = 4;
+        } else {
+            $b3 = 0;
+        }
+        if ($this->input->post('b4') == 'YA') {
+            $b4 = 7;
+        } else {
+            $b4 = 0;
+        }
+        if ($this->input->post('b5') == 'YA') {
+            $b5 = 3;
+        } else {
+            $b5 = 0;
+        }
+        if ($this->input->post('b6') == 'YA') {
+            $b6 = 1;
+        } else {
+            $b6 = 0;
+        }
+        if ($this->input->post('b7') == 'YA') {
+            $b7 = 1;
+        } else {
+            $b7 = 0;
+        }
+        $total = $a1 + $a2 + $a3 + $b1 + $b2 + $b4 + $b4 + $b5 + $b6 + $b7;
 
+        // if ($this->input->post('a1') == 'YA' or $this->input->post('a2') == 'YA' or $this->input->post('a3') == 'YA' or $this->input->post('b1') == 'YA' or $this->input->post('b2') == 'YA' or $this->input->post('b3') == 'YA' or $this->input->post('b4') == 'YA' or $this->input->post('b5') == 'YA' or $this->input->post('b6') == 'YA' or $this->input->post('b7') == 'YA') {
+        if ($total == 0) {
+            $status = 'AMAN';
+        } elseif ($total >= 1 and $total <= 3) {
+            $status = 'SIAGA';
+        } elseif ($total >= 4 and $total <= 6) {
+            $status = 'AWAS';
+        } elseif ($total >= 7) {
+            $status = 'BAHAYA';
+        }
         $data = [
             'id' => time(),
             'npk' => $this->session->userdata('npk'),
@@ -49,11 +110,55 @@ class Dirumahaja extends CI_Controller
             'b3' => $this->input->post('b3'),
             'b4' => $this->input->post('b4'),
             'b5' => $this->input->post('b5'),
+            'b6' => $this->input->post('b6'),
+            'b7' => $this->input->post('b7'),
             'catatan' => $this->input->post('catatan'),
-            'create_at' => date('Y-m-d H:i:s'),
-            'status' => '9'
+            'status' => $status,
+            'sect_id' => $this->session->userdata('sect_id'),
+            'dept_id' => $this->session->userdata('dept_id'),
+            'create_at' => date('Y-m-d H:i:s')
         ];
         $this->db->insert('kesehatan', $data);
+
+        $this->db->where('dept_id', $this->session->userdata('dept_id'));
+        $this->db->where('posisi_id', '3');
+        $depthead = $this->db->get('karyawan')->row_array();
+        //Notifikasi ke DeptHead
+        $postData = array(
+            'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+            'number' => $depthead['phone'],
+            'message' => "*PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
+                "\r\n*STATUS : " . $status . "*" .
+                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                "\r\n \r\nA1. Kondisi kesehatan selama libur lebaran (Demam/Pilek/Influenza) : *" . $this->input->post('a1') . "*" .
+                "\r\n \r\nA2. Kondisi kesehatan selama libur lebaran (Batuk/Suara serak/Demam) : *" . $this->input->post('a2') . "*" .
+                "\r\n \r\nA3. Kondisi kesehatan selama libur lebaran (Sesak nafas/Nafas pendek) : *" . $this->input->post('a3') . "*" .
+                "\r\n \r\nB1. Pernah berinteraksi dengan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b1') . "*" .
+                "\r\n \r\nB2. Pernah berkunjung ke rumah keluarga Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b2') . "*" .
+                "\r\n \r\nB3. Penghuni satu rumah ada yang dinyatakan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b3') . "*" .
+                "\r\n \r\nB4. Kamu masuk dalam status Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b4') . "*" .
+                "\r\n \r\nB5. Mengikuti pemerikasaan Rapid Test, PCR, ataupun Tes Kesehatan lainnya dengan hasil kemungkinan terinfeksi COVID-19 : *" . $this->input->post('b5') . "*" .
+                "\r\n \r\nB6. Pergi dan kembali dari luar kota / Kab : *" . $this->input->post('b6') . "*" .
+                "\r\n \r\nB7. Beraktivitas jauh (lebih dari 20KM) dari rumah kediaman : *" . $this->input->post('b7') . "*" .
+                "\r\n \r\nCatatan : " . $this->input->post('catatan') .
+                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+        );
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $headers = array();
+        $headers[] = 'Accept: application/json';
+        $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
         redirect('dirumahaja');
     }
 

@@ -26,6 +26,8 @@
                                         <th>B3</th>
                                         <th>B4</th>
                                         <th>B5</th>
+                                        <th>B6</th>
+                                        <th>B7</th>
                                         <th>Catatan</th>
                                         <th>Dibuat pada</th>
                                     </tr>
@@ -42,6 +44,8 @@
                                         <th>B3</th>
                                         <th>B4</th>
                                         <th>B5</th>
+                                        <th>B6</th>
+                                        <th>B7</th>
                                         <th>Catatan</th>
                                         <th>Dibuat pada</th>
                                     </tr>
@@ -49,7 +53,7 @@
                                 <tbody>
                                     <?php
                                     foreach ($kesehatan as $k) :
-                                        if ($k['a1'] == 'YA' or $k['a2'] == 'YA' or $k['a3'] == 'YA' or $k['b1'] == 'YA' or $k['b2'] == 'YA' or $k['b3'] == 'YA' or $k['b4'] == 'YA' or $k['b5'] == 'YA') {
+                                        if ($k['a1'] == 'YA' or $k['a2'] == 'YA' or $k['a3'] == 'YA' or $k['b1'] == 'YA' or $k['b2'] == 'YA' or $k['b3'] == 'YA' or $k['b4'] == 'YA' or $k['b5'] == 'YA' or $k['b6'] == 'YA' or $k['b7'] == 'YA') {
                                             echo '<tr class="text-white bg-danger">';
                                         } else {
                                             echo '<tr>';
@@ -65,19 +69,23 @@
                                         <td><?= $k['b3']; ?></td>
                                         <td><?= $k['b4']; ?></td>
                                         <td><?= $k['b5']; ?></td>
+                                        <td><?= $k['b6']; ?></td>
+                                        <td><?= $k['b7']; ?></td>
                                         <td><?= $k['catatan']; ?></td>
-                                        <td><?= date('Y-m-d H:i', strtotime($k['create_at'])); ?></td>
+                                        <td><?= date('d-m-Y H:i', strtotime($k['create_at'])); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
+                        <h4>A. Kondisi Kesehatan</h4>
                         A1. Kondisi kesehatan selama libur lebaran <b>(Demam/Pilek/Influenza)</b>
                         </br>
                         A2. Kondisi kesehatan selama libur lebaran <b>(Batuk/Suara serak/Demam)</b>
                         </br>
                         A3. Kondisi kesehatan selama libur lebaran <b>(Sesak nafas/Nafas pendek)</b>
                         </p>
+                        <h4>B. Risiko Penularan</h4>
                         B1. Pernah berinteraksi dengan <b>Pasien Positif, PDP, ODP</b> ataupun <b>Orang yang sedang menjalani Isolasi Mandiri COVID-19</b>
                         </br>
                         B2. Pernah berkunjung ke rumah keluarga <b>Pasien Positif, PDP, ODP</b> ataupun <b>Orang yang sedang menjalani Isolasi Mandiri COVID-19</b>
@@ -87,6 +95,10 @@
                         B4. Kamu masuk dalam status <b>Pasien Positif, PDP, ODP</b> ataupun <b>Orang yang sedang menjalani Isolasi Mandiri COVID-19</b>
                         </br>
                         B5. Mengikuti pemerikasaan Rapid Test, PCR, ataupun Tes Kesehatan lainnya dengan hasil <b>"kemungkinan terinfeksi COVID-19"</b>
+                        </br>
+                        B6. Pergi dan kembali dari <b>luar kota / Kab</b>
+                        </br>
+                        B7. Beraktivitas jauh <b>(lebih dari 20KM)</b> dari rumah kediaman
                     </div>
                 </div>
                 <!--  end card  -->
