@@ -70,10 +70,10 @@ class Dirumahaja extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function informasi()
+    public function uptodate()
     {
-        $data['sidemenu'] = 'COVID-19';
-        $data['sidesubmenu'] = 'Informasi';
+        $data['sidemenu'] = 'DiRumahAja';
+        $data['sidesubmenu'] = 'Informasi Terbaru';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['visit'] = $this->db->get('visit')->result_array();
         $this->load->view('templates/header', $data);
