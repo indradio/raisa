@@ -51,4 +51,21 @@ class Depthead extends CI_Controller
         $this->load->view('depthead/presensi', $data);
         $this->load->view('templates/footer');
     }
+
+    public function laporan($parameter)
+    {
+        if ($parameter == 'kesehatan') {
+            $data['sidemenu'] = 'Kepala Departemen';
+            $data['sidesubmenu'] = 'Laporan Kesehatan';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['kesehatan'] = $this->db->get_where('kesehatan')->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('dirumahaja/data_kesehatan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('dashboard');
+        }
+    }
 }
