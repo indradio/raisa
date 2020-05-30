@@ -5,23 +5,21 @@
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <!-- Begin Content -->
-          <strong>PENGUMUMAN LIBUR RESMI, CUTI BERSAMA DAN COMPANY EVENT</strong>
+          <strong>PENGISIAN FORM PEDULI KESEHATAN KARYAWAN</strong>
           </br>
-          </br>Sehubungan dengan telah dikeluarkannya revisi SKB 3 mentri, maka dengan ini Manajemen PT Astra Otoparts Divisi Winteq menetapkan untuk jadwal libur resmi, cuti bersama, event company tahun 2020 tetap dengan menggunakan Calendar of Event yang sudah ditetapkan sebelumnya. 
+          </br>Untuk memastikan rasa aman saat kembali berkerja di kantor setelah libur lebaran, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
           </br>
-          </br>Perlu diketahui bersama bahwa
-          </br><strong>1. Libur nasional yang ditetapkan pemerintah tidak ada perubahan sehingga masih sesuai dengan COE 2020 yang sudah ditetapkan sebelumnya.</strong>
-          </br><strong>2. Cuti bersama bersifat fakultatif(dapat ditentukan oleh perusahaan).</strong>
-          </br>
-          </br>Demikian yang dapat kami sampaikan kiranya informasi ini dapat bermanfaat untuk kita semua. 
+          </br>Poin penting :
+          </br><strong>1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.</strong>
+          </br><strong>2. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.</strong>
           </br>
           </br>Regards,
           </br>PT Astra Otoparts. Tbk - Divisi Winteq
           </br>
-          </br><a href="<?= base_url(); ?>assets/pdf/COE 2020 - R2.pdf" target="_blank" class="btn btn-success text-light">Download Calendar of Event</a>
-          <!-- </br><small>Download Calendar of Event</small> -->
-          </div>
-          <div class="alert alert-info" role="alert">
+          </br><a href="<?= base_url(); ?>dirumahaja" class="btn btn-danger text-light">ISI SEKARANG!</a>
+          </br><small>*Klik tombol di atas untuk mengisi FORM PEDULI KESEHATAN KARYAWAN</small>
+        </div>
+        <div class="alert alert-info" role="alert">
           <strong>PANDUAN E-CLAIM REIMBURSEMENT GARDA MEDIKA - MEDCARE</strong>
           </br>
           </br>Informasi lebih lengkap Panduan E-Claim Reimbursement Garda Medika
@@ -1301,85 +1299,85 @@
   initPhotoSwipeFromDOM('.my-gallery');
 
   $(document).ready(function() {
-        var cJamkerja = $('#calendarJamkerja');
+    var cJamkerja = $('#calendarJamkerja');
 
-        today = new Date();
-        y = today.getFullYear();
-        m = today.getMonth();
-        d = today.getDate();
+    today = new Date();
+    y = today.getFullYear();
+    m = today.getMonth();
+    d = today.getDate();
 
-        cJamkerja.fullCalendar({
-            timeZone: 'asia/jakarta', // the default (unnecessary to specify)
-            viewRender: function(view, element) {
-                // We make sure that we activate the perfect scrollbar when the view isn't on Month
-                if (view.name != 'month') {
-                    $(element).find('.fc-scroller').perfectScrollbar();
-                }
-            },
-            header: {
-                left: 'month',
-                center: 'title',
-                right: 'prev,next,today'
-            },
+    cJamkerja.fullCalendar({
+      timeZone: 'asia/jakarta', // the default (unnecessary to specify)
+      viewRender: function(view, element) {
+        // We make sure that we activate the perfect scrollbar when the view isn't on Month
+        if (view.name != 'month') {
+          $(element).find('.fc-scroller').perfectScrollbar();
+        }
+      },
+      header: {
+        left: 'month',
+        center: 'title',
+        right: 'prev,next,today'
+      },
 
-            firstDay: 1,
-            defaultDate: today,
-            businessHours: [{
-                default: false,
-                // days of week. an array of zero-based day of week integers (0=Sunday)
-                dow: [1, 2, 3, 4, 5], // Monday - Friday
-                start: '07:30', // a start time 
-                end: '16:30' // an end time 
-            }],
+      firstDay: 1,
+      defaultDate: today,
+      businessHours: [{
+        default: false,
+        // days of week. an array of zero-based day of week integers (0=Sunday)
+        dow: [1, 2, 3, 4, 5], // Monday - Friday
+        start: '07:30', // a start time 
+        end: '16:30' // an end time 
+      }],
 
-            views: {
-                month: { // name of view
-                    titleFormat: 'MMMM YYYY'
-                    // other view-specific options here
-                },
-                week: {
-                    titleFormat: " MMMM D YYYY"
-                },
-                day: {
-                    titleFormat: 'D MMM, YYYY'
-                }
-            },
+      views: {
+        month: { // name of view
+          titleFormat: 'MMMM YYYY'
+          // other view-specific options here
+        },
+        week: {
+          titleFormat: " MMMM D YYYY"
+        },
+        day: {
+          titleFormat: 'D MMM, YYYY'
+        }
+      },
 
-            selectable: true,
-            selectHelper: true,
-            editable: true,
+      selectable: true,
+      selectHelper: true,
+      editable: true,
 
-            eventSources: [{
-                    events: function(start, end, timezone, callback) {
-                        $.ajax({
-                            url: '<?php echo base_url() ?>jamkerja/GET_MY_jamkerja',
-                            dataType: 'json',
-                            success: function(msg) {
-                                var events = msg.events;
-                                callback(events);
-                            }
-                        });
-                    }
-                },
-                {
-                    events: function(start, end, timezone, callback) {
-                        $.ajax({
-                            url: '<?php echo base_url() ?>jamkerja/GET_MY_lembur',
-                            dataType: 'json',
-                            success: function(msg) {
-                                var events = msg.events;
-                                callback(events);
-                            }
-                        });
-                    },
-                    color: 'red' // an option!
-                },
-            ],
-            eventLimit: true, // allow "more" link when too many events
+      eventSources: [{
+          events: function(start, end, timezone, callback) {
+            $.ajax({
+              url: '<?php echo base_url() ?>jamkerja/GET_MY_jamkerja',
+              dataType: 'json',
+              success: function(msg) {
+                var events = msg.events;
+                callback(events);
+              }
+            });
+          }
+        },
+        {
+          events: function(start, end, timezone, callback) {
+            $.ajax({
+              url: '<?php echo base_url() ?>jamkerja/GET_MY_lembur',
+              dataType: 'json',
+              success: function(msg) {
+                var events = msg.events;
+                callback(events);
+              }
+            });
+          },
+          color: 'red' // an option!
+        },
+      ],
+      eventLimit: true, // allow "more" link when too many events
 
-            select: function(start, end, info) {
-                window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
-            },
-        });
+      select: function(start, end, info) {
+        window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
+      },
     });
+  });
 </script>
