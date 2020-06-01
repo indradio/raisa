@@ -15,32 +15,30 @@ class Presensi extends CI_Controller
         $kesehatan = $this->db->get_where('kesehatan', ['npk' => $this->session->userdata('npk')])->row_array();
         if (empty($kesehatan)) {
             redirect('dirumahaja');
-        } else {
-            date_default_timezone_set('asia/jakarta');
-            $data['sidemenu'] = 'Kehadiran';
-            $data['sidesubmenu'] = 'Kehadiran';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-
-            // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-            //     $data['state'] = 'C/In';
-            // } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-            if (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-                $data['state'] = 'C/Rest';
-                // } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
-                //     $data['state'] = 'C/Out';
-            } else {
-                $data['state'] = 'No State for this time';
-            }
-
-            $data['time'] = date('H:i');
-
-            $this->load->helper('url');
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('presensi/index', $data);
-            $this->load->view('templates/footer');
         }
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'Kehadiran';
+        $data['sidesubmenu'] = 'Kehadiran';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+            $data['state'] = 'C/In';
+        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+            $data['state'] = 'C/Rest';
+        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+            $data['state'] = 'C/Out';
+        } else {
+            $data['state'] = 'No State for this time';
+        }
+
+        $data['time'] = date('H:i');
+
+        $this->load->helper('url');
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('presensi/index', $data);
+        $this->load->view('templates/footer');
     }
 
     public function submit()
@@ -52,13 +50,12 @@ class Presensi extends CI_Controller
         } else {
             $day = 'WorkDay';
         }
-        // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-        //     $state = 'C/In';
-        // } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-        if (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+        if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+            $state = 'C/In';
+        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
             $state = 'C/Rest';
-            // } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
-            //     $state = 'C/Out';
+        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+            $state = 'C/Out';
         } else {
             $state = 'notime';
         }

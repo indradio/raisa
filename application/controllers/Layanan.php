@@ -183,10 +183,10 @@ class Layanan extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         if ($parameter == 'A') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('group', 'A');
-            // $this->db->where('npk', '0282');
+            // $this->db->where('is_active', '1');
+            // $this->db->where('status', '1');
+            // $this->db->where('group', 'A');
+            $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER

@@ -12,10 +12,6 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
-        $kesehatan = $this->db->get_where('kesehatan', ['npk' => $this->session->userdata('npk')])->row_array();
-        if (empty($kesehatan)) {
-            redirect('dirumahaja');
-        }
         date_default_timezone_set('asia/jakarta');
         $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
         //Auto batalkan perjalanan

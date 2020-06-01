@@ -1,22 +1,21 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-default" role="alert"> -->
-    <!-- Begin Content -->
-    <!-- Sesuai dengan Surat Keputusan No <strong>OO4/WTQ-HR/IV/2020</strong> tentang <strong>"Pengaturan Jam Kerja Karyawan pada bulan Ramadhan 1441 H"</strong>.
-          </br>Berikut adalah perubahan jadwal absensi melalui RAISA.
+        <div class="alert alert-default" role="alert">
+          <!-- Begin Content -->
+          Berikut adalah perubahan jadwal absensi melalui RAISA.
           </br>
-          </br><strong>1. Check in antara 06:30 - 07.30</strong>
+          </br><strong>1. Check in antara 07:00 - 08.30</strong>
           </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
-          </br><strong>3. Check out antara 16.00 - 18.00</strong>
+          </br><strong>3. Check out antara 16.00 - 17.30</strong>
           </br>
-          </br>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman. -->
-    <!-- End Content -->
-    <!-- </div>
+          </br>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.
+          <!-- End Content -->
+        </div>
       </div>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col-md-6">
         <form id="timePrecense" class="form" method="post" action="<?= base_url('presensi/submit'); ?>">
@@ -51,9 +50,10 @@
               </div>
               <div class="form-group">
                 <label for="newstate" class="bmd-label-floating"> Work State *</label>
-                <select class="form-control selectpicker" data-style="btn btn-link" id="newstate" name="newstate" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
-                  <option value="OFFDAY" selected>OFF DAY</option>
-                  <!-- <option value="WFH">WFH</option> -->
+                <select class="form-control selectpicker" data-style="btn btn-link" id="newstate" name="newstate" title="Silahkan Pilih" data-size="3" data-live-search="false" required>
+                  <option value="OFFDAY">OFF DAY</option>
+                  <option value="WFH">WORK FROM HOME</option>
+                  <option value="WFO">WORK FROM OFFICE</option>
                 </select>
               </div>
               <div class="form-group">
@@ -82,13 +82,12 @@
             </div>
             <div class="card-footer ml-auto">
               <?php
-              // if (date('H:i') >= '06:30' and date('H:i') <= '07:30') {
-              // echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
-              // } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-              if (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+              if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+                echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
+              } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
                 echo '<button type="submit" id="submit" class="btn btn-success">Rest Time</button>';
-                // } elseif (date('H:i') >= '16:00' and date('H:i') <= '18:00') {
-                // echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
+              } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+                echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
               } else {
                 echo '<button type="submit" class="btn btn-default" disabled="false">Belum Waktunya</button>';
                 echo '</div><div class="card-footer mr-auto">Kamu hanya bisa Clock In/Rest/Out di jendela waktu yang telah ditentukan.';
