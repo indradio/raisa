@@ -13,7 +13,7 @@ class Dirumahaja extends CI_Controller
     public function index()
     {
         $data['sidemenu'] = '#DiRumahAja';
-        $data['sidesubmenu'] = 'Form';
+        $data['sidesubmenu'] = 'Form Peduli Kesehatan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $kesehatan = $this->db->get_where('kesehatan', ['npk' => $this->session->userdata('npk')])->row_array();
         if (empty($kesehatan)) {
