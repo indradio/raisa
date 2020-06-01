@@ -11,7 +11,9 @@
           </br>
           </br>Poin penting :
           </br><strong>1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.</strong>
-          </br><strong>2. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.</strong>
+          </br><strong>2. Setiap Karyawan menyadari bahwa keselamatan karyawan lain serta keluarga juga menjadi bagian dari tanggung jawab sosial guna mencegah persebaran virus / penyakit infeksi COVID-19.</strong>
+          </br><strong>3. Setiap karyawan telah mentaati peraturan pemerintah danperusahaan dalam mencegah persebaran virus / penyakit infeksi COVID-19.</strong>
+          </br><strong>4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.</strong>
           </br>
           </br>Regards,
           </br>PT Astra Otoparts. Tbk - Divisi Winteq
