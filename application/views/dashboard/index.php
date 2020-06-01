@@ -7,7 +7,7 @@
           <!-- Begin Content -->
           <strong>PENGISIAN FORM PEDULI KESEHATAN KARYAWAN</strong>
           </br>
-          </br>Untuk memastikan rasa aman saat kembali berkerja di kantor setelah libur lebaran, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
+          </br>Demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan setelah libur lebaran, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
           </br>
           </br>Poin penting :
           </br><strong>1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.</strong>
