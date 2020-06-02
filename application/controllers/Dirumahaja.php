@@ -12,6 +12,7 @@ class Dirumahaja extends CI_Controller
 
     public function index()
     {
+        redirect('dashboard');
         $data['sidemenu'] = '#DiRumahAja';
         $data['sidesubmenu'] = 'Form Peduli Kesehatan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
