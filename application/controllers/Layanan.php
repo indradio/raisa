@@ -183,28 +183,27 @@ class Layanan extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         if ($parameter == 'A') {
-            // $this->db->where('is_active', '1');
-            // $this->db->where('status', '1');
-            // $this->db->where('group', 'A');
-            $this->db->where('npk', '0282');
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'A');
+            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*PENTING! : PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
+                    'message' => "*INFORMASI : TETAP ABSENSI SAAT OFF DAY*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam rangka pencegahan penyebaran COVID 19 dan demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan setelah libur lebaran, maka setiap karyawan *DIHARUSKAN* mengisi FORM PEDULI KESEHATAN KARYAWAN sebelum kembali berkerja." .
-                        "\r\n \r\nAdapun poin penting yang perlu diingat sebagai berikut:" .
-                        "\r\n \r\n*1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.*" .
-                        "\r\n*2. Setiap Karyawan menyadari bahwa keselamatan karyawan lain serta keluarga juga menjadi bagian dari tanggung jawab sosial guna mencegah persebaran virus / penyakit infeksi COVID-19.*" .
-                        "\r\n*3. Setiap karyawan telah mentaati peraturan pemerintah danperusahaan dalam mencegah persebaran virus / penyakit infeksi COVID-19.*" .
-                        "\r\n*4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.*" .
-                        "\r\n \r\nUntuk pengisian FORM PEDULI KESEHATAN KARYAWAN dapat melalui link berikut : https://raisa.winteq-astra.com/dirumahaja" .
-                        "\r\n \r\nDemikian informasi yang kami sampaikan. Atas perhatian dan pengertiannya kami ucapkan terima kasih." .
-                        "\r\n \r\n \r\nHormat kami," .
-                        "\r\n \r\n \r\nPT Astra Otoparts Tbk Divisi Winteq"
+                        "\r\n \r\nBagi kamu yang sudah mendapat jadwal dari atasan masing-masing, jangan lupa untuk tetap absensi ya!" .
+                        "\r\n \r\nAdapun waktu absensi sebagai berikut:" .
+                        "\r\n*1. Check in antara 07:00 - 08.30*" .
+                        "\r\n*2. Istirahat antara 11.30 - 13.00*" .
+                        "\r\n*3. Check out antara 16.00 - 17.30*" .
+                        "\r\n \r\n*Karyawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja*" .
+                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan" .
+                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman_" .
+                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
 
                 $ch = curl_init();
@@ -234,19 +233,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*PENTING! : PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam rangka pencegahan penyebaran COVID 19 dan demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan setelah libur lebaran, maka setiap karyawan *DIHARUSKAN* mengisi FORM PEDULI KESEHATAN KARYAWAN sebelum kembali berkerja." .
-                        "\r\n \r\nAdapun poin penting yang perlu diingat sebagai berikut:" .
-                        "\r\n \r\n*1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.*" .
-                        "\r\n*2. Setiap Karyawan menyadari bahwa keselamatan karyawan lain serta keluarga juga menjadi bagian dari tanggung jawab sosial guna mencegah persebaran virus / penyakit infeksi COVID-19.*" .
-                        "\r\n*3. Setiap karyawan telah mentaati peraturan pemerintah danperusahaan dalam mencegah persebaran virus / penyakit infeksi COVID-19.*" .
-                        "\r\n*4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.*" .
-                        "\r\n \r\nUntuk pengisian FORM PEDULI KESEHATAN KARYAWAN dapat melalui link berikut : https://raisa.winteq-astra.com/dirumahaja" .
-                        "\r\n \r\nDemikian informasi yang kami sampaikan. Atas perhatian dan pengertiannya kami ucapkan terima kasih." .
-                        "\r\n \r\n \r\nHormat kami," .
-                        "\r\n \r\n \r\nPT Astra Otoparts Tbk Divisi Winteq"
-                );
+                    'message' => "*INFORMASI : TETAP ABSENSI SAAT OFF DAY*" .
+                    "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                    "\r\n \r\nBagi kamu yang sudah mendapat jadwal dari atasan masing-masing, jangan lupa untuk tetap absensi ya!" .
+                    "\r\n \r\nAdapun waktu absensi sebagai berikut:" .
+                    "\r\n*1. Check in antara 07:00 - 08.30*" .
+                    "\r\n*2. Istirahat antara 11.30 - 13.00*" .
+                    "\r\n*3. Check out antara 16.00 - 17.30*" .
+                    "\r\n \r\n*Karyawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja*" .
+                    "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan" .
+                    "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman_" .
+                    "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi di link berikut https://raisa.winteq-astra.com"
+            );
 
                 $ch = curl_init();
 
@@ -275,19 +273,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*PENTING! : PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam rangka pencegahan penyebaran COVID 19 dan demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan setelah libur lebaran, maka setiap karyawan *DIHARUSKAN* mengisi FORM PEDULI KESEHATAN KARYAWAN sebelum kembali berkerja." .
-                        "\r\n \r\nAdapun poin penting yang perlu diingat sebagai berikut:" .
-                        "\r\n \r\n*1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.*" .
-                        "\r\n*2. Setiap Karyawan menyadari bahwa keselamatan karyawan lain serta keluarga juga menjadi bagian dari tanggung jawab sosial guna mencegah persebaran virus / penyakit infeksi COVID-19.*" .
-                        "\r\n*3. Setiap karyawan telah mentaati peraturan pemerintah danperusahaan dalam mencegah persebaran virus / penyakit infeksi COVID-19.*" .
-                        "\r\n*4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.*" .
-                        "\r\n \r\nUntuk pengisian FORM PEDULI KESEHATAN KARYAWAN dapat melalui link berikut : https://raisa.winteq-astra.com/dirumahaja" .
-                        "\r\n \r\nDemikian informasi yang kami sampaikan. Atas perhatian dan pengertiannya kami ucapkan terima kasih." .
-                        "\r\n \r\n \r\nHormat kami," .
-                        "\r\n \r\n \r\nPT Astra Otoparts Tbk Divisi Winteq"
-                );
+                    'message' => "*INFORMASI : TETAP ABSENSI SAAT OFF DAY*" .
+                    "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                    "\r\n \r\nBagi kamu yang sudah mendapat jadwal dari atasan masing-masing, jangan lupa untuk tetap absensi ya!" .
+                    "\r\n \r\nAdapun waktu absensi sebagai berikut:" .
+                    "\r\n*1. Check in antara 07:00 - 08.30*" .
+                    "\r\n*2. Istirahat antara 11.30 - 13.00*" .
+                    "\r\n*3. Check out antara 16.00 - 17.30*" .
+                    "\r\n \r\n*Karyawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja*" .
+                    "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan" .
+                    "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman_" .
+                    "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi di link berikut https://raisa.winteq-astra.com"
+            );
 
                 $ch = curl_init();
 
