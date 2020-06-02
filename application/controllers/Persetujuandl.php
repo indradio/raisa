@@ -69,12 +69,14 @@ class Persetujuandl extends CI_Controller
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
             if ($rsv['jenis_perjalanan'] == 'TAPP' or $rsv['jenis_perjalanan'] == 'TA') {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
-                $this->db->set('status', '3');
+                $this->db->set('status', '4');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 
-                $this->db->where('posisi_id', '3');
-                $this->db->where('dept_id', '21');
+                // $this->db->where('posisi_id', '3');
+                // $this->db->where('dept_id', '21');
+                $this->db->where('posisi_id', '2');
+                $this->db->where('div_id', '2');
                 $fin_head = $this->db->get('karyawan')->row_array();
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',

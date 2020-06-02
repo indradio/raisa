@@ -45,6 +45,8 @@ class Persetujuanta extends CI_Controller
         $rsv = $this->db->get_where('reservasi', ['id' =>  $this->input->post('id')])->row_array();
         if ($this->session->userdata('posisi_id') == '2') {
             if ($rsv['jenis_perjalanan']=='TA'){
+                $this->db->set('fin_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
+                $this->db->set('tgl_fin', date('Y-m-d H:i:s'));
                 $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_div', date('Y-m-d H:i:s'));
                 $this->db->set('status', '5');
@@ -84,6 +86,8 @@ class Persetujuanta extends CI_Controller
                 
                 $result = curl_exec($ch);
             }elseif ($rsv['jenis_perjalanan']=='TAPP'){
+                $this->db->set('fin_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
+                $this->db->set('tgl_fin', date('Y-m-d H:i:s'));
                 $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_div', date('Y-m-d H:i:s'));
                 $this->db->set('status', '6');
