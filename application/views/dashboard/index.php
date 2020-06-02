@@ -3,8 +3,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-default" role="alert">
-          <!-- Begin Content -->
+        <!-- <div class="alert alert-default" role="alert">
           <strong>PENGISIAN FORM PEDULI KESEHATAN KARYAWAN</strong>
           </br>
           </br>Demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan setelah libur lebaran, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
@@ -20,7 +19,7 @@
           </br>
           </br><a href="<?= base_url(); ?>dirumahaja" class="btn btn-danger text-light">ISI SEKARANG!</a>
           </br><small>*Klik tombol di atas untuk mengisi FORM PEDULI KESEHATAN KARYAWAN</small>
-        </div>
+        </div> -->
         <div class="alert alert-info" role="alert">
           <strong>PANDUAN E-CLAIM REIMBURSEMENT GARDA MEDIKA - MEDCARE</strong>
           </br>

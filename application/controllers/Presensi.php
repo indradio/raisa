@@ -12,10 +12,6 @@ class Presensi extends CI_Controller
 
     public function index()
     {
-        $kesehatan = $this->db->get_where('kesehatan', ['npk' => $this->session->userdata('npk')])->row_array();
-        if (empty($kesehatan)) {
-            redirect('dirumahaja');
-        }
         date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'Kehadiran';
         $data['sidesubmenu'] = 'Kehadiran';
