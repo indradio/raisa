@@ -193,17 +193,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : TETAP ABSENSI SAAT OFF DAY*" .
+                    'message' => "*INFORMASI : PROTOKOL KESEHATAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nBagi kamu yang sudah mendapat jadwal dari atasan masing-masing, jangan lupa untuk tetap absensi ya!" .
-                        "\r\n \r\nAdapun waktu absensi sebagai berikut:" .
-                        "\r\n*1. Check in antara 07:00 - 08.30*" .
-                        "\r\n*2. Istirahat antara 11.30 - 13.00*" .
-                        "\r\n*3. Check out antara 16.00 - 17.30*" .
-                        "\r\n \r\n*Karyawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan" .
-                        "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman_" .
-                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi di link berikut https://raisa.winteq-astra.com"
+                        "\r\n \r\nBagaimana kabar kamu hari ini? Tetap jaga kondisi kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat dan menjalankan protokol kesehatan dalam kehidupan sehari-hari." .
+                        "\r\n \r\nProtokol Kesehatan agar tetap sehat dan terhindar dari pernyakit:" .
+                        "\r\n*1. Tetap #DiRumahAja.*" .
+                        "\r\n*2. Rajin mencuci tangan menggunakan sabun dan air mengalir ataupun hand sanitizer.*" .
+                        "\r\n*3. Selalu menggunakan masker saat keluar rumah atau ketika kamu sedang berinteraksi dengan orang lain.*" .
+                        "\r\n*4. Terapkan physical Distancing dengan menjaga jarak min 1 meter dengan orang lain.*" .
+                        "\r\n*5. Hindari keramaian/kerumunan banyak orang.*" .
+                        "\r\n*6. Pastikan kebersihan rumah kamu tetap terjaga agar tidak ada bakteri ataupun virus yang dapat menyebabkan penyakit.*" .
+                        "\r\n \r\n*Obat Terbaik adalah Menjaga Sehat*" .
+                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
 
                 $ch = curl_init();
@@ -233,18 +234,19 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : TETAP ABSENSI SAAT OFF DAY*" .
-                    "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                    "\r\n \r\nBagi kamu yang sudah mendapat jadwal dari atasan masing-masing, jangan lupa untuk tetap absensi ya!" .
-                    "\r\n \r\nAdapun waktu absensi sebagai berikut:" .
-                    "\r\n*1. Check in antara 07:00 - 08.30*" .
-                    "\r\n*2. Istirahat antara 11.30 - 13.00*" .
-                    "\r\n*3. Check out antara 16.00 - 17.30*" .
-                    "\r\n \r\n*Karyawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja*" .
-                    "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan" .
-                    "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman_" .
-                    "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi di link berikut https://raisa.winteq-astra.com"
-            );
+                    'message' => "*INFORMASI : PROTOKOL KESEHATAN*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\n \r\nBagaimana kabar kamu hari ini? Tetap jaga kondisi kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat dan menjalankan protokol kesehatan dalam kehidupan sehari-hari." .
+                        "\r\n \r\nProtokol Kesehatan agar tetap sehat dan terhindar dari pernyakit:" .
+                        "\r\n*1. Tetap #DiRumahAja.*" .
+                        "\r\n*2. Rajin mencuci tangan menggunakan sabun dan air mengalir ataupun hand sanitizer.*" .
+                        "\r\n*3. Selalu menggunakan masker saat keluar rumah atau ketika kamu sedang berinteraksi dengan orang lain.*" .
+                        "\r\n*4. Terapkan physical Distancing dengan menjaga jarak min 1 meter dengan orang lain.*" .
+                        "\r\n*5. Hindari keramaian/kerumunan banyak orang.*" .
+                        "\r\n*6. Pastikan kebersihan rumah kamu tetap terjaga agar tidak ada bakteri ataupun virus yang dapat menyebabkan penyakit.*" .
+                        "\r\n \r\n*Obat Terbaik adalah Menjaga Sehat*" .
+                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                );
 
                 $ch = curl_init();
 
@@ -273,18 +275,19 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : TETAP ABSENSI SAAT OFF DAY*" .
-                    "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                    "\r\n \r\nBagi kamu yang sudah mendapat jadwal dari atasan masing-masing, jangan lupa untuk tetap absensi ya!" .
-                    "\r\n \r\nAdapun waktu absensi sebagai berikut:" .
-                    "\r\n*1. Check in antara 07:00 - 08.30*" .
-                    "\r\n*2. Istirahat antara 11.30 - 13.00*" .
-                    "\r\n*3. Check out antara 16.00 - 17.30*" .
-                    "\r\n \r\n*Karyawan dan perusahaan harus memastikan kita semua hanya berada di lingkungan yang terkontrol yaitu #DiRUmahAja*" .
-                    "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan" .
-                    "\r\n \r\n_Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman_" .
-                    "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi di link berikut https://raisa.winteq-astra.com"
-            );
+                    'message' => "*INFORMASI : PROTOKOL KESEHATAN*" .
+                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                        "\r\n \r\nBagaimana kabar kamu hari ini? Tetap jaga kondisi kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat dan menjalankan protokol kesehatan dalam kehidupan sehari-hari." .
+                        "\r\n \r\nProtokol Kesehatan agar tetap sehat dan terhindar dari pernyakit:" .
+                        "\r\n*1. Tetap #DiRumahAja.*" .
+                        "\r\n*2. Rajin mencuci tangan menggunakan sabun dan air mengalir ataupun hand sanitizer.*" .
+                        "\r\n*3. Selalu menggunakan masker saat keluar rumah atau ketika kamu sedang berinteraksi dengan orang lain.*" .
+                        "\r\n*4. Terapkan physical Distancing dengan menjaga jarak min 1 meter dengan orang lain.*" .
+                        "\r\n*5. Hindari keramaian/kerumunan banyak orang.*" .
+                        "\r\n*6. Pastikan kebersihan rumah kamu tetap terjaga agar tidak ada bakteri ataupun virus yang dapat menyebabkan penyakit.*" .
+                        "\r\n \r\n*Obat Terbaik adalah Menjaga Sehat*" .
+                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                );
 
                 $ch = curl_init();
 
