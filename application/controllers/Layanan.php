@@ -193,21 +193,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : JIKA KAMU MERASA TIDAK SEHAT*" .
+                    'message' => "*INFORMASI : PROTOKOL KESEHATAN DI LINGKUNGAN PERUSAHAAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nUntuk mencegah persebaran virus corona (COVID-19) maka setiap orang harus peduli dengan kondisi kesehatanya." .
-                        "\r\n \r\nJika kamu merasa tidak sehat dengan kriteria:" .
-                        "\r\na. Demam 38 derajat Celcius atau lebih" .
-                        "\r\nb. Batuk/Pilek, dan" .
-                        "\r\nc. Sesak atau nafas cepat" .
-                        "\r\n \r\nYang harus kamu lakukan sebagai berikut:" .
-                        "\r\n \r\n*1. Segera lapor ke atasan kamu*" .
-                        "\r\n \r\n*2. Melakukan isolasi mandiri dengan pola hidup sehat dan bersih sampai kondisi kesehatan kamu baik*" .
-                        "\r\n \r\n*3. Segeralah berobat agar gejala tersebut dapat diidentifikasi*" .
-                        "\r\nKamu bisa memanfaatkan fasilitas berobat online atau jika darurat segeralah berobat ke *Fasilitas Pelayanan Kesehatan* seperti Klinik ataupun Rumah Sakit" .
-                        "\r\n \r\n*4. Ikuti protokol kesehatan dari pemerintah*" .
-                        "\r\nhttps://www.kemkes.go.id/resources/download/info-terkini/COVID-19%20dokumen%20resmi/1%20Protokol-Kesehatan-COVID-19.pdf" .
-                        "\r\n \r\n*Obat Terbaik adalah Menjaga Sehat*" .
+                        "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
+                        "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
+                        "\r\n \r\n*1. PROTOKOL KESEHATAN PENERIMAAN TAMU (LOBBY)*" .
+                        "\r\n- Setiap orang harus selalu menggunakan masker." .
+                        "\r\n- Setiap orang harus mencuci tangan / menggunakan hand sanitizer sebelum dan sesudah meeting." .
+                        "\r\n- Setiap orang saling menjaga jarak minimal 1 meter." .
+                        "\r\n- Tidak melakukan kontak fisik langsung seperti berjabat tangan ataupun yang lainnya." .
+                        "\r\n- Tidak melakukan pertemuan/meeting terlalu lama." .
+                        "\r\n- Tidak batuk atau bersin di tengah meeting, menjauh terlebih dahulu kalau ingin batuk atau bersin." .
+                        "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
 
@@ -238,21 +235,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : JIKA KAMU MERASA TIDAK SEHAT*" .
+                    'message' => "*INFORMASI : PROTOKOL KESEHATAN DI LINGKUNGAN PERUSAHAAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nUntuk mencegah persebaran virus corona (COVID-19) maka setiap orang harus peduli dengan kondisi kesehatanya." .
-                        "\r\n \r\nJika kamu merasa tidak sehat dengan kriteria:" .
-                        "\r\na. Demam 38 derajat Celcius atau lebih" .
-                        "\r\nb. Batuk/Pilek, dan" .
-                        "\r\nc. Sesak atau nafas cepat" .
-                        "\r\n \r\nYang harus kamu lakukan sebagai berikut:" .
-                        "\r\n \r\n*1. Segera lapor ke atasan kamu*" .
-                        "\r\n \r\n*2. Melakukan isolasi mandiri dengan pola hidup sehat dan bersih sampai kondisi kesehatan kamu baik*" .
-                        "\r\n \r\n*3. Segeralah berobat agar gejala tersebut dapat diidentifikasi*" .
-                        "\r\nKamu bisa memanfaatkan fasilitas berobat online atau jika darurat segeralah berobat ke *Fasilitas Pelayanan Kesehatan* seperti Klinik ataupun Rumah Sakit" .
-                        "\r\n \r\n*4. Ikuti protokol kesehatan dari pemerintah*" .
-                        "\r\nhttps://www.kemkes.go.id/resources/download/info-terkini/COVID-19%20dokumen%20resmi/1%20Protokol-Kesehatan-COVID-19.pdf" .
-                        "\r\n \r\n*Obat Terbaik adalah Menjaga Sehat*" .
+                        "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
+                        "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
+                        "\r\n \r\n*1. PROTOKOL KESEHATAN PENERIMAAN TAMU (LOBBY)*" .
+                        "\r\n- Setiap orang harus selalu menggunakan masker." .
+                        "\r\n- Setiap orang harus mencuci tangan / menggunakan hand sanitizer sebelum dan sesudah meeting." .
+                        "\r\n- Setiap orang saling menjaga jarak minimal 1 meter." .
+                        "\r\n- Tidak melakukan kontak fisik langsung seperti berjabat tangan ataupun yang lainnya." .
+                        "\r\n- Tidak melakukan pertemuan/meeting terlalu lama." .
+                        "\r\n- Tidak batuk atau bersin di tengah meeting, menjauh terlebih dahulu kalau ingin batuk atau bersin." .
+                        "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
 
@@ -283,21 +277,18 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : JIKA KAMU MERASA TIDAK SEHAT*" .
+                    'message' => "*INFORMASI : PROTOKOL KESEHATAN DI LINGKUNGAN PERUSAHAAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nUntuk mencegah persebaran virus corona (COVID-19) maka setiap orang harus peduli dengan kondisi kesehatanya." .
-                        "\r\n \r\nJika kamu merasa tidak sehat dengan kriteria:" .
-                        "\r\na. Demam 38 derajat Celcius atau lebih" .
-                        "\r\nb. Batuk/Pilek, dan" .
-                        "\r\nc. Sesak atau nafas cepat" .
-                        "\r\n \r\nYang harus kamu lakukan sebagai berikut:" .
-                        "\r\n \r\n*1. Segera lapor ke atasan kamu*" .
-                        "\r\n \r\n*2. Melakukan isolasi mandiri dengan pola hidup sehat dan bersih sampai kondisi kesehatan kamu baik*" .
-                        "\r\n \r\n*3. Segeralah berobat agar gejala tersebut dapat diidentifikasi*" .
-                        "\r\nKamu bisa memanfaatkan fasilitas berobat online atau jika darurat segeralah berobat ke *Fasilitas Pelayanan Kesehatan* seperti Klinik ataupun Rumah Sakit" .
-                        "\r\n \r\n*4. Ikuti protokol kesehatan dari pemerintah*" .
-                        "\r\nhttps://www.kemkes.go.id/resources/download/info-terkini/COVID-19%20dokumen%20resmi/1%20Protokol-Kesehatan-COVID-19.pdf" .
-                        "\r\n \r\n*Obat Terbaik adalah Menjaga Sehat*" .
+                        "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
+                        "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
+                        "\r\n \r\n*1. PROTOKOL KESEHATAN PENERIMAAN TAMU (LOBBY)*" .
+                        "\r\n- Setiap orang harus selalu menggunakan masker." .
+                        "\r\n- Setiap orang harus mencuci tangan / menggunakan hand sanitizer sebelum dan sesudah meeting." .
+                        "\r\n- Setiap orang saling menjaga jarak minimal 1 meter." .
+                        "\r\n- Tidak melakukan kontak fisik langsung seperti berjabat tangan ataupun yang lainnya." .
+                        "\r\n- Tidak melakukan pertemuan/meeting terlalu lama." .
+                        "\r\n- Tidak batuk atau bersin di tengah meeting, menjauh terlebih dahulu kalau ingin batuk atau bersin." .
+                        "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
 
