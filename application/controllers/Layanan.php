@@ -197,13 +197,12 @@ class Layanan extends CI_Controller
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
                         "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
                         "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
-                        "\r\n \r\n*1. PROTOKOL KESEHATAN PENERIMAAN TAMU (LOBBY)*" .
-                        "\r\n- Setiap orang harus selalu menggunakan masker." .
-                        "\r\n- Setiap orang harus mencuci tangan / menggunakan hand sanitizer sebelum dan sesudah meeting." .
-                        "\r\n- Setiap orang saling menjaga jarak minimal 1 meter." .
-                        "\r\n- Tidak melakukan kontak fisik langsung seperti berjabat tangan ataupun yang lainnya." .
-                        "\r\n- Tidak melakukan pertemuan/meeting terlalu lama." .
-                        "\r\n- Tidak batuk atau bersin di tengah meeting, menjauh terlebih dahulu kalau ingin batuk atau bersin." .
+                        "\r\n \r\n*2. PROTOKOL KESEHATAN SAAT BERADA DI MUSHOLA*" .
+                        "\r\n- Setiap orang tetap saling menjaga jarak." .
+                        "\r\n- Setiap orang membawa sajadah masing-masing untuk sholat." .
+                        "\r\n- Tidak terlalu lama berdiam didalam mushola setelah selesai sholat." .
+                        "\r\n- Tidak diperkenankan berdiskusi (ngobrol) di dalam maupun di luar mushola." .
+                        "\r\n- *Tidak meludah atau membuang cairan hidung ketika berwudhu* (harap lakukan ini di toilet karena ini adalah sumber penularan dropet yang paling berbahaya)." .
                         "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
@@ -239,13 +238,12 @@ class Layanan extends CI_Controller
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
                         "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
                         "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
-                        "\r\n \r\n*1. PROTOKOL KESEHATAN PENERIMAAN TAMU (LOBBY)*" .
-                        "\r\n- Setiap orang harus selalu menggunakan masker." .
-                        "\r\n- Setiap orang harus mencuci tangan / menggunakan hand sanitizer sebelum dan sesudah meeting." .
-                        "\r\n- Setiap orang saling menjaga jarak minimal 1 meter." .
-                        "\r\n- Tidak melakukan kontak fisik langsung seperti berjabat tangan ataupun yang lainnya." .
-                        "\r\n- Tidak melakukan pertemuan/meeting terlalu lama." .
-                        "\r\n- Tidak batuk atau bersin di tengah meeting, menjauh terlebih dahulu kalau ingin batuk atau bersin." .
+                        "\r\n \r\n*2. PROTOKOL KESEHATAN SAAT BERADA DI MUSHOLA*" .
+                        "\r\n- Setiap orang tetap saling menjaga jarak." .
+                        "\r\n- Setiap orang membawa sajadah masing-masing untuk sholat." .
+                        "\r\n- Tidak terlalu lama berdiam didalam mushola setelah selesai sholat." .
+                        "\r\n- Tidak diperkenankan berdiskusi (ngobrol) di dalam maupun di luar mushola." .
+                        "\r\n- *Tidak meludah atau membuang cairan hidung ketika berwudhu* (harap lakukan ini di toilet karena ini adalah sumber penularan dropet yang paling berbahaya)." .
                         "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
@@ -281,13 +279,12 @@ class Layanan extends CI_Controller
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
                         "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
                         "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
-                        "\r\n \r\n*1. PROTOKOL KESEHATAN PENERIMAAN TAMU (LOBBY)*" .
-                        "\r\n- Setiap orang harus selalu menggunakan masker." .
-                        "\r\n- Setiap orang harus mencuci tangan / menggunakan hand sanitizer sebelum dan sesudah meeting." .
-                        "\r\n- Setiap orang saling menjaga jarak minimal 1 meter." .
-                        "\r\n- Tidak melakukan kontak fisik langsung seperti berjabat tangan ataupun yang lainnya." .
-                        "\r\n- Tidak melakukan pertemuan/meeting terlalu lama." .
-                        "\r\n- Tidak batuk atau bersin di tengah meeting, menjauh terlebih dahulu kalau ingin batuk atau bersin." .
+                        "\r\n \r\n*2. PROTOKOL KESEHATAN SAAT BERADA DI MUSHOLA*" .
+                        "\r\n- Setiap orang tetap saling menjaga jarak." .
+                        "\r\n- Setiap orang membawa sajadah masing-masing untuk sholat." .
+                        "\r\n- Tidak terlalu lama berdiam didalam mushola setelah selesai sholat." .
+                        "\r\n- Tidak diperkenankan berdiskusi (ngobrol) di dalam maupun di luar mushola." .
+                        "\r\n- *Tidak meludah atau membuang cairan hidung ketika berwudhu* (harap lakukan ini di toilet karena ini adalah sumber penularan dropet yang paling berbahaya)." .
                         "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
