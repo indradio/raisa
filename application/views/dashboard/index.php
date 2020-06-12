@@ -3,30 +3,24 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <!-- <div class="alert alert-default" role="alert">
+        <div class="alert alert-default" role="alert">
           <strong>PENGISIAN FORM PEDULI KESEHATAN KARYAWAN</strong>
           </br>
-          </br>Demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan setelah libur lebaran, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
+          </br>Demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
           </br>
           </br>Poin penting :
           </br><strong>1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.</strong>
           </br><strong>2. Setiap Karyawan menyadari bahwa keselamatan karyawan lain serta keluarga juga menjadi bagian dari tanggung jawab sosial guna mencegah persebaran virus / penyakit infeksi COVID-19.</strong>
           </br><strong>3. Setiap karyawan telah mentaati peraturan pemerintah danperusahaan dalam mencegah persebaran virus / penyakit infeksi COVID-19.</strong>
-          </br><strong>4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.</strong>
+          </br><strong>4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja.</strong>
           </br>
           </br>Regards,
           </br>PT Astra Otoparts. Tbk - Divisi Winteq
           </br>
-          </br><a href="<?= base_url(); ?>dirumahaja" class="btn btn-danger text-light">ISI SEKARANG!</a>
-          </br><small>*Klik tombol di atas untuk mengisi FORM PEDULI KESEHATAN KARYAWAN</small>
-        </div> -->
-        <div class="alert alert-info" role="alert">
-          <strong>PANDUAN E-CLAIM REIMBURSEMENT GARDA MEDIKA - MEDCARE</strong>
-          </br>
-          </br>Informasi lebih lengkap Panduan E-Claim Reimbursement Garda Medika
-          </br><a href="<?= base_url(); ?>corona/medcare" class="btn btn-success">KLIK DISINI</a>
-          </br>
-          <!-- End Content -->
+          <?php if (date('D') == 'Sun' and date('H:i') >= '15:00') { ?>
+            </br><a href="<?= base_url(); ?>dirumahaja" class="btn btn-danger text-light">ISI SEKARANG!</a>
+            </br><small>*Klik tombol di atas untuk mengisi FORM PEDULI KESEHATAN KARYAWAN</small>
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -266,7 +260,7 @@
                               $nopol = $k['nopol'];
                               $queryPerjalanan = "SELECT *
                                                   FROM `perjalanan`
-                                                  WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
+                                                  WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  (`status` = 1 OR `status` = 2 OR `status` = 8)
                                                   ";
                               $p = $this->db->query($queryPerjalanan)->row_array();
                               if (!empty($p)) { ?>
@@ -282,7 +276,7 @@
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
                                     </div>
                                     <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
-                                  <?php } elseif ($p['status'] == 8 or $p['status'] == 11) { ?>
+                                  <?php } elseif ($p['status'] == 8) { ?>
                                     <div class="img-container">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                     </div>

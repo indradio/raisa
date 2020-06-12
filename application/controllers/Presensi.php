@@ -17,14 +17,18 @@ class Presensi extends CI_Controller
         $data['sidesubmenu'] = 'Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
-        if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
-            $data['state'] = 'C/In';
-        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-            $data['state'] = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
-            $data['state'] = 'C/Out';
-        } else {
+        if (date('D') == 'Sat' or date('D') == 'Sun') {
             $data['state'] = 'No State for this time';
+        } else {
+            if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+                $data['state'] = 'C/In';
+            } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+                $data['state'] = 'C/Rest';
+            } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+                $data['state'] = 'C/Out';
+            } else {
+                $data['state'] = 'No State for this time';
+            }
         }
 
         $data['time'] = date('H:i');

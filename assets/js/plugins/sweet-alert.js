@@ -2,8 +2,8 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "Hai Sobat RAISA!",
-    text: "Sudah absen (melaporkan kehadiran) hari ini? Jangan sampai lupa ya!",
+    title: "Semangat Pagi!",
+    text: "Jangan lupa untuk selalu menjaga jarak, menggunakan masker, rajin mencuci tangan / menggunakan hand sanitizer dan mematuhi protokol kesehatan.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-info",
     type: "info"

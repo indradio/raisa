@@ -193,16 +193,12 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : PROTOKOL KESEHATAN DI LINGKUNGAN PERUSAHAAN*" .
+                    'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
-                        "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
-                        "\r\n \r\n*2. PROTOKOL KESEHATAN SAAT BERADA DI MUSHOLA*" .
-                        "\r\n- Setiap orang tetap saling menjaga jarak." .
-                        "\r\n- Setiap orang membawa sajadah masing-masing untuk sholat." .
-                        "\r\n- Tidak terlalu lama berdiam didalam mushola setelah selesai sholat." .
-                        "\r\n- Tidak diperkenankan berdiskusi (ngobrol) di dalam maupun di luar mushola." .
-                        "\r\n- *Tidak meludah atau membuang cairan hidung ketika berwudhu* (harap lakukan ini di toilet karena ini adalah sumber penularan dropet yang paling berbahaya)." .
+                        "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
+                        "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
+                        "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
+                        "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
                         "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
@@ -234,16 +230,12 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : PROTOKOL KESEHATAN DI LINGKUNGAN PERUSAHAAN*" .
+                    'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
-                        "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
-                        "\r\n \r\n*2. PROTOKOL KESEHATAN SAAT BERADA DI MUSHOLA*" .
-                        "\r\n- Setiap orang tetap saling menjaga jarak." .
-                        "\r\n- Setiap orang membawa sajadah masing-masing untuk sholat." .
-                        "\r\n- Tidak terlalu lama berdiam didalam mushola setelah selesai sholat." .
-                        "\r\n- Tidak diperkenankan berdiskusi (ngobrol) di dalam maupun di luar mushola." .
-                        "\r\n- *Tidak meludah atau membuang cairan hidung ketika berwudhu* (harap lakukan ini di toilet karena ini adalah sumber penularan dropet yang paling berbahaya)." .
+                        "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
+                        "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
+                        "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
+                        "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
                         "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );
@@ -275,16 +267,12 @@ class Layanan extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $k['phone'],
-                    'message' => "*INFORMASI : PROTOKOL KESEHATAN DI LINGKUNGAN PERUSAHAAN*" .
+                    'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
                         "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam upaya mencegah persebaran virus corona (COVID-19) maka setiap orang harus disiplin menjalankan protokol kesehatan." .
-                        "\r\nBerikut ini protokol kesehatan yang harus dijalankan di lingkungan perusahaan:" .
-                        "\r\n \r\n*2. PROTOKOL KESEHATAN SAAT BERADA DI MUSHOLA*" .
-                        "\r\n- Setiap orang tetap saling menjaga jarak." .
-                        "\r\n- Setiap orang membawa sajadah masing-masing untuk sholat." .
-                        "\r\n- Tidak terlalu lama berdiam didalam mushola setelah selesai sholat." .
-                        "\r\n- Tidak diperkenankan berdiskusi (ngobrol) di dalam maupun di luar mushola." .
-                        "\r\n- *Tidak meludah atau membuang cairan hidung ketika berwudhu* (harap lakukan ini di toilet karena ini adalah sumber penularan dropet yang paling berbahaya)." .
+                        "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
+                        "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
+                        "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
+                        "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
                         "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
                         "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                 );

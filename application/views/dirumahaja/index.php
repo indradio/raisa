@@ -3,22 +3,31 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-default" role="alert">
-          <!-- Begin Content -->
-          ⚠️<strong>WAJIB BACA SEBELUM MENGISI FORM</strong>⚠️
-          </p>Tindakan bila ada yang terisi "Ya"
-          </p><strong>Pernyataan A1-A3 (Kondisi Kesehatan)</strong>
-          </br>1. Periksa ke klinik tingkat pertama, ikuti protokol klinik.
-          </br>2. Lapor ke Atasan sampai Manager.
-          </p><strong>Pernyataan B1-B7 (Risiko Penularan)</strong>
-          </br>1. Lapor ke Atasan sampai Manager.
-          </br>2. Jangan masuk kerja di tanggal 2 Juni 2020 sampai ada instruksi dari Managernya.
-          </p><strong>Catatan</strong>
-          </br>1. Bila ada yang terisi "Ya" dari quesionare ini, maka Karyawan harus segera menginformasikan ke atasannya (sampai Manager) di hari tersebut.
-          </br>2. Form ini berlaku untuk semua orang yang bekerja di lingkungan WINTEQ.
-          </br>3. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.
-          <!-- End Content -->
-        </div>
+        <?php if (date('D') == 'Sun' and date('H:i') >= '15:00') { ?>
+          <div class="alert alert-default" role="alert">
+            <!-- Begin Content -->
+            ⚠️<strong>WAJIB BACA SEBELUM MENGISI FORM</strong>⚠️
+            </p>Tindakan bila ada yang terisi "Ya"
+            </p><strong>Pernyataan A1-A3 (Kondisi Kesehatan)</strong>
+            </br>1. Periksa ke klinik tingkat pertama, ikuti protokol klinik.
+            </br>2. Lapor ke Atasan sampai Manager.
+            </p><strong>Pernyataan B1-B7 (Risiko Penularan)</strong>
+            </br>1. Lapor ke Atasan sampai Manager.
+            </br>2. Jangan masuk kerja sampai ada instruksi dari Managernya.
+            </p><strong>Catatan</strong>
+            </br>1. Bila ada yang terisi "Ya" dari quesionare ini, maka Karyawan harus segera menginformasikan ke atasannya (sampai Manager) di hari tersebut.
+            </br>2. Form ini berlaku untuk semua orang yang bekerja di lingkungan WINTEQ.
+            </br>3. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja setelah Libur Lebaran.
+            <!-- End Content -->
+          </div>
+        <?php  } else { ?>
+          <div class="alert alert-danger" role="alert">
+            <!-- Begin Content -->
+            ⚠️<strong>WAKTU PENGISIAN BELUM DIMULAI</strong>⚠️
+            </p><strong>Pengisian hanya bisa dilakukan pada hari minggu setelah jam 15:00 atau jam 3 sore.</strong>
+            <!-- End Content -->
+          </div>
+        <?php } ?>
       </div>
     </div>
     <div class="row">
@@ -29,7 +38,7 @@
               <div class="card-icon">
                 <i class="material-icons">local_hospital</i>
               </div>
-              <h4 class="card-title">FORM PEDULI KESEHATAN KARYAWAN WINTEQ SELAMA LIBUR LEBARAN</h4>
+              <h4 class="card-title">FORM PEDULI KESEHATAN KARYAWAN WINTEQ</h4>
             </div>
             <div class="card-body ">
               <div class="progress" style="width: 100%">
@@ -41,21 +50,21 @@
                 </label>
               </div>
               <div class="form-group">
-                <label for="a1" class="bmd-label-floating">A1. Kondisi kesehatan selama libur lebaran <b>(Demam/Pilek/Influenza)</b></label>
+                <label for="a1" class="bmd-label-floating">A1. Kondisi kesehatan <b>(Demam/Pilek/Influenza)</b></label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="a1" name="a1" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
                   <option value="YA">YA</option>
                   <option value="TIDAK">TIDAK</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="a2" class="bmd-label-floating">A2. Kondisi kesehatan selama libur lebaran <b>(Batuk/Suara serak/Demam)</b></label>
+                <label for="a2" class="bmd-label-floating">A2. Kondisi kesehatan <b>(Batuk/Suara serak/Demam)</b></label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="a2" name="a2" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
                   <option value="YA">YA</option>
                   <option value="TIDAK">TIDAK</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="a3" class="bmd-label-floating">A3. Kondisi kesehatan selama libur lebaran <b>(Sesak nafas/Nafas pendek)</b></label>
+                <label for="a3" class="bmd-label-floating">A3. Kondisi kesehatan <b>(Sesak nafas/Nafas pendek)</b></label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="a3" name="a3" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
                   <option value="YA">YA</option>
                   <option value="TIDAK">TIDAK</option>
@@ -141,7 +150,11 @@
               </div>
             </div>
             <div class="card-footer ml-auto">
-              <button type="submit" id="submit" class="btn btn-success">SUBMIT</button>
+              <?php if (date('D') == 'Sun' and date('H:i') >= '15:00') {
+                echo '<button type="submit" id="submit" class="btn btn-success">SUBMIT</button>';
+              } else {
+                echo '<button type="submit" id="submit" class="btn btn-default disabled">SUBMIT</button>';
+              } ?>
             </div>
           </div>
         </form>

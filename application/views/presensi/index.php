@@ -11,6 +11,8 @@
           </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
           </br><strong>3. Check out antara 16.00 - 17.30</strong>
           </br>
+          </br><b>Untuk hari libur sabtu dan minggu tidak perlu melaporkan kehadiran.</b>
+          </br>
           </br>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.
           <!-- End Content -->
         </div>
@@ -82,15 +84,20 @@
             </div>
             <div class="card-footer ml-auto">
               <?php
-              if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
-                echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
-              } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-                echo '<button type="submit" id="submit" class="btn btn-success">Rest Time</button>';
-              } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
-                echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
-              } else {
+              if (date('D') == 'Sat' or date('D') == 'Sun') {
                 echo '<button type="submit" class="btn btn-default" disabled="false">Belum Waktunya</button>';
-                echo '</div><div class="card-footer mr-auto">Kamu hanya bisa Clock In/Rest/Out di jendela waktu yang telah ditentukan.';
+                echo '</div><div class="card-footer mr-auto">Hari libur sabtu dan minggu tidak perlu melaporkan kehadiran (absensi).';
+              } else {
+                if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+                  echo '<button type="submit" id="submit" class="btn btn-success">Clock In</button>';
+                } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+                  echo '<button type="submit" id="submit" class="btn btn-success">Rest Time</button>';
+                } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+                  echo '<button type="submit" id="submit" class="btn btn-success">Clock Out</button>';
+                } else {
+                  echo '<button type="submit" class="btn btn-default" disabled="false">Belum Waktunya</button>';
+                  echo '</div><div class="card-footer mr-auto">Kamu hanya bisa Clock In/Rest/Out di jendela waktu yang telah ditentukan.';
+                }
               }
               ?>
             </div>
