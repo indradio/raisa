@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-rose text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
@@ -115,6 +115,14 @@
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Estimasi Biaya</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" id="biaya" name="biaya" disabled="true" />
                                     </div>
                                 </div>
                             </div>
@@ -366,11 +374,11 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
-                        <h4 class="card-title">Tambah Peseta perjalanan</h4>
+                        <h4 class="card-title">Peseta perjalanan</h4>
                     </div>
                 </div>
                 <form class="form" method="post" action="<?= base_url('cekdl/tambahpeserta'); ?>">
@@ -404,7 +412,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-center">
-                                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">TAMBAH</button>
+                                <button type="submit" class="btn btn-success">TAMBAH PESERTA</button>
                             </div>
                         </div>
                     </div>

@@ -27,19 +27,19 @@ class Reservasi extends CI_Controller
         $temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->result_array();
         foreach ($temp as $t) :
             $this->db->set('perjalanan_anggota');
-            $this->db->where('reservasi_id',$t['id']);
+            $this->db->where('reservasi_id', $t['id']);
             $this->db->delete('perjalanan_anggota');
 
             $this->db->set('perjalanan_tujuan');
-            $this->db->where('reservasi_id',$t['id']);
+            $this->db->where('reservasi_id', $t['id']);
             $this->db->delete('perjalanan_tujuan');
 
             $this->db->set('perjalanan_jadwal');
-            $this->db->where('reservasi_id',$t['id']);
+            $this->db->where('reservasi_id', $t['id']);
             $this->db->delete('perjalanan_jadwal');
 
             $this->db->set('reservasi_temp');
-            $this->db->where('id',$t['id']);
+            $this->db->where('id', $t['id']);
             $this->db->delete('reservasi_temp');
         endforeach;
 
@@ -213,6 +213,7 @@ class Reservasi extends CI_Controller
                 'karyawan_nama' => $dataku['nama'],
                 'karyawan_dept' => $dept['nama'],
                 'karyawan_posisi' => $posisi['nama'],
+                'karyawan_gol' => $dataku['gol_id'],
                 'status' => '0'
             ];
             $this->db->insert('perjalanan_anggota', $peserta);
@@ -221,6 +222,9 @@ class Reservasi extends CI_Controller
                 $karyawan = $this->db->get_where('karyawan', ['inisial' => $a])->row_array();
                 $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
                 $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
+                $this->db->where('jenis_perjalanan', $reservasi_temp['jenis_perjalanan']);
+                $this->db->where('gol_id', $karyawan['gol_id']);
+                $tunjangan = $this->db->get('perjalanan_tunjangan')->row_array();
                 $peserta = [
                     'reservasi_id' => $reservasi_temp['id'],
                     'npk' => $karyawan['npk'],
@@ -228,6 +232,12 @@ class Reservasi extends CI_Controller
                     'karyawan_nama' => $karyawan['nama'],
                     'karyawan_dept' => $dept['nama'],
                     'karyawan_posisi' => $posisi['nama'],
+                    'karyawan_gol' => $karyawan['gol_id'],
+                    'uang_saku' => $tunjangan['uang_saku'],
+                    'insentif_pagi' => $tunjangan['insentif_pagi'],
+                    'um_pagi' => $tunjangan['um_pagi'],
+                    'um_siang' => $tunjangan['um_siang'],
+                    'um_malam' => $tunjangan['um_malam'],
                     'status' => '0'
                 ];
                 $this->db->insert('perjalanan_anggota', $peserta);
@@ -257,6 +267,7 @@ class Reservasi extends CI_Controller
                     'karyawan_nama' => $karyawan['nama'],
                     'karyawan_dept' => $dept2['nama'],
                     'karyawan_posisi' => $posisi2['nama'],
+                    'karyawan_gol' => $karyawan['gol_id'],
                     'status' => '0'
                 ];
                 $this->db->insert('perjalanan_anggota', $peserta2);
@@ -275,11 +286,15 @@ class Reservasi extends CI_Controller
         $this->db->set('keperluan', $this->input->post('keperluan'));
         $this->db->set('copro', $this->input->post('copro'));
         $this->db->set('anggota', implode(', ', $listpeserta));
+        $this->db->set('taksi', '0');
+        $this->db->set('bbm', '0');
+        $this->db->set('tol', '0');
+        $this->db->set('parkir', '0');
         $this->db->set('catatan', $this->input->post('catatan'));
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
-        redirect('reservasi/dl1z');
+        redirect('reservasi/dl1d');
     }
 
     // Jika menggunakan kendaraan non-operasional
@@ -310,6 +325,92 @@ class Reservasi extends CI_Controller
         $this->db->update('reservasi_temp');
 
         redirect('reservasi/dl1c1');
+    }
+
+    public function dl1d()
+    {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
+        $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('reservasi/dl1d', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function dl1d_proses()
+    {
+        $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $reservasi_temp = $this->db->order_by('id', "DESC");
+        $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        //Uang Saku
+        if ($reservasi_temp['jenis_perjalanan'] == 'TAPP') {
+            $this->db->select_sum('uang_saku');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $uang_saku = $query->row()->uang_saku;
+        } else {
+            $uang_saku = 0;
+        }
+
+        //Insentif pagi
+        if ($reservasi_temp['jamberangkat'] <= $um['um1']) {
+            $this->db->select_sum('insentif_pagi');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $insentif_pagi = $query->row()->insentif_pagi;
+        } else {
+            $insentif_pagi = 0;
+        }
+
+        //Makan Pagi
+        if ($reservasi_temp['jenis_perjalanan'] == 'TAPP' and $reservasi_temp['jamberangkat'] <= $um['um2']) {
+            $this->db->select_sum('um_pagi');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_pagi = $query->row()->um_pagi;
+        } else {
+            $um_pagi = 0;
+        }
+
+        //Makan Siang
+        if ($reservasi_temp['jamberangkat'] <= $um['um3'] and $reservasi_temp['jamkembali'] >= $um['um3']) {
+            $this->db->select_sum('um_siang');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_siang = $query->row()->um_siang;
+        } else {
+            $um_siang = 0;
+        }
+
+        //Makan Malam
+        if ($reservasi_temp['jamkembali'] >= $um['um4']) {
+            $this->db->select_sum('um_malam');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_malam = $query->row()->um_malam;
+        } else {
+            $um_malam = 0;
+        }
+        $total = $uang_saku + $insentif_pagi + $um_pagi + $um_siang + $um_malam + $this->input->post('taksi') + $this->input->post('bbm') + $this->input->post('tol') + $this->input->post('parkir');
+        $this->db->set('uang_saku', $uang_saku);
+        $this->db->set('insentif_pagi', $insentif_pagi);
+        $this->db->set('um_pagi', $um_pagi);
+        $this->db->set('um_siang', $um_siang);
+        $this->db->set('um_malam', $um_malam);
+        $this->db->set('taksi', $this->input->post('taksi'));
+        $this->db->set('bbm', $this->input->post('bbm'));
+        $this->db->set('tol', $this->input->post('tol'));
+        $this->db->set('parkir', $this->input->post('parkir'));
+        $this->db->set('total', $total);
+        $this->db->where('id', $reservasi_temp['id']);
+        $this->db->update('reservasi_temp');
+
+        redirect('reservasi/dl1z');
     }
 
     public function dl1z()
@@ -348,12 +449,13 @@ class Reservasi extends CI_Controller
             $this->db->where('year(tglberangkat)', $tahun);
             $this->db->where('month(tglberangkat)', $bulan);
             $rsv = $this->db->get('reservasi');
-            $total_rsv = $rsv->num_rows()+1;
-            $id = 'RSV'.date('ym', strtotime($reservasi_temp['tglberangkat'])). sprintf("%04s", $total_rsv);
+            $total_rsv = $rsv->num_rows() + 1;
+            $id = 'RSV' . date('ym', strtotime($reservasi_temp['tglberangkat'])) . sprintf("%04s", $total_rsv);
 
             $data = [
                 'id' => $id,
                 'tglreservasi' => date('Y-m-d H:i:s'),
+                'jenis_perjalanan' => $reservasi_temp['jenis_perjalanan'],
                 'npk' => $reservasi_temp['npk'],
                 'nama' => $reservasi_temp['nama'],
                 'tujuan' => $reservasi_temp['tujuan'],
@@ -364,64 +466,74 @@ class Reservasi extends CI_Controller
                 'jamberangkat' => $reservasi_temp['jamberangkat'],
                 'tglkembali' => $reservasi_temp['tglkembali'],
                 'jamkembali' => $reservasi_temp['jamkembali'],
-                'nopol' => $reservasi_temp['nopol'],
                 'kepemilikan' => $reservasi_temp['kepemilikan'],
+                'kendaraan' => $reservasi_temp['kendaraan'],
+                'nopol' => $reservasi_temp['nopol'],
                 'atasan1' => $atasan1['inisial'],
                 'atasan2' => $atasan2['inisial'],
                 'catatan' => $reservasi_temp['catatan'],
-                'jenis_perjalanan' => $reservasi_temp['jenis_perjalanan'],
+                'uang_saku' => $reservasi_temp['uang_saku'],
+                'insentif_pagi' => $reservasi_temp['insentif_pagi'],
+                'um_pagi' => $reservasi_temp['um_pagi'],
+                'um_siang' => $reservasi_temp['um_siang'],
+                'um_malam' => $reservasi_temp['um_malam'],
+                'taksi' => $reservasi_temp['taksi'],
+                'bbm' => $reservasi_temp['bbm'],
+                'tol' => $reservasi_temp['tol'],
+                'parkir' => $reservasi_temp['parkir'],
+                'total' => $reservasi_temp['total'],
                 'status' => '1'
             ];
             $this->db->insert('reservasi', $data);
 
             if ($this->session->userdata('posisi_id') <= 3) {
-                if ($reservasi_temp['jenis_perjalanan']=='DLPP'){
+                if ($reservasi_temp['jenis_perjalanan'] == 'DLPP') {
                     $this->db->set('atasan1', null);
                     $this->db->set('atasan2', null);
                     $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                     $this->db->set('status', '6');
                     $this->db->where('id', $data['id']);
                     $this->db->update('reservasi');
-    
+
                     $this->db->where('sect_id', '214');
                     $ga_admin = $this->db->get('karyawan_admin')->row_array();
                     $postData = array(
                         'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                         'number' => $ga_admin['phone'],
                         'message' => "*PENGAJUAN PERJALANAN DINAS DLPP*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                            "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                            "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                            "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                            "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                            "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                            "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                            "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                            " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                     );
-                    
+
                     $ch = curl_init();
-                    
+
                     curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
                     curl_setopt($ch, CURLOPT_POST, 1);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
                     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    
+
                     $headers = array();
                     $headers[] = 'Accept: application/json';
                     $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
                     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                    
+
                     $result = curl_exec($ch);
-                }else{
+                } else {
                     $this->db->set('atasan1', null);
                     $this->db->set('atasan2', null);
                     $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                     $this->db->set('status', '3');
                     $this->db->where('id', $data['id']);
                     $this->db->update('reservasi');
-    
+
                     $this->db->where('posisi_id', '3');
                     $this->db->where('dept_id', '21');
                     $fin_head = $this->db->get('karyawan')->row_array();
@@ -429,34 +541,34 @@ class Reservasi extends CI_Controller
                         'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                         'number' => $fin_head['phone'],
                         'message' => "*PENGAJUAN PERJALANAN DINAS TAPP*\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                            "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                            "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                            "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                            "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                            "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                            "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                            "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                            " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                     );
-                    
+
                     $ch = curl_init();
-                    
+
                     curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
                     curl_setopt($ch, CURLOPT_POST, 1);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
                     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    
+
                     $headers = array();
                     $headers[] = 'Accept: application/json';
                     $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
                     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                    
+
                     $result = curl_exec($ch);
                 }
             } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
-                
+
                 $this->db->set('atasan2', null);
                 $this->db->set('status', '1');
                 $this->db->where('id', $data['id']);
@@ -467,67 +579,67 @@ class Reservasi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $atsn1['phone'],
-                    'message' => "*PENGAJUAN PERJALANAN DINAS*". 
-                    "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                    "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                    "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                    "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                    "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                    "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                    "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                    'message' => "*PENGAJUAN PERJALANAN DINAS*" .
+                        "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
-                
+
                 $ch = curl_init();
-                
+
                 curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                
+
                 $headers = array();
                 $headers[] = 'Accept: application/json';
                 $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                
-                $result = curl_exec($ch);            
+
+                $result = curl_exec($ch);
             } elseif ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
-            
+
                 $this->db->where('npk', $atasan1['npk']);
                 $atsn1 = $this->db->get('karyawan')->row_array();
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $atsn1['phone'],
-                    'message' => "*PENGAJUAN PERJALANAN DINAS*".
-                    "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                    "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                    "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                    "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                    "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                    "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                    "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                    "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                    " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                    'message' => "*PENGAJUAN PERJALANAN DINAS*" .
+                        "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
-                
+
                 $ch = curl_init();
-                
+
                 curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                
+
                 $headers = array();
                 $headers[] = 'Accept: application/json';
                 $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                
-                $result = curl_exec($ch);            
+
+                $result = curl_exec($ch);
             }
 
             // update table anggota perjalanan
@@ -592,14 +704,14 @@ class Reservasi extends CI_Controller
     public function dl3_proses()
     {
         date_default_timezone_set('asia/jakarta');
-        if (date("Y-m-d", strtotime($this->input->post('tglberangkat'))) < date("Y-m-d") OR date("Y-m-d", strtotime($this->input->post('tglkembali'))) < date("Y-m-d", strtotime($this->input->post('tglberangkat')))) {
+        if (date("Y-m-d", strtotime($this->input->post('tglberangkat'))) < date("Y-m-d") or date("Y-m-d", strtotime($this->input->post('tglkembali'))) < date("Y-m-d", strtotime($this->input->post('tglberangkat')))) {
 
             $this->session->set_flashdata('message', 'backdate');
             redirect('reservasi/dl');
-        // } elseif (date("Y-m-d", strtotime($this->input->post('tglkembali'))) < date("Y-m-d", strtotime($this->input->post('tglberangkat')))) {
+            // } elseif (date("Y-m-d", strtotime($this->input->post('tglkembali'))) < date("Y-m-d", strtotime($this->input->post('tglberangkat')))) {
 
-        //     $this->session->set_flashdata('message', 'backdate');
-        //     redirect('reservasi/dl');
+            //     $this->session->set_flashdata('message', 'backdate');
+            //     redirect('reservasi/dl');
         } else {
             $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data = [
@@ -658,7 +770,7 @@ class Reservasi extends CI_Controller
 
         $this->db->where('reservasi_id', $reservasi_temp['id']);
         $this->db->delete('perjalanan_tujuan');
-        if ($this->input->post('tujuan')){
+        if ($this->input->post('tujuan')) {
             foreach ($this->input->post('tujuan') as $t) :
                 $customer = $this->db->get_where('customer', ['inisial' => $t])->row_array();
                 $tujuan = [
@@ -673,8 +785,7 @@ class Reservasi extends CI_Controller
             endforeach;
         }
 
-        if ($this->input->post('tujuan_lain'))
-        {
+        if ($this->input->post('tujuan_lain')) {
             $tujuan_lain = [
                 'reservasi_id' => $reservasi_temp['id'],
                 'inisial' =>  $this->input->post('tujuan_lain'),
@@ -685,32 +796,30 @@ class Reservasi extends CI_Controller
             $this->db->insert('perjalanan_tujuan', $tujuan_lain);
         }
 
-        if ($this->input->post('penginapan') == null)
-        {
+        if ($this->input->post('penginapan') == null) {
             $penginapan = 'TIDAK';
             $menginap = null;
-        }else{
+        } else {
             $penginapan = $this->input->post('penginapan');
             $menginap = $this->input->post('lama');
         }
 
-        if ($this->input->post('checkoperasional') == null)
-        {
+        if ($this->input->post('checkoperasional') == null) {
             $kendaraan = 'Non Operasional';
             $nopol = null;
             $kepemilikan = 'Non Operasional';
-        }else{
-            if ($this->input->post('kendaraan') == 'Taksi' or $this->input->post('kendaraan') == 'Sewa' or $this->input->post('kendaraan') == 'Pribadi'){
+        } else {
+            if ($this->input->post('kendaraan') == 'Taksi' or $this->input->post('kendaraan') == 'Sewa' or $this->input->post('kendaraan') == 'Pribadi') {
                 $nopol = null;
                 $kendaraan = 'Non Operasional';
                 $kepemilikan = $this->input->post('kendaraan');
-            }else{
+            } else {
                 $kr = $this->db->get_where('kendaraan', ['nama' => $this->input->post('kendaraan')])->row_array();
                 $nopol = $kr['nopol'];
                 $kendaraan = $this->input->post('kendaraan');
                 $kepemilikan = 'Operasional';
             }
-        }    
+        }
 
         $peserta = $this->db->where('reservasi_id', $reservasi_temp['id']);
         $peserta = $this->db->get_where('perjalanan_anggota')->result_array();
@@ -732,7 +841,7 @@ class Reservasi extends CI_Controller
         $this->db->set('kepemilikan', $kepemilikan);
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
-        
+
         redirect('reservasi/dl3z');
     }
 
@@ -763,17 +872,17 @@ class Reservasi extends CI_Controller
         $saring1 = $this->db->query($queryVal)->row_array();
         $total = $saring1['COUNT(*)'];
         if ($total == 0) {
-            
+
             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
-                  
+
             $tahun = date("Y", strtotime($reservasi_temp['tglberangkat']));
             $bulan = date("m", strtotime($reservasi_temp['tglberangkat']));
             $this->db->where('year(tglberangkat)', $tahun);
             $this->db->where('month(tglberangkat)', $bulan);
             $rsv = $this->db->get('reservasi');
-            $total_rsv = $rsv->num_rows()+1;
-            $id = 'RSV'.date('ym', strtotime($reservasi_temp['tglberangkat'])). sprintf("%04s", $total_rsv);
+            $total_rsv = $rsv->num_rows() + 1;
+            $id = 'RSV' . date('ym', strtotime($reservasi_temp['tglberangkat'])) . sprintf("%04s", $total_rsv);
 
             $data = [
                 'id' => $id,
@@ -802,49 +911,48 @@ class Reservasi extends CI_Controller
             $this->db->insert('reservasi', $data);
 
             if ($this->session->userdata('posisi_id') <= 3) {
-            
-                    $this->db->set('atasan1', null);
-                    $this->db->set('atasan2', null);
-                    $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
-                    $this->db->set('status', '3');
-                    $this->db->where('id', $data['id']);
-                    $this->db->update('reservasi');
 
-                    $this->db->where('posisi_id', '3');
-                    $this->db->where('dept_id', '21');
-                    $fin_head = $this->db->get('karyawan')->row_array();
-                    $postData = array(
-                        'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                        'number' => $fin_head['phone'],
-                        'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
-                            "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                            "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                            "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                            "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                            "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                            "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                            "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                            "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                            " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                    );
-                    
-                    $ch = curl_init();
-                    
-                    curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                    curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    
-                    $headers = array();
-                    $headers[] = 'Accept: application/json';
-                    $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                    
-                    $result = curl_exec($ch);
-            } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) 
-            {
+                $this->db->set('atasan1', null);
+                $this->db->set('atasan2', null);
+                $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+                $this->db->set('status', '3');
+                $this->db->where('id', $data['id']);
+                $this->db->update('reservasi');
+
+                $this->db->where('posisi_id', '3');
+                $this->db->where('dept_id', '21');
+                $fin_head = $this->db->get('karyawan')->row_array();
+                $postData = array(
+                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+                    'number' => $fin_head['phone'],
+                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*" .
+                        "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
+                        "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
+                        "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                        "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
+                        "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
+                        "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
+                        "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
+                        "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
+                        " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                );
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $headers = array();
+                $headers[] = 'Accept: application/json';
+                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($ch);
+            } elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6 or $this->session->userdata('posisi_id') == 9) {
                 $this->db->set('atasan1', $atasan1['inisial']);
                 $this->db->set('atasan2', null);
                 $this->db->where('id', $data['id']);
@@ -855,7 +963,7 @@ class Reservasi extends CI_Controller
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $atsn1['phone'],
-                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
+                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*" .
                         "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
                         "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
                         "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
@@ -866,35 +974,34 @@ class Reservasi extends CI_Controller
                         "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
                         " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
-                
+
                 $ch = curl_init();
-                
+
                 curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                
+
                 $headers = array();
                 $headers[] = 'Accept: application/json';
                 $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                
+
                 $result = curl_exec($ch);
-            }elseif ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) 
-            {
+            } elseif ($this->session->userdata('posisi_id') == 7 or $this->session->userdata('posisi_id') == 10) {
                 $this->db->set('atasan1', $atasan1['inisial']);
                 $this->db->set('atasan2', $atasan2['inisial']);
                 $this->db->where('id', $data['id']);
                 $this->db->update('reservasi');
-                
+
                 $this->db->where('npk', $atasan1['npk']);
                 $atsn1 = $this->db->get('karyawan')->row_array();
                 $postData = array(
                     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
                     'number' => $atsn1['phone'],
-                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*".
+                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*" .
                         "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
                         "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
                         "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
@@ -905,21 +1012,21 @@ class Reservasi extends CI_Controller
                         "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
                         " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 );
-                
+
                 $ch = curl_init();
-                
+
                 curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                
+
                 $headers = array();
                 $headers[] = 'Accept: application/json';
                 $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                
+
                 $result = curl_exec($ch);
             }
 
@@ -947,7 +1054,7 @@ class Reservasi extends CI_Controller
 
             $this->session->set_flashdata('message', 'rsvbaru');
             redirect('reservasi');
-        }else{
+        } else {
             $this->session->set_flashdata('message', 'rsvgagal');
             redirect('reservasi/dl3a');
         }
@@ -963,12 +1070,10 @@ class Reservasi extends CI_Controller
         $tanggal_berangkat = date("Y-m-d", strtotime($reservasi_temp['tglberangkat']));
         $tanggal_kembali = date("Y-m-d", strtotime($reservasi_temp['tglkembali']));
 
-        if ($tanggal >= $tanggal_berangkat AND $tanggal <= $tanggal_kembali)
-        {
-            if($this->input->post('transportasi')=='Lainnya')
-            {
+        if ($tanggal >= $tanggal_berangkat and $tanggal <= $tanggal_kembali) {
+            if ($this->input->post('transportasi') == 'Lainnya') {
                 $transportasi = $this->input->post('transportasi_lain');
-            }else{
+            } else {
                 $transportasi = $this->input->post('transportasi');
             }
             $jadwal = [
@@ -983,8 +1088,8 @@ class Reservasi extends CI_Controller
             $this->db->insert('perjalanan_jadwal', $jadwal);
 
             redirect('reservasi/dl3z');
-        }else{
-            $this->session->set_flashdata('message', 'backjadwal');  
+        } else {
+            $this->session->set_flashdata('message', 'backjadwal');
             redirect('reservasi/dl3z');
         }
     }
@@ -1035,7 +1140,7 @@ class Reservasi extends CI_Controller
                 'karyawan_dept' =>  $dept['nama'],
                 'karyawan_posisi' => $posisi['nama'],
                 'status' => '0'
-                ];
+            ];
             $this->db->insert('perjalanan_anggota', $data);
         endforeach;
 
@@ -1047,7 +1152,7 @@ class Reservasi extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('reservasi');
 
-        redirect('perjalanandl/prosesta1/'.$this->input->post('id'));
+        redirect('perjalanandl/prosesta1/' . $this->input->post('id'));
     }
 
     public function hapusanggota($id, $inisial)
@@ -1064,7 +1169,7 @@ class Reservasi extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('reservasi');
 
-        redirect('perjalanandl/prosesta1/'.$id);
+        redirect('perjalanandl/prosesta1/' . $id);
     }
 
     public function hapuspeserta($id, $inisial)
@@ -1082,11 +1187,10 @@ class Reservasi extends CI_Controller
         $this->db->update('reservasi_temp');
 
         $reservasi = $this->db->get_where('reservasi_temp', ['id' => $id])->row_array();
-        if ($reservasi['jenis_perjalanan']=='TA')
-        {
+        if ($reservasi['jenis_perjalanan'] == 'TA') {
             redirect('reservasi/dl3z');
-        }else{
-            redirect('reservasi/dl1z');
+        } else {
+            redirect('reservasi/dl1d');
         }
     }
 
@@ -1118,7 +1222,7 @@ class Reservasi extends CI_Controller
     {
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db->get_where('reservasi', ['id' => $id])->row_array();
-        
+
         $this->load->view('reservasi/stta', $data);
     }
 }

@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
                                 <i class="material-icons">assignment</i>
                             </div>
@@ -29,6 +29,7 @@
                                             <th>Jam Keberangkatan</th>
                                             <th>Tgl Kembali</th>
                                             <th>Jam Kembali</th>
+                                            <th>Estimasi Biaya</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -44,22 +45,23 @@
                                             <th>Jam Keberangkatan</th>
                                             <th>Tgl Kembali</th>
                                             <th>Jam Kembali</th>
+                                            <th>Estimasi Biaya</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        if ($this->session->userdata('inisial')=='ABU'){
+                                        if ($this->session->userdata('inisial') == 'ABU') {
                                             $queryRsv = "SELECT *
                                             FROM `reservasi`
                                             WHERE `status` = 1 or `status` = 2
                                             ";
-                                        }else{
+                                        } else {
                                             $queryRsv = "SELECT *
                                             FROM `reservasi`
                                             WHERE (`atasan1` = '{$karyawan['inisial']}' and `status` = 1) or (`atasan2` = '{$karyawan['inisial']}' and `status` = 2)
                                             ";
                                         }
-                                        
+
                                         $reservasi = $this->db->query($queryRsv)->result_array();
                                         foreach ($reservasi as $rsv) : ?>
                                             <tr>
@@ -74,6 +76,7 @@
                                                 <td><?= $rsv['jamberangkat']; ?></td>
                                                 <td><?= $rsv['tglkembali']; ?></td>
                                                 <td><?= $rsv['jamkembali']; ?></td>
+                                                <td><?= $rsv['total']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

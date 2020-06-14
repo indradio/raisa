@@ -4,23 +4,14 @@
     <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>PENGISIAN FORM PEDULI KESEHATAN KARYAWAN</strong>
+          <strong>UJI COBA FITUR ESTIMASI BIAYA & PENYELESAIAN PERJALANAN DINAS</strong>
           </br>
-          </br>Demi menjaga kesehatan serta keselamatan para karyawan serta keluarga karyawan, maka setiap karyawan <strong>DIHARUSKAN</strong> mengisi FORM PEDULI KESEHATAN KARYAWAN.
-          </br>
-          </br>Poin penting :
-          </br><strong>1. Form ini diisi dengan penuh kesadaran dan kejujuran, kejujuran karyawan menentukan keselamatan karyawan lainnya.</strong>
-          </br><strong>2. Setiap Karyawan menyadari bahwa keselamatan karyawan lain serta keluarga juga menjadi bagian dari tanggung jawab sosial guna mencegah persebaran virus / penyakit infeksi COVID-19.</strong>
-          </br><strong>3. Setiap karyawan telah mentaati peraturan pemerintah danperusahaan dalam mencegah persebaran virus / penyakit infeksi COVID-19.</strong>
-          </br><strong>4. Tanpa form ini Karyawan tidak diperkenankan masuk di hari kerja.</strong>
-          </br>
-          </br>Regards,
-          </br>PT Astra Otoparts. Tbk - Divisi Winteq
-          </br>
-          <?php if (date('D') == 'Sun' and date('H:i') >= '15:00') { ?>
-            </br><a href="<?= base_url(); ?>dirumahaja" class="btn btn-danger text-light">ISI SEKARANG!</a>
-            </br><small>*Klik tombol di atas untuk mengisi FORM PEDULI KESEHATAN KARYAWAN</small>
-          <?php } ?>
+          </br>Hai <?= $karyawan['nama']; ?>,
+          </br>Mulai hari senin (15/06/2020) ada fitur baru loh di RAISA.
+          </br>Yups, Estimasi Biaya Perjalanan Dinas. Saat kamu melakukan reservasi akan ada halaman tambahan untuk estimasi biaya perjalanan dinas kamu dan tim.
+          </br></br>INGAT : Setelah kembali dari perjalanan dinas, jangan lupa untuk klaim penyelesaian kamu ya.
+          </br></br>Fitur ini masih dalam tahap uji coba aplikasi, jadi semua alur proses masih seperti biasa yang kamu lakukan.
+          </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
         </div>
       </div>
     </div>

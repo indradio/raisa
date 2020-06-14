@@ -7,7 +7,7 @@
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Jadwal keberangkatan</h4>
+                        <h4 class="card-title">Rincian Perjalanan</h4>
                     </div>
                     <div class="card-body ">
                         <form class="form-horizontal" action="<?= base_url('reservasi/dl1z_proses'); ?>" method="post">
@@ -28,6 +28,22 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Berangkat</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="berangkat" name="berangkat" value="<?= date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Kembali</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="kembali" name="kembali" value="<?= date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -35,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -43,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -51,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -68,14 +84,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">COPRO</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="copro" value="<?= $reservasi_temp['copro']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-2 col-form-label">Keperluan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -84,15 +92,23 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">COPRO</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="copro" value="<?= $reservasi_temp['copro']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Peserta</label>
                                 <div class="col-md-5">
+                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $reservasi_temp['id']; ?>">TAMBAH MAGANG</button> -->
                                     <div class="material-datatables">
                                         <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>Inisial</th>
                                                     <th>Nama</th>
-                                                    <th class="disabled-sorting">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -144,7 +160,6 @@
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
                                                         <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><a href="<?= base_url('reservasi/hapuspeserta/') . $reservasi_temp['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -152,51 +167,108 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <p>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Estimasi Biaya</label>
+                                    <div class="col-md-5">
+                                        <div class="material-datatables">
+                                            <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Biaya</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Uang Saku <small>(TAPP)</small></td>
+                                                        <td><?= number_format($reservasi_temp['uang_saku'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Insentif Pagi</br><small>Berangkat < 05:00</small> </td> <td><?= number_format($reservasi_temp['insentif_pagi'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Makan Pagi <small>(TAPP)</br>Berangkat < 07:00</small> </td> <td><?= number_format($reservasi_temp['um_pagi'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Makan Siang</td>
+                                                        <td><?= number_format($reservasi_temp['um_siang'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Makan Malam</br><small>Kembali > 19:30</small></td>
+                                                        <td><?= number_format($reservasi_temp['um_malam'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Taksi/Sewa</br><small>Pribadi per KM</small> </td>
+                                                        <td><?= number_format($reservasi_temp['taksi'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>BBM</td>
+                                                        <td><?= number_format($reservasi_temp['bbm'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Tol</td>
+                                                        <td><?= number_format($reservasi_temp['tol'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Parkir & Lainnya</td>
+                                                        <td><?= number_format($reservasi_temp['parkir'], 0, ',', '.'); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>TOTAL</strong></td>
+                                                        <td><strong><?= number_format($reservasi_temp['total'], 0, ',', '.'); ?></strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <small>*Untuk Perjalanan TA masih dalam pengembangan. Silahkan gunakan penyelesaian manual ke HR dan GA.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-5">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $reservasi_temp['id']; ?>">TAMBAH MAGANG</button>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Catatan</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <textarea rows="3" class="form-control disabled" name="catatan"><?= $reservasi_temp['catatan']; ?></textarea>
+                            </div> -->
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Catatan</label>
+                                    <div class="col-md-5">
+                                        <div class="form-group has-default">
+                                            <textarea rows="3" class="form-control" name="catatan"><?= $reservasi_temp['catatan']; ?></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label"></label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <p class="mb-0">Perhatikan hal-hal berikut:</p>
-                                        <p class="mb-0">1. Mengemudilah dengan aman dan gunakan selalu sabuk keselamatan.</p>
-                                        <p class="mb-0">2. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.</p>
-                                        <p class="mb-0">3. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.</p>
-                                        <p class="mb-0">4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.</p>
-                                        <p class="mb-0">5. Patuhi peraturan GA yang berlaku.
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" id="check" name="check" value="1" required="true">
-                                            Ya, Saya setuju dengan ketentuan di atas dan siap dikenakan sanksi yang berlaku atas pelanggaran dan kelalaian yang saya lakukan.
-                                            <span class="form-check-sign">
-                                                <span class="check"></span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <button type="submit" class="btn btn-fill btn-success" id="submit">RESERVASI</button>
-                                        <a href="<?= base_url('reservasi/dl1c1'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label"></label>
+                                    <div class="col-md-8">
+                                        <div class="form-group has-default">
+                                            <p class="mb-0">Perhatikan hal-hal berikut:</p>
+                                            <p class="mb-0">1. Mengemudilah dengan aman dan gunakan selalu sabuk keselamatan.</p>
+                                            <p class="mb-0">2. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.</p>
+                                            <p class="mb-0">3. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.</p>
+                                            <p class="mb-0">4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.</p>
+                                            <p class="mb-0">5. Patuhi peraturan GA yang berlaku.
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" id="check" name="check" value="1" required="true">
+                                                Ya, Saya setuju dengan ketentuan di atas dan siap dikenakan sanksi yang berlaku atas pelanggaran dan kelalaian yang saya lakukan.
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group has-default">
+                                            <button type="submit" class="btn btn-fill btn-success" id="submit">RESERVASI</button>
+                                            <a href="<?= base_url('reservasi/dl1d'); ?>" class="btn btn-link btn-default">Kembali</a>
+                                        </div>
+                                    </div>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -262,3 +334,18 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        var checker = document.getElementById('check');
+        var sendbtn = document.getElementById('submit');
+        sendbtn.disabled = true;
+        // when unchecked or checked, run the function
+        checker.onchange = function() {
+            if (this.checked) {
+                sendbtn.disabled = false;
+            } else {
+                sendbtn.disabled = true;
+            }
+        }
+    });
+</script>

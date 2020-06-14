@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Data Reservasi</h4>
+                        <h4 class="card-title">Daftar Perjalanan</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -18,7 +18,7 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Nomor Reservasi</th>
+                                        <th>No Perjalanan</th>
                                         <th>Jenis Perjalanan</th>
                                         <th>Kendaraan</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
@@ -48,40 +48,23 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($reservasi as $rsv) : ?>
-                                        <?php if ($rsv['tglberangkat'] < date('Y-m-d')) { ?>
-                                            <tr class="text-dark bg-danger">
-                                            <?php } else { ?>
-                                            <tr>
-                                            <?php }; ?>
-                                            <td><?= $rsv['id']; ?></td>
-                                            <td><?= $rsv['jenis_perjalanan']; ?></td>
-                                            <td><?= $rsv['nopol']; ?>
-                                                <?php if ($rsv['kepemilikan'] == 'Operasional') { ?>
-                                                    <br /><span class="badge badge-success"><?= $rsv['kepemilikan']; ?></span></td>
-                                        <?php } elseif ($rsv['kepemilikan'] == 'Taksi') { ?>
-                                            <br /><span class="badge badge-warning"><?= $rsv['kepemilikan']; ?></span></td>
-                                        <?php } elseif ($rsv['kepemilikan'] == 'Sewa') { ?>
-                                            <br /><span class="badge badge-danger"><?= $rsv['kepemilikan']; ?></span></td>
-                                        <?php } else { ?>
-                                            <br /><span class="badge badge-info"><?= $rsv['kepemilikan']; ?></span></td>
-                                        <?php }; ?>
-                                        <td><?= $rsv['nama']; ?></td>
-                                        <td><?= $rsv['tujuan']; ?></td>
-                                        <td><?= $rsv['keperluan']; ?></td>
-                                        <td><?= $rsv['anggota']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($rsv['tglberangkat'])) . ' ' . date('H:i', strtotime($rsv['jamberangkat'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($rsv['tglkembali'])) . ' ' . date('H:i', strtotime($rsv['jamkembali'])); ?></td>
-                                        <td><?= $rsv['catatan']; ?></td>
+                                    foreach ($perjalanan as $p) : ?>
+
+                                        <td><?= $p['id']; ?></td>
+                                        <td><?= $p['jenis_perjalanan']; ?></td>
+                                        <td><?= $p['kendaraan']; ?></td>
+                                        <td><?= $p['nama']; ?></td>
+                                        <td><?= $p['tujuan']; ?></td>
+                                        <td><?= $p['keperluan']; ?></td>
+                                        <td><?= $p['anggota']; ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['tglberangkat'])) . ' ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['tglkembali'])) . ' ' . date('H:i', strtotime($p['jamkembali'])); ?></td>
+                                        <td><?= $p['catatan_security']; ?></td>
                                         <td class="text-right">
-                                            <a href="<?= base_url('perjalanandl/prosesdl1/') . $rsv['id']; ?>" class="btn btn-sm btn-round btn-success">Proses</a>
-                                            <br />
-                                            <!-- <a href="<?= base_url('perjalanandl/gabung/') . $rsv['id']; ?>" class="btn btn-sm btn-round btn-warning">Gabungkan</a>
-                                            <br /> -->
-                                            <a href="" class="btn btn-sm btn-round btn-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
+                                            <a href="<?= base_url('perjalanandl/penyelesaian/') . $p['id']; ?>" class="btn btn-sm btn-round btn-success">Proses</a>
                                         </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

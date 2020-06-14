@@ -72,7 +72,7 @@
                                                 <tr>
                                                     <th>Inisial</th>
                                                     <th>Nama</th>
-                                                    <th class="disabled-sorting text-right">Actions</th>
+                                                    <th class="disabled-sorting">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -86,14 +86,14 @@
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
                                                         <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
+                                                        <td><a href="<?= base_url('cekdl/hapus_anggota/') . $perjalanan['id'] . '/' . $ang['karyawan_inisial']; ?>" class="badge badge-danger">HAPUS</a></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <?php if ($perjalanan['jenis_perjalanan']!='TA'){ ?>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $perjalanan['id']; ?>">Tambah Peserta</button>
+                                    <?php if ($perjalanan['jenis_perjalanan'] != 'TA') { ?>
+                                        <button type="button" class="btn btn-facebook" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $perjalanan['id']; ?>">Tambah Peserta</button>
                                     <?php } ?>
                                 </div>
                             </div>

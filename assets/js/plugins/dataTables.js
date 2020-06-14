@@ -195,8 +195,9 @@ $(document).ready(function () {
                 modal.find('.modal-body input[name="jamberangkat"]').val(tableAtasan.rows(indexes).data().pluck(8).toArray())
                 modal.find('.modal-body input[name="tglkembali"]').val(tableAtasan.rows(indexes).data().pluck(9).toArray())
                 modal.find('.modal-body input[name="jamkembali"]').val(tableAtasan.rows(indexes).data().pluck(10).toArray())
-                modal.find('.modal-body input[name="berangkat"]').val(tableAtasan.rows(indexes).data().pluck(7).toArray()+' '+tableAtasan.rows(indexes).data().pluck(8).toArray())
-                modal.find('.modal-body input[name="kembali"]').val(tableAtasan.rows(indexes).data().pluck(9).toArray()+' '+tableAtasan.rows(indexes).data().pluck(10).toArray())
+                modal.find('.modal-body input[name="berangkat"]').val(tableAtasan.rows(indexes).data().pluck(7).toArray() + ' ' + tableAtasan.rows(indexes).data().pluck(8).toArray())
+                modal.find('.modal-body input[name="kembali"]').val(tableAtasan.rows(indexes).data().pluck(9).toArray() + ' ' + tableAtasan.rows(indexes).data().pluck(10).toArray())
+                modal.find('.modal-body input[name="biaya"]').val(tableAtasan.rows(indexes).data().pluck(11).toArray())
             })
             $('#rsvBatal').on('show.bs.modal', function () {
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.

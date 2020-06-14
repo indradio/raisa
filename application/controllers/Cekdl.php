@@ -165,8 +165,91 @@ class Cekdl extends CI_Controller
         date_default_timezone_set('asia/jakarta');
 
         // $kmkembali = substr($this->input->post('kmkembali'), -4);
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+        if ($perjalanan['jenis_perjalanan'] == 'DLPP' or $perjalanan['jenis_perjalanan'] == 'TAPP') {
+            $stat = '3';
+        } else {
+            $stat = '9';
+        }
         $kmkembali = $this->input->post('kmkembali');
         $kmtotal = $kmkembali - $this->input->post('kmberangkat');
+
+        //Tidak untuk jensi perjalanan TA
+        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        if ($perjalanan['jenis_perjalanan'] != 'TA') {
+            //Insentif pagi
+            if ($perjalanan['jamberangkat'] <= $um['um1']) {
+                $this->db->select_sum('insentif_pagi');
+                $this->db->where('perjalanan_id', $this->input->post('id'));
+                $query = $this->db->get('perjalanan_anggota');
+                $insentif_pagi = $query->row()->insentif_pagi;
+
+                $this->db->set('um1', 'YA');
+                $this->db->set('insentif_pagi', $insentif_pagi);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            } else {
+                $this->db->set('um1', 'TIDAK');
+                $this->db->set('insentif_pagi', 0);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            };
+            //Makan Pagi
+            if ($perjalanan['jenis_perjalanan'] == 'TAPP' and $perjalanan['jamberangkat'] <= $um['um2']) {
+                $this->db->select_sum('um_pagi');
+                $this->db->where('perjalanan_id', $this->input->post('id'));
+                $query = $this->db->get('perjalanan_anggota');
+                $um_pagi = $query->row()->um_pagi;
+
+                $this->db->set('um2', 'YA');
+                $this->db->set('um_pagi', $um_pagi);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            } else {
+                $this->db->set('um2', 'TIDAK');
+                $this->db->set('um_pagi', 0);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            };
+            //Makan Siang
+            if ($this->input->post('jamberangkat') <= $um['um3'] and $this->input->post('jamkembali') >= $um['um3']) {
+                $this->db->select_sum('um_siang');
+                $this->db->where('perjalanan_id', $this->input->post('id'));
+                $query = $this->db->get('perjalanan_anggota');
+                $um_siang = $query->row()->um_siang;
+
+                $this->db->set('um3', 'YA');
+                $this->db->set('um_siang', $um_siang);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            } else {
+                $this->db->set('um3', 'TIDAK');
+                $this->db->set('um_siang', 0);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            };
+            //Makan Malam
+            if ($this->input->post('jamkembali') >= $um['um4']) {
+                $this->db->select_sum('um_malam');
+                $this->db->where('perjalanan_id', $this->input->post('id'));
+                $query = $this->db->get('perjalanan_anggota');
+                $um_malam = $query->row()->um_malam;
+
+                $this->db->set('um4', 'YA');
+                $this->db->set('um_malam', $um_malam);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            } else {
+                $this->db->set('um4', 'TIDAK');
+                $this->db->set('um_malam', 0);
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+            };
+            $total = $perjalanan['uang_saku'] + $insentif_pagi + $um_pagi + $um_siang + $um_malam + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+        } else {
+            $total = 0;
+        }
+
         $this->db->set('tglkembali', date("Y-m-d"));
         $this->db->set('jamkembali', date("H:i:s"));
         $this->db->set('cekkembali', $this->session->userdata('inisial'));
@@ -174,84 +257,250 @@ class Cekdl extends CI_Controller
         $this->db->set('supirkembali', $this->input->post('supirkembali'));
         $this->db->set('kmtotal', $kmtotal);
         $this->db->set('catatan_security', $this->input->post('catatan'));
-        $this->db->set('status', '9');
+        $this->db->set('total', $total);
+        $this->db->set('status', $stat);
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
-        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
-        if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um3'] and $this->input->post('jamkembali') >= $um['um3']) {
-            $this->db->set('um3', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
-        if ($this->input->post('jenis') != 'TA' and $this->input->post('jamkembali') >= $um['um4']) {
-            $this->db->set('um4', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
+        $perjalanan_update = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+        $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $this->input->post('id')])->result_array();
+        foreach ($peserta as $p) :
+            if ($perjalanan_update['uang_saku'] > 0) {
+                $uangsaku = $p['uang_saku'];
+            } else {
+                $uangsaku = 0;
+            }
+            if ($perjalanan_update['insentif_pagi'] > 0) {
+                $insentif = $p['insentif_pagi'];
+            } else {
+                $insentif = 0;
+            }
+            if ($perjalanan_update['um_pagi'] > 0) {
+                $um_pagi = $p['um_pagi'];
+            } else {
+                $um_pagi = 0;
+            }
+            if ($perjalanan_update['um_siang'] > 0) {
+                $um_siang = $p['um_siang'];
+            } else {
+                $um_siang = 0;
+            }
+            if ($perjalanan_update['um_malam'] > 0) {
+                $um_malam = $p['um_malam'];
+            } else {
+                $um_malam = 0;
+            }
 
-        $rsv = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
+            $total = $uangsaku + $insentif + $um_pagi + $um_siang + $um_malam;
+            $this->db->set('total', $total);
+            $this->db->where('npk', $p['npk']);
+            $this->db->where('perjalanan_id', $this->input->post('id'));
+            $this->db->update('perjalanan_anggota');
+        endforeach;
+
         $this->db->set('status', '9');
-        $this->db->where('id', $rsv['reservasi_id']);
+        $this->db->where('id', $perjalanan['reservasi_id']);
         $this->db->update('reservasi');
 
         redirect('cekdl/kembali');
     }
     public function tambahpeserta()
     {
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
         foreach ($this->input->post('anggota') as $a) :
-            $dl = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
             $karyawan = $this->db->get_where('karyawan', ['inisial' => $a])->row_array();
             $dept = $this->db->get_where('karyawan_dept', ['id' => $karyawan['dept_id']])->row_array();
             $posisi = $this->db->get_where('karyawan_posisi', ['id' => $karyawan['posisi_id']])->row_array();
-            $peserta = [
-                'perjalanan_id' => $dl['id'],
-                'reservasi_id' => $dl['reservasi_id'],
-                'npk' => $karyawan['npk'],
-                'karyawan_inisial' => $karyawan['inisial'],
-                'karyawan_nama' => $karyawan['nama'],
-                'karyawan_dept' => $dept['nama'],
-                'karyawan_posisi' => $posisi['nama'],
-                'status' => '1'
-            ];
-            $this->db->insert('perjalanan_anggota', $peserta);
+            $this->db->where('jenis_perjalanan', $perjalanan['jenis_perjalanan']);
+            $this->db->where('gol_id', $karyawan['gol_id']);
+            $tunjangan = $this->db->get('perjalanan_tunjangan')->row_array();
+            //Cek Peserta
+            $this->db->where('perjalanan_id', $this->input->post('id'));
+            $this->db->where('karyawan_inisial', $a);
+            $exist_peserta = $this->db->get('perjalanan_anggota')->row_array();
+            if (empty($exist_peserta)) {
+                $peserta = [
+                    'perjalanan_id' => $this->input->post('id'),
+                    'reservasi_id' => $perjalanan['reservasi_id'],
+                    'npk' => $karyawan['npk'],
+                    'karyawan_inisial' => $karyawan['inisial'],
+                    'karyawan_nama' => $karyawan['nama'],
+                    'karyawan_dept' => $dept['nama'],
+                    'karyawan_posisi' => $posisi['nama'],
+                    'karyawan_gol' => $karyawan['gol_id'],
+                    'uang_saku' => $tunjangan['uang_saku'],
+                    'insentif_pagi' => $tunjangan['insentif_pagi'],
+                    'um_pagi' => $tunjangan['um_pagi'],
+                    'um_siang' => $tunjangan['um_siang'],
+                    'um_malam' => $tunjangan['um_malam'],
+                    'status' => '1'
+                ];
+                $this->db->insert('perjalanan_anggota', $peserta);
+            }
         endforeach;
 
-        $anggota = $this->db->where('perjalanan_id', $dl['id']);
+        $anggota = $this->db->where('perjalanan_id', $perjalanan['id']);
         $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
         $anggotabaru = array_column($anggota, 'karyawan_inisial');
 
+        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        //Uang Saku
+        if ($perjalanan['jenis_perjalanan'] == 'TAPP') {
+            $this->db->select_sum('uang_saku');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $uang_saku = $query->row()->uang_saku;
+        } else {
+            $uang_saku = 0;
+        }
+
+        //Insentif pagi
+        if ($perjalanan['jamberangkat'] <= $um['um1']) {
+            $this->db->select_sum('insentif_pagi');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $insentif_pagi = $query->row()->insentif_pagi;
+        } else {
+            $insentif_pagi = 0;
+        }
+
+        //Makan Pagi
+        if ($perjalanan['jenis_perjalanan'] == 'TAPP' and $perjalanan['jamberangkat'] <= $um['um2']) {
+            $this->db->select_sum('um_pagi');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_pagi = $query->row()->um_pagi;
+        } else {
+            $um_pagi = 0;
+        }
+
+        //Makan Siang
+        if ($perjalanan['jamberangkat'] <= $um['um3'] and $perjalanan['jamkembali'] >= $um['um3']) {
+            $this->db->select_sum('um_siang');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_siang = $query->row()->um_siang;
+        } else {
+            $um_siang = 0;
+        }
+
+        //Makan Malam
+        if ($perjalanan['jamkembali'] >= $um['um4']) {
+            $this->db->select_sum('um_malam');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_malam = $query->row()->um_malam;
+        } else {
+            $um_malam = 0;
+        }
+        $total = $uang_saku + $insentif_pagi + $um_pagi + $um_siang + $um_malam + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+        $this->db->set('uang_saku', $uang_saku);
+        $this->db->set('insentif_pagi', $insentif_pagi);
+        $this->db->set('um_pagi', $um_pagi);
+        $this->db->set('um_siang', $um_siang);
+        $this->db->set('um_malam', $um_malam);
+        $this->db->set('total', $total);
         $this->db->set('anggota', implode(', ', $anggotabaru));
-        $this->db->where('id', $dl['id']);
+        $this->db->where('id', $perjalanan['id']);
         $this->db->update('perjalanan');
 
-        $this->db->set('anggota', implode(', ', $anggotabaru));
-        $this->db->where('id', $dl['reservasi_id']);
-        $this->db->update('reservasi');
-
-        redirect('cekdl/cekberangkat/' . $dl['id']);
-    }
-
-    public function hapus_anggota($dl, $inisial)
-    {
-        $this->db->where('perjalanan_id', $dl);
-        $this->db->where('karyawan_inisial', $inisial);
-        $this->db->delete('perjalanan_anggota');
-
-        $anggota = $this->db->where('perjalanan_id', $dl);
-        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
-        $anggotabaru = array_column($anggota, 'karyawan_inisial');
-
-        $this->db->set('anggota', implode(', ', $anggotabaru));
-        $this->db->where('id', $dl);
-        $this->db->update('perjalanan');
-
-        $perjalanan = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();
+        $this->db->set('uang_saku', $uang_saku);
+        $this->db->set('insentif_pagi', $insentif_pagi);
+        $this->db->set('um_pagi', $um_pagi);
+        $this->db->set('um_siang', $um_siang);
+        $this->db->set('um_malam', $um_malam);
+        $this->db->set('total', $total);
         $this->db->set('anggota', implode(', ', $anggotabaru));
         $this->db->where('id', $perjalanan['reservasi_id']);
         $this->db->update('reservasi');
 
-        redirect('cekdl/cekberangkat/' . $dl);
+        redirect('cekdl/cekberangkat/' . $perjalanan['id']);
+    }
+
+    public function hapus_anggota($id, $inisial)
+    {
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+
+        $this->db->where('perjalanan_id', $id);
+        $this->db->where('karyawan_inisial', $inisial);
+        $this->db->delete('perjalanan_anggota');
+
+        $anggota = $this->db->where('perjalanan_id', $perjalanan['id']);
+        $anggota = $this->db->get_where('perjalanan_anggota')->result_array();
+        $anggotabaru = array_column($anggota, 'karyawan_inisial');
+
+        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        //Uang Saku
+        if ($perjalanan['jenis_perjalanan'] == 'TAPP') {
+            $this->db->select_sum('uang_saku');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $uang_saku = $query->row()->uang_saku;
+        } else {
+            $uang_saku = 0;
+        }
+
+        //Insentif pagi
+        if ($perjalanan['jamberangkat'] <= $um['um1']) {
+            $this->db->select_sum('insentif_pagi');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $insentif_pagi = $query->row()->insentif_pagi;
+        } else {
+            $insentif_pagi = 0;
+        }
+
+        //Makan Pagi
+        if ($perjalanan['jenis_perjalanan'] == 'TAPP' and $perjalanan['jamberangkat'] <= $um['um2']) {
+            $this->db->select_sum('um_pagi');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_pagi = $query->row()->um_pagi;
+        } else {
+            $um_pagi = 0;
+        }
+
+        //Makan Siang
+        if ($perjalanan['jamberangkat'] <= $um['um3'] and $perjalanan['jamkembali'] >= $um['um3']) {
+            $this->db->select_sum('um_siang');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_siang = $query->row()->um_siang;
+        } else {
+            $um_siang = 0;
+        }
+
+        //Makan Malam
+        if ($perjalanan['jamkembali'] >= $um['um4']) {
+            $this->db->select_sum('um_malam');
+            $this->db->where('perjalanan_id', $perjalanan['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_malam = $query->row()->um_malam;
+        } else {
+            $um_malam = 0;
+        }
+        $total = $uang_saku + $insentif_pagi + $um_pagi + $um_siang + $um_malam + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+        $this->db->set('uang_saku', $uang_saku);
+        $this->db->set('insentif_pagi', $insentif_pagi);
+        $this->db->set('um_pagi', $um_pagi);
+        $this->db->set('um_siang', $um_siang);
+        $this->db->set('um_malam', $um_malam);
+        $this->db->set('total', $total);
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $perjalanan['id']);
+        $this->db->update('perjalanan');
+
+        $this->db->set('uang_saku', $uang_saku);
+        $this->db->set('insentif_pagi', $insentif_pagi);
+        $this->db->set('um_pagi', $um_pagi);
+        $this->db->set('um_siang', $um_siang);
+        $this->db->set('um_malam', $um_malam);
+        $this->db->set('total', $total);
+        $this->db->set('anggota', implode(', ', $anggotabaru));
+        $this->db->where('id', $perjalanan['reservasi_id']);
+        $this->db->update('reservasi');
+
+        redirect('cekdl/cekberangkat/' . $id);
     }
 
     public function revisi()
@@ -263,73 +512,73 @@ class Cekdl extends CI_Controller
         $this->db->update('perjalanan');
 
         $dl = $this->db->get_where('perjalanan', ['id' =>  $this->input->post('id')])->row_array();
-        $ga_admin = $this->db->get_where('karyawan_admin', ['sect_id' => '214'])->row_array(); 
+        $ga_admin = $this->db->get_where('karyawan_admin', ['sect_id' => '214'])->row_array();
         $postData = array(
             'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
             'number' => $ga_admin['phone'],
             'message' => "*REVISI PERJALANAN DINAS*\r\n \r\n No. Perjalanan : *" . $dl['id'] . "*" .
-            "\r\n Nama Pemohon: *" . $dl['nama'] . "*" .
-            "\r\n Tujuan : *" . $dl['tujuan'] . "*" .
-            "\r\n Keperluan : *" . $dl['keperluan'] . "*" .
-            "\r\n Peserta : *" . $dl['anggota'] . "*" .
-            "\r\n Berangkat : *" . $dl['tglberangkat'] . "* *" . $dl['jamberangkat'] . "* _estimasi_" .
-            "\r\n Kembali : *" . $dl['tglkembali'] . "* *" . $dl['jamkembali'] . "* _estimasi_" .
-            "\r\n Kendaraan : *" . $dl['nopol'] . "* ( *" . $dl['kepemilikan'] . "*" .
-            "\r\n Catatan : *" . $dl['catatan_security'] . "*" .
-            "\r\n Direvisi Oleh " . $this->session->userdata('inisial') . ' pada ' . date('d-m-Y H:i') .
-            " ) \r\n \r\nPerjalanan ini membutuhkan revisi dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                "\r\n Nama Pemohon: *" . $dl['nama'] . "*" .
+                "\r\n Tujuan : *" . $dl['tujuan'] . "*" .
+                "\r\n Keperluan : *" . $dl['keperluan'] . "*" .
+                "\r\n Peserta : *" . $dl['anggota'] . "*" .
+                "\r\n Berangkat : *" . $dl['tglberangkat'] . "* *" . $dl['jamberangkat'] . "* _estimasi_" .
+                "\r\n Kembali : *" . $dl['tglkembali'] . "* *" . $dl['jamkembali'] . "* _estimasi_" .
+                "\r\n Kendaraan : *" . $dl['nopol'] . "* ( *" . $dl['kepemilikan'] . "*" .
+                "\r\n Catatan : *" . $dl['catatan_security'] . "*" .
+                "\r\n Direvisi Oleh " . $this->session->userdata('inisial') . ' pada ' . date('d-m-Y H:i') .
+                " ) \r\n \r\nPerjalanan ini membutuhkan revisi dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
         );
 
         $ch = curl_init();
-    
+
         curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        
+
         $headers = array();
         $headers[] = 'Accept: application/json';
         $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        
+
         $result = curl_exec($ch);
 
         redirect('cekdl/berangkat');
     }
 
-    public function edit()
-    {
-        $this->db->set('tglberangkat', $this->input->post('tglberangkat'));
-        $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
-        $this->db->set('tglkembali', $this->input->post('tglkembali'));
-        $this->db->set('jamkembali', $this->input->post('jamkembali'));
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('perjalanan');
+    // public function edit()
+    // {
+    //     $this->db->set('tglberangkat', $this->input->post('tglberangkat'));
+    //     $this->db->set('jamberangkat', $this->input->post('jamberangkat'));
+    //     $this->db->set('tglkembali', $this->input->post('tglkembali'));
+    //     $this->db->set('jamkembali', $this->input->post('jamkembali'));
+    //     $this->db->where('id', $this->input->post('id'));
+    //     $this->db->update('perjalanan');
 
-        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
-        if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um1']) {
-            $this->db->set('um1', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
-        if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um2']) {
-            $this->db->set('um2', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
-        if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um3'] and $this->input->post('jamkembali') >= $um['um3']) {
-            $this->db->set('um3', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
-        if ($this->input->post('jenis') != 'TA' and $this->input->post('jamkembali') >= $um['um4']) {
-            $this->db->set('um4', 'YA');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('perjalanan');
-        };
+    //     $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+    //     if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um1']) {
+    //         $this->db->set('um1', 'YA');
+    //         $this->db->where('id', $this->input->post('id'));
+    //         $this->db->update('perjalanan');
+    //     };
+    //     if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um2']) {
+    //         $this->db->set('um2', 'YA');
+    //         $this->db->where('id', $this->input->post('id'));
+    //         $this->db->update('perjalanan');
+    //     };
+    //     if ($this->input->post('jenis') != 'TA' and $this->input->post('jamberangkat') <= $um['um3'] and $this->input->post('jamkembali') >= $um['um3']) {
+    //         $this->db->set('um3', 'YA');
+    //         $this->db->where('id', $this->input->post('id'));
+    //         $this->db->update('perjalanan');
+    //     };
+    //     if ($this->input->post('jenis') != 'TA' and $this->input->post('jamkembali') >= $um['um4']) {
+    //         $this->db->set('um4', 'YA');
+    //         $this->db->where('id', $this->input->post('id'));
+    //         $this->db->update('perjalanan');
+    //     };
 
-        redirect('cekdl/index');
-    }
+    //     redirect('cekdl/index');
+    // }
 }
