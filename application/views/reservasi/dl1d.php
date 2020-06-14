@@ -91,6 +91,7 @@
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
                                                 foreach ($anggota as $ang) :
+                                                    $gol = $this->db->get_where('karyawan_gol', ['id' => $ang['karyawan_gol']])->row_array();
                                                     $rsvnpk = $ang['npk'];
                                                     $tglberangkat = $reservasi_temp['tglberangkat'];
                                                     $querySaring1 = "SELECT *
@@ -118,7 +119,7 @@
                                                     endforeach; ?>
                                                     <tr>
                                                         <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><?= $ang['karyawan_gol']; ?></td>
+                                                        <td><?= $gol['nama']; ?></td>
                                                         <td><?= $ang['uang_saku']; ?></td>
                                                         <td><?= $ang['insentif_pagi']; ?></td>
                                                         <td><?= $ang['um_pagi']; ?></td>
