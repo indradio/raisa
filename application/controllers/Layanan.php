@@ -178,7 +178,6 @@ class Layanan extends CI_Controller
             $this->db->where('group', 'A');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
-                //Notifikasi ke USER
                  //Notifikasi ke USER
                  $client = new \GuzzleHttp\Client();
                  $response = $client->post(

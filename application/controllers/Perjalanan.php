@@ -44,6 +44,36 @@ class Perjalanan extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
+                $this->db->where('sect_id', '214');
+                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $ga_admin['phone'],
+                            'message' =>"*PENGAJUAN PENYELESAIAN PERJALANAN DINAS*"
+                            "\r\n \r\nNo. Reservasi : *" .$perjalanan['id'] . "*" .
+                            "\r\nNama : *" . $perjalanan['nama'] . "*" .
+                            "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
+                            "\r\nTujuan : *" . $perjalanan['tujuan'] . "*" .
+                            "\r\nKeperluan : *" . $perjalanan['keperluan'] . "*" .
+                            "\r\nBerangkat : *" . date("d M Y", strtotime($perjalanan['tglberangkat'])) . ' - ' . date("H:i", strtotime($perjalanan['jamberangkat'])) . "* _estimasi_" .
+                            "\r\nKembali : *" . date("d M Y", strtotime($perjalanan['tglkembali'])) . ' - ' . date("H:i", strtotime($perjalanan['jamkembali'])) . "* _estimasi_" .
+                            "\r\nKendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
+                            "\r\n \r\nKasbon : *" . $perjalanan['kasbon'] . "*" .
+                            "\r\nBiaya : *" . $perjalanan['total'] . "*" .
+                            "\r\n \r\nProses sekarang! https://raisa.winteq-astra.com/perjalanandl/penyelesaian/".$perjalanan['id'],
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
                 redirect('perjalanan/penyelesaian/daftar');
             }else{
                 redirect('perjalanan/penyelesaian/daftar');

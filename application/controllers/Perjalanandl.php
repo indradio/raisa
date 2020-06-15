@@ -1128,7 +1128,7 @@ class Perjalanandl extends CI_Controller
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
         if (empty($perjalanan)) {
             if ($parameter == 'daftar') {
-                $data['sidemenu'] = 'Perjalanan Dinas';
+                $data['sidemenu'] = 'GA';
                 $data['sidesubmenu'] = 'Penyelesaian';
                 $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
                 $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' => '4'])->result_array();
@@ -1147,7 +1147,7 @@ class Perjalanandl extends CI_Controller
                 redirect('perjalanandl/penyelesaian/daftar');
             }
         } else {
-            $data['sidemenu'] = 'Perjalanan Dinas';
+            $data['sidemenu'] = 'GA';
             $data['sidesubmenu'] = 'Penyelesaian';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
