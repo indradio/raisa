@@ -45,6 +45,8 @@ class Perjalanan extends CI_Controller
                 $this->db->update('perjalanan');
 
                 redirect('perjalanan/penyelesaian/daftar');
+            }else{
+                redirect('perjalanan/penyelesaian/daftar');
             }
         } else {
             $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();

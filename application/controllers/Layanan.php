@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Layanan extends CI_Controller
 {
     public function __construct()
@@ -111,36 +114,23 @@ class Layanan extends CI_Controller
     {
         foreach ($this->input->post('penerima') as $to) :
             date_default_timezone_set('asia/jakarta');
-            // $my_apikey = "NQXJ3HED5LW2XV440HCG";
-            // $destination = $to;
-            // $message = $this->input->post('pesan');
-            // $api_url = "http://panel.apiwha.com/send_message.php";
-            // $api_url .= "?apikey=" . urlencode($my_apikey);
-            // $api_url .= "&number=" . urlencode($destination);
-            // $api_url .= "&text=" . urlencode($message);
-            // json_decode(file_get_contents($api_url, false));
-
-            $postData = array(
-                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                'number' => $to,
-                'message' => $this->input->post('pesan')
+            
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $to,
+                        'message' => $this->input->post('pesan'),
+                    ],
+                ]
             );
-
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            $headers = array();
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($ch);
+            $body = $response->getBody();
 
             // Record History
             $penerima = $this->db->get_where('karyawan', ['phone' => $to])->row_array();
@@ -186,38 +176,33 @@ class Layanan extends CI_Controller
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'A');
-            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
-                        "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
-                        "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
-                        "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
-                        "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
-                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
-                );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
+                 //Notifikasi ke USER
+                 $client = new \GuzzleHttp\Client();
+                 $response = $client->post(
+                     'https://region01.krmpesan.com/api/v2/message/send-text',
+                     [
+                         'headers' => [
+                             'Content-Type' => 'application/json',
+                             'Accept' => 'application/json',
+                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                         ],
+                         'json' => [
+                             'phone' => $k['phone'],
+                             'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
+                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                             "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
+                             "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
+                             "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
+                             "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
+                             "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
+                             "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                         ],
+                     ]
+                 );
+                 $body = $response->getBody();
             endforeach;
             redirect('layanan/broadcast');
         } elseif ($parameter == 'B') {
@@ -227,71 +212,63 @@ class Layanan extends CI_Controller
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
-                        "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
-                        "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
-                        "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
-                        "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
-                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                //Notifikasi ke USER
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $k['phone'],
+                            'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
+                            "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                            "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
+                            "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
+                            "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
+                            "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
+                            "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
+                            "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
                 );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
+                $body = $response->getBody();
             endforeach;
             redirect('layanan/broadcast');
         } elseif ($parameter == 'C') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
+            $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
-                        "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
-                        "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
-                        "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
-                        "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
-                        "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $k['phone'],
+                            'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
+                            "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
+                            "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
+                            "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
+                            "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
+                            "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
+                            "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
+                            "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
                 );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
+                $body = $response->getBody();
             endforeach;
             redirect('layanan/broadcast');
         }
