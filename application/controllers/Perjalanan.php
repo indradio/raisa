@@ -57,7 +57,7 @@ class Perjalanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $ga_admin['phone'],
-                            'message' =>"*PENGAJUAN PENYELESAIAN PERJALANAN DINAS*"
+                            'message' =>"*PENGAJUAN PENYELESAIAN PERJALANAN DINAS*" .
                             "\r\n \r\nNo. Reservasi : *" .$perjalanan['id'] . "*" .
                             "\r\nNama : *" . $perjalanan['nama'] . "*" .
                             "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
