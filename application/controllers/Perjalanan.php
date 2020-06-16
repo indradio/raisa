@@ -8,6 +8,7 @@ class Perjalanan extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model("Karyawan_model");
+        date_default_timezone_set('asia/jakarta');
     }
 
     public function index()
@@ -24,6 +25,7 @@ class Perjalanan extends CI_Controller
 
     public function penyelesaian($parameter)
     {
+        date_default_timezone_set('asia/jakarta');
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
         if (empty($perjalanan)) {
             if ($parameter == 'daftar') {

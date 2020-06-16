@@ -521,6 +521,18 @@ class Reservasi extends CI_Controller
             ];
             $this->db->insert('reservasi', $data);
 
+            // update table anggota perjalanan
+            $this->db->set('reservasi_id', $data['id']);
+            $this->db->set('status', '1');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $this->db->update('perjalanan_tujuan');
+
+            // update table anggota perjalanan
+            $this->db->set('reservasi_id', $data['id']);
+            $this->db->set('status', '1');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $this->db->update('perjalanan_anggota');
+
             if ($this->session->userdata('posisi_id') <= 3) {
                 if ($reservasi_temp['jenis_perjalanan'] == 'DLPP') {
                     $this->db->set('atasan1', null);
@@ -543,7 +555,7 @@ class Reservasi extends CI_Controller
                             ],
                             'json' => [
                                 'phone' => $ga_admin['phone'],
-                                'message' =>"*PENGAJUAN PERJALANAN DINAS DLPP*".
+                                'message' =>"*PENGAJUAN PERJALANAN DINAS DLPP*" .
                                 "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                                 "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                                 "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -618,7 +630,7 @@ class Reservasi extends CI_Controller
                             ],
                             'json' => [
                                 'phone' => $div_head['phone'],
-                                'message' =>"*PENGAJUAN PERJALANAN DINAS TAPP*".
+                                'message' =>"*PENGAJUAN PERJALANAN DINAS TAPP*" .
                                 "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                                 "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                                 "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -693,18 +705,6 @@ class Reservasi extends CI_Controller
                 );
                 $body = $response->getBody();
             }
-
-            // update table anggota perjalanan
-            $this->db->set('reservasi_id', $data['id']);
-            $this->db->set('status', '1');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $this->db->update('perjalanan_tujuan');
-
-            // update table anggota perjalanan
-            $this->db->set('reservasi_id', $data['id']);
-            $this->db->set('status', '1');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $this->db->update('perjalanan_anggota');
 
             //delete temporary
             $this->db->where('id', $reservasi_temp['id']);
@@ -992,7 +992,7 @@ class Reservasi extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $div_head['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*".
+                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*" .
                             "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                             "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                             "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -1009,37 +1009,6 @@ class Reservasi extends CI_Controller
                     ]
                 );
                 $body = $response->getBody();
-
-                // $postData = array(
-                //     'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                //     'number' => $fin_head['phone'],
-                //     'message' => "*PENGAJUAN PERJALANAN DINAS TA*" .
-                //         "\r\n \r\n No. Reservasi : *" . $data['id'] . "*" .
-                //         "\r\n Nama : *" . $reservasi_temp['nama'] . "*" .
-                //         "\r\n Tujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                //         "\r\n Keperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                //         "\r\n Peserta : *" . $reservasi_temp['anggota'] . "*" .
-                //         "\r\n Berangkat : *" . $reservasi_temp['tglberangkat'] . "* *" . $reservasi_temp['jamberangkat'] . "* _estimasi_" .
-                //         "\r\n Kembali : *" . $reservasi_temp['tglkembali'] . "* *" . $reservasi_temp['jamkembali'] . "* _estimasi_" .
-                //         "\r\n Kendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "*" .
-                //         " ) \r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                // );
-
-                // $ch = curl_init();
-
-                // curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                // curl_setopt($ch, CURLOPT_POST, 1);
-                // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                // $headers = array();
-                // $headers[] = 'Accept: application/json';
-                // $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                // $result = curl_exec($ch);
             } else {
                 //Kirim Notifikasi ke Atasan1
                 $client = new \GuzzleHttp\Client();
@@ -1053,7 +1022,7 @@ class Reservasi extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $atasan1['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*".
+                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*" .
                             "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                             "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                             "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
