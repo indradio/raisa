@@ -543,7 +543,7 @@ class Reservasi extends CI_Controller
                             ],
                             'json' => [
                                 'phone' => $ga_admin['phone'],
-                                'message' =>"*PENGAJUAN PERJALANAN DINAS DLPP*"
+                                'message' =>"*PENGAJUAN PERJALANAN DINAS DLPP*".
                                 "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                                 "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                                 "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -618,7 +618,7 @@ class Reservasi extends CI_Controller
                             ],
                             'json' => [
                                 'phone' => $div_head['phone'],
-                                'message' =>"*PENGAJUAN PERJALANAN DINAS TAPP*"
+                                'message' =>"*PENGAJUAN PERJALANAN DINAS TAPP*".
                                 "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                                 "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                                 "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -677,7 +677,7 @@ class Reservasi extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $atasan1['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS ". $reservasi_temp['jenis_perjalanan'] . "*"
+                            'message' =>"*PENGAJUAN PERJALANAN DINAS ". $reservasi_temp['jenis_perjalanan'] . "*".
                             "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                             "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                             "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -992,7 +992,7 @@ class Reservasi extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $div_head['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*"
+                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*".
                             "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                             "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                             "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
@@ -1053,7 +1053,7 @@ class Reservasi extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $atasan1['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*"
+                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*".
                             "\r\n \r\nNo. Reservasi : *" . $id . "*" .
                             "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
                             "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
