@@ -251,7 +251,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanandl/ubah_uangsaku'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/uangsaku'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -268,7 +268,7 @@
                         <label class="col-md-5 col-form-label">Aktual</label>
                         <div class="col-md-7">
                             <div class="form-group has-default">
-                                <input type="number" class="form-control" id="uang_saku" name="uang_saku" required="true" />
+                                <input type="number" class="form-control" id="uangsaku" name="uangsaku" required="true" />
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanandl/ubah_insentif'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/insentif'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -329,7 +329,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanandl/ubah_umpagi'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/umpagi'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -368,7 +368,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanandl/ubah_umsiang'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/umsiang'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -407,7 +407,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanandl/ubah_ummalam'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/ummalam'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -446,7 +446,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanan/penyelesaian_edit/taksi'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/taksi'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -485,7 +485,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanan/penyelesaian_edit/bbm'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/bbm'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -524,7 +524,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanan/penyelesaian_edit/tol'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/tol'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">
@@ -563,7 +563,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form" method="post" action="<?= base_url('perjalanan/penyelesaian_edit/parkir'); ?>">
+            <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian_edit/parkir'); ?>">
                 <div class="modal-body">
                     <div class="form-group" hidden="true">
                         <input type="text" class="form-control" id="id" name="id">

@@ -1004,7 +1004,6 @@ class Perjalanandl extends CI_Controller
                     'akomodasi' => $reservasi['akomodasi'],
                     'penginapan' => $reservasi['penginapan'],
                     'lama_menginap' => $reservasi['lama_menginap'],
-                    'uangsaku' => 'YA',
                     'admin_hr' => $this->session->userdata('inisial'),
                     'tgl_hr' => date('Y-m-d H:i:s'),
                     'catatan_ga' => $this->input->post('catatan'),
@@ -1158,5 +1157,74 @@ class Perjalanandl extends CI_Controller
             $this->load->view('perjalanandl/penyelesaian_proses', $data);
             $this->load->view('templates/footer');
         }
+    }
+    public function penyelesaian_edit($parameter)
+    {
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+        if ($parameter == 'uangsaku') {
+            $total = $this->input->post('uangsaku') + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('uang_saku', $this->input->post('uangsaku'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }elseif ($parameter == 'insentif') {
+            $total = $perjalanan['uang_saku'] + $this->input->post('insentif') + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('insentif_pagi', $this->input->post('insentif'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }elseif ($parameter == 'umpagi') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $this->input->post('umpagi') + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('um_pagi', $this->input->post('umpagi'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }elseif ($parameter == 'umsiang') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $this->input->post('umsiang') +  $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('um_siang', $this->input->post('umsiang'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }elseif ($parameter == 'ummalam') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $this->input->post('ummalam') + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('um_malam', $this->input->post('ummalam'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }elseif ($parameter == 'taksi') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $this->input->post('taksi') + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('taksi', $this->input->post('taksi'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }elseif ($parameter == 'bbm') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $this->input->post('bbm') + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('bbm', $this->input->post('bbm'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        } elseif ($parameter == 'tol') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $this->input->post('tol') + $perjalanan['parkir'];
+
+            $this->db->set('tol', $this->input->post('tol'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        } elseif ($parameter == 'parkir') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $this->input->post('parkir');
+
+            $this->db->set('parkir', $this->input->post('parkir'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+        }
+        redirect('perjalanan/penyelesaian/' . $this->input->post('id'));
     }
 }
