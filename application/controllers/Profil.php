@@ -60,4 +60,32 @@ class Profil extends CI_Controller
         }
     }
 
+    public function update($parameter)
+    {
+        if ($parameter=='e-wallet')
+        {
+            $data['sidemenu'] = 'Profil';
+            $data['sidesubmenu'] = 'Profil';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('profil/update_ewallet', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function submit($parameter)
+    {
+        if ($parameter=='e-wallet')
+        {
+            $this->db->set('ewallet_1', $this->input->post('utama').' - '.$this->input->post('utama_rek'));
+            $this->db->set('ewallet_2', $this->input->post('cadangan').' - '.$this->input->post('cadangan_rek'));
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->update('karyawan');
+
+            redirect('profil');
+        }
+    }
+
 }

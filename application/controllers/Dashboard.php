@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Dashboard extends CI_Controller
 {
     public function __construct()
@@ -40,38 +43,34 @@ class Dashboard extends CI_Controller
                 $this->db->update('reservasi');
 
                 //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $user['phone'],
-                    'message' => "*PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
-                        "\r\nNama : *" . $p['nama'] . "*" .
-                        "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                        "\r\nKeperluan : *" . $p['keperluan'] . "*" .
-                        "\r\nPeserta : *" . $p['anggota'] . "*" .
-                        "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
-                        "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
-                        "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                        "\r\nCatatan : *" . $p['catatan_ga'] .  "*" .
-                        "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi 2 Jam / batas waktu keberangkatan" .
-                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                        "\r\n \r\n" . $notifikasi['pesan']
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user['phone'],
+                            'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
+                                "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
+                                "\r\nNama : *" . $p['nama'] . "*" .
+                                "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
+                                "\r\nPeserta : *" . $p['anggota'] . "*" .
+                                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                                "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
+                                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                                "\r\nCatatan : *" . $p['catatan_ga'] .  "*" .
+                                "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi 2 Jam / batas waktu keberangkatan" .
+                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
+                                "\r\n \r\n" . $notifikasi['pesan']
+                                ],
+                    ]
                 );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
+                $body = $response->getBody();
             }
         endforeach;
 
@@ -101,35 +100,30 @@ class Dashboard extends CI_Controller
                         $this->db->insert('notifikasi', $data);
 
                         //Notifikasi ke USER
-                        $postData = array(
-                            'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                            'number' => $user['phone'],
-                            'message' => "*WAKTU REALISASI KAMU KURANG DARI 8 JAM*" .
-                                "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
-                                "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                                "\r\nNama : *" . $l['nama'] . "*" .
-                                "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
-                                "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
-                                "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." .
-                                "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                "\r\n \r\n" . $notifikasi['pesan']
+                        $client = new \GuzzleHttp\Client();
+                        $response = $client->post(
+                            'https://region01.krmpesan.com/api/v2/message/send-text',
+                            [
+                                'headers' => [
+                                    'Content-Type' => 'application/json',
+                                    'Accept' => 'application/json',
+                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                                ],
+                                'json' => [
+                                    'phone' => $user['phone'],
+                                    'message' => "*[MENUNGGU REALISASI] WAKTU REALISASI KAMU KURANG DARI 8 JAM*" .
+                                        "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
+                                        "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                        "\r\nNama : *" . $l['nama'] . "*" .
+                                        "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
+                                        "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
+                                        "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." .
+                                        "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
+                                        "\r\n \r\n" . $notifikasi['pesan']
+                                        ],
+                            ]
                         );
-
-                        $ch = curl_init();
-
-                        curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                        curl_setopt($ch, CURLOPT_POST, 1);
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                        $headers = array();
-                        $headers[] = 'Accept: application/json';
-                        $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                        $result = curl_exec($ch);
+                        $body = $response->getBody();
                     }
                 }
 
@@ -142,38 +136,32 @@ class Dashboard extends CI_Controller
                     $this->db->update('lembur');
 
                     //Notifikasi ke USER
-                    $postData = array(
-                        'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                        'number' => $user['phone'],
-                        'message' => "*WAKTU REALISASI KAMU TELAH HABIS*" .
-                            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
-                            "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                            "\r\nNama : *" . $l['nama'] . "*" .
-                            "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                            "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                            "\r\n \r\nLEMBUR kamu Telah *DIBATALKAN* otomatis oleh SISTEM" .
-                            "\r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." .
-                            "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi" .
-                            "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi" .
-                            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                            "\r\n \r\n" . $notifikasi['pesan']
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $user['phone'],
+                                'message' => "*[DIBATALKAN] WAKTU REALISASI LEMBUR KAMU TELAH HABIS*" .
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    "\r\nNama : *" . $l['nama'] . "*" .
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                                    "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
+                                    "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." .
+                                    "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi" .
+                                    "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi" .
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
+                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    ],
+                        ]
                     );
-
-                    $ch = curl_init();
-
-                    curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                    curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                    $headers = array();
-                    $headers[] = 'Accept: application/json';
-                    $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                    $result = curl_exec($ch);
+                    $body = $response->getBody();
                 }
             } elseif ($l['status'] > 1 and $l['status'] < 7 and $l['life'] == 0) {
                 // Batalkan LEMBUR LEWAT 7 HARI
@@ -185,39 +173,33 @@ class Dashboard extends CI_Controller
                     $this->db->update('lembur');
 
                     //Notifikasi ke USER
-                    $postData = array(
-                        'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                        'number' => $user['phone'],
-                        'message' => "*WAKTU LEMBUR KAMU TELAH HABIS LEMBUR KAMU DIBATALKAN*" .
-                            "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
-                            "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                            "\r\nNama : *" . $l['nama'] . "*" .
-                            "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                            "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                            "\r\nStatus Terakhir : *" . $last_status['nama'] . "*" .
-                            "\r\n \r\nTelah *DIBATALKAN* otomatis oleh SISTEM" .
-                            "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
-                            "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi" .
-                            "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi" .
-                            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                            "\r\n \r\n" . $notifikasi['pesan']
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $user['phone'],
+                                'message' => "*[DIBATALKAN] WAKTU LEMBUR KAMU TELAH HABIS*" .
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    "\r\nNama : *" . $l['nama'] . "*" .
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                                    "\r\nStatus Terakhir : *" . $last_status['nama'] . "*" .
+                                    "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
+                                    "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
+                                    "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi" .
+                                    "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi" .
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
+                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    ],
+                        ]
                     );
-
-                    $ch = curl_init();
-
-                    curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                    curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                    $headers = array();
-                    $headers[] = 'Accept: application/json';
-                    $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                    $result = curl_exec($ch);
+                    $body = $response->getBody();
                 }
             }
         endforeach;

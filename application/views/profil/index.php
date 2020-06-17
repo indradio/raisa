@@ -114,26 +114,20 @@
                         <div class="card-body">
                             <form>
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-6 mt-2">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Company (disabled)</label>
-                                            <input type="text" class="form-control" disabled>
+                                            <label class="bmd-label-floating">e-Wallet Utama</label>
+                                            <input type="text" class="form-control" value="<?= $karyawan['ewallet_1']; ?>" disabled>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6 mt-2">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Username</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Email address</label>
-                                            <input type="email" class="form-control">
+                                            <label class="bmd-label-floating">e-Wallet Cadangan</label>
+                                            <input type="text" class="form-control" value="<?= $karyawan['ewallet_2']; ?>" disabled>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Fist Name</label>
@@ -186,7 +180,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
+                                <button type="submit" class="btn btn-rose pull-right">Update Profile</button> -->
                                 <div class="clearfix"></div>
                             </form>
                         </div>

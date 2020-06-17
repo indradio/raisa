@@ -323,8 +323,8 @@ class Cekdl extends CI_Controller
                         "\r\n Tujuan : *" . $perjalanan['tujuan'] . "*" .
                         "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
                         "\r\n Peserta : *" . $perjalanan['anggota'] . "*" .
-                        "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "* _estimasi_" .
-                        "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "* _estimasi_" .
+                        "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "*" .
+                        "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "*" .
                         "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
                         "\r\n \r\nPerjalanan ini telah kembali, JANGAN LUPA UNTUK SEGERA MELAKUKAN PENYELESAIAN.".
                         "\r\n \r\nklik link berikut : https://raisa.winteq-astra.com/perjalanan/penyelesaian/".$perjalanan['id'].
