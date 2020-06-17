@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Perjalanan extends CI_Controller
 {
     public function __construct()
@@ -48,6 +51,7 @@ class Perjalanan extends CI_Controller
 
                 $this->db->where('sect_id', '214');
                 $ga_admin = $this->db->get('karyawan_admin')->row_array();
+
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(
                     'https://region01.krmpesan.com/api/v2/message/send-text',
@@ -60,7 +64,7 @@ class Perjalanan extends CI_Controller
                         'json' => [
                             'phone' => $ga_admin['phone'],
                             'message' =>"*PENGAJUAN PENYELESAIAN PERJALANAN DINAS*" .
-                            "\r\n \r\nNo. Reservasi : *" .$perjalanan['id'] . "*" .
+                            "\r\n \r\nNo. Reservasi : *" . $perjalanan['id'] . "*" .
                             "\r\nNama : *" . $perjalanan['nama'] . "*" .
                             "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
                             "\r\nTujuan : *" . $perjalanan['tujuan'] . "*" .
