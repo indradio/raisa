@@ -317,10 +317,66 @@ class Reservasi extends CI_Controller
         $peserta = $this->db->get_where('perjalanan_anggota')->result_array();
         $listpeserta = array_column($peserta, 'karyawan_inisial');
 
+        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        //Uang Saku
+        if ($reservasi_temp['jenis_perjalanan'] == 'TAPP') {
+            $this->db->select_sum('uang_saku');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $uang_saku = $query->row()->uang_saku;
+        } else {
+            $uang_saku = 0;
+        }
+
+        //Insentif pagi
+        if ($reservasi_temp['jamberangkat'] <= $um['um1']) {
+            $this->db->select_sum('insentif_pagi');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $insentif_pagi = $query->row()->insentif_pagi;
+        } else {
+            $insentif_pagi = 0;
+        }
+
+        //Makan Pagi
+        if ($reservasi_temp['jenis_perjalanan'] == 'TAPP' and $reservasi_temp['jamberangkat'] <= $um['um2']) {
+            $this->db->select_sum('um_pagi');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_pagi = $query->row()->um_pagi;
+        } else {
+            $um_pagi = 0;
+        }
+
+        //Makan Siang
+        if ($reservasi_temp['jamberangkat'] <= $um['um3'] and $reservasi_temp['jamkembali'] >= $um['um3']) {
+            $this->db->select_sum('um_siang');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_siang = $query->row()->um_siang;
+        } else {
+            $um_siang = 0;
+        }
+
+        //Makan Malam
+        if ($reservasi_temp['jamkembali'] >= $um['um4']) {
+            $this->db->select_sum('um_malam');
+            $this->db->where('reservasi_id', $reservasi_temp['id']);
+            $query = $this->db->get('perjalanan_anggota');
+            $um_malam = $query->row()->um_malam;
+        } else {
+            $um_malam = 0;
+        }
+
         $this->db->set('tujuan', implode(', ', $listtujuan));
         $this->db->set('keperluan', $this->input->post('keperluan'));
         $this->db->set('copro', $this->input->post('copro'));
         $this->db->set('anggota', implode(', ', $listpeserta));
+        $this->db->set('uang_saku', $uang_saku);
+        $this->db->set('insentif_pagi', $insentif_pagi);
+        $this->db->set('um_pagi', $um_pagi);
+        $this->db->set('um_siang', $um_siang);
+        $this->db->set('um_malam', $um_malam);
         $this->db->set('taksi', '0');
         $this->db->set('bbm', '0');
         $this->db->set('tol', '0');
@@ -381,67 +437,68 @@ class Reservasi extends CI_Controller
         $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $reservasi_temp = $this->db->order_by('id', "DESC");
         $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
-        $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
-        //Uang Saku
-        if ($reservasi_temp['jenis_perjalanan'] == 'TAPP') {
-            $this->db->select_sum('uang_saku');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $query = $this->db->get('perjalanan_anggota');
-            $uang_saku = $query->row()->uang_saku;
-        } else {
-            $uang_saku = 0;
-        }
+        // $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
+        // //Uang Saku
+        // if ($reservasi_temp['jenis_perjalanan'] == 'TAPP') {
+        //     $this->db->select_sum('uang_saku');
+        //     $this->db->where('reservasi_id', $reservasi_temp['id']);
+        //     $query = $this->db->get('perjalanan_anggota');
+        //     $uang_saku = $query->row()->uang_saku;
+        // } else {
+        //     $uang_saku = 0;
+        // }
 
-        //Insentif pagi
-        if ($reservasi_temp['jamberangkat'] <= $um['um1']) {
-            $this->db->select_sum('insentif_pagi');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $query = $this->db->get('perjalanan_anggota');
-            $insentif_pagi = $query->row()->insentif_pagi;
-        } else {
-            $insentif_pagi = 0;
-        }
+        // //Insentif pagi
+        // if ($reservasi_temp['jamberangkat'] <= $um['um1']) {
+        //     $this->db->select_sum('insentif_pagi');
+        //     $this->db->where('reservasi_id', $reservasi_temp['id']);
+        //     $query = $this->db->get('perjalanan_anggota');
+        //     $insentif_pagi = $query->row()->insentif_pagi;
+        // } else {
+        //     $insentif_pagi = 0;
+        // }
 
-        //Makan Pagi
-        if ($reservasi_temp['jenis_perjalanan'] == 'TAPP' and $reservasi_temp['jamberangkat'] <= $um['um2']) {
-            $this->db->select_sum('um_pagi');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $query = $this->db->get('perjalanan_anggota');
-            $um_pagi = $query->row()->um_pagi;
-        } else {
-            $um_pagi = 0;
-        }
+        // //Makan Pagi
+        // if ($reservasi_temp['jenis_perjalanan'] == 'TAPP' and $reservasi_temp['jamberangkat'] <= $um['um2']) {
+        //     $this->db->select_sum('um_pagi');
+        //     $this->db->where('reservasi_id', $reservasi_temp['id']);
+        //     $query = $this->db->get('perjalanan_anggota');
+        //     $um_pagi = $query->row()->um_pagi;
+        // } else {
+        //     $um_pagi = 0;
+        // }
 
-        //Makan Siang
-        if ($reservasi_temp['jamberangkat'] <= $um['um3'] and $reservasi_temp['jamkembali'] >= $um['um3']) {
-            $this->db->select_sum('um_siang');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $query = $this->db->get('perjalanan_anggota');
-            $um_siang = $query->row()->um_siang;
-        } else {
-            $um_siang = 0;
-        }
+        // //Makan Siang
+        // if ($reservasi_temp['jamberangkat'] <= $um['um3'] and $reservasi_temp['jamkembali'] >= $um['um3']) {
+        //     $this->db->select_sum('um_siang');
+        //     $this->db->where('reservasi_id', $reservasi_temp['id']);
+        //     $query = $this->db->get('perjalanan_anggota');
+        //     $um_siang = $query->row()->um_siang;
+        // } else {
+        //     $um_siang = 0;
+        // }
 
-        //Makan Malam
-        if ($reservasi_temp['jamkembali'] >= $um['um4']) {
-            $this->db->select_sum('um_malam');
-            $this->db->where('reservasi_id', $reservasi_temp['id']);
-            $query = $this->db->get('perjalanan_anggota');
-            $um_malam = $query->row()->um_malam;
-        } else {
-            $um_malam = 0;
-        }
-        $total = $uang_saku + $insentif_pagi + $um_pagi + $um_siang + $um_malam + $this->input->post('taksi') + $this->input->post('bbm') + $this->input->post('tol') + $this->input->post('parkir');
-        $this->db->set('uang_saku', $uang_saku);
-        $this->db->set('insentif_pagi', $insentif_pagi);
-        $this->db->set('um_pagi', $um_pagi);
-        $this->db->set('um_siang', $um_siang);
-        $this->db->set('um_malam', $um_malam);
+        // //Makan Malam
+        // if ($reservasi_temp['jamkembali'] >= $um['um4']) {
+        //     $this->db->select_sum('um_malam');
+        //     $this->db->where('reservasi_id', $reservasi_temp['id']);
+        //     $query = $this->db->get('perjalanan_anggota');
+        //     $um_malam = $query->row()->um_malam;
+        // } else {
+        //     $um_malam = 0;
+        // }
+        $total =  $reservasi_temp['uang_saku'] +  $reservasi_temp['insentif_pagi'] +  $reservasi_temp['um_pagi'] +  $reservasi_temp['um_siang'] +  $reservasi_temp['um_malam'] + $this->input->post('taksi') + $this->input->post('bbm') + $this->input->post('tol') + $this->input->post('parkir');
+        // $this->db->set('uang_saku', $uang_saku);
+        // $this->db->set('insentif_pagi', $insentif_pagi);
+        // $this->db->set('um_pagi', $um_pagi);
+        // $this->db->set('um_siang', $um_siang);
+        // $this->db->set('um_malam', $um_malam);
         $this->db->set('taksi', $this->input->post('taksi'));
         $this->db->set('bbm', $this->input->post('bbm'));
         $this->db->set('tol', $this->input->post('tol'));
         $this->db->set('parkir', $this->input->post('parkir'));
         $this->db->set('total', $total);
+        $this->db->set('pic_perjalanan', $this->input->post('pic'));
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
@@ -497,6 +554,7 @@ class Reservasi extends CI_Controller
                 'copro' => $reservasi_temp['copro'],
                 'keperluan' => $reservasi_temp['keperluan'],
                 'anggota' => $reservasi_temp['anggota'],
+                'pic_perjalanan' => $reservasi_temp['pic_perjalanan'],
                 'tglberangkat' => $reservasi_temp['tglberangkat'],
                 'jamberangkat' => $reservasi_temp['jamberangkat'],
                 'tglkembali' => $reservasi_temp['tglkembali'],

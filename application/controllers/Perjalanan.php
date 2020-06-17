@@ -43,6 +43,7 @@ class Perjalanan extends CI_Controller
                 $this->load->view('perjalanandl/penyelesaian_user_daftar', $data);
                 $this->load->view('templates/footer');
             } elseif ($parameter == 'submit') {
+                $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
                 $this->db->set('klaim_by', $this->session->userdata('inisial'));
                 $this->db->set('klaim_at', date('Y-m-d H:i:s'));
                 $this->db->set('status', '4');

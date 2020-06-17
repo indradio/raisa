@@ -97,7 +97,6 @@
                                                 <tr>
                                                     <th>Inisial</th>
                                                     <th>Nama</th>
-                                                    <th>Gol</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -107,11 +106,16 @@
                                                         WHERE `reservasi_id` = '{$reservasi['id']}'
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
-                                                foreach ($anggota as $ang) : ?>
+                                                foreach ($anggota as $ang) : 
+                                                $gol = $this->db->get_where('karyawan_gol', ['id' => $ang['karyawan_gol']])->row_array();
+                                                ?>
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
-                                                        <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><?= $ang['karyawan_gol']; ?></td>
+                                                        <?php if ($reservasi['pic_perjalanan'] == $ang['karyawan_inisial']){ ?>
+                                                            <td><?= $ang['karyawan_nama'].' <a href="#" class="btn btn-link btn-success btn-just-icon" data-toggle="tooltip" data-placement="top" title="PIC Perjalanan"><i class="material-icons">military_tech</i></a>'; ?></td>
+                                                        <?php }else{ ?>
+                                                            <td><?= $ang['karyawan_nama']; ?></td>
+                                                        <?php } ?>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -121,7 +125,7 @@
                             </div>
                             <p>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Estimasi Biaya</label>
+                                    <label class="col-md-2 col-form-label">Tunjangan </br><small>Estimasi</small></label>
                                     <div class="col-md-8">
                                         <div class="material-datatables">
                                             <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -150,6 +154,25 @@
                                                         <td>Makan Malam</br><small>Kembali > 19:30</small></td>
                                                         <td><?= number_format($reservasi['um_malam'], 0, ',', '.'); ?></td>
                                                     </tr>
+                                                </tbody>
+                                            </table>
+                                            <small>*Untuk Perjalanan TA masih dalam pengembangan. masih menggunakan penyelesaian manual.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <p>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Rincian Biaya </br><small>Estimasi</small></label>
+                                    <div class="col-md-8">
+                                        <div class="material-datatables">
+                                            <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Biaya</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     <tr>
                                                         <td>Taksi/Sewa</br><small>Pribadi per KM</small> </td>
                                                         <td><?= number_format($reservasi['taksi'], 0, ',', '.'); ?></td>

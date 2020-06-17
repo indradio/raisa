@@ -149,6 +149,26 @@ $(document).ready(function () {
         }
     });
 
+    $('#dtperjalanan-desc').DataTable({
+        "pagingType": "full_numbers",
+        scrollX: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'print'
+        ],
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        order: [
+            [0, 'desc']
+        ],
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
     var tablePerjalanan = $('#dtperjalanan').DataTable();
 
     //datatables persetujuan DL

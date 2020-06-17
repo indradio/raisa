@@ -36,10 +36,10 @@
                                     </div>
                                 </div>
                             </form>
-                            <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtperjalanan-desc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Nomor DL</th>
+                                        <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
                                         <th>No. Polisi</th>
                                         <th>Kendaraan</th>
@@ -56,11 +56,6 @@
                                         <th>KM Kembali</th>
                                         <th>Security Kembali</th>
                                         <th>KM Total</th>
-                                        <th>Uang Saku</th>
-                                        <th>UM 1</th>
-                                        <th>UM 2</th>
-                                        <th>UM 3</th>
-                                        <th>UM 4</th>
                                         <th>Catatan GA</th>
                                         <th>Catatan Security</th>
                                         <th>Status</th>
@@ -86,11 +81,6 @@
                                         <th>KM Kembali</th>
                                         <th>Security Kembali</th>
                                         <th>KM Total</th>
-                                        <th>Uang Saku</th>
-                                        <th>UM 1</th>
-                                        <th>UM 2</th>
-                                        <th>UM 3</th>
-                                        <th>UM 4</th>
                                         <th>Catatan GA</th>
                                         <th>Catatan Security</th>
                                         <th>Status</th>
@@ -101,7 +91,12 @@
                                     <?php
                                     foreach ($perjalanan as $pdl) : ?>
                                         <tr>
-                                            <td><?= $pdl['id']; ?></td>
+                                            <td>
+                                            <?= $pdl['id']; ?>
+                                            <?php if ($pdl['status'] > '4') { ?>
+                                                <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
+                                            <?php }; ?> 
+                                            </td>
                                             <td><?= $pdl['jenis_perjalanan']; ?></td>
                                             <td><?= $pdl['nopol']; ?></td>
                                             <td><?= $pdl['kepemilikan']; ?></td>
@@ -118,11 +113,6 @@
                                             <td><?= $pdl['kmkembali']; ?></td>
                                             <td><?= $pdl['cekkembali']; ?></td>
                                             <td><?= $pdl['kmtotal']; ?></td>
-                                            <td><?= $pdl['uangsaku']; ?></td>
-                                            <td><?= $pdl['um1']; ?></td>
-                                            <td><?= $pdl['um2']; ?></td>
-                                            <td><?= $pdl['um3']; ?></td>
-                                            <td><?= $pdl['um4']; ?></td>
                                             <td><?= $pdl['catatan_ga']; ?></td>
                                             <td><?= $pdl['catatan_security']; ?></td>
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>

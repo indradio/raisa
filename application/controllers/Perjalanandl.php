@@ -127,6 +127,7 @@ class Perjalanandl extends CI_Controller
                     'tujuan' => $reservasi['tujuan'],
                     'keperluan' => $reservasi['keperluan'],
                     'anggota' => $reservasi['anggota'],
+                    'pic_perjalanan' => $reservasi['pic_perjalanan'],
                     'tglberangkat' => $reservasi['tglberangkat'],
                     'jamberangkat' => $reservasi['jamberangkat'],
                     'kmberangkat' => '0',
@@ -214,7 +215,6 @@ class Perjalanandl extends CI_Controller
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanandl/admindl');
             } else {
-
                 $data = [
                     'id' => 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . sprintf("%04s", $totalDl),
                     'npk' => $reservasi['npk'],
@@ -436,14 +436,18 @@ class Perjalanandl extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if ($perjalanan['jenis_perjalanan'] == 'DLPP') {
-            $this->load->view('perjalanandl/sjdlpp', $data);
-        } elseif ($perjalanan['jenis_perjalanan'] == 'TAPP') {
-            $this->load->view('perjalanandl/sjtapp', $data);
-        } elseif ($perjalanan['jenis_perjalanan'] == 'TA') {
-            $this->load->view('perjalanandl/sjdlpp', $data);
-            // $this->load->view('perjalanandl/sjta', $data);
-        };
+        if($perjalanan['status']=='9'){
+            if ($perjalanan['jenis_perjalanan'] == 'DLPP') {
+                $this->load->view('perjalanandl/sjdlpp', $data);
+            } elseif ($perjalanan['jenis_perjalanan'] == 'TAPP') {
+                $this->load->view('perjalanandl/sjtapp', $data);
+            } elseif ($perjalanan['jenis_perjalanan'] == 'TA') {
+                $this->load->view('perjalanandl/sjta', $data);
+                // $this->load->view('perjalanandl/sjta', $data);
+            }
+        }else{
+            redirect('perjalanandl/perjalanan');
+        }
     }
 
     public function surattugas($id)
@@ -1147,15 +1151,19 @@ class Perjalanandl extends CI_Controller
                 redirect('perjalanandl/penyelesaian/daftar');
             }
         } else {
-            $data['sidemenu'] = 'GA';
-            $data['sidesubmenu'] = 'Penyelesaian';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('perjalanandl/penyelesaian_proses', $data);
-            $this->load->view('templates/footer');
+            if (($this->session->userdata('sect_id')=='214' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='4'){
+                $data['sidemenu'] = 'GA';
+                $data['sidesubmenu'] = 'Penyelesaian';
+                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+                $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('perjalanandl/penyelesaian_proses', $data);
+                $this->load->view('templates/footer');
+            }else{
+                redirect('perjalanandl/penyelesaian/daftar');
+            }
         }
     }
     public function penyelesaian_edit($parameter)
@@ -1225,6 +1233,47 @@ class Perjalanandl extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
         }
-        redirect('perjalanan/penyelesaian/' . $this->input->post('id'));
+        redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
+    }
+
+    public function payment($parameter)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
+        if (empty($perjalanan)) {
+            if ($parameter == 'daftar') {
+                $data['sidemenu'] = 'FA';
+                $data['sidesubmenu'] = 'Penyelesaian';
+                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' => '5'])->result_array();
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('perjalanandl/penyelesaian_fa_daftar', $data);
+                $this->load->view('templates/footer');
+            } elseif ($parameter == 'submit') {
+                $this->db->set('penyelesaian_by', $this->session->userdata('inisial'));
+                $this->db->set('penyelesaian_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '9');
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+
+                redirect('perjalanandl/penyelesaian/daftar');
+            }
+        } else {
+            if (($this->session->userdata('sect_id')=='211' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='5'){
+                $data['sidemenu'] = 'FA';
+                $data['sidesubmenu'] = 'Penyelesaian';
+                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+                $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('perjalanandl/penyelesaian_fa_proses', $data);
+                $this->load->view('templates/footer');
+            }else{
+                redirect('perjalanandl/penyelesaian/daftar');
+            }
+        }
     }
 }

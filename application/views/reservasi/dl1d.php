@@ -61,12 +61,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nama</th>
-                                                    <th>Gol</th>
-                                                    <th>Uang Saku</th>
-                                                    <th>Insentif Pagi</th>
-                                                    <th>Pagi</th>
-                                                    <th>Siang</th>
-                                                    <th>Malam</th>
+                                                    <?php if ($reservasi_temp['uang_saku']>0){ echo '<th>Uang Saku</th>'; } ?>
+                                                    <?php if ($reservasi_temp['insentif_pagi']>0){ echo '<th>Insentif</th>';} ?>
+                                                    <?php if ($reservasi_temp['um_pagi']>0){ echo '<th>Pagi</th>';} ?>
+                                                    <?php if ($reservasi_temp['um_siang']>0){ echo '<th>Siang</th>';} ?>
+                                                    <?php if ($reservasi_temp['um_malam']>0){ echo '<th>Malam</th>';} ?>
                                                     <th class="disabled-sorting">Actions</th>
                                                 </tr>
                                             </thead>
@@ -91,7 +90,6 @@
                                                         ";
                                                 $anggota = $this->db->query($queryAnggota)->result_array();
                                                 foreach ($anggota as $ang) :
-                                                    $gol = $this->db->get_where('karyawan_gol', ['id' => $ang['karyawan_gol']])->row_array();
                                                     $rsvnpk = $ang['npk'];
                                                     $tglberangkat = $reservasi_temp['tglberangkat'];
                                                     $querySaring1 = "SELECT *
@@ -119,12 +117,11 @@
                                                     endforeach; ?>
                                                     <tr>
                                                         <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <td><?= $gol['nama']; ?></td>
-                                                        <td><?= $ang['uang_saku']; ?></td>
-                                                        <td><?= $ang['insentif_pagi']; ?></td>
-                                                        <td><?= $ang['um_pagi']; ?></td>
-                                                        <td><?= $ang['um_siang']; ?></td>
-                                                        <td><?= $ang['um_malam']; ?></td>
+                                                        <?php if ($reservasi_temp['uang_saku']>0){ echo '<td>'.number_format($ang['uang_saku'], 0, ',', '.').'</td>'; } ?>
+                                                        <?php if ($reservasi_temp['insentif_pagi']>0){ echo '<td>'.number_format($ang['insentif_pagi'], 0, ',', '.').'</td>';} ?>
+                                                        <?php if ($reservasi_temp['um_pagi']>0){ echo '<td>'.number_format($ang['um_pagi'], 0, ',', '.').'</td>';} ?>
+                                                        <?php if ($reservasi_temp['um_siang']>0){ echo '<td>'.number_format($ang['um_siang'], 0, ',', '.').'</td>';} ?>
+                                                        <?php if ($reservasi_temp['um_malam']>0){ echo '<td>'.number_format($ang['um_malam'], 0, ',', '.').'</td>';} ?>
                                                         <td><a href="<?= base_url('reservasi/hapuspeserta/') . $reservasi_temp['id'] . '/' . $ang['karyawan_inisial']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -135,6 +132,7 @@
                                 </div>
                             </div>
                             <p>
+                            
                                 <div class="row">
                                     <label class="col-md-2 col-form-label">Biaya Taksi/Sewa</label>
                                     <div class="col-md-3">
@@ -164,6 +162,20 @@
                                     <div class="col-md-3">
                                         <div class="form-group has-default">
                                             <input type="number" class="form-control" id="parkir" name="parkir" value="<?= $reservasi_temp['parkir']; ?>" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">PIC Perjalanan</label>
+                                    <div class="col-md-3">
+                                        <div class="form-group has-default">
+                                            <select class="selectpicker" name="pic" data-style="select-with-transition" title="Pilih PIC" data-size="10" required>
+                                                <?php
+                                                $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $reservasi_temp['id']])->result_array();
+                                                foreach ($peserta as $p) : ?>
+                                                    <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

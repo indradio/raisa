@@ -339,8 +339,7 @@
                                   <br />
                                   <small><?= $p['id'] . ' - ' . $p['jenis_perjalanan']; ?></small>
                                 </td>
-                                <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array(); 
-                                ?>
+                                <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array(); ?>
                                 <td data-toggle="tooltip" data-placement="top" title="<?php 
                                   for($i=0;$i<count($peserta);$i++){
                                     echo $peserta[$i]['karyawan_nama']. "\r\n";
@@ -382,7 +381,11 @@
                                     <br />
                                     <small><?= $r['id'] . ' - ' . $r['jenis_perjalanan']; ?></small>
                                   </td>
-                                  <td><?= $r['anggota']; ?></td>
+                                  <?php $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $r['id']])->result_array(); ?>
+                                  <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($peserta);$i++){
+                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
+                                  } ?>"><?= $r['anggota']; ?></td>
                                   <td><?= $r['tujuan']; ?></td>
                                   <td><?= $r['keperluan']; ?></td>
                                   <td><?= date('d-M', strtotime($r['tglberangkat'])) . ' ' . date('H:i', strtotime($r['jamberangkat'])); ?></td>

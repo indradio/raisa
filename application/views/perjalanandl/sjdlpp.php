@@ -140,17 +140,17 @@ foreach ($peserta as $p) :
 
     $pdf->Cell(7, 4, $no, 1, 0, 'C', 1);
     $pdf->Cell(41, 4, $p['karyawan_nama'], 1, 0, 'C', 1);
-    if ($perjalanan['um1'] == 'YA') {
+    if ($perjalanan['insentif_pagi'] > 0) {
         $pdf->Cell(21, 4, number_format($p['insentif_pagi'], 0, ',', '.'), 1, 0, 'C', 1);
     } else {
         $pdf->Cell(21, 4, '-', 1, 0, 'C', 1);
     }
-    if ($perjalanan['um3'] == 'YA') {
+    if ($perjalanan['um_siang'] > 0) {
         $pdf->Cell(21, 4, number_format($p['um_siang'], 0, ',', '.'), 1, 0, 'C', 1);
     } else {
         $pdf->Cell(21, 4, '-', 1, 0, 'C', 1);
     }
-    if ($perjalanan['um4'] == 'YA') {
+    if ($perjalanan['um_malam'] > 0) {
         $pdf->Cell(21, 4, number_format($p['um_malam'], 0, ',', '.'), 1, 0, 'C', 1);
     } else {
         $pdf->Cell(21, 4, '-', 1, 0, 'C', 1);
@@ -250,7 +250,7 @@ $pdf->SetTextColor(255, 0, 0);
 $pdf->Ln(1);
 $pdf->Cell(32, 2, 'Dengan melakukan perjalanan ini, saya setuju untuk:', 0, 1);
 $pdf->Cell(32, 2, '1. Mengemudi dengan aman dan selalu menggunakan sabuk keselamatan | 2. Tidak menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag | 3. Menjaga kebersihan kendaraan dan tidak meninggalkan sampah dan barang-barang lainnya', 0, 1);
-$pdf->Cell(32, 2, '4. Menghargai pengguna berikutnya dengan mengembalikan kendaraan dalam kondisi bersih dan rapih | 5. Mematuhi peraturan perusahaan yang berlaku', 0, 1);
+$pdf->Cell(32, 2, '4. Menghargai pengguna berikutnya dengan mengembalikan kendaraan dalam kondisi bersih dan rapih | 5. Mematuhi peraturan perusahaan yang berlaku | 6. Bertanggungjawab atas segala risiko yang terjadi karena kelalaian peserta perjalanan', 0, 1);
 
 //$pdf->Output();
 //OUTPUT SET FILENAME DOWNLOAD

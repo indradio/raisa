@@ -88,7 +88,7 @@
                           <?php
                           $queryKaryawan = "SELECT *
                                     FROM `karyawan`
-                                    WHERE `status` = '1'
+                                    WHERE `is_active` = '1' AND `npk` != '1111'
                                     ORDER BY `nama` ASC
                                     ";
                           $Karyawan = $this->db->query($queryKaryawan)->result_array();

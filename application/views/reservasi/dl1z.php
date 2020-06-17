@@ -159,7 +159,11 @@
                                                     endforeach; ?>
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
-                                                        <td><?= $ang['karyawan_nama']; ?></td>
+                                                        <?php if ($reservasi_temp['pic_perjalanan'] == $ang['karyawan_inisial']){ ?>
+                                                            <td><?= $ang['karyawan_nama'].' <a href="#" class="btn btn-link btn-success btn-just-icon" data-toggle="tooltip" data-placement="top" title="PIC Perjalanan"><i class="material-icons">military_tech</i></a>'; ?></td>
+                                                        <?php }else{ ?>
+                                                            <td><?= $ang['karyawan_nama']; ?></td>
+                                                        <?php } ?>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -169,7 +173,7 @@
                             </div>
                             <p>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Estimasi Biaya</label>
+                                    <label class="col-md-2 col-form-label">Tunjangan </br><small>Estimasi</small></label>
                                     <div class="col-md-5">
                                         <div class="material-datatables">
                                             <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -198,6 +202,25 @@
                                                         <td>Makan Malam</br><small>Kembali > 19:30</small></td>
                                                         <td><?= number_format($reservasi_temp['um_malam'], 0, ',', '.'); ?></td>
                                                     </tr>
+                                                </tbody>
+                                            </table>
+                                            <small>*Untuk Perjalanan TA masih dalam pengembangan. Silahkan gunakan penyelesaian manual ke HR dan GA.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Rincian Biaya </br><small>Estimasi</small></label>
+                                    <div class="col-md-5">
+                                        <div class="material-datatables">
+                                            <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Biaya</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     <tr>
                                                         <td>Taksi/Sewa</br><small>Pribadi per KM</small> </td>
                                                         <td><?= number_format($reservasi_temp['taksi'], 0, ',', '.'); ?></td>
