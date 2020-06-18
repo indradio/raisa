@@ -76,7 +76,7 @@
                                                 <td><?= $rsv['jamberangkat']; ?></td>
                                                 <td><?= $rsv['tglkembali']; ?></td>
                                                 <td><?= $rsv['jamkembali']; ?></td>
-                                                <td><?= $rsv['total']; ?></td>
+                                                <td><?= number_format($rsv['total'], 0, ',', '.'); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

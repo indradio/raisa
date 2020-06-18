@@ -122,8 +122,15 @@
                                 <label class="col-md-4 col-form-label">Estimasi Biaya</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control" id="biaya" name="biaya" disabled="true" />
+                                       <input type="text" class="form-control font-weight-bold text-danger" id="biaya" name="biaya" disabled="true" />
                                     </div>
+                                </div>
+                                </br>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8">
+                                    <small>*Estimasi biaya ini belum termasuk BBM dan TOL jika menggunakan kendaraan operasional.</small>
                                 </div>
                             </div>
                             <div class="modal-footer">
