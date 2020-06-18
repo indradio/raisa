@@ -154,6 +154,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group has-default">
                                             <input type="number" class="form-control" id="tol" name="tol" value="<?= $reservasi_temp['tol']; ?>" required />
+                                            </br><small>*Biaya tol jika menggunakan uang pribadi, kosongkan jika menggunakan e-toll dari GA.</small>
                                         </div>
                                     </div>
                                 </div>

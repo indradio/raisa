@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Perjalanandl extends CI_Controller
 {
     public function __construct()
@@ -436,7 +439,7 @@ class Perjalanandl extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        if($perjalanan['status']=='9'){
+        if($perjalanan['status']>4){
             if ($perjalanan['jenis_perjalanan'] == 'DLPP') {
                 $this->load->view('perjalanandl/sjdlpp', $data);
             } elseif ($perjalanan['jenis_perjalanan'] == 'TAPP') {
@@ -1139,16 +1142,48 @@ class Perjalanandl extends CI_Controller
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
                 $this->load->view('templates/navbar', $data);
-                $this->load->view('perjalanandl/penyelesaian_daftar', $data);
+                $this->load->view('perjalanandl/penyelesaian_ga_daftar', $data);
                 $this->load->view('templates/footer');
             } elseif ($parameter == 'submit') {
                 $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
                 $this->db->set('penyelesaian_by', $this->session->userdata('inisial'));
                 $this->db->set('penyelesaian_at', date('Y-m-d H:i:s'));
+                $this->db->set('bayar', $perjalanan['kasbon']);
                 $this->db->set('selisih', $perjalanan['total']-$perjalanan['kasbon']);
-                $this->db->set('status', '9');
+                $this->db->set('status', '5');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
+
+                $this->db->where('sect_id', '211');
+                $fa_admin = $this->db->get('karyawan_admin')->row_array();
+                $selisih = $perjalanan['total']-$perjalanan['kasbon'];
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $fa_admin['phone'],
+                            'message' => "*PENYELESAIAN PERJALANAN DINAS TELAH DIVERIFIKASI*" . 
+                            "\r\n \r\nNo. Perjalanan : *" . $perjalanan['id'] . "*" .
+                            "\r\nNama : *" . $perjalanan['nama'] . "*" .
+                            "\r\nTujuan : *" . $perjalanan['tujuan'] . "*" .
+                            "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
+                            "\r\nBerangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "*" .
+                            "\r\nKembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "*" .
+                            "\r\nTotal : *" . $perjalanan['total'] . "*" .
+                            "\r\nKasbon/Sudah Dibayar : *" . $perjalanan['kasbon'] . "*" .
+                            "\r\nSelisih : *" . $selisih . "*" .
+                            "\r\n \r\nPenyelesaian Perjalanan ini telah diverifikasi, JANGAN LUPA UNTUK SEGERA MELAKUKAN PEMBAYARAN.".
+                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
 
                 redirect('perjalanandl/penyelesaian/daftar');
             }
@@ -1161,7 +1196,7 @@ class Perjalanandl extends CI_Controller
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
                 $this->load->view('templates/navbar', $data);
-                $this->load->view('perjalanandl/penyelesaian_proses', $data);
+                $this->load->view('perjalanandl/penyelesaian_ga_proses', $data);
                 $this->load->view('templates/footer');
             }else{
                 redirect('perjalanandl/penyelesaian/daftar');
@@ -1272,13 +1307,13 @@ class Perjalanandl extends CI_Controller
                 $this->load->view('perjalanandl/penyelesaian_fa_daftar', $data);
                 $this->load->view('templates/footer');
             } elseif ($parameter == 'submit') {
-                $this->db->set('penyelesaian_by', $this->session->userdata('inisial'));
-                $this->db->set('penyelesaian_at', date('Y-m-d H:i:s'));
+                $this->db->set('payment_by', $this->session->userdata('inisial'));
+                $this->db->set('payment_at', date('Y-m-d H:i:s'));
                 $this->db->set('status', '9');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
-                redirect('perjalanandl/penyelesaian/daftar');
+                redirect('perjalanandl/payment/daftar');
             }
         } else {
             if (($this->session->userdata('sect_id')=='211' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='5'){
@@ -1295,5 +1330,107 @@ class Perjalanandl extends CI_Controller
                 redirect('perjalanandl/penyelesaian/daftar');
             }
         }
+    }
+
+    public function bayar($id,$npk)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        
+        $this->db->where('perjalanan_id', $id);
+        $this->db->where('npk', $npk);
+        $p_peserta = $this->db->get('perjalanan_anggota')->row_array();
+
+        if ($perjalanan['pic_perjalanan']==$p_peserta['karyawan_inisial']){
+            $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
+            $tp = $p_peserta['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']-$perjalanan['kasbon'];
+        }else{
+            $bp = '0';
+            $tp = $p_peserta['total'];
+        }
+        
+        if ($perjalanan['uang_saku']>0){
+            $us = $p_peserta['uang_saku'];
+        }else{
+            $us = '0';
+        }
+        if ($perjalanan['insentif_pagi']>0){
+            $ip = $p_peserta['insentif_pagi'];
+        }else{
+            $ip = '0';
+        }
+        if ($perjalanan['um_pagi']>0){
+            $ump = $p_peserta['um_pagi'];
+        }else{
+            $ump = '0';
+        }
+        if ($perjalanan['um_siang']>0){
+            $ums = $p_peserta['um_siang'];
+        }else{
+            $ums = '0';
+        }
+        if ($perjalanan['um_malam']>0){
+            $umm = $p_peserta['um_malam'];
+        }else{
+            $umm = '0';
+        }
+        if ($perjalanan['pic_perjalanan']==$p_peserta['karyawan_inisial']){
+            $kas = $perjalanan['kasbon'];
+            $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
+            $tp = $p_peserta['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']-$perjalanan['bayar'];
+        }else{
+            $kas = '0';
+            $bp = '0';
+            $tp = $p_peserta['total'];
+        }
+
+        $bayar = $perjalanan['bayar']+$tp;
+        $selisih = $perjalanan['total']-$bayar;
+
+        $this->db->set('bayar', $bayar);
+        $this->db->set('selisih',$selisih);
+        $this->db->where('id', $id);
+        $this->db->update('perjalanan');
+
+        $this->db->set('payment_by', $this->session->userdata('inisial'));
+        $this->db->set('payment_at', date('Y-m-d H:i:s'));
+        $this->db->set('status_pembayaran','SUDAH DIBAYAR');
+        $this->db->set('status', '9');
+        $this->db->where('perjalanan_id', $id);
+        $this->db->where('npk', $npk);
+        $this->db->update('perjalanan_anggota');
+
+        $user = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*PEMBAYARAN PERJALANAN DINAS*". 
+                    "\r\n \r\nKamu mendapat pembayaran dari perjalanan dinas berikut :".
+                    "\r\n \r\nNo. Perjalanan : *" . $perjalanan['id'] . "*" .
+                    "\r\nNama: *" . $p_peserta['karyawan_nama'] . "*" .
+                    "\r\nUang Saku : *" . number_format($us, 0, ',', '.') . "*" .
+                    "\r\nInsentif Pagi : *" . number_format($ip, 0, ',', '.') . "*" .
+                    "\r\nMakan Pagi : *" . number_format($ump, 0, ',', '.') . "*" .
+                    "\r\nMakan Siang : *" . number_format($ums, 0, ',', '.') . "*" .
+                    "\r\nMakan Malam : *" . number_format($umm, 0, ',', '.') . "*" .
+                    "\r\nBiaya Perjalanan : *" . number_format($bp, 0, ',', '.') . "*" .
+                    "\r\nKasbon : *(" . number_format($kas, 0, ',', '.') . ")*" .
+                    "\r\n________________" .
+                    "\r\nTotal yang dibayarkan : *" . number_format($tp, 0, ',', '.') . "*" .
+                    "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+
+        redirect('perjalanandl/payment/'.$id);
     }
 }

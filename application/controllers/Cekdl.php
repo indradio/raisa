@@ -327,6 +327,8 @@ class Cekdl extends CI_Controller
                         "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "*" .
                         "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
                         "\r\n \r\nPerjalanan ini telah kembali, JANGAN LUPA UNTUK SEGERA MELAKUKAN PENYELESAIAN.".
+                        "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul 07:00-09:00 (dibayarkan hari yang sama).".
+                        "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul lewat 09:01 (dibayarkan hari berikutnya).".
                         "\r\n \r\nklik link berikut : https://raisa.winteq-astra.com/perjalanan/penyelesaian/".$perjalanan['id'].
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                     ],
@@ -367,6 +369,7 @@ class Cekdl extends CI_Controller
                     'um_siang' => $tunjangan['um_siang'],
                     'um_malam' => $tunjangan['um_malam'],
                     'total' => '0',
+                    'status_pembayaran' => 'BELUM DIBAYAR',
                     'status' => '1'
                 ];
                 $this->db->insert('perjalanan_anggota', $peserta);

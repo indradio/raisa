@@ -265,8 +265,8 @@
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="selisih" value="<?= number_format($perjalanan['total'] - $perjalanan['kasbon'], 0, ',', '.'); ?>">
                                         </div>
-                                        <small>*(-)Uang yang harus bayar ke peserta.</small></br>
-                                        <small>*(+)Uang yang harus kembalikan ke GA.</small>
+                                        <small>*(+)Uang yang harus berikan ke peserta.</small></br>
+                                        <small>*(--)Uang yang harus kembalikan ke GA.</small>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -225,6 +225,7 @@ class Reservasi extends CI_Controller
                     'um_siang' => $tunjangan['um_siang'],
                     'um_malam' => $tunjangan['um_malam'],
                     'total' => '0',
+                    'status_pembayaran' => 'BELUM DIBAYAR',
                     'status' => '0'
                 ];
                 $this->db->insert('perjalanan_anggota', $peserta);

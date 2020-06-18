@@ -19,62 +19,54 @@
                                 <thead>
                                     <tr>
                                         <th>No Perjalanan</th>
-                                        <th>Jenis Perjalanan</th>
-                                        <th>Kendaraan</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
-                                        <th>Tujuan</th>
-                                        <th>Keperluan</th>
+                                        <th>Waktu Berangkat</th>
+                                        <th>Kendaraan</th>
                                         <th>Peserta</th>
-                                        <th>Waktu Keberangkatan</th>
-                                        <th>Waktu Kembali</th>
-                                        <th>Catatan</th>
+                                        <th>Tujuan</th>
+                                        <th>Total</th>
+                                        <th>Kasbon /<small> Bayar*</small></th>
+                                        <th>Selisih</th>
                                         <th class="disabled-sorting text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No. Reservasi</th>
-                                        <th>Jenis Perjalanan</th>
+                                        <th>No Perjalanan</th>
+                                        <th>Nama <small>(<i>Pemohon</i>)</small></th>
+                                        <th>Waktu Berangkat</th>
                                         <th>Kendaraan</th>
-                                        <th>Nama</th>
-                                        <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Waktu Keberangkatan</th>
-                                        <th>Waktu Kembali</th>
-                                        <th>Catatan</th>
-                                        <th class="text-center">Actions</th>
+                                        <th>Tujuan</th>
+                                        <th>Total</th>
+                                        <th>Kasbon /<small> Bayar*</small></th>
+                                        <th>Selisih</th>
+                                        <th class="disabled-sorting text-center">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $p) : ?>
-
-                                        <td><?= $p['id']; ?></td>
-                                        <td><?= $p['jenis_perjalanan']; ?></td>
-                                        <td><?= $p['kendaraan']; ?></td>
+                                    <tr>
+                                        <td><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></td>
                                         <td><?= $p['nama']; ?></td>
-                                        <td><?= $p['tujuan']; ?></td>
-                                        <td><?= $p['keperluan']; ?></td>
+                                        <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                        <td><?= $p['kepemilikan']; ?></td>
                                         <td><?= $p['anggota']; ?></td>
-                                        <td><?= date('d/m/Y', strtotime($p['tglberangkat'])) . ' ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($p['tglkembali'])) . ' ' . date('H:i', strtotime($p['jamkembali'])); ?></td>
-                                        <td><?= $p['catatan_security']; ?></td>
+                                        <td><?= $p['tujuan']; ?></td>
+                                        <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
+                                        <td><?= number_format($p['kasbon'], 0, ',', '.'); ?></td>
+                                        <td><?= number_format($p['total']-$p['kasbon'], 0, ',', '.'); ?></td>
                                         <td class="text-right">
                                             <a href="<?= base_url('perjalanandl/penyelesaian/') . $p['id']; ?>" class="btn btn-sm btn-round btn-success">Proses</a>
                                         </td>
-                                        </tr>
+                                    </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="fa fa-circle text-danger"></i> Perjalanan yang tanggal keberangkatan sudah lewat
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!--  end card  -->

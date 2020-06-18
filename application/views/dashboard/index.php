@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <strong>UJI COBA FITUR ESTIMASI BIAYA & PENYELESAIAN PERJALANAN DINAS</strong>
@@ -14,7 +14,7 @@
           </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- End Banner -->
     <?php if (empty($karyawan['ewallet_1'])){ ?>
     <div class="row">
@@ -345,7 +345,12 @@
                                     echo $peserta[$i]['karyawan_nama']. "\r\n";
                                   } ?>">
                                 <?= $p['anggota']; ?></td>
-                                <td><?= $p['tujuan']; ?></td>
+                                <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['perjalanan_id' => $p['id']])->result_array(); ?>
+                                <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($tujuan);$i++){
+                                    echo $tujuan[$i]['nama']. "\r\n";
+                                  } ?>">
+                                  <?= $p['tujuan']; ?></td>
                                 <td><?= $p['keperluan']; ?></td>
                                 <td><?= date('d-M', strtotime($p['tglberangkat'])) . ' ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                 <td><?= date('d-M', strtotime($p['tglkembali'])) . ' ' . date('H:i', strtotime($p['jamkembali'])); ?></td>
@@ -386,7 +391,12 @@
                                   for($i=0;$i<count($peserta);$i++){
                                     echo $peserta[$i]['karyawan_nama']. "\r\n";
                                   } ?>"><?= $r['anggota']; ?></td>
-                                  <td><?= $r['tujuan']; ?></td>
+                                  <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $r['id']])->result_array(); ?>
+                                <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($tujuan);$i++){
+                                    echo $tujuan[$i]['nama']. "\r\n";
+                                  } ?>">
+                                  <?= $r['tujuan']; ?></td>
                                   <td><?= $r['keperluan']; ?></td>
                                   <td><?= date('d-M', strtotime($r['tglberangkat'])) . ' ' . date('H:i', strtotime($r['jamberangkat'])); ?></td>
                                   <td><?= date('d-M', strtotime($r['tglkembali'])) . ' ' . date('H:i', strtotime($r['jamkembali'])); ?></td>
@@ -448,8 +458,17 @@
                                 <br />
                                 <small><?= $rn['id'] . ' - ' . $rn['jenis_perjalanan']; ?></small>
                               </td>
-                              <td><?= $rn['anggota']; ?></td>
-                              <td><?= $rn['tujuan']; ?></td>
+                              <?php $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $rn['id']])->result_array(); ?>
+                                  <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($peserta);$i++){
+                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
+                                  } ?>"><?= $rn['anggota']; ?></td>
+                                  <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $rn['id']])->result_array(); ?>
+                                <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($tujuan);$i++){
+                                    echo $tujuan[$i]['nama']. "\r\n";
+                                  } ?>">
+                                  <?= $rn['tujuan']; ?></td>
                               <td><?= $rn['keperluan']; ?></td>
                               <td><?= date('d-M', strtotime($rn['tglberangkat'])) . ' ' . date('H:i', strtotime($rn['jamberangkat'])); ?></td>
                               <td><?= date('d-M', strtotime($rn['tglkembali'])) . ' ' . date('H:i', strtotime($rn['jamkembali'])); ?></td>
@@ -492,8 +511,18 @@
                                 <br />
                                 <small><?= $pn['id'] . ' - ' . $pn['jenis_perjalanan']; ?></small>
                               </td>
-                              <td><?= $pn['anggota']; ?></td>
-                              <td><?= $pn['tujuan']; ?></td>
+                              <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $pn['id']])->result_array(); ?>
+                                <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($peserta);$i++){
+                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
+                                  } ?>">
+                                <?= $pn['anggota']; ?></td>
+                                <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['perjalanan_id' => $pn['id']])->result_array(); ?>
+                                <td data-toggle="tooltip" data-placement="top" title="<?php 
+                                  for($i=0;$i<count($tujuan);$i++){
+                                    echo $tujuan[$i]['nama']. "\r\n";
+                                  } ?>">
+                                  <?= $pn['tujuan']; ?></td>
                               <td><?= $pn['keperluan']; ?></td>
                               <td><?= date('d-M', strtotime($pn['tglberangkat'])) . ' ' . date('H:i', strtotime($pn['jamberangkat'])); ?></td>
                               <td><?= date('d-M', strtotime($pn['tglkembali'])) . ' ' . date('H:i', strtotime($pn['jamkembali'])); ?></td>
