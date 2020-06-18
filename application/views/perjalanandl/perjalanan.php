@@ -113,7 +113,7 @@
                                             <td><?= $pdl['kmkembali']; ?></td>
                                             <td><?= $pdl['cekkembali']; ?></td>
                                             <td><?= $pdl['kmtotal']; ?></td>
-                                            <td><?= $pdl['catatan_ga']; ?></td>
+                                            <td><?= $pdl['catatan']; ?></td>
                                             <td><?= $pdl['catatan_security']; ?></td>
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
@@ -211,7 +211,7 @@
                                             <td><?= $pdl['keperluan']; ?></td>
                                             <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])) . ' ' . date('H:i', strtotime($pdl['jamberangkat'])); ?></td>
                                             <td><?= date('d/m/Y', strtotime($pdl['tglkembali'])) . ' ' . date('H:i', strtotime($pdl['jamkembali'])); ?></td>
-                                            <td><?= $pdl['catatan_ga']; ?></td>
+                                            <td><?= $pdl['catatan']; ?></td>
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                             <td class="text-right">

@@ -241,7 +241,7 @@ class Layanan extends CI_Controller
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
-            $this->db->where('npk', '0282');
+            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
             foreach ($karyawan as $k) :
                 //Notifikasi ke USER
@@ -261,6 +261,8 @@ class Layanan extends CI_Controller
                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
                             "\r\n \r\nSehubungan dengan akan diberlakukanya sistem pembayaran cashless menggunakan e-wallet untuk transaksi perjalanan dinas mulai tanggal *22 juni 2020*.". 
                             "\r\nJangan lupa utnuk mendaftarkan akun e-Wallet kamu segera ya!." .
+                            "\r\n \r\ne-Wallet yang dilayani yaitu OVO, DANA dan GO-PAY." .
+                            "\r\n \r\nBuat kamu yang belum punya akun e-Wallet ." .
                             "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]

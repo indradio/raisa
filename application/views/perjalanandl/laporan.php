@@ -68,7 +68,7 @@
                                                 <td><?= $pdetail['anggota']; ?></td>
                                                 <td><?= date('d/m/Y', strtotime($pdetail['tglberangkat'])); ?> <?= date('H:i', strtotime($pdetail['jamberangkat'])); ?></td>
                                                 <td><?= date('d/m/Y', strtotime($pdetail['tglkembali'])); ?> <?= date('H:i', strtotime($pdetail['jamkembali'])); ?></td>
-                                                <td><?= $pdetail['catatan_ga']; ?></td>
+                                                <td><?= $pdetail['catatan']; ?></td>
                                                 <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
                                                 <td class="text-right">

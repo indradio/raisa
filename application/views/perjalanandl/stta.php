@@ -168,7 +168,7 @@ $pdf->Cell(9, 5, '' , 0, 1);
 
 $pdf->Ln(2);
 $pdf->Cell(37, 5, 'Catatan                                        :', 0, 0);
-$pdf->Cell(170, 5, $perjalanan['catatan_ga'] , 0, 1);
+$pdf->Cell(170, 5, $perjalanan['catatan'] , 0, 1);
 
 $reservasi = $this->db->get_where('reservasi', ['id' => $perjalanan['reservasi_id']])->row_array();
 $pdf->Ln(4);

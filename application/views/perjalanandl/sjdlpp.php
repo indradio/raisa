@@ -110,7 +110,7 @@ $atasan2 = $this->db->get_where('karyawan', ['inisial' => substr($reservasi['ata
 $ga_admin = $this->db->get_where('karyawan', ['inisial' => $perjalanan['penyelesaian_by']])->row_array();
 
 $pdf->Cell(17, 5, 'Keterangan', 0, 0);
-$pdf->Cell(115, 5, ': ' . $perjalanan['catatan_ga'] . ' ' . $perjalanan['catatan_security'], 0, 0);
+$pdf->Cell(115, 5, ': ' . $perjalanan['catatan'] . ' ' . $perjalanan['catatan_security'], 0, 0);
 
 // $pdf->Cell(1, 5, '', 0, 1);
 

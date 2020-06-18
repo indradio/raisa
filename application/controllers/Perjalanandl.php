@@ -144,7 +144,7 @@ class Perjalanandl extends CI_Controller
                     'nopol' => $reservasi['nopol'],
                     'admin_ga' => $this->session->userdata('inisial'),
                     'tgl_ga' => date('Y-m-d H:i:s'),
-                    'catatan_ga' => $reservasi['catatan'],
+                    'catatan' => $reservasi['catatan'],
                     'ka_dept' => $ka_dept['nama'],
                     'kmtotal' => '0',
                     'uang_saku' => $reservasi['uang_saku'],
@@ -242,7 +242,7 @@ class Perjalanandl extends CI_Controller
                     'lama_menginap' => $reservasi['lama_menginap'],
                     'admin_ga' => $this->session->userdata('inisial'),
                     'tgl_ga' => date('Y-m-d H:i:s'),
-                    'catatan_ga' => $this->input->post('catatan'),
+                    'catatan' => $this->input->post('catatan'),
                     'admin_hr' => $reservasi['admin_hr'],
                     'tgl_hr' => $reservasi['tgl_hr'],
                     'ka_dept' => $ka_dept['nama'],
@@ -575,7 +575,7 @@ class Perjalanandl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $this->db->set('status', '0');
-        $this->db->set('catatan_ga', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
+        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
@@ -632,7 +632,7 @@ class Perjalanandl extends CI_Controller
     public function revisi_proses()
     {
         $this->db->set('status', '1');
-        $this->db->set('catatan_ga',  $this->input->post('catatan'));
+        $this->db->set('catatan',  $this->input->post('catatan'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
@@ -658,7 +658,7 @@ class Perjalanandl extends CI_Controller
         $sekarang = date('H:i:s');
         $this->db->set('status', '1');
         $this->db->set('jamberangkat', $sekarang);
-        $this->db->set('catatan_ga', "");
+        $this->db->set('catatan', '');
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
@@ -1013,7 +1013,7 @@ class Perjalanandl extends CI_Controller
                     'lama_menginap' => $reservasi['lama_menginap'],
                     'admin_hr' => $this->session->userdata('inisial'),
                     'tgl_hr' => date('Y-m-d H:i:s'),
-                    'catatan_ga' => $this->input->post('catatan'),
+                    'catatan' => $this->input->post('catatan'),
                     'ka_dept' => $ka_dept['nama'],
                     'kmtotal' => '0',
                     'jenis_perjalanan' => $reservasi['jenis_perjalanan'],

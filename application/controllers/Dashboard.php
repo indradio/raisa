@@ -34,7 +34,7 @@ class Dashboard extends CI_Controller
             if ($jam >= 2) {
                 $this->db->set('status', '0');
                 $this->db->set('last_status', $p['status']);
-                $this->db->set('catatan_ga', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
+                $this->db->set('catatan', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
                 $this->db->where('id', $p['id']);
                 $this->db->update('perjalanan');
 
@@ -63,7 +63,7 @@ class Dashboard extends CI_Controller
                                 "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
                                 "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
                                 "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                                "\r\nCatatan : *" . $p['catatan_ga'] .  "*" .
+                                "\r\nCatatan : *" . $p['catatan'] .  "*" .
                                 "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi 2 Jam / batas waktu keberangkatan" .
                                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
                                 "\r\n \r\n" . $notifikasi['pesan']

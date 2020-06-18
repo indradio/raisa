@@ -104,7 +104,7 @@
                                         <td><?= $pdl['um2']; ?></td>
                                         <td><?= $pdl['um3']; ?></td>
                                         <td><?= $pdl['um4']; ?></td>
-                                        <td><?= $pdl['catatan_ga']; ?></td>
+                                        <td><?= $pdl['catatan']; ?></td>
                                         <td><?= $pdl['catatan_security']; ?></td>
                                         <td><?= $pdl['kmtotal']; ?></td>
                                         <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>

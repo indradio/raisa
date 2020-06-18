@@ -127,7 +127,7 @@ if ($perjalanan['kendaraan']=='Operasional'){
 $pdf->Cell(30, 5, $perjalanan['nopol'], 1, 0, 'C', 1);
 $pdf->Cell(30, 5, '', 1, 0, 'C', 1);
 $pdf->Cell(30, 5, $perjalanan['admin_ga'], 1, 0, 'C', 1);
-$pdf->Cell(40, 5, $perjalanan['catatan_ga'], 1, 0, 'C', 1);
+$pdf->Cell(40, 5, $perjalanan['catatan'], 1, 0, 'C', 1);
 $pdf->Cell(0, 5, '', 0, 1, 0);
 
 $pdf->Ln(1);
