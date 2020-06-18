@@ -1142,8 +1142,10 @@ class Perjalanandl extends CI_Controller
                 $this->load->view('perjalanandl/penyelesaian_daftar', $data);
                 $this->load->view('templates/footer');
             } elseif ($parameter == 'submit') {
+                $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
                 $this->db->set('penyelesaian_by', $this->session->userdata('inisial'));
                 $this->db->set('penyelesaian_at', date('Y-m-d H:i:s'));
+                $this->db->set('selisih', $perjalanan['total']-$perjalanan['kasbon']);
                 $this->db->set('status', '9');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
@@ -1236,6 +1238,24 @@ class Perjalanandl extends CI_Controller
         redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
     }
 
+    public function update_kasbon($parameter)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($parameter == 'tambah') {
+            $this->db->set('kasbon', $this->input->post('kasbon')+$this->input->post('tambah_kasbon'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+
+            redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
+        } elseif ($parameter == 'kurang') {
+            $this->db->set('kasbon', $this->input->post('kasbon')-$this->input->post('kurang_kasbon'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+
+            redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
+        }
+    }
+    
     public function payment($parameter)
     {
         date_default_timezone_set('asia/jakarta');

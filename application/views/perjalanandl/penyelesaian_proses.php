@@ -134,8 +134,9 @@
                                                         <?php if ($perjalanan['pic_perjalanan'] == $a['karyawan_inisial']){ ?>
                                                             <td>
                                                             <?= number_format($a['total'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'] - $perjalanan['kasbon'], 0, ',', '.'); ?><br>
+                                                            <small>Rincian :</small><br>
                                                             <small>+ <?= number_format($a['total'], 0, ',', '.'); ?> (Tunjangan)</small><br>
-                                                            <small>+ <?= number_format($perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'], 0, ',', '.'); ?> (Biaya Perjalanan)</small><br>
+                                                            <small>+ <?= number_format($perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'], 0, ',', '.'); ?> (Perjalanan)</small><br>
                                                             <small>- <?= number_format($perjalanan['kasbon'], 0, ',', '.'); ?> (Kasbon)</small>
                                                             </td>
                                                         <?php }else{ ?>
@@ -242,7 +243,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Kasbon</label>
+                                    <label class="col-md-2 col-form-label">Kasbon/</br>Yang Sudah Dibayar</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon'], 0, ',', '.'); ?>">
@@ -250,13 +251,22 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group has-default">
+                                            <a href="#" class="btn btn-linkedin" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">TAMBAH (BAYAR)</a>
+                                            <a href="#" class="btn btn-pinterest" data-toggle="modal" data-target="#kurangKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">KURANGI (DIKEMBALIKAN)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <label class="col-md-2 col-form-label">Selisih</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" name="selisih" value="<?= number_format($perjalanan['kasbon'] - $perjalanan['total'], 0, ',', '.'); ?>">
+                                            <input type="text" class="form-control disabled" name="selisih" value="<?= number_format($perjalanan['total'] - $perjalanan['kasbon'], 0, ',', '.'); ?>">
                                         </div>
-                                        <small>*(+)Uang yang harus dikembalikan.</small></br>
-                                        <small>*(-)Uang yang harus diberikan.</small>
+                                        <small>*(-)Uang yang harus bayar ke peserta.</small></br>
+                                        <small>*(+)Uang yang harus kembalikan ke GA.</small>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -284,6 +294,100 @@
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade" id="tambahKasbon" tabindex="-1" role="dialog" aria-labelledby="tambahKasbonLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahKasbonLabel">Kasbon/Biaya Dibayarkan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('perjalanandl/update_kasbon/tambah'); ?>">
+                <div class="modal-body">
+                    <div class="form-group" hidden="true">
+                        <input type="text" class="form-control" id="id" name="id">
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Total Biaya</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="text" class="form-control disabled" id="total" name="total" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Kasbon</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="text" class="form-control disabled" id="kasbon" name="kasbon" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Bayar Lagi</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="number" class="form-control" id="tambah_kasbon" name="tambah_kasbon" value="0" required="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="kurangKasbon" tabindex="-1" role="dialog" aria-labelledby="kurangKasbonLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kurangKasbonLabel">Kasbon/Biaya Dibayarkan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('perjalanandl/update_kasbon/kurang'); ?>">
+                <div class="modal-body">
+                    <div class="form-group" hidden="true">
+                        <input type="text" class="form-control" id="id" name="id">
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Total Biaya</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="text" class="form-control disabled" id="total" name="total" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Kasbon</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="text" class="form-control disabled" id="kasbon" name="kasbon" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Uang yang dikembalikan</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="number" class="form-control" id="kurang_kasbon" name="kurang_kasbon" value="0" required="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="ubahUangsaku" tabindex="-1" role="dialog" aria-labelledby="ubahUangsakuLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -637,6 +741,28 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+     
+        $('#tambahKasbon').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var total = button.data('total')
+            var kasbon = button.data('kasbon')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+            modal.find('.modal-body input[name="total"]').val(total)
+            modal.find('.modal-body input[name="kasbon"]').val(kasbon)
+        })
+        $('#kurangKasbon').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var total = button.data('total')
+            var kasbon = button.data('kasbon')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+            modal.find('.modal-body input[name="total"]').val(total)
+            modal.find('.modal-body input[name="kasbon"]').val(kasbon)
+        })
+    
         $('#ubahUangsaku').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
