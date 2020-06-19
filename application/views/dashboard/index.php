@@ -428,7 +428,7 @@
                           <?php
                           $queryReservasiNon = "SELECT *
                                               FROM `reservasi`
-                                              WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` < 3 AND `kepemilikan` != 'Operasional'
+                                              WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND `status` != 0 AND `status` != 9
                                               ORDER BY `kepemilikan` ASC ";
                           $reservasiNon = $this->db->query($queryReservasiNon)->result_array();
                           foreach ($reservasiNon as $rn) : ?>
@@ -480,7 +480,7 @@
                           <?php
                           $queryPerjalananNon = "SELECT *
                                             FROM `perjalanan`
-                                                WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9 AND `kepemilikan` != 'Operasional'
+                                                WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND (`status` = 1 OR `status` = 2 OR `status` = 8)
                                                 ORDER BY `kepemilikan` ASC ";
                           $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
                           foreach ($perjalananNon as $pn) : ?>
