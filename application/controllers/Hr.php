@@ -279,6 +279,7 @@ class Hr extends CI_Controller
 
     public function laporan($parameter)
     {
+        date_default_timezone_set('asia/jakarta');
         if ($parameter == 'kesehatan') {
             $data['sidemenu'] = 'HR';
             $data['sidesubmenu'] = 'Laporan Kesehatan';
@@ -289,8 +290,55 @@ class Hr extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('dirumahaja/data_kesehatan', $data);
             $this->load->view('templates/footer');
+        } elseif ($parameter == 'lembur') {
+            $data['sidemenu'] = 'HR';
+            $data['sidesubmenu'] = 'Laporan Lembur';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            if ($this->input->post('select_by')=='1'){
+                // if ($this->input->post('select_date')){
+                $date = date('Y-m-d', strtotime($this->input->post('select_date'))); 
+                $data['at_week'] = date("W", strtotime($date));
+                $data['tglawal'] = date("Y-m-d", strtotime('monday this week', strtotime($date)));
+                $data['tglakhir'] = date("Y-m-d", strtotime('sunday this week', strtotime($date)));
+                // }else{
+                //     $date = date('Y-m-d'); 
+                //     $data['at_week'] = date("W", strtotime($date));
+                //     $data['tglawal'] = date("Y-m-d", strtotime('monday this week', strtotime($date)));
+                //     $data['tglakhir'] = date("Y-m-d", strtotime('sunday this week', strtotime($date)));
+                // }
+            }elseif ($this->input->post('select_by')=='2'){
+                $data['at_week'] = date("W", strtotime($this->input->post('from_date')));
+                $data['tglawal'] = date("Y-m-d", strtotime($this->input->post('from_date')));
+                $data['tglakhir'] = date("Y-m-d", strtotime($this->input->post('to_date')));
+            }else{
+                $date = date('Y-m-d'); 
+                $data['at_week'] = date("W", strtotime($date));
+                $data['tglawal'] = date("Y-m-d", strtotime('monday this week', strtotime($date)));
+                $data['tglakhir'] = date("Y-m-d", strtotime('sunday this week', strtotime($date)));
+            }
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/lp_lembur_week', $data);
+            $this->load->view('templates/footer');
         } else {
             redirect('dashboard');
         }
+    }
+    public function laporan_lembur($npk)
+    {
+            $data['sidemenu'] = 'HR';
+            $data['sidesubmenu'] = 'Laporan Kesehatan';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->db->where('npk', $npk);
+            $this->db->where('week(tglmulai)','0');
+            $this->db->where('year(tglmulai)','2020');
+            $this->db->where('status', '9');
+            $data['lembur'] = $this->db->get('lembur')->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/lp_lembur_week_karyawan', $data);
+            $this->load->view('templates/footer');
     }
 }

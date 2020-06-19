@@ -1150,7 +1150,7 @@ class Perjalanandl extends CI_Controller
                 $this->db->set('penyelesaian_at', date('Y-m-d H:i:s'));
                 $this->db->set('bayar', $perjalanan['kasbon']);
                 $this->db->set('selisih', $perjalanan['total']-$perjalanan['kasbon']);
-                $this->db->set('status', '9');
+                $this->db->set('status', '5');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
