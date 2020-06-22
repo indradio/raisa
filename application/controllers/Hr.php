@@ -295,24 +295,20 @@ class Hr extends CI_Controller
             $data['sidesubmenu'] = 'Laporan Lembur';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             if ($this->input->post('select_by')=='1'){
-                // if ($this->input->post('select_date')){
                 $date = date('Y-m-d', strtotime($this->input->post('select_date'))); 
                 $data['at_week'] = date("W", strtotime($date));
+                $data['at_month'] = date("m", strtotime($date));
                 $data['tglawal'] = date("Y-m-d", strtotime('monday this week', strtotime($date)));
                 $data['tglakhir'] = date("Y-m-d", strtotime('sunday this week', strtotime($date)));
-                // }else{
-                //     $date = date('Y-m-d'); 
-                //     $data['at_week'] = date("W", strtotime($date));
-                //     $data['tglawal'] = date("Y-m-d", strtotime('monday this week', strtotime($date)));
-                //     $data['tglakhir'] = date("Y-m-d", strtotime('sunday this week', strtotime($date)));
-                // }
             }elseif ($this->input->post('select_by')=='2'){
                 $data['at_week'] = date("W", strtotime($this->input->post('from_date')));
+                $data['at_month'] = date("m", strtotime($this->input->post('from_date')));
                 $data['tglawal'] = date("Y-m-d", strtotime($this->input->post('from_date')));
                 $data['tglakhir'] = date("Y-m-d", strtotime($this->input->post('to_date')));
             }else{
                 $date = date('Y-m-d'); 
                 $data['at_week'] = date("W", strtotime($date));
+                $data['at_month'] = date("m", strtotime($date));
                 $data['tglawal'] = date("Y-m-d", strtotime('monday this week', strtotime($date)));
                 $data['tglakhir'] = date("Y-m-d", strtotime('sunday this week', strtotime($date)));
             }

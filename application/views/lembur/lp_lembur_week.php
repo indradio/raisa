@@ -57,10 +57,11 @@
                                         <th colspan="3"style="text-align: center;">AKTIVITAS</th>
                                     </tr>  -->
                                     <tr>
+                                        <th>NPK</th>
                                         <th>NAMA</th>
                                         <th>LEMBUR <small>TOTAL</small></th>
                                         <th>LEMBUR <small>JAM</small></th>
-                                        <th>WEEK <small>AT</small></th>
+                                        <th>WEEK - MONTH <small>AT</small></th>
                                         <th>RANGE</th>
                                     </tr>
                                 </thead>
@@ -86,10 +87,11 @@
                                     
                                     if ($total_lembur->num_rows()>0){ ?>
                                     <tr>
+                                        <td class="td-name"><?= $k['npk']; ?></td>
                                         <td class="td-name"><?= $k['nama']; ?></td>
                                         <td><?= $total_lembur->num_rows(); ?></td>
                                         <td><?= $total_durasi; ?></td>
-                                        <td><?= $at_week; ?></td>
+                                        <td><?= $at_week.' - '.$at_month; ?></td>
                                         <td><?= date("d-m-Y", strtotime($tglawal)).' s/d '.date("d-m-Y", strtotime($tglakhir)); ?></td>
                                     </tr>
                                     <?php };

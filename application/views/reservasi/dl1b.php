@@ -49,7 +49,7 @@
                 $saring1 = $this->db->query($querySaring1)->row_array();
                 // $total1 = $saring1['COUNT(*)'];
                 if ($saring1 != null) { ?>
-                  <a href="#foo" class="btn btn-danger btn-round" role="button" data-toggle="modal" data-target="#detailRsvModal" data-id="<?= $saring1['id']; ?>" data-tujuan="<?= $saring1['tujuan']; ?>" data-peserta="<?= $saring1['anggota']; ?>" data-keperluan="<?= $saring1['keperluan']; ?>"><?= $saring1['id']; ?></a>
+                  <a href="#foo" class="btn btn-danger btn-round" role="button" data-toggle="modal" data-target="#detailRsvModal" data-id="<?= $saring1['id']; ?>" data-tujuan="<?= $saring1['tujuan']; ?>" data-peserta="<?= $saring1['anggota']; ?>" data-keperluan="<?= $saring1['keperluan']; ?>"><?= $saring1['tujuan']; ?></a>
                   <?php } else {
                   $querySaring2 = "SELECT *
                         FROM `reservasi`
@@ -58,7 +58,7 @@
                   $saring2 = $this->db->query($querySaring2)->row_array();
                   // $total2 = $saring2['COUNT(*)'];
                   if ($saring2 != null) { ?>
-                    <a href="#foo" class="btn btn-danger btn-round" role="button" data-toggle="modal" data-target="#detailRsvModal" data-id="<?= $saring2['id']; ?>" data-tujuan="<?= $saring2['tujuan']; ?>" data-peserta="<?= $saring2['anggota']; ?>" data-keperluan="<?= $saring2['keperluan']; ?>"><?= $saring2['id']; ?></a>
+                    <a href="#foo" class="btn btn-danger btn-round" role="button" data-toggle="modal" data-target="#detailRsvModal" data-id="<?= $saring2['id']; ?>" data-tujuan="<?= $saring2['tujuan']; ?>" data-peserta="<?= $saring2['anggota']; ?>" data-keperluan="<?= $saring2['keperluan']; ?>"><?= $saring2['tujuan']; ?></a>
                   <?php } else { ?>
                     <a href="<?= base_url('reservasi/dl1b_proses/') . $kend['id']; ?>" class="btn btn-success btn-round" role="button" aria-disabled="false">Pilih</a>
                   <?php }; ?>

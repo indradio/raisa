@@ -209,6 +209,7 @@
                                                         <td>Tol</td>
                                                         <td><?= number_format($perjalanan['tol'], 0, ',', '.'); ?></td>
                                                         <td><a href="#" class="btn btn-fill btn-sm btn-warning" data-toggle="modal" data-target="#ubahTol" data-id="<?= $perjalanan['id']; ?>" data-tol="<?= $perjalanan['tol']; ?>">UBAH</a></td>
+                                                        </br><small>*Biaya tol jika menggunakan uang pribadi, kosongkan jika menggunakan e-toll dari GA.</small>
                                                     </tr>
                                                     <tr>
                                                         <td>Parkir & Lainnya</td>
