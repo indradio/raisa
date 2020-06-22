@@ -1,35 +1,33 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>UJI COBA FITUR ESTIMASI BIAYA & PENYELESAIAN PERJALANAN DINAS</strong>
+          <strong>ESTIMASI BIAYA & PENYELESAIAN PERJALANAN DINAS</strong>
+          </br><strong>PASTIKAN e-WALLET KAMU SUDAH TERDAFTAR DI SISTEM YA!</strong>
           </br>
           </br>Hai <?= $karyawan['nama']; ?>,
-          </br>Mulai hari senin (15/06/2020) ada fitur baru loh di RAISA.
-          </br>Yups, Estimasi Biaya Perjalanan Dinas. Saat kamu melakukan reservasi akan ada halaman tambahan untuk estimasi biaya perjalanan dinas kamu dan tim.
-          </br></br>INGAT : Setelah kembali dari perjalanan dinas, jangan lupa untuk klaim penyelesaian kamu ya.
-          </br></br>Fitur ini masih dalam tahap uji coba aplikasi, jadi semua alur proses masih seperti biasa yang kamu lakukan.
+          </br>Setelah kembali dari perjalanan dinas, jangan lupa untuk klaim penyelesaian kamu ya.
           </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- End Banner -->
     <?php if (empty($karyawan['ewallet_1'])){ ?>
     <div class="row">
       <div class="col-md-12">
         <form id="timePrecense" class="form" method="post" action="<?= base_url('profil/submit/e-wallet'); ?>">
           <div class="card ">
-            <div class="card-header card-header-info card-header-icon">
+            <div class="card-header card-header-danger card-header-icon">
               <div class="card-icon">
                 <i class="material-icons">account_balance_wallet</i>
               </div>
-              <h4 class="card-title">UPDATE e-WALLET</h4>
+              <h4 class="card-title">KAMU BELUM MEMDAFTARKAN e-WALLET NIH, DAFTARKAN e-WALLET SEKARANG KUY!</h4>
             </div>
             <div class="card-body ">
               <div class="progress" style="width: 100%">
-                <div class="progress-bar progress-bar-info" role="progressbar" style="width: 100%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 100%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
               </div>
               <div class="form-group">
                 <label for="a1" class="bmd-label-floating">Utama* <small>( Wajib )</small></label>
@@ -39,7 +37,7 @@
                   <option value="GO-PAY">GO-PAY</option>
                 </select>
                 <div class="form-group has-default">
-                <input type="text" class="form-control" name="utama_rek" placeholder="Nomor Rekening e-Wallet" required="true">
+                <input type="text" class="form-control" name="utama_rek" placeholder="Nomor Rek/HP e-Wallet" required="true">
               </div>
               </div>
               <div class="form-group">
@@ -50,7 +48,7 @@
                   <option value="GO-PAY">GO-PAY</option>
                 </select>
                 <div class="form-group has-default">
-                <input type="text" class="form-control" name="cadangan_rek" placeholder="Nomor Rekening e-Wallet">
+                <input type="text" class="form-control" name="cadangan_rek" placeholder="Nomor Rek/HP e-Wallet">
               </div>
               </div>
               <div class="form-check mr-auto">
