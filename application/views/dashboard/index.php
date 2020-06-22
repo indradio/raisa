@@ -428,7 +428,7 @@
                           <?php
                           $queryReservasiNon = "SELECT *
                                               FROM `reservasi`
-                                              WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND `status` != 0 AND `status` != 9
+                                              WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND `status` > 0 AND `status` < 7
                                               ORDER BY `kepemilikan` ASC ";
                           $reservasiNon = $this->db->query($queryReservasiNon)->result_array();
                           foreach ($reservasiNon as $rn) : ?>

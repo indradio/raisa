@@ -8,7 +8,7 @@
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-text">
                             <h4 class="card-title">Laporan Lembur</h4>
-                            <p class="card-category">Berdasarkan periode minggu ke-<?= $at_week .' | '.$tglawal.' s/d '.$tglakhir; ?></p>
+                            <p class="card-category">Berdasarkan periode minggu ke-<?= $at_week .' | '.date("d-m-Y", strtotime($tglawal)).' s/d '.date("d-m-Y", strtotime($tglakhir)); ?></p>
                         </div>
                     </div>
                     <div class="card-body">
