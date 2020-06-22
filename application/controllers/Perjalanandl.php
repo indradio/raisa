@@ -1433,4 +1433,34 @@ class Perjalanandl extends CI_Controller
 
         redirect('perjalanandl/payment/'.$id);
     }
+
+    public function laporan_fa()
+    {
+        $data['sidemenu'] = 'FA';
+        $data['sidesubmenu'] = 'Laporan Perjalanan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if (empty($this->input->post('tglawal')))
+        {
+            $tglawal = date('Y-m-d');
+            $tglakhir = date('Y-m-d');
+            $this->db->where('tglberangkat',$tglawal);
+            $this->db->where('status', '9');
+            $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
+        }else{
+            $tglawal = date("Y-m-d", strtotime($this->input->post('tglawal')));
+            $tglakhir = date("Y-m-d", strtotime($this->input->post('tglakhir')));
+            $this->db->where('tglberangkat >=',$tglawal);
+            $this->db->where('tglberangkat <=',$tglakhir);
+            $this->db->where('status', '9');
+            $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
+        }
+        $data['tglawal'] = $tglawal;
+        $data['tglakhir'] = $tglakhir;
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/lp_perjalanan_fa', $data);
+        $this->load->view('templates/footer');
+    }
 }
