@@ -1392,6 +1392,7 @@ class Perjalanandl extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
+        $this->db->set('bayar', $tp);
         $this->db->set('payment_by', $this->session->userdata('inisial'));
         $this->db->set('payment_at', date('Y-m-d H:i:s'));
         $this->db->set('status_pembayaran','SUDAH DIBAYAR');
