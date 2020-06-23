@@ -56,7 +56,7 @@
                                         <td><?= $p['tujuan']; ?></td>
                                         <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
                                         <td><?= number_format($p['kasbon'], 0, ',', '.'); ?></td>
-                                        <td><?= number_format($p['total']-$p['kasbon'], 0, ',', '.'); ?></td>
+                                        <td><?= number_format($p['bayar'], 0, ',', '.'); ?></td>
                                         <td class="text-right">
                                             <a href="<?= base_url('perjalanandl/payment/') . $p['id']; ?>" class="btn btn-sm btn-round btn-success">Proses</a>
                                         </td>
