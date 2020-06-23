@@ -1378,10 +1378,12 @@ class Perjalanandl extends CI_Controller
             $kas = $perjalanan['kasbon'];
             $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
             $tp = $p_peserta['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']-$perjalanan['bayar'];
+            $bayar_peserta = $p_peserta['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']-$perjalanan['kasbon'];
         }else{
             $kas = '0';
             $bp = '0';
             $tp = $p_peserta['total'];
+            $bayar_peserta = $p_peserta['total'];
         }
 
         $bayar = $perjalanan['bayar']+$tp;
@@ -1392,7 +1394,7 @@ class Perjalanandl extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
-        $this->db->set('bayar', $tp);
+        $this->db->set('bayar', $bayar_peserta);
         $this->db->set('payment_by', $this->session->userdata('inisial'));
         $this->db->set('payment_at', date('Y-m-d H:i:s'));
         $this->db->set('status_pembayaran','SUDAH DIBAYAR');
