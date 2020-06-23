@@ -254,13 +254,13 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-10">
                                         <div class="form-group has-default">
-                                            <a href="#" class="btn btn-linkedin" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">TAMBAH (BAYAR)</a>
+                                            <a href="#" class="btn btn-linkedin" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">TAMBAH (DIBAYARKAN)</a>
                                             <a href="#" class="btn btn-pinterest" data-toggle="modal" data-target="#kurangKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">KURANGI (DIKEMBALIKAN)</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Selisih</label>
+                                    <label class="col-md-2 col-form-label">Selisih/</br>Yang akan Dibayar FA</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="selisih" value="<?= number_format($perjalanan['total'] - $perjalanan['kasbon'], 0, ',', '.'); ?>">
@@ -281,7 +281,11 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-10">
                                         <div class="form-group has-default">
-                                            <button type="submit" class="btn btn-fill btn-success">PROSES</button>
+                                        <?php if ($perjalanan['total'] - $perjalanan['kasbon'] >= 0){ 
+                                            echo '<button type="submit" class="btn btn-fill btn-success">PROSES VERIFIKASI</button>';
+                                        }else{
+                                            echo '<button type="submit" class="btn btn-fill btn-danger disabled">SELISIH TIDAK BOLEH MINUS</button>';
+                                        } ?>
                                             <a href="<?= base_url('perjalanandl/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
                                         </div>
                                     </div>

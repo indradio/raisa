@@ -117,6 +117,21 @@
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             },
+            rowGroup: {
+                startRender: null,
+                endRender: function ( rows, group ) {
+                    var avg = rows
+                        .data()
+                        .pluck(9)
+                        .reduce( function (a, b) {
+                            return a + b.replace(/[^\d]/g, '')*1;
+                        }, 0);
+    
+                    return 'Total in '+group+' : '+
+                        $.fn.dataTable.render.number('.', ',', 0, 'Rp ').display( avg );
+                },
+                dataSrc: 0
+            },
             "footerCallback": function ( row, data, start, end, display ) {
                 var api = this.api(), data;
     
