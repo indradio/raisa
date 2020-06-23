@@ -1340,15 +1340,7 @@ class Perjalanandl extends CI_Controller
         $this->db->where('perjalanan_id', $id);
         $this->db->where('npk', $npk);
         $p_peserta = $this->db->get('perjalanan_anggota')->row_array();
-
-        if ($perjalanan['pic_perjalanan']==$p_peserta['karyawan_inisial']){
-            $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
-            $tp = $p_peserta['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']-$perjalanan['kasbon'];
-        }else{
-            $bp = '0';
-            $tp = $p_peserta['total'];
-        }
-        
+     
         if ($perjalanan['uang_saku']>0){
             $us = $p_peserta['uang_saku'];
         }else{
@@ -1377,7 +1369,7 @@ class Perjalanandl extends CI_Controller
         if ($perjalanan['pic_perjalanan']==$p_peserta['karyawan_inisial']){
             $kas = $perjalanan['kasbon'];
             $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
-            $tp = $p_peserta['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']-$perjalanan['kasbon'];
+            $tp = ($p_peserta['total']+$bp)-$perjalanan['kasbon'];
         }else{
             $kas = '0';
             $bp = '0';

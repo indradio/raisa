@@ -8,7 +8,11 @@
           </br><strong>PASTIKAN e-WALLET KAMU SUDAH TERDAFTAR DI SISTEM YA!</strong>
           </br>
           </br>Hai <?= $karyawan['nama']; ?>,
-          </br>Setelah kembali dari perjalanan dinas, jangan lupa untuk klaim penyelesaian kamu ya.
+          </br>Klaim penyelesaian kamu akan dibayarkan jika:  
+          </br>Sudah diverifikasi oleh GA pukul 07-09 pagi (Dibayarkan di hari yang sama)
+          </br>Sudah diverifikasi oleh GA pukul 09 pagi atau lebih (Dibayarkan H+1 hari kerja)
+          </br>
+          </br>Segera submit klaim penyelesaian dan dokumen/struk/kwitansi perjalanan kamu setelah perjalanan ya!.
           </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
         </div>
       </div>
