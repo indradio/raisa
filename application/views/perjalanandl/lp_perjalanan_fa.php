@@ -35,96 +35,60 @@
                             </form>
                         </div>
                         <div class="material-datatables">
-                            <table id="dtperjalanan-desc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dt-report" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
-                                        <th>Nama</th>
+                                        <th>Waktu Keberangkatan</th>
                                         <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tgl Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>KM Keberangkatan</th>
-                                        <th>Security Keberangkatan</th>
-                                        <th>Tgl Kembali</th>
-                                        <th>Jam Kembali</th>
-                                        <th>KM Kembali</th>
-                                        <th>Security Kembali</th>
-                                        <th>KM Total</th>
-                                        <th>Catatan GA</th>
-                                        <th>Catatan Security</th>
+                                        <th>Total Biaya</th>
+                                        <th>e-Wallet</th>
+                                        <th>Approval</th>
+                                        <th>Verifikasi GA</th>
+                                        <th>Verifikasi FA</th>
                                         <th>Status</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nomor DL</th>
+                                        <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
-                                        <th>Nama</th>
+                                        <th>Waktu Keberangkatan</th>
                                         <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Tgl Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>KM Keberangkatan</th>
-                                        <th>Security Keberangkatan</th>
-                                        <th>Tgl Kembali</th>
-                                        <th>Jam Kembali</th>
-                                        <th>KM Kembali</th>
-                                        <th>Security Kembali</th>
-                                        <th>KM Total</th>
-                                        <th>Catatan GA</th>
-                                        <th>Catatan Security</th>
+                                        <th>Total Biaya</th>
+                                        <th>e-Wallet</th>
+                                        <th>Approval</th>
+                                        <th>Verifikasi GA</th>
+                                        <th>Verifikasi FA</th>
                                         <th>Status</th>
-                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($perjalanan as $pdl) : ?>
+                                    foreach ($perjalanan as $p) : 
+                                        $reservasi = $this->db->get_where('reservasi', ['id' => $p['reservasi_id']])->row_array();
+                                        $p_peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array();
+                                        foreach ($p_peserta as $pp) : 
+                                            $peserta = $this->db->get_where('karyawan', ['npk' => $pp['npk']])->row_array();
+                                    ?>
                                         <tr>
-                                            <td>
-                                            <?= $pdl['id']; ?>
-                                            <?php if ($pdl['status'] > '4') { ?>
-                                                <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
-                                            <?php }; ?> 
-                                            </td>
-                                            <td><?= $pdl['jenis_perjalanan']; ?></td>
-                                            <td><?= $pdl['nopol']; ?></td>
-                                            <td><?= $pdl['kepemilikan']; ?></td>
-                                            <td><?= $pdl['nama']; ?></td>
-                                            <td><?= $pdl['tujuan']; ?></td>
-                                            <td><?= $pdl['keperluan']; ?></td>
-                                            <td><?= $pdl['anggota']; ?></td>
-                                            <td><?= $pdl['tglberangkat']; ?></td>
-                                            <td><?= $pdl['jamberangkat']; ?></td>
-                                            <td><?= $pdl['kmberangkat']; ?></td>
-                                            <td><?= $pdl['cekberangkat']; ?></td>
-                                            <td><?= $pdl['tglkembali']; ?></td>
-                                            <td><?= $pdl['jamkembali']; ?></td>
-                                            <td><?= $pdl['kmkembali']; ?></td>
-                                            <td><?= $pdl['cekkembali']; ?></td>
-                                            <td><?= $pdl['kmtotal']; ?></td>
-                                            <td><?= $pdl['catatan']; ?></td>
-                                            <td><?= $pdl['catatan_security']; ?></td>
-                                            <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
-                                            <td><?= $status['nama']; ?></td>
-                                            <td class="text-right">
-                                                <?php if ($pdl['status'] == '0') { ?>
-                                                    <a href="<?= base_url('perjalanandl/aktifkan/') . $pdl['id']; ?>" class="badge badge-success">Aktifkan</a>
-                                                <?php } elseif ($pdl['status'] == '9') { ?>
-                                                    <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
-                                                <?php }; ?>
-                                            </td>
+                                            <td><?= $p['id']; ?></td>
+                                            <td><?= $p['jenis_perjalanan']; ?></td>
+                                            <td><?= date("d-m-Y", strtotime($p['tglberangkat'])).' '.date("H:i", strtotime($p['jamberangkat']));; ?></td>
+                                            <td><?= $p['tujuan']; ?></td>
+                                            <td><?= $pp['karyawan_nama']; ?></td>
+                                            <td><?= $pp['total']; ?></td>
+                                            <td><?= $peserta['ewallet_1']; ?></td>
+                                            <td><?= substr($reservasi['atasan1'], -3).' - '.date("d-m-Y H:i", strtotime($reservasi['tgl_atasan1'])); ?></td>
+                                            <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
+                                            <td><?= $p['payment_by'].' - '.date("d-m-Y H:i", strtotime($p['payment_at'])); ?></td>
+                                            <td><?= $pp['status_pembayaran']; ?></td>
                                         </tr>
-                                    <?php endforeach; ?>
+                                    <?php endforeach; 
+                                endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -139,3 +103,25 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dt-report').DataTable({
+            "pagingType": "full_numbers",
+            scrollX: true,
+            scrollY: '512px',
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            order: [
+                [0, 'asc']
+            ],
+            scrollCollapse: true,
+            paging: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+    } );
+</script>

@@ -1445,6 +1445,7 @@ class Perjalanandl extends CI_Controller
             $tglawal = date('Y-m-d');
             $tglakhir = date('Y-m-d');
             $this->db->where('tglberangkat',$tglawal);
+            $this->db->where('jenis_perjalanan !=','TA');
             $this->db->where('status', '9');
             $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
         }else{
@@ -1452,6 +1453,7 @@ class Perjalanandl extends CI_Controller
             $tglakhir = date("Y-m-d", strtotime($this->input->post('tglakhir')));
             $this->db->where('tglberangkat >=',$tglawal);
             $this->db->where('tglberangkat <=',$tglakhir);
+            $this->db->where('jenis_perjalanan !=','TA');
             $this->db->where('status', '9');
             $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
         }
