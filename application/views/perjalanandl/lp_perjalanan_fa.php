@@ -43,29 +43,14 @@
                                         <th>Waktu Keberangkatan</th>
                                         <th>Tujuan</th>
                                         <th>Peserta</th>
-                                        <th>Total Biaya</th>
                                         <th>e-Wallet</th>
                                         <th>Approval</th>
                                         <th>Verifikasi GA</th>
                                         <th>Verifikasi FA</th>
+                                        <th>Total Biaya</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Nomor_Perjalanan</th>
-                                        <th>Jenis DL</th>
-                                        <th>Waktu Keberangkatan</th>
-                                        <th>Tujuan</th>
-                                        <th>Peserta</th>
-                                        <th>Total Biaya</th>
-                                        <th>e-Wallet</th>
-                                        <th>Approval</th>
-                                        <th>Verifikasi GA</th>
-                                        <th>Verifikasi FA</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $p) : 
@@ -73,23 +58,29 @@
                                         $p_peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array();
                                         foreach ($p_peserta as $pp) : 
                                             $peserta = $this->db->get_where('karyawan', ['npk' => $pp['npk']])->row_array();
-                                    ?>
+                                            ?>
                                         <tr>
                                             <td><?= $p['id']; ?></td>
                                             <td><?= $p['jenis_perjalanan']; ?></td>
                                             <td><?= date("d-m-Y", strtotime($p['tglberangkat'])).' '.date("H:i", strtotime($p['jamberangkat']));; ?></td>
                                             <td><?= $p['tujuan']; ?></td>
                                             <td><?= $pp['karyawan_nama']; ?></td>
-                                            <td><?= $pp['bayar']; ?></td>
                                             <td><?= $peserta['ewallet_1']; ?></td>
                                             <td><?= substr($reservasi['atasan1'], -3).' - '.date("d-m-Y H:i", strtotime($reservasi['tgl_atasan1'])); ?></td>
                                             <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
                                             <td><?= $p['payment_by'].' - '.date("d-m-Y H:i", strtotime($p['payment_at'])); ?></td>
+                                            <td><?= $pp['bayar']; ?></td>
                                             <td><?= $pp['status_pembayaran']; ?></td>
                                         </tr>
                                     <?php endforeach; 
                                 endforeach; ?>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="10" style="text-align:right">Total:</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -121,39 +112,30 @@
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }
+            },
             "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
- 
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
- 
-            // Total over all pages
-            total = api
-                .column( 5 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
- 
-            // Total over this page
-            pageTotal = api
-                .column( 5, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
- 
-            // Update footer
-            $( api.column( 5 ).footer() ).html(
-                '$'+pageTotal +' ( $'+ total +' total)'
-            );
-        }
+                var api = this.api(), data;
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 9 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+                // Update footer
+                $( api.column( 9 ).footer() ).html(
+                    'RP '+ total 
+                );
+            }
         });
     } );
 </script>
