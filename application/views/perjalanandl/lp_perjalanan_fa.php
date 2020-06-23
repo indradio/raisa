@@ -68,7 +68,7 @@
                                             <td><?= $peserta['ewallet_1']; ?></td>
                                             <td><?= substr($reservasi['atasan1'], -3).' - '.date("d-m-Y H:i", strtotime($reservasi['tgl_atasan1'])); ?></td>
                                             <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
-                                            <td><?= $p['payment_by'].' - '.date("d-m-Y H:i", strtotime($p['payment_at'])); ?></td>
+                                            <td><?= $pp['payment_by'].' - '.date("d-m-Y H:i", strtotime($pp['payment_at'])); ?></td>
                                             <td><?= $pp['bayar']; ?></td>
                                             <td><?= $pp['status_pembayaran']; ?></td>
                                         </tr>
