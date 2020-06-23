@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -27,7 +27,8 @@
                                         <th>Total</th>
                                         <th>Kasbon /<small> Bayar*</small></th>
                                         <th>Selisih</th>
-                                        <th class="disabled-sorting text-center">Actions</th>
+                                        <th>Selisih</th>
+                                        <th>Verifikasi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -41,13 +42,13 @@
                                         <th>Total</th>
                                         <th>Kasbon /<small> Bayar*</small></th>
                                         <th>Selisih</th>
-                                        <th class="disabled-sorting text-center">Actions</th>
+                                        <th>Verifikasi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $p) : ?>
-                                    <tr>
+                                    <tr onclick="window.location='<?= base_url('perjalanandl/payment/' . $p['id']); ?>'">
                                         <td><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></td>
                                         <td><?= $p['nama']; ?></td>
                                         <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
@@ -57,9 +58,7 @@
                                         <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
                                         <td><?= number_format($p['bayar'], 0, ',', '.'); ?></td>
                                         <td><?= number_format($p['total']-$p['bayar'], 0, ',', '.'); ?></td>
-                                        <td class="text-right">
-                                            <a href="<?= base_url('perjalanandl/payment/') . $p['id']; ?>" class="btn btn-sm btn-round btn-success">Proses</a>
-                                        </td>
+                                        <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
