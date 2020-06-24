@@ -27,24 +27,9 @@
                                         <th>Total</th>
                                         <th>Kasbon /<small> Bayar*</small></th>
                                         <th>Selisih</th>
-                                        <th>Selisih</th>
                                         <th>Verifikasi</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No Perjalanan</th>
-                                        <th>Nama <small>(<i>Pemohon</i>)</small></th>
-                                        <th>Waktu Berangkat</th>
-                                        <th>Kendaraan</th>
-                                        <th>Peserta</th>
-                                        <th>Tujuan</th>
-                                        <th>Total</th>
-                                        <th>Kasbon /<small> Bayar*</small></th>
-                                        <th>Selisih</th>
-                                        <th>Verifikasi</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $p) : ?>
@@ -62,6 +47,20 @@
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>No Perjalanan</th>
+                                        <th>Nama <small>(<i>Pemohon</i>)</small></th>
+                                        <th>Waktu Berangkat</th>
+                                        <th>Kendaraan</th>
+                                        <th>Peserta</th>
+                                        <th>Tujuan</th>
+                                        <th>Total</th>
+                                        <th>Kasbon /<small> Bayar*</small></th>
+                                        <th>Selisih</th>
+                                        <th>Verifikasi</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
