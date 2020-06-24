@@ -190,9 +190,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Rincian Biaya</label>
+                                    <label class="col-md-2 col-form-label">Rincian Biaya </br><small>Perjalanan</small></label>
                                     <div class="col-md-8">
                                         <div class="material-datatables">
                                             <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

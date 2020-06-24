@@ -47,7 +47,7 @@
                                         <th>Approval</th>
                                         <th>Verifikasi GA</th>
                                         <th>Verifikasi FA</th>
-                                        <th>Total Biaya</th>
+                                        <th>Total_Biaya</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -80,10 +80,23 @@
                                 endforeach; ?>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <th colspan="9" style="text-align:right">Total:</th>
+                                <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Total Biaya</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
+                                    <!-- <tr>
+                                        <th colspan="9" style="text-align:right">Total:</th>
+                                        <th></th>
+                                    </tr> -->
                                 </tfoot>
                             </table>
                         </div>
@@ -106,7 +119,14 @@
             scrollY: '512px',
             dom: 'Bfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel',
+                {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A4',
+                download: 'open',
+                footer: true
+            }
             ],
             order: [
                 [0, 'asc']
