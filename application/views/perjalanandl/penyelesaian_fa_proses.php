@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                             <p>
-                                <div class="row" hidden="true">
+                                <div class="row">
                                     <label class="col-md-2 col-form-label">Tunjangan </br><small>Peserta</small></label>
                                     <div class="col-md-8">
                                         <div class="table-responsive">
@@ -170,7 +170,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" hidden="true">
+                                <?php if ($perjalanan['kepemilikan']!='Operasional'){?>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Kilometer</label>
+                                    <div class="col-md-8">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" name="kmtotal" value="<?= $perjalanan['kmtotal']; ?> Km">
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } ?>
+                                <div class="row">
                                     <label class="col-md-2 col-form-label">Rincian Biaya</label>
                                     <div class="col-md-8">
                                         <div class="material-datatables">
@@ -242,6 +252,7 @@
                                         }else{
                                             echo '<button type="submit" class="btn btn-fill btn-default disabled">BELUM DIBAYAR SEMUA</button>';
                                         }?>
+                                            <a href="#" class="btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiPenyelesaian" data-id="<?= $perjalanan['id']; ?>">REVISI</a>
                                             <a href="<?= base_url('perjalanandl/payment/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
                                         </div>
                                     </div>
@@ -254,3 +265,39 @@
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade" id="revisiPenyelesaian" tabindex="-1" role="dialog" aria-labelledby="revisiPenyelesaianTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <!-- <div class="modal-header">
+          <div class="card-header card-header-info text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">REVISI PENYELESAIAN</h4>
+          </div>
+        </div> -->
+        <form class="form" method="post" action="<?= base_url('perjalanandl/penyelesaian/revisi'); ?>">
+          <div class="modal-body">
+            <input type="hidden" class="form-control disabled" name="id">
+            <textarea rows="3" class="form-control" name="catatan" id="catatan" placeholder="Berikan penjelasan untuk revisi" required></textarea>
+          </div>
+          <div class="modal-footer justify-content-right">
+            <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+            <button type="submit" class="btn btn-success">SUBMIT</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#revisiPenyelesaian').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id') // Extract info from data-* attributes
+        var modal = $(this)
+        modal.find('.modal-body input[name="id"]').val(id)
+        })
+    });  
+</script>

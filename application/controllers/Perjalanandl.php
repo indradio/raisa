@@ -1092,10 +1092,19 @@ class Perjalanandl extends CI_Controller
 
                 $this->db->where('sect_id', '214');
                 $ga_admin = $this->db->get('karyawan_admin')->row_array();
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $ga_admin['phone'],
-                    'message' => "*PENGAJUAN PERJALANAN DINAS TA*" .
+
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $ga_admin['phone'],
+                            'message' => "*PENGAJUAN PERJALANAN DINAS TA*" .
                         "\r\n \r\n No. Reservasi : *" . $reservasi['id'] . "*" .
                         "\r\n Nama : *" . $reservasi['nama'] . "*" .
                         "\r\n Tujuan : *" . $reservasi['tujuan'] . "*" .
@@ -1105,23 +1114,10 @@ class Perjalanandl extends CI_Controller
                         "\r\n Kembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
                         "\r\n Kendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "* )" .
                         "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
                 );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
+                $body = $response->getBody();
 
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanandl/adminhr');
@@ -1186,6 +1182,43 @@ class Perjalanandl extends CI_Controller
                 $body = $response->getBody();
 
                 redirect('perjalanandl/penyelesaian/daftar');
+            } elseif ($parameter == 'revisi') {
+                $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+                $this->db->set('catatan', $this->input->post('catatan'));
+                $this->db->set('status', '4');
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
+
+                $this->db->where('sect_id', '214');
+                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+             
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $ga_admin['phone'],
+                            'message' => "*PERMINTAAN REVISI PENYELESAIAN PERJALANAN DINAS*" . 
+                            "\r\n \r\nNo. Perjalanan : *" . $perjalanan['id'] . "*" .
+                            "\r\nNama : *" . $perjalanan['nama'] . "*" .
+                            "\r\nTujuan : *" . $perjalanan['tujuan'] . "*" .
+                            "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
+                            "\r\nBerangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "*" .
+                            "\r\nKembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "*" .
+                            "\r\n \r\n*Catatan : " . $this->input->post('catatan') . "*" .
+                            "\r\n \r\nPenyelesaian Perjalanan ini membutuhkan revisi.".
+                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
+                redirect('perjalanandl/payment/daftar');
             }
         } else {
             if (($this->session->userdata('sect_id')=='214' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='4'){

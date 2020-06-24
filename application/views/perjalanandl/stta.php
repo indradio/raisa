@@ -237,7 +237,7 @@ $pdf->Cell(1, 18, date("d M Y H:i", strtotime($reservasi['tgl_fin'])), 0,'C', 0)
 $pdf->Ln(14);
 $pdf->SetFont('Arial', 'B', 6);
 $pdf->Cell(140, 5, '', 0, 0);
-$pdf->Cell(42, 4, '(  Dwi Ayu Waraswati  )', 0,0,'C',0);
+$pdf->Cell(42, 4, '(  Eko Juwono  )', 0,0,'C',0);
 
 $pdf->Ln(2);
 $pdf->SetFont('Arial', 'B', 6);
