@@ -219,6 +219,11 @@ class Perjalanandl extends CI_Controller
                 $body = $response->getBody();
 
                 if ($this->input->post('kasbon')>0){
+
+                    $this->db->set('kasbon_status', 'REQUEST');
+                    $this->db->where('id', $data['id']);
+                    $this->db->update('perjalanan');
+
                     $this->db->where('sect_id', '211');
                     $fa_admin = $this->db->get('karyawan_admin')->row_array();
                 
@@ -1195,6 +1200,7 @@ class Perjalanandl extends CI_Controller
                 $this->db->set('penyelesaian_at', date('Y-m-d H:i:s'));
                 $this->db->set('bayar', $perjalanan['kasbon']);
                 $this->db->set('selisih', $perjalanan['total']-$perjalanan['kasbon']);
+                $this->db->set('kasbon_status', 'CLOSED');
                 $this->db->set('status', '5');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
@@ -1539,5 +1545,57 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('perjalanandl/lp_perjalanan_fa', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function kasbon($parameter="")
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($parameter == '') {
+            $data['sidemenu'] = 'FA';
+            $data['sidesubmenu'] = 'Permintaan Kasbon';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['perjalanan'] = $this->db->where('kasbon_status', 'REQUEST');
+            $data['perjalanan'] = $this->db->or_where('kasbon_status', 'OUTSTANDING');
+            $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('perjalanandl/kasbon_fa_daftar', $data);
+            $this->load->view('templates/footer');
+        } elseif ($parameter == 'submit') {
+
+            $this->db->set('kasbon_by', $this->session->userdata('inisial'));
+            $this->db->set('kasbon_at', date('Y-m-d H:i:s'));
+            $this->db->set('kasbon', $this->input->post('kasbon'));
+            $this->db->set('kasbon_status', 'OUTSTANDING');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $this->input->post('phone'),
+                        'message' => "*TRANSFER KASBON PERJALANAN DINAS*". 
+                        "\r\n \r\nKamu mendapat kasbon dari perjalanan dinas berikut :".
+                        "\r\n \r\nNo. Perjalanan : *" . $this->input->post('id') . "*" .
+                        "\r\nKasbon : *" . number_format($this->input->post('kasbon'), 0, ',', '.') . "*" .
+                        "\r\n \r\n*INGAT : KASBON ini hanya untuk biaya perjalanan seperti taksi, tol, dan parkir.*" .
+                        "\r\n \r\n*Untuk tunjangan peserta seperti uang saku, insentif dan uang makan, akan dibayarkan setelah perjalanan selesai oleh bagian FA.*" .
+                        "\r\n \r\n*Kelebihan KASBON harus dikembalikan saat penyelesaian ke bagian FA serta menunjukan bukti transfernya ke bagian GA untuk verifikasi*" .
+                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka aplikasi di link berikut https://raisa.winteq-astra.com"
+                    ],
+                ]
+            );
+            $body = $response->getBody();
+
+            redirect('perjalanandl/kasbon');
+        }
     }
 }

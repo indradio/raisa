@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('perjalanandl/penyelesaian/submit'); ?>" method="post">
                             <div class="row" hidden="true">
-                                <label class="col-md-2 col-form-label">Nomor Reservasi</label>
+                                <label class="col-md-2 col-form-label">Nomor Perjalanan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="id" value="<?= $perjalanan['id']; ?>" />
@@ -253,8 +253,8 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-10">
                                         <div class="form-group has-default">
-                                            <a href="#" class="btn btn-linkedin" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">TAMBAH (DIBAYARKAN)</a>
-                                            <a href="#" class="btn btn-pinterest" data-toggle="modal" data-target="#kurangKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">KURANGI (DIKEMBALIKAN)</a>
+                                            <a href="#" class="btn btn-facebook" data-toggle="modal" data-target="#kurangKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">DIKEMBALIKAN (KURANGI)</a>
+                                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">DIBAYARKAN (TAMBAH)</a>
                                         </div>
                                     </div>
                                 </div>
@@ -280,10 +280,16 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-10">
                                         <div class="form-group has-default">
-                                        <?php if ($perjalanan['total'] - $perjalanan['kasbon'] >= 0){ 
+                                        <?php 
+                                         $this->db->where('perjalanan_id', $perjalanan['id']);
+                                         $this->db->where('karyawan_inisial', $perjalanan['pic_perjalanan']);
+                                         $pic = $this->db->get('perjalanan_anggota')->row_array();
+                                         $selisih = ($pic['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']) - $perjalanan['kasbon'];
+                                         if ($selisih >= 0){ 
                                             echo '<button type="submit" class="btn btn-fill btn-success">PROSES VERIFIKASI</button>';
                                         }else{
-                                            echo '<button type="submit" class="btn btn-fill btn-danger disabled">SELISIH TIDAK BOLEH MINUS</button>';
+                                            echo '<small>PIC Perjalanan harus menyelesaikan kasbon terlebih dulu senilai </small> Rp '. number_format($selisih, 0, ',', '.').' </br>';
+                                            echo '<button type="submit" class="btn btn-fill btn-danger disabled">PIC TIDAK BOLEH MINUS</button>';
                                         } ?>
                                             <a href="<?= base_url('perjalanandl/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
                                         </div>

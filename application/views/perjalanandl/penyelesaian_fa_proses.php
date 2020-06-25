@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('perjalanandl/payment/submit'); ?>" method="post">
                             <div class="row" hidden="true">
-                                <label class="col-md-2 col-form-label">Nomor Reservasi</label>
+                                <label class="col-md-2 col-form-label">Nomor Perjalanan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="id" value="<?= $perjalanan['id']; ?>" />
