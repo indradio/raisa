@@ -47,7 +47,7 @@
                                         <td><?= $p['tujuan']; ?></td>
                                         <td><?= $p['kepemilikan']; ?></td>
                                         <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
-                                        <td><?= number_format($p['bayar'], 0, ',', '.'); ?></td>
+                                        <td><?= number_format($p['kasbon'], 0, ',', '.'); ?></td>
                                         <td><?= $p['kasbon_status']; ?></td>
                                         <td><?= $p['admin_ga'].' - '.date("d-m-Y H:i", strtotime($p['tgl_ga'])); ?></td>
                                     </tr>
