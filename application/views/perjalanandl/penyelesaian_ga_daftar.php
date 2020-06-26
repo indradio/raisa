@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
@@ -27,9 +27,24 @@
                                         <th>Total</th>
                                         <th>Kasbon /<small> Bayar*</small></th>
                                         <th>Selisih</th>
-                                        <th class="disabled-sorting text-center">Actions</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($perjalanan as $p) : ?>
+                                    <tr onclick="window.location='<?= base_url('perjalanandl/penyelesaian/' . $p['id']); ?>'">
+                                        <td><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></td>
+                                        <td><?= $p['nama']; ?></td>
+                                        <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
+                                        <td><?= $p['kepemilikan']; ?></td>
+                                        <td><?= $p['anggota']; ?></td>
+                                        <td><?= $p['tujuan']; ?></td>
+                                        <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
+                                        <td><?= number_format($p['kasbon'], 0, ',', '.'); ?></td>
+                                        <td><?= number_format($p['total']-$p['kasbon'], 0, ',', '.'); ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>No Perjalanan</th>
@@ -41,28 +56,8 @@
                                         <th>Total</th>
                                         <th>Kasbon /<small> Bayar*</small></th>
                                         <th>Selisih</th>
-                                        <th class="disabled-sorting text-center">Actions</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    <?php
-                                    foreach ($perjalanan as $p) : ?>
-                                    <tr>
-                                        <td><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></td>
-                                        <td><?= $p['nama']; ?></td>
-                                        <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                        <td><?= $p['kepemilikan']; ?></td>
-                                        <td><?= $p['anggota']; ?></td>
-                                        <td><?= $p['tujuan']; ?></td>
-                                        <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
-                                        <td><?= number_format($p['kasbon'], 0, ',', '.'); ?></td>
-                                        <td><?= number_format($p['total']-$p['kasbon'], 0, ',', '.'); ?></td>
-                                        <td class="text-right">
-                                            <a href="<?= base_url('perjalanandl/penyelesaian/') . $p['id']; ?>" class="btn btn-sm btn-round btn-success">Proses</a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>

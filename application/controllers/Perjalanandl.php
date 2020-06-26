@@ -1375,6 +1375,33 @@ class Perjalanandl extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
 
+            $kasbon = $this->input->post('kasbon')-$this->input->post('kurang_kasbon');
+
+            $this->db->where('sect_id', '211');
+            $fa_admin = $this->db->get('karyawan_admin')->row_array();
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $fa_admin['phone'],
+                        'message' => "*PENGEMBALIAN KASBON PERJALANAN DINAS*" . 
+                        "\r\n \r\nNo. Perjalanan : *" . $this->input->post('id') . "*" .
+                        "\r\nKasbon Sebelumnya : *" . $this->input->post('kasbon') . "*" .
+                        "\r\n \r\nKasbon Dikembalikan : *" . $this->input->post('kurang_kasbon') . "*" .
+                        "\r\nTotal Kasbon : *" . $kasbon . "*" .
+                        "\r\n \r\nPastikan transfer kasbon yg dikembalikan sudah masuk/diterima.".
+                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                    ],
+                ]
+            );
+            $body = $response->getBody();
+
             redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
         }
     }

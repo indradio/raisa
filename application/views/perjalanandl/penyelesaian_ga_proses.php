@@ -62,19 +62,19 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Jarak <small>/Kilometer</small></label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="kmtotal" value="<?= $perjalanan['kmtotal']; ?> Km">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Kendaraan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $perjalanan['kepemilikan']; ?>">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $perjalanan['nopol']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Kilometer</label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kmtotal" value="<?= $perjalanan['kmtotal']; ?> Km">
                                     </div>
                                 </div>
                             </div>
@@ -264,8 +264,6 @@
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="selisih" value="<?= number_format($perjalanan['total'] - $perjalanan['kasbon'], 0, ',', '.'); ?>">
                                         </div>
-                                        <small>*(+)Uang yang harus berikan ke peserta.</small></br>
-                                        <small>*(--)Uang yang harus kembalikan ke GA.</small>
                                     </div>
                                 </div>
                                 <div class="row">
