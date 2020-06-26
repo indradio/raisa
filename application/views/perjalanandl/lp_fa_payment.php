@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <form action="<?= base_url('perjalanandl/laporan_fa'); ?>" method="post">
+                            <form action="<?= base_url('perjalanandl/laporan_payment_fa'); ?>" method="post">
                                 <div class="row">
                                     <label class="col-md-2 col-form-label">Dari Tanggal</label>
                                     <div class="col-md-2">
