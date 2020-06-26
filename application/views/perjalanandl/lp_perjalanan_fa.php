@@ -80,7 +80,7 @@
                                 endforeach; ?>
                                 </tbody>
                                 <tfoot>
-                                <tr>
+                                    <tr>
                                         <th></th>
                                         <th></th>
                                         <th></th>

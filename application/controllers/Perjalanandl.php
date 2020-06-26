@@ -1484,11 +1484,13 @@ class Perjalanandl extends CI_Controller
         if ($perjalanan['pic_perjalanan']==$p_peserta['karyawan_inisial']){
             $kas = $perjalanan['kasbon'];
             $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
-            $tp = ($p_peserta['total']+$bp)-$perjalanan['kasbon'];
+            $tp = $p_peserta['total']+$bp;
+            $tb = ($p_peserta['total']+$bp)-$perjalanan['kasbon'];
         }else{
             $kas = '0';
             $bp = '0';
             $tp = $p_peserta['total'];
+            $tb = $p_peserta['total'];
         }
 
         $bayar = $perjalanan['bayar']+$tp;
@@ -1523,6 +1525,8 @@ class Perjalanandl extends CI_Controller
                     'message' => "*PEMBAYARAN PERJALANAN DINAS*". 
                     "\r\n \r\nKamu mendapat pembayaran dari perjalanan dinas berikut :".
                     "\r\n \r\nNo. Perjalanan : *" . $perjalanan['id'] . "*" .
+                    "\r\nTgl Perjalanan : *" .date("Y-m-d", strtotime($perjalanan['tglberangkat'])). "*" .
+                    "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
                     "\r\nNama: *" . $p_peserta['karyawan_nama'] . "*" .
                     "\r\nUang Saku : *" . number_format($us, 0, ',', '.') . "*" .
                     "\r\nInsentif Pagi : *" . number_format($ip, 0, ',', '.') . "*" .
@@ -1532,7 +1536,7 @@ class Perjalanandl extends CI_Controller
                     "\r\nBiaya Perjalanan : *" . number_format($bp, 0, ',', '.') . "*" .
                     "\r\nKasbon : *(" . number_format($kas, 0, ',', '.') . ")*" .
                     "\r\n________________" .
-                    "\r\nTotal yang dibayarkan : *" . number_format($tp, 0, ',', '.') . "*" .
+                    "\r\nTotal yang dibayarkan : *" . number_format($tb, 0, ',', '.') . "*" .
                     "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 ],
             ]
