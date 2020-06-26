@@ -49,6 +49,7 @@
                                         <th>Verifikasi FA</th>
                                         <th>Total_Biaya</th>
                                         <th>Status</th>
+                                        <th>Npk</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,6 +76,7 @@
                                             }?>
                                             <td><?= $pp['bayar']; ?></td>
                                             <td><?= $pp['status_pembayaran']; ?></td>
+                                            <td><?= $peserta['npk']; ?></td>
                                         </tr>
                                     <?php endforeach; 
                                 endforeach; ?>
@@ -90,6 +92,7 @@
                                         <th></th>
                                         <th></th>
                                         <th>Total Biaya</th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
