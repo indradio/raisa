@@ -44,10 +44,15 @@
                                         <th>Tujuan</th>
                                         <th>Peserta</th>
                                         <th>e-Wallet</th>
+                                        <th>Tunjangan</th>
+                                        <th>Taksi/Pribadi</th>
+                                        <th>BBM</th>
+                                        <th>TOL</th>
+                                        <th>Parkir <small>Lainnya</small></th>
+                                        <th>Total_Biaya</th>
                                         <th>Approval</th>
                                         <th>Verifikasi GA</th>
                                         <th>Verifikasi FA</th>
-                                        <th>Total_Biaya</th>
                                         <th>Status</th>
                                         <th>Npk</th>
                                     </tr>
@@ -67,6 +72,19 @@
                                             <td><?= $p['tujuan']; ?></td>
                                             <td><?= $pp['karyawan_nama']; ?></td>
                                             <td><?= $peserta['ewallet_1']; ?></td>
+                                            <td><?= $pp['total']; ?></td>
+                                            <?php if ($p['pic_perjalanan']==$pp['karyawan_inisial']){
+                                                echo '<td>'. $p['taksi'],'</td>';
+                                                echo '<td>'. $p['bbm'],'</td>';
+                                                echo '<td>'. $p['tol'],'</td>';
+                                                echo '<td>'. $p['parkir'],'</td>';
+                                            } else {
+                                                echo '<td>0</td>';
+                                                echo '<td>0</td>';
+                                                echo '<td>0</td>';
+                                                echo '<td>0</td>';
+                                            }?>
+                                            <td><?= $pp['bayar']; ?></td>
                                             <td><?= substr($reservasi['atasan1'], -3).' - '.date("d-m-Y H:i", strtotime($reservasi['tgl_atasan1'])); ?></td>
                                             <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
                                             <?php if ($pp['payment_by']){
@@ -74,7 +92,6 @@
                                             } else {
                                                 echo '<td>-</td>';
                                             }?>
-                                            <td><?= $pp['bayar']; ?></td>
                                             <td><?= $pp['status_pembayaran']; ?></td>
                                             <td><?= $peserta['npk']; ?></td>
                                         </tr>
@@ -91,7 +108,12 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th>Total Biaya</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -126,7 +148,7 @@
                 {
                 extend: 'pdfHtml5',
                 orientation: 'landscape',
-                pageSize: 'A4',
+                pageSize: 'A3',
                 download: 'open',
                 footer: true
             }
@@ -145,7 +167,7 @@
                 endRender: function ( rows, group ) {
                     var avg = rows
                         .data()
-                        .pluck(9)
+                        .pluck(11)
                         .reduce( function (a, b) {
                             return a + b.replace(/[^\d]/g, '')*1;
                         }, 0);
@@ -168,7 +190,7 @@
     
                 // Total over all pages
                 total = api
-                    .column( 9 )
+                    .column( 11 )
                     .data()
                     .reduce( function (a, b) {
                         return intVal(a) + intVal(b);
@@ -186,7 +208,7 @@
                 }
 
                 // Update footer
-                $( api.column( 9 ).footer() ).html(
+                $( api.column( 11 ).footer() ).html(
                     'Rp '+ rupiah
                 );
             }

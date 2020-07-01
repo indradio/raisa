@@ -161,7 +161,7 @@ class Perjalanandl extends CI_Controller
                     'um_siang' => $reservasi['um_siang'],
                     'um_malam' => $reservasi['um_malam'],
                     'taksi' => $reservasi['taksi'],
-                    'bbm' => $reservasi['bbm'],
+                    'bbm' => 0,
                     'tol' => $reservasi['tol'],
                     'parkir' => $reservasi['parkir'],
                     'total' => $reservasi['total'],
