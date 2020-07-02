@@ -226,6 +226,22 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <label class="col-md-2 col-form-label">Kasbon/</br><small>Transfer</small></label>
+                                    <div class="col-md-5">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_out'], 0, ',', '.'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Kasbon/</br><small>Dikembalikan</small></label>
+                                    <div class="col-md-5">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_in'], 0, ',', '.'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <label class="col-md-2 col-form-label">Sudah Dibayar<br><small>+Kasbon</small></label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">

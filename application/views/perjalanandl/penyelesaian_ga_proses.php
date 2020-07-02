@@ -242,22 +242,40 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Kasbon/</br>Yang Sudah Dibayar</label>
+                                    <label class="col-md-2 col-form-label">Kasbon/</br><small>Transfer</small></label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon'], 0, ',', '.'); ?>">
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_out'], 0, ',', '.'); ?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-10">
+                                    <label class="col-md-2 col-form-label">Kasbon/</br><small>Dikembalikan</small></label>
+                                    <div class="col-md-5">
                                         <div class="form-group has-default">
-                                            <a href="#" class="btn btn-facebook" data-toggle="modal" data-target="#kurangKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">DIKEMBALIKAN (KURANGI)</a>
-                                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">DIBAYARKAN (TAMBAH)</a>
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_in'], 0, ',', '.'); ?>">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Kasbon</label>
+                                    <div class="col-md-5">
+                                        <div class="form-group has-default">
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon'], 0, ',', '.'); ?>">
+                                            <?php if ($perjalanan['kasbon']>0){
+                                                echo '<a href="#" class="btn btn-wd btn-facebook" data-toggle="modal" data-target="#kurangKasbon" data-id="'. $perjalanan['id'].'" data-total="'. $perjalanan['total'].'" data-kasbon="'. $perjalanan['kasbon'].'">DIKEMBALIKAN</a>';
+                                            } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <div class="form-group has-default">
+                                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#tambahKasbon" data-id="<?= $perjalanan['id']; ?>" data-total="<?= $perjalanan['total']; ?>" data-kasbon="<?= $perjalanan['kasbon']; ?>">DIBAYARKAN (TAMBAH)</a>
+                                        </div>
+                                    </div>
+                                </div> -->
                                 <div class="row">
                                     <label class="col-md-2 col-form-label">Selisih/</br>Yang akan Dibayar FA</label>
                                     <div class="col-md-5">
@@ -287,7 +305,7 @@
                                             echo '<button type="submit" class="btn btn-fill btn-success">PROSES VERIFIKASI</button>';
                                         }else{
                                             echo '<small>PIC Perjalanan harus menyelesaikan kasbon terlebih dulu senilai </small> Rp '. number_format($selisih, 0, ',', '.').' </br>';
-                                            echo '<button type="submit" class="btn btn-fill btn-danger disabled">PIC TIDAK BOLEH MINUS</button>';
+                                            echo '<button type="submit" class="btn btn-wd btn-fill btn-danger disabled">PIC TIDAK BOLEH MINUS</button>';
                                         } ?>
                                             <a href="<?= base_url('perjalanandl/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
                                         </div>

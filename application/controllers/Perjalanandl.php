@@ -1364,6 +1364,7 @@ class Perjalanandl extends CI_Controller
     public function update_kasbon($parameter)
     {
         date_default_timezone_set('asia/jakarta');
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
         if ($parameter == 'tambah') {
             $this->db->set('kasbon', $this->input->post('kasbon')+$this->input->post('tambah_kasbon'));
             $this->db->where('id', $this->input->post('id'));
@@ -1372,6 +1373,7 @@ class Perjalanandl extends CI_Controller
             redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
         } elseif ($parameter == 'kurang') {
             $this->db->set('kasbon', $this->input->post('kasbon')-$this->input->post('kurang_kasbon'));
+            $this->db->set('kasbon_in', $perjalanan['kasbon_in']+$this->input->post('kurang_kasbon'));
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
 
@@ -1629,6 +1631,8 @@ class Perjalanandl extends CI_Controller
 
             $this->db->set('kasbon_by', $this->session->userdata('inisial'));
             $this->db->set('kasbon_at', date('Y-m-d H:i:s'));
+            $this->db->set('kasbon_out', $this->input->post('kasbon'));
+            $this->db->set('kasbon_in', 0);
             $this->db->set('kasbon', $this->input->post('kasbon'));
             $this->db->set('kasbon_status', 'OUTSTANDING');
             $this->db->where('id', $this->input->post('id'));

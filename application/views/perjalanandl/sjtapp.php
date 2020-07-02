@@ -153,13 +153,17 @@ $pdf->Cell(50, 12, '', 1, 0, 'C', 1);
 $pdf->Cell(0, 12, '', 0, 1, 0);
 
 $pdf->Cell(40, -16, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_div'])), 0, 0, 'C', 0);
-$pdf->Cell(40, -16, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_fin'])), 0, 0, 'C', 0);
+// Depthead Fin Adm
+// $pdf->Cell(40, -16, 'Disetujui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_fin'])), 0, 0, 'C', 0);
+$pdf->Cell(40, -16, '', 0, 0, 'C', 0);
 $pdf->Cell(50, -16, 'Diketahui pada ' . date('d/m/Y H:i', strtotime($reservasi['tgl_atasan2'])), 0, 0, 'C', 0);
 $pdf->Cell(50, -16, 'Dibuat pada ' . date('d/m/Y H:i', strtotime($reservasi['tglreservasi'])), 0, 0, 'C', 0);
 $pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 
 $pdf->Cell(40, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
-$pdf->Cell(40, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
+// Depthead Fin Adm
+// $pdf->Cell(40, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
+$pdf->Cell(40, -11, '', 0, 0, 'C', 0);
 $pdf->Cell(50, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
 $pdf->Cell(50, -11, 'Tidak memerlukan tanda tangan basah', 0, 0, 'C', 0);
 $pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
@@ -167,7 +171,8 @@ $pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
 $pdf->SetFont('Arial', 'B', 6);
 
 $pdf->Cell(40, -3, '( Eko Juwono )', 0, 0, 'C', 0);
-$pdf->Cell(40, -3, '( Dwi Ayu W. )', 0, 0, 'C', 0);
+// Depthead Fin Adm
+$pdf->Cell(40, -3, '', 0, 0, 'C', 0);
 $pdf->Cell(50, -3, '( ' .$perjalanan['ka_dept']. ' )', 0, 0, 'C', 0);
 $pdf->Cell(50, -3, '( ' . $perjalanan['nama'] . ' )', 0, 0, 'C', 0);
 $pdf->Cell(50, 0.1, '', 0, 1, 'C', 0);
