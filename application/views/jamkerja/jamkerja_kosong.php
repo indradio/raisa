@@ -71,6 +71,12 @@
                 <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/add_jamkerja'); ?>">
                     <div class="modal-body">
                     <input type="hidden" class="form-control" id="tanggal" name="tanggal" value="<?= date("d-m-Y", strtotime($tanggal)); ?>">
+                        <div class="row col-md-11 ml-auto mr-auto">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Mohon untuk memilih shift sesuai waktu kerja.
+                                    </br>Untuk perubahan shift dapat menghubungi admin.
+                            </div>
+                        </div>
                         <div class="row">
                                 <label class="col-md-3 col-form-label">Pilih Shift</label>
                                 <div class="col-md-7">
@@ -82,11 +88,6 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                                Untuk saat ini perubahan shift belum dapat dilakukan, mohon untuk memilih shift sesuai waktu kerja.
-                                </br>Untuk perubahan shift dapat menghubungi admin.
                             </div>
                         </div>
                     <div class="modal-footer justify-content-center">
