@@ -1,5 +1,16 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>PEMBARUAN SISTEM</strong>
+        </br>
+        </br>
+        Sehubungan dengan diberlakuknya sistem shift, maka ada perubahan saat pengisian jam kerja di awal untuk memilih shift.
+        </br> Kemungkinan untuk jam kerja yang sudah di input sebelumnya akan mengalami error data.
+        </br> Jika kamu mengalami error atau masalah segera hubungi admin (Indra Dio).
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 ml-auto mr-auto">

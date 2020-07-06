@@ -100,7 +100,7 @@ class Jamkerja extends CI_Controller
         }else{
             redirect('jamkerja/tanggal/'.$this->input->post('tanggal'));
         }
-    }
+    } 
 
     //via callendar
     public function checktanggal($date)
