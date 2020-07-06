@@ -16,7 +16,7 @@
                             <form class="form" id="formDate" method="post" action="<?= base_url('jamkerja/pilihtanggal'); ?>">
                                 <div class="form-group label-floating">
                                     <div class="input-group date">
-                                        <input type="text" id="tanggal" name="tanggal" class="form-control datepicker" placeholder="Pilih Tanggal" required="true" />
+                                        <input type="text" id="tanggal" name="tanggal" class="form-control datepicker" value="<?= date('d-m-y');?>" placeholder="Pilih Tanggal" required="true" />
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <span class="glyphicon glyphicon-calendar"><i class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -43,37 +43,6 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
-
-<!-- Modal JamKerja
-<div class="modal fade" id="jamkerjaModal" tabindex="-1" role="dialog" aria-labelledby="jamkerjaModalTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-danger text-center">
-                    </div>
-                </div>
-                <form class="form-horizontal" method="post" action="<?= base_url('jamkerja/pilihtanggal'); ?>">
-                    <div class="modal-body">
-                        <div class="form-group label-floating">
-                            <div class="input-group date">
-                                <input type="text" id="tanggal" name="tanggal" class="form-control datepicker" placeholder="Pilih Tanggal" required="true" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <span class="glyphicon glyphicon-calendar"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-success">BUAT LAPORAN</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -153,48 +122,19 @@
             ],
             eventLimit: true, // allow "more" link when too many events
 
-            // dateClick: function(info) {
-            //     alert('Date: ' + info.dateStr);
-            //     alert('Resource ID: ' + info.resource.id);
-            // },
-
             select: function(start, end, info) {
 
-                window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
-                // on select we show the Sweet Alert modal with an input
-                // swal({
-                //         title: 'Maaf, Fitur ini masih dalam pengembangan.',
-                //         // html: '<div class="form-group">' +
-                //         //     '<input class="form-control" placeholder="Event Title" id="input-field">' +
-                //         //     '</div>',
-                //         html: 'Silahkan gunakan tombol "laporkan sekarang!" di atas untuk memilih tanggal yang kamu inginkan.'+y,
-                //         showCancelButton: false,
-                //         confirmButtonClass: 'btn btn-success',
-                //         cancelButtonClass: 'btn btn-danger',
-                //         buttonsStyling: false
-                //     }).then(function(result) {
-
-                //         var eventData;
-                //         event_title = $('#input-field').val();
-
-                //         if (event_title) {
-                //             eventData = {
-                //                 title: event_title,
-                //                 start: start,
-                //                 end: end
-                //             };
-                //             $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
-                //         }
-                //         $calendar.fullCalendar('unselect');
-                //     })
-                //     .catch(swal.noop);
+                window.location = '<?= base_url('jamkerja/checktanggal/'); ?>' + start.format();
             },
 
-            // eventClick: function(info) {
-            //     alert('Date: ' + info.dateStr);
-            //     alert('Resource ID: ' + info.resource.id);
-            //     // $('#jamkerjaModal').modal("show");
-            // }
+            // select: function (start, end) {
+            //     // on select we show the Sweet Alert modal with an input
+            //     swal({
+            //         title: 'Maaf untuk sementara fitur ini di-nonaktifkan, silahkan gunakan tombol yang ada di atas.',
+            //     })
+            //     .catch(swal.noop);
+            // },
+
         });
     });
 </script>

@@ -34,23 +34,37 @@ class Jamkerja extends CI_Controller
     public function add_jamkerja()
     {
         date_default_timezone_set('asia/jakarta');
+        $tanggal = $this->input->post('tanggal');
+        $tahun = date("Y", strtotime($tanggal));
+        $bulan = date("m", strtotime($tanggal));
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
-        $tglmulai = date('Y-m-d 07:30:00');
-        $tglselesai = date('Y-m-d 16:30:00');
+        if ($this->input->post('shift')=='SHIFT1'){
+            $tglmulai = date('Y-m-d 00:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 07:30:00', strtotime($tanggal));
+            $due = strtotime(date('Y-m-d 00:00:00', strtotime('+1 days', strtotime($tanggal))));
+        }elseif($this->input->post('shift')=='SHIFT2'){
+            $tglmulai = date('Y-m-d 07:30:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 16:30:00', strtotime($tanggal));
+            $due = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($tanggal))));
+        }elseif($this->input->post('shift')=='SHIFT3'){
+            $tglmulai = date('Y-m-d 16:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 00:00:00', strtotime('+1 days',strtotime($tanggal)));
+            $due = strtotime(date('Y-m-d 16:00:00', strtotime('+1 days', strtotime($tanggal))));
+        }
         
-        $this->db->where('year(tglmulai)', date('Y'));
-        $this->db->where('month(tglmulai)', date('m'));
+        $create = time();
+        $respon = $due - $create;
+
+        $this->db->where('year(tglmulai)', $tahun);
+        $this->db->where('month(tglmulai)', $bulan);
         $hitung_jamkerja = $this->db->get('jamkerja');
         $total_jamkerja = $hitung_jamkerja->num_rows()+1;
-        $id = 'WH'.date('ym'). sprintf("%04s", $total_jamkerja);
-
-        $create = time();
-        $due = strtotime(date('Y-m-d 23:59:00'));
-        $respon = $due - $create;
+        $id = 'WH'.date('ym', strtotime($tanggal)). sprintf("%04s", $total_jamkerja);
 
         $data = [
             'id' => $id,
+            'shift' => $this->input->post('shift'),
             'npk' => $this->session->userdata('npk'),
             'nama' => $this->session->userdata('nama'),
             'tglmulai' => $tglmulai,
@@ -66,94 +80,91 @@ class Jamkerja extends CI_Controller
             'status' => '0'
         ];
         $this->db->insert('jamkerja', $data);
-        redirect('jamkerja');
+        redirect('jamkerja/tanggal/'.$tanggal);
     }
 
+    //via button
     public function pilihtanggal()
     {
         date_default_timezone_set('asia/jakarta');
-        if (date('D', strtotime($this->input->post('tanggal')))=='Sat' or date('D', strtotime($this->input->post('tanggal')))=='Sun'){
+        $strdate = strtotime($this->input->post('tanggal'));
+        $strnow =  time();
+        $strlastyear = strtotime(date('2019-12-31'));
+
+        if ($strdate>=$strnow){
+            redirect('jamkerja');
+        }elseif ($strdate<=$strlastyear){
+            redirect('jamkerja');
+        }elseif (date('D', strtotime($this->input->post('tanggal')))=='Sat' or date('D', strtotime($this->input->post('tanggal')))=='Sun'){
             redirect('jamkerja');
         }else{
             redirect('jamkerja/tanggal/'.$this->input->post('tanggal'));
         }
     }
 
-    public function tanggal($tanggal)
+    //via callendar
+    public function checktanggal($date)
     {
-            date_default_timezone_set('asia/jakarta');
-            $tahun = date("Y", strtotime($tanggal));
-            $bulan = date("m", strtotime($tanggal));
-            $hari =  date("d", strtotime($tanggal));
-            $strdate = strtotime($tanggal);
-            $strnow =  time();
-            $strlastyear = strtotime(date('2019-12-31'));
+        date_default_timezone_set('asia/jakarta');
+        $strdate = strtotime($date);
+        $strnow =  time();
+        $strlastyear = strtotime(date('2019-12-31'));
 
+        if ($strdate>=$strnow){
+            redirect('jamkerja');
+        }elseif ($strdate<=$strlastyear){
+            redirect('jamkerja');
+        }elseif (date('D', strtotime($date))=='Sat' or date('D', strtotime($date))=='Sun'){
+            redirect('jamkerja');
+        }else{
+            redirect('jamkerja/tanggal/'.$date);
+        }
+    }
+
+    public function tanggal($date)
+    {
+        date_default_timezone_set('asia/jakarta');
+        
+        $tahun = date("Y", strtotime($date));
+        $bulan = date("m", strtotime($date));
+        $tanggal =  date("d", strtotime($date));
+    
+        $this->db->where('year(tglmulai)',$tahun);
+        $this->db->where('month(tglmulai)',$bulan);
+        $this->db->where('day(tglmulai)',$tanggal);
+        $this->db->where('npk',$this->session->userdata('npk'));
+        $jamkerja = $this->db->get('jamkerja')->row_array();
+        if (!empty($jamkerja['id'])){
+        
+            $data['sidemenu'] = 'Jam Kerja';
+            $data['sidesubmenu'] = 'Laporan Kerja Harian';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $this->db->where('year(tglmulai)',$tahun);
             $this->db->where('month(tglmulai)',$bulan);
-            $this->db->where('day(tglmulai)',$hari);
+            $this->db->where('day(tglmulai)',$tanggal);
             $this->db->where('npk',$this->session->userdata('npk'));
-            $jamkerja = $this->db->get('jamkerja')->row_array();
-            if ($jamkerja['id']){
-         
-                $data['sidemenu'] = 'Jam Kerja';
-                $data['sidesubmenu'] = 'Laporan Kerja Harian';
-                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-                $this->db->where('year(tglmulai)',$tahun);
-                $this->db->where('month(tglmulai)',$bulan);
-                $this->db->where('day(tglmulai)',$hari);
-                $this->db->where('npk',$this->session->userdata('npk'));
-                $data['jamkerja'] = $this->db->get('jamkerja')->row_array();
-                $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-                $data['project'] = $this->jamkerja_model->fetch_project();
-                $this->load->view('templates/header', $data);
-                $this->load->view('templates/sidebar', $data);
-                $this->load->view('templates/navbar', $data);
-                $this->load->view('jamkerja/jamkerja_tanggal', $data);
-                $this->load->view('templates/footer');
-         
-            }else{
-                if ($strdate>=$strnow){
-                    redirect('jamkerja');
-                }elseif ($strdate<=$strlastyear){
-                    redirect('jamkerja');
-                }else{
-         
-                    $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+            $data['jamkerja'] = $this->db->get('jamkerja')->row_array();
+            $data['kategori'] = $this->jamkerja_model->fetch_kategori();
+            $data['project'] = $this->jamkerja_model->fetch_project();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/jamkerja_tanggal', $data);
+            $this->load->view('templates/footer');
+        
+        }else{
 
-                    $tglmulai = date('Y-m-d 07:30:00', strtotime($tanggal));
-                    $tglselesai = date('Y-m-d 16:30:00', strtotime($tanggal));
-                    
-                    $this->db->where('year(tglmulai)', $tahun);
-                    $this->db->where('month(tglmulai)', $bulan);
-                    $hitung_jamkerja = $this->db->get('jamkerja');
-                    $total_jamkerja = $hitung_jamkerja->num_rows()+1;
-                    $id = 'WH'.date('ym', strtotime($tanggal)). sprintf("%04s", $total_jamkerja);
+            $data['sidemenu'] = 'Jam Kerja';
+            $data['sidesubmenu'] = 'Laporan Kerja Harian';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['tanggal'] = date("d M Y", strtotime($date));
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/jamkerja_kosong', $data);
+            $this->load->view('templates/footer');
 
-                    $create = time();
-                    $due = strtotime(date('Y-m-d 23:59:00', strtotime($tanggal)));
-                    $respon = $due - $create;
-
-                    $data = [
-                        'id' => $id,
-                        'npk' => $this->session->userdata('npk'),
-                        'nama' => $this->session->userdata('nama'),
-                        'tglmulai' => $tglmulai,
-                        'tglselesai' => $tglselesai,
-                        'durasi' => '00:00:00',
-                        'atasan1' => $atasan1['inisial'],
-                        'posisi_id' => $this->session->userdata('posisi_id'),
-                        'div_id' => $this->session->userdata('div_id'),
-                        'dept_id' => $this->session->userdata('dept_id'),
-                        'sect_id' => $this->session->userdata('sect_id'),
-                        'create' => date('Y-m-d H:i:s'),
-                        'respon_create' => $respon,
-                        'status' => '0'
-                    ];
-                    $this->db->insert('jamkerja', $data);
-                    redirect('jamkerja/tanggal/'.$tanggal);
-                }
-            }
+        }
     }
 
     public function ajax()
@@ -230,47 +241,136 @@ class Jamkerja extends CI_Controller
         $this->db->from('aktivitas');
         $totaldurasi = $this->db->get()->row()->total;
 
-        if ($totaldurasi>=8){
-            $this->db->set('rev', 0);
-            $this->db->set('status', 1);
-        }else{
-            $this->db->set('status', 0);
-        }
-
-        $this->db->set('create', date('Y-m-d H:i:s'));
-        $this->db->set('respon_create', $respon);
-        $this->db->set('durasi', $totaldurasi);
-        $this->db->where('id', $jamkerja['id']);
-        $this->db->update('jamkerja');
-
-        if ($this->session->userdata('posisi_id')!=7){
-            if ($totaldurasi>=8){
-                $this->db->select_sum('durasi');
-                $this->db->where('link_aktivitas', $jamkerja['id']);
-                $this->db->where('kategori', '1');
-                $query1 = $this->db->get('aktivitas');
-                $kategori1 = $query1->row()->durasi;
-                $produktif1 = ($kategori1 / 8) * 100;
-
-                $this->db->select_sum('durasi');
-                $this->db->where('link_aktivitas', $jamkerja['id']);
-                $this->db->where('kategori', '2');
-                $query2 = $this->db->get('aktivitas');
-                $kategori2 = $query2->row()->durasi;
-                $produktif2 = ($kategori2 / 8) * 100;
-
-                $produktifitas = $produktif1 + $produktif2;
-
-                $this->db->set('produktifitas', $produktifitas);
+        if ($jamkerja['shift']=='SHIFT1'){
+            
+            if ($totaldurasi>=6){
                 $this->db->set('rev', 0);
-                $this->db->set('status', 2);
-                $this->db->set('create', date('Y-m-d H:i:s'));
-                $this->db->set('respon_create', $respon);
-                $this->db->set('durasi', $totaldurasi);
-                $this->db->where('id', $jamkerja['id']);
-                $this->db->update('jamkerja');
+                $this->db->set('status', 1);
+            }else{
+                $this->db->set('status', 0);
             }
-        } 
+    
+            $this->db->set('create', date('Y-m-d H:i:s'));
+            $this->db->set('respon_create', $respon);
+            $this->db->set('durasi', $totaldurasi);
+            $this->db->where('id', $jamkerja['id']);
+            $this->db->update('jamkerja');
+    
+            if ($this->session->userdata('posisi_id')!=6){
+                if ($totaldurasi>=6){
+                    $this->db->select_sum('durasi');
+                    $this->db->where('link_aktivitas', $jamkerja['id']);
+                    $this->db->where('kategori', '1');
+                    $query1 = $this->db->get('aktivitas');
+                    $kategori1 = $query1->row()->durasi;
+                    $produktif1 = ($kategori1 / 6) * 100;
+    
+                    $this->db->select_sum('durasi');
+                    $this->db->where('link_aktivitas', $jamkerja['id']);
+                    $this->db->where('kategori', '2');
+                    $query2 = $this->db->get('aktivitas');
+                    $kategori2 = $query2->row()->durasi;
+                    $produktif2 = ($kategori2 / 6) * 100;
+    
+                    $produktifitas = $produktif1 + $produktif2;
+    
+                    $this->db->set('produktifitas', $produktifitas);
+                    $this->db->set('rev', 0);
+                    $this->db->set('status', 2);
+                    $this->db->set('create', date('Y-m-d H:i:s'));
+                    $this->db->set('respon_create', $respon);
+                    $this->db->set('durasi', $totaldurasi);
+                    $this->db->where('id', $jamkerja['id']);
+                    $this->db->update('jamkerja');
+                }
+            } 
+        }elseif ($jamkerja['shift']=='SHIFT2'){
+            
+            if ($totaldurasi>=8){
+                $this->db->set('rev', 0);
+                $this->db->set('status', 1);
+            }else{
+                $this->db->set('status', 0);
+            }
+    
+            $this->db->set('create', date('Y-m-d H:i:s'));
+            $this->db->set('respon_create', $respon);
+            $this->db->set('durasi', $totaldurasi);
+            $this->db->where('id', $jamkerja['id']);
+            $this->db->update('jamkerja');
+    
+            if ($this->session->userdata('posisi_id')!=8){
+                if ($totaldurasi>=8){
+                    $this->db->select_sum('durasi');
+                    $this->db->where('link_aktivitas', $jamkerja['id']);
+                    $this->db->where('kategori', '1');
+                    $query1 = $this->db->get('aktivitas');
+                    $kategori1 = $query1->row()->durasi;
+                    $produktif1 = ($kategori1 / 8) * 100;
+    
+                    $this->db->select_sum('durasi');
+                    $this->db->where('link_aktivitas', $jamkerja['id']);
+                    $this->db->where('kategori', '2');
+                    $query2 = $this->db->get('aktivitas');
+                    $kategori2 = $query2->row()->durasi;
+                    $produktif2 = ($kategori2 / 8) * 100;
+    
+                    $produktifitas = $produktif1 + $produktif2;
+    
+                    $this->db->set('produktifitas', $produktifitas);
+                    $this->db->set('rev', 0);
+                    $this->db->set('status', 2);
+                    $this->db->set('create', date('Y-m-d H:i:s'));
+                    $this->db->set('respon_create', $respon);
+                    $this->db->set('durasi', $totaldurasi);
+                    $this->db->where('id', $jamkerja['id']);
+                    $this->db->update('jamkerja');
+                }
+            } 
+        }elseif ($jamkerja['shift']=='SHIFT3'){
+            
+            if ($totaldurasi>=7){
+                $this->db->set('rev', 0);
+                $this->db->set('status', 1);
+            }else{
+                $this->db->set('status', 0);
+            }
+    
+            $this->db->set('create', date('Y-m-d H:i:s'));
+            $this->db->set('respon_create', $respon);
+            $this->db->set('durasi', $totaldurasi);
+            $this->db->where('id', $jamkerja['id']);
+            $this->db->update('jamkerja');
+    
+            if ($this->session->userdata('posisi_id')!=7){
+                if ($totaldurasi>=7){
+                    $this->db->select_sum('durasi');
+                    $this->db->where('link_aktivitas', $jamkerja['id']);
+                    $this->db->where('kategori', '1');
+                    $query1 = $this->db->get('aktivitas');
+                    $kategori1 = $query1->row()->durasi;
+                    $produktif1 = ($kategori1 / 7) * 100;
+    
+                    $this->db->select_sum('durasi');
+                    $this->db->where('link_aktivitas', $jamkerja['id']);
+                    $this->db->where('kategori', '2');
+                    $query2 = $this->db->get('aktivitas');
+                    $kategori2 = $query2->row()->durasi;
+                    $produktif2 = ($kategori2 / 7) * 100;
+    
+                    $produktifitas = $produktif1 + $produktif2;
+    
+                    $this->db->set('produktifitas', $produktifitas);
+                    $this->db->set('rev', 0);
+                    $this->db->set('status', 2);
+                    $this->db->set('create', date('Y-m-d H:i:s'));
+                    $this->db->set('respon_create', $respon);
+                    $this->db->set('durasi', $totaldurasi);
+                    $this->db->where('id', $jamkerja['id']);
+                    $this->db->update('jamkerja');
+                }
+            } 
+        }
        
         redirect('jamkerja/tanggal/'.date("Y-m-d", strtotime($jamkerja['tglmulai'])));
     }

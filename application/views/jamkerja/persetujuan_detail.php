@@ -37,6 +37,13 @@
               <?php
               $link = $jamkerja['id'];
               $durasi = $jamkerja['durasi'];
+              if ($jamkerja['shift']=='SHIFT1'){
+                $shift = 6;
+              }elseif ($jamkerja['shift']=='SHIFT2'){
+                $shift = 8;
+              }elseif ($jamkerja['shift']=='SHIFT3'){
+                $shift = 7;
+              }
 
               $this->db->select_sum('durasi');
               $this->db->where('link_aktivitas', $link);
@@ -44,7 +51,7 @@
               $query1 = $this->db->get('aktivitas');
               $kategori1 = $query1->row()->durasi;
               $bar1 = $kategori1 * 12.5;
-              $produktif1 = ($kategori1 / 8) * 100;
+              $produktif1 = ($kategori1 / $shift) * 100;
 
               $this->db->select_sum('durasi');
               $this->db->where('link_aktivitas', $link);
@@ -52,7 +59,7 @@
               $query2 = $this->db->get('aktivitas');
               $kategori2 = $query2->row()->durasi;
               $bar2 = $kategori2 * 12.5;
-              $produktif2 = ($kategori2 / 8) * 100;
+              $produktif2 = ($kategori2 / $shift) * 100;
 
               $this->db->select_sum('durasi');
               $this->db->where('link_aktivitas', $link);
@@ -60,7 +67,7 @@
               $query3 = $this->db->get('aktivitas');
               $kategori3 = $query3->row()->durasi;
               $bar3 = $kategori3 * 12.5;
-              $produktif3 = ($kategori3 / 8) * 0;
+              $produktif3 = ($kategori3 / $shift) * 0;
 
               $produktifitas = $produktif1 + $produktif2 + $produktif3;
               ?>
@@ -71,8 +78,11 @@
                   <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2; ?>%" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                   <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3; ?>%" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
               </div>
-              <?php if ($jamkerja['durasi'] < 8)
-              {
+              <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){
+                echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';
+              } elseif($jamkerja['shift']=='SHIFT2' AND $jamkerja['durasi']<8){
+                echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';
+              } elseif($jamkerja['shift']=='SHIFT3' AND $jamkerja['durasi']<7){
                 echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';
               } ?>
             </div>
@@ -149,7 +159,15 @@
                                 <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-default" role="button">Kembali</a>
                             <?php }else{ ?>
                                 <!-- Button SUBMIT -->
-                                <?php if($jamkerja['durasi']<8){ ?>
+                                <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){ ?>
+                                <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
+                                <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
+                                <?php }elseif($jamkerja['shift']=='SHIFT2' AND $jamkerja['durasi']<8){ ?>
+                                <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
+                                <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
+                                <?php }elseif($jamkerja['shift']=='SHIFT3' AND $jamkerja['durasi']<7){ ?>
                                 <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
                                 <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>

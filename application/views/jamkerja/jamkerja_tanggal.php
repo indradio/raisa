@@ -65,7 +65,7 @@
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Laporan Kerja Harian
+                        <h4 class="card-title">Laporan Kerja Harian <?= $jamkerja['shift']; ?>
                             <small> - <?= date("d M Y", strtotime($jamkerja['tglmulai'])); ?></small>
                         </h4>
                     </div>
@@ -100,19 +100,30 @@
                                     $kategori3 = $query3->row()->durasi;
                                     $bar3 = $kategori3 * 12.5;
 
-                                    if ($durasi <= 4) {
+                                    if ($durasi < 4) {
                                         $sisadurasi = 4;
                                     } else {
-                                        $sisadurasi = 8 - $durasi;
+                                        if ($jamkerja['shift']=='SHIFT1'){
+                                            $sisadurasi = 6 - $durasi;
+                                        }elseif ($jamkerja['shift']=='SHIFT2'){
+                                            $sisadurasi = 8 - $durasi;
+                                        }elseif ($jamkerja['shift']=='SHIFT3'){
+                                            $sisadurasi = 7 - $durasi;
+                                        }
                                     }
                                     $jam = $this->db->get_where('jam', ['id <=' =>  $sisadurasi])->result();
-                            ?>
+                                    ?>
                                     <div class="progress" style="width: 100%">
                                         <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1 . '%'; ?>" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                                         <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2 . '%'; ?>" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                                         <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3 . '%'; ?>" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                                     </div>
-                                    <?php if ($durasi < 8.0) { ?>
+
+                                    <?php if ($jamkerja['shift']=='SHIFT1' and $durasi < 6.0) { ?>
+                                        <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
+                                    <?php }elseif ($jamkerja['shift']=='SHIFT2' and $durasi < 8.0){ ?>
+                                        <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
+                                    <?php }elseif ($jamkerja['shift']=='SHIFT3' and $durasi < 7.0){ ?>
                                         <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
                                     <?php }; ?>
                         </div>
@@ -173,8 +184,9 @@
                     <div class="card-footer">
                         <!-- <div class="row"> -->
                         <p> Perhatikan hal-hal berikut :
-                            </br> 1. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 8 Jam Kerja.
-                            </br> 2. Istirahat Siang hanya untuk aktivitas lembur, tidak untuk Laporan Kerja Harian.
+                            </br> 1. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 8 Jam Kerja untuk shift 1.
+                            </br> 2. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 7 Jam Kerja untuk shift 2.
+                            </br> 3. Istirahat Siang hanya untuk aktivitas lembur, tidak untuk Laporan Kerja Harian.
                             <!-- </div> -->
                             </br>
                             </br>
