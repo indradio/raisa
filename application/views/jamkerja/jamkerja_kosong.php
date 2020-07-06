@@ -83,7 +83,12 @@
                                     </div>
                                 </div>
                             </div>
-                    </div>
+                        </div>
+                        <div class="row">
+                                Untuk saat ini perubahan shift belum dapat dilakukan, mohon untuk memilih shift sesuai waktu kerja.
+                                </br>Untuk perubahan shift dapat menghubungi admin.
+                            </div>
+                        </div>
                     <div class="modal-footer justify-content-center">
                         <button type="submit" class="btn btn-success">BUAT LAPORAN</button>
                     </div>
