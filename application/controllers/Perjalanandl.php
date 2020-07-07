@@ -1495,14 +1495,6 @@ class Perjalanandl extends CI_Controller
             $tb = $p_peserta['total'];
         }
 
-        $bayar = $perjalanan['bayar']+$tp;
-        $selisih = $perjalanan['total']-$bayar;
-
-        $this->db->set('bayar', $bayar);
-        $this->db->set('selisih',$selisih);
-        $this->db->where('id', $id);
-        $this->db->update('perjalanan');
-
         $this->db->set('bayar', $tp);
         $this->db->set('payment_by', $this->session->userdata('inisial'));
         $this->db->set('payment_at', date('Y-m-d H:i:s'));
@@ -1511,6 +1503,19 @@ class Perjalanandl extends CI_Controller
         $this->db->where('perjalanan_id', $id);
         $this->db->where('npk', $npk);
         $this->db->update('perjalanan_anggota');
+
+        $this->db->select_sum('bayar');
+        $this->db->where('perjalanan_id', $id);
+        $this->db->where('status_pembayaran', 'SUDAH DIBAYAR');
+        $bayar = $this->db->get('perjalanan_anggota');
+        $total_bayar = $bayar->row()->bayar;
+
+        $selisih = $perjalanan['total']-$bayar;
+
+        $this->db->set('bayar', $total_bayar);
+        $this->db->set('selisih',$selisih);
+        $this->db->where('id', $id);
+        $this->db->update('perjalanan');
 
         $user = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
         $client = new \GuzzleHttp\Client();
