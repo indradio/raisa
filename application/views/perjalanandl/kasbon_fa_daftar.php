@@ -22,6 +22,7 @@
                                         <th>Waktu Berangkat</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
                                         <th>Nama <small>(<i>PIC</i>)</small></th>
+                                        <th>e-Wallet</th>
                                         <th>Tujuan</th>
                                         <th>Kendaraan</th>
                                         <th>Total</th>
@@ -48,6 +49,7 @@
                                         <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                         <td><?= $p['nama']; ?></td>
                                         <td><?= $pic['nama']; ?></td>
+                                        <td><?= $pic['ewallet_1']; ?></td>
                                         <td><?= $p['tujuan']; ?></td>
                                         <td><?= $p['kepemilikan']; ?></td>
                                         <td><?= number_format($p['total'], 0, ',', '.'); ?></td>
@@ -65,6 +67,7 @@
                                         <th>Waktu Berangkat</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
                                         <th>PIC</th>
+                                        <th>e-Wallet</th>
                                         <th>Tujuan</th>
                                         <th>Kendaraan</th>
                                         <th>Total</th>
