@@ -41,6 +41,7 @@ class Lembur extends CI_Controller
     {
         //Auto batalkan LEMBUR
         $this->db->where('status', '1');
+        $this->db->where('life', '0');
         $rencanalembur = $this->db->get('lembur')->result_array();
 
         foreach ($rencanalembur as $l) :

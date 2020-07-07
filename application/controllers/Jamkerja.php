@@ -69,7 +69,7 @@ class Jamkerja extends CI_Controller
             'nama' => $this->session->userdata('nama'),
             'tglmulai' => $tglmulai,
             'tglselesai' => $tglselesai,
-            'durasi' => '00:00:00',
+            'durasi' => '0',
             'atasan1' => $atasan1['inisial'],
             'posisi_id' => $this->session->userdata('posisi_id'),
             'div_id' => $this->session->userdata('div_id'),
