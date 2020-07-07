@@ -1510,7 +1510,7 @@ class Perjalanandl extends CI_Controller
         $bayar = $this->db->get('perjalanan_anggota');
         $total_bayar = $bayar->row()->bayar;
 
-        $selisih = $perjalanan['total']-$bayar;
+        $selisih = $perjalanan['total']-$total_bayar;
 
         $this->db->set('bayar', $total_bayar);
         $this->db->set('selisih',$selisih);
