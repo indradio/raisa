@@ -256,7 +256,7 @@ class Jamkerja extends CI_Controller
             $this->db->where('id', $jamkerja['id']);
             $this->db->update('jamkerja');
     
-            if ($this->session->userdata('posisi_id')!=6){
+            if ($this->session->userdata('posisi_id')!=7){
                 if ($totaldurasi>=6){
                     $this->db->select_sum('durasi');
                     $this->db->where('link_aktivitas', $jamkerja['id']);
@@ -299,7 +299,7 @@ class Jamkerja extends CI_Controller
             $this->db->where('id', $jamkerja['id']);
             $this->db->update('jamkerja');
     
-            if ($this->session->userdata('posisi_id')!=8){
+            if ($this->session->userdata('posisi_id')!=7){
                 if ($totaldurasi>=8){
                     $this->db->select_sum('durasi');
                     $this->db->where('link_aktivitas', $jamkerja['id']);

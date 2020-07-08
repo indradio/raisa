@@ -173,7 +173,7 @@
                         }, 0);
     
                     return 'Total in '+group+' : '+
-                        $.fn.dataTable.render.number('.', ',', 0, 'Rp ').display( avg );
+                        $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display( avg );
                 },
                 dataSrc: 0
             },
