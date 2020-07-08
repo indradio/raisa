@@ -242,8 +242,8 @@
                           <?php } else {
                           echo '<tr>';
                         } ?>
-                          <td><?= date('D', strtotime($bulan . '-' . $i . '-' . $tahun)); ?></td>
-                          <td><?= $bulan . '-' . $i . '-' . $tahun; ?></td>
+                          <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
+                          <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                           <td><?= $jamkerja['shift']; ?></td>
                           <td><?= $k['nama']; ?></td>
                           <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
@@ -268,8 +268,8 @@
                           </tr>
                         <?php } else { ?>
                           <tr>
-                            <td><?= date('D', strtotime($bulan . '-' . $i . '-' . $tahun)); ?></td>
-                            <td><?= $bulan . '-' . $i . '-' . $tahun; ?></td>
+                            <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
+                            <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                             <td><?= $jamkerja['shift']; ?></td>
                             <td><?= $k['nama']; ?></td>
                             <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
