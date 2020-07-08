@@ -171,6 +171,7 @@
                   <tr>
                     <th>Hari</th>
                     <th>Tanggal</th>
+                    <th>Shift</th>
                     <th>Nama</th>
                     <th>Cell</th>
                     <th>Tgl Submit</th>
@@ -183,6 +184,7 @@
                   <tr>
                     <th>Hari</th>
                     <th>Tanggal</th>
+                    <th>Shift</th>
                     <th>Nama</th>
                     <th>Cell</th>
                     <th>Tgl Submit</th>
@@ -242,6 +244,7 @@
                         } ?>
                           <td><?= date('D', strtotime($bulan . '-' . $i . '-' . $tahun)); ?></td>
                           <td><?= $bulan . '-' . $i . '-' . $tahun; ?></td>
+                          <td><?= $jamkerja['shift']; ?></td>
                           <td><?= $k['nama']; ?></td>
                           <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
                           <td><?= $sect['nama']; ?></td>
