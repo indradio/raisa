@@ -72,19 +72,19 @@
                                             <td><?= $p['tujuan']; ?></td>
                                             <td><?= $pp['karyawan_nama']; ?></td>
                                             <td><?= $peserta['ewallet_1']; ?></td>
-                                            <td><?= $pp['total']; ?></td>
+                                            <td><?= number_format($pp['total'], 0, '.', ','); ?></td>
                                             <?php if ($p['pic_perjalanan']==$pp['karyawan_inisial']){
-                                                echo '<td>'. $p['taksi'],'</td>';
-                                                echo '<td>'. $p['bbm'],'</td>';
-                                                echo '<td>'. $p['tol'],'</td>';
-                                                echo '<td>'. $p['parkir'],'</td>';
+                                                echo '<td>'. number_format($p['taksi'], 0, '.', ','),'</td>';
+                                                echo '<td>'. number_format($p['bbm'], 0, '.', ','),'</td>';
+                                                echo '<td>'. number_format($p['tol'], 0, '.', ','),'</td>';
+                                                echo '<td>'. number_format($p['parkir'], 0, '.', ','),'</td>';
                                             } else {
                                                 echo '<td>0</td>';
                                                 echo '<td>0</td>';
                                                 echo '<td>0</td>';
                                                 echo '<td>0</td>';
                                             }?>
-                                            <td><?= $pp['bayar']; ?></td>
+                                            <td><?= number_format($pp['bayar'], 0, '.', ','); ?></td>
                                             <td><?= substr($reservasi['atasan1'], -3).' - '.date("d-m-Y H:i", strtotime($reservasi['tgl_atasan1'])); ?></td>
                                             <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
                                             <?php if ($pp['payment_by']){
@@ -203,8 +203,8 @@
                     ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
                         
                 if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah += separator + ribuan.join('.');
+                    separator = sisa ? ',' : '';
+                    rupiah += separator + ribuan.join(',');
                 }
 
                 // Update footer
