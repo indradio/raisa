@@ -243,7 +243,7 @@ class Jamkerja extends CI_Controller
 
         if ($jamkerja['shift']=='SHIFT1'){
             
-            if ($totaldurasi>=6){
+            if ($totaldurasi==6){
                 $this->db->set('rev', 0);
                 $this->db->set('status', 1);
             }else{
@@ -257,7 +257,7 @@ class Jamkerja extends CI_Controller
             $this->db->update('jamkerja');
     
             if ($this->session->userdata('posisi_id')!=7){
-                if ($totaldurasi>=6){
+                if ($totaldurasi==6){
                     $this->db->select_sum('durasi');
                     $this->db->where('link_aktivitas', $jamkerja['id']);
                     $this->db->where('kategori', '1');
@@ -286,7 +286,7 @@ class Jamkerja extends CI_Controller
             } 
         }elseif ($jamkerja['shift']=='SHIFT2'){
             
-            if ($totaldurasi>=8){
+            if ($totaldurasi==8){
                 $this->db->set('rev', 0);
                 $this->db->set('status', 1);
             }else{
@@ -300,7 +300,7 @@ class Jamkerja extends CI_Controller
             $this->db->update('jamkerja');
     
             if ($this->session->userdata('posisi_id')!=7){
-                if ($totaldurasi>=8){
+                if ($totaldurasi==8){
                     $this->db->select_sum('durasi');
                     $this->db->where('link_aktivitas', $jamkerja['id']);
                     $this->db->where('kategori', '1');
@@ -329,7 +329,7 @@ class Jamkerja extends CI_Controller
             } 
         }elseif ($jamkerja['shift']=='SHIFT3'){
             
-            if ($totaldurasi>=7){
+            if ($totaldurasi==7){
                 $this->db->set('rev', 0);
                 $this->db->set('status', 1);
             }else{
@@ -343,7 +343,7 @@ class Jamkerja extends CI_Controller
             $this->db->update('jamkerja');
     
             if ($this->session->userdata('posisi_id')!=7){
-                if ($totaldurasi>=7){
+                if ($totaldurasi==7){
                     $this->db->select_sum('durasi');
                     $this->db->where('link_aktivitas', $jamkerja['id']);
                     $this->db->where('kategori', '1');
