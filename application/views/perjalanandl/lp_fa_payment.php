@@ -144,14 +144,24 @@
             scrollY: '512px',
             dom: 'Bfrtip',
             buttons: [
-                'copy', 'csv', 'excel',
+                'copy',
                 {
-                extend: 'pdfHtml5',
-                orientation: 'landscape',
-                pageSize: 'A3',
-                download: 'open',
-                footer: true
-            }
+                    extend: 'excelHtml5',
+                    title: 'REKAP KLAIM BIAYA DINAS LUAR',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    messageTop: '<?= date("d.m.Y", strtotime($tglawal)).' - '.date("d.m.Y", strtotime($tglakhir)); ?>',
+                    footer: true
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Data RAISA - Payment Perjalanan Dinas',
+                    text:'<i class="fa fa-file-pdf-o" aria-hidden="true" ></i>',
+                    messageTop: 'REKAP KLAIM BIAYA DINAS LUAR PERIODE <?= date("d M Y", strtotime($tglawal)).' - '.date("d M Y", strtotime($tglakhir)); ?>',
+                    orientation: 'landscape',
+                    pageSize: 'A3',
+                    download: 'open',
+                    footer: true
+                }
             ],
             order: [
                 [0, 'asc']
