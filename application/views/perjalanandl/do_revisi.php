@@ -59,7 +59,7 @@
                                 <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker disabled" id="jamberangkat" name="jamberangkat" value="<?= $perjalanan['jamberangkat']; ?>">
+                                        <input type="text" class="form-control disabled" id="jamberangkat" name="jamberangkat" value="<?= date('H:i', strtotime($perjalanan['jamberangkat'])); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                                 <label class="col-md-2 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
-                                        <input type="time" class="form-control timepicker disabled" id="jamkembali" name="jamkembali" value="<?= $perjalanan['jamkembali']; ?>">
+                                        <input type="text" class="form-control disabled" id="jamkembali" name="jamkembali" value="<?= date('H:i', strtotime($perjalanan['jamkembali'])); ?>">
                                     </div>
                                 </div>
                             </div>
