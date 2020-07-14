@@ -857,6 +857,10 @@ class Jamkerja extends CI_Controller
             $tglawal  = date('Y-m-1');
             $tglakhir = date('Y-m-31');
         }
+        $data['periode'] = [
+            'tglawal' => $tglawal,
+            'tglakhir' => $tglakhir
+        ];
 
         $data['aktivitas'] = $this->db->where('tgl_aktivitas >=',$tglawal);
         $data['aktivitas'] = $this->db->where('tgl_aktivitas <=',$tglakhir);
