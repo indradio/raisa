@@ -48,9 +48,9 @@ class Jamkerja extends CI_Controller
             $tglselesai = date('Y-m-d 16:30:00', strtotime($tanggal));
             $due = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($tanggal))));
         }elseif($this->input->post('shift')=='SHIFT3'){
-            $tglmulai = date('Y-m-d 16:00:00', strtotime($tanggal));
+            $tglmulai = date('Y-m-d 16:30:00', strtotime($tanggal));
             $tglselesai = date('Y-m-d 00:00:00', strtotime('+1 days',strtotime($tanggal)));
-            $due = strtotime(date('Y-m-d 16:00:00', strtotime('+1 days', strtotime($tanggal))));
+            $due = strtotime(date('Y-m-d 16:30:00', strtotime('+1 days', strtotime($tanggal))));
         }
         
         $create = time();
