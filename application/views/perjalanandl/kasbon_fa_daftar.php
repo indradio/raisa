@@ -25,7 +25,7 @@
                                         <th>e-Wallet</th>
                                         <th>Tujuan</th>
                                         <th>Kendaraan</th>
-                                        <th>Total</th>
+                                        <th>Biaya Perjalanan</th>
                                         <th>Kasbon <small>(<i>Out</i>)</small></th>
                                         <th>Kasbon <small>(<i>In</i>)</small></th>
                                         <th>Kasbon <small>(<i>Remains</i>)</small></th>
