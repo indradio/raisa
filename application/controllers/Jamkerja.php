@@ -513,18 +513,30 @@ class Jamkerja extends CI_Controller
     //         $this->load->view('templates/footer');
     // }
 
-    // public function ppic($tanggal)
-    // {
-    //         $data['tanggal'] = date("Y-m-d 07:30:00", strtotime($tanggal));
-    //         $data['sidemenu'] = 'PPIC';
-    //         $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
-    //         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-    //         $this->load->view('templates/header', $data);
-    //         $this->load->view('templates/sidebar', $data);
-    //         $this->load->view('templates/navbar', $data);
-    //         $this->load->view('jamkerja/persetujuan_ppic', $data);
-    //         $this->load->view('templates/footer');
-    // }
+    public function laporan()
+    {
+            $data['sidemenu'] = 'PPIC';
+            $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+                                $this->db->where('tglmulai >', date("Y-m-d 00:00:00", strtotime($this->input->post('tanggal'))));
+                                $this->db->where('tglmulai <', date("Y-m-d 23:59:00", strtotime($this->input->post('tanggal'))));
+                                $this->db->where('status', '9');
+            $data['jamkerja'] = $this->db->get('jamkerja')->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/lp_jamkerja', $data);
+            $this->load->view('templates/footer');
+    }
+
+    public function cetak($id)
+    {
+        $data['jamkerja']  = $this->db->get_where('jamkerja', ['id' => $id])->row_array();
+        $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
+        $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+
+        $this->load->view('jamkerja/reportjk', $data);
+    }
 
     public function detail($link_aktivitas)
     {
