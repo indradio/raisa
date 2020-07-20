@@ -49,6 +49,7 @@
                                         <th>Cell / Section</th>
                                         <th>Posisi</th>
                                         <th>Jenis</th>
+                                        <th>Approval</th>
                                         <th>Hari</th>
                                     </tr>
                                 </thead>
@@ -67,12 +68,14 @@
                                         <th>Cell / Section</th>
                                         <th>Posisi</th>
                                         <th>Jenis</th>
+                                        <th>Approval</th>
                                         <th>Hari</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($aktivitas as $a) :
-                                        $kry = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); ?>
+                                        $kry = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); 
+                                        ?>
                                         <tr>
                                             <td><?= date('m-d-Y', strtotime($a['tgl_aktivitas'])); ?></td>
                                             <td><?= $kry['nama']; ?></td>
@@ -95,6 +98,17 @@
                                             <?php $posisi = $this->db->get_where('karyawan_posisi', ['id' => $kry['posisi_id']])->row_array(); ?>
                                             <td><?= $posisi['nama']; ?></td>
                                             <td><?= $a['jenis_aktivitas']; ?></td>
+                                            <?php if ($a['jenis_aktivitas']=='JAM KERJA'){
+                                               $jk = $this->db->get_where('jamkerja', ['id' => $a['link_aktivitas']])->row_array(); 
+                                               if ($jk['posisi_id']=='7'){
+                                                   echo '<td>'. $jk['atasan1'].' '. date('d-m-Y H:i', strtotime($jk['tgl_atasan1'])).'</td>';
+                                                }else{
+                                                    echo '<td>-</td>';
+                                               }
+                                            } elseif ($a['jenis_aktivitas']=='LEMBUR'){
+                                                $ot = $this->db->get_where('lembur', ['id' => $a['link_aktivitas']])->row_array(); 
+                                                echo '<td>'. substr($ot['atasan1_realisasi'], -3).' '. date('d-m-Y H:i', strtotime($ot['tgl_atasan1_realisasi'])).'</td>';
+                                            }?>
                                             <td><?= date('D', strtotime($a['tgl_aktivitas'])); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
