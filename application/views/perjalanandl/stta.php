@@ -219,6 +219,26 @@ $pdf->Cell(105, 5, '3.       ........        :', 0, 1);
 $pdf->Cell(35, 4, '',0,0);
 $pdf->Cell(105, 5, '4.       ........        :', 0, 0);
 
+$pdf->Ln(-12);
+$pdf->Cell(137, 5, '', 0, 0);
+$pdf->Cell(45, 4, '   Disetujui ,', 1,1,'C',1);
+$pdf->Cell(137, 5, '', 0, 0);
+$pdf->Cell(45, 25, '', 1,1,'C',1);
+$pdf->Cell(137, 5, '', 0, 0);
+$pdf->Cell(45, 4, '   Dept.Head', 1,1,'C',1);
+
+$pdf->Ln(-22);
+$pdf->SetFont('arial-monospaced', '', 5.5);
+$pdf->Cell(175, 3, 'Ini adalah form digital', 0,'C', 0);
+$pdf->Cell(6.5, 8, 'Tidak memerlukan tanda tangan basah', 0,'C', 0);
+$pdf->Cell(-11, 13, 'Disetujui Pada', 0,'C', 0);
+$pdf->Cell(1, 18, date("d M Y H:i", strtotime($reservasi['tgl_atasan2'])), 0,'C', 0);
+
+$pdf->Ln(14);
+$pdf->SetFont('Arial', 'B', 6);
+$pdf->Cell(140, 5, '', 0, 0);
+$pdf->Cell(42, 4, '( '.$perjalanan['ka_dept'].'  )', 0,0,'C',0);
+
 // $pdf->Ln(-12);
 // $pdf->Cell(137, 5, '', 0, 0);
 // $pdf->Cell(45, 4, '   Diketahui / Dibuat Oleh ,', 1,1,'C',1);
