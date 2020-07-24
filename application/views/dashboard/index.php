@@ -4,15 +4,14 @@
     <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>ESTIMASI BIAYA & PENYELESAIAN PERJALANAN DINAS</strong>
-          </br><strong>PASTIKAN e-WALLET KAMU SUDAH TERDAFTAR DI SISTEM YA!</strong>
+          <strong>INFO : LAYANAN e-Wallet OVO DIBERHENTIKAN</strong>
           </br>
           </br>Hai <?= $karyawan['nama']; ?>,
-          </br>Klaim penyelesaian kamu akan dibayarkan jika:  
-          </br>Sudah diverifikasi oleh GA pukul 07-09 pagi (Dibayarkan di hari yang sama)
-          </br>Sudah diverifikasi oleh GA pukul 09 pagi atau lebih (Dibayarkan H+1 hari kerja)
+          </br>Buat kamu yang menggunakan e-wallet OVO, RAISA mohon maaf karena mulai tgl 27 Juli 2020 transfer tunjangan perjalanan dinas tidak dapat menggunakan OVO.
+          </br>Hal ini dikarenakan kebijakan dari OVO yang memiliki keterbatasan transaksi.
           </br>
-          </br>Segera submit klaim penyelesaian dan dokumen/struk/kwitansi perjalanan kamu setelah perjalanan ya!.
+          </br>Segera update ewallet kamu ya!
+          </br><a href="<?= base_url('profil'); ?>" class="btn btn-success text-light" role="button" aria-disabled="false">UPDATE E-WALLET</a>
           </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
         </div>
       </div>

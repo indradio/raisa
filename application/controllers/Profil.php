@@ -88,4 +88,23 @@ class Profil extends CI_Controller
         }
     }
 
+    public function update_ewallet()
+    {
+        if ($this->input->post('ewallet')=='GOPAY')
+        {
+            $this->db->set('ewallet_1', $this->input->post('rek'));
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->update('karyawan');
+
+            redirect('profil');
+        }elseif ($this->input->post('ewallet')=='DANA')
+        {
+            $this->db->set('ewallet_2', $this->input->post('rek'));
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->update('karyawan');
+
+            redirect('profil');
+        }
+    }
+
 }

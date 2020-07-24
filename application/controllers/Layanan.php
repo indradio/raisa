@@ -190,13 +190,17 @@ class Layanan extends CI_Controller
                          ],
                          'json' => [
                              'phone' => $k['phone'],
-                             'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
+                             'message' => "*WEBINAR : MENGHADAPI NEW NORMAL*" .
                              "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                             "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
-                             "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
-                             "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
-                             "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
-                             "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
+                             "\r\n \r\nEh kamu tahu gak apa itu NEW NORMAL? Adaptasi Kebiasaan Baru (AKB)?" .
+                             "\r\nKalo kamu masih bingung, webinar ini cocok buat kamu biar kamu gak stress di tengah kondisi seperti sekarang ini." .
+                             "\r\n \r\nWebinar dengan tema : \"MENGHADAPI NEW NORMAL\" " .
+                             "\r\nNARASUMBER : *dr. Yitro A. C. Wilar, MKK, Sp, OK*" .
+                             "\r\nWAKTU : *Jum'at, 24 Juli 2020*" .
+                             "\r\nLOKASI : *ONLINE / AREA yang telah disediakan (Lihat di banner)*" .
+                             "\r\nLINK : *https://bit.ly/NEWNORMALAOPGM*" .
+                             "\r\n*Jangan sampai ketinggalan ya! Ada hadiah menarik untuk pertanyaan terbaik.*" .
+                             "\r\n \r\n*INGAT! Buat kamu yang nobar, Tetap menjaga jarak, Gunakan masker dan menjalankan protokol kesehatan selama webinar berlangsung.*" .
                              "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                          ],
                      ]
@@ -223,13 +227,17 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFORMASI : PENGISIAN FORM PEDULI KESEHATAN*" .
+                            'message' => "*WEBINAR : MENGHADAPI NEW NORMAL*" .
                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nDalam upaya memberikan rasa aman dan nyaman bagi karyawan yang bekerja di lingkungan perusahaan, maka setiap karyawan *DIHARUSKAN* melaporkan kondisi kesehatanya." .
-                            "\r\n*Pengisian FORM PEDULI KESEHATAN ini menggantikan ABSENSI di hari libur sabtu dan minggu*" .
-                            "\r\n \r\nWaktu pengisian FORM PEDULI KESEHATAN akan dimulai pada *hari minggu (14/06/20) pukul 15:00 (atau jam 3 sore)*." .
-                            "\r\n \r\nKaryawan yang belum mengisi FORM PEDULI KESEHATAN tidak diperkenankan untuk masuk kerja." .
-                            "\r\n \r\n*INGAT : Setiap dari kita wajib melakukan upaya untuk tidak menularkan ke orang lain*" .
+                            "\r\n \r\nEh kamu tahu gak apa itu NEW NORMAL? Adaptasi Kebiasaan Baru (AKB)?" .
+                            "\r\nKalo kamu masih bingung, webinar ini cocok buat kamu biar kamu gak stress di tengah kondisi seperti sekarang ini." .
+                            "\r\n \r\nWebinar dengan tema : \"MENGHADAPI NEW NORMAL\" " .
+                            "\r\nNARASUMBER : *dr. Yitro A. C. Wilar, MKK, Sp, OK*" .
+                            "\r\nWAKTU : *Jum'at, 24 Juli 2020*" .
+                            "\r\nLOKASI : *ONLINE / AREA yang telah disediakan (Lihat di banner)*" .
+                            "\r\nLINK : *https://bit.ly/NEWNORMALAOPGM*" .
+                            "\r\n*Jangan sampai ketinggalan ya! Ada hadiah menarik untuk pertanyaan terbaik.*" .
+                            "\r\n \r\n*INGAT! Buat kamu yang nobar, Tetap menjaga jarak, Gunakan masker dan menjalankan protokol kesehatan selama webinar berlangsung.*" .
                             "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
@@ -256,13 +264,17 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*PERJALANAN DINAS CASHLESS MULAI 22 JUNI 2020*".
-                            "\r\nDAFTARKAN e-WALLET KAMU SEGERA!!*" .
+                            'message' => "*WEBINAR : MENGHADAPI NEW NORMAL*" .
                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nSehubungan dengan akan diberlakukanya sistem pembayaran cashless menggunakan e-wallet untuk transaksi perjalanan dinas mulai tanggal *22 juni 2020*.". 
-                            "\r\nJangan lupa utnuk mendaftarkan akun e-Wallet kamu segera ya!." .
-                            "\r\n \r\ne-Wallet yang dilayani yaitu OVO, DANA dan GO-PAY." .
-                            "\r\n \r\nBuat kamu yang belum punya akun e-Wallet ." .
+                            "\r\n \r\nEh kamu tahu gak apa itu NEW NORMAL? Adaptasi Kebiasaan Baru (AKB)?" .
+                            "\r\nKalo kamu masih bingung, webinar ini cocok buat kamu biar kamu gak stress di tengah kondisi seperti sekarang ini." .
+                            "\r\n \r\nWebinar dengan tema : \"MENGHADAPI NEW NORMAL\" " .
+                            "\r\nNARASUMBER : *dr. Yitro A. C. Wilar, MKK, Sp, OK*" .
+                            "\r\nWAKTU : *Jum'at, 24 Juli 2020*" .
+                            "\r\nLOKASI : *ONLINE / AREA yang telah disediakan (Lihat di banner)*" .
+                            "\r\nLINK : *https://bit.ly/NEWNORMALAOPGM*" .
+                            "\r\n*Jangan sampai ketinggalan ya! Ada hadiah menarik untuk pertanyaan terbaik.*" .
+                            "\r\n \r\n*INGAT! Buat kamu yang nobar, Tetap menjaga jarak, Gunakan masker dan menjalankan protokol kesehatan selama webinar berlangsung.*" .
                             "\r\n \r\nUntuk informasi lebih lengkap bisa dilihat melalui aplikasi RAISA di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]

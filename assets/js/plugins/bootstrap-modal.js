@@ -113,8 +113,8 @@ $('#realisasiAktivitas').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var id = button.data('id') // Extract info from data-* attributes
     var aktivitas = button.data('aktivitas') // Extract info from data-* attributes
-    var deskripsi_hasil = button.data('deskripsi_hasil') 
-    var progres_hasil = button.data('progres_hasil') 
+    var deskripsi_hasil = button.data('deskripsi_hasil')
+    var progres_hasil = button.data('progres_hasil')
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
     modal.find('.modal-body input[name="aktivitas"]').val(aktivitas)
@@ -198,9 +198,9 @@ $('#projectModal').on('show.bs.modal', function (event) {
 })
 
 $('#ubahMailstone').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) 
-    var id = button.data('id') 
-    var milestone = button.data('milestone') 
+    var button = $(event.relatedTarget)
+    var id = button.data('id')
+    var milestone = button.data('milestone')
     var tglmulai_wbs = button.data('tglmulai_wbs')
     var tglselesai_wbs = button.data('tglselesai_wbs')
     var modal = $(this)
@@ -211,18 +211,18 @@ $('#ubahMailstone').on('show.bs.modal', function (event) {
 })
 
 $('#hapusAktivitas').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) 
-    var id = button.data('id') 
+    var button = $(event.relatedTarget)
+    var id = button.data('id')
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
 })
 
 $('#uploadBanner').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) 
-    var id = button.data('id') 
-    var judul = button.data('judul') 
-    var deskripsi = button.data('deskripsi') 
-    var berlaku = button.data('berlaku') 
+    var button = $(event.relatedTarget)
+    var id = button.data('id')
+    var judul = button.data('judul')
+    var deskripsi = button.data('deskripsi')
+    var berlaku = button.data('berlaku')
     var modal = $(this)
     modal.find('.modal-body input[name="id"]').val(id)
     modal.find('.modal-body input[name="judul"]').val(judul)
@@ -230,19 +230,18 @@ $('#uploadBanner').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="berlaku"]').val(berlaku)
 })
 $('#detail').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) 
-    var no_order = button.data('no_order') 
+    var button = $(event.relatedTarget)
+    var no_order = button.data('no_order')
     var nama_pekerjaan = button.data('nama_pekerjaan')
-    var jenis_material = button.data('jenis_material') 
+    var jenis_material = button.data('jenis_material')
     var jumlah = button.data('jumlah')
     var keperluan = button.data('keperluan')
-    var nama_kategori = button.data('nama_kategori') 
-    var estimasi_selesai = button.data('estimasi_selesai')    
-    var ket_lain = button.data('ket_lain') 
-    var status = button.data('status') 
+    var nama_kategori = button.data('nama_kategori')
+    var estimasi_selesai = button.data('estimasi_selesai')
+    var ket_lain = button.data('ket_lain')
+    var status = button.data('status')
     // var atasan1 = button.data('atasan1') 
     // var atasan2 = button.data('atasan2')
-
 
     var modal = $(this)
     modal.find('.modal-body input[name="no_order"]').val(no_order)
@@ -255,6 +254,6 @@ $('#detail').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="ket_lain"]').val(ket_lain)
     modal.find('.modal-body input[name="status"]').val(status)
 
-  
+
 })
 
