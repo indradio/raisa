@@ -4,15 +4,6 @@
     <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>LINK WEBINAR</strong>
-          </br><a href="https://teams.microsoft.com/dl/launcher/launcher.html?type=meetup-join&deeplinkId=650a2e5a-d479-4765-8ff0-495b035b5395&directDl=true&msLaunch=true&enableMobilePage=true&url=%2F_%23%2Fl%2Fmeetup-join%2F19%253ameeting_ZmZmM2JiNGUtZmE0NS00OWFlLTk1MzQtZGM2M2M2MWRhNmE1%2540thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522f5332409-fcd5-4d5d-aaf7-b5189010d0d0%2522%252c%2522Oid%2522%253a%25223509aa3d-d95b-4588-824e-a17f86b4063e%2522%257d%26anon%3Dtrue&suppressPrompt=true">GABUNG WEBINAR</a>
-          </br>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="alert alert-default" role="alert">
           <strong>INFO : LAYANAN e-Wallet OVO DIBERHENTIKAN</strong>
           </br>
           </br>Hai <?= $karyawan['nama']; ?>,
