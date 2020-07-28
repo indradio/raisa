@@ -76,7 +76,6 @@
                                                     <?php if ($perjalanan['um_siang']>0){ echo '<th>Siang</th>';} ?>
                                                     <?php if ($perjalanan['um_malam']>0){ echo '<th>Malam</th>';} ?>
                                                     <th>Total</th>
-                                                    <th>e-Wallet</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
@@ -112,13 +111,8 @@
                                                         <?php }else{ ?>
                                                             <td><?= number_format($a['total'], 0, ',', '.'); ?></td>
                                                         <?php } ?>
-                                                        <td>
-                                                            <?= $peserta['ewallet_1']; ?>
-                                                            </br>
-                                                            <?= $peserta['ewallet_2']; ?>
-                                                        </td>
                                                         <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR'){ ?>
-                                                            <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger">BAYAR SEKARANG!</a></td>
+                                                            <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-ewallet1="<?= $peserta['ewallet_1']; ?>" data-ewallet2="<?= $peserta['ewallet_2']; ?>">BAYAR SEKARANG!</a></td>
                                                         <?php }else{ ?>
                                                             <td><a href="#" class="btn btn-sm btn-fill btn-success disabled">SUDAH DIBAYAR</a></td>
                                                         <?php } ?>
@@ -281,6 +275,54 @@
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="paymentLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentLabel">Pembayaran</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('perjalanandl/bayar'); ?>">
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id" name="id">
+                    <input type="hidden" class="form-control" id="npk" name="npk">
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">GO-PAY</label>
+                        <div class="col-md-6">
+                            <div class="form-group has-default">
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="gopay" checked requierd/>
+                                <input type="text" class="form-control bg-white ml-4" id="ewallet1" name="ewallet1" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">DANA</label>
+                        <div class="col-md-6">
+                            <div class="form-group has-default">
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="dana" requierd/>
+                                <input type="text" class="form-control bg-white ml-4" id="ewallet2" name="ewallet2" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <!-- <label class="col-md-5 col-form-label"></label> -->
+                        <div class="col-md-12 mr-4">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                            <button type="submit" class="btn btn-success">TRANSFER</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <small>Tranfernya pake aplikasi e-Wallet di HP ya!</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="revisiPenyelesaian" tabindex="-1" role="dialog" aria-labelledby="revisiPenyelesaianTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -309,6 +351,19 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#payment').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var npk = button.data('npk')
+            var ewallet1 = button.data('ewallet1')
+            var ewallet2 = button.data('ewallet2')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+            modal.find('.modal-body input[name="npk"]').val(npk)
+            modal.find('.modal-body input[name="ewallet1"]').val(ewallet1)
+            modal.find('.modal-body input[name="ewallet2"]').val(ewallet2)
+        })
+
         $('#revisiPenyelesaian').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id') // Extract info from data-* attributes

@@ -41,7 +41,7 @@
                                         if ( $p['kasbon_status']=='REQUEST'){
                                             echo '<tr data-toggle="modal" data-target="#kasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $pic['ewallet_1'].'" data-ewallet2="'. $pic['ewallet_2'].'" data-total="'. $p['total'].'" data-kasbon="'. $p['kasbon'].'">';
                                         }elseif ( $p['kasbon_status']=='OUTSTANDING'){
-                                            echo '<tr class="table-danger" data-toggle="modal" data-target="#detailKasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $pic['ewallet_1'].'" data-ewallet2="'. $pic['ewallet_2'].'" data-total="'. number_format($p['total'], 0, ',', '.').'" data-kasbon_out="'. number_format($p['kasbon_out'], 0, ',', '.').'"data-kasbon_in="'. number_format($p['kasbon_in'], 0, ',', '.').'"data-kasbon="'. number_format($p['kasbon'], 0, ',', '.').'"data-kasbon_by="'. $p['kasbon_by'].' at '.date("d-m-Y H:i", strtotime($p['kasbon_at'])).'">';
+                                            echo '<tr class="table-danger" data-toggle="modal" data-target="#detailKasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet="'. $p['kasbon_ewallet'].'" data-total="'. number_format($p['total'], 0, ',', '.').'" data-kasbon_out="'. number_format($p['kasbon_out'], 0, ',', '.').'"data-kasbon_in="'. number_format($p['kasbon_in'], 0, ',', '.').'"data-kasbon="'. number_format($p['kasbon'], 0, ',', '.').'"data-kasbon_by="'. $p['kasbon_by'].' at '.date("d-m-Y H:i", strtotime($p['kasbon_at'])).'">';
                                         } else {
                                             echo '<tr data-toggle="modal" data-target="#detailKasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $pic['ewallet_1'].'" data-ewallet2="'. $pic['ewallet_2'].'" data-total="'. number_format($p['total'], 0, ',', '.').'" data-kasbon_out="'. number_format($p['kasbon_out'], 0, ',', '.').'"data-kasbon_in="'. number_format($p['kasbon_in'], 0, ',', '.').'"data-kasbon="'. number_format($p['kasbon'], 0, ',', '.').'"data-kasbon_by="'. $p['kasbon_by'].' at '.date("d-m-Y H:i", strtotime($p['kasbon_at'])).'">';
                                         }?>
@@ -118,18 +118,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-md-5 col-form-label">e-Wallet Utama</label>
-                        <div class="col-md-7">
+                        <label class="col-md-5 col-form-label">GO-PAY</label>
+                        <div class="col-md-5">
                             <div class="form-group has-default">
-                                <input type="text" class="form-control disabled" id="ewallet1" name="ewallet1" />
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="gopay" checked requierd/>
+                                <input type="text" class="form-control bg-white ml-4" id="ewallet1" name="ewallet1" readonly/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-md-5 col-form-label">e-Wallet Cadangan</label>
-                        <div class="col-md-7">
+                        <label class="col-md-5 col-form-label">DANA</label>
+                        <div class="col-md-5">
                             <div class="form-group has-default">
-                                <input type="text" class="form-control disabled" id="ewallet2" name="ewallet2" />
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="dana" requierd/>
+                                <input type="text" class="form-control bg-white ml-4" id="ewallet2" name="ewallet2" readonly/>
                             </div>
                         </div>
                     </div>
@@ -185,18 +187,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-md-5 col-form-label">e-Wallet Utama</label>
+                        <label class="col-md-5 col-form-label">e-Wallet</label>
                         <div class="col-md-7">
                             <div class="form-group has-default">
-                                <input type="text" class="form-control disabled" id="ewallet1" name="ewallet1" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label class="col-md-5 col-form-label">e-Wallet Cadangan</label>
-                        <div class="col-md-7">
-                            <div class="form-group has-default">
-                                <input type="text" class="form-control disabled" id="ewallet2" name="ewallet2" />
+                                <input type="text" class="form-control disabled" id="ewallet" name="ewallet" />
                             </div>
                         </div>
                     </div>
@@ -266,8 +260,7 @@
             var id = button.data('id')
             var phone = button.data('phone')
             var nama = button.data('nama')
-            var ewallet1 = button.data('ewallet1')
-            var ewallet2 = button.data('ewallet2')
+            var ewallet = button.data('ewallet')
             var total = button.data('total')
             var kasbon_by = button.data('kasbon_by')
             var kasbon_out = button.data('kasbon_out')
@@ -277,8 +270,7 @@
             modal.find('.modal-body input[name="id"]').val(id)
             modal.find('.modal-body input[name="phone"]').val(phone)
             modal.find('.modal-body input[name="nama"]').val(nama)
-            modal.find('.modal-body input[name="ewallet1"]').val(ewallet1)
-            modal.find('.modal-body input[name="ewallet2"]').val(ewallet2)
+            modal.find('.modal-body input[name="ewallet"]').val(ewallet)
             modal.find('.modal-body input[name="total"]').val(total)
             modal.find('.modal-body input[name="kasbon_by"]').val(kasbon_by)
             modal.find('.modal-body input[name="kasbon_out"]').val(kasbon_out)

@@ -1449,13 +1449,13 @@ class Perjalanandl extends CI_Controller
         }
     }
 
-    public function bayar($id,$npk)
+    public function bayar()
     {
         date_default_timezone_set('asia/jakarta');
-        $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
         
-        $this->db->where('perjalanan_id', $id);
-        $this->db->where('npk', $npk);
+        $this->db->where('perjalanan_id', $this->input->post('id'));
+        $this->db->where('npk', $this->input->post('npk'));
         $p_peserta = $this->db->get('perjalanan_anggota')->row_array();
      
         if ($perjalanan['uang_saku']>0){
@@ -1494,18 +1494,24 @@ class Perjalanandl extends CI_Controller
             $tp = $p_peserta['total'];
             $tb = $p_peserta['total'];
         }
+        if ($this->input->post('ewallet')=="gopay"){
+            $ewallet = "GO-PAY - ".$this->input->post('ewallet1');
+        }elseif ($this->input->post('ewallet')=="dana"){
+            $ewallet = "DANA - ".$this->input->post('ewallet2');
+        }
 
         $this->db->set('bayar', $tp);
         $this->db->set('payment_by', $this->session->userdata('inisial'));
         $this->db->set('payment_at', date('Y-m-d H:i:s'));
+        $this->db->set('ewallet', $ewallet);
         $this->db->set('status_pembayaran','SUDAH DIBAYAR');
         $this->db->set('status', '9');
-        $this->db->where('perjalanan_id', $id);
-        $this->db->where('npk', $npk);
+        $this->db->where('perjalanan_id', $this->input->post('id'));
+        $this->db->where('npk', $this->input->post('npk'));
         $this->db->update('perjalanan_anggota');
 
         $this->db->select_sum('bayar');
-        $this->db->where('perjalanan_id', $id);
+        $this->db->where('perjalanan_id', $this->input->post('id'));
         $this->db->where('status_pembayaran', 'SUDAH DIBAYAR');
         $bayar = $this->db->get('perjalanan_anggota');
         $total_bayar = $bayar->row()->bayar;
@@ -1514,10 +1520,10 @@ class Perjalanandl extends CI_Controller
 
         $this->db->set('bayar', $total_bayar);
         $this->db->set('selisih',$selisih);
-        $this->db->where('id', $id);
+        $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
-        $user = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
+        $user = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
         $client = new \GuzzleHttp\Client();
         $response = $client->post(
             'https://region01.krmpesan.com/api/v2/message/send-text',
@@ -1550,7 +1556,7 @@ class Perjalanandl extends CI_Controller
         );
         $body = $response->getBody();
 
-        redirect('perjalanandl/payment/'.$id);
+        redirect('perjalanandl/payment/'.$this->input->post('id'));
     }
 
     public function laporan_payment_fa()
@@ -1634,13 +1640,20 @@ class Perjalanandl extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('perjalanandl/kasbon_fa_daftar', $data);
             $this->load->view('templates/footer');
+
         } elseif ($parameter == 'submit') {
 
+            if ($this->input->post('ewallet')=="gopay"){
+                $ewallet = "GO-PAY - ".$this->input->post('ewallet1');
+            }elseif ($this->input->post('ewallet')=="dana"){
+                $ewallet = "DANA - ".$this->input->post('ewallet2');
+            }
             $this->db->set('kasbon_by', $this->session->userdata('inisial'));
             $this->db->set('kasbon_at', date('Y-m-d H:i:s'));
             $this->db->set('kasbon_out', $this->input->post('kasbon'));
             $this->db->set('kasbon_in', 0);
             $this->db->set('kasbon', $this->input->post('kasbon'));
+            $this->db->set('kasbon_ewallet', $ewallet);
             $this->db->set('kasbon_status', 'OUTSTANDING');
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
