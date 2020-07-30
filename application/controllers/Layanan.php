@@ -197,6 +197,11 @@ class Layanan extends CI_Controller
             $this->db->where('status', '1');
             $this->db->where('group', 'E');
             $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'F') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'E');
+            $karyawan = $this->db->get('karyawan')->result_array();
         }
 
         foreach ($karyawan as $k) :

@@ -11,15 +11,17 @@
             <h4 class="card-title">Broadcast</h4>
           </div>
           <div class="card-body">
-            <a href="<?= base_url('layanan/broadcast_send/A'); ?>" class="btn btn-success">Group A</a>
+            <a href="<?= base_url('layanan/broadcast_send/A'); ?>" class="btn btn-info">Group A</a>
             </br>
-            <a href="<?= base_url('layanan/broadcast_send/B'); ?>" class="btn btn-warning">Group B</a>
+            <a href="<?= base_url('layanan/broadcast_send/B'); ?>" class="btn btn-twitter">Group B</a>
             </br>
-            <a href="<?= base_url('layanan/broadcast_send/C'); ?>" class="btn btn-danger">Group C</a>
+            <a href="<?= base_url('layanan/broadcast_send/C'); ?>" class="btn btn-linkedin">Group C</a>
             </br>
-            <a href="<?= base_url('layanan/broadcast_send/D'); ?>" class="btn btn-danger">Group D</a>
+            <a href="<?= base_url('layanan/broadcast_send/D'); ?>" class="btn btn-facebook">Group D</a>
             </br>
-            <a href="<?= base_url('layanan/broadcast_send/E'); ?>" class="btn btn-danger">Group E</a>
+            <a href="<?= base_url('layanan/broadcast_send/E'); ?>" class="btn btn-tumblr">Group E</a>
+            </br>
+            <a href="<?= base_url('layanan/broadcast_send/F'); ?>" class="btn btn-github">Group E</a>
             </br>
             <!-- </br>
             <a href="<?= base_url('presensi/notifikasi/sect'); ?>" class="btn btn-info">Notifikasi for Sect/RDA</a>
