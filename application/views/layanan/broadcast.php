@@ -17,6 +17,10 @@
             </br>
             <a href="<?= base_url('layanan/broadcast_send/C'); ?>" class="btn btn-danger">Group C</a>
             </br>
+            <a href="<?= base_url('layanan/broadcast_send/D'); ?>" class="btn btn-danger">Group D</a>
+            </br>
+            <a href="<?= base_url('layanan/broadcast_send/E'); ?>" class="btn btn-danger">Group E</a>
+            </br>
             <!-- </br>
             <a href="<?= base_url('presensi/notifikasi/sect'); ?>" class="btn btn-info">Notifikasi for Sect/RDA</a>
             </br>
