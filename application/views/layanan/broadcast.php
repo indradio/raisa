@@ -21,7 +21,7 @@
             </br>
             <a href="<?= base_url('layanan/broadcast_send/E'); ?>" class="btn btn-tumblr">Group E</a>
             </br>
-            <a href="<?= base_url('layanan/broadcast_send/F'); ?>" class="btn btn-github">Group E</a>
+            <a href="<?= base_url('layanan/broadcast_send/F'); ?>" class="btn btn-github">Group F</a>
             </br>
             <!-- </br>
             <a href="<?= base_url('presensi/notifikasi/sect'); ?>" class="btn btn-info">Notifikasi for Sect/RDA</a>

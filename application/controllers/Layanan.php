@@ -217,11 +217,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : LAYANAN PEMBAYARAN MENGGUNAKAN e-WALLET OVO DIBERHENTIKAN*" .
+                            'message' => "*INFO : PENCAIRAN GO-PAY KINI BISA DI KOPERASI*" .
                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nBuat kamu yang menggunkan e-wallet OVO, Efektip mulai tanggal 1 Agustus layanan pembayaran menggunkan e-wallet OVO akan diberhentikan." .
-                            "\r\nHal ini dikarenakan kebijakan dari OVO terkait pembatasan transaksi." .
-                            "\r\nSaat ini e-Wallet yang dapat kamu gunakan *GO-PAY & DANA*." .
+                            "\r\n \r\nJalan-jalan ke bekasi" .
+                            "\r\nSiang hari baru sampai" .
+                            "\r\nAda yang baru nih di koperasi" .
+                            "\r\nSekarang bisa cairin GO-PAY" .
+                            "\r\nInfo lebih lanjut bisa langsung cuss ke koperasi sambil jajan ya!" .
                             "\r\n \r\n*SEGERA UPDATE e-WALLET KAMU YA!*".
                             "\r\nCatatan : Update e-wallet dapat dilakukan di menu profile kamu.".
                             "\r\n \r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui https://raisa.winteq-astra.com"
