@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Dirumahaja extends CI_Controller
 {
     public function __construct()
@@ -120,45 +123,44 @@ class Dirumahaja extends CI_Controller
         ];
         $this->db->insert('kesehatan', $data);
 
-        $this->db->where('dept_id', $this->session->userdata('dept_id'));
-        $this->db->where('posisi_id', '3');
-        $depthead = $this->db->get('karyawan')->row_array();
+        if ($this->session->userdata('posisi_id')==7){
+            $this->db->where('npk', $this->session->userdata('atasan2'));
+            $atasan = $this->db->get('karyawan')->row_array();
+        }else{
+            $this->db->where('npk', $this->session->userdata('atasan1'));
+            $atasan = $this->db->get('karyawan')->row_array();
+        }
         //Notifikasi ke DeptHead
-        $postData = array(
-            'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-            'number' => $depthead['phone'],
-            'message' => "*PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
-                "\r\n*STATUS : " . $status . "*" .
-                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
-                "\r\n \r\nA1. Kondisi kesehatan selama libur lebaran (Demam/Pilek/Influenza) : *" . $this->input->post('a1') . "*" .
-                "\r\n \r\nA2. Kondisi kesehatan selama libur lebaran (Batuk/Suara serak/Demam) : *" . $this->input->post('a2') . "*" .
-                "\r\n \r\nA3. Kondisi kesehatan selama libur lebaran (Sesak nafas/Nafas pendek) : *" . $this->input->post('a3') . "*" .
-                "\r\n \r\nB1. Pernah berinteraksi dengan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b1') . "*" .
-                "\r\n \r\nB2. Pernah berkunjung ke rumah keluarga Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b2') . "*" .
-                "\r\n \r\nB3. Penghuni satu rumah ada yang dinyatakan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b3') . "*" .
-                "\r\n \r\nB4. Kamu masuk dalam status Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b4') . "*" .
-                "\r\n \r\nB5. Mengikuti pemerikasaan Rapid Test, PCR, ataupun Tes Kesehatan lainnya dengan hasil kemungkinan terinfeksi COVID-19 : *" . $this->input->post('b5') . "*" .
-                "\r\n \r\nB6. Pergi dan kembali dari luar kota / Kab : *" . $this->input->post('b6') . "*" .
-                "\r\n \r\nB7. Beraktivitas jauh (lebih dari 20KM) dari rumah kediaman : *" . $this->input->post('b7') . "*" .
-                "\r\n \r\nCatatan : " . $this->input->post('catatan') .
-                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $atasan['phone'],
+                    'message' => "*PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
+                        "\r\n*STATUS : " . $status . "*" .
+                        "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                        "\r\n \r\nA1. Kondisi kesehatan selama libur lebaran (Demam/Pilek/Influenza) : *" . $this->input->post('a1') . "*" .
+                        "\r\n \r\nA2. Kondisi kesehatan selama libur lebaran (Batuk/Suara serak/Demam) : *" . $this->input->post('a2') . "*" .
+                        "\r\n \r\nA3. Kondisi kesehatan selama libur lebaran (Sesak nafas/Nafas pendek) : *" . $this->input->post('a3') . "*" .
+                        "\r\n \r\nB1. Pernah berinteraksi dengan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b1') . "*" .
+                        "\r\n \r\nB2. Pernah berkunjung ke rumah keluarga Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b2') . "*" .
+                        "\r\n \r\nB3. Penghuni satu rumah ada yang dinyatakan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b3') . "*" .
+                        "\r\n \r\nB4. Kamu masuk dalam status Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b4') . "*" .
+                        "\r\n \r\nB5. Mengikuti pemerikasaan Rapid Test, PCR, ataupun Tes Kesehatan lainnya dengan hasil kemungkinan terinfeksi COVID-19 : *" . $this->input->post('b5') . "*" .
+                        "\r\n \r\nB6. Pergi dan kembali dari luar kota / Kab : *" . $this->input->post('b6') . "*" .
+                        "\r\n \r\nB7. Beraktivitas jauh (lebih dari 20KM) dari rumah kediaman : *" . $this->input->post('b7') . "*" .
+                        "\r\n \r\nCatatan : " . $this->input->post('catatan') .
+                        "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                ],
+            ]
         );
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $headers = array();
-        $headers[] = 'Accept: application/json';
-        $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
+        $body = $response->getBody();
         redirect('dirumahaja');
     }
 
