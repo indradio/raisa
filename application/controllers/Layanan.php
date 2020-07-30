@@ -177,69 +177,29 @@ class Layanan extends CI_Controller
             $this->db->where('status', '1');
             $this->db->where('group', 'A');
             $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
-                 //Notifikasi ke USER
-                 $client = new \GuzzleHttp\Client();
-                 $response = $client->post(
-                     'https://region01.krmpesan.com/api/v2/message/send-text',
-                     [
-                         'headers' => [
-                             'Content-Type' => 'application/json',
-                             'Accept' => 'application/json',
-                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                         ],
-                         'json' => [
-                             'phone' => $k['phone'],
-                             'message' => "*UPDATE LINK WEBINAR : MENGHADAPI NEW NORMAL*" .
-                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                             "\r\n \r\nYuk gabung di webinar, sebentar lagi akan segera mulai." .
-                             "\r\n \r\nKlik link dibahaw ini ya" .
-                             "\r\n \r\n*https://raisa.winteq-astra.com/meeting/webinar*".
-                             "\r\n \r\n \r\n*INGAT! Buat kamu yang nobar, Tetap menjaga jarak, Gunakan masker dan menjalankan protokol kesehatan selama webinar berlangsung.*"
-                         ],
-                     ]
-                 );
-                 $body = $response->getBody();
-            endforeach;
-            redirect('layanan/broadcast');
         } elseif ($parameter == 'B') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'B');
             $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
-                //Notifikasi ke USER
-                //Notifikasi ke USER
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $k['phone'],
-                            'message' => "*UPDATE LINK WEBINAR : MENGHADAPI NEW NORMAL*" .
-                            "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nYuk gabung di webinar, sebentar lagi akan segera mulai." .
-                            "\r\n \r\nKlik link dibahaw ini ya" .
-                            "\r\n \r\n*https://raisa.winteq-astra.com/meeting/webinar*".
-                            "\r\n \r\n \r\n*INGAT! Buat kamu yang nobar, Tetap menjaga jarak, Gunakan masker dan menjalankan protokol kesehatan selama webinar berlangsung.*"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
-            endforeach;
-            redirect('layanan/broadcast');
         } elseif ($parameter == 'C') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
-            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
+        } elseif ($parameter == 'D') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'D');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'E') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('group', 'E');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        }
+
+        foreach ($karyawan as $k) :
                 //Notifikasi ke USER
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(
@@ -252,18 +212,19 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*UPDATE LINK WEBINAR : MENGHADAPI NEW NORMAL*" .
+                            'message' => "*INFO : LAYANAN PEMBAYARAN MENGGUNAKAN e-WALLET OVO DIBERHENTIKAN*" .
                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nYuk gabung di webinar, sebentar lagi akan segera mulai." .
-                            "\r\n \r\nKlik link dibahaw ini ya" .
-                            "\r\n \r\n*https://raisa.winteq-astra.com/meeting/webinar*".
-                            "\r\n \r\n \r\n*INGAT! Buat kamu yang nobar, Tetap menjaga jarak, Gunakan masker dan menjalankan protokol kesehatan selama webinar berlangsung.*"
+                            "\r\n \r\nBuat kamu yang menggunkan e-wallet OVO, Efektip mulai tanggal 1 Agustus layanan pembayaran menggunkan e-wallet OVO akan diberhentikan." .
+                            "\r\nHal ini dikarenakan kebijakan dari OVO terkait pembatasan transaksi." .
+                            "\r\nSaat ini e-Wallet yang dapat kamu gunakan *GO-PAY & DANA*." .
+                            "\r\n \r\n*SEGERA UPDATE e-WALLET KAMU YA!*".
+                            "\r\nCatatan : Update e-wallet dapat dilakukan di menu profile kamu.".
+                            "\r\n \r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui https://raisa.winteq-astra.com"
                         ],
                     ]
                 );
                 $body = $response->getBody();
-            endforeach;
-            redirect('layanan/broadcast');
-        }
+        endforeach;
+        redirect('layanan/broadcast');
     }
 }
