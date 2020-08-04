@@ -57,6 +57,38 @@ class Persetujuandl extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('reservasi');
         }
+
+        if (date('H:i', strtotime($rsv['jamberangkat'])) != date("H:i", strtotime($this->input->post('jamberangkat')))){
+            $user = $this->db->get_where('karyawan', ['npk' => $rsv['npk']])->row_array();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user['phone'],
+                            'message' =>"*PERUBAHAN JAM KEBERANGKATAN PERJALANAN DINAS*" .
+                            "\r\n \r\nPerjalanan dinas kamu dengan detail :" .
+                            "\r\n \r\nNo. Reservasi : *" . $rsv['id'] . "*" .
+                            "\r\nNama : *" . $rsv['nama'] . "*" .
+                            "\r\nPeserta : *" . $rsv['anggota'] . "*" .
+                            "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+                            "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
+                            "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+                            "\r\n \r\n*Perubahan JAM KEBERANGKATAN menjadi*" .
+                            "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
+                            "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) .
+                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+        }
+
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
             if ($rsv['jenis_perjalanan'] == 'DLPP') {
@@ -89,7 +121,7 @@ class Persetujuandl extends CI_Controller
                             "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
                             "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
                             "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
-                            "\r\Estimasi Biaya : *" . $rsv['total'] . "*" .
+                            "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
                             "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
@@ -128,7 +160,7 @@ class Persetujuandl extends CI_Controller
                             "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
                             "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
                             "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
-                            "\r\Estimasi Biaya : *" . $rsv['total'] . "*" .
+                            "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
                             "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
@@ -204,7 +236,7 @@ class Persetujuandl extends CI_Controller
                             "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
                             "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
                             "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
-                            "\r\Estimasi Biaya : *" . $rsv['total'] . "*" .
+                            "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
                             "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
