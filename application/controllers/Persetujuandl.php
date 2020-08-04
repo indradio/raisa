@@ -72,14 +72,9 @@ class Persetujuandl extends CI_Controller
                         'json' => [
                             'phone' => $user['phone'],
                             'message' =>"*PERUBAHAN JAM KEBERANGKATAN PERJALANAN DINAS*" .
-                            "\r\n \r\nPerjalanan dinas kamu dengan detail :" .
-                            "\r\n \r\nNo. Reservasi : *" . $rsv['id'] . "*" .
-                            "\r\nNama : *" . $rsv['nama'] . "*" .
-                            "\r\nPeserta : *" . $rsv['anggota'] . "*" .
+                            "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
                             "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
-                            "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
-                            "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
-                            "\r\n \r\n*Perubahan JAM KEBERANGKATAN menjadi*" .
+                            "\r\n \r\n*JAM KEBERANGKATAN menjadi*" .
                             "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
                             "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) .
                             "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
