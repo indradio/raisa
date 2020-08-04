@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Waktu Keberangkatan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-4 col-form-label">Waktu Kembali</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" hidden>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" hidden>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" hidden>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" hidden>
+                            <div class="row">
                                 <label class="col-md-4 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
