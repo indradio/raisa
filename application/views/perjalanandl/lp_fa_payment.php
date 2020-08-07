@@ -71,7 +71,7 @@
                                             <td><?= date("d-m-Y", strtotime($p['tglberangkat'])).' '.date("H:i", strtotime($p['jamberangkat']));; ?></td>
                                             <td><?= $p['tujuan']; ?></td>
                                             <td><?= $pp['karyawan_nama']; ?></td>
-                                            <td><?= $peserta['ewallet']; ?></td>
+                                            <td><?= $p['ewallet']; ?></td>
                                             <td><?= number_format($pp['total'], 0, '.', ','); ?></td>
                                             <?php if ($p['pic_perjalanan']==$pp['karyawan_inisial']){
                                                 echo '<td>'. number_format($p['taksi'], 0, '.', ','),'</td>';
