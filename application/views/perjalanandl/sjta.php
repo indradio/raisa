@@ -137,9 +137,9 @@ foreach ($peserta as $p) :
 
 $pdf->Cell(7, 4, $no, 1, 0, 'C', 1);
 $pdf->Cell(41, 4, $p['karyawan_nama'], 1, 0, 'C', 1);
-$pdf->Cell(21, 4, $perjalanan['um3'], 1, 0, 'C', 1);
-$pdf->Cell(21, 4, $perjalanan['um4'], 1, 0, 'C', 1);
-$pdf->Cell(21, 4, $perjalanan['um1'], 1, 0, 'C', 1);
+$pdf->Cell(21, 4, '', 1, 0, 'C', 1);
+$pdf->Cell(21, 4, '', 1, 0, 'C', 1);
+$pdf->Cell(21, 4, '', 1, 0, 'C', 1);
 $pdf->Cell(21, 4, '', 1, 0, 'C', 1);
 $pdf->Cell(37, 4, '', 1, 1, 'C', 1);
 
