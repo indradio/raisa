@@ -294,6 +294,7 @@
                                             <option value="INSTALLATION & TRIAL @ CUSTOMER">INSTALLATION & TRIAL @ CUSTOMER</option>
                                             <option value="COMMISSIONING">COMMISSIONING</option>
                                             <option value="TRAINING">TRAINING</option>
+                                            <option value="SUPERVISI">SUPERVISI</option>
                                         </datalist>
                                     </div>
                                 </div>
