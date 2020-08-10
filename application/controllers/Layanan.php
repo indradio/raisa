@@ -186,6 +186,7 @@ class Layanan extends CI_Controller
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
+            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
         } elseif ($parameter == 'D') {
             $this->db->where('is_active', '1');
@@ -217,16 +218,14 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : PENCAIRAN GO-PAY KINI BISA DI KOPERASI*" .
+                            'message' => "*INFO : PERUBAHAN BATAS WAKTU KEBERANGKATAN PERJALANAN DINAS*" .
                             "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nJalan-jalan ke bekasi" .
-                            "\r\nSiang hari baru sampai" .
-                            "\r\nAda yang baru nih di koperasi" .
-                            "\r\nSekarang bisa cairin GO-PAY" .
-                            "\r\nInfo lebih lanjut bisa langsung cuss ke koperasi sambil jajan ya!" .
-                            "\r\n \r\n*SEGERA UPDATE e-WALLET KAMU YA!*".
-                            "\r\nCatatan : Update e-wallet dapat dilakukan di menu profile kamu.".
-                            "\r\n \r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui https://raisa.winteq-astra.com"
+                            "\r\n \r\nSejalan dengan semangat dan komitmen winteq untuk terus memberikan pelayanan yang terbaik bagi customer" .
+                            "\r\nMulai tanggal 11 Agustus 2020, *Batas Waktu Keberangkatan Perjalanan Dinas* sebagai berikut :" .
+                            "\r\n \r\n*MAX 1 JAM* dari waktu rencana keberangkatan untuk perjalanan yang menggunakan *COPRO* (Keperluan projek ke customer)" .
+                            "\r\n \r\n*MAX 2 JAM* dari waktu rencana keberangkatan untuk perjalanan tanpa menggunakan COPRO (Keperluan non projek)" .
+                            "\r\n \r\nPerjalanan yang melewati batas waktu keberangkatan akan *DIBATALKAN* secara otomatis." .
+                            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui https://raisa.winteq-astra.com"
                         ],
                     ]
                 );

@@ -287,6 +287,7 @@
                                             <option value="MECHANICAL DESIGN">MECHANICAL DESIGN</option>
                                             <option value="ELECTRICAL DESIGN">ELECTRICAL DESIGN</option>
                                             <option value="ROBOTIC DESIGN">ROBOTIC DESIGN</option>
+                                            <option value="ROBOTIC ASSEMBLY">ROBOTIC ASSEMBLY</option>
                                             <option value="MECHANICAL ASSEMBLY">MECHANICAL ASSEMBLY</option>
                                             <option value="ELECTRICAL ASSEMBLY">ELECTRICAL ASSEMBLY</option>
                                             <option value="PROGRAMMING">PROGRAMMING</option>
