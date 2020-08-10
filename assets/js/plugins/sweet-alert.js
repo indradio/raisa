@@ -71,7 +71,7 @@ if (flashData == 'masuk') {
 } else if (flashData == 'tambahwaktudl') {
   swal({
     title: "Yeaayy!!!",
-    text: "Waktu keberangkatan kamu RAISA tambah 2 JAM dari waktu keberangkatan yang kamu pesan.",
+    text: "Waktu keberangkatan kamu RAISA tambah 1 JAM dari rencana waktu keberangkatan.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-info",
     type: "info"

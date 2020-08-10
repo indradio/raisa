@@ -16,6 +16,89 @@
                             <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-facebook mb-2" role="button" aria-disabled="false">Buat Pejalanan Dinas</a>
                         </div>
                         <div class="material-datatables">
+                            <table id="dt-asc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jenis</th>
+                                        <th>Tujuan</th>
+                                        <th>Keperluan</th>
+                                        <th>Peserta</th>
+                                        <th>Berangkat</th>
+                                        <th>Kembali</th>
+                                        <th>Kendaraan</th>
+                                        <th>Nopol</th>
+                                        <th>Status</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jenis</th>
+                                        <th>Tujuan</th>
+                                        <th>Keperluan</th>
+                                        <th>Peserta</th>
+                                        <th>Berangkat</th>
+                                        <th>Kembali</th>
+                                        <th>Kendaraan</th>
+                                        <th>Nopol</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                                  $this->db->where('status >=' , '1');
+                                                  $this->db->where('status <' , '9');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr>
+                                                <td><?= $row['id']; ?></td>
+                                                <td><?= $row['jenis_perjalanan']; ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= date('d M - ', strtotime($row['tglberangkat'])); ?> <?= date('H:i', strtotime($row['jamberangkat'])); ?></td>
+                                                <td><?= date('d M - ', strtotime($row['tglkembali'])); ?> <?= date('H:i', strtotime($row['jamkembali'])); ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                                <td><?= $row['nopol']; ?></td>
+                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $row['status']])->row_array(); ?>
+                                                <td><?= $status['nama']; ?></td>
+                                                <td class="text-right">
+                                                    <?php if ($row['status'] == 1) { ?>
+                                                        <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $row['id']; ?>" class="btn btn-sm btn-warning">+1 JAM</a>
+                                                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $row['id']; ?>">BATALKAN</a>
+                                                    <?php } elseif ($row['status'] == 3) { ?>
+                                                        <a href="<?= base_url('perjalanan/penyelesaian/' . $row['id']); ?>" class="btn btn-sm btn-success">Penyelesaian</a>
+                                                    <?php }; ?>
+                                                </td>
+                                            </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Perjalanan Dinas</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
@@ -73,11 +156,10 @@
                                                 <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
                                                 <td><?= $status['nama']; ?></td>
                                                 <td class="text-right">
-                                                    <?php if ($pdetail['status'] == 1) { ?>
-                                                        <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $pdetail['id']; ?>" class="badge badge-warning">+2 JAM</a>
-                                                        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $pdetail['id']; ?>">BATALKAN</a>
-                                                    <?php } elseif ($pdetail['status'] == 9) { ?>
+                                                    <?php if ($pdetail['status'] == 9) { ?>
                                                         <a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
+                                                    <?php } else { ?>
+                                                        <a href="#" class="btn btn-link btn-info btn-just-icon disabled"><i class="material-icons">print</i></a>
                                                     <?php }; ?>
                                                 </td>
                                             </tr>
@@ -103,7 +185,7 @@
         <div class="modal-content">
             <div class="card card-signup card-plain">
                 <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
+                    <div class="card-header card-header-info text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="material-icons">clear</i>
                         </button>
@@ -113,10 +195,11 @@
                 <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl'); ?>">
                     <div class="modal-body">
                         <input type="text" class="form-control disabled" name="id" hidden>
-                        <textarea rows="2" class="form-control" name="catatan" required></textarea>
+                        <textarea rows="3" class="form-control" name="catatan" placeholder="Contoh : Tidak jadi berangkat" required></textarea>
                     </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-danger">BATALKAN PERJALANAN INI!</button>
+                    <div class="modal-footer justify-content-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                        <button type="submit" class="btn btn-danger">BATALKAN!</button>
                     </div>
                 </form>
             </div>

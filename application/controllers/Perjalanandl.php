@@ -697,7 +697,7 @@ class Perjalanandl extends CI_Controller
     public function tambahwaktudl($id)
     {
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        $updatejam = date('H:i:s', strtotime('+2 hour', strtotime($perjalanan['jamberangkat'])));
+        $updatejam = date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat'])));
         $this->db->set('jamberangkat', $updatejam);
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
@@ -1494,6 +1494,7 @@ class Perjalanandl extends CI_Controller
             $tp = $p_peserta['total'];
             $tb = $p_peserta['total'];
         }
+        
         if ($this->input->post('ewallet')=="gopay"){
             $ewallet = "GO-PAY - ".$this->input->post('ewallet1');
         }elseif ($this->input->post('ewallet')=="dana"){
