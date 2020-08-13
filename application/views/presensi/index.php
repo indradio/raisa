@@ -56,7 +56,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="condition" class="bmd-label-floating"> Jelaskan Kondisi kesehatan kamu * (</label>
+                <label for="condition" class="bmd-label-floating"> Jelaskan kondisi kesehatan kamu *</label>
                 <textarea rows="3" class="form-control" id="condition" name="condition" required="true"></textarea>
               </div>
               <div class="form-group">
