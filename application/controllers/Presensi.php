@@ -82,7 +82,7 @@ class Presensi extends CI_Controller
                         'dept_id' => $this->session->userdata('dept_id'),
                         'sect_id' => $this->session->userdata('sect_id'),
                         'day_state' => $day,
-                        'note' => $this->input->post('note')
+                        'condition' => $this->input->post('condition')
                     ];
                     $this->db->insert('presensi', $data);
 
@@ -176,7 +176,7 @@ class Presensi extends CI_Controller
 
                     $this->session->set_flashdata('message', 'clockSuccess');
 
-                if ($state == 'C/In'){
+                if ($state == 'C/In' or $state == 'C/Out'){
                     $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
                     $client = new \GuzzleHttp\Client();
                     $response = $client->post(
@@ -193,7 +193,7 @@ class Presensi extends CI_Controller
                                     "\r\n \r\n Nama : *" . $this->session->userdata('nama') . "*" .
                                     "\r\n Waktu : *" . date('H:i') . "*" .
                                     "\r\n Lokasi : *" . $this->input->post('loc') . "*" .
-                                    "\r\n Catatan : *" . $this->input->post('note') . "*"
+                                    "\r\n Kondisi Kesehatan : *" . $this->input->post('condition') . "*"
                             ],
                         ]
                     );

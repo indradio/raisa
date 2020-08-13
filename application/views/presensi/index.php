@@ -56,8 +56,8 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="note" class="bmd-label-floating"> Catatan *</label>
-                <textarea rows="3" class="form-control" id="note" name="note" required="true"></textarea>
+                <label for="condition" class="bmd-label-floating"> Jelaskan Kondisi kesehatan kamu * (</label>
+                <textarea rows="3" class="form-control" id="condition" name="condition" required="true"></textarea>
               </div>
               <div class="form-group">
                 <label for="time" class="bmd-label-floating"> Time *</label>
