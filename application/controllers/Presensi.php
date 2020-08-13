@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Presensi extends CI_Controller
 {
     public function __construct()
@@ -78,7 +81,8 @@ class Presensi extends CI_Controller
                         'div_id' => $this->session->userdata('div_id'),
                         'dept_id' => $this->session->userdata('dept_id'),
                         'sect_id' => $this->session->userdata('sect_id'),
-                        'day_state' => $day
+                        'day_state' => $day,
+                        'note' => $this->input->post('note')
                     ];
                     $this->db->insert('presensi', $data);
 
@@ -171,6 +175,30 @@ class Presensi extends CI_Controller
                     }
 
                     $this->session->set_flashdata('message', 'clockSuccess');
+
+                if ($state == 'C/In'){
+                    $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $atasan['phone'],
+                                'message' => "*ABSENSI " . date('d M Y') . "*" .
+                                    "\r\n \r\n Nama : *" . $this->session->userdata('nama') . "*" .
+                                    "\r\n Waktu : *" . date('H:i') . "*" .
+                                    "\r\n Lokasi : *" . $this->input->post('loc') . "*" .
+                                    "\r\n Catatan : *" . $this->input->post('note') . "*"
+                            ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                }
                 } else {
                     $this->session->set_flashdata('message', 'clockSuccess2');
                 }

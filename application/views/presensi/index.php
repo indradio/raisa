@@ -5,13 +5,11 @@
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <!-- Begin Content -->
-          Berikut adalah perubahan jadwal absensi melalui RAISA.
+          Berikut adalah jadwal absensi melalui RAISA.
           </br>
-          </br><strong>1. Check in antara 07:00 - 08.30</strong>
-          </br><strong>2. Istirahat antara 11.30 - 13.00</strong>
-          </br><strong>3. Check out antara 16.00 - 17.30</strong>
-          </br>
-          </br><b>Untuk hari libur sabtu dan minggu tidak perlu melaporkan kehadiran.</b>
+          </br><strong>1. Check in antara 07:00 - 08:30</strong>
+          </br><strong>2. Istirahat antara 11:30 - 13:00</strong>
+          </br><strong>3. Check out antara 16:00 - 17:30</strong>
           </br>
           </br>*Pastikan GPS smartphone kamu aktif dan pilih izinkan jika muncul peringatan saat membuka halaman.
           <!-- End Content -->
@@ -55,8 +53,11 @@
                 <select class="form-control selectpicker" data-style="btn btn-link" id="newstate" name="newstate" title="Silahkan Pilih" data-size="3" data-live-search="false" required>
                   <option value="OFFDAY">OFF DAY</option>
                   <option value="WFH">WORK FROM HOME</option>
-                  <option value="WFO">WORK FROM OFFICE</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="note" class="bmd-label-floating"> Catatan *</label>
+                <textarea rows="3" class="form-control" id="note" name="note" required="true"></textarea>
               </div>
               <div class="form-group">
                 <label for="time" class="bmd-label-floating"> Time *</label>
