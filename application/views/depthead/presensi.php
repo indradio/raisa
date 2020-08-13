@@ -17,17 +17,17 @@
                   <label class="col-md-1 col-form-label">From</label>
                   <div class="col-md-2">
                     <div class="form-group has-default">
-                      <input type="text" class="form-control datepicker" id="datefr" name="datefr" required="true" />
+                      <input type="text" class="form-control datepicker" id="datefr" name="datefr" value="<?= date('d-m-Y', strtotime($fr)); ?>" required="true" />
                     </div>
                   </div>
                   <label class="col-md-1 col-form-label">To</label>
                   <div class="col-md-2">
                     <div class="form-group has-default">
-                      <input type="text" class="form-control datepicker" id="dateto" name="dateto" onchange='this.form.submit()' required="true" />
+                      <input type="text" class="form-control datepicker" id="dateto" name="dateto" value="<?= date('d-m-Y', strtotime($to)); ?>" required="true" />
                     </div>
                   </div>
                   <div class="col-md-1">
-                    <button type="submit" class="btn btn-twitter"><i class="material-icons">search</i> Search by Date</button>
+                    <button type="submit" class="btn btn-twitter"><i class="material-icons">search</i> Search</button>
                   </div>
                   <div class="col-md-5"></div>
                 </div>
@@ -60,13 +60,12 @@
                   <thead>
                     <tr>
                       <th>Tanggal</th>
-                      <th>NPK</th>
                       <th>Name</th>
                       <th>Time</th>
                       <th>State</th>
                       <th>New State</th>
                       <th>Location</th>
-                      <th>Device</th>
+                      <th>Health</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -78,7 +77,6 @@
                         echo '<tr>';
                       }
                       echo '<th>' . date('d M Y', strtotime($p['time'])) . '</th>';
-                      echo '<th>' . $p['npk'] . '</th>';
                       echo '<th>' . $p['nama'] . '</th>';
                       echo '<th>' . date('H:i', strtotime($p['time'])) . '</th>';
 
@@ -98,7 +96,7 @@
                       } else {
                         echo '<th></th>';
                       }
-                      echo '<th>' . $p['platform'] . '</th>';
+                      echo '<th>' . $p['condition'] . '</th>';
                     endforeach;
                     ?>
                   </tbody>

@@ -11,15 +11,15 @@ class Depthead extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Lembur';
-        $data['sidesubmenu'] = 'LemburKu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('lembur/index', $data);
-        $this->load->view('templates/footer');
+        // $data['sidemenu'] = 'Lembur';
+        // $data['sidesubmenu'] = 'LemburKu';
+        // $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        // $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
+        // $this->load->view('templates/header', $data);
+        // $this->load->view('templates/sidebar', $data);
+        // $this->load->view('templates/navbar', $data);
+        // $this->load->view('lembur/index', $data);
+        // $this->load->view('templates/footer');
     }
 
     public function presensi()
