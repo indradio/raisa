@@ -82,7 +82,7 @@
                                         $opnamed = $this->db->get_where('asset_opnamed', ['id' => $a['id']])->row_array();
                                         if (empty($opnamed)){    
                                     ?>
-                                        <tr>
+                                        <tr onclick="window.location='<?= base_url('asset/opname/' . $a['id']); ?>'">
                                             <td>
                                                 <div class="img-container" style="width:100px; height:100px;">
                                                     <img src="<?= base_url(); ?>assets/img/asset/sto-icon.jpg" alt="...">
@@ -99,7 +99,7 @@
                                             </td>
                                         </tr>
                                     <?php }else{ ?>
-                                        <tr>
+                                        <tr onclick="window.location='<?= base_url('asset/opname/' . $a['id']); ?>'">
                                             <td>
                                                 <div class="img-container" style="width:100px; height:100px;">
                                                     <img src="<?= base_url(); ?>assets/img/asset/<?= $opnamed['asset_foto']; ?>" alt="...">
