@@ -215,6 +215,8 @@
         var stats = $('#stats').val();
                 if (stats == '1') {
                     $('#catatan').prop("required", false);
+                } else if (stats == '2') {
+                    $('#catatan').prop("required", false);
                 } else {
                     $('#catatan').prop("required", true);
                 }
