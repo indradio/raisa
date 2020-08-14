@@ -39,8 +39,7 @@ class F221 extends CI_Controller
         $data['sidemenu'] = 'FA';
         $data['sidesubmenu'] = 'Verifikasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->where('npk' , $this->session->userdata('npk'));
-        $data['asset'] = $this->db->where('status' , '1');
+        $data['asset'] = $this->db->where('status', '1');
         $data['asset'] = $this->db->get('asset')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

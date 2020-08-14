@@ -30,7 +30,6 @@ class Asset extends CI_Controller
                     $opnamed = $this->db->get('asset');
                     $data['assetOpnamed'] = $opnamed->num_rows();
                 
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
