@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Asset extends CI_Controller
+class F221 extends CI_Controller
 {
     public function __construct()
     {
@@ -9,47 +9,43 @@ class Asset extends CI_Controller
         is_logged_in();
     }
 
-    public function index()
+    public function asset()
     {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'AssetKu';
+        $data['sidemenu'] = 'FA';
+        $data['sidesubmenu'] = 'Asset';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result_array();
+        $data['asset'] = $this->db->get_where('asset')->result_array();
 
-                    $this->db->where('npk',$this->session->userdata('npk'));
-                    $total = $this->db->get('asset');
-                    $data['assetTotal'] = $total->num_rows();
+        $total = $this->db->get('asset');
+        $data['assetTotal'] = $total->num_rows();
 
-                    $this->db->where('npk',$this->session->userdata('npk'));
-                    $this->db->where('status', '0');
-                    $remains = $this->db->get('asset');
-                    $data['assetRemains'] = $remains->num_rows();
+        $this->db->where('status', '1');
+        $remains = $this->db->get('asset');
+        $data['assetRemains'] = $remains->num_rows();
 
-                    $this->db->where('npk',$this->session->userdata('npk'));
-                    $this->db->where('status', '1');
-                    $opnamed = $this->db->get('asset');
-                    $data['assetOpnamed'] = $opnamed->num_rows();
+        $this->db->where('status', '9');
+        $verified = $this->db->get('asset');
+        $data['assetVerified'] = $verified->num_rows();
                 
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/index', $data);
+        $this->load->view('asset/asset', $data);
         $this->load->view('templates/footer');
     }
 
-    public function remains()
+    public function verify()
     {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'Remaining';
+        $data['sidemenu'] = 'FA';
+        $data['sidesubmenu'] = 'Verifikasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->where('npk' , $this->session->userdata('npk'));
-        $data['asset'] = $this->db->where('status' , '0');
+        $data['asset'] = $this->db->where('status' , '1');
         $data['asset'] = $this->db->get('asset')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/index', $data);
+        $this->load->view('asset/asset', $data);
         $this->load->view('templates/footer');
     }
 
@@ -100,24 +96,6 @@ class Asset extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('asset/opnamed', $data);
             $this->load->view('templates/footer');
-        }
-    }
-
-    public function id($id)
-    {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
-        if ($data['asset']['status']=='9'){
-            $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('asset/opnamed', $data);
-            $this->load->view('templates/footer');
-        }else{    
-            redirect('f221/asset');
         }
     }
 
@@ -204,48 +182,20 @@ class Asset extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('asset');
 
-        if ($this->input->post('role')=='fac'){
-            redirect('f221/verify');
-        }else {
-            redirect('asset/opname/'.$this->input->post('id'));
-        }
+        redirect('asset/opname/'.$this->input->post('id'));
     }
 
-    public function verify($id=false)
+    public function verifikasi()
     {
-        $this->db->where('id', $id);
-        $this->db->where('status', '1');
-        $asset = $this->db->get_where('asset')->row_array();
-        if (!empty($asset)){
-            $data['sidemenu'] = 'FA';
-            $data['sidesubmenu'] = 'Verifikasi Opname';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-            $data['asset'] = $asset;
-            $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('asset/verify', $data);
-            $this->load->view('templates/footer');
-        }
-    }
-
-    public function verify_proses()
-    {
-        date_default_timezone_set('asia/jakarta');
-        
-        //Updated verify opname
-        $this->db->set('verify_at', date('Y-m-d H:i:s'));
-        $this->db->set('verify_by', $this->session->userdata('nama'));
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('asset_opnamed');
-
-        //Updated status opname
-        $this->db->set('status', '9');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('asset');
-
-        redirect('f221/verify');
+        $data['sidemenu'] = 'FA';
+        $data['sidesubmenu'] = 'Verifikasi Opname';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['asset'] = $this->db->get_where('asset_opname', ['status_opname' =>  '1'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('asset/opname_verifikasi', $data);
+        $this->load->view('templates/footer');
     }
 
     public function verifikasi2()
@@ -279,18 +229,18 @@ class Asset extends CI_Controller
         redirect('asset/verifikasi');
     }
 
-    public function asset()
-    {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset Manajemen';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get('asset')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/asset', $data);
-        $this->load->view('templates/footer');
-    }
+    // public function asset()
+    // {
+    //     $data['sidemenu'] = 'FA';
+    //     $data['sidesubmenu'] = 'Asset Manajemen';
+    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    //     $data['asset'] = $this->db->get('asset')->result_array();
+    //     $this->load->view('templates/header', $data);
+    //     $this->load->view('templates/sidebar', $data);
+    //     $this->load->view('templates/navbar', $data);
+    //     $this->load->view('asset/asset', $data);
+    //     $this->load->view('templates/footer');
+    // }
     public function opname1()
     {
         $data['sidemenu'] = 'FA';

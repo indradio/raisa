@@ -1,6 +1,58 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
+    <?php if ($sidesubmenu == 'Asset'){ ?>
+        <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-twitter"></i>
+                    </div>
+                    <p class="card-category">Total</p>
+                    <h3 class="card-title"><?= $assetTotal; ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Just Updated
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">store</i>
+                    </div>
+                    <p class="card-category">Verified</p>
+                    <h3 class="card-title"><?= $assetVerified; ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Just Updated
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">equalizer</i>
+                    </div>
+                    <p class="card-category">Opnamed</p>
+                    <h3 class="card-title"><?= $assetRemains; ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Just Updated
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <?php } ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -11,85 +63,73 @@
                         <h4 class="card-title">Data Asset</h4>
                     </div>
                     <div class="card-body">
-                        <div class="toolbar text-center">
+                        <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <?php
-                            $queryOpname1 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  1');
-                            $queryOpname2 = $this->db->query('SELECT * FROM asset WHERE `status_opname` =  2 or `status_opname` =  3');
-
-                            ?>
-                            <a href="<?= base_url('asset/asset'); ?>" class="btn btn-lg btn-primary mb-2" role="button" aria-disabled="false">TAMPILKAN SEMUA</a>
-                            <a href="<?= base_url('asset/opname1'); ?>" class="btn btn-lg btn-danger mb-2" role="button" aria-disabled="false">BELUM DIOPNAME : <?= $queryOpname1->num_rows(); ?></a>
-                            <a href="<?= base_url('asset/opname2'); ?>" class="btn btn-lg btn-success mb-2" role="button" aria-disabled="false">SUDAH DIOPNAME : <?= $queryOpname2->num_rows(); ?></a>
                         </div>
                         <div class="material-datatables">
-                            <table id="dtperjalanan" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="disabled-sorting text-center"></th>
-                                        <th>No Asset</th>
+                                        <th class="disabled-sorting"></th>
                                         <th>Asset</th>
-                                        <th>Kategori</th>
-                                        <th>First Acq</th>
-                                        <th>Value Acq</th>
-                                        <th>Cost Center</th>
-                                        <th>PIC</th>
-                                        <th>Lokasi</th>
-                                        <th>Status</th>
-                                        <th>Tgl Opname</th>
-                                        <th>Catatan</th>
-
+                                        <th class="th-description">Tgl Opname</th>
+                                        <th class="disabled-sorting th-description text-right">Actions</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($asset as $a) : 
+                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $a['id']])->row_array();
+                                        if (empty($opnamed)){    
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/sto-icon.jpg" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $a['asset_deskripsi']; ?>
+                                                <br />
+                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?> (<?= $a['kategori']; ?>)</small>
+                                            </td>
+                                            <td></td>
+                                            <td class="text-right">
+                                                <a href="#" class="btn btn-sm btn-fill btn-danger disabled">BELUM </br>DIOPNAME</a>
+                                            </td>
+                                        </tr>
+                                    <?php }else{ ?>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $opnamed['asset_foto']; ?>" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <a><?= $a['asset_deskripsi']; ?></a>
+                                                <br />
+                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?> (<?= $a['kategori']; ?>)</small>
+                                            </td>
+                                            <td><?= date('d M Y', strtotime($opnamed['opname_at'])); ?></td>
+                                            <td class="text-right">
+                                                <?php if ($a['status']==1){ ?>
+                                                    <a href="<?= base_url('asset/verify/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIVERIFIKASI</a>
+                                                <?php } elseif ($a['status']==9){ ?>
+                                                    <a href="<?= base_url('asset/id/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIVERIFIKASI</a>
+                                                <?php } ?>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                    <?php endforeach; ?>
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th class="text-center"></th>
-                                        <th>No Asset</th>
                                         <th>Asset</th>
-                                        <th>Kategori</th>
-                                        <th>First Acq</th>
-                                        <th>Value Acq</th>
-                                        <th>Cost Center</th>
-                                        <th>PIC</th>
-                                        <th>Lokasi</th>
-                                        <th>Status</th>
-                                        <th>Tgl Opname</th>
-                                        <th>Catatan</th>
-
+                                        <th class="th-description">Tgl Opname</th>
+                                        <th class="th-description text-right">Actions</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    <?php foreach ($asset as $a) :
-                                        if ($a['status_opname'] == 1) {
-                                            $status = "BELUM DIOPNAME";
-                                        } elseif ($a['status_opname'] == 2) {
-                                            $status = "SEDANG DIVERIFIKASI";
-                                        } elseif ($a['status_opname'] == 3) {
-                                            $status = "SUDAH DIVERIFIKASI";
-                                        }; ?>
-                                        <tr>
-                                            <td>
-                                                <div class="img-container">
-                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
-                                                </div>
-                                            </td>
-                                            <td><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></td>
-                                            <td class="td-name">
-                                                <a><?= $a['asset_deskripsi']; ?></a>
-                                            </td>
-                                            <td><?= $a['kategori']; ?></td>
-                                            <td><?= $a['first_acq']; ?></td>
-                                            <td><?= $a['value_acq']; ?></td>
-                                            <td><?= $a['cost_center']; ?></td>
-                                            <?php $karyawan = $this->db->get_where('karyawan', ['npk' =>  $a['npk']])->row_array(); ?>
-                                            <td><?= $karyawan['nama']; ?></td>
-                                            <td><?= $a['lokasi']; ?></td>
-                                            <td><?= $status; ?></td>
-                                            <td><?= $a['tglopname']; ?></td>
-                                            <td><?= $a['catatan']; ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>

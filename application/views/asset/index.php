@@ -1,6 +1,58 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
+    <?php if ($sidesubmenu == 'AssetKu'){ ?>
+        <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-twitter"></i>
+                    </div>
+                    <p class="card-category">Total</p>
+                    <h3 class="card-title"><?= $assetTotal; ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Just Updated
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">store</i>
+                    </div>
+                    <p class="card-category">Opnamed</p>
+                    <h3 class="card-title"><?= $assetOpnamed; ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Just Updated
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">equalizer</i>
+                    </div>
+                    <p class="card-category">Remaining</p>
+                    <h3 class="card-title"><?= $assetRemains; ?></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Just Updated
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <?php } ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -13,64 +65,71 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('asset/index'); ?>" class="btn btn-lg btn-primary mb-2" role="button" aria-disabled="false">TAMPILKAN SEMUA</a>
-                            <a href="<?= base_url('asset/assetku1'); ?>" class="btn btn-lg btn-danger mb-2" role="button" aria-disabled="false">BELUM DIOPNAME </a>
-                            <a href="<?= base_url('asset/assetku2'); ?>" class="btn btn-lg btn-success mb-2" role="button" aria-disabled="false">SUDAH DIOPNAME </a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th class="disabled-sorting"></th>
                                         <th>Asset</th>
-                                        <th class="th-description">Kategori</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">Status</th>
-                                        <th class="th-description">Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
-                                        <th class="disabled-sorting th-description">Actions</th>
+                                        <th class="disabled-sorting th-description text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th class="text-center"></th>
-                                        <th>Asset</th>
-                                        <th class="th-description">Kategori</th>
-                                        <th class="th-description">First Acq</th>
-                                        <th class="th-description">Lokasi</th>
-                                        <th class="th-description">Status</th>
-                                        <th class="th-description">Catatan</th>
-                                        <th class="th-description">Tgl Opname</th>
-                                        <th class="th-description">Actions</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($asset as $a) : ?>
+                                    foreach ($asset as $a) : 
+                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $a['id']])->row_array();
+                                        if (empty($opnamed)){    
+                                    ?>
                                         <tr>
                                             <td>
-                                                <div class="img-container">
-                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $a['asset_foto']; ?>" alt="...">
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/sto-icon.jpg" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $a['asset_deskripsi']; ?>
+                                                <br />
+                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?> (<?= $a['kategori']; ?>)</small>
+                                            </td>
+                                            <td></td>
+                                            <td class="text-right">
+                                                <a href="<?= base_url('asset/opname/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-danger">BELUM </br>DIOPNAME</a>
+                                            </td>
+                                        </tr>
+                                    <?php }else{ ?>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/<?= $opnamed['asset_foto']; ?>" alt="...">
                                                 </div>
                                             </td>
                                             <td class="td-name">
                                                 <a><?= $a['asset_deskripsi']; ?></a>
                                                 <br />
-                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?></small>
+                                                <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?> (<?= $a['kategori']; ?>)</small>
                                             </td>
-                                            <td><?= $a['kategori']; ?></td>
-                                            <td><?= $a['first_acq']; ?></td>
-                                            <td><?= $a['lokasi']; ?></td>
-                                            <td><?= $a['status']; ?></td>
-                                            <td><?= $a['catatan']; ?></td>
-                                            <td><?= $a['tglopname']; ?></td>
+                                            <td><?= date('d M Y', strtotime($opnamed['opname_at'])); ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('asset/do_opname/') . $a['asset_no'] . '/' . $a['asset_sub_no']; ?>" class="btn btn-round btn-primary">OPNAME</a>
+                                            <?php if($a['status']==1){?>
+                                                <a href="<?= base_url('asset/opname/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIVERIFIKASI</a>
+                                            <?php }elseif ($a['status']==9){?>
+                                                <a href="<?= base_url('asset/opname/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIOPNAME</a>
+                                            <?php } ?>
                                             </td>
                                         </tr>
+                                        <?php } ?>
                                     <?php endforeach; ?>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th>Asset</th>
+                                        <th class="th-description">Tgl Opname</th>
+                                        <th class="th-description text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
