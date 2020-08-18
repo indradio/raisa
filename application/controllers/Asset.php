@@ -169,6 +169,7 @@ class Asset extends CI_Controller
                 'change_pic' => $changePic, 
                 'change_lokasi' => $changeLokasi,
                 'dept_id' => $this->session->userdata('dept_id'),
+                'div_id' => $this->session->userdata('div_id')
             ];
             $this->db->insert('asset_opnamed', $data);
 
