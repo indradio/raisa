@@ -114,6 +114,8 @@
                                             <td class="text-right">
                                             <?php if($a['status']==1){?>
                                                 <a href="<?= base_url('asset/opname/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIVERIFIKASI</a>
+                                            <?php }elseif ($a['status']==2){?>
+                                                <a href="<?= base_url('asset/opname/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIAPPROVE</a>
                                             <?php }elseif ($a['status']==9){?>
                                                 <a href="<?= base_url('asset/opname/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIOPNAME</a>
                                             <?php } ?>
