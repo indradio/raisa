@@ -193,6 +193,8 @@
                         <div class="modal-footer justify-content-end">
                         <?php if ($sidesubmenu=='AssetKu'){
                                 echo '<a href="'.base_url('asset').'" class="btn btn-link">Kembali</a>';
+                            }elseif ($sidesubmenu=='Approval'){
+                                echo '<a href="'.base_url('asset/approval').'" class="btn btn-link">Kembali</a>';
                             }else{
                                 echo '<a href="'.base_url('f221/asset').'" class="btn btn-link">Kembali</a>';
                         } ?>

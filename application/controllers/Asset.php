@@ -16,19 +16,19 @@ class Asset extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result_array();
 
-                    $this->db->where('npk',$this->session->userdata('npk'));
-                    $total = $this->db->get('asset');
-                    $data['assetTotal'] = $total->num_rows();
+        $this->db->where('npk',$this->session->userdata('npk'));
+        $total = $this->db->get('asset');
+        $data['assetTotal'] = $total->num_rows();
 
-                    $this->db->where('npk',$this->session->userdata('npk'));
-                    $this->db->where('status', '0');
-                    $remains = $this->db->get('asset');
-                    $data['assetRemains'] = $remains->num_rows();
+        $this->db->where('npk',$this->session->userdata('npk'));
+        $this->db->where('status', '0');
+        $remains = $this->db->get('asset');
+        $data['assetRemains'] = $remains->num_rows();
 
-                    $this->db->where('npk',$this->session->userdata('npk'));
-                    $this->db->where('status', '1');
-                    $opnamed = $this->db->get('asset');
-                    $data['assetOpnamed'] = $opnamed->num_rows();
+        $this->db->where('npk',$this->session->userdata('npk'));
+        $this->db->where('status', '1');
+        $opnamed = $this->db->get('asset');
+        $data['assetOpnamed'] = $opnamed->num_rows();
                 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -104,11 +104,11 @@ class Asset extends CI_Controller
 
     public function id($id)
     {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
-        if ($data['asset']['status']=='9'){
+        if ($data['asset']['status']=='2'){
+            $data['sidemenu'] = 'FA';
+            $data['sidesubmenu'] = 'Asset';
             $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -240,11 +240,70 @@ class Asset extends CI_Controller
         $this->db->update('asset_opnamed');
 
         //Updated status opname
-        $this->db->set('status', '9');
+        $this->db->set('status', '2');
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('asset');
 
         redirect('f221/verify');
+    }
+
+    public function approval()
+    {
+        $data['sidemenu'] = 'Asset';
+        $data['sidesubmenu'] = 'Approval';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->db->where('verify_by !=' , null);
+        $this->db->where('approve_by' , null);
+        $data['asset'] = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
+
+        $this->db->where('dept_id',$this->session->userdata('dept_id'));
+        $this->db->where('status', '1');
+        $stats1 = $this->db->get('asset_opnamed');
+        $data['assetStats1'] = $stats1->num_rows();
+
+        $this->db->where('dept_id',$this->session->userdata('dept_id'));
+        $this->db->where('status', '2');
+        $stats2 = $this->db->get('asset_opnamed');
+        $data['assetStats2'] = $stats2->num_rows();
+
+        $this->db->where('dept_id',$this->session->userdata('dept_id'));
+        $this->db->where('status', '3');
+        $stats3 = $this->db->get('asset_opnamed');
+        $data['assetStats3'] = $stats3->num_rows();
+
+        $this->db->where('dept_id',$this->session->userdata('dept_id'));
+        $this->db->where('status', '4');
+        $stats4 = $this->db->get('asset_opnamed');
+        $data['assetStats4'] = $stats4->num_rows();
+                
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('asset/approval', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function approve()
+    {
+        date_default_timezone_set('asia/jakarta');
+        
+        $this->db->where('verify_by !=', null);
+        $this->db->where('approve_by', null);
+        $asset = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
+
+        foreach ($asset as $a) : 
+            //Updated approve opname
+            $this->db->set('approve_at', date('Y-m-d H:i:s'));
+            $this->db->set('approve_by', $this->session->userdata('nama'));
+            $this->db->where('id', $a['id']);
+            $this->db->update('asset_opnamed');
+
+            //Updated status opname
+            $this->db->set('status', '9');
+            $this->db->where('id', $a['id']);
+            $this->db->update('asset');
+        endforeach;
+        redirect('asset/approval');
     }
 
     public function verifikasi2()
@@ -252,7 +311,7 @@ class Asset extends CI_Controller
         $data['sidemenu'] = 'FA';
         $data['sidesubmenu'] = 'Verifikasi Opname';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset_opname', ['status_opname' =>  '2'])->result_array();
+        $data['asset'] = $this->db->get_where('asset_opname', ['status_opname' => '2'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -278,30 +337,20 @@ class Asset extends CI_Controller
         redirect('asset/verifikasi');
     }
 
-    public function asset()
+    public function asset($id)
     {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset Manajemen';
+        $data['sidemenu'] = 'Asset';
+        $data['sidesubmenu'] = 'Approval';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get('asset')->result_array();
+        $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
+        $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/asset', $data);
+        $this->load->view('asset/opnamed', $data);
         $this->load->view('templates/footer');
     }
-    public function opname1()
-    {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset Manajemen';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['status_opname' =>  1])->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/asset', $data);
-        $this->load->view('templates/footer');
-    }
+
     public function opname2()
     {
         $data['sidemenu'] = 'FA';

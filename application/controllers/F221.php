@@ -23,7 +23,7 @@ class F221 extends CI_Controller
         $remains = $this->db->get('asset');
         $data['assetRemains'] = $remains->num_rows();
 
-        $this->db->where('status', '9');
+        $this->db->where('status', '2');
         $verified = $this->db->get('asset');
         $data['assetVerified'] = $verified->num_rows();
                 
