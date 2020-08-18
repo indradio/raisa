@@ -253,30 +253,59 @@ class Asset extends CI_Controller
         $data['sidemenu'] = 'Asset';
         $data['sidesubmenu'] = 'Approval';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $this->db->where('verify_by !=' , null);
-        $this->db->where('approve_by' , null);
-        $data['asset'] = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
+        
+        if ($this->session->userdata('posisi_id' == 3)){
+            $this->db->where('verify_by !=' , null);
+            $this->db->where('approve_by' , null);
+            $data['asset'] = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
 
-        $this->db->where('dept_id',$this->session->userdata('dept_id'));
-        $this->db->where('status', '1');
-        $stats1 = $this->db->get('asset_opnamed');
-        $data['assetStats1'] = $stats1->num_rows();
+            $this->db->where('dept_id',$this->session->userdata('dept_id'));
+            $this->db->where('status', '1');
+            $stats1 = $this->db->get('asset_opnamed');
+            $data['assetStats1'] = $stats1->num_rows();
 
-        $this->db->where('dept_id',$this->session->userdata('dept_id'));
-        $this->db->where('status', '2');
-        $stats2 = $this->db->get('asset_opnamed');
-        $data['assetStats2'] = $stats2->num_rows();
+            $this->db->where('dept_id',$this->session->userdata('dept_id'));
+            $this->db->where('status', '2');
+            $stats2 = $this->db->get('asset_opnamed');
+            $data['assetStats2'] = $stats2->num_rows();
 
-        $this->db->where('dept_id',$this->session->userdata('dept_id'));
-        $this->db->where('status', '3');
-        $stats3 = $this->db->get('asset_opnamed');
-        $data['assetStats3'] = $stats3->num_rows();
+            $this->db->where('dept_id',$this->session->userdata('dept_id'));
+            $this->db->where('status', '3');
+            $stats3 = $this->db->get('asset_opnamed');
+            $data['assetStats3'] = $stats3->num_rows();
 
-        $this->db->where('dept_id',$this->session->userdata('dept_id'));
-        $this->db->where('status', '4');
-        $stats4 = $this->db->get('asset_opnamed');
-        $data['assetStats4'] = $stats4->num_rows();
-                
+            $this->db->where('dept_id',$this->session->userdata('dept_id'));
+            $this->db->where('status', '4');
+            $stats4 = $this->db->get('asset_opnamed');
+            $data['assetStats4'] = $stats4->num_rows();
+        } elseif ($this->session->userdata('posisi_id' == 2)){
+            $this->db->where('verify_by !=' , null);
+            $this->db->where('approve_by' , null);
+            $data['asset'] = $this->db->get_where('asset_opnamed', ['div_id' => $this->session->userdata('div_id')])->result_array();
+    
+            $this->db->where('div_id',$this->session->userdata('div_id'));
+            $this->db->where('status', '1');
+            $stats1 = $this->db->get('asset_opnamed');
+            $data['assetStats1'] = $stats1->num_rows();
+    
+            $this->db->where('div_id',$this->session->userdata('div_id'));
+            $this->db->where('status', '2');
+            $stats2 = $this->db->get('asset_opnamed');
+            $data['assetStats2'] = $stats2->num_rows();
+    
+            $this->db->where('div_id',$this->session->userdata('div_id'));
+            $this->db->where('status', '3');
+            $stats3 = $this->db->get('asset_opnamed');
+            $data['assetStats3'] = $stats3->num_rows();
+    
+            $this->db->where('div_id',$this->session->userdata('div_id'));
+            $this->db->where('status', '4');
+            $stats4 = $this->db->get('asset_opnamed');
+            $data['assetStats4'] = $stats4->num_rows();
+        }else{
+            redirect('asset');
+        }
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
