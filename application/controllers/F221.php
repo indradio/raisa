@@ -26,6 +26,10 @@ class F221 extends CI_Controller
         $this->db->where('status', '2');
         $verified = $this->db->get('asset');
         $data['assetVerified'] = $verified->num_rows();
+
+        $this->db->where('status', '9');
+        $approved = $this->db->get('asset');
+        $data['assetApproved'] = $approved->num_rows();
                 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

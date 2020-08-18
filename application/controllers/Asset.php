@@ -26,7 +26,7 @@ class Asset extends CI_Controller
         $data['assetRemains'] = $remains->num_rows();
 
         $this->db->where('npk',$this->session->userdata('npk'));
-        $this->db->where('status', '1');
+        $this->db->where('status >', '1');
         $opnamed = $this->db->get('asset');
         $data['assetOpnamed'] = $opnamed->num_rows();
                 
@@ -106,7 +106,7 @@ class Asset extends CI_Controller
     {
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
-        if ($data['asset']['status']=='2'){
+        if ($data['asset']['status']=='9'){
             $data['sidemenu'] = 'FA';
             $data['sidesubmenu'] = 'Asset';
             $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
@@ -253,7 +253,7 @@ class Asset extends CI_Controller
         $data['sidemenu'] = 'Asset';
         $data['sidesubmenu'] = 'Approval';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        
+
         if ($this->session->userdata('posisi_id' == 3)){
             $this->db->where('verify_by !=' , null);
             $this->db->where('approve_by' , null);
