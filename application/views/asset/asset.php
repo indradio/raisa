@@ -113,9 +113,11 @@
                                             <td><?= date('d M Y', strtotime($opnamed['opname_at'])); ?></td>
                                             <td class="text-right">
                                                 <?php if ($a['status']==1){ ?>
-                                                    <a href="<?= base_url('asset/verify/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIVERIFIKASI</a>
+                                                    <a href="<?= base_url('asset/verify/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-danger">BELUM </br>DIVERIFIKASI</a>
+                                                <?php } elseif ($a['status']==2){ ?>
+                                                    <a href="<?= base_url('asset/id/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIAPPROVE</a>
                                                 <?php } elseif ($a['status']==9){ ?>
-                                                    <a href="<?= base_url('asset/id/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIVERIFIKASI</a>
+                                                    <a href="<?= base_url('asset/id/' . $a['id']); ?>" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIOPNAME</a>
                                                 <?php } ?>
                                             </td>
                                         </tr>
