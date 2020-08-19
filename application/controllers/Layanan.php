@@ -218,14 +218,17 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : PERUBAHAN BATAS WAKTU KEBERANGKATAN PERJALANAN DINAS*" .
-                            "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                            "\r\n \r\nSejalan dengan semangat dan komitmen winteq untuk terus memberikan pelayanan yang terbaik bagi customer" .
-                            "\r\nMulai tanggal 11 Agustus 2020, *Batas Waktu Keberangkatan Perjalanan Dinas* sebagai berikut :" .
-                            "\r\n \r\n*MAX 1 JAM* dari waktu rencana keberangkatan untuk perjalanan yang menggunakan *COPRO* (Keperluan projek ke customer)" .
-                            "\r\n \r\n*MAX 2 JAM* dari waktu rencana keberangkatan untuk perjalanan tanpa menggunakan COPRO (Keperluan non projek)" .
-                            "\r\n \r\nPerjalanan yang melewati batas waktu keberangkatan akan *DIBATALKAN* secara otomatis." .
-                            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui https://raisa.winteq-astra.com"
+                            'message' => "*INFO : LIBUR TAHUN BARU ISLAM DAN CUTI BERSAMA*" .
+                            "\r\n \r\nSemangat Pagi, *" . $k['nama'] . "*" .
+                            "\r\n \r\nDengan Hormat," .
+                            "\r\nBerdasarkan Calender Of Even (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2020, maka dengan ini kami informasikan bahwa :" .
+                            "\r\n \r\n*1.	Tanggal 20 Agustus 2020	: Tahun Baru Islam*" .
+                            "\r\n*2.	Tanggal 21 Agustus 2020	: Cuti Bersama*" .
+                            "\r\n \r\nOleh karena hal tersebut, maka karyawan bisa masuk kembali bekerja seperti biasa pada tanggal *24 Agustus 2020*" .
+                            "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
+                            "\r\n \r\nHormat kami," .
+                            "\r\nHuman Capital" .
+                            "\r\nPT Astra Otoparts Tbk Divisi Winteq"
                         ],
                     ]
                 );
