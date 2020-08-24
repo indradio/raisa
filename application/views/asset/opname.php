@@ -3,6 +3,13 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+            <strong>MAXIMAL FOTO 2MB YA!</strong>
+            </div>
+        </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header card-header-primary card-header-icon">
