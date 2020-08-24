@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <strong>INFO : LAYANAN e-Wallet OVO DIBERHENTIKAN</strong>
@@ -15,7 +15,7 @@
           </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- End Banner -->
     <div class="row">
       <?php
