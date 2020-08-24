@@ -218,17 +218,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : LIBUR TAHUN BARU ISLAM DAN CUTI BERSAMA*" .
+                            'message' => "*INFO : ASSET OPNAME PERIODE 2020*" .
                             "\r\n \r\nSemangat Pagi, *" . $k['nama'] . "*" .
-                            "\r\n \r\nDengan Hormat," .
-                            "\r\nBerdasarkan Calender Of Even (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2020, maka dengan ini kami informasikan bahwa :" .
-                            "\r\n \r\n*1.	Tanggal 20 Agustus 2020	: Tahun Baru Islam*" .
-                            "\r\n*2.	Tanggal 21 Agustus 2020	: Cuti Bersama*" .
-                            "\r\n \r\nOleh karena hal tersebut, maka karyawan bisa masuk kembali bekerja seperti biasa pada tanggal *24 Agustus 2020*" .
-                            "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
-                            "\r\n \r\nHormat kami," .
-                            "\r\nHuman Capital" .
-                            "\r\nPT Astra Otoparts Tbk Divisi Winteq"
+                            "\r\n \r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun, maka Winteq akan mengadakan agenda asset opname pada tanggal 24-28 Agustus 2020." .
+                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset->AssetKu* lalu silahkan melakukan Asset opname (diharuskan mengupload foto barang)." .
+                            "\r\n \r\n*Apabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin & Acct*" .
+                            "\r\n Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
                 );
