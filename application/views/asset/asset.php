@@ -96,6 +96,7 @@
                                     <?php
                                     foreach ($asset as $a) : 
                                         $opnamed = $this->db->get_where('asset_opnamed', ['id' => $a['id']])->row_array();
+                                        $pic = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array();
                                         if (empty($opnamed)){    
                                     ?>
                                         <tr>
@@ -108,6 +109,8 @@
                                                 <?= $a['asset_deskripsi']; ?>
                                                 <br />
                                                 <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?> (<?= $a['kategori']; ?>)</small>
+                                                <br />
+                                                <small><?= $pic['nama']; ?></small>
                                             </td>
                                             <td></td>
                                             <td class="text-right">
@@ -125,6 +128,8 @@
                                                 <a><?= $a['asset_deskripsi']; ?></a>
                                                 <br />
                                                 <small><?= $a['asset_no'] . '-' . $a['asset_sub_no']; ?> (<?= $a['kategori']; ?>)</small>
+                                                <br />
+                                                <small><?= $pic['nama']; ?></small>
                                             </td>
                                             <td><?= date('d M Y', strtotime($opnamed['opname_at'])); ?></td>
                                             <td class="text-right">
