@@ -14,7 +14,7 @@
                     </div>
                     <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
+                        <a href="<?= base_url('f221/asset'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Selengkapnya</a>
                     </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
+                        <a href="<?= base_url('f221/asset/approved'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Selengkapnya</a>
                     </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
+                        <a href="<?= base_url('f221/asset/verified'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Selengkapnya</a>
                     </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
+                        <a href="<?= base_url('f221/asset/opnamed'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Selengkapnya</a>
                     </div>
                     </div>
                 </div>

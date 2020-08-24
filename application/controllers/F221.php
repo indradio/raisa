@@ -9,12 +9,21 @@ class F221 extends CI_Controller
         is_logged_in();
     }
 
-    public function asset()
+    public function asset($kategori = null)
     {
         $data['sidemenu'] = 'FA';
         $data['sidesubmenu'] = 'Asset';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset')->result_array();
+
+        if ($kategori == 'approved'){
+            $data['asset'] = $this->db->get_where('asset', ['status' => '9'])->result_array();
+        } elseif($kategori == 'verified'){
+            $data['asset'] = $this->db->get_where('asset', ['status' => '2'])->result_array();
+        } elseif($kategori == 'opnamed'){
+            $data['asset'] = $this->db->get_where('asset', ['status' => '1'])->result_array();
+        }else{
+            $data['asset'] = $this->db->get('asset')->result_array();
+        }
 
         $total = $this->db->get('asset');
         $data['assetTotal'] = $total->num_rows();
