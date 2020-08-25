@@ -102,7 +102,7 @@
                                             <td><?= $a['value_acq']; ?></td>
                                             <td><?= $a['cost_center']; ?></td>
                                             <td><?= $opnamed['catatan']; ?></td>
-                                            <td><?= date('d M Y', strtotime($opnamed['opname_at'])); ?></td>
+                                            <td><?= date('d M Y', strtotime($opnamed['opname_at'])).' Oleh '.$opnamed['opname_by']; ?></td>
                                             <td><?= date('d M Y', strtotime($opnamed['verify_at'])).' Oleh '.$opnamed['verify_by']; ?></td>
                                             <td><?= date('d M Y', strtotime($opnamed['approve_at'])).' Oleh '.$opnamed['approve_by']; ?></td>
                                             <?php $dept = $this->db->get_where('karyawan_dept', ['id' => $opnamed['dept_id']])->row_array(); ?>
