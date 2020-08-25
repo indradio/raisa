@@ -255,7 +255,7 @@ class Asset extends CI_Controller
         $data['sidesubmenu'] = 'Approval';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
-        if ($this->session->userdata('posisi_id' == 3)){
+        if ($this->session->userdata('posisi_id') == 3){
             $this->db->where('verify_by !=' , null);
             $this->db->where('approve_by' , null);
             $data['asset'] = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
@@ -279,7 +279,7 @@ class Asset extends CI_Controller
             $this->db->where('status', '4');
             $stats4 = $this->db->get('asset_opnamed');
             $data['assetStats4'] = $stats4->num_rows();
-        } elseif ($this->session->userdata('posisi_id' == 2)){
+        } elseif ($this->session->userdata('posisi_id') == 2){
             $this->db->where('verify_by !=' , null);
             $this->db->where('approve_by' , null);
             $data['asset'] = $this->db->get_where('asset_opnamed', ['div_id' => $this->session->userdata('div_id')])->result_array();
