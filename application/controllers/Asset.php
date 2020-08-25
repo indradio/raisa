@@ -29,6 +29,12 @@ class Asset extends CI_Controller
         $this->db->where('status >', '1');
         $opnamed = $this->db->get('asset');
         $data['assetOpnamed'] = $opnamed->num_rows();
+
+        if ($this->session->userdata('npk')=='0282'){
+            $data['asset'] = $this->db->where('npk' , '0282');
+            $data['asset'] = $this->db->or_where('npk' , '0081');
+            $data['asset'] = $this->db->get('asset')->result_array();
+        }
                 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
