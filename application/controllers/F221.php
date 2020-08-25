@@ -253,30 +253,17 @@ class F221 extends CI_Controller
     //     $this->load->view('asset/asset', $data);
     //     $this->load->view('templates/footer');
     // }
-    public function opname1()
+    public function all()
     {
         $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset Manajemen';
+        $data['sidesubmenu'] = 'Asset';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['status_opname' =>  1])->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/asset', $data);
-        $this->load->view('templates/footer');
-    }
-    public function opname2()
-    {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset Manajemen';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->where('status_opname', '2');
-        $data['asset'] = $this->db->or_where('status_opname', '3');
         $data['asset'] = $this->db->get('asset')->result_array();
+                
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/asset', $data);
+        $this->load->view('asset/asset-detail', $data);
         $this->load->view('templates/footer');
     }
 
