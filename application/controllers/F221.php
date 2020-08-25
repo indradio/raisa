@@ -256,7 +256,7 @@ class F221 extends CI_Controller
     public function all()
     {
         $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset';
+        $data['sidesubmenu'] = 'Laporan Asset';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get('asset')->result_array();
                 
