@@ -262,7 +262,7 @@
                                     <div class="img-container">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                     </div>
-                                    <a class="badge badge-pill badge-info" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                    <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
                                   <?php } elseif ($p['status'] == 2) { ?>
                                     <div class="img-container">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
