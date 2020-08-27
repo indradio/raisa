@@ -19,7 +19,7 @@
                                                 <?php
                                                 $queryKendaraan = "SELECT *
                                                                     FROM `kendaraan_status`
-                                                                    WHERE `id` != 1
+                                                                    WHERE `id` = 2 OR `id` = 3
                                                                     ORDER BY `id` ASC
                                                                     ";
                                                 $Kendaraan = $this->db->query($queryKendaraan)->result_array();
