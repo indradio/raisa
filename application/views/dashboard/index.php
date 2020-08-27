@@ -348,6 +348,7 @@
                                     <div class="img-container">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan1.png" alt="...">
                                     </div>
+                                    <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>">GiPieS</a>
                                     <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
                                   </td>
                                   <td class="td-name">
@@ -1044,6 +1045,7 @@
           var mapOptions = {
             center: location,
             zoom: 18,
+            mapTypeId: 'satellite',
 
             mapTypeId: google.maps.MapTypeId.ROADMAP
           }
