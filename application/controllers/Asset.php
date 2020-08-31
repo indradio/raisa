@@ -31,8 +31,6 @@ class Asset extends CI_Controller
         $data['assetOpnamed'] = $opnamed->num_rows();
 
         if ($this->session->userdata('npk')=='0282'){
-            $data['asset'] = $this->db->where('npk' , '0282');
-            $data['asset'] = $this->db->or_where('npk' , '0081');
             $data['asset'] = $this->db->get('asset')->result_array();
         }
                 
@@ -51,6 +49,12 @@ class Asset extends CI_Controller
         $data['asset'] = $this->db->where('npk' , $this->session->userdata('npk'));
         $data['asset'] = $this->db->where('status' , '0');
         $data['asset'] = $this->db->get('asset')->result_array();
+
+        if ($this->session->userdata('npk')=='0282'){
+            $data['asset'] = $this->db->where('status' , '0');
+            $data['asset'] = $this->db->get('asset')->result_array();
+        }
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
@@ -66,6 +70,12 @@ class Asset extends CI_Controller
         $data['asset'] = $this->db->where('npk' , $this->session->userdata('npk'));
         $data['asset'] = $this->db->where('status >=' , '1');
         $data['asset'] = $this->db->get('asset')->result_array();
+
+        if ($this->session->userdata('npk')=='0282'){
+            $data['asset'] = $this->db->where('status >=' , '1');
+            $data['asset'] = $this->db->get('asset')->result_array();
+        }
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
