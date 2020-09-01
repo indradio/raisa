@@ -22,6 +22,8 @@
     <script src="<?= base_url(); ?>assets/js/plugins/tinymce.min.js"></script>
     <script src="<?= base_url(); ?>assets/js/plugins/jquery.mask.js"></script>
     <script src="<?= base_url(); ?>assets/js/plugins/jquery.mask.min.js"></script>
+    <script src="<?= base_url(); ?>assets/js/plugins/OneSignalSDKUpdaterWorker.js"></script>
+    <script src="<?= base_url(); ?>assets/js/plugins/OneSignalSDKWorker.js"></script>
     <!-- Plugin for jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -30,12 +32,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script>
-  window.OneSignal = window.OneSignal || [];
-  OneSignal.push(function() {
-    OneSignal.init({
-      appId: "39c59297-a627-4ae7-ac1d-4fd1e0b75c9f",
+    <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+        OneSignal.init({
+        appId: "39c59297-a627-4ae7-ac1d-4fd1e0b75c9f",
+        });
     });
-  });
-</script>
+    </script>
 </head>
