@@ -2,16 +2,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-danger" role="alert">
-                    <strong>UJI COBA FITUR ESTIMASI BIAYA & PENYELESAIAN PERJALANAN DINAS</strong>
-                    </br>
-                    </br>Dalam tahap uji coba aplikasi
-                </div>
-            </div>
-        </div>
-        <!-- Banner -->
-        <div class="row">
-            <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-icon">

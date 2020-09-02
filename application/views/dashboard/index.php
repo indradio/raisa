@@ -1,21 +1,22 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>INFO : LAYANAN e-Wallet OVO DIBERHENTIKAN</strong>
+          <strong>INFO : ABSENSI SAAT WFH/OFF MENJALANI ISOLASI MANDIRI</strong>
           </br>
-          </br>Hai <?= $karyawan['nama']; ?>,
-          </br>Buat kamu yang menggunakan e-wallet OVO, RAISA mohon maaf karena mulai tgl 27 Juli 2020 transfer tunjangan perjalanan dinas tidak dapat menggunakan OVO.
-          </br>Hal ini dikarenakan kebijakan dari OVO yang memiliki keterbatasan transaksi.
+          </br>Semangat pagi <strong><?= $karyawan['nama']; ?></strong>,
           </br>
-          </br>Segera update ewallet kamu ya!
-          </br><a href="<?= base_url('profil'); ?>" class="btn btn-success text-light" role="button" aria-disabled="false">UPDATE E-WALLET</a>
-          </br></br>Kalo kamu masih bingung atau mengalami kesulitan jangan ragu untuk kasih tahu kami ya!
+          </br>Untuk semua karyawan yang sedang atau suatu saat nanti akan WFH/OFF isolasi mandiri karena beresiko (baik karena ada kasus di sekitar rumah, tracing resiko pribadi, atau panggilan gugus tugas), <strong>WAJIB</strong> absen online di Raisa sebagai pengganti ketidakhadiran di kantor. 
+          </br>
+          </br><strong>Karyawan yang WFH/OFF isolasi mandiri dan tidak absen online maka sama dengan tidak masuk tanpa keterangan</strong>
+          </br>
+          </br>Dengan Hormat,
+          </br>HR
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- End Banner -->
     <div class="row">
       <?php
@@ -174,11 +175,11 @@
                 <i class="material-icons">update</i> Lembur
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#tabmedical" role="tablist">
                 <i class="material-icons">local_hospital</i> Claim <br>Medical
               </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
                 <i class="material-icons">event_note</i> Project <br>Schedule

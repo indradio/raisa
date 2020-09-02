@@ -218,12 +218,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : ASSET OPNAME PERIODE 2020*" .
-                            "\r\n \r\nSemangat Pagi, *" . $k['nama'] . "*" .
-                            "\r\n \r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun, maka Winteq akan mengadakan agenda asset opname pada tanggal 24-28 Agustus 2020." .
-                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset->AssetKu* lalu silahkan melakukan Asset opname (diharuskan mengupload foto barang)." .
-                            "\r\n \r\n*Apabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin & Acct*" .
-                            "\r\n Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                            'message' => "*INFO : ABSENSI SAAT WFH/OFF ISOLASI MANDIRI*" .
+                            "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
+                            "\r\n \r\nUntuk semua karyawan yang sedang atau suatu saat nanti akan WFH/OFF isolasi mandiri karena beresiko (baik karena ada kasus di sekitar rumah, tracing resiko pribadi, atau panggilan gugus tugas), *WAJIB* absen online di Raisa sebagai pengganti ketidakhadiran di kantor." .
+                            "\r\n \r\n*Karyawan yang WFH/OFF isolasi mandiri dan tidak absen online maka sama dengan tidak masuk tanpa keterangan*" .
+                            "\r\n \r\nDengan Hormat" .
+                            "\r\nHR" .
+                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
                 );

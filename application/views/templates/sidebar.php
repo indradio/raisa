@@ -8,7 +8,7 @@
       -->
       <div class="logo">
         <a href="#" class="simple-text logo-mini">
-          R
+            <img src="<?= base_url(); ?>assets/img/logo.png" style="width:28px; height:28px;"/>
         </a>
         <a href="#" class="simple-text logo-normal">
           R A I S A
