@@ -16,7 +16,7 @@
                             <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-facebook mb-2" role="button" aria-disabled="false">Buat Pejalanan Dinas</a>
                         </div>
                         <div class="material-datatables">
-                            <table id="dt-asc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>

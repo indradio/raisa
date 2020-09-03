@@ -12,7 +12,7 @@
           </br>
           </br><strong>Karyawan yang WFH/OFF isolasi mandiri dan tidak absen online maka sama dengan tidak masuk tanpa keterangan</strong>
           </br>
-          </br>Dengan Hormat,
+          </br>Hormat Kami,
           </br>HR
         </div>
       </div>
