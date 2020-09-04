@@ -537,7 +537,7 @@ class Jamkerja extends CI_Controller
 
             $querylembur = "SELECT *
                             FROM `lembur`
-                            WHERE `tglmulai` >= '$tglmulai' AND `tglmulai` <= '$tglselesai' AND (`status` = '9')
+                            WHERE `tglmulai` >= '$tglmulai' AND `tglmulai` <= '$tglselesai' AND `contract`='Direct Labor' AND `status`='9'
                             ";
             $data['lembur'] = $this->db->query($querylembur)->result_array();
             $data['tglmulai'] = $tglmulai;
