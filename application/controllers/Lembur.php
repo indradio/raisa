@@ -1591,6 +1591,18 @@ class Lembur extends CI_Controller
         $this->load->view('lembur/reportlbr', $data);
     }
 
+    public function cetak($id)
+    {
+        $data['sidemenu'] = 'Lembur';
+        $data['sidesubmenu'] = 'LemburKu';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['lembur']  = $this->db->get_where('lembur', ['id' => $id])->row_array();
+        $data['jamkerja_kategori']  = $this->db->get_where('jamkerja_kategori', ['id' => $id])->row_array();
+        $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
+
+        $this->load->view('lembur/reportlbr', $data);
+    }
+
      public function report_lembur_sect()
     {
         $data['sidemenu'] = 'Lembur';

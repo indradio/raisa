@@ -48,7 +48,7 @@
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
                                     <th class="disabled-sorting text-right">Actions</th>
-                                    <th class="disabled-sorting"></th>
+                                    <!-- <th class="disabled-sorting"></th> -->
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -63,7 +63,7 @@
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
                                     <th class="text-right">Actions</th>
-                                    <th></th>
+                                    <!-- <th></th> -->
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -87,19 +87,9 @@
                                     <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= $l['durasi']; ?> Jam </td>
                                     <td class="text-right">
-                                        <?php if ($l['status'] == 9 ) { ?>
-                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
-                                        <?php } else { ?>
-                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons">dvr</i></a>
-                                        <?php }; ?>
+                                            <a href="<?= base_url('lembur/cetak/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
                                     </td>
-                                    <td>
-                                        <!-- <?php if ($l['status'] == 9 ) { ?>
-                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
-                                        <?php } else { ?>
-                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons">dvr</i></a>
-                                        <?php }; ?> -->
-                                    </td>
+                                        <!-- <td></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
