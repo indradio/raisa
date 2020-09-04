@@ -1482,6 +1482,49 @@ class Perjalanandl extends CI_Controller
             redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
         }
     }
+
+    public function kasbon_in()
+    {
+        date_default_timezone_set('asia/jakarta');
+            $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+            $this->db->set('kasbon', $perjalanan['kasbon_out'] - $this->input->post('kasbon_transfer'));
+            $this->db->set('kasbon_in', $perjalanan['kasbon_in'] + $this->input->post('kasbon_transfer'));
+            $this->db->set('kasbon_in_by', $this->session->userdata('inisial'));
+            $this->db->set('kasbon_in_at', date('Y-m-d H:i:s'));
+            $this->db->set('kasbon_in_ewallet', $this->input->post('kasbon_in_ewallet'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+
+            $kasbon = $perjalanan['kasbon_out'] - ($perjalanan['kasbon_in'] + $this->input->post('kasbon_transfer'));
+
+            $this->db->where('sect_id', '211');
+            $fa_admin = $this->db->get('karyawan_admin')->row_array();
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $fa_admin['phone'],
+                        'message' => "*PENGEMBALIAN KASBON PERJALANAN DINAS*" . 
+                        "\r\n*#" . $this->input->post('id') . "*" .
+                        "\r\n \r\nKasbon : *" . $perjalanan['kasbon_out'] . "*" .
+                        "\r\nDikembalikan : *" . $this->input->post('kasbon_transfer') . "*" .
+                        "\r\nKe eWallet : *" . $this->input->post('kasbon_in_ewallet') . "*" .
+                        "\r\nTotal Kasbon : *" . $kasbon . "*" .
+                        "\r\n \r\nPastikan transfer kasbon yg dikembalikan sudah masuk/diterima.".
+                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                    ],
+                ]
+            );
+            $body = $response->getBody();
+
+            redirect('perjalanan/penyelesaian/' . $this->input->post('id'));
+    }
     
     public function payment($parameter)
     {

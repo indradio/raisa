@@ -44,8 +44,15 @@ class Perjalanan extends CI_Controller
                 $this->load->view('templates/footer');
             } elseif ($parameter == 'submit') {
                 $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+                if (empty($this->input->post('catatan'))){
+                    $catatan = '';
+                }else{
+                    $catatan = $this->input->post('catatan').' - '. $this->session->userdata('inisial');
+                }
                 $this->db->set('klaim_by', $this->session->userdata('inisial'));
                 $this->db->set('klaim_at', date('Y-m-d H:i:s'));
+                $this->db->set('tujuan_pic', $this->input->post('tujuan_pic'));
+                $this->db->set('catatan', $catatan);
                 $this->db->set('status', '4');
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
@@ -214,5 +221,14 @@ class Perjalanan extends CI_Controller
             $this->db->update('perjalanan');
         }
         redirect('perjalanan/penyelesaian/' . $this->input->post('id'));
+    }
+
+    public function change_pic($id,$inisial)
+    {
+        $this->db->set('pic_perjalanan', $inisial);
+        $this->db->where('id', $id);
+        $this->db->update('perjalanan');
+     
+        redirect('perjalanan/penyelesaian/' . $id);
     }
 }
