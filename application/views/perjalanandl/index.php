@@ -192,7 +192,7 @@
                         <h4 class="card-title">ALASAN PEMBATALAN</h4>
                     </div>
                 </div>
-                <form class="form" method="post" action="<?= base_url('perjalanandl/bataldl'); ?>">
+                <form class="form" method="post" action="<?= base_url('perjalanandl/batal_perjalanan'); ?>">
                     <div class="modal-body">
                         <input type="text" class="form-control disabled" name="id" hidden>
                         <textarea rows="3" class="form-control" name="catatan" placeholder="Contoh : Tidak jadi berangkat" required></textarea>

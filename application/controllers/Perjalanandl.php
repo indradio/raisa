@@ -625,6 +625,23 @@ class Perjalanandl extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function batal_perjalanan()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->set('status', '0');
+        $this->db->set('catatan', "Alasan pembatalan : " . $this->input->post('catatan') . " - Dibatalkan oleh " . $this->session->userdata('inisial') . " pada " . date('d-m-Y H:i'));
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('perjalanan');
+
+        $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
+        $this->db->set('status', '9');
+        $this->db->where('id', $perjalanan['reservasi_id']);
+        $this->db->update('reservasi');
+
+        $this->session->set_flashdata('message', 'bataldl');
+        redirect('perjalanandl');
+    }
+
     public function bataldl()
     {
         date_default_timezone_set('asia/jakarta');
