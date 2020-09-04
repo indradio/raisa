@@ -260,7 +260,7 @@
                             } ?>
                           </td>
                           <?php if (!empty($lembur)) {
-                            $otstat = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array(); ?>
+                            $otstat = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
                             <td><?= $otstat['nama']; ?></td>
                           <?php  } else { ?>
                             <td class="text-danger">Tidak ada Laporan Lembur</td>

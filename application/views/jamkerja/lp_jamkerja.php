@@ -12,16 +12,17 @@
           </div>
           <div class="card-body">
             <div class="toolbar">
-            <form class="form" method="POST" action="<?= base_url('jamkerja/laporan'); ?>">
+            <form class="form" method="POST" action="<?= base_url('jamkerja/laporan/jk'); ?>">
                 <div class="form-group label-floating">
                   <div class="input-group date">
                     <input type="text" id="tanggal" name="tanggal" class="form-control datepicker" placeholder="Pilih Tanggal" required="true" />
-                      <div class="input-group-append">
+                      <div class="input-group-prepend">
                         <span class="input-group-text">
-                        <button type="submit" class="btn btn-success">CARI</button>
+                          <i class="material-icons">date_range</i>
                         </span>
                       </div>
                   </div>
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
                 </div>
             </form>
               <!--        Here you can write extra buttons/actions for the toolbar              -->

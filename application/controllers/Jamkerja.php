@@ -513,10 +513,11 @@ class Jamkerja extends CI_Controller
     //         $this->load->view('templates/footer');
     // }
 
-    public function laporan()
+    public function laporan($param=false)
     {
+    if($param=="jk"){
             $data['sidemenu'] = 'PPIC';
-            $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
+            $data['sidesubmenu'] = 'Cetak Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
                                 $this->db->where('tglmulai >', date("Y-m-d 00:00:00", strtotime($this->input->post('tanggal'))));
                                 $this->db->where('tglmulai <', date("Y-m-d 23:59:00", strtotime($this->input->post('tanggal'))));
@@ -527,7 +528,29 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/lp_jamkerja', $data);
             $this->load->view('templates/footer');
+    }elseif ($param=="ot"){
+            $data['sidemenu'] = 'PPIC';
+            $data['sidesubmenu'] = 'Cetak Lembur';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));
+            $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglakhir')));
+
+            $querylembur = "SELECT *
+                            FROM `lembur`
+                            WHERE `tglmulai` >= '$tglmulai' AND `tglmulai` <= '$tglselesai' AND (`status` = '9')
+                            ";
+            $data['lembur'] = $this->db->query($querylembur)->result_array();
+            $data['tglmulai'] = $tglmulai;
+            $data['tglselesai'] = $tglselesai;
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/lp_lembur', $data);
+            $this->load->view('templates/footer');
+    }else{
+        $this->load->view('auth/denied');
     }
+}
 
     public function cetak($id)
     {
