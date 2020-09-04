@@ -87,7 +87,7 @@
                                     <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= $l['durasi']; ?> Jam </td>
                                     <td class="text-right">
-                                            <a href="<?= base_url('lembur/cetak/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
+                                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
                                     </td>
                                         <!-- <td></td> -->
                                     </tr>
