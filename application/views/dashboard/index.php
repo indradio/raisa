@@ -380,7 +380,7 @@
                             <tr>
                               <td class="text-center">
                                 <div class="img-container">
-                                  <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                 </div>
                                 <?php if ($rn['status'] == 1) { ?>
                                   <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $rn['atasan1']; ?></span>
@@ -439,7 +439,7 @@
                                   <span class="badge badge-pill badge-info"><?= $status_pn['nama']; ?></span>
                                 <?php } elseif ($pn['status'] == 2) { ?>
                                   <div class="img-container">
-                                    <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                                    <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                   </div>
                                   <span class="badge badge-pill badge-danger"><?= $status_pn['nama']; ?></span>
                                 <?php } elseif ($pn['status'] == 8 or $pn['status'] == 11) { ?>
