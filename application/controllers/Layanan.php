@@ -218,13 +218,14 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : ABSENSI SAAT WFH/OFF ISOLASI MANDIRI*" .
+                            'message' => "*PENTING : SEMUA PAKAI MASKER*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\n \r\nUntuk semua karyawan yang sedang atau suatu saat nanti akan WFH/OFF isolasi mandiri karena beresiko (baik karena ada kasus di sekitar rumah, tracing resiko pribadi, atau panggilan gugus tugas), *WAJIB* absen online di Raisa sebagai pengganti ketidakhadiran di kantor." .
-                            "\r\n \r\n*Karyawan yang WFH/OFF isolasi mandiri dan tidak absen online maka sama dengan tidak masuk tanpa keterangan*" .
-                            "\r\n \r\nDengan Hormat" .
-                            "\r\nHR" .
-                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                            "\r\n \r\nRaisa mau ingetin lagi nih buat kamu guna mencegah penyebaran virus Covid-19, *setiap karyawan harus selalu menggunakan maskernya*." .
+                            "\r\nTidak diperkenankan untuk membuka masker kecuali saat makan dan minum aja ya." .
+                            "\r\n \r\nMpok alfa rumahnya angker (cakep)" .
+                            "\r\nJangan lupa pake masker" .
+                            "\r\nMaskerku melindungimu, Maskermu melindungiku." .
+                            "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                         ],
                     ]
                 );
