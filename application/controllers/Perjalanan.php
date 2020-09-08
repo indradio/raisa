@@ -87,12 +87,28 @@ class Perjalanan extends CI_Controller
                     ]
                 );
                 $body = $response->getBody();
-
                 redirect('perjalanan/penyelesaian/daftar');
             }else{
                 redirect('perjalanan/penyelesaian/daftar');
             }
         } else {
+            $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $parameter])->result_array();
+            foreach ($peserta as $a) :
+                $this->db->where('jenis_perjalanan', $perjalanan['jenis_perjalanan']);
+                $this->db->where('gol_id', $a['karyawan_gol']);
+                $tunjangan = $this->db->get('perjalanan_tunjangan')->row_array();
+                
+                $this->db->set('uang_saku', $tunjangan['uang_saku']);
+                $this->db->set('insentif_pagi', $tunjangan['insentif_pagi']);
+                $this->db->set('um_pagi', $tunjangan['um_pagi']);
+                $this->db->set('um_siang', $tunjangan['um_siang']);
+                $this->db->set('um_malam', $tunjangan['um_malam']);
+                $this->db->where('npk', $a['npk']);
+                $this->db->where('perjalanan_id', $parameter);
+                $this->db->update('perjalanan_anggota');
+                
+            endforeach;
+
             $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
             //Uang Saku
             if ($perjalanan['jenis_perjalanan'] == 'TAPP') {
@@ -230,5 +246,14 @@ class Perjalanan extends CI_Controller
         $this->db->update('perjalanan');
      
         redirect('perjalanan/penyelesaian/' . $id);
+    }
+
+    public function change_kategori()
+    {
+        $this->db->set('jenis_perjalanan', 'DLPP');
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('perjalanan');
+     
+        redirect('perjalanan/penyelesaian/' . $this->input->post('id'));
     }
 }

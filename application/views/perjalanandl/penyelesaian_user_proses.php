@@ -104,6 +104,7 @@
                             <div class="row">
                                 <label class="col-md-2 col-form-label">Tunjangan </br><small>Peserta</small></label>
                                 <div class="col-md-8">
+                                    <?php if ($perjalanan['jenis_perjalanan']=='TAPP'){ echo '<a href="#" class="btn btn-sm btn-facebook" data-toggle="modal" data-target="#ubahKategori" data-id="'.$perjalanan['id'].'">Ganti Kategori DLPP</a>';}?>
                                     <div class="table-responsive">
                                         <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                             <thead>
@@ -311,6 +312,33 @@
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade" id="ubahKategori" tabindex="-1" role="dialog" aria-labelledby="ubahKategoriLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-danger text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Ubah Kategori Perjalanan</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('perjalanan/change_kategori'); ?>">
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id" name="id">
+                    Kategori perjalanan menjadi DLPP </br>
+                    Nilai Tunjangan dalam perjalanan ini akan disesuaikan dengan kategori perjalanan. 
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                        <button type="submit" class="btn btn-success">SUBMIT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="ubahTaksi" tabindex="-1" role="dialog" aria-labelledby="ubahTaksiLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -517,6 +545,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#ubahKategori').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+        })
         $('#ubahTaksi').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
