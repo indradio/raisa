@@ -71,6 +71,7 @@
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>: Penyimpangan Lembur
                           </div>
                         </div>
                       </div>
@@ -122,6 +123,7 @@
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>: Penyimpangan Lembur
                           </div>
                         </div>
                       </div>
@@ -174,6 +176,7 @@
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>: Penyimpangan Lembur
                           </div>
                         </div>
                       </div>
@@ -184,7 +187,7 @@
               </div>
             </div>
           </div>
-  <!-- RENCANA - Atasan 1 & 2 -->
+  <!-- RENCANA - Atasan 1 & 2
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -197,7 +200,7 @@
           <div class="card-body">
           <div class="table-responsive">
             <div class="toolbar">
-              <!--        Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2       -->
+                     Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2      
             </div>
             <div class="material-datatables">
               <table id="#" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -226,15 +229,16 @@
               </table>
             </div>
           </div>
-          <!-- end content-->
+          end content
           </div>
         </div>
-        <!--  end card  -->
+         end card 
       </div>
-      <!-- end col-md-12 -->
+      end col-md-12
     </div>
-    <!-- end row -->
+    end row -->
  
+    <!-- REALISASI USER
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -247,7 +251,7 @@
           <div class="card-body">
           <div class="table-responsive">
             <div class="toolbar">
-              <!--        Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2       -->
+                     Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2      
             </div>
             <div class="material-datatables">
             <table id="#" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -276,22 +280,22 @@
                       <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
                       <td><?= $l['durasi_rencana']; ?> Jam</td>
                       <td><?= $hari; ?> Hari <?= $jam; ?> Jam <?= $menit; ?> Menit</td>
-                      <!-- <td><?= floor($selisih / (60 * 60 * 24)); ?> Hari</td> -->
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
               </table>
             </div>
           </div>
-          <!-- end content-->
+          end content
         </div>
         </div>
-        <!--  end card  -->
+         end card 
       </div>
-      <!-- end col-md-12 -->
+      end col-md-12
     </div>
-    <!-- end row -->
-    <!-- REALISASI - Atasan 1 & 2 -->
+    end row -->
+
+    <!-- REALISASI - Atasan 1 & 2
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -304,7 +308,7 @@
           <div class="card-body">
           <div class="table-responsive">
             <div class="toolbar">
-              <!--        Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2       -->
+                     Here you can write extra buttons/actions for the toolbar       Rencana Atasan 1 & 2      
             </div>
             <div class="material-datatables">
             <table id="#" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -344,14 +348,14 @@
               </table>
             </div>
           </div>
-          <!-- end content-->
+          end content
         </div>
         </div>
-        <!--  end card  -->
+         end card 
       </div>
-      <!-- end col-md-12 -->
+      end col-md-12
     </div>
-    <!-- end row -->
+    end row -->
   </div>
 </div>
 <!-- Modal -->
