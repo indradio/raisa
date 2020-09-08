@@ -1568,7 +1568,7 @@ class Perjalanandl extends CI_Controller
                 redirect('perjalanandl/payment/daftar');
             }
         } else {
-            if (($this->session->userdata('sect_id')=='211' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='5'){
+            if (($this->session->userdata('sect_id')=='211' or $this->session->userdata('npk')=='0075' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='5'){
                 $data['sidemenu'] = 'FA';
                 $data['sidesubmenu'] = 'Penyelesaian';
                 $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
