@@ -115,7 +115,7 @@
                                 ?>
                                 <tr>
                                     <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small><?php if ($l['life']==1){ echo '<a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>';}?></td>
-                                    <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
+                                    <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                                     <td><?= $l['durasi_rencana']; ?> Jam</td>
                                     <td><?= $hari; ?> Hari <?= $jam; ?> Jam <?= $menit; ?> Menit</td>
                                     <!-- <td><?= floor($selisih / (60 * 60 * 24)); ?> Hari</td> -->
