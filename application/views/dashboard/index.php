@@ -261,7 +261,7 @@
                                   <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                                   <?php if ($p['status'] == 1) { ?>
                                     <div class="img-container">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
                                     </div>
                                     <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
                                   <?php } elseif ($p['status'] == 2) { ?>
@@ -271,7 +271,7 @@
                                     <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
                                   <?php } elseif ($p['status'] == 8) { ?>
                                     <div class="img-container">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
                                     </div>
                                     <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
                                   <?php }; ?>
