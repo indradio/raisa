@@ -8,27 +8,8 @@ class Notification extends CI_Controller
 {
     public function index()
     {
-        echo 'Auto Refresh';
-        //Notifikasi ke USER
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post(
-            'https://region01.krmpesan.com/api/v2/message/send-text',
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                ],
-                'json' => [
-                    'phone' => '6281311196988',
-                    'message' => "*AUTO REFRESH*" .
-                        "\r\n*BERHASIL*"
-                        ],
-            ]
-        );
-        $body = $response->getBody();
-
         date_default_timezone_set('asia/jakarta');
+        echo 'Auto Refresh | Last Refresh at '.date('d M Y H:i:s') ;
 
         //Notif lembur hari ini to GA
         $n = time();
