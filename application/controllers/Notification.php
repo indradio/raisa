@@ -5,7 +5,28 @@ class Notification extends CI_Controller
 {
     public function index()
     {
+        echo 'Auto Refresh';
+        //Notifikasi ke USER
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => '6281311196988',
+                    'message' => "*AUTO REFRESH*" .
+                        "\r\n*BERHASIL*"
+                        ],
+            ]
+        );
+        $body = $response->getBody();
+
         date_default_timezone_set('asia/jakarta');
+        
         //Notif lembur hari ini to GA
         $n = time();
         $m = strtotime(date('Y-m-d 16:00:00'));
@@ -66,7 +87,7 @@ class Notification extends CI_Controller
             }
         }
 
-        echo 'Kirim Notif lembur hari ini ke GA Admin Berhasil';
+        echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
 // ----------------------------------------------------------------------------------------
         //Cari Lembur Realisasi
         $this->db->where('status','4');
@@ -210,8 +231,8 @@ class Notification extends CI_Controller
                 $body = $response->getBody();
             }
         endforeach;
-        echo 'Kirim Notif lembur realisasi Berhasil';
-        echo 'Kirim Notif lembur expired 7x24 Berhasil';
+        echo '<p>Kirim Notif lembur realisasi - Berhasil';
+        echo '<p>Kirim Notif lembur expired 7x24 - Berhasil';
 // ----------------------------------------------------------------------------------------
     }
 }
