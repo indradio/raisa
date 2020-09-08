@@ -68,10 +68,9 @@ class Notification extends CI_Controller
                 );
                 $this->db->insert('notifikasi', $data);
 
+                echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
             }
         }
-
-        echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
 // ----------------------------------------------------------------------------------------
         //Cari Lembur Realisasi
         $this->db->where('status','4');
@@ -122,6 +121,7 @@ class Notification extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+                    echo '<p>#'. $l['id'] .' [NOTIFIKASI] Kirim Notif lembur realisasi kurang dari 8 Jam - Berhasil';
                 }
             }
 
@@ -160,6 +160,7 @@ class Notification extends CI_Controller
                     ]
                 );
                 $body = $response->getBody();
+                echo '<p>#'. $l['id'] .' [DIBATALKAN] Kirim Notif lembur realisasi lebih dari 3x24 Jam - Berhasil';
             }
         endforeach;
 
@@ -213,10 +214,9 @@ class Notification extends CI_Controller
                     ]
                 );
                 $body = $response->getBody();
+                echo '<p>#'. $l['id'] .' [DIBATALKAN] Kirim Notif lembur lebih dari 7x24 Jam - Berhasil';
             }
         endforeach;
-        echo '<p>Kirim Notif lembur realisasi - Berhasil';
-        echo '<p>Kirim Notif lembur expired 7x24 - Berhasil';
 // ----------------------------------------------------------------------------------------
     }
 }
