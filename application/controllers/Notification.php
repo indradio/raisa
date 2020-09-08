@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Notification extends CI_Controller
 {
     public function index()
@@ -26,7 +29,7 @@ class Notification extends CI_Controller
         $body = $response->getBody();
 
         date_default_timezone_set('asia/jakarta');
-        
+
         //Notif lembur hari ini to GA
         $n = time();
         $m = strtotime(date('Y-m-d 16:00:00'));
