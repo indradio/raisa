@@ -10,6 +10,7 @@
           </br>
           </br>Sekarang kamu bisa tentukan ewallet utama kamu. 
           </br>Cek profil kamu ya!
+          </br>Pastikan nomor eWallet yang terdaftar atasnama kamu, ewallet atasnama orang lain tidak akan diproses. 
         </div>
       </div>
     </div>
