@@ -4,16 +4,12 @@
     <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>INFO : ABSENSI SAAT WFH/OFF MENJALANI ISOLASI MANDIRI</strong>
+          <strong>UPDATE : TENTUKAN EWALLET UTAMA KAMU</strong>
           </br>
           </br>Semangat pagi <strong><?= $karyawan['nama']; ?></strong>,
           </br>
-          </br>Untuk semua karyawan yang sedang atau suatu saat nanti akan WFH/OFF isolasi mandiri karena beresiko (baik karena ada kasus di sekitar rumah, tracing resiko pribadi, atau panggilan gugus tugas), <strong>WAJIB</strong> absen online di Raisa sebagai pengganti ketidakhadiran di kantor. 
-          </br>
-          </br><strong>Karyawan yang WFH/OFF isolasi mandiri dan tidak absen online maka sama dengan tidak masuk tanpa keterangan</strong>
-          </br>
-          </br>Hormat Kami,
-          </br>HR
+          </br>Sekarang kamu bisa tentukan ewallet utama kamu. 
+          </br>Cek profil kamu ya!
         </div>
       </div>
     </div>
