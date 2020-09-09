@@ -271,6 +271,7 @@ class Notification extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+                    echo '<p>#'. $r['id'] .' [DIBATALKAN] Kirim Notif reservasi dibatalkan - Berhasil';
                 }else{
                     $this->db->set('status', '9');
                     $this->db->where('id', $r['id']);
@@ -310,16 +311,17 @@ class Notification extends CI_Controller
                             'json' => [
                                 'phone' => $user['phone'],
                                 'message' => "*PERJALANAN DINAS KAMU HARUS SEGERA BERANGKAT*". 
-                                        "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
-                                        "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                                        "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
-                                        "\r\n \r\nWaktu keberangkatan perjalanan kamu *Telah Tiba*." .
-                                        "\r\n \r\nJIka tidak berangkat max 1 Jam (untuk projek) atau max 2 Jam (Non Projek) maka perjalanan akan dibatalkan." .
-                                        "\r\n \r\nKamu dapat menambah waktu keberangkatan perjalanan di menu Perjalanan - PerjalananKu."
-                                        ],
+                                    "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
+                                    "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                    "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
+                                    "\r\n \r\nWaktu keberangkatan perjalanan kamu *Telah Tiba*." .
+                                    "\r\n \r\nJIka tidak berangkat max 1 Jam (untuk projek) atau max 2 Jam (Non Projek) maka perjalanan akan dibatalkan." .
+                                    "\r\n \r\nKamu dapat menambah waktu keberangkatan perjalanan di menu Perjalanan - PerjalananKu."
+                            ],
                         ]
                     );
                     $body = $response->getBody();
+                    echo '<p>#'. $p['id'] .' [INFO] Kirim Notif Waktu perjalanan telah tiba - Berhasil';
 
                     $data = array(
                         'id' => $p['id'],
@@ -355,6 +357,7 @@ class Notification extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+                    echo '<p>#'. $p['id'] .' [INFO] Kirim Notif Waktu perjalanan lewat 30 menit - Berhasil';
 
                     $data = array(
                         'id' => $p['id'],
@@ -403,10 +406,11 @@ class Notification extends CI_Controller
                                 "\r\n2 Jam untuk perjalanan tanpa COPRO" .
                                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
                                 "\r\n \r\n" . $notifikasi['pesan']
-                                ],
+                        ],
                     ]
                 );
                 $body = $response->getBody();
+                echo '<p>#'. $p['id'] .' [DIBATALKAN] Kirim Notif perjalanan dibatalkan - Berhasil';
             }
         endforeach;
 // ----------------------------------------------------------------------------------------
