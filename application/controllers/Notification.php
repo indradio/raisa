@@ -259,8 +259,7 @@ class Notification extends CI_Controller
                                     "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
                                     "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
                                     "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                     ],
                         ]
                     );
@@ -291,8 +290,7 @@ class Notification extends CI_Controller
                                     "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
                                     "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
                                     "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                     ],
                         ]
                     );
@@ -489,8 +487,7 @@ class Notification extends CI_Controller
                                 "\r\nBatas Waktu keberangkatan :" .
                                 "\r\n1 Jam untuk perjalanan dengan COPRO" .
                                 "\r\n2 Jam untuk perjalanan tanpa COPRO" .
-                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                                "\r\n \r\n" . $notifikasi['pesan']
+                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" 
                         ],
                     ]
                 );
