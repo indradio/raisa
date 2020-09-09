@@ -218,6 +218,91 @@ class Notification extends CI_Controller
             }
         endforeach;
 // ----------------------------------------------------------------------------------------
+        //Cari Lembur Approval
+        $this->db->or_where('status','2');
+        $this->db->or_where('status','3');
+        $this->db->or_where('status','5');
+        $this->db->or_where('status','6');
+        $lembur = $this->db->get('lembur')->result_array();
+        foreach ($lembur as $l) :
+            // cari selisih
+            $sekarang = strtotime(date('Y-m-d H:i:s'));
+            // $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai_rencana']))));
+            $last_notify = strtotime(date('Y-m-d H:i:s', strtotime('+3 hours', strtotime($l['last_notify']))));
+            // $expired = strtotime($l['expired_at']);
+            $atasan1 = $this->db->get_where('karyawan', ['inisial' => $l['atasan1']])->row_array();
+            $atasan2 = $this->db->get_where('karyawan', ['inisial' => $l['atasan2']])->row_array();
+            // $last_status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array();
+
+            if ($last_notify < $sekarang) {
+                if ($l['status']=='2' or $l['status']=='5') {
+                
+                    $this->db->set('last_notify', date('Y-m-d H:i:s'));
+                    $this->db->where('id', $l['id']);
+                    $this->db->update('lembur');
+
+                    //Notifikasi ke USER
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $atasan1['phone'],
+                                'message' => "*[MENUNGGU APPROVAL] LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    "\r\nNama : *" . $l['nama'] . "*" .
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
+                                    "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
+                                    "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
+                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                    echo '<p>#'. $l['id'] .' [NOTIFIKASI] Kirim Notif lembur menunggu approval atasan1 - Berhasil';
+                    
+                }elseif ($l['status']=='3' or $l['status']=='6') {
+                
+                    $this->db->set('last_notify', date('Y-m-d H:i:s'));
+                    $this->db->where('id', $l['id']);
+                    $this->db->update('lembur');
+
+                    //Notifikasi ke USER
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $atasan2['phone'],
+                                'message' => "*[MENUNGGU APPROVAL] LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    "\r\nNama : *" . $l['nama'] . "*" .
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                                    "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
+                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                    echo '<p>#'. $l['id'] .' [NOTIFIKASI] Kirim Notif lembur menunggu approval atasan2 - Berhasil';
+                }
+            }
+
+        endforeach;
+// ----------------------------------------------------------------------------------------
         //auto batalkan reservasi
         $queryReservasi = "SELECT *
         FROM `reservasi`

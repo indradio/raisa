@@ -881,6 +881,7 @@ class Lembur extends CI_Controller
 
         $this->db->set('tglpengajuan_realisasi', date('Y-m-d H:i:s'));
         $this->db->set('status', 5);
+        $this->db->set('last_notify', date('Y-m-d H:i:s'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
 
