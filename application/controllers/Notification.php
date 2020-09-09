@@ -218,5 +218,200 @@ class Notification extends CI_Controller
             }
         endforeach;
 // ----------------------------------------------------------------------------------------
+        //auto batalkan reservasi
+        $queryReservasi = "SELECT *
+        FROM `reservasi`
+        WHERE `tglberangkat` <= CURDATE() AND (`status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5' OR `status` = '6')
+        ";
+        $reservasi = $this->db->query($queryReservasi)->result_array();
+        foreach ($reservasi as $r) :
+            // cari selisih
+            $mulai = strtotime($r['jamberangkat']);
+            $selesai = time();
+            $durasi = $selesai - $mulai;
+            $jam   = floor($durasi / (60 * 60));
+
+            if (($r['copro']!='NON PROJEK' and $jam >= 1)or($r['copro']=='NON PROJEK' and $jam >= 2)) {
+                $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $r['id']])->row_array();
+                $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array();
+                
+                if (empty($perjalanan['id'])) {
+
+                    $this->db->set('status', '0');
+                    $this->db->set('catatan', "Waktu reservasi perjalanan kamu telah selesai (Status : ".$status['nama'].") - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
+                    $this->db->where('id', $r['id']);
+                    $this->db->update('reservasi');
+
+                    $this->db->where('npk', $r['npk']);
+                    $karyawan = $this->db->get('karyawan')->row_array();
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $karyawan['phone'],
+                                'message' => "*[DIBATALKAN] RESERVASI PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
+                                "\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
+                                "\r\nNama : *" . $r['nama'] . "*" .
+                                "\r\nTujuan : *" . $r['tujuan'] . "*" .
+                                "\r\nKeperluan : *" . $r['keperluan'] . "*" .
+                                "\r\nPeserta : *" . $r['anggota'] . "*" .
+                                "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
+                                "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
+                                "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
+                                "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
+                                "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
+                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                            ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                }else{
+                    $this->db->set('status', '9');
+                    $this->db->where('id', $r['id']);
+                    $this->db->update('reservasi');
+                }
+            }
+        endforeach;
+// ----------------------------------------------------------------------------------------
+        //Auto batalkan perjalanan
+        $queryPerjalanan = "SELECT *
+        FROM `perjalanan`
+        WHERE `tglberangkat` <= CURDATE() AND (`status` = 1 OR `status` = 8)
+        ";
+        $perjalanan = $this->db->query($queryPerjalanan)->result_array();
+        foreach ($perjalanan as $p) :
+            // cari selisih
+            $mulai = strtotime($p['jamberangkat']);
+            $selesai = time();
+            $durasi = $selesai - $mulai;
+            $jam   = floor($durasi / (60 * 60));
+            $menit   = floor($durasi / 60);
+            $user = $this->db->get_where('karyawan', ['npk' => $p['npk']])->row_array();
+            
+            if ($menit > 1) {
+                $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
+                if (empty($notifyCheck)){
+                    //Notify to USER
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $user['phone'],
+                                'message' => "*PERJALANAN DINAS KAMU HARUS SEGERA BERANGKAT*". 
+                                        "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
+                                        "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                        "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
+                                        "\r\n \r\nWaktu keberangkatan perjalanan kamu *Telah Tiba*." .
+                                        "\r\n \r\nJIka tidak berangkat max 1 Jam (untuk projek) atau max 2 Jam (Non Projek) maka perjalanan akan dibatalkan." .
+                                        "\r\n \r\nKamu dapat menambah waktu keberangkatan perjalanan di menu Perjalanan - PerjalananKu."
+                                        ],
+                        ]
+                    );
+                    $body = $response->getBody();
+
+                    $data = array(
+                        'id' => $p['id'],
+                        'times' => 2,
+                        'tanggal' => date('Y-m-d H:i:s')
+                    );
+                    $this->db->insert('notifikasi', $data);
+                }
+            }
+
+            if ($p['copro']!='NON PROJEK' and $menit > -30) {
+                $this->db->where('times', '2');
+                $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
+                if (empty($notifyCheck)){
+                    //Notify to USER
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $user['phone'],
+                                'message' => "*WAKTU PERJALANAN DINAS KAMU SUDAH LEWAT 30 MENIT*". 
+                                    "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
+                                    "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                    "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
+                                    "\r\n \r\nWaktu keberangkatan perjalanan kamu akan dibatalkan dalam *30 Menit* lagi."
+                                    ],
+                        ]
+                    );
+                    $body = $response->getBody();
+
+                    $data = array(
+                        'id' => $p['id'],
+                        'times' => 1,
+                        'tanggal' => date('Y-m-d H:i:s')
+                    );
+                    $this->db->insert('notifikasi', $data);
+                }
+            }
+
+            if (($p['copro']!='NON PROJEK' and $jam >= 1)or($p['copro']=='NON PROJEK' and $jam >= 2)) {
+                $this->db->set('status', '0');
+                $this->db->set('last_status', $p['status']);
+                $this->db->set('catatan', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
+                $this->db->where('id', $p['id']);
+                $this->db->update('perjalanan');
+
+                $this->db->set('status', '9');
+                $this->db->where('id', $p['reservasi_id']);
+                $this->db->update('reservasi');
+
+                //Notifikasi ke USER
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user['phone'],
+                            'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
+                                "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
+                                "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
+                                "\r\nPeserta : *" . $p['anggota'] . "*" .
+                                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                                "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
+                                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                                "\r\nCatatan : *" . $p['catatan'] .  "*" .
+                                "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi batas waktu keberangkatan" .
+                                "\r\nBatas Waktu keberangkatan :" .
+                                "\r\n1 Jam untuk perjalanan dengan COPRO" .
+                                "\r\n2 Jam untuk perjalanan tanpa COPRO" .
+                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
+                                "\r\n \r\n" . $notifikasi['pesan']
+                                ],
+                    ]
+                );
+                $body = $response->getBody();
+            }
+        endforeach;
+// ----------------------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------------------
     }
 }
