@@ -36,6 +36,7 @@
                                         <th>Verifikasi</th>
                                         <th>Disetujui</th>
                                         <th>Dept</th>
+                                        <th>Status</th>
                                         <th class="disabled-sorting th-description text-right">Actions</th>
                                     </tr>
                                 </thead>
@@ -73,11 +74,22 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <a href="#" class="btn btn-sm btn-fill btn-danger disabled">BELUM </br>DIOPNAME</a>
                                             </td>
                                         </tr>
-                                    <?php }else{ ?>
+                                    <?php }else{ 
+                                        if ($opnamed['status']==1){
+                                            $status = 'BAIK-ADA-DIGUNAKAN';
+                                        }elseif ($opnamed['status']==2) {
+                                            $status = 'BAIK-TIDAK SESUAI';
+                                        }elseif ($opnamed['status']==3) {
+                                            $status = 'RUSAK';
+                                        }elseif ($opnamed['status']==4) {
+                                            $status = 'HILANG';
+                                        }
+                                            ?>
                                         <tr>
                                             
                                             <td>
@@ -107,6 +119,7 @@
                                             <td><?= date('d M Y', strtotime($opnamed['approve_at'])).' Oleh '.$opnamed['approve_by']; ?></td>
                                             <?php $dept = $this->db->get_where('karyawan_dept', ['id' => $opnamed['dept_id']])->row_array(); ?>
                                             <td><?= $dept['nama']; ?></td>
+                                            <td><?= $status; ?></td>
                                             <td class="text-right">
                                                 <?php if ($a['status']==1){ ?>
                                                     <a href="#" class="btn btn-sm btn-fill btn-danger">BELUM </br>DIVERIFIKASI</a>
