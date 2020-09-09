@@ -755,13 +755,12 @@ class Lembur extends CI_Controller
             //fitur ini sementara off
             if ($lembur['pemohon'] == $lembur['atasan1']){
 
-                $status = '3';
-
                 $this->db->set('kategori', $this->input->post('kategori_lembur'));
                 $this->db->set('lokasi', $lokasi);
                 $this->db->set('catatan', $this->input->post('catatan'));
                 $this->db->set('expired_at', $expired);
-                $this->db->set('status', $status);
+                $this->db->set('status', '3');
+                $this->db->set('last_notify', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('lembur');
     
@@ -791,16 +790,17 @@ class Lembur extends CI_Controller
                 );
                 $body = $response->getBody();
 
-            //Submit RENCANA Lembur to Atasan 1
             }else{
-                $status = '2';
-
+                
+                //Submit RENCANA Lembur to Atasan 1
+                
                 $this->db->set('tglpengajuan_rencana', date('Y-m-d H:i:s'));
                 $this->db->set('kategori', $this->input->post('kategori_lembur'));
                 $this->db->set('lokasi', $lokasi);
                 $this->db->set('catatan', $this->input->post('catatan'));
                 $this->db->set('expired_at', $expired);
-                $this->db->set('status', $status);
+                $this->db->set('status', '2');
+                $this->db->set('last_notify', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('lembur');
     
@@ -830,9 +830,9 @@ class Lembur extends CI_Controller
                 );
                 $body = $response->getBody();
             }
-        }
-        else
-        {
+
+        }else{
+
             //Submit Perintah lembur to TIM
             //fitur ini sementara off
             $this->db->set('tglpengajuan_rencana', date('Y-m-d H:i:s'));
