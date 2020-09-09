@@ -24,7 +24,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
-                      <i class="material-icons">assignment</i> Proses HR
+                      <i class="material-icons">assignment_ind</i> Proses HR
                     </a>
                   </li>
                 </ul>
@@ -219,7 +219,7 @@
                                   $menit = $selisih - $hari * (60 * 60 * 24) - $jam * (60 * 60);
                                   $menit = floor($menit / 60);
                                   ?>
-                                <tr>
+                                <tr <?php if ($tempo < $sekarang){ echo 'class="table-danger"'; } ?> >
                                     <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small><?php if ($l['life']==1){ echo '<a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>';}?></td>
                                     <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                                     <td><?= $l['durasi']; ?> Jam</td>
