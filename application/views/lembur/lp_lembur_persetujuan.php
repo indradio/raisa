@@ -22,6 +22,11 @@
                       <i class="material-icons">assignment_turned_in</i> Realisasi Approval
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
+                      <i class="material-icons">assignment</i> Proses HR
+                    </a>
+                  </li>
                 </ul>
                 <div class="tab-content tab-space tab-subcategories">
                   <div class="tab-pane" id="link7">
@@ -172,6 +177,53 @@
                                     <?php }elseif ($l['status']==6){ ?>
                                       <td><span class="badge badge-pill badge-success">Menunggu <?= $l['atasan2']; ?></span></td>
                                     <?php }; ?>
+                                </tr>
+                                <?php endforeach; ?>
+                              </tbody>
+                            </table>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>: Penyimpangan Lembur
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  end card  -->
+                  </div>
+                  <div class="tab-pane" id="link10">
+                    <div class="card">
+                      <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                          <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">PROSES HR</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <div class="material-datatables">
+                            <table id="#" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                              <thead>
+                                <tr>
+                                  <th>Nama</th>
+                                  <th>Tanggal</th>
+                                  <th>Durasi/Jam</th>
+                                  <th>Sisa Waktu</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php foreach ($lembur as $l) : 
+                                  $sekarang = strtotime(date('Y-m-d H:i:s'));
+                                  $tempo =  strtotime($l['expired_at']);
+                                  $selisih = $tempo - $sekarang;
+                                  $hari  = floor($selisih / (60 * 60 * 24));
+                                  $jam = $selisih - $hari * (60 * 60 * 24);
+                                  $jam   = floor($jam / (60 * 60));
+                                  $menit = $selisih - $hari * (60 * 60 * 24) - $jam * (60 * 60);
+                                  $menit = floor($menit / 60);
+                                  ?>
+                                <tr>
+                                    <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small><?php if ($l['life']==1){ echo '<a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="tooltip" data-placement="top" title="Penyimpangan"><i class="material-icons">notification_important</i></a>';}?></td>
+                                    <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
+                                    <td><?= $l['durasi']; ?> Jam</td>
+                                    <td><?= $hari; ?> Hari <?= $jam; ?> Jam <?= $menit; ?> Menit</td>
                                 </tr>
                                 <?php endforeach; ?>
                               </tbody>
