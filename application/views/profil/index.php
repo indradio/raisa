@@ -146,36 +146,37 @@
                                     <div class="col-md-6 mt-2">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">GO-PAY</label>
-                                            <input type="text" class="form-control" value="<?= $gopay; ?>" disabled>
-                                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="GOPAY" role="button" aria-disabled="false">Ubah</a>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" value="<?= $gopay; ?>" disabled>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="GOPAY" data-rek="<?= $gopay; ?>"><i class="material-icons">edit</i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <?php if ($karyawan['ewallet_utama']=='GO-PAY'){
+                                                echo '<a href="#" class="btn btn-sm btn-info disabled" role="button" aria-disabled="false">Utama</a>';
+                                            }else{
+                                                echo '<a href="'.base_url('profil/ewallet_utama/GO-PAY'). '" class="btn btn-sm btn-warning" role="button" aria-disabled="false">Jadikan Utama</a>';
+                                            } ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mt-2">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">DANA</label>
-                                            <input type="text" class="form-control" value="<?= $dana; ?>" disabled>
-                                            <a href="#" class="btn btn-sm btn-success" role="button" data-toggle="modal" data-target="#updateEwallet" data-ewallet="DANA" aria-disabled="false">Ubah</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <label class="bmd-label-floating">E-Wallet Sebelumnya</label>
-                                <div class="row">
-                                    <div class="col-md-4 mt-2">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">GO-PAY</label>
-                                            <input type="text" class="form-control" value="<?= $gopay; ?>" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mt-2">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">DANA</label>
-                                            <input type="text" class="form-control" value="<?= $dana; ?>" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mt-2">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">OVO</label>
-                                            <input type="text" class="form-control" value="<?= $ovo; ?>" disabled>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" value="<?= $dana; ?>" disabled>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="DANA" data-rek="<?= $dana; ?>"><i class="material-icons">edit</i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <?php if ($karyawan['ewallet_utama']=='DANA'){
+                                                echo '<a href="#" class="btn btn-sm btn-info disabled" role="button" aria-disabled="false">Utama</a>';
+                                            }else{
+                                                echo '<a href="'.base_url('profil/ewallet_utama/DANA'). '" class="btn btn-sm btn-warning" role="button" aria-disabled="false">Jadikan Utama</a>';
+                                            } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +262,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="bmd-label-floating">Nomor Handphone*</label>
-                        <input type="text" class="form-control" name="rek" id="rek"/>
+                        <input type="text" class="form-control" name="rek" id="rek" value=" "/>
                     </div>
                 </div>
             </div>
@@ -281,8 +282,10 @@
         $('#updateEwallet').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var ewallet = button.data('ewallet')
+            var rek = button.data('rek')
             var modal = $(this)
             modal.find('.modal-body input[name="ewallet"]').val(ewallet)
+            modal.find('.modal-body input[name="rek"]').val(rek)
         })  
     });
 </script>

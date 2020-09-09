@@ -1630,10 +1630,10 @@ class Perjalanandl extends CI_Controller
             $tb = $p_peserta['total'];
         }
         
-        if ($this->input->post('ewallet')=="gopay"){
-            $ewallet = "GO-PAY - ".$this->input->post('ewallet1');
-        }elseif ($this->input->post('ewallet')=="dana"){
-            $ewallet = "DANA - ".$this->input->post('ewallet2');
+        if ($this->input->post('ewallet')=="primary"){
+            $ewallet = $this->input->post('ewallet1');
+        }elseif ($this->input->post('ewallet')=="secondary"){
+            $ewallet = $this->input->post('ewallet2');
         }
 
         $this->db->set('bayar', $tp);
@@ -1686,6 +1686,7 @@ class Perjalanandl extends CI_Controller
                     "\r\nKasbon : *(" . number_format($kas, 0, ',', '.') . ")*" .
                     "\r\n________________" .
                     "\r\nTotal yang dibayarkan : *" . number_format($tb, 0, ',', '.') . "*" .
+                    "\r\ne-Wallet : *" . $ewallet . "*" .
                     "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                 ],
             ]

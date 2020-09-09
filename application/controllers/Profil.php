@@ -107,4 +107,13 @@ class Profil extends CI_Controller
         }
     }
 
+    public function ewallet_utama($parameter)
+    {
+        $this->db->set('ewallet_utama', $parameter);
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->update('karyawan');
+
+        redirect('profil');
+    }
+
 }
