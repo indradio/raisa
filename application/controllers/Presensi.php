@@ -374,8 +374,8 @@ class Presensi extends CI_Controller
     public function peta()
     {
         date_default_timezone_set('asia/jakarta');
-        $data['sidemenu'] = 'Kehadiran';
-        $data['sidesubmenu'] = 'Kehadiran';
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Peta Kehadiran';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
         $this->load->helper('url');
