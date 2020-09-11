@@ -211,4 +211,38 @@ class Karyawan extends CI_Controller
         $this->load->view('hr/presensi', $data);
         $this->load->view('templates/footer');
     }
+
+    public function peta()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'HR';
+        $data['sidesubmenu'] = 'Peta Rumah';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        $this->load->helper('url');
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('karyawan/peta', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function jsondata()
+    {
+        date_default_timezone_set('asia/jakarta');
+
+        $this->db->where('is_active', '1');
+        $karyawan = $this->db->get('karyawan')->result_array();
+        $output = array();
+        foreach ($karyawan as $row) {
+            $output[] = array(
+                $row['nama'].'<br>'.$row['loc'], 
+                $row['lat'], 
+                $row['lng']
+            );
+        }
+
+		//output to json format
+        echo json_encode($output);
+    }
 }
