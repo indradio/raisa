@@ -8,10 +8,10 @@
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
                 <!-- <i class="material-icons">location_on</i> -->
-                <i class="material-icons">fingerprint</i>
+                <i class="material-icons">map</i>
               </div>
               <!-- <h4 class="card-title">Your Location</h4> -->
-              <h4 class="card-title">Kehadiran</h4>
+              <h4 class="card-title">Peta</h4>
             </div>
             <div class="card-body ">
               <div id="map" class="map" style="width:100%;height:640px;"></div>
@@ -23,6 +23,61 @@
       </div>
     </div>
     <!-- end row -->
+    <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">account_box</i>
+                        </div>
+                        <h4 class="card-title">Data Karyawan</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!-- Here you can write extra buttons/actions for the toolbar -->
+                        </div>
+                        <div class="material-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Alamat</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Alamat</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                    foreach ($datakaryawan as $row) :
+                                    ?>
+                                        <tr>
+                                            <td><?= $row['nama']; ?></td>
+                                            <td><?= $row['loc']; ?></td>
+                                            <td class="text-right">
+                                            <?php if (empty($row['lat']) or empty($row['lng'])){ ?>
+                                                <a href="#" class="btn btn-link btn-default btn-just-icon disabled"><i class="material-icons">directions</i></a>
+                                            <?php }else{ ?>
+                                                <a href="https://www.google.com/maps/search/?api=1&query=<?= $row['lat'] . ',' . $row['lng'];?>" target="_blank" class="btn btn-link btn-success btn-just-icon edit"><i class="material-icons">directions</i></a>
+                                            <?php } ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
   </div>
 </div>
 <script>
@@ -69,9 +124,9 @@
         
     }
     </script>
-    <!-- <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0&callback=initMap">
-    </script> -->
     <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0&callback=initMap">
     </script>
+    <!-- <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4&callback=initMap">
+    </script> -->

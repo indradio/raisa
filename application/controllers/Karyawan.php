@@ -218,7 +218,10 @@ class Karyawan extends CI_Controller
         $data['sidemenu'] = 'Data Karyawan';
         $data['sidesubmenu'] = 'Alamat (Peta)';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-
+        $data['datakaryawan'] = $this->db->where('npk !=', '1111');
+        $data['datakaryawan'] = $this->db->where('is_active', '1');
+        $data['datakaryawan'] = $this->db->get('karyawan')->result_array();
+        
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
