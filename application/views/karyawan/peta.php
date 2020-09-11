@@ -84,7 +84,7 @@
 
 </script>
 <script>
-     function initMap() {
+    function initMap() {
       var center = {lat: -6.5034587, lng: 106.8379949};
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
@@ -100,19 +100,20 @@
           myObj = JSON.parse(this.responseText);
           // document.getElementById("location").innerHTML = myObj.name;
           for (count = 0; count < myObj.length; count++) {
-        marker = new google.maps.Marker({
-          position: new google.maps.LatLng(myObj[count][1], myObj[count][2]),
-          map: map,
-          icon: pin,
-          title: myObj[count][0]
-        });
-    google.maps.event.addListener(marker, 'click', (function (marker, count) {
-          return function () {
-            infowindow.setContent(myObj[count][0]);
-            infowindow.open(map, marker);
-          }
-        })(marker, count));
-      }
+            marker = new google.maps.Marker({
+            position: new google.maps.LatLng(myObj[count][1], myObj[count][2]),
+            map: map,
+            icon: pin,
+            title: myObj[count][0]
+          });
+
+          google.maps.event.addListener(marker, 'click', (function (marker, count) {
+            return function () {
+              infowindow.setContent(myObj[count][0]);
+              infowindow.open(map, marker);
+            }
+          })(marker, count));
+        }
 
         }
       };
@@ -120,7 +121,14 @@
       xmlhttp.open("GET", "<?= site_url('karyawan/jsondata'); ?>", true);
       xmlhttp.send();
 
-    
+      google.maps.event.addListener(map, 'click', function (event) {
+        var virus = 'https://raisa.winteq-astra.com/assets/img/virus.png';
+        new google.maps.Marker({
+            position: event.latLng,
+            map: map,
+            icon: virus
+        });
+    });
         
     }
     </script>
