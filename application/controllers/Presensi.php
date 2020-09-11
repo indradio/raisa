@@ -370,4 +370,44 @@ class Presensi extends CI_Controller
             redirect('presensi/notifikasi/index');
         }
     }
+
+    public function peta()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'Kehadiran';
+        $data['sidesubmenu'] = 'Kehadiran';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        $this->load->helper('url');
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('presensi/peta', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function jsondata()
+    {
+        date_default_timezone_set('asia/jakarta');
+
+        // $this->db->where('year(time)', date('2020'));
+        // $this->db->where('month(time)',date('06'));
+        // $this->db->where('day(time)', date('15'));
+        $this->db->where('year(time)', date('Y'));
+        $this->db->where('month(time)',date('m'));
+        $this->db->where('day(time)', date('d'));
+        $this->db->where('state', 'C/In');
+        $presensi = $this->db->get('presensi')->result_array();
+        $output = array();
+        foreach ($presensi as $row) {
+            $output[] = array(
+                $row['nama'].'<br>'.$row['loc'], 
+                $row['lat'], 
+                $row['lng']
+            );
+        }
+
+		//output to json format
+        echo json_encode($output);
+    }
 }
