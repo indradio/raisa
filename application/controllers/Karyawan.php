@@ -12,8 +12,8 @@ class Karyawan extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'HR';
-        $data['sidesubmenu'] = 'Data Karyawan';
+        $data['sidemenu'] = 'Data Karyawan';
+        $data['sidesubmenu'] = 'Data';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['datakaryawan'] = $this->db->where('npk !=', '1111');
         $data['datakaryawan'] = $this->db->where('is_active', '1');
@@ -27,8 +27,8 @@ class Karyawan extends CI_Controller
 
     public function update($inisial)
     {
-        $data['sidemenu'] = 'HR';
-        $data['sidesubmenu'] = 'Data Karyawan';
+        $data['sidemenu'] = 'Data Karyawan';
+        $data['sidesubmenu'] = 'Data';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['dataKar'] = $this->db->get_where('karyawan', ['inisial' => $inisial])->row_array();
         $this->load->view('templates/header', $data);
@@ -113,7 +113,7 @@ class Karyawan extends CI_Controller
             $this->db->update('karyawan');
         }
 
-        redirect('hr/karyawan');
+        redirect('karyawan');
     }
 
     public function ubah($npk)
@@ -163,7 +163,7 @@ class Karyawan extends CI_Controller
         $this->db->set('role_id', $this->input->post('role'));
         $this->db->where('npk', $this->input->post('npk'));
         $this->db->update('karyawan');
-        redirect('hr/karyawan');
+        redirect('karyawan');
     }
 
     public function qrc()
@@ -195,7 +195,7 @@ class Karyawan extends CI_Controller
             $this->db->where('npk', $k['npk']);
             $this->db->update('karyawan');
         endforeach;
-        redirect('hr/karyawan');
+        redirect('karyawan');
     }
     public function presensi()
     {
@@ -215,8 +215,8 @@ class Karyawan extends CI_Controller
     public function peta()
     {
         date_default_timezone_set('asia/jakarta');
-        $data['sidemenu'] = 'HR';
-        $data['sidesubmenu'] = 'Peta Rumah';
+        $data['sidemenu'] = 'Data Karyawan';
+        $data['sidesubmenu'] = 'Alamat (Peta)';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
         $this->load->helper('url');

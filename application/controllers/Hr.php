@@ -100,13 +100,13 @@ class Hr extends CI_Controller
             $this->db->update('karyawan');
         }
 
-        redirect('hr/karyawan');
+        redirect('karyawan');
     }
 
     public function ubah($npk)
     {
-        $data['sidemenu'] = 'HR';
-        $data['sidesubmenu'] = 'Data Karyawan';
+        $data['sidemenu'] = 'Data Karyawan';
+        $data['sidesubmenu'] = 'Data';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['datakaryawan'] = $this->db->get_where('karyawan', ['npk' =>  $npk])->row_array();
         $this->load->view('templates/header', $data);
@@ -115,6 +115,7 @@ class Hr extends CI_Controller
         $this->load->view('karyawan/ubah', $data);
         $this->load->view('templates/footer');
     }
+
     public function ajax()
     {
         $id = $_POST['id'];
@@ -150,7 +151,7 @@ class Hr extends CI_Controller
         $this->db->set('role_id', $this->input->post('role'));
         $this->db->where('npk', $this->input->post('npk'));
         $this->db->update('karyawan');
-        redirect('hr/karyawan');
+        redirect('karyawan');
     }
 
     public function qrc()
@@ -182,7 +183,7 @@ class Hr extends CI_Controller
             $this->db->where('npk', $k['npk']);
             $this->db->update('karyawan');
         endforeach;
-        redirect('hr/karyawan');
+        redirect('karyawan');
     }
     public function presensi($parameter)
     {
