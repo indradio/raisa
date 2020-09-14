@@ -254,32 +254,47 @@
                                                   ";
                               $p = $this->db->query($queryPerjalanan)->row_array();
                               if (!empty($p)) { ?>
-                                <td class="text-center">
                                   <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
                                   <?php if ($p['status'] == 1) { ?>
-                                    <div class="img-container">
+                                  <td class="text-center">
+                                    <div class="img-container" style="width:100px; height:90px;">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
                                     </div>
-                                    <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                  </td>
+                                  <td>
+                                    <?= $k['nopol']; ?>
+                                    <br />
+                                    #<?= $p['id']; ?>
+                                    <br />
+                                    <a href="#" class="badge badge-info" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                  </td>
                                   <?php } elseif ($p['status'] == 2) { ?>
-                                    <div class="img-container">
+                                  <td class="text-center">
+                                    <div class="img-container" style="width:100px; height:90px;">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
                                     </div>
-                                    <a href="#" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                  </td>
+                                  <td>
+                                    <?= $k['nopol']; ?>
+                                    <br />
+                                    #<?= $p['id']; ?>
+                                    <br />
+                                    <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                  </td>
                                   <?php } elseif ($p['status'] == 8) { ?>
-                                    <div class="img-container">
+                                  <td class="text-center">
+                                    <div class="img-container" style="width:100px; height:90px;">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
                                     </div>
-                                    <span class="badge badge-pill badge-warning"><?= $status['nama']; ?></span>
+                                  </td>
+                                  <td>
+                                    <?= $k['nopol']; ?>
+                                    <br />
+                                    #<?= $p['id']; ?>
+                                    <br />
+                                    <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
+                                  </td>
                                   <?php }; ?>
-                                </td>
-                                <td class="td-name">
-                                  <a><?= $k['nopol']; ?></a>
-                                  <br />
-                                  <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
-                                  <br />
-                                  <small><?= $p['id'] . ' - ' . $p['jenis_perjalanan']; ?></small>
-                                </td>
                                 <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array(); ?>
                                 <td data-toggle="tooltip" data-placement="top" title="<?php 
                                   for($i=0;$i<count($peserta);$i++){
@@ -303,29 +318,28 @@
                                 $r = $this->db->query($queryReservasi)->row_array();
                                 if (!empty($r)) { ?>
                                   <td class="text-center">
-                                    <div class="img-container">
+                                    <div class="img-container" style="width:100px; height:90px;">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
                                     </div>
-                                    <?php if ($r['status'] == 1) { ?>
-                                      <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
-                                    <?php } elseif ($r['status'] == 2) { ?>
-                                      <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
-                                    <?php } elseif ($r['status'] == 3) { ?>
-                                      <span class="badge badge-pill badge-warning">Menunggu Persetujuan DWA</span>
-                                    <?php } elseif ($r['status'] == 4) { ?>
-                                      <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
-                                    <?php } elseif ($r['status'] == 5) { ?>
-                                      <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
-                                    <?php } elseif ($r['status'] == 6) { ?>
-                                      <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
-                                    <?php }; ?>
                                   </td>
-                                  <td class="td-name">
-                                    <a><?= $k['nopol']; ?></a>
+                                  <td>
+                                    <?= $k['nopol']; ?>
                                     <br />
-                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                    #<?= $r['id']; ?>
                                     <br />
-                                    <small><?= $r['id'] . ' - ' . $r['jenis_perjalanan']; ?></small>
+                                    <?php if ($r['status'] == 1) { ?>
+                                      <span class="badge badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
+                                    <?php } elseif ($r['status'] == 2) { ?>
+                                      <span class="badge badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
+                                    <?php } elseif ($r['status'] == 3) { ?>
+                                      <span class="badge badge-warning">Menunggu Persetujuan DWA</span>
+                                    <?php } elseif ($r['status'] == 4) { ?>
+                                      <span class="badge badge-warning">Menunggu Persetujuan EJU</span>
+                                    <?php } elseif ($r['status'] == 5) { ?>
+                                      <span class="badge badge-warning">Menunggu Persetujuan HR</span>
+                                    <?php } elseif ($r['status'] == 6) { ?>
+                                      <span class="badge badge-warning">Menunggu Persetujuan GA</span>
+                                    <?php }; ?>
                                   </td>
                                   <?php $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $r['id']])->result_array(); ?>
                                   <td data-toggle="tooltip" data-placement="top" title="<?php 
@@ -343,16 +357,17 @@
                                   <td><?= date('d-M', strtotime($r['tglkembali'])) . ' ' . date('H:i', strtotime($r['jamkembali'])); ?></td>
                                 <?php } else { ?>
                                   <td class="text-center">
-                                    <div class="img-container text-center">
+                                    <div class="img-container" style="width:100px; height:90px;">
                                       <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan1.png" alt="...">
                                     </div>
-                                    <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-pill badge-success">Tersedia</a>
-                                    <a href="#" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><i class="material-icons">place</i></a>
                                   </td>
-                                  <td class="td-name">
-                                    <a><?= $k['nopol']; ?></a>
+                                  <td>
+                                    <?= $k['nopol']; ?>
                                     <br />
-                                    <small><?= $k['nama'] . ' - ' . $k['tipe']; ?></small>
+                                    <?= $k['nama']; ?>
+                                    <br />
+                                    <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-success">Tersedia</a>
+                                    <a href="#" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><i class="material-icons">place</i></a>
                                   </td>
                                   <td></td>
                                   <td></td>
@@ -376,29 +391,28 @@
                           foreach ($reservasiNon as $rn) : ?>
                             <tr>
                               <td class="text-center">
-                                <div class="img-container">
+                                <div class="img-container" style="width:100px; height:90px;">
                                   <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                 </div>
-                                <?php if ($rn['status'] == 1) { ?>
-                                  <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $rn['atasan1']; ?></span>
-                                <?php } elseif ($rn['status'] == 2) { ?>
-                                  <span class="badge badge-pill badge-warning">Menunggu Persetujuan <?= $rn['atasan2']; ?></span>
-                                <?php } elseif ($rn['status'] == 3) { ?>
-                                  <span class="badge badge-pill badge-warning">Menunggu Persetujuan DWA</span>
-                                <?php } elseif ($rn['status'] == 4) { ?>
-                                  <span class="badge badge-pill badge-warning">Menunggu Persetujuan EJU</span>
-                                <?php } elseif ($rn['status'] == 5) { ?>
-                                  <span class="badge badge-pill badge-warning">Menunggu Persetujuan HR</span>
-                                <?php } elseif ($rn['status'] == 6) { ?>
-                                  <span class="badge badge-pill badge-warning">Menunggu Persetujuan GA</span>
-                                <?php }; ?>
                               </td>
-                              <td class="td-name">
-                                <a><?= $rn['nopol']; ?></a>
+                              <td>
+                                <?= $rn['nopol']; ?>
                                 <br />
-                                <small><?= $rn['kepemilikan']; ?></small>
+                                #<?= $rn['id']; ?>
                                 <br />
-                                <small><?= $rn['id'] . ' - ' . $rn['jenis_perjalanan']; ?></small>
+                                <?php if ($rn['status'] == 1) { ?>
+                                  <span class="badge badge-warning">Menunggu Persetujuan <?= $rn['atasan1']; ?></span>
+                                <?php } elseif ($rn['status'] == 2) { ?>
+                                  <span class="badge badge-warning">Menunggu Persetujuan <?= $rn['atasan2']; ?></span>
+                                <?php } elseif ($rn['status'] == 3) { ?>
+                                  <span class="badge badge-warning">Menunggu Persetujuan DWA</span>
+                                <?php } elseif ($rn['status'] == 4) { ?>
+                                  <span class="badge badge-warning">Menunggu Persetujuan EJU</span>
+                                <?php } elseif ($rn['status'] == 5) { ?>
+                                  <span class="badge badge-warning">Menunggu Persetujuan HR</span>
+                                <?php } elseif ($rn['status'] == 6) { ?>
+                                  <span class="badge badge-warning">Menunggu Persetujuan GA</span>
+                                <?php }; ?>
                               </td>
                               <?php $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $rn['id']])->result_array(); ?>
                                   <td data-toggle="tooltip" data-placement="top" title="<?php 
@@ -427,32 +441,47 @@
                           $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
                           foreach ($perjalananNon as $pn) : ?>
                             <tr>
-                              <td class="text-center">
                                 <?php $status_pn = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
                                 <?php if ($pn['status'] == 1) { ?>
-                                  <div class="img-container">
+                                <td class="text-center">
+                                  <div class="img-container" style="width:100px; height:90px;">
                                     <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                   </div>
-                                  <span class="badge badge-pill badge-info"><?= $status_pn['nama']; ?></span>
+                                </td>
+                                <td>
+                                  <?= $pn['nopol']; ?>
+                                  <br />
+                                  #<?= $pn['id']; ?>
+                                  <br />
+                                  <span class="badge badge-info"><?= $status_pn['nama']; ?></span>
+                                </td>
                                 <?php } elseif ($pn['status'] == 2) { ?>
-                                  <div class="img-container">
+                                <td class="text-center">
+                                  <div class="img-container" style="width:100px; height:90px;">
                                     <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                   </div>
-                                  <span class="badge badge-pill badge-danger"><?= $status_pn['nama']; ?></span>
+                                </td>
+                                <td>
+                                  <?= $pn['nopol']; ?>
+                                  <br />
+                                  #<?= $pn['id']; ?>
+                                  <br />
+                                  <span class="badge badge-danger"><?= $status_pn['nama']; ?></span>
+                                </td>
                                 <?php } elseif ($pn['status'] == 8 or $pn['status'] == 11) { ?>
-                                  <div class="img-container">
+                                <td class="text-center">
+                                  <div class="img-container" style="width:100px; height:90px;">
                                     <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
                                   </div>
-                                  <span class="badge badge-pill badge-warning"><?= $status_pn['nama']; ?></span>
+                                </td>
+                                <td>
+                                  <?= $pn['nopol']; ?>
+                                  <br />
+                                  #<?= $pn['id']; ?>
+                                  <br />
+                                  <span class="badge badge-warning"><?= $status_pn['nama']; ?></span>
+                                </td>
                                 <?php }; ?>
-                              </td>
-                              <td class="td-name">
-                                <a><?= $pn['nopol']; ?></a>
-                                <br />
-                                <small><?= $pn['kepemilikan']; ?></small>
-                                <br />
-                                <small><?= $pn['id'] . ' - ' . $pn['jenis_perjalanan']; ?></small>
-                              </td>
                               <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $pn['id']])->result_array(); ?>
                                 <td data-toggle="tooltip" data-placement="top" title="<?php 
                                   for($i=0;$i<count($peserta);$i++){
