@@ -115,8 +115,7 @@ class Notification extends CI_Controller
                                     "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
                                     "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
                                     "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." .
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                     ],
                         ]
                     );
@@ -154,8 +153,7 @@ class Notification extends CI_Controller
                                 "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." .
                                 "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadiv, dan HR" .
                                 "\r\n2. Untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadiv, dan HR" .
-                                "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                "\r\n \r\n" . $notifikasi['pesan']
+                                "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                 ],
                     ]
                 );
@@ -208,8 +206,7 @@ class Notification extends CI_Controller
                                 "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
                                 "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadiv, dan HR" .
                                 "\r\n2. Untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadiv, dan HR" .
-                                "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                "\r\n \r\n" . $notifikasi['pesan']
+                                "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                 ],
                     ]
                 );
@@ -235,7 +232,7 @@ class Notification extends CI_Controller
             // $last_status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array();
 
             if ($last_notify < $sekarang) {
-                if ($l['status']=='2' or $l['status']=='5') {
+                if ($l['status']=='2') {
                 
                     $this->db->set('last_notify', date('Y-m-d H:i:s'));
                     $this->db->where('id', $l['id']);
@@ -253,7 +250,7 @@ class Notification extends CI_Controller
                             ],
                             'json' => [
                                 'phone' => $atasan1['phone'],
-                                'message' => "*[MENUNGGU APPROVAL] LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
+                                'message' => "*[MENUNGGU APPROVAL] RENCANA LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
                                     "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
                                     "\r\nNama : *" . $l['nama'] . "*" .
                                     "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
@@ -266,7 +263,7 @@ class Notification extends CI_Controller
                     $body = $response->getBody();
                     echo '<p>#'. $l['id'] .' [NOTIFIKASI] Kirim Notif lembur menunggu approval atasan1 - Berhasil';
                     
-                }elseif ($l['status']=='3' or $l['status']=='6') {
+                }elseif ($l['status']=='3') {
                 
                     $this->db->set('last_notify', date('Y-m-d H:i:s'));
                     $this->db->where('id', $l['id']);
@@ -284,7 +281,69 @@ class Notification extends CI_Controller
                             ],
                             'json' => [
                                 'phone' => $atasan2['phone'],
-                                'message' => "*[MENUNGGU APPROVAL] LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
+                                'message' => "*[MENUNGGU APPROVAL] RENCANA LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    "\r\nNama : *" . $l['nama'] . "*" .
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
+                                    "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
+                                    "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                                    ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                    echo '<p>#'. $l['id'] .' [NOTIFIKASI] Kirim Notif lembur menunggu approval atasan2 - Berhasil';
+
+                } elseif ($l['status']=='5') {
+                
+                    $this->db->set('last_notify', date('Y-m-d H:i:s'));
+                    $this->db->where('id', $l['id']);
+                    $this->db->update('lembur');
+
+                    //Notifikasi ke USER
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $atasan1['phone'],
+                                'message' => "*[MENUNGGU APPROVAL] REALISASI LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
+                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    "\r\nNama : *" . $l['nama'] . "*" .
+                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                                    "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                                    ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                    echo '<p>#'. $l['id'] .' [NOTIFIKASI] Kirim Notif lembur menunggu approval atasan1 - Berhasil';
+                    
+                }elseif ($l['status']=='6') {
+                
+                    $this->db->set('last_notify', date('Y-m-d H:i:s'));
+                    $this->db->where('id', $l['id']);
+                    $this->db->update('lembur');
+
+                    //Notifikasi ke USER
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $atasan2['phone'],
+                                'message' => "*[MENUNGGU APPROVAL] REALISASI LEMBUR INI MASIH MENUNGGU PERSETUJUAN*" .
                                     "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
                                     "\r\nNama : *" . $l['nama'] . "*" .
                                     "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
@@ -496,7 +555,71 @@ class Notification extends CI_Controller
             }
         endforeach;
 // ----------------------------------------------------------------------------------------
+        //Notif Kehadiran hari ini to Atasan
+        // $t = time();
+        // $in = strtotime(date('Y-m-d 08:30:00'));
+        // $rest = strtotime(date('Y-m-d 13:00:00'));
+        // $out = strtotime(date('Y-m-d 17:30:00'));
+        // $today = date('d');
+        // $bulan = date('m');
+        // $tahun = date('Y');
+        
 
+
+        // if ($t > $in and $t < $rest){
+        //     $id = 'GA'.date('ymd');
+        //     $cekn = $this->db->get_where('notifikasi', ['id' =>  $id])->row_array();
+        //     if (empty($cekn)){
+        //         $this->db->where('year(tglmulai)',$tahun);
+        //         $this->db->where('month(tglmulai)',$bulan);
+        //         $this->db->where('day(tglmulai)',$today);
+        //         $this->db->where('lokasi !=','WTQ');
+        //         $this->db->where('status >', '2');
+        //         $lembur_cus = $this->db->get('lembur');
+
+        //         $this->db->where('year(tglmulai)',$tahun);
+        //         $this->db->where('month(tglmulai)',$bulan);
+        //         $this->db->where('day(tglmulai)',$today);
+        //         $this->db->where('lokasi','WTQ');
+        //         $this->db->where('status >', '2');
+        //         $lembur_wtq = $this->db->get('lembur');
+
+        //         $this->db->where('sect_id', '214');
+        //         $ga_admin = $this->db->get('karyawan_admin')->row_array();
+             
+        //         $client = new \GuzzleHttp\Client();
+        //         $response = $client->post(
+        //             'https://region01.krmpesan.com/api/v2/message/send-text',
+        //             [
+        //                 'headers' => [
+        //                     'Content-Type' => 'application/json',
+        //                     'Accept' => 'application/json',
+        //                     'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //                 ],
+        //                 'json' => [
+        //                     'phone' => $ga_admin['phone'],
+        //                     'message' => "*INFORMASI LEMBUR HARI INI*" . 
+        //                     "\r\n \r\nTanggal : *" . date('d M Y') . "*" .
+        //                     "\r\nLembur di WINTEQ : *" . $lembur_wtq->num_rows() . "*" .
+        //                     "\r\nLembur di Customer : *" . $lembur_cus->num_rows() . "*" .
+        //                     "\r\n \r\nMohon segera konfirmasi untuk konsumsi.".
+        //                     "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+        //                 ],
+        //             ]
+        //         );
+        //         $body = $response->getBody();
+
+        //         // Notifikasi telah dikirim
+        //         $data = array(
+        //             'id' => $id,
+        //             'notifikasi' => 1,
+        //             'tanggal' => date('Y-m-d H:i:s')
+        //         );
+        //         $this->db->insert('notifikasi', $data);
+
+        //         echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
+        //     }
+        // }
 
 // ----------------------------------------------------------------------------------------
     }
