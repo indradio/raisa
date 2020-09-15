@@ -474,7 +474,7 @@ class Notification extends CI_Controller
                 }
             }
 
-            if ($p['copro']!='NON PROJEK' and $menit > -30) {
+            if ($p['copro']!='NON PROJEK' and $menit > 30) {
                 $this->db->where('times', '2');
                 $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
                 if (empty($notifyCheck)){
