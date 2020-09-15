@@ -82,6 +82,10 @@ class Presensi extends CI_Controller
                         'dept_id' => $this->session->userdata('dept_id'),
                         'sect_id' => $this->session->userdata('sect_id'),
                         'day_state' => $day,
+                        'temperature' => $this->input->post('temperature'),
+                        'radang' => $this->input->post('radang'),
+                        'flu' => $this->input->post('flu'),
+                        'sesak' => $this->input->post('sesak'),
                         'condition' => $this->input->post('condition')
                     ];
                     $this->db->insert('presensi', $data);
@@ -142,6 +146,7 @@ class Presensi extends CI_Controller
                                     'dept_id' => $this->session->userdata('dept_id'),
                                     'sect_id' => $this->session->userdata('sect_id'),
                                     'produktifitas' => '0',
+                                    'shift' => 'SHIFT2',
                                     'create' => date('Y-m-d H:i:s'),
                                     'respon_create' => $respon,
                                     'status' => $statusjk

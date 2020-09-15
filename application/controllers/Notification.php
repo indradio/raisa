@@ -555,71 +555,74 @@ class Notification extends CI_Controller
             }
         endforeach;
 // ----------------------------------------------------------------------------------------
-        //Notif Kehadiran hari ini to Atasan
-        // $t = time();
-        // $in = strtotime(date('Y-m-d 08:30:00'));
-        // $rest = strtotime(date('Y-m-d 13:00:00'));
-        // $out = strtotime(date('Y-m-d 17:30:00'));
-        // $today = date('d');
-        // $bulan = date('m');
-        // $tahun = date('Y');
+        // Notif Kehadiran hari ini to Atasan
+        $t = time();
+        $in = strtotime(date('Y-m-d 08:30:00'));
+        $rest = strtotime(date('Y-m-d 13:00:00'));
+        $out = strtotime(date('Y-m-d 17:30:00'));
+        $tanggal = date('d');
+        $bulan = date('m');
+        $tahun = date('Y');
         
+        if ($t > $in and $t < $rest){
 
+            // Kirim Presensi c/In ke Section Head
 
-        // if ($t > $in and $t < $rest){
-        //     $id = 'GA'.date('ymd');
-        //     $cekn = $this->db->get_where('notifikasi', ['id' =>  $id])->row_array();
-        //     if (empty($cekn)){
-        //         $this->db->where('year(tglmulai)',$tahun);
-        //         $this->db->where('month(tglmulai)',$bulan);
-        //         $this->db->where('day(tglmulai)',$today);
-        //         $this->db->where('lokasi !=','WTQ');
-        //         $this->db->where('status >', '2');
-        //         $lembur_cus = $this->db->get('lembur');
+                        $this->db->or_where('posisi_id', '5');
+                        $this->db->where('is_active', '1');
+                        $this->db->or_where('posisi_id', '6');
+                        $this->db->where('is_active', '1');
+            $section =  $this->db->get('karyawan')->result_array();
+            foreach ($section as $sect) :
+                $id = 'IN'.date('ymd').$sect['sect_id'];
+                $sent = $this->db->get_where('notifikasi', ['id' =>  $id])->row_array();
+                if (empty($sent)){
 
-        //         $this->db->where('year(tglmulai)',$tahun);
-        //         $this->db->where('month(tglmulai)',$bulan);
-        //         $this->db->where('day(tglmulai)',$today);
-        //         $this->db->where('lokasi','WTQ');
-        //         $this->db->where('status >', '2');
-        //         $lembur_wtq = $this->db->get('lembur');
+                    $this->db->where('year(time)',$tahun);
+                    $this->db->where('month(time)',$bulan);
+                    $this->db->where('day(time)',$tanggal);
+                    $this->db->where('state','C/In');
+                    $this->db->where('sect_id', $sect['sect_id']);
+                    $presensi = $this->db->get('presensi')->result_array();
 
-        //         $this->db->where('sect_id', '214');
-        //         $ga_admin = $this->db->get('karyawan_admin')->row_array();
-             
-        //         $client = new \GuzzleHttp\Client();
-        //         $response = $client->post(
-        //             'https://region01.krmpesan.com/api/v2/message/send-text',
-        //             [
-        //                 'headers' => [
-        //                     'Content-Type' => 'application/json',
-        //                     'Accept' => 'application/json',
-        //                     'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-        //                 ],
-        //                 'json' => [
-        //                     'phone' => $ga_admin['phone'],
-        //                     'message' => "*INFORMASI LEMBUR HARI INI*" . 
-        //                     "\r\n \r\nTanggal : *" . date('d M Y') . "*" .
-        //                     "\r\nLembur di WINTEQ : *" . $lembur_wtq->num_rows() . "*" .
-        //                     "\r\nLembur di Customer : *" . $lembur_cus->num_rows() . "*" .
-        //                     "\r\n \r\nMohon segera konfirmasi untuk konsumsi.".
-        //                     "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-        //                 ],
-        //             ]
-        //         );
-        //         $body = $response->getBody();
+                    if (!empty($presensi)){
 
-        //         // Notifikasi telah dikirim
-        //         $data = array(
-        //             'id' => $id,
-        //             'notifikasi' => 1,
-        //             'tanggal' => date('Y-m-d H:i:s')
-        //         );
-        //         $this->db->insert('notifikasi', $data);
+                        $users = '';
+                        foreach ($insect as $row) :
+                            $users = $users . $row['nama']. "\r\n";
+                        endforeach;
 
-        //         echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
-        //     }
-        // }
+                        $client = new \GuzzleHttp\Client();
+                        $response = $client->post(
+                            'https://region01.krmpesan.com/api/v2/message/send-text',
+                            [
+                                'headers' => [
+                                    'Content-Type' => 'application/json',
+                                    'Accept' => 'application/json',
+                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                                ],
+                                'json' => [
+                                    'phone' => $sect['phone'],
+                                    'message' => "*PRESENSI C/IN " . date('d M Y') . "*" .
+                                    "\r\n \r\n" . $users
+                                ],
+                            ]
+                        );
+                        $body = $response->getBody();
+    
+                        // Notifikasi telah dikirim
+                        $data = array(
+                            'id' => $id,
+                            'notifikasi' => 1,
+                            'tanggal' => date('Y-m-d H:i:s')
+                        );
+                        $this->db->insert('notifikasi', $data);
+    
+                        echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
+                    }
+                }
+            endforeach;
+        }
 
 // ----------------------------------------------------------------------------------------
     }
