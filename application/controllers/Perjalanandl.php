@@ -1630,10 +1630,10 @@ class Perjalanandl extends CI_Controller
             $tb = $p_peserta['total'];
         }
         
-        if ($this->input->post('ewallet')=="primary"){
-            $ewallet = $this->input->post('ewallet1');
-        }elseif ($this->input->post('ewallet')=="secondary"){
+        if ($this->input->post('ewallet')=="secondary"){
             $ewallet = $this->input->post('ewallet2');
+        } else {
+            $ewallet = $this->input->post('ewallet1');
         }
 
         $this->db->set('bayar', $tp);
