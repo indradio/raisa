@@ -26,7 +26,7 @@
                 <i class="material-icons">fingerprint</i>
               </div>
               <!-- <h4 class="card-title">Your Location</h4> -->
-              <h4 class="card-title">Kehadiran</h4>
+              <h4 class="card-title">Kehadiran & Kondisi Kesehatan</h4>
             </div>
             <div class="card-body ">
               <div id="map" class="map" style="width:100%;height:240px;"></div>
@@ -53,6 +53,55 @@
                 <select class="form-control selectpicker" data-style="btn btn-link" id="newstate" name="newstate" title="Silahkan Pilih" data-size="3" data-live-search="false" required>
                   <option value="OFFDAY">OFF DAY</option>
                   <option value="WFH">WORK FROM HOME</option>
+                </select>
+              </div>
+              <div class="form-group bmd-form-group is-filled">
+                <label for="temperature" class="bmd-label"> Suhu Tubuh *</label><br />
+                <select class="form-control selectpicker" data-style="btn btn-link" id="temperature" name="temperature" title="Silahkan Pilih" data-size="5" data-live-search="true" required> 
+                  <option value="35.9">35.9</option>
+                  <option value="36.0">36.0</option>
+                  <option value="36.1">36.1</option>
+                  <option value="36.2">36.2</option>
+                  <option value="36.3">36.3</option>
+                  <option value="36.4">36.4</option>
+                  <option value="36.5">36.5</option>
+                  <option value="36.6">36.6</option>
+                  <option value="36.7">36.7</option>
+                  <option value="36.8">36.8</option>
+                  <option value="36.9">36.9</option>
+                  <option value="37.0">37.0</option>
+                  <option value="37.1">37.1</option>
+                  <option value="37.2">37.2</option>
+                  <option value="37.3">37.3</option>
+                  <option value="37.4">37.4</option>
+                  <option value="37.5">37.5</option>
+                  <option value="37.6">37.6</option>
+                  <option value="37.7">37.7</option>
+                  <option value="37.8">37.8</option>
+                  <option value="37.9">37.9</option>
+                  <option value="38.0">38.0</option>
+                  <option value="38.1">38.1</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="radang" class="bmd-label-floating"> Tenggorokan Sakit ? *</label>
+                <select class="form-control selectpicker" data-style="btn btn-link" id="radang" name="radang" title="Silahkan Pilih" data-size="3" data-live-search="false" required>
+                  <option value="YA">YA</option>
+                  <option value="TIDAK">TIDAK</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="flu" class="bmd-label-floating"> Flu ? *</label>
+                <select class="form-control selectpicker" data-style="btn btn-link" id="flu" name="flu" title="Silahkan Pilih" data-size="3" data-live-search="false" required>
+                  <option value="YA">YA</option>
+                  <option value="TIDAK">TIDAK</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sesak" class="bmd-label-floating"> Sesak Nafas ? *</label>
+                <select class="form-control selectpicker" data-style="btn btn-link" id="sesak" name="sesak" title="Silahkan Pilih" data-size="3" data-live-search="false" required>
+                  <option value="YA">YA</option>
+                  <option value="TIDAK">TIDAK</option>
                 </select>
               </div>
               <div class="form-group">
