@@ -180,30 +180,6 @@ class Presensi extends CI_Controller
                     }
 
                     $this->session->set_flashdata('message', 'clockSuccess');
-
-                if ($state == 'C/In' or $state == 'C/Out'){
-                    $atasan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $atasan['phone'],
-                                'message' => "*ABSENSI " . date('d M Y') . "*" .
-                                    "\r\n \r\n Nama : *" . $this->session->userdata('nama') . "*" .
-                                    "\r\n Waktu : *" . date('H:i') . "*" .
-                                    "\r\n Lokasi : *" . $this->input->post('loc') . "*" .
-                                    "\r\n Kondisi Kesehatan : *" . $this->input->post('condition') . "*"
-                            ],
-                        ]
-                    );
-                    $body = $response->getBody();
-                }
                 } else {
                     $this->session->set_flashdata('message', 'clockSuccess2');
                 }

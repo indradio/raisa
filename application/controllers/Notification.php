@@ -558,13 +558,14 @@ class Notification extends CI_Controller
         // Notif Kehadiran hari ini to Atasan
         $t = time();
         $in = strtotime(date('Y-m-d 08:30:00'));
-        $rest = strtotime(date('Y-m-d 13:00:00'));
+        $in_end = strtotime(date('Y-m-d 13:00:00'));
         $out = strtotime(date('Y-m-d 17:30:00'));
+        $out_end = strtotime(date('Y-m-d 18:00:00'));
         $tanggal = date('d');
         $bulan = date('m');
         $tahun = date('Y');
         
-        if ($t > $in and $t < $rest){
+        if ($t > $in and $t < $in_end){
 
             // Kirim Presensi c/In ke Section Head
 
@@ -618,12 +619,66 @@ class Notification extends CI_Controller
                         );
                         $this->db->insert('notifikasi', $data);
     
-                        echo '<p>Kirim Notif Presensi hari ini ke Section - Berhasil';
+                        echo '<p>Kirim Notif Presensi hari ini ke SectHead - Berhasil';
+                    }
+                }
+            endforeach;
+
+            // Kirim Presensi c/In ke Dept Head
+
+                        $this->db->or_where('posisi_id', '3');
+                        $this->db->where('is_active', '1');
+            $departement =  $this->db->get('karyawan')->result_array();
+            foreach ($departement as $dept) :
+                $id = 'IN'.date('ymd').$dept['dept_id'];
+                $sent = $this->db->get_where('notifikasi', ['id' =>  $id])->row_array();
+                if (empty($sent)){
+
+                    $this->db->where('year(time)',$tahun);
+                    $this->db->where('month(time)',$bulan);
+                    $this->db->where('day(time)',$tanggal);
+                    $this->db->where('state','C/In');
+                    $this->db->where('dept_id', $dept['dept_id']);
+                    $presensi = $this->db->get('presensi')->result_array();
+
+                    if (!empty($presensi)){
+
+                        $users = '';
+                        foreach ($presensi as $row) :
+                            $users = $users . $row['nama']. " " .date('H:i', strtotime($row['time'])). " " .$row['new_state'] . "\r\n";
+                        endforeach;
+
+                        $client = new \GuzzleHttp\Client();
+                        $response = $client->post(
+                            'https://region01.krmpesan.com/api/v2/message/send-text',
+                            [
+                                'headers' => [
+                                    'Content-Type' => 'application/json',
+                                    'Accept' => 'application/json',
+                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                                ],
+                                'json' => [
+                                    'phone' => $dept['phone'],
+                                    'message' => "*PRESENSI C/IN " . date('d M Y') . "*" .
+                                    "\r\n \r\n" . $users
+                                ],
+                            ]
+                        );
+                        $body = $response->getBody();
+    
+                        // Notifikasi telah dikirim
+                        $data = array(
+                            'id' => $id,
+                            'notifikasi' => 1,
+                            'tanggal' => date('Y-m-d H:i:s')
+                        );
+                        $this->db->insert('notifikasi', $data);
+    
+                        echo '<p>Kirim Notif Presensi hari ini ke DeptHead - Berhasil';
                     }
                 }
             endforeach;
         }
-
 // ----------------------------------------------------------------------------------------
     }
 }
