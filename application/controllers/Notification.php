@@ -588,8 +588,8 @@ class Notification extends CI_Controller
                     if (!empty($presensi)){
 
                         $users = '';
-                        foreach ($insect as $row) :
-                            $users = $users . $row['nama']. "\r\n";
+                        foreach ($presensi as $row) :
+                            $users = $users . $row['nama']. " " .date('H:i', strtotime($row['time'])). " " .$row['new_state'] . "\r\n";
                         endforeach;
 
                         $client = new \GuzzleHttp\Client();
@@ -618,7 +618,7 @@ class Notification extends CI_Controller
                         );
                         $this->db->insert('notifikasi', $data);
     
-                        echo '<p>Kirim Notif lembur hari ini ke GA Admin - Berhasil';
+                        echo '<p>Kirim Notif Presensi hari ini ke Section - Berhasil';
                     }
                 }
             endforeach;
