@@ -2,177 +2,369 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">assignment</i>
-                        </div>
-                        <h4 class="card-title">Perjalanan Dinas</h4>
+        <div class="col-md-12">
+              <div class="card ">
+                <div class="card-header ">
+                  <h4 class="card-title">
+                    <!-- <small class="description">PerjalananKu</small> -->
+                  </h4>
+                </div>
+                <div class="card-body ">
+                <div class="table-responsive">
+                    <div class="material-datatables">
+                      <table class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                          <tr>
+                            <!-- <th> -->
+                            <ul class="nav nav-pills nav-pills-info" role="tablist" style="flex-wrap:unset">
+                                <li class="nav-item">
+                                <a class="nav-link active show" data-toggle="tab" href="#link1" role="tablist">
+                                    Aktif
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">
+                                    Perjalanan
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#link3" role="tablist">
+                                    Penyelesaian
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#link4" role="tablist">
+                                    Verifikasi
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#link5" role="tablist">
+                                    Payment
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
+                                    Selesai
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#link0" role="tablist">
+                                    Dibatalkan
+                                </a>
+                                </li>
+                            </ul>
+                            <!-- </th> -->
+                          </tr>
+                        </thead>
+                      </table>
                     </div>
-                    <div class="card-body">
-                        <div class="toolbar">
-                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-facebook mb-2" role="button" aria-disabled="false">Buat Pejalanan Dinas</a>
-                        </div>
+                  </div>
+                  <div class="tab-content tab-space">
+                    <div class="tab-pane active show" id="link1">
                         <div class="material-datatables">
-                            <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtdesc1" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                                  $this->db->where('status >' , '0');
+                                                  $this->db->where('status <' , '9');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr>
+                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $row['status']])->row_array(); ?>
+                                                <td>
+                                                    <?= $status['nama']; ?>
+                                                    <?php if ($row['status'] == 1) { ?>
+                                                        <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $row['id']; ?>" class="badge badge-warning">+1 JAM</a>
+                                                        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $row['id']; ?>">BATALKAN</a>
+                                                    <?php }; ?>
+                                                </td>
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                            </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="link2">
+                        <div class="material-datatables">
+                            <table id="dtdesc2" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Jenis</th>
+                                        <th>Tanggal</th>
                                         <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Berangkat</th>
-                                        <th>Kembali</th>
+                                        <th>Keperluan</th>
                                         <th>Kendaraan</th>
-                                        <th>Nopol</th>
-                                        <th>Status</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Jenis</th>
+                                        <th>Tanggal</th>
                                         <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Berangkat</th>
-                                        <th>Kembali</th>
+                                        <th>Keperluan</th>
                                         <th>Kendaraan</th>
-                                        <th>Nopol</th>
-                                        <th>Status</th>
-                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
                                                   $this->db->where('status >=' , '1');
-                                                  $this->db->where('status <' , '9');
+                                                  $this->db->where('status <=' , '2');
                                     $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
                                     foreach ($perjalanan as $row) : ?>
                                             <tr>
-                                                <td><?= $row['id']; ?></td>
-                                                <td><?= $row['jenis_perjalanan']; ?></td>
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
                                                 <td><?= $row['tujuan']; ?></td>
-                                                <td><?= $row['keperluan']; ?></td>
                                                 <td><?= $row['anggota']; ?></td>
-                                                <td><?= date('d M - ', strtotime($row['tglberangkat'])); ?> <?= date('H:i', strtotime($row['jamberangkat'])); ?></td>
-                                                <td><?= date('d M - ', strtotime($row['tglkembali'])); ?> <?= date('H:i', strtotime($row['jamkembali'])); ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
                                                 <td><?= $row['kepemilikan']; ?></td>
-                                                <td><?= $row['nopol']; ?></td>
-                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $row['status']])->row_array(); ?>
-                                                <td><?= $status['nama']; ?></td>
-                                                <td class="text-right">
-                                                    <?php if ($row['status'] == 1) { ?>
-                                                        <a href="<?= base_url('perjalanandl/tambahwaktudl/') . $row['id']; ?>" class="btn btn-sm btn-warning">+1 JAM</a>
-                                                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#batalDl" data-id="<?= $row['id']; ?>">BATALKAN</a>
-                                                    <?php } elseif ($row['status'] == 3) { ?>
-                                                        <a href="<?= base_url('perjalanan/penyelesaian/' . $row['id']); ?>" class="btn btn-sm btn-success">Penyelesaian</a>
-                                                    <?php }; ?>
-                                                </td>
                                             </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-                <!--  end card  -->
-            </div>
-            <!-- end col-md-12 -->
-        </div>
-        <!-- end row -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">assignment</i>
-                        </div>
-                        <h4 class="card-title">Perjalanan Dinas</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="toolbar">
-                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-                        </div>
+                    <div class="tab-pane" id="link3">
                         <div class="material-datatables">
-                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtdesc3" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Nomor DL</th>
-                                        <th>Jenis DL</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
-                                        <th>Nama <small>(<i>Pemohon</i>)</small></th>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
                                         <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Keberangkatan</th>
-                                        <th>Kembali</th>
-                                        <th>Catatan</th>
-                                        <th>Status</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nomor DL</th>
-                                        <th>Jenis DL</th>
-                                        <th>No. Polisi</th>
-                                        <th>Kendaraan</th>
-                                        <th>Nama</th>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
                                         <th>Tujuan</th>
-                                        <th>Keperluan</th>
                                         <th>Peserta</th>
-                                        <th>Keberangkatan</th>
-                                        <th>Kembali</th>
-                                        <th>Catatan</th>
-                                        <th>Status</th>
-                                        <th class="text-right">Actions</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    $perjalanan = $this->db->get_where('perjalanan_anggota', ['npk' => $this->session->userdata('npk')])->result_array();
-                                    foreach ($perjalanan as $pdl) :
-                                        $rsvid = $pdl['perjalanan_id'];
-                                        if ($rsvid != null) {
-                                            $pdetail = $this->db->get_where('perjalanan', ['id' => $rsvid])->row_array(); ?>
-                                            <tr>
-                                                <td><?= $pdetail['id']; ?></td>
-                                                <td><?= $pdetail['jenis_perjalanan']; ?></td>
-                                                <td><?= $pdetail['nopol']; ?></td>
-                                                <td><?= $pdetail['kepemilikan']; ?></td>
-                                                <td><?= $pdetail['nama']; ?></td>
-                                                <td><?= $pdetail['tujuan']; ?></td>
-                                                <td><?= $pdetail['keperluan']; ?></td>
-                                                <td><?= $pdetail['anggota']; ?></td>
-                                                <td><?= date('d/m/Y', strtotime($pdetail['tglberangkat'])); ?> <?= date('H:i', strtotime($pdetail['jamberangkat'])); ?></td>
-                                                <td><?= date('d/m/Y', strtotime($pdetail['tglkembali'])); ?> <?= date('H:i', strtotime($pdetail['jamkembali'])); ?></td>
-                                                <td><?= $pdetail['catatan']; ?></td>
-                                                <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdetail['status']])->row_array(); ?>
-                                                <td><?= $status['nama']; ?></td>
-                                                <td class="text-right">
-                                                    <?php if ($pdetail['status'] == 9) { ?>
-                                                        <a href="<?= base_url('perjalanandl/suratjalan/') . $pdetail['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
-                                                    <?php } else { ?>
-                                                        <a href="#" class="btn btn-link btn-info btn-just-icon disabled"><i class="material-icons">print</i></a>
-                                                    <?php }; ?>
-                                                </td>
+                                                  $this->db->where('status' , '3');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr onclick="window.location='<?= base_url('perjalanan/penyelesaian/' . $row['id']); ?>'">
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
                                             </tr>
-                                        <?php }; ?>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    <div class="tab-pane" id="link4">
+                        <div class="material-datatables">
+                            <table id="dtdesc4" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                                  $this->db->where('status' , '4');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr>
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                            </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="link5">
+                        <div class="material-datatables">
+                            <table id="dtdesc5" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                                  $this->db->where('status' , '5');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr>
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                            </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="link9">
+                        <div class="material-datatables">
+                            <table id="dtdesc9" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                                  $this->db->limit(50);
+                                                  $this->db->where('status' , '9');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr>
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                            </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="link0">
+                        <div class="material-datatables">
+                            <table id="dtdesc0" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Peserta</th>
+                                        <th>Keperluan</th>
+                                        <th>Kendaraan</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                                  $this->db->limit(50);
+                                                  $this->db->where('status' , '0');
+                                    $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
+                                    foreach ($perjalanan as $row) : ?>
+                                            <tr>
+                                                <td><?= $row['id'].'-'.$row['jenis_perjalanan']; ?></td>
+                                                <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                            </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                  </div>
                 </div>
-                <!--  end card  -->
+              </div>
             </div>
-            <!-- end col-md-12 -->
         </div>
         <!-- end row -->
     </div>
@@ -206,3 +398,114 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#dtdesc1').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [1, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+
+        $('#dtdesc2').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [0, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+
+        $('#dtdesc3').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [0, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+        $('#dtdesc4').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [0, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+        $('#dtdesc5').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [0, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+        $('#dtdesc9').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [0, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+        $('#dtdesc0').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            order: [
+                [0, 'desc']
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+    });
+</script>
