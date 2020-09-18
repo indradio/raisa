@@ -558,9 +558,9 @@ class Notification extends CI_Controller
         // Notif Kehadiran hari ini to Atasan
         $t = time();
         $in = strtotime(date('Y-m-d 08:30:00'));
-        $in_end = strtotime(date('Y-m-d 13:00:00'));
+        $in_end = strtotime(date('Y-m-d 08:45:00'));
         $out = strtotime(date('Y-m-d 17:30:00'));
-        $out_end = strtotime(date('Y-m-d 18:00:00'));
+        $out_end = strtotime(date('Y-m-d 17:45:00'));
         $tanggal = date('d');
         $bulan = date('m');
         $tahun = date('Y');
@@ -590,7 +590,7 @@ class Notification extends CI_Controller
 
                         $users = '';
                         foreach ($presensi as $row) :
-                            $users = $users . $row['nama']. " " .date('H:i', strtotime($row['time'])). " " .$row['new_state'] . "\r\n";
+                            $users = $users . "\r\nNama : " .$row['nama']. "\r\nWaktu : " .date('H:i', strtotime($row['time'])). "\r\nKategori : " .$row['new_state']. "\r\nSuhu : " .$row['temperature']. "\r\nKondisi : " .$row['condition']. "\r\nLokasi : " .$row['loc'] . "\r\n \r\n";
                         endforeach;
 
                         $client = new \GuzzleHttp\Client();
@@ -645,7 +645,7 @@ class Notification extends CI_Controller
 
                         $users = '';
                         foreach ($presensi as $row) :
-                            $users = $users . $row['nama']. " " .date('H:i', strtotime($row['time'])). " " .$row['new_state'] . "\r\n";
+                            $users = $users . "\r\nNama : " .$row['nama']. "\r\nWaktu : " .date('H:i', strtotime($row['time'])). "\r\nKategori : " .$row['new_state']. "\r\nSuhu : " .$row['temperature']. "\r\nKondisi : " .$row['condition']. "\r\nLokasi : " .$row['loc'] . "\r\n \r\n";
                         endforeach;
 
                         $client = new \GuzzleHttp\Client();
