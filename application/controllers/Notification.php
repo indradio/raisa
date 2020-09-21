@@ -660,7 +660,7 @@ class Notification extends CI_Controller
                                 'json' => [
                                     'phone' => $dept['phone'],
                                     'message' => "*PRESENSI C/IN " . date('d M Y') . "*" .
-                                    "\r\n \r\n" . $users
+                                    "\r\n" . $users
                                 ],
                             ]
                         );
