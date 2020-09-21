@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
           <strong>UPDATE : TENTUKAN EWALLET UTAMA KAMU</strong>
@@ -10,10 +10,10 @@
           </br>
           </br>Sekarang kamu bisa tentukan ewallet utama kamu. 
           </br>Cek profil kamu ya!
-          </br>Pastikan nomor eWallet yang terdaftar atasnama kamu, ewallet atasnama orang lain tidak akan diproses. 
+          </br><strong>Pastikan nomor eWallet yang terdaftar atasnama kamu, ewallet atasnama orang lain tidak akan diproses.</strong>
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- End Banner -->
     <div class="row">
       <?php
