@@ -737,7 +737,7 @@ class Perjalanandl extends CI_Controller
                         'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS INI MUNDUR*". 
                         "\r\n \r\n*#" . $perjalanan['id'] . "*" .
                         "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
-                        "\r\nPeserta: *" . $perjalanan['peserta'] . "*" .
+                        "\r\nPeserta: *" . $perjalanan['anggota'] . "*" .
                         "\r\nWaktu Keberangkatan Menjadi: *" . date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat']))) . "*"
                     ],
                 ]
@@ -761,7 +761,7 @@ class Perjalanandl extends CI_Controller
                         'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS INI MUNDUR*". 
                         "\r\n \r\n*#" . $perjalanan['id'] . "*" .
                         "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
-                        "\r\nPeserta: *" . $perjalanan['peserta'] . "*" .
+                        "\r\nPeserta: *" . $perjalanan['anggota'] . "*" .
                         "\r\nWaktu Keberangkatan Menjadi: *" . date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat']))) . "*"
                     ],
                 ]
