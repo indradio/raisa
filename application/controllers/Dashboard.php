@@ -134,76 +134,7 @@ class Dashboard extends CI_Controller
                 );
                 $body = $response->getBody();
             }
-            if ($menit > 1) {
-                            $this->db->where('times', '2');
-                $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
-                if (empty($notifyCheck)){
-                    //Notify to USER
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $user['phone'],
-                                'message' => "*PERJALANAN DINAS KAMU HARUS SEGERA BERANGKAT*". 
-                                        "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
-                                        "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                                        "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
-                                        "\r\n \r\nWaktu keberangkatan perjalanan kamu *Telah Tiba*." .
-                                        "\r\n \r\nJIka tidak berangkat max 1 Jam (untuk projek) atau max 2 Jam (Non Projek) maka perjalanan akan dibatalkan." .
-                                        "\r\n \r\nKamu dapat menambah waktu keberangkatan perjalanan di menu Perjalanan - PerjalananKu."
-                                        ],
-                        ]
-                    );
-                    $body = $response->getBody();
-
-                    $data = array(
-                        'id' => $p['id'],
-                        'times' => 2,
-                        'tanggal' => date('Y-m-d H:i:s')
-                    );
-                    $this->db->insert('notifikasi', $data);
-                }
-            }
-
-            if ($p['copro']!='NON PROJEK' and $menit > -30) {
-                $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
-                if (empty($notifyCheck)){
-                    //Notify to USER
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $user['phone'],
-                                'message' => "*PERJALANAN DINAS KAMU KURANG DARI 30 MENIT*". 
-                                    "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
-                                    "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                                    "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
-                                    "\r\n \r\nWaktu keberangkatan perjalanan kamu *kurang dari 30 Menit lagi*."
-                                    ],
-                        ]
-                    );
-                    $body = $response->getBody();
-
-                    $data = array(
-                        'id' => $p['id'],
-                        'times' => 1,
-                        'tanggal' => date('Y-m-d H:i:s')
-                    );
-                    $this->db->insert('notifikasi', $data);
-                }
-            }
+            
         endforeach;
 
         //Auto LEMBUR
