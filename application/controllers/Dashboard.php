@@ -79,7 +79,7 @@ class Dashboard extends CI_Controller
         //Auto batalkan perjalanan
         $queryPerjalanan = "SELECT *
         FROM `perjalanan`
-        WHERE `tglberangkat` <= CURDATE() AND (`status` = 1 OR `status` = 8)
+        WHERE `tglberangkat` = CURDATE() AND (`status` = 1 OR `status` = 8)
         ";
         $perjalanan = $this->db->query($queryPerjalanan)->result_array();
         foreach ($perjalanan as $p) :
