@@ -218,7 +218,7 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*PENTING : ABSENSI SAAT WFH LEWAT RAISA*" .
+                            'message' => "*INFO : LIBUR NASIONAL DAN CUTI BERSAMA*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2020, maka dengan ini kami informasikan bahwa :" .
                             "\r\n \r\n*1.	Tanggal 29 Oktober 2020	: Libur Nasional Maulid Nabi Muhammad SAW*" .
