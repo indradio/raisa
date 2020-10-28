@@ -220,11 +220,12 @@ class Layanan extends CI_Controller
                             'phone' => $k['phone'],
                             'message' => "*PENTING : ABSENSI SAAT WFH LEWAT RAISA*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\n \r\nUntuk semua karyawan yang sedang atau suatu saat nanti akan WFH/OFF isolasi mandiri karena beresiko (baik karena ada kasus di sekitar rumah, tracing resiko pribadi, atau panggilan gugus tugas), *WAJIB* absen online di Raisa sebagai pengganti ketidakhadiran di kantor." .
-                            "\r\n \r\n*Karyawan yang WFH/OFF isolasi mandiri dan tidak absen online maka sama dengan tidak masuk tanpa keterangan*" .
-                            "\r\n \r\nJika kamu mengalami gejala seperti *demam, diare, gangguan pernafasan, menurunnya fungsi indra perasa dan penciuman, segera menghubungi atasan nya masing-masing*." .
-                            "\r\n \r\nIkan hiu makan tomat" .
-                            "\r\nTetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, menjalankan pola hidup bersih dan sehat serta mematuhi protokol kesehatan."
+                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2020, maka dengan ini kami informasikan bahwa :" .
+                            "\r\n \r\n*1.	Tanggal 29 Oktober 2020	: Libur Nasional Maulid Nabi Muhammad SAW*" .
+                            "\r\n*2.	Tanggal 30 Oktober 2020	: Cuti Bersama*" .
+                            "\r\n \r\nOleh karena hal tersebut, maka karyawan bisa masuk kembali bekerja seperti biasa pada tanggal *02 November 2020*." .
+                            "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
+                            "\r\nTetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, menjalankan serta mematuhi protokol kesehatan."
                         ],
                     ]
                 );
