@@ -225,7 +225,7 @@ class Layanan extends CI_Controller
                             "\r\n*2.	Tanggal 30 Oktober 2020	: Cuti Bersama*" .
                             "\r\n \r\nOleh karena hal tersebut, maka karyawan bisa masuk kembali bekerja seperti biasa pada tanggal *02 November 2020*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
-                            "\r\nTetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, menjalankan serta mematuhi protokol kesehatan."
+                            "\r\n \r\n*Tetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, menjalankan serta mematuhi protokol kesehatan*."
                         ],
                     ]
                 );
