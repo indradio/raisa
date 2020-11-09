@@ -17,6 +17,14 @@ class Dashboard extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
 
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('date', date('Y-m-d'));
+        $complete = $this->db->get('kesehatan')->row_array();
+
+        if (empty($complete)){
+            redirect('dashboard/sehat');
+        }
+
         //Notif lembur hari ini to GA
         $n = time();
         $m = strtotime(date('Y-m-d 16:00:00'));
@@ -327,4 +335,25 @@ class Dashboard extends CI_Controller
             redirect('dashboard');
         }
     }
+
+    public function sehat()
+    {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('date', date('Y-m-d'));
+        $complete = $this->db->get('kesehatan')->row_array();
+
+        if (empty($complete)){
+            $data['sidemenu'] = 'Dashboard';
+            $data['sidesubmenu'] = '';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('dashboard/fpk', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('dashboard');
+        }
+    }
+
 }
