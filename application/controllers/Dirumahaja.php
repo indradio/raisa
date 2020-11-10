@@ -94,21 +94,21 @@ class Dirumahaja extends CI_Controller
             $nilai_a8 = 0;
         }
         if ($this->input->post('a9') == 'YA') {
-            $a9 = "ilangnya indera perasa atau penciuman";
+            $a9 = "Hilangnya indera perasa atau penciuman";
             $nilai_a9 = 1;
         } else {
             $a9 = null;
             $nilai_a9 = 0;
         }
         if ($this->input->post('b1') == 'YA') {
-            $b1 = "Anggota keluarga dalam satu rumah sedang sakit dengan gejala covid-19";
+            $b1 = "Anggota keluarga satu rumah sedang sakit dengan gejala/Positif COVID-19";
             $nilai_b1 = 10;
         } else {
             $b1 = null;
             $nilai_b1 = 0;
         }
         if ($this->input->post('b2') == 'YA') {
-            $b2 = "Tetangga yang dinyatakan positif COVID-19";
+            $b2 = "Tetangga ada yang dinyatakan Positif COVID-19";
             $nilai_b2 = 10;
         } else {
             $b2 = null;
