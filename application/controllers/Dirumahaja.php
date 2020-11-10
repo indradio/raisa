@@ -157,44 +157,159 @@ class Dirumahaja extends CI_Controller
         ];
         $this->db->insert('kesehatan', $data);
 
-        // if ($this->session->userdata('posisi_id')==7){
-        //     $this->db->where('npk', $this->session->userdata('atasan2'));
-        //     $atasan = $this->db->get('karyawan')->row_array();
-        // }else{
-        //     $this->db->where('npk', $this->session->userdata('atasan1'));
-        //     $atasan = $this->db->get('karyawan')->row_array();
-        // }
-        // //Notifikasi ke DeptHead
-        // $client = new \GuzzleHttp\Client();
-        // $response = $client->post(
-        //     'https://region01.krmpesan.com/api/v2/message/send-text',
-        //     [
-        //         'headers' => [
-        //             'Content-Type' => 'application/json',
-        //             'Accept' => 'application/json',
-        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-        //         ],
-        //         'json' => [
-        //             'phone' => $atasan['phone'],
-        //             'message' => "*PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
-        //                 "\r\n*STATUS : " . $status . "*" .
-        //                 "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
-        //                 "\r\n \r\nA1. Kondisi kesehatan selama libur lebaran (Demam/Pilek/Influenza) : *" . $this->input->post('a1') . "*" .
-        //                 "\r\n \r\nA2. Kondisi kesehatan selama libur lebaran (Batuk/Suara serak/Demam) : *" . $this->input->post('a2') . "*" .
-        //                 "\r\n \r\nA3. Kondisi kesehatan selama libur lebaran (Sesak nafas/Nafas pendek) : *" . $this->input->post('a3') . "*" .
-        //                 "\r\n \r\nB1. Pernah berinteraksi dengan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b1') . "*" .
-        //                 "\r\n \r\nB2. Pernah berkunjung ke rumah keluarga Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b2') . "*" .
-        //                 "\r\n \r\nB3. Penghuni satu rumah ada yang dinyatakan Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b3') . "*" .
-        //                 "\r\n \r\nB4. Kamu masuk dalam status Pasien Positif, PDP, ODP ataupun Orang yang sedang menjalani Isolasi Mandiri COVID-19 : *" . $this->input->post('b4') . "*" .
-        //                 "\r\n \r\nB5. Mengikuti pemerikasaan Rapid Test, PCR, ataupun Tes Kesehatan lainnya dengan hasil kemungkinan terinfeksi COVID-19 : *" . $this->input->post('b5') . "*" .
-        //                 "\r\n \r\nB6. Pergi dan kembali dari luar kota / Kab : *" . $this->input->post('b6') . "*" .
-        //                 "\r\n \r\nB7. Beraktivitas jauh (lebih dari 20KM) dari rumah kediaman : *" . $this->input->post('b7') . "*" .
-        //                 "\r\n \r\nCatatan : " . $this->input->post('catatan') .
-        //                 "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
-        //         ],
-        //     ]
-        // );
-        // $body = $response->getBody();
+        if ($total>0){
+            if ($this->session->userdata('posisi_id')==7){
+                $this->db->where('npk', $this->session->userdata('atasan1'));
+                $atasan1 = $this->db->get('karyawan')->row_array();
+
+                //Notifikasi ke Section
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $atasan1['phone'],
+                            'message' => "*PERINGATAN KARYAWAN BERISIKO COVID-19*" .
+                                "\r\n*STATUS : " . $status . "*" .
+                                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                                "\r\nKondisi : *" . implode(', ', $kondisi) . "*" .
+                                "\r\nCatatan : " . $this->input->post('catatan') .
+                                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
+                $this->db->where('npk', $this->session->userdata('atasan2'));
+                $atasan2 = $this->db->get('karyawan')->row_array();
+
+                //Notifikasi ke Depthead
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $atasan2['phone'],
+                            'message' => "*PERINGATAN KARYAWAN BERISIKO COVID-19*" .
+                                "\r\n*STATUS : " . $status . "*" .
+                                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                                "\r\nKondisi : *" . implode(', ', $kondisi) . "*" .
+                                "\r\nCatatan : " . $this->input->post('catatan') .
+                                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
+                //Notifikasi ke Pak Eko
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => '6281316604848',
+                            'message' => "*PERINGATAN KARYAWAN BERISIKO COVID-19*" .
+                                "\r\n*STATUS : " . $status . "*" .
+                                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                                "\r\nKondisi : *" . implode(', ', $kondisi) . "*" .
+                                "\r\nCatatan : " . $this->input->post('catatan') .
+                                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
+            }elseif ($this->session->userdata('posisi_id')==5 or $this->session->userdata('posisi_id')==6 or $this->session->userdata('posisi_id')==9 or $this->session->userdata('posisi_id')==10){
+                $this->db->where('npk', $this->session->userdata('atasan1'));
+                $atasan1 = $this->db->get('karyawan')->row_array();
+
+                //Notifikasi ke Section
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $atasan1['phone'],
+                            'message' => "*PERINGATAN KARYAWAN BERISIKO COVID-19*" .
+                                "\r\n*STATUS : " . $status . "*" .
+                                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                                "\r\nKondisi : *" . implode(', ', $kondisi) . "*" .
+                                "\r\nCatatan : " . $this->input->post('catatan') .
+                                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
+                //Notifikasi ke Pak Eko
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => '6281316604848',
+                            'message' => "*PERINGATAN KARYAWAN BERISIKO COVID-19*" .
+                                "\r\n*STATUS : " . $status . "*" .
+                                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                                "\r\nKondisi : *" . implode(', ', $kondisi) . "*" .
+                                "\r\nCatatan : " . $this->input->post('catatan') .
+                                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
+            }else{
+                //Notifikasi ke Pak Eko
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => '6281316604848',
+                            'message' => "*PERINGATAN KARYAWAN BERISIKO COVID-19*" .
+                                "\r\n*STATUS : " . $status . "*" .
+                                "\r\n \r\nNama : *" . $this->session->userdata('nama') . "*" .
+                                "\r\nKondisi : *" . implode(', ', $kondisi) . "*" .
+                                "\r\nCatatan : " . $this->input->post('catatan') .
+                                "\r\n \r\n_Dibuat pada tanggal " . date('d-m-Y H:i:s') . "_"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+            }
+            
+        }
         redirect('dashboard');
     }
 
