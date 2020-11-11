@@ -218,14 +218,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : LIBUR NASIONAL DAN CUTI BERSAMA*" .
+                            'message' => "*PENTING : PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2020, maka dengan ini kami informasikan bahwa :" .
-                            "\r\n \r\n*1.	Tanggal 29 Oktober 2020	: Libur Nasional Maulid Nabi Muhammad SAW*" .
-                            "\r\n*2.	Tanggal 30 Oktober 2020	: Cuti Bersama*" .
-                            "\r\n \r\nOleh karena hal tersebut, maka karyawan bisa masuk kembali bekerja seperti biasa pada tanggal *02 November 2020*." .
-                            "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
-                            "\r\n \r\n*Tetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, menjalankan serta mematuhi protokol kesehatan*."
+                            "\r\nBagaimana kondisi kamu hari ini? semoga sehat selalu ya." .
+                            "\r\n \r\nUntuk mencegah penyebaran Penyakit Infeksi Virus Corona atau COVID-19 di lingkungan perusahaan, maka setiap karyawan *DIWAJIBKAN* melaporkan kondisi kesehatanya melalui FORM PEDULI KESEHATAN KARYAWAN" .
+                            "\r\nPengisian FORM PEDULI KESEHATAN KARYAWAN dilakukan *SETIAP HARI MAKSIMAL JAM 8 PAGI*" .
+                            "\r\nPengisian FORM PEDULI KESEHATAN KARYAWAN dapat diakses di link berikut https://raisa.winteq-astra.com " .
+                            "\r\n \r\n_*Tetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, serta mematuhi protokol kesehatan*_."
                         ],
                     ]
                 );
