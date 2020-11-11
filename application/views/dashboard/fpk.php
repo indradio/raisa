@@ -136,7 +136,7 @@
                 </label>
               </div>
               <div class="form-group">
-                <label for="b1" class="bmd-label-floating">B1. Anggota keluarga dalam satu rumah sedang mengalami sakit dengan gejala berikut <b>Demam, Batuk, Nyeri Tenggorokan, Atau Sesak Nafas atau Positif COVID-19</b></label>
+                <label for="b1" class="bmd-label-floating">B1. Anggota keluarga dalam satu rumah sedang mengalami sakit dengan gejala berikut <b>Demam, Batuk, Nyeri Tenggorokan, Sesak Nafas atau Positif COVID-19</b></label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="b1" name="b1" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
                   <option value="YA">YA, ADA</option>
                   <option value="TIDAK">TIDAK ADA</option>
