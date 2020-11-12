@@ -222,8 +222,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nBagaimana kondisi kamu hari ini? semoga sehat selalu ya." .
                             "\r\n \r\nUntuk mencegah penyebaran Penyakit Infeksi Virus Corona atau COVID-19 di lingkungan perusahaan, maka setiap karyawan *DIWAJIBKAN* melaporkan kondisi kesehatanya melalui FORM PEDULI KESEHATAN KARYAWAN" .
-                            "\r\nPengisian FORM PEDULI KESEHATAN KARYAWAN dilakukan *SETIAP HARI MAKSIMAL JAM 8 PAGI*" .
-                            "\r\nPengisian FORM PEDULI KESEHATAN KARYAWAN dapat diakses di link berikut https://raisa.winteq-astra.com " .
+                            "\r\n \r\nPengisian FORM PEDULI KESEHATAN KARYAWAN dapat diakses di link berikut https://raisa.winteq-astra.com " .
                             "\r\n \r\n_*Tetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, serta mematuhi protokol kesehatan*_."
                         ],
                     ]
