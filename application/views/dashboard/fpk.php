@@ -269,26 +269,29 @@
     var a8 = document.getElementById('a8');
     var a9 = document.getElementById('a9');
 
+    a1.required = true;
+
     // when unchecked or checked, run the function
     a1.onchange = function() {
       if (this.checked) {
-        a2.checked = false
+        a2.checked = false;
         a2.disabled = true;
-        a3.checked = false
+        a3.checked = false;
         a3.disabled = true;
-        a4.checked = false
+        a4.checked = false;
         a4.disabled = true;
-        a5.checked = false
+        a5.checked = false;
         a5.disabled = true;
-        a6.checked = false
+        a6.checked = false;
         a6.disabled = true;
-        a7.checked = false
+        a7.checked = false;
         a7.disabled = true;
-        a8.checked = false
+        a8.checked = false;
         a8.disabled = true;
-        a9.checked = false
+        a9.checked = false;
         a9.disabled = true;
       } else {
+        a1.required = false;
         a2.disabled = false;
         a3.disabled = false;
         a4.disabled = false;
