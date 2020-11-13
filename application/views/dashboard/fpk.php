@@ -269,8 +269,6 @@
     var a8 = document.getElementById('a8');
     var a9 = document.getElementById('a9');
 
-    a1.required = true;
-
     // when unchecked or checked, run the function
     a1.onchange = function() {
       if (this.checked) {
@@ -291,7 +289,6 @@
         a9.checked = false;
         a9.disabled = true;
       } else {
-        a1.required = false;
         a2.disabled = false;
         a3.disabled = false;
         a4.disabled = false;
