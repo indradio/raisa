@@ -338,6 +338,8 @@ class Dashboard extends CI_Controller
 
     public function sehat()
     {
+        date_default_timezone_set('asia/jakarta');
+        
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('date', date('Y-m-d'));
         $complete = $this->db->get('kesehatan')->row_array();
