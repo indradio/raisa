@@ -525,7 +525,7 @@
                         <div class="col-md-5">
                             <div class="form-group has-default">
                                 <select class="selectpicker" name="kasbon_in_ewallet" id="kasbon_in_ewallet" data-style="select-with-transition" title="Pilih eWallet" data-size="7" required>
-                                    <option value="GO-PAY - 081311010378">GO-PAY - 081311010378</option>
+                                    <option value="GO-PAY - 085717304048">GO-PAY - 085717304048</option>
                                     <option value="DANA - 081311010378">DANA - 081311010378</option>
                                 </select>
                             </div>

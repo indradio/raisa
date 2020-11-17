@@ -1,7 +1,6 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-  <?php date_default_timezone_set('asia/jakarta'); ?>
     <!-- <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
@@ -18,6 +17,7 @@
     <!-- End Banner -->
     <div class="row">
       <?php
+      date_default_timezone_set('asia/jakarta');
       $queryLayInfo = "SELECT COUNT(*)
         FROM `informasi`
         WHERE `berlaku` >= CURDATE()
