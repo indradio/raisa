@@ -3,13 +3,11 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-default" role="alert">
+            <div class="alert alert-info" role="alert">
                 <strong>UPDATE!</strong>
-                </br>1. Klik <a href="#" class="btn btn-link btn-warning btn-just-icon" data-toggle="tooltip" data-placement="top" title="Jadikan PIC"><i class="material-icons">push_pin</i></a> pada peserta untuk ganti PIC perjalanan.
-                </br>2. Penyelesaian KASBON (jika ada selisih yang harus dikembalikan) sebelum melakukan klaim.
-                </br>
-                </br>3. Mengisi nama pic customer/orang yang ditemui.
-                </br>
+                </br>Update nomor GO-PAY Admin
+                </br>Untuk pengembalian kasbon ke akaun GO-PAY sekarang ke nomor <strong>085717304048 a/n Lia Hendra Gianti</strong>
+                </br>Jangan sampai salah transfer ya!
             </div>
         </div>
         </div>
