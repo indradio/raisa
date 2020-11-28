@@ -4,16 +4,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
-                        <h4 class="card-title">Data Perjalanan Dinas Luar</h4>
+                        <h4 class="card-title">Perjalanan Dinas</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <a href="<?= base_url('cekdl/berangkat'); ?>" class="btn btn-lg btn-block btn-info mb-2" role="button" aria-disabled="false">KLIK UNTUK REFRESH</a>
+                        </div>
+                        </p>
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <a href="#" class="btn btn-sm btn-block btn-success mb-2 disabled" role="button" aria-disabled="false">PERJALANAN SIAP BERANGKAT</a>
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -75,6 +80,59 @@
                                             </tr>
                                         <?php endforeach; ?>
                                 </tbody>
+                            </table>
+                        </div>
+                        </p>
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                            <a href="#" class="btn btn-sm btn-block btn-danger mb-2 disabled" role="button" aria-disabled="false">RESERVASI MENUNGGU GA</a>
+                        </div>
+                        <div class="material-datatables">
+                            <table id="dtasc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nomor RSV</th>
+                                        <th>Tanggal (Estimasi)</th>
+                                        <th>Kendaraan</th>
+                                        <th>NOPOL</th>
+                                        <th>Nama</th>
+                                        <th>Peserta</th>
+                                        <th>Tujuan</th>
+                                        <th>Keperluan</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($reservasi as $row) : ?>
+                                            <tr>
+                                                <td><?= $row['id']; ?></td>
+                                                <td><?= date('d-m-Y', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
+                                                <td><?= $row['kepemilikan']; ?></td>
+                                                <td><?= $row['nopol']; ?></td>
+                                                <td><?= $row['nama']; ?></td>
+                                                <td><?= $row['anggota']; ?></td>
+                                                <td><?= $row['tujuan']; ?></td>
+                                                <td><?= $row['keperluan']; ?></td>
+                                                <td class="text-right">
+                                                    <a href="<?= base_url('CEKDL/CORSV/') . $row['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Nomor RSV</th>
+                                        <th>Tanggal (Estimasi)</th>
+                                        <th>Kendaraan</th>
+                                        <th>NOPOL</th>
+                                        <th>Nama</th>
+                                        <th>Peserta</th>
+                                        <th>Tujuan</th>
+                                        <th>Keperluan</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
