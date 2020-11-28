@@ -212,7 +212,7 @@
                                                         <td><?= number_format($perjalanan['taksi'], 0, ',', '.'); ?></td>
                                                         <td><a href="#" class="btn btn-fill btn-sm btn-warning" data-toggle="modal" data-target="#ubahTaksi" data-id="<?= $perjalanan['id']; ?>" data-taksi="<?= $perjalanan['taksi']; ?>">UBAH</a></td>
                                                     </tr>
-                                                    <tr class="table-danger">
+                                                    <tr class="table-danger" hidden>
                                                         <td>BBM</td>
                                                         <td><?= number_format($perjalanan['bbm'], 0, ',', '.'); ?></td>
                                                         <td>Voucher SPBU</td>

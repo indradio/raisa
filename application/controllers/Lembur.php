@@ -10,6 +10,8 @@ class Lembur extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        date_default_timezone_set('asia/jakarta');
+        
         $this->load->model("project_model");
 
         $this->db->where('npk', $this->session->userdata('npk'));

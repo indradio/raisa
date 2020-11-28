@@ -10,6 +10,8 @@ class Perjalanandl extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        date_default_timezone_set('asia/jakarta');
+        
         $this->load->model("Karyawan_model");
 
         $this->db->where('npk', $this->session->userdata('npk'));

@@ -10,8 +10,17 @@ class Perjalanan extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
-        $this->load->model("Karyawan_model");
         date_default_timezone_set('asia/jakarta');
+        
+        $this->load->model("Karyawan_model");
+        
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('date', date('Y-m-d'));
+        $complete = $this->db->get('kesehatan')->row_array();
+
+        if (empty($complete)){
+            redirect('dashboard/sehat');
+        }
     }
 
     public function index()
@@ -148,6 +157,11 @@ class Perjalanan extends CI_Controller
             };
             //Makan Malam
             if ($perjalanan['jamkembali'] >= $um['um4']) {
+                $this->db->select_sum('um_malam');
+                $this->db->where('perjalanan_id', $parameter);
+                $query = $this->db->get('perjalanan_anggota');
+                $um_malam = $query->row()->um_malam;
+            }elseif ($perjalanan['jamkembali'] <= $um['um4'] and $perjalanan['tglkembali'] > $perjalanan['tglberangkat']) {
                 $this->db->select_sum('um_malam');
                 $this->db->where('perjalanan_id', $parameter);
                 $query = $this->db->get('perjalanan_anggota');
