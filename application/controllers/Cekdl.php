@@ -38,7 +38,7 @@ class Cekdl extends CI_Controller
         $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
         
         $data['reservasi'] = $this->db->where('tglberangkat', date('Y-m-d'));
-        $data['reservasi'] = $this->db->where('jamberangkat <', '16:30');
+        $data['reservasi'] = $this->db->where('jamberangkat <', '07:30');
         $data['reservasi'] = $this->db->where('kepemilikan', 'Operasional');
         $data['reservasi'] = $this->db->where('status', '6');
         $data['reservasi'] = $this->db->get('reservasi')->result_array();
@@ -113,7 +113,7 @@ class Cekdl extends CI_Controller
         }
     }
 
-    public function CORSV($id)
+    public function corsv($id)
     {
         date_default_timezone_set('asia/jakarta');
 

@@ -115,7 +115,7 @@
                                                 <td><?= $row['tujuan']; ?></td>
                                                 <td><?= $row['keperluan']; ?></td>
                                                 <td class="text-right">
-                                                    <a href="<?= base_url('CEKDL/CORSV/') . $row['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
+                                                    <a href="<?= base_url('cekdl/corsv/') . $row['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
