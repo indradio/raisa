@@ -218,12 +218,14 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*PENTING : PENGISIAN FORM PEDULI KESEHATAN KARYAWAN*" .
+                            'message' => "*INFO HR : GANGGUAN SISTEM RAWAT JALAN DENGAN MEKANISME GESEK KARTU GARDA MEDIKA*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nBagaimana kondisi kamu hari ini? semoga sehat selalu ya." .
-                            "\r\n \r\nUntuk mencegah penyebaran Penyakit Infeksi Virus Corona atau COVID-19 di lingkungan perusahaan, maka setiap karyawan *DIWAJIBKAN* melaporkan kondisi kesehatanya melalui FORM PEDULI KESEHATAN KARYAWAN" .
-                            "\r\n \r\nPengisian FORM PEDULI KESEHATAN KARYAWAN dapat diakses di link berikut https://raisa.winteq-astra.com " .
-                            "\r\n \r\n_*Tetap jaga kesehatan kamu dengan selalu menggunakan masker, rajin mencuci tangan, menjaga jarak dengan orang lain, serta mematuhi protokol kesehatan*_."
+                            "\r\nSehubungan dengan adanya gangguan di sistem rawat jalan garda medika dengan mekanisme gesek kartu di mesin EDC per hari ini *1 desember 2020*, kami memohon maaf terkait dengan gangguan layanan ini." .
+                            "\r\n \r\nSaat ini Tim IT Garda Medika dan tim IT Admedika sebagai vendor rawat jalan Garda Medika sedang berusaha untuk menyelesaikan masalah tersebut." .
+                            "\r\n \r\nSedangkan untuk perkiraan paling lama terkait case ini maksimal 2 hari di hitung dari hari ini. Adapun alternative solusi yg dapat kami infokan yaitu dengan cara reimbursement kemudian  peserta proses tagihan tersebut via e-claim di aplikasi medcare." .
+                            "\r\n \r\nHormat Kami,".
+                            "\r\n*Human Capital*" .
+                            "\r\n*PT Astra Otoparts Tbk Divisi Winteq*"
                         ],
                     ]
                 );
