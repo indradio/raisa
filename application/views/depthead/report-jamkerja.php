@@ -56,7 +56,7 @@
             </div>
             <div class="material-datatables">
               <div class="table-responsive">
-                <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <table id="dtJamkerja" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
                       <th>AKTIVITAS</th>
@@ -78,6 +78,16 @@
                   </thead>
                   <tbody>
                     <tr>
+                      <th>Dept</th>
+                      <?php
+                      foreach ($labor as $row) :
+                        $dept = $this->db->get_where('karyawan_dept', ['id' => $row['dept_id']])->row_array();
+
+                        echo '<th>'.$dept['inisial'].'</th>';
+                      endforeach;
+                      ?>
+                    </tr>
+                    <tr>
                       <th>Project</th>
                       <?php
                       foreach ($labor as $row) :
@@ -90,8 +100,7 @@
                         $this->db->from('aktivitas');
                   
                         $totalDurasi = $this->db->get()->row()->durasi;
-
-                        echo '<th>'.$totalDurasi.'</th>';
+                        echo '<th>'. ($totalDurasi > 0 ? $totalDurasi : '0') .'</th>';
                       endforeach;
                       ?>
                     </tr>
@@ -112,8 +121,7 @@
                         $this->db->from('aktivitas');
                   
                         $totalDurasi = $this->db->get()->row()->durasi;
-
-                        echo '<th>'.$totalDurasi.'</th>';
+                        echo '<th>'. ($totalDurasi > 0 ? $totalDurasi : '0') .'</th>';
                       endforeach;
                       echo '</tr>';
                     endforeach;
@@ -137,50 +145,28 @@
 
 <script>
   $(document).ready(function() {
-    var groupColumn = 0;
-    var table = $('#dt-presensi').DataTable({
-      "columnDefs": [{
-        "visible": false,
-        "targets": groupColumn
-      }],
-      "orderFixed": [
-        [groupColumn, 'asc']
-      ],
-      "scrollY": "867px",
-      "scrollX": true,
-      "scrollCollapse": true,
+    $('#dtJamkerja').DataTable({
+      "pagingType": "full_numbers",
+      scrollX: true,
+      "ordering": false,
       "paging": false,
-      // "displayLength": 25,
-      "drawCallback": function(settings) {
-        var api = this.api();
-        var rows = api.rows({
-          page: 'current'
-        }).nodes();
-        var last = null;
-
-        api.column(groupColumn, {
-          page: 'current'
-        }).data().each(function(group, i) {
-          if (last !== group) {
-            $(rows).eq(i).before(
-              '<tr class="group"><td colspan="9">' + group + '</td></tr>'
-            );
-
-            last = group;
-          }
-        });
+      dom: 'Bfrtip',
+      buttons: [
+        'csv', 'print'
+      ],
+      "lengthMenu": [
+        [10, 25, 50, -1],
+        [10, 25, 50, "All"]
+      ],
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search records",
       }
 
-      // $('#').DataTable({
-      //     order: [[0, 'asc']],
-      //     rowGroup: {
-      //         dataSrc: 0
-      //     },
-      //   "scrollY": "512px",
-      //   "scrollX": true,
-      //   "scrollCollapse": true,
-      //   "ordering": true,
-      //   "paging": false
+      // "scrollY": "512px",
+      // "scrollX": true,
+      // "scrollCollapse": true,
+
     });
   });
 </script>
