@@ -8,7 +8,10 @@
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Perjalanan - <?= $perjalanan['id']; ?></h4>
+                        <div class="card-text">
+                            <h4 class="card-title">Perjalanan</h4>
+                            <p class="card-category"><?= $perjalanan['jenis_perjalanan'].' - '.$perjalanan['id']; ?></p>
+                        </div>
                     </div>
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('perjalanandl/penyelesaian/submit'); ?>" method="post">
@@ -30,26 +33,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jenis Perjalanan</label>
+                                <label class="col-md-2 col-form-label">Tanggal (Jam)</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="jperjalanan" value="<?= $perjalanan['jenis_perjalanan']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Tanggal</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date("d M Y", strtotime($perjalanan['tglberangkat'])); ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Jam</label>
-                                <div class="col-md-3">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" id="jam" name="jam" value="<?= date("H:i", strtotime($perjalanan['jamberangkat'])) . ' - ' . date("H:i", strtotime($perjalanan['jamkembali'])); ?>">
+                                    <?php if ($perjalanan['tglberangkat'] == $perjalanan['tglkembali']){ ?>
+                                        <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date("d M Y", strtotime($perjalanan['tglberangkat'])) .' ('.date("H:i", strtotime($perjalanan['jamberangkat'])) . ' - ' . date("H:i", strtotime($perjalanan['jamkembali'])).') '; ?>">
+                                    <?php }else{ ?>
+                                        <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date("d M Y", strtotime($perjalanan['tglberangkat'])) . ' - ' .date("d M Y", strtotime($perjalanan['tglkembali'])); ?>">
+                                    <?php }?>
                                     </div>
                                 </div>
                             </div>
@@ -62,19 +53,19 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Jarak <small>/Kilometer</small></label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kmtotal" value="<?= $perjalanan['kmtotal']; ?> Km">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-2 col-form-label">Kendaraan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $perjalanan['kepemilikan']; ?>">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $perjalanan['nopol']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Jarak Tempuh </br><small>/Kilometer</small></label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="kmtotal" value="<?= $perjalanan['kmtotal']; ?> Km">
                                     </div>
                                 </div>
                             </div>
@@ -159,31 +150,40 @@
                                                     <tr>
                                                         <th>Biaya</th>
                                                         <th>Total</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td>Uang Saku <small>(TAPP)</small></td>
                                                         <td><?= number_format($perjalanan['uang_saku'], 0, ',', '.'); ?></td>
-                                                         <!-- <td><a href="#" class="btn btn-fill btn-sm btn-danger disabled" data-toggle="modal" data-target="#ubahUangsaku" data-id="<?= $perjalanan['id']; ?>" data-uang_saku="<?= $perjalanan['uang_saku']; ?>">UBAH</a></td> -->
+                                                        <td><a href="#" class="btn btn-fill btn-sm btn-info disabled">AUTO</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Insentif Pagi</br><small>Berangkat < 05:00</small> </td> <td><?= number_format($perjalanan['insentif_pagi'], 0, ',', '.'); ?></td>
-                                                        <!-- <td><a href="#" class="btn btn-fill btn-sm btn-danger disabled" data-toggle="modal" data-target="#ubahInsentif" data-id="<?= $perjalanan['id']; ?>" data-insentif="<?= $perjalanan['insentif_pagi']; ?>">UBAH</a></td> -->
+                                                        <td><a href="#" class="btn btn-fill btn-sm btn-info disabled">AUTO</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Makan Pagi <small>(TAPP)</br>Berangkat < 07:00</small> </td> <td><?= number_format($perjalanan['um_pagi'], 0, ',', '.'); ?></td>
-                                                        <!-- <td><a href="#" class="btn btn-fill btn-sm btn-danger disabled" data-toggle="modal" data-target="#ubahUmpagi" data-id="<?= $perjalanan['id']; ?>" data-umpagi="<?= $perjalanan['um_pagi']; ?>">UBAH</a></td> -->
+                                                        <td><a href="#" class="btn btn-fill btn-sm btn-info disabled">AUTO</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Makan Siang</td>
                                                         <td><?= number_format($perjalanan['um_siang'], 0, ',', '.'); ?></td>
-                                                        <!-- <td><a href="#" class="btn btn-fill btn-sm btn-danger disabled" data-toggle="modal" data-target="#ubahUmsiang" data-id="<?= $perjalanan['id']; ?>" data-umsiang="<?= $perjalanan['um_siang']; ?>">UBAH</a></td> -->
+                                                        <?php if ($perjalanan['um_siang']==0) {?>
+                                                            <td><a href="<?= base_url('perjalanandl/update_umsiang/tambah/'.$perjalanan['id']); ?>" class="btn btn-fill btn-sm btn-success">TAMBAH</a></td>
+                                                        <?php }else{ ?>
+                                                            <td><a href="<?= base_url('perjalanandl/update_umsiang/kurang/'.$perjalanan['id']); ?>" class="btn btn-fill btn-sm btn-danger">HAPUS</a></td>
+                                                        <?php } ?>
                                                     </tr>
                                                     <tr>
                                                         <td>Makan Malam</br><small>Kembali > 19:30</small></td>
                                                         <td><?= number_format($perjalanan['um_malam'], 0, ',', '.'); ?></td>
-                                                        <!-- <td><a href="#" class="btn btn-fill btn-sm btn-danger disabled" data-toggle="modal" data-target="#ubahUmmalam" data-id="<?= $perjalanan['id']; ?>" data-ummalam="<?= $perjalanan['um_malam']; ?>">UBAH</a></td> -->
+                                                        <?php if ($perjalanan['um_malam']==0) {?>
+                                                            <td><a href="<?= base_url('perjalanandl/update_ummalam/tambah/'.$perjalanan['id']); ?>" class="btn btn-fill btn-sm btn-success">TAMBAH</a></td>
+                                                        <?php }else{ ?>
+                                                            <td><a href="<?= base_url('perjalanandl/update_ummalam/kurang/'.$perjalanan['id']); ?>" class="btn btn-fill btn-sm btn-danger">HAPUS</a></td>
+                                                        <?php } ?>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -242,7 +242,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Kasbon/</br><small>Transfer</small></label>
+                                    <label class="col-md-2 col-form-label">Kasbon</br><small>Transfer</small></label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_out'], 0, ',', '.'); ?>">
@@ -250,7 +250,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Kasbon/</br><small>Dikembalikan</small></label>
+                                    <label class="col-md-2 col-form-label">Kasbon</br><small>Dikembalikan</small></label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_in'], 0, ',', '.'); ?>">
@@ -258,7 +258,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Kasbon</label>
+                                    <label class="col-md-2 col-form-label">Kasbon</br><small>Total</small></label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon'], 0, ',', '.'); ?>">
@@ -277,7 +277,7 @@
                                     </div>
                                 </div> -->
                                 <div class="row">
-                                    <label class="col-md-2 col-form-label">Selisih/</br>Yang akan Dibayar FA</label>
+                                    <label class="col-md-2 col-form-label">Biaya Perjalanan </br><small>yang akan dibayar FA</small></label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="selisih" value="<?= number_format($perjalanan['total'] - $perjalanan['kasbon'], 0, ',', '.'); ?>">
@@ -302,7 +302,7 @@
                                          $pic = $this->db->get('perjalanan_anggota')->row_array();
                                          $selisih = ($pic['total']+$perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir']) - $perjalanan['kasbon'];
                                          if ($selisih >= 0){ 
-                                            echo '<button type="submit" class="btn btn-fill btn-success">PROSES VERIFIKASI</button>';
+                                            echo '<button type="submit" class="btn btn-fill btn-success">VERIFIKASI</button>';
                                         }else{
                                             echo '<small>PIC Perjalanan harus menyelesaikan kasbon terlebih dulu senilai </small> Rp '. number_format($selisih, 0, ',', '.').' </br>';
                                             echo '<button type="submit" class="btn btn-wd btn-fill btn-danger disabled">PIC TIDAK BOLEH MINUS</button>';
