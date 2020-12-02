@@ -218,11 +218,10 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO HR : GANGGUAN SISTEM RAWAT JALAN DENGAN MEKANISME GESEK KARTU GARDA MEDIKA*" .
+                            'message' => "*INFO HR : SISTEM RAWAT JALAN DENGAN MEKANISME GESEK KARTU GARDA MEDIKA SUDAH KEMBALI NORMAL*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nSehubungan dengan adanya gangguan di sistem rawat jalan garda medika dengan mekanisme gesek kartu di mesin EDC per hari ini *1 desember 2020*, kami memohon maaf terkait dengan gangguan layanan ini." .
-                            "\r\n \r\nSaat ini Tim IT Garda Medika dan tim IT Admedika sebagai vendor rawat jalan Garda Medika sedang berusaha untuk menyelesaikan masalah tersebut." .
-                            "\r\n \r\nSedangkan untuk perkiraan paling lama terkait case ini maksimal 2 hari di hitung dari hari ini. Adapun alternative solusi yg dapat kami infokan yaitu dengan cara reimbursement kemudian  peserta proses tagihan tersebut via e-claim di aplikasi medcare." .
+                            "\r\nDengan ini kami informasikan layanan rawat jalan dengan kartu fisik garda medika *via mesin EDC sudah kembali berfungsi*." .
+                            "\r\n \r\nMohon maaf atas kendala yg terjadi." .
                             "\r\n \r\nHormat Kami,".
                             "\r\n*Human Capital*" .
                             "\r\n*PT Astra Otoparts Tbk Divisi Winteq*"
