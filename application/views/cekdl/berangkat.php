@@ -22,63 +22,49 @@
                         </div>
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                <thead>
+                            <thead>
                                     <tr>
                                         <th>Nomor DL</th>
-                                        <th>Nomor Polisi</th>
+                                        <th>Tanggal (Estimasi)</th>
                                         <th>Kendaraan</th>
+                                        <th>NOPOL</th>
                                         <th>Nama</th>
+                                        <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Peserta</th>
-                                        <th>Tanggal Keberangkatan (Estimasi)</th>
-                                        <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th class="disabled-sorting"></th>
-                                        <th class="disabled-sorting">Actions</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nomor DL</th>
-                                        <th>No. Polisi</th>
+                                        <th>Nomor RSV</th>
+                                        <th>Tanggal (Estimasi)</th>
                                         <th>Kendaraan</th>
+                                        <th>NOPOL</th>
                                         <th>Nama</th>
+                                        <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Peserta</th>
-                                        <th>Tgl Keberangkatan (Estimasi)</th>
-                                        <th>Jam Keberangkatan (Estimasi)</th>
-                                        <th></th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($perjalanan as $pdl) : ?>
-                                        <?php if ($pdl['tglberangkat'] < date('Y-m-d') and $pdl['status'] == 1) { ?>
-                                            <tr class="text-dark bg-danger">
-                                            <?php } elseif ($pdl['tglberangkat'] < date('Y-m-d') and $pdl['status'] == 11) { ?>
-                                            <tr class="text-dark bg-warning">
-                                            <?php } else { ?>
-                                            <tr>
-                                            <?php }; ?>
-                                            <td><?= $pdl['id']; ?></td>
-                                            <td><?= $pdl['nopol']; ?></td>
-                                            <td><?= $pdl['kepemilikan']; ?></td>
-                                            <td><?= $pdl['nama']; ?></td>
-                                            <td><?= $pdl['tujuan']; ?></td>
-                                            <td><?= $pdl['keperluan']; ?></td>
-                                            <td><?= $pdl['anggota']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])); ?></td>
-                                            <td><?= $pdl['jamberangkat']; ?></td>
-                                            <td class="text-right">
-                                                <a href="<?= base_url('cekdl/cekberangkat/') . $pdl['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
-                                            </td>
-                                            <td>
-                                                <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#revisiPerjalanan" data-id="<?= $pdl['id']; ?>">Revisi</a>
-                                            </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                    foreach ($perjalanan as $row) : ?>
+                                        <td><?= $row['id']; ?></td>
+                                        <td><?= date('d-m-Y', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
+                                        <td><?= $row['kepemilikan']; ?></td>
+                                        <td><?= $row['nopol']; ?></td>
+                                        <td><?= $row['nama']; ?></td>
+                                        <td><?= $row['anggota']; ?></td>
+                                        <td><?= $row['tujuan']; ?></td>
+                                        <td><?= $row['keperluan']; ?></td>
+                                        <td class="text-right">
+                                            <a href="<?= base_url('cekdl/cekberangkat/') . $row['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
+                                            <a href="#" class="btn btn-round btn-warning btn-sm" data-toggle="modal" data-target="#revisiPerjalanan" data-id="<?= $row['id']; ?>">Revisi</a>
+                                        </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -105,20 +91,20 @@
                                 <tbody>
                                     <?php
                                     foreach ($reservasi as $row) : ?>
-                                            <tr>
-                                                <td><?= $row['id']; ?></td>
-                                                <td><?= date('d-m-Y', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
-                                                <td><?= $row['kepemilikan']; ?></td>
-                                                <td><?= $row['nopol']; ?></td>
-                                                <td><?= $row['nama']; ?></td>
-                                                <td><?= $row['anggota']; ?></td>
-                                                <td><?= $row['tujuan']; ?></td>
-                                                <td><?= $row['keperluan']; ?></td>
-                                                <td class="text-right">
-                                                    <a href="<?= base_url('cekdl/corsv/') . $row['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                        <tr>
+                                            <td><?= $row['id']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
+                                            <td><?= $row['kepemilikan']; ?></td>
+                                            <td><?= $row['nopol']; ?></td>
+                                            <td><?= $row['nama']; ?></td>
+                                            <td><?= $row['anggota']; ?></td>
+                                            <td><?= $row['tujuan']; ?></td>
+                                            <td><?= $row['keperluan']; ?></td>
+                                            <td class="text-right">
+                                                <a href="<?= base_url('cekdl/corsv/') . $row['id']; ?>" class="btn btn-round btn-success btn-sm">Berangkat</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
