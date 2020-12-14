@@ -395,7 +395,7 @@ class Perjalanandl extends CI_Controller
         redirect('perjalanandl/admindl');
     }
 
-    public function perjalanan($parameter="")
+    public function perjalanan($parameter=null)
     {
         date_default_timezone_set('asia/jakarta');
         $perjalanan = $this->db->get_where('perjalanan', ['id' => $parameter])->row_array();
