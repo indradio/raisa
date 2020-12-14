@@ -41,48 +41,26 @@
                                     <tr>
                                         <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
-                                        <th>No. Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Nama</th>
+                                        <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Peserta</th>
-                                        <th>Tgl Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>KM Keberangkatan</th>
-                                        <th>Security Keberangkatan</th>
-                                        <th>Tgl Kembali</th>
-                                        <th>Jam Kembali</th>
-                                        <th>KM Kembali</th>
-                                        <th>Security Kembali</th>
-                                        <th>KM Total</th>
-                                        <th>Catatan GA</th>
-                                        <th>Catatan Security</th>
+                                        <th>Waktu Keberangkatan</th>
                                         <th>Status</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nomor DL</th>
+                                        <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
-                                        <th>No. Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Nama</th>
+                                        <th>Peserta</th>
                                         <th>Tujuan</th>
                                         <th>Keperluan</th>
-                                        <th>Peserta</th>
-                                        <th>Tgl Keberangkatan</th>
-                                        <th>Jam Keberangkatan</th>
-                                        <th>KM Keberangkatan</th>
-                                        <th>Security Keberangkatan</th>
-                                        <th>Tgl Kembali</th>
-                                        <th>Jam Kembali</th>
-                                        <th>KM Kembali</th>
-                                        <th>Security Kembali</th>
-                                        <th>KM Total</th>
-                                        <th>Catatan GA</th>
-                                        <th>Catatan Security</th>
+                                        <th>Waktu Keberangkatan</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
@@ -90,7 +68,7 @@
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $pdl) : ?>
-                                        <tr>
+                                        <tr onclick="window.location='<?= base_url('perjalanandl/perjalanan/' . $pdl['id']); ?>'">
                                             <td>
                                             <?= $pdl['id']; ?>
                                             <?php if ($pdl['status'] > '4') { ?>
@@ -98,27 +76,16 @@
                                             <?php }; ?> 
                                             </td>
                                             <td><?= $pdl['jenis_perjalanan']; ?></td>
-                                            <td><?= $pdl['nopol']; ?></td>
                                             <td><?= $pdl['kepemilikan']; ?></td>
                                             <td><?= $pdl['nama']; ?></td>
+                                            <td><?= $pdl['anggota']; ?></td>
                                             <td><?= $pdl['tujuan']; ?></td>
                                             <td><?= $pdl['keperluan']; ?></td>
-                                            <td><?= $pdl['anggota']; ?></td>
-                                            <td><?= $pdl['tglberangkat']; ?></td>
-                                            <td><?= $pdl['jamberangkat']; ?></td>
-                                            <td><?= $pdl['kmberangkat']; ?></td>
-                                            <td><?= $pdl['cekberangkat']; ?></td>
-                                            <td><?= $pdl['tglkembali']; ?></td>
-                                            <td><?= $pdl['jamkembali']; ?></td>
-                                            <td><?= $pdl['kmkembali']; ?></td>
-                                            <td><?= $pdl['cekkembali']; ?></td>
-                                            <td><?= $pdl['kmtotal']; ?></td>
-                                            <td><?= $pdl['catatan']; ?></td>
-                                            <td><?= $pdl['catatan_security']; ?></td>
+                                            <td><?= date('d M', strtotime($pdl['tglberangkat'])) . ' - ' . date('H:i', strtotime($pdl['jamberangkat'])); ?></td>
                                             <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
-                                                <?php if ($pdl['status'] == '0') { ?>
+                                                <?php if ($pdl['status'] == '0' and $pdl['tglberangkat']== date('Y-m-d')) { ?>
                                                     <a href="<?= base_url('perjalanandl/aktifkan/') . $pdl['id']; ?>" class="badge badge-success">Aktifkan</a>
                                                 <?php } elseif ($pdl['status'] == '9') { ?>
                                                     <a href="<?= base_url('perjalanandl/suratjalan/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
