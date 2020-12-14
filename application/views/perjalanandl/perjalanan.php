@@ -68,7 +68,8 @@
                                 <tbody>
                                     <?php
                                     foreach ($perjalanan as $pdl) : ?>
-                                        <tr onclick="window.location='<?= base_url('perjalanandl/perjalanan/' . $pdl['id']); ?>'">
+                                        <!-- <tr onclick="window.location='<?= base_url('perjalanandl/perjalanan/' . $pdl['id']); ?>'"> -->
+                                        <tr>
                                             <td>
                                             <?= $pdl['id']; ?>
                                             <?php if ($pdl['status'] > '4') { ?>
