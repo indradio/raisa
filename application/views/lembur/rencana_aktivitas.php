@@ -1,6 +1,17 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-rose alert-with-icon" data-notify="container">
+            <i class="material-icons" data-notify="icon">notifications</i>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="material-icons">close</i>
+            </button>
+            <span data-notify="message">PENTING! Jangan lupa untuk klik "SUBMIT" rencana lembur kamu ya!.</span>
+        </div>
+      </div>
+    </div>
         <div class="row">
             <div class="col-md-12 align-content-start">
                 <div class="card">
@@ -93,7 +104,7 @@
                                             $queyCustomer = "SELECT * FROM customer ";
                                             $customer = $this->db->query($queyCustomer)->result_array();
                                             foreach ($customer as $c) : ?>
-                                                <option data-subtext="<?= $c['nama']; ?>" value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
+                                                <option value="<?= $c['inisial']; ?>"><?= $c['inisial']; ?></option>
                                             <?php endforeach; ?>
                                             <option data-subtext="Lokasi Lainnya" value="lainnya">LAINNYA</option>
                                         </select>
@@ -388,7 +399,10 @@
                                     <div class="form-group has-default" id="jammulai">
                                         <input type="text" class="form-control timepicker" id="jammulai" name="jammulai" />
                                     </div>
+                                <small>Untuk lembur hari ini, Jam mulai harus lebih besar dari jam sekarang!</small>
                                 </div>
+                            </div>
+                            <div class="row">
                             </div>
                         </div>
                         <div class="modal-footer justify-content-right">

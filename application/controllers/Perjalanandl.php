@@ -1128,118 +1128,118 @@ class Perjalanandl extends CI_Controller
         $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $this->input->post('id')])->row_array();
         $reservasi = $this->db->get_where('reservasi', ['id' => $this->input->post('id')])->row_array();
         if (empty($perjalanan['id'])) {
-            if ($reservasi['kendaraan'] == 'Non Operasional') {
-                $karyawan = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
+            // if ($reservasi['kendaraan'] == 'Non Operasional') {
+            //     $karyawan = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
 
-                $this->db->where('posisi_id', '3');
-                $this->db->where('dept_id', $karyawan['dept_id']);
-                $ka_dept = $this->db->get('karyawan')->row_array();
+            //     $this->db->where('posisi_id', '3');
+            //     $this->db->where('dept_id', $karyawan['dept_id']);
+            //     $ka_dept = $this->db->get('karyawan')->row_array();
 
-                $tahun = date("Y", strtotime($reservasi['tglberangkat']));
-                $bulan = date("m", strtotime($reservasi['tglberangkat']));
+            //     $tahun = date("Y", strtotime($reservasi['tglberangkat']));
+            //     $bulan = date("m", strtotime($reservasi['tglberangkat']));
 
-                $queryDl = "SELECT COUNT(*)
-                FROM `perjalanan`
-                WHERE YEAR(tglberangkat) = '$tahun' AND MONTH(tglberangkat) = '$bulan'
-                ";
-                $dl = $this->db->query($queryDl)->row_array();
-                $totalDl = $dl['COUNT(*)'] + 1;
+            //     $queryDl = "SELECT COUNT(*)
+            //     FROM `perjalanan`
+            //     WHERE YEAR(tglberangkat) = '$tahun' AND MONTH(tglberangkat) = '$bulan'
+            //     ";
+            //     $dl = $this->db->query($queryDl)->row_array();
+            //     $totalDl = $dl['COUNT(*)'] + 1;
 
-                $data = [
-                    'id' => 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . sprintf("%04s", $totalDl),
-                    'npk' => $reservasi['npk'],
-                    'nama' => $reservasi['nama'],
-                    'anggota' => $reservasi['anggota'],
-                    'tujuan' => $reservasi['tujuan'],
-                    'keperluan' => $reservasi['keperluan'],
-                    'copro' => $reservasi['copro'],
-                    'tglberangkat' => $reservasi['tglberangkat'],
-                    'jamberangkat' => $reservasi['jamberangkat'],
-                    'kmberangkat' => '0',
-                    'cekberangkat' => null,
-                    'tglkembali' => $reservasi['tglkembali'],
-                    'jamkembali' => $reservasi['jamkembali'],
-                    'kmkembali' => '0',
-                    'cekkembali' => null,
-                    'nopol' => $reservasi['nopol'],
-                    'kepemilikan' => $reservasi['kepemilikan'],
-                    'kendaraan' => $reservasi['kendaraan'],
-                    'akomodasi' => $reservasi['akomodasi'],
-                    'penginapan' => $reservasi['penginapan'],
-                    'lama_menginap' => $reservasi['lama_menginap'],
-                    'admin_hr' => $this->session->userdata('inisial'),
-                    'tgl_hr' => date('Y-m-d H:i:s'),
-                    'catatan' => $this->input->post('catatan'),
-                    'ka_dept' => $ka_dept['nama'],
-                    'kmtotal' => '0',
-                    'jenis_perjalanan' => $reservasi['jenis_perjalanan'],
-                    'reservasi_id' => $reservasi['id'],
-                    'div_id' => $karyawan['div_id'],
-                    'dept_id' => $karyawan['dept_id'],
-                    'sect_id' => $karyawan['sect_id'],
-                    'status' => '9'
-                ];
-                $this->db->insert('perjalanan', $data);
+            //     $data = [
+            //         'id' => 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . sprintf("%04s", $totalDl),
+            //         'npk' => $reservasi['npk'],
+            //         'nama' => $reservasi['nama'],
+            //         'anggota' => $reservasi['anggota'],
+            //         'tujuan' => $reservasi['tujuan'],
+            //         'keperluan' => $reservasi['keperluan'],
+            //         'copro' => $reservasi['copro'],
+            //         'tglberangkat' => $reservasi['tglberangkat'],
+            //         'jamberangkat' => $reservasi['jamberangkat'],
+            //         'kmberangkat' => '0',
+            //         'cekberangkat' => null,
+            //         'tglkembali' => $reservasi['tglkembali'],
+            //         'jamkembali' => $reservasi['jamkembali'],
+            //         'kmkembali' => '0',
+            //         'cekkembali' => null,
+            //         'nopol' => $reservasi['nopol'],
+            //         'kepemilikan' => $reservasi['kepemilikan'],
+            //         'kendaraan' => $reservasi['kendaraan'],
+            //         'akomodasi' => $reservasi['akomodasi'],
+            //         'penginapan' => $reservasi['penginapan'],
+            //         'lama_menginap' => $reservasi['lama_menginap'],
+            //         'admin_hr' => $this->session->userdata('inisial'),
+            //         'tgl_hr' => date('Y-m-d H:i:s'),
+            //         'catatan' => $this->input->post('catatan'),
+            //         'ka_dept' => $ka_dept['nama'],
+            //         'kmtotal' => '0',
+            //         'jenis_perjalanan' => $reservasi['jenis_perjalanan'],
+            //         'reservasi_id' => $reservasi['id'],
+            //         'div_id' => $karyawan['div_id'],
+            //         'dept_id' => $karyawan['dept_id'],
+            //         'sect_id' => $karyawan['sect_id'],
+            //         'status' => '9'
+            //     ];
+            //     $this->db->insert('perjalanan', $data);
 
-                // update table anggota perjalanan
-                $this->db->set('perjalanan_id', $data['id']);
-                $this->db->where('reservasi_id', $reservasi['id']);
-                $this->db->update('perjalanan_tujuan');
+            //     // update table anggota perjalanan
+            //     $this->db->set('perjalanan_id', $data['id']);
+            //     $this->db->where('reservasi_id', $reservasi['id']);
+            //     $this->db->update('perjalanan_tujuan');
 
-                // update table anggota perjalanan
-                $this->db->set('perjalanan_id', $data['id']);
-                $this->db->where('reservasi_id', $reservasi['id']);
-                $this->db->update('perjalanan_anggota');
+            //     // update table anggota perjalanan
+            //     $this->db->set('perjalanan_id', $data['id']);
+            //     $this->db->where('reservasi_id', $reservasi['id']);
+            //     $this->db->update('perjalanan_anggota');
 
-                // update table anggota jadwal
-                $this->db->set('perjalanan_id', $data['id']);
-                $this->db->where('reservasi_id', $reservasi['id']);
-                $this->db->update('perjalanan_jadwal');
+            //     // update table anggota jadwal
+            //     $this->db->set('perjalanan_id', $data['id']);
+            //     $this->db->where('reservasi_id', $reservasi['id']);
+            //     $this->db->update('perjalanan_jadwal');
 
-                $this->db->set('admin_hr', $this->session->userdata('inisial'));
-                $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
-                $this->db->set('status', '9');
-                $this->db->where('id', $this->input->post('id'));
-                $this->db->update('reservasi');
+            //     $this->db->set('admin_hr', $this->session->userdata('inisial'));
+            //     $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
+            //     $this->db->set('status', '9');
+            //     $this->db->where('id', $this->input->post('id'));
+            //     $this->db->update('reservasi');
 
-                $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
-                $user = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $user['phone'],
-                    'message' => "*PERJALANAN DINAS TA SUDAH SIAP*" .
-                        "\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
-                        "\r\n Tujuan : *" . $data['tujuan'] . "*" .
-                        "\r\n Peserta : *" . $data['anggota'] . "*" .
-                        "\r\n Keperluan : *" . $data['keperluan'] . "*" .
-                        "\r\n Berangkat : *" . $data['tglberangkat'] . "* *" . $data['jamberangkat'] . "* _estimasi_" .
-                        "\r\n Kembali : *" . $data['tglkembali'] . "* *" . $data['jamkembali'] . "* _estimasi_" .
-                        "\r\n Kendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "* )" .
-                        "\r\n \r\nTelah siap untuk berangkat." .
-                        "\r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal." .
-                        "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas." .
-                        "\r\n \r\n" . $notifikasi['pesan']
-                );
+            //     $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
+            //     $user = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
+            //     $postData = array(
+            //         'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
+            //         'number' => $user['phone'],
+            //         'message' => "*PERJALANAN DINAS TA SUDAH SIAP*" .
+            //             "\r\n \r\n No. Perjalanan : *" . $data['id'] . "*" .
+            //             "\r\n Tujuan : *" . $data['tujuan'] . "*" .
+            //             "\r\n Peserta : *" . $data['anggota'] . "*" .
+            //             "\r\n Keperluan : *" . $data['keperluan'] . "*" .
+            //             "\r\n Berangkat : *" . $data['tglberangkat'] . "* *" . $data['jamberangkat'] . "* _estimasi_" .
+            //             "\r\n Kembali : *" . $data['tglkembali'] . "* *" . $data['jamkembali'] . "* _estimasi_" .
+            //             "\r\n Kendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "* )" .
+            //             "\r\n \r\nTelah siap untuk berangkat." .
+            //             "\r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal." .
+            //             "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas." .
+            //             "\r\n \r\n" . $notifikasi['pesan']
+            //     );
 
-                $ch = curl_init();
+            //     $ch = curl_init();
 
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            //     curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
+            //     curl_setopt($ch, CURLOPT_POST, 1);
+            //     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            //     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            //     $headers = array();
+            //     $headers[] = 'Accept: application/json';
+            //     $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
+            //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-                $result = curl_exec($ch);
+            //     $result = curl_exec($ch);
 
-                $this->session->set_flashdata('message', 'barudl');
-                redirect('perjalanandl/adminhr');
-            } else {
+            //     $this->session->set_flashdata('message', 'barudl');
+            //     redirect('perjalanandl/adminhr');
+            // } else {
                 $this->db->set('admin_hr', $this->session->userdata('inisial'));
                 $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
                 $this->db->set('status', '6');
@@ -1277,7 +1277,7 @@ class Perjalanandl extends CI_Controller
 
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanandl/adminhr');
-            }
+            // }
         }
     }
 

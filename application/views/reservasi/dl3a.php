@@ -165,7 +165,7 @@
                                     <?php
                                       $queryKendaraan = "SELECT *
                                         FROM `kendaraan`
-                                        WHERE `id` > 100
+                                        WHERE `id` > 100 AND `is_active` = 1
                                         ORDER BY `id` ASC
                                         ";
                                       $kendaraan = $this->db->query($queryKendaraan)->result_array();
