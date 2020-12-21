@@ -42,6 +42,7 @@
                                         <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
                                         <th>Kendaraan</th>
+                                        <th>Nopol</th>
                                         <th>Nama</th>
                                         <th>Peserta</th>
                                         <th>Tujuan</th>
@@ -56,6 +57,7 @@
                                         <th>Nomor_Perjalanan</th>
                                         <th>Jenis DL</th>
                                         <th>Kendaraan</th>
+                                        <th>Nopol</th>
                                         <th>Nama</th>
                                         <th>Peserta</th>
                                         <th>Tujuan</th>
@@ -78,6 +80,7 @@
                                             </td>
                                             <td><?= $pdl['jenis_perjalanan']; ?></td>
                                             <td><?= $pdl['kepemilikan']; ?></td>
+                                            <td><?= $pdl['nopol']; ?></td>
                                             <td><?= $pdl['nama']; ?></td>
                                             <td><?= $pdl['anggota']; ?></td>
                                             <td><?= $pdl['tujuan']; ?></td>
