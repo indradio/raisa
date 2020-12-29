@@ -244,4 +244,4 @@ $pdf->Cell(140, 4, 'Cc.  :  1.  Accounting / Finance & Accounting', 0, 1);
 $pdf->Cell(140, 5, '           2. HRDGA / Administration', 0, 1);
 
 
-$pdf->Output('I', 'SURAT TUGAS TA' . RAND() . '.pdf');
+$pdf->Output('I', 'SURAT TUGAS TA ' . $reservasi['id'] . '.pdf');
