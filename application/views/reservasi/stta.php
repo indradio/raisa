@@ -171,8 +171,7 @@ $pdf->Cell(37, 5, 'Catatan                                        :', 0, 0);
 $pdf->Cell(170, 5, $reservasi['catatan'] , 0, 1);
 
 $pdf->Ln(4);
-$pdf->Cell(137, 4, 'Disetujui Oleh ,', 1, 0, 'C', 1);
-$pdf->Cell(45, 4, 'Dibuat Oleh ,', 1, 1, 'C', 1);
+$pdf->Cell(182, 4, 'Disetujui Oleh ,', 1, 1, 'C', 1);
 $pdf->Cell(47, 30, '', 1, 0, 1);
 $pdf->Cell(45, 30, '', 1, 0, 1);
 $pdf->Cell(45, 30, '', 1, 0, 1);
@@ -195,7 +194,7 @@ $pdf->Ln(19);
 $pdf->Cell(47, 4, 'President Director', 1,0,'C',1);
 $pdf->Cell(45, 4, 'Chief Operator Officer',1,0,'C',1);
 $pdf->Cell(45, 4, 'Supporting & Adm. Division', 1,0,'C',1);
-$pdf->Cell(45, 4, 'Pemohon / Dept.Head', 1,0,'C',1);
+$pdf->Cell(45, 4, 'Dept.Head', 1,0,'C',1);
 $pdf->Cell(5, 4, '', 0, 1, 0);
 
 $pdf->Ln(-8);
@@ -203,7 +202,7 @@ $pdf->SetFont('Arial', 'B', 6);
 $pdf->Cell(45, 4, '(                             )', 0,0,'C',0);
 $pdf->Cell(45, 4, '( Donny Novanda )',0,0,'C',0);
 $pdf->Cell(50, 4, '( Eko Juwono )', 0,0,'C',0);
-$pdf->Cell(42, 4, '( '.$reservasi['nama'].' )', 0,0,'C',0);
+$pdf->Cell(42, 4, '( '.$reservasi['ka_dept'].' )', 0,0,'C',0);
 $pdf->Cell(5, 4, '', 0, 1, 0);
 
 
@@ -220,11 +219,11 @@ $pdf->Cell(105, 5, '4.       ........        :', 0, 0);
 
 $pdf->Ln(-12);
 $pdf->Cell(137, 5, '', 0, 0);
-$pdf->Cell(45, 4, '   Diketahui / Dibuat Oleh ,', 1,1,'C',1);
+$pdf->Cell(45, 4, '   Dibuat Oleh ,', 1,1,'C',1);
 $pdf->Cell(137, 5, '', 0, 0);
 $pdf->Cell(45, 25, '', 1,1,'C',1);
 $pdf->Cell(137, 5, '', 0, 0);
-$pdf->Cell(45, 4, '   HRDGA / Adm.Dept.Head', 1,1,'C',1);
+$pdf->Cell(45, 4, '      Pemohon', 1,1,'C',1);
 
 $pdf->Ln(-22);
 $pdf->SetFont('arial-monospaced', '', 5.5);
@@ -236,7 +235,7 @@ $pdf->Cell(1, 18, date("d M Y H:i", strtotime($reservasi['tgl_fin'])), 0,'C', 0)
 $pdf->Ln(14);
 $pdf->SetFont('Arial', 'B', 6);
 $pdf->Cell(140, 5, '', 0, 0);
-$pdf->Cell(42, 4, '(  Dwi Ayu Waraswati  )', 0,0,'C',0);
+$pdf->Cell(42, 4, '( '.$reservasi['nama'].' )', 0,0,'C',0);
 
 $pdf->Ln(2);
 $pdf->SetFont('Arial', 'B', 6);
