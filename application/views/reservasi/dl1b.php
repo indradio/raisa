@@ -12,6 +12,7 @@
           } ?>
         </div>
       </div>
+      <p>
       <div class="row">
         <?php
         $queryKendaraan = "SELECT *
@@ -22,7 +23,7 @@
         $kendaraan = $this->db->query($queryKendaraan)->result_array();
         ?>
         <?php foreach ($kendaraan as $kend) : ?>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <div class="card card-product">
               <div class="card-header card-header-image" data-header-animation="false">
                 <img class="img" src="<?= base_url(); ?>assets/img/kendaraan/<?= $kend['gambar']; ?>">

@@ -10,7 +10,7 @@
                             <h4 class="card-title">Data Perjalanan</h4>
                         </div>
                         <div class="card-body ">
-                            <form action="<?= base_url('reservasi/dl1c2_proses'); ?>" method="post">
+                            <form action="<?= base_url('reservasi/dl1c_proses'); ?>" method="post">
                                 <div class="row">
                                     <label class="col-md-2 col-form-label">Jenis Kendaraan</label>
                                     <div class="col-md-5">

@@ -96,18 +96,65 @@
                   <label class="col-md-2 col-form-label">Keperluan*</label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
-                      <textarea rows="2" class="form-control" id="keperluan" name="keperluan" placeholder="Jelaskan keperluan kamu." required></textarea>
+                      <textarea rows="3" class="form-control" id="keperluan" name="keperluan" placeholder="Jelaskan keperluan kamu." required></textarea>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <label class="col-md-2 col-form-label">Akomodasi</label>
                   <div class="col-md-5">
-                    <div class="form-group has-default">
-                    <input type="text" class="form-control" id="akomodasi" name="akomodasi">
-                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" id="checkoperasional" name="checkoperasional" value="YA"> Kendaraan (Operasional, Taksi/Sewa/Pribadi)
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                      </label>
+                    </div>    
                   </div>
                 </div>
+                <div class="row">
+                          <!-- <label class="col-md-2 col-form-label"></label> -->
+                          <div class="col-md-10 ml-auto" id="pilihkendaraan" style="display:none;">
+                              <div class="form-group has-default">
+                                  <select class="selectpicker" name="kendaraan" id="kendaraan" title="Pilih" data-style="select-with-transition" data-size="5" data-width="fit" data-live-search="false">
+                                  <?php
+                                    $queryKendaraan = "SELECT *
+                                      FROM `kendaraan`
+                                      WHERE `id` > 100 AND `is_active` = 1
+                                      ORDER BY `id` ASC
+                                      ";
+                                    $kendaraan = $this->db->query($queryKendaraan)->result_array();
+                                    foreach ($kendaraan as $k) : 
+
+                                        $nopol = $k['nopol'];
+                                        $tglberangkat = $reservasi_temp['tglberangkat'];
+                                        $tglkembali = $reservasi_temp['tglkembali'];
+                                        $jamberangkat = $reservasi_temp['jamberangkat'];
+                                        $jamkembali = $reservasi_temp['jamkembali'];
+
+                                        $queryCari = "SELECT COUNT(*)
+                                            FROM `reservasi`
+                                            WHERE `nopol` =  '$nopol' AND `status` != 0 AND `status` != 9
+                                            AND ((`tglberangkat` <= '$tglberangkat'  AND `tglkembali` >= '$tglberangkat') 
+                                            OR (`tglberangkat` <= '$tglkembali'  AND `tglkembali` >= '$tglkembali')
+                                            OR (`tglberangkat` >= '$tglberangkat'  AND `tglkembali` <= '$tglkembali')
+                                            OR (`tglberangkat` <= '$tglberangkat'  AND `tglkembali` >= '$tglkembali'))
+                                            ";
+                                        $cari = $this->db->query($queryCari)->row_array();
+                                        $total = $cari['COUNT(*)'];
+                                        if ($total == 0) 
+                                        { 
+                                          echo '<option data-subtext="'. $k['nopol'] . '" value="' . $k['nama'] .'">'. $k['nama'] .'</option>';
+                                        }
+                                    endforeach; ?>
+                                        <option value="Taksi">Taksi</option>
+                                        <option value="Sewa">Sewa</option>
+                                        <option value="Pribadi">Pribadi</option>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
                 <div class="row">
                   <label class="col-md-2 col-form-label"></label>
                   <div class="col-md-5">
@@ -122,8 +169,8 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-md-2 col-form-label"></label>
-                  <div class="col-md-5" id="lblPenginapan" style="display:none;">
+                  <!-- <label class="col-md-2 col-form-label"></label> -->
+                  <div class="col-md-10 ml-auto" id="lblPenginapan" style="display:none;">
                     <div class="form-group has-default">
                     <select class="selectpicker" name="penginapan" id="penginapan" title="Pilih" data-style="select-with-transition" data-width="auto">
                       <option value="HOTEL">HOTEL</option>
@@ -144,66 +191,20 @@
                   <label class="col-form-label">Malam</label>
                   </div> 
                 </div>
-                <div class="row">
-                            <label class="col-md-2 col-form-label"></label>
-                            <div class="col-md-5">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" id="checkoperasional" name="checkoperasional" value="YA"> Kendaraan Operasional
-                        <span class="form-check-sign">
-                          <span class="check"></span>
-                        </span>
-                      </label>
-                    </div>    
-                  </div>
-                  </div>
+                
                   <div class="row">
-                            <label class="col-md-2 col-form-label"></label>
-                            <div class="col-md-5" id="pilihkendaraan" style="display:none;">
-                                <div class="form-group has-default">
-                                    <select class="selectpicker" name="kendaraan" id="kendaraan" title="Pilih" data-style="select-with-transition" data-size="5" data-width="fit" data-live-search="false">
-                                    <?php
-                                      $queryKendaraan = "SELECT *
-                                        FROM `kendaraan`
-                                        WHERE `id` > 100 AND `is_active` = 1
-                                        ORDER BY `id` ASC
-                                        ";
-                                      $kendaraan = $this->db->query($queryKendaraan)->result_array();
-                                      foreach ($kendaraan as $k) : 
-
-                                          $nopol = $k['nopol'];
-                                          $tglberangkat = $reservasi_temp['tglberangkat'];
-                                          $tglkembali = $reservasi_temp['tglkembali'];
-                                          $jamberangkat = $reservasi_temp['jamberangkat'];
-                                          $jamkembali = $reservasi_temp['jamkembali'];
-
-                                          $queryCari = "SELECT COUNT(*)
-                                              FROM `reservasi`
-                                              WHERE `nopol` =  '$nopol' AND `status` != 0 AND `status` != 9
-                                              AND ((`tglberangkat` <= '$tglberangkat'  AND `tglkembali` >= '$tglberangkat') 
-                                              OR (`tglberangkat` <= '$tglkembali'  AND `tglkembali` >= '$tglkembali')
-                                              OR (`tglberangkat` >= '$tglberangkat'  AND `tglkembali` <= '$tglkembali')
-                                              OR (`tglberangkat` <= '$tglberangkat'  AND `tglkembali` >= '$tglkembali'))
-                                              ";
-                                          $cari = $this->db->query($queryCari)->row_array();
-                                          $total = $cari['COUNT(*)'];
-                                          if ($total == 0) 
-                                          { 
-                                            echo '<option data-subtext="'. $k['nopol'] . '" value="' . $k['nama'] .'">'. $k['nama'] .'</option>';
-                                          }
-                                      endforeach; ?>
-                                          <option value="Taksi">Taksi</option>
-                                          <option value="Sewa">Sewa</option>
-                                          <option value="Pribadi">Pribadi</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                  <label class="col-md-2 col-form-label"></label>
+                  <div class="col-md-5">
+                    <div class="form-group has-default">
+                    <input type="text" class="form-control" id="akomodasi" name="akomodasi">
+                    </div>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-md-2"></div>
                   <div class="col-md-3">
                     <div class="form-group has-default">
-                      <button type="submit" class="btn btn-fill btn-rose">Selanjutnya</button>
+                      <button type="submit" class="btn btn-fill btn-success">Selanjutnya</button>
                     </div>
                   </div>
                 </div>

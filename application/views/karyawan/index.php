@@ -23,8 +23,8 @@
                                         <th></th>
                                         <th>Foto</th>
                                         <th>NPK</th>
-                                        <th>Nama</th>
                                         <th>Inisial</th>
+                                        <th>Nama</th>
                                         <th>Email</th>
                                         <th>No. HP</th>
                                         <th>Golongan</th>
@@ -44,8 +44,8 @@
                                         <th>QR Code</th>
                                         <th>Foto</th>
                                         <th>NPK</th>
-                                        <th>Nama</th>
                                         <th>Inisial</th>
+                                        <th>Nama</th>
                                         <th>Email</th>
                                         <th>No. HP</th>
                                         <th>Golongan</th>
@@ -84,27 +84,19 @@
                                                 </div>
                                             </td>
                                             <td><?= $kry['npk']; ?></td>
-                                            <td><?= $kry['nama']; ?></td>
                                             <td><?= $kry['inisial']; ?></td>
+                                            <td><?= $kry['nama']; ?></td>
                                             <td><?= $kry['email']; ?></td>
                                             <td><?= $kry['phone']; ?></td>
-                                            <?php if (!empty($golongan)) {
-                                                echo '<td>' . $golongan['nama'] . '</td>';
-                                            } else {
-                                                echo '<td> Tidak ada</td>';
-                                            } ?>
-                                            <td><?= $fasilitas['nama']; ?></td>
+                                            <td><?= (!empty($golongan)) ? $golongan['nama'] : 'TIDAK ADA'; ?></td>
+                                            <td><?= (!empty($fasilitas)) ? $fasilitas['nama'] : 'TIDAK ADA'; ?></td>
                                             <td><?= $posisi['nama']; ?></td>
                                             <td><?= $divisi['nama']; ?></td>
                                             <td><?= $departemen['nama']; ?></td>
                                             <td><?= $seksi['nama']; ?></td>
                                             <td><?= $atasan1['nama']; ?></td>
                                             <td><?= $atasan2['nama']; ?></td>
-                                            <?php if ($kry['is_active'] == 1) : ?>
-                                                <td>Aktif</td>
-                                            <?php else : ?>
-                                                <td>Nonaktif</td>
-                                            <?php endif; ?>
+                                            <td><?= ($kry['is_active'] == 1) ? 'AKTIF' : 'TIDAK AKTIF'; ?></td>
                                             <td class="text-right">
                                                 <a href="<?= base_url('hr/ubah/') . $kry['npk']; ?>" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                                                 <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a>

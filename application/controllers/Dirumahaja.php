@@ -157,6 +157,12 @@ class Dirumahaja extends CI_Controller
         ];
         $this->db->insert('kesehatan', $data);
 
+        if (!empty($this->input->post('goldarah'))){
+            $this->db->set('gol_darah', $this->input->post('goldarah'));
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->update('karyawan');
+        }
+
         if ($total>0){
             if ($this->session->userdata('posisi_id')==7){
                 $this->db->where('npk', $this->session->userdata('atasan1'));

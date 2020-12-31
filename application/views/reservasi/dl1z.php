@@ -20,10 +20,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Nomor Polisi</label>
+                                <label class="col-md-2 col-form-label">Kendaraan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi_temp['nopol'] . ' (' . $reservasi_temp['kepemilikan'] . ')'; ?>">
+                                        <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi_temp['nopol'] . ' (' . $reservasi_temp['kendaraan'] . ')'; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -159,11 +159,7 @@
                                                     endforeach; ?>
                                                     <tr>
                                                         <td><?= $ang['karyawan_inisial']; ?></td>
-                                                        <?php if ($reservasi_temp['pic_perjalanan'] == $ang['karyawan_inisial']){ ?>
-                                                            <td><?= $ang['karyawan_nama'].' <a href="#" class="btn btn-link btn-success btn-just-icon" data-toggle="tooltip" data-placement="top" title="PIC Perjalanan"><i class="material-icons">military_tech</i></a>'; ?></td>
-                                                        <?php }else{ ?>
-                                                            <td><?= $ang['karyawan_nama']; ?></td>
-                                                        <?php } ?>
+                                                        <td><?= $ang['karyawan_nama']; ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -237,22 +233,33 @@
                                                         <td>Parkir & Lainnya</td>
                                                         <td><?= number_format($reservasi_temp['parkir'], 0, ',', '.'); ?></td>
                                                     </tr>
-                                                    <tr>
-                                                        <td><strong>TOTAL</strong></td>
-                                                        <td><strong><?= number_format($reservasi_temp['total'], 0, ',', '.'); ?></strong></td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
-                                            <small>*Untuk Perjalanan TA masih dalam pengembangan. Silahkan gunakan penyelesaian manual ke HR dan GA.</small>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-                                <div class="col-md-2"></div>
+                                <div class="row">
+                                <label class="col-md-2 col-form-label">Total Biaya </br><small>Estimasi</small></label>
                                 <div class="col-md-5">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahPeserta" data-id="<?= $reservasi_temp['id']; ?>">TAMBAH MAGANG</button>
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="biaya" value="<?= number_format($reservasi_temp['total'], 0, ',', '.'); ?>">
+                                    </div>
                                 </div>
-                            </div> -->
+                            </div>
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">PIC Perjalanan</label>
+                                    <div class="col-md-3">
+                                        <div class="form-group has-default">
+                                            <select class="selectpicker" name="pic" data-style="select-with-transition" title="Pilih PIC" data-size="10" required>
+                                                <?php
+                                                $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $reservasi_temp['id']])->result_array();
+                                                foreach ($peserta as $p) : ?>
+                                                    <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <label class="col-md-2 col-form-label">Catatan</label>
                                     <div class="col-md-5">
@@ -295,64 +302,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="tambahPeserta" tabindex="-1" role="dialog" aria-labelledby="tambahPesertaTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-primary text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">Tambah Peseta perjalanan</h4>
-                    </div>
-                </div>
-                <form class="form" method="post" action="<?= base_url('reservasi/tambahpeserta'); ?>">
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="id" hidden>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Nama</label>
-                                <div class="col-md-7">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control" id="nama" name="nama" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Departemen</label>
-                                <div class="col-md-7">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" name="dept" data-style="select-with-transition" title="Pilih" data-size="6" required>
-                                            <?php
-                                            $queryDept = "SELECT *
-                                                                    FROM `karyawan_dept`
-                                                                    ORDER BY `id` ASC
-                                                                    ";
-                                            $dept = $this->db->query($queryDept)->result_array();
-                                            foreach ($dept as $d) : ?>
-                                                <option value="<?= $d['nama']; ?>"><?= $d['nama']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-center">
-                                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">TAMBAH</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

@@ -2,14 +2,17 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-info" role="alert">
-                <strong>UPDATE!</strong>
-                </br>Update nomor GO-PAY Admin
-                </br>Untuk pengembalian kasbon ke akaun GO-PAY sekarang ke nomor <strong>085717304048 a/n Lia Hendra Gianti</strong>
-                </br>Jangan sampai salah transfer ya!
+            <div class="col-md-12">
+                <div class="alert alert-info alert-with-icon" data-notify="container">
+                    <i class="material-icons" data-notify="icon">notifications</i>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="material-icons">close</i>
+                    </button>
+                    <span data-notify="message"><strong>UPDATE nomor GO-PAY Admin!</strong></span>
+                    </br>Untuk pengembalian kasbon ke akaun GO-PAY sekarang ke nomor <strong>081311010378 a/n Dwi Septianingrum</strong>
+                    </br>Jangan sampai salah transfer ya!
+                </div>
             </div>
-        </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -132,10 +135,11 @@
                                                             $tunj_pic = $a['total']; 
                                                             ?>
                                                             <td><?= '<a href="#" class="btn btn-link btn-success btn-just-icon" data-toggle="tooltip" data-placement="top" title="PIC Perjalanan"><i class="material-icons">military_tech</i></a>'.$a['karyawan_nama']; ?></td>
+                                                        <td><strong><?= number_format($a['total']+$perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']-$perjalanan['kasbon'], 0, ',', '.'); ?></strong></td>
                                                         <?php }else{ ?>
                                                             <td><?= '<a href="'. base_url('perjalanan/change_pic/'.$perjalanan['id'].'/'.$a['karyawan_inisial']).'" class="btn btn-link btn-warning btn-just-icon" data-toggle="tooltip" data-placement="top" title="Jadikan PIC"><i class="material-icons">push_pin</i></a>'.$a['karyawan_nama']; ?></td>
-                                                        <?php } ?>
                                                         <td><strong><?= number_format($a['total'], 0, ',', '.'); ?></strong></td>
+                                                        <?php } ?>
                                                         <?php if ($perjalanan['uang_saku']>0){ echo '<td><small>'.number_format($a['uang_saku'], 0, ',', '.').'</small></td>'; } ?>
                                                         <?php if ($perjalanan['insentif_pagi']>0){ echo '<td><small>'.number_format($a['insentif_pagi'], 0, ',', '.').'</small></td>';} ?>
                                                         <?php if ($perjalanan['um_pagi']>0){ echo '<td><small>'.number_format($a['um_pagi'], 0, ',', '.').'</small></td>';} ?>
@@ -234,7 +238,6 @@
                                                 </tbody>
                                             </table>
                                             <small>*Isi Biaya tol jika menggunakan uang pribadi, kosongkan jika menggunakan e-toll dari GA.</small>
-                                            </br><small>*Untuk Perjalanan TA masih dalam pengembangan. Silahkan menggunakan penyelesaian manual.</small></br>
                                         </div>
                                     </div>
                                 </div>
@@ -247,8 +250,8 @@
                                     <label class="col-md-2 col-form-label">Kasbon</label>
                                     <div class="col-md-5">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_out'], 0, ',', '.'); ?> (In)">
-                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_in'], 0, ',', '.'); ?> (Out)">
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_out'], 0, ',', '.'); ?> (Terima)">
+                                            <input type="text" class="form-control disabled" name="kasbon" value="<?= number_format($perjalanan['kasbon_in'], 0, ',', '.'); ?> (Kembali)">
                                         </div>
                                     </div>
                                 </div>
@@ -258,7 +261,7 @@
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control disabled" name="selisih" value="<?= number_format(($tunj_pic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - $perjalanan['kasbon'], 0, ',', '.'); ?>">
                                         </div>
-                                        <small>*Selisih = Kasbon - (Biaya Perjalanan + Tunj PIC).</small></br>
+                                        <small>*Selisih =(Biaya Perjalanan + Tunj PIC) - Kasbon.</small></br>
                                         <?php if ($selisih < 0){ echo '<a href="#" class="btn btn-sm btn-facebook" data-toggle="modal" data-target="#penyelesaianKasbon" data-id="'.$perjalanan['id'].'" data-kasbon_out="'.number_format($perjalanan['kasbon_out'], 0, ',', '.').'" data-kasbon_out_ewallet="'.$perjalanan['kasbon_ewallet'].'" data-biaya="( '.number_format($perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'], 0, ',', '.').' )" data-tunj="( '.number_format($tunj_pic, 0, ',', '.').' )" data-kasbon_in="( '.number_format($perjalanan['kasbon_in'], 0, ',', '.').' )" data-kasbon_transfer="'.$selisihPositif.'" data-kasbon="'.number_format($selisihPositif, 0, ',', '.').'">Kembalikan Kasbon</a>'; }?>
                                     </div>
                                 </div>
@@ -523,7 +526,7 @@
                         <div class="col-md-5">
                             <div class="form-group has-default">
                                 <select class="selectpicker" name="kasbon_in_ewallet" id="kasbon_in_ewallet" data-style="select-with-transition" title="Pilih eWallet" data-size="7" required>
-                                    <option value="GO-PAY - 085717304048">GO-PAY - 085717304048</option>
+                                    <option value="GO-PAY - 085717304048">GO-PAY - 081311010378</option>
                                     <option value="DANA - 081311010378">DANA - 081311010378</option>
                                 </select>
                             </div>

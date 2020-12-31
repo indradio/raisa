@@ -121,7 +121,7 @@
                                                             $tunjPeserta = number_format($a['total'], 0, ',', '.'); ?>
                                                             <td><?= $tunjPeserta; ?></td>
                                                         <?php } ?>
-                                                        <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR'){ 
+                                                        <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta > 0){ 
                                                             if ($peserta['ewallet_utama']=='GO-PAY'){ 
                                                                 $ewallet1 = 'GO-PAY - '.$peserta['ewallet_1'];
                                                                 $ewallet2 = 'DANA - '.$peserta['ewallet_2'];
@@ -130,9 +130,11 @@
                                                                 $ewallet2 = 'GO-PAY - '.$peserta['ewallet_1'];
                                                             } ?>
                                                             <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-tunj="<?= $tunjPeserta; ?>" data-ewallet1="<?= $ewallet1; ?>" data-ewallet2="<?= $ewallet2; ?>">BAYAR SEKARANG!</a></td>
-                                                        <?php }else{ ?>
-                                                            <td><a href="#" class="btn btn-sm btn-fill btn-success disabled">SUDAH DIBAYAR</a></td>
-                                                        <?php } ?>
+                                                        <?php }elseif ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta == 0){ 
+                                                            echo '<td><a href="#" class="btn btn-sm btn-fill btn-default disabled">TIDAK DIBAYAR</a></td>';
+                                                        }else{
+                                                            echo '<td><a href="#" class="btn btn-sm btn-fill btn-success disabled">SUDAH DIBAYAR</a></td>';
+                                                         } ?>
                                                     </tr>
                                                 <?php 
                                                 $totalTunj = $totalTunj + $a['total']; 
@@ -240,7 +242,7 @@
                                     $this->db->where('status_pembayaran', 'BELUM DIBAYAR');
                                     $unpayment = $this->db->get('perjalanan_anggota')->row_array();
                                     
-                                    if (empty($unpayment)){
+                                    if ($perjalanan['selisih']==0){
                                         echo '<button type="submit" class="btn btn-fill btn-success">SELESAI</button>';
                                     }else{
                                         echo '<button type="submit" class="btn btn-fill btn-default disabled">SILAHKAN BAYAR DULU</button>';

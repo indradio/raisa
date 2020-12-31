@@ -149,6 +149,62 @@
                   <option value="TIDAK">TIDAK ADA</option>
                 </select>
               </div>
+              <?php if (empty($karyawan['gol_darah'])){ ?>
+              </br>
+              <div class="form-group">
+                <label class="bmd-label-floating">
+                  <h4><b>C. Data</b></h4>
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="c1" class="bmd-label-floating">C1. Golongan Darah</label>
+                <div class="form-check form-check-radio">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="goldarah" id="goldarA" value="A" required>
+                        A
+                        <span class="circle">
+                            <span class="check"></span>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-check form-check-radio">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="goldarah" id="goldarB" value="B" required>
+                        B
+                        <span class="circle">
+                            <span class="check"></span>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-check form-check-radio">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="goldarah" id="goldarAB" value="AB" required>
+                        AB
+                        <span class="circle">
+                            <span class="check"></span>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-check form-check-radio">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="goldarah" id="goldarO" value="O" required>
+                        O
+                        <span class="circle">
+                            <span class="check"></span>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-check form-check-radio">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="goldarah" id="goldarX" value="TIDAK TAHU" required>
+                        TIDAK TAHU
+                        <span class="circle">
+                            <span class="check"></span>
+                        </span>
+                    </label>
+                </div>
+              </div>
+              <?php } ?>
               <!-- <div class="form-group">
                 <label for="b3" class="bmd-label-floating">B3. Penghuni satu rumah ada yang dinyatakan <b>Pasien Positif, PDP, ODP</b> ataupun <b>Orang yang sedang menjalani Isolasi Mandiri COVID-19</b></label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="b3" name="b3" title="Silahkan Pilih" data-size="2" data-live-search="false" required>

@@ -121,9 +121,11 @@ class Perjalanandl extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $reservasi = $this->db->get_where('reservasi', ['id' => $this->input->post('id')])->row_array();
         $karyawan = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
+
         $this->db->where('posisi_id', '3');
         $this->db->where('dept_id', $karyawan['dept_id']);
         $ka_dept = $this->db->get('karyawan')->row_array();
+        
         $tahun = date("Y", strtotime($reservasi['tglberangkat']));
         $bulan = date("m", strtotime($reservasi['tglberangkat']));
 
@@ -382,6 +384,25 @@ class Perjalanandl extends CI_Controller
             $this->db->update('reservasi');
             redirect('perjalanandl/prosesdl1/' . $rsv_id);
         }
+    }
+
+    public function rsvgk($id)
+    {
+        if ($this->input->post('kendaraan') == 'Taksi' or $this->input->post('kendaraan') == 'Sewa' or $this->input->post('kendaraan') == 'Pribadi') {
+            $this->db->set('nopol', $this->input->post('nopol'));
+            $this->db->set('kendaraan', $this->input->post('kendaraan'));
+            $this->db->set('kepemilikan', 'Non Operasional');
+            $this->db->where('id', $id);
+            $this->db->update('reservasi');
+        } else {
+            $kendaraan = $this->db->get_where('kendaraan', ['nama' => $this->input->post('kendaraan')])->row_array();
+            $this->db->set('nopol', $kendaraan['nopol']);
+            $this->db->set('kendaraan', $kendaraan['nama']);
+            $this->db->set('kepemilikan', 'Operasional');
+            $this->db->where('id', $id);
+            $this->db->update('reservasi');
+        }
+        redirect('perjalanandl/prosesta3/' . $id);
     }
 
     public function batalrsv()
@@ -1281,6 +1302,19 @@ class Perjalanandl extends CI_Controller
         }
     }
 
+    public function prosesta3($rsv_id)
+    {
+        $data['sidemenu'] = 'GA';
+        $data['sidesubmenu'] = 'Konfirmasi Perjalanan Dinas';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi'] = $this->db->get_where('reservasi', ['id' =>  $rsv_id])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanandl/prosestaga', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function penyelesaian($parameter)
     {
         date_default_timezone_set('asia/jakarta');
@@ -1763,10 +1797,28 @@ class Perjalanandl extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
+                $this->db->where('perjalanan_id', $this->input->post('id'));
+                $this->db->where('status_pembayaran', 'BELUM DIBAYAR');
+                $unpayment = $this->db->get('perjalanan_anggota')->result_array();
+
+                foreach ($unpayment as $row) :
+                    $this->db->set('bayar', 0);
+                    $this->db->set('payment_by', $this->session->userdata('inisial'));
+                    $this->db->set('payment_at', date('Y-m-d H:i:s'));
+                    $this->db->set('status_pembayaran','SUDAH DIBAYAR');
+                    $this->db->set('status', '9');
+                    $this->db->where('perjalanan_id', $this->input->post('id'));
+                    $this->db->where('npk', $row['npk']);
+                    $this->db->update('perjalanan_anggota');
+                endforeach;
+
                 redirect('perjalanandl/payment/daftar');
             }
         } else {
-            if (($this->session->userdata('sect_id')=='211' or $this->session->userdata('npk')=='0075' or $this->session->userdata('npk')=='1111') and $perjalanan['status']=='5'){
+            if (($this->session->userdata('sect_id')=='211' 
+                    or $this->session->userdata('npk')=='0075' 
+                    or $this->session->userdata('npk')=='1111') 
+                    and $perjalanan['status']=='5'){
                 $data['sidemenu'] = 'FA';
                 $data['sidesubmenu'] = 'Penyelesaian';
                 $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();

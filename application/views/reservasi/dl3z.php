@@ -15,11 +15,11 @@
               <div class="card-icon">
                 <i class="material-icons">directions_car</i>
               </div>
-              <h4 class="card-title">Jadwal Perjalanan TA</h4>
+              <h4 class="card-title">Rincian Perjalanan TA</h4>
             </div>
             <div class="card-body">
               <form class="form-horizontal" action="<?= base_url('reservasi/dl3z_proses'); ?>" method="post">
-                            <div class="row">
+              <div class="row">
                                 <label class="col-md-2 col-form-label">Jenis Perjalanan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -28,6 +28,22 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label class="col-md-2 col-form-label">Berangkat</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="berangkat" name="berangkat" value="<?= date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Kembali</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" id="kembali" name="kembali" value="<?= date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Tanggal Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -35,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Jam Keberangkatan</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -43,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Tanggal Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -51,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" hidden>
                                 <label class="col-md-2 col-form-label">Jam Kembali</label>
                                 <div class="col-md-3">
                                     <div class="form-group has-default">
@@ -68,18 +84,18 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">COPRO</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="copro" value="<?= $reservasi_temp['copro']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-2 col-form-label">Keperluan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <textarea rows="2" class="form-control disabled" name="keperluan"><?= $reservasi_temp['keperluan']; ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">COPRO</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="copro" value="<?= $reservasi_temp['copro']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -91,6 +107,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if (!empty($reservasi_temp['kendaraan'])){ ?>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Kendaraan</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="nopol" value="<?= $reservasi_temp['nopol'] . ' (' . $reservasi_temp['kendaraan'] . ')'; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                             <div class="row">
                                 <label class="col-md-2 col-form-label">Penginapan/Hotel</label>
                                 <div class="col-md-5">
@@ -108,24 +134,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-2 col-form-label">Kendaraan Operasional</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kendaraan" value="<?= $reservasi_temp['kendaraan']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 col-form-label">Nomor polisi</label>
-                                <div class="col-md-5">
-                                    <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kendaraan" value="<?= $reservasi_temp['nopol']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label class="col-md-2 col-form-label">Peserta Perjalanan</label>
-                                <div class="col-md-5">
+                                <div class="col-md-8">
                                   <div class="toolbar">
                                   <!--        Here you can write extra buttons/actions for the toolbar              -->
                                     <!-- <a href="#" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahPerjalanan">Tambah</a> -->
@@ -161,10 +171,10 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-2 col-form-label">Jadwal Perjalanan</label>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                   <div class="toolbar">
                                   <!--        Here you can write extra buttons/actions for the toolbar              -->
-                                    <a href="#" class="btn btn-primary" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahPerjalanan">Tambah</a>
+                                    <!-- <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahPerjalanan">Tambah</a> -->
                                   </div>
                                   <div class="material-datatables">
                                     <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -176,7 +186,6 @@
                                           <th>Tempat Tujuan</th>
                                           <th>Transportasi</th>
                                           <th>Keterangan</th>
-                                          <th class="disabled-sorting text-right">Actions</th>
                                         </tr>
                                       </thead>
                                       <tfoot>
@@ -187,7 +196,6 @@
                                           <th>Tempat Tujuan</th>
                                           <th>Transportasi</th>
                                           <th>Keterangan</th>
-                                          <th class="disabled-sorting text-right">Actions</th>
                                         </tr>
                                       </tfoot>
                                       <tbody>
@@ -202,7 +210,6 @@
                                                                 <td><?= $j['tujuan']; ?></td>
                                                                 <td><?= $j['transportasi']; ?></td>
                                                                 <td><?= $j['keterangan']; ?></td>
-                                                                <td class="text-right"><a href="<?= base_url('reservasi/hapusjadwal/') . $j['id']; ?>" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a></td>
                                                             </tr>
                                                         <?php 
                                                               $no++;
@@ -212,6 +219,20 @@
                                   </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                    <label class="col-md-2 col-form-label">PIC Perjalanan</label>
+                                    <div class="col-md-3">
+                                        <div class="form-group has-default">
+                                            <select class="selectpicker" name="pic" data-style="select-with-transition" title="Pilih PIC" data-size="10" required>
+                                                <?php
+                                                $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $reservasi_temp['id']])->result_array();
+                                                foreach ($peserta as $p) : ?>
+                                                    <option value="<?= $p['karyawan_inisial']; ?>"><?= $p['karyawan_nama']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                     <div class="row">
                                 <label class="col-md-2 col-form-label">Catatan</label>
                                 <div class="col-md-5">
@@ -254,7 +275,7 @@
                                             echo '<button type="submit" class="btn btn-fill btn-danger disabled" id="submit">JADWAL PERJALANAN TIDAK BOLEH KOSONG</button>';
                                         }
                                         ?>
-                                        <a href="<?= base_url('reservasi/dl3a'); ?>" class="btn btn-fill btn-default">Kembali</a>
+                                        <a href="<?= base_url('reservasi/dl3b'); ?>" class="btn btn-link btn-default">Kembali</a>
                                     </div>
                                 </div>
                             </div>
@@ -318,9 +339,7 @@
                             <div class="col-md-7">
                                 <div class="form-group has-default">
                                     <select onchange="transportasiSelect(this);" class="selectpicker" name="transportasi" id="transportasi" title="Pilih" data-style="select-with-transition" data-size="5" data-width="fit" data-live-search="false" >
-                                      <?php if($reservasi_temp['kepemilikan']=='Operasional'){
-                                        echo '<option value="Operasional">Operasional</option>';
-                                      } ?>
+                                      <option value="Operasional">Operasional</option>
                                       <option value="Taksi">Taksi</option>
                                       <option value="Pribadi">Kendaraan Pribadi</option>
                                       <option value="Pesawat">Pesawat</option>
@@ -359,23 +378,35 @@
     </div>
   </div>
   <script>
-                                       function transportasiSelect(nameSelect)
-                                        {
-                                            var val = nameSelect.options[nameSelect.selectedIndex].value;
-                                            document.getElementById("lblTransportasi").style.display = val == 'Lainnya' ? "block" : 'none';
-                                            document.getElementById("txtTransportasi").style.display = val == 'Lainnya' ? "block" : 'none';
-                                        }
+    function transportasiSelect(nameSelect)
+    {
+        var val = nameSelect.options[nameSelect.selectedIndex].value;
+        document.getElementById("lblTransportasi").style.display = val == 'Lainnya' ? "block" : 'none';
+        document.getElementById("txtTransportasi").style.display = val == 'Lainnya' ? "block" : 'none';
+    }
 
-                                        $(document).ready(function() {
-                                                $('#transportasi').change(function() {
-                                                    var Transportasi = $('#transportasi').val();
-                                                    if (Transportasi == 'Lainnya') {
-                                                        $('#transportasi_lain').prop('disabled', false);
-                                                        $('#transportasi_lain').prop('required', true);
-                                                    } else {
-                                                        $('#transportasi_lain').prop('disabled', true);
-                                                        $('#transportasi_lain').prop('required', false);
-                                                    }
-                                                });
-                                            });
-                                    </script>
+    $(document).ready(function() {
+            $('#transportasi').change(function() {
+                var Transportasi = $('#transportasi').val();
+                if (Transportasi == 'Lainnya') {
+                    $('#transportasi_lain').prop('disabled', false);
+                    $('#transportasi_lain').prop('required', true);
+                } else {
+                    $('#transportasi_lain').prop('disabled', true);
+                    $('#transportasi_lain').prop('required', false);
+                }
+            });
+
+            var checker = document.getElementById('check');
+            var sendbtn = document.getElementById('submit');
+            sendbtn.disabled = true;
+            // when unchecked or checked, run the function
+            checker.onchange = function() {
+                if (this.checked) {
+                    sendbtn.disabled = false;
+                } else {
+                    sendbtn.disabled = true;
+                }
+            }
+        });
+    </script>

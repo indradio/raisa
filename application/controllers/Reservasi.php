@@ -117,7 +117,7 @@ class Reservasi extends CI_Controller
     public function dl1b_proses($id)
     {
         if ($id == 1) {
-            redirect('reservasi/dl1c2');
+            redirect('reservasi/dl1c');
         } else {
             $data['sidemenu'] = 'Perjalanan Dinas';
             $data['sidesubmenu'] = 'Reservasi';
@@ -129,11 +129,11 @@ class Reservasi extends CI_Controller
             $this->db->set('kepemilikan', 'Operasional');
             $this->db->where('id', $reservasi_temp['id']);
             $this->db->update('reservasi_temp');
-            redirect('reservasi/dl1c1');
+            redirect('reservasi/dl1d');
         };
     }
 
-    public function dl1c1()
+    public function dl1d()
     {
         $data['sidemenu'] = 'Perjalanan Dinas';
         $data['sidesubmenu'] = 'Reservasi';
@@ -143,11 +143,11 @@ class Reservasi extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('reservasi/dl1c1', $data);
+        $this->load->view('reservasi/dl1d', $data);
         $this->load->view('templates/footer');
     }
 
-    public function dl1c1_proses()
+    public function dl1d_proses()
     {
         $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $reservasi_temp = $this->db->order_by('id', "DESC");
@@ -241,7 +241,7 @@ class Reservasi extends CI_Controller
             endforeach;
         }else{
             $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan peserta perjalanan anda terlebih dahulu.</div>');
-            redirect('reservasi/dl1c1');
+            redirect('reservasi/dl1d');
         }
 
         // if ($this->input->post('anggota') == null and $this->input->post('ikut') == null) {
@@ -378,6 +378,8 @@ class Reservasi extends CI_Controller
             $um_malam = 0;
         }
 
+        $total =  $uang_saku +  $insentif_pagi +  $um_pagi +  $um_siang +  $um_malam + $this->input->post('taksi') + $this->input->post('bbm') + $this->input->post('tol') + $this->input->post('parkir');
+        
         $this->db->set('tujuan', implode(', ', $listtujuan));
         $this->db->set('keperluan', $this->input->post('keperluan'));
         $this->db->set('copro', $this->input->post('copro'));
@@ -387,66 +389,67 @@ class Reservasi extends CI_Controller
         $this->db->set('um_pagi', $um_pagi);
         $this->db->set('um_siang', $um_siang);
         $this->db->set('um_malam', $um_malam);
-        $this->db->set('taksi', '0');
-        $this->db->set('bbm', '0');
-        $this->db->set('tol', '0');
-        $this->db->set('parkir', '0');
+        $this->db->set('taksi', $this->input->post('taksi'));
+        $this->db->set('bbm', $this->input->post('bbm'));
+        $this->db->set('tol', $this->input->post('tol'));
+        $this->db->set('parkir', $this->input->post('parkir'));
+        $this->db->set('total', $total);
         $this->db->set('catatan', $this->input->post('catatan'));
+        $this->db->where('id', $reservasi_temp['id']);
+        $this->db->update('reservasi_temp');
+
+        redirect('reservasi/dl1z');
+    }
+
+    // Jika menggunakan kendaraan non-operasional
+    public function dl1c()
+    {
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
+        $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('reservasi/dl1c', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function dl1c_proses()
+    {
+        $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $reservasi_temp = $this->db->order_by('id', "DESC");
+        $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        $this->db->set('kepemilikan', 'Non Operasional');
+        $this->db->set('kendaraan', $this->input->post('kepemilikan'));
+        $this->db->set('nopol', $this->input->post('nopol'));
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
         redirect('reservasi/dl1d');
     }
 
-    // Jika menggunakan kendaraan non-operasional
-    public function dl1c2()
-    {
-        $data['sidemenu'] = 'Perjalanan Dinas';
-        $data['sidesubmenu'] = 'Reservasi';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
-        $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('reservasi/dl1c2', $data);
-        $this->load->view('templates/footer');
-    }
+    // public function dl1d()
+    // {
+    //     $data['sidemenu'] = 'Perjalanan Dinas';
+    //     $data['sidesubmenu'] = 'Reservasi';
+    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    //     $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
+    //     $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+    //     $this->load->view('templates/header', $data);
+    //     $this->load->view('templates/sidebar', $data);
+    //     $this->load->view('templates/navbar', $data);
+    //     $this->load->view('reservasi/dl1d', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
-    public function dl1c2_proses()
-    {
-        $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $reservasi_temp = $this->db->order_by('id', "DESC");
-        $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
-
-        $this->db->set('nopol', $this->input->post('nopol'));
-        $this->db->set('kendaraan', 'Non Operasional');
-        $this->db->set('kepemilikan', $this->input->post('kepemilikan'));
-        $this->db->where('id', $reservasi_temp['id']);
-        $this->db->update('reservasi_temp');
-
-        redirect('reservasi/dl1c1');
-    }
-
-    public function dl1d()
-    {
-        $data['sidemenu'] = 'Perjalanan Dinas';
-        $data['sidesubmenu'] = 'Reservasi';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
-        $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('reservasi/dl1d', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function dl1d_proses()
-    {
-        $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $reservasi_temp = $this->db->order_by('id', "DESC");
-        $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+    // public function dl1d_proses()
+    // {
+    //     $dataku = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    //     $reservasi_temp = $this->db->order_by('id', "DESC");
+    //     $reservasi_temp = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
         // $um = $this->db->get_where('perjalanan_um', ['id' =>  '1'])->row_array();
         // //Uang Saku
         // if ($reservasi_temp['jenis_perjalanan'] == 'TAPP') {
@@ -497,23 +500,23 @@ class Reservasi extends CI_Controller
         // } else {
         //     $um_malam = 0;
         // }
-        $total =  $reservasi_temp['uang_saku'] +  $reservasi_temp['insentif_pagi'] +  $reservasi_temp['um_pagi'] +  $reservasi_temp['um_siang'] +  $reservasi_temp['um_malam'] + $this->input->post('taksi') + $this->input->post('bbm') + $this->input->post('tol') + $this->input->post('parkir');
+        // $total =  $reservasi_temp['uang_saku'] +  $reservasi_temp['insentif_pagi'] +  $reservasi_temp['um_pagi'] +  $reservasi_temp['um_siang'] +  $reservasi_temp['um_malam'] + $this->input->post('taksi') + $this->input->post('bbm') + $this->input->post('tol') + $this->input->post('parkir');
         // $this->db->set('uang_saku', $uang_saku);
         // $this->db->set('insentif_pagi', $insentif_pagi);
         // $this->db->set('um_pagi', $um_pagi);
         // $this->db->set('um_siang', $um_siang);
         // $this->db->set('um_malam', $um_malam);
-        $this->db->set('taksi', $this->input->post('taksi'));
-        $this->db->set('bbm', $this->input->post('bbm'));
-        $this->db->set('tol', $this->input->post('tol'));
-        $this->db->set('parkir', $this->input->post('parkir'));
-        $this->db->set('total', $total);
-        $this->db->set('pic_perjalanan', $this->input->post('pic'));
-        $this->db->where('id', $reservasi_temp['id']);
-        $this->db->update('reservasi_temp');
+    //     $this->db->set('taksi', $this->input->post('taksi'));
+    //     $this->db->set('bbm', $this->input->post('bbm'));
+    //     $this->db->set('tol', $this->input->post('tol'));
+    //     $this->db->set('parkir', $this->input->post('parkir'));
+    //     $this->db->set('total', $total);
+    //     $this->db->set('pic_perjalanan', $this->input->post('pic'));
+    //     $this->db->where('id', $reservasi_temp['id']);
+    //     $this->db->update('reservasi_temp');
 
-        redirect('reservasi/dl1z');
-    }
+    //     redirect('reservasi/dl1z');
+    // }
 
     public function dl1z()
     {
@@ -546,6 +549,10 @@ class Reservasi extends CI_Controller
             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
+            $this->db->where('posisi_id', '3');
+            $this->db->where('dept_id', $this->session->userdata('dept_id'));
+            $ka_dept = $this->db->get('karyawan')->row_array();
+
             $tahun = date("Y", strtotime($reservasi_temp['tglberangkat']));
             $bulan = date("m", strtotime($reservasi_temp['tglberangkat']));
             $this->db->where('year(tglberangkat)', $tahun);
@@ -564,7 +571,7 @@ class Reservasi extends CI_Controller
                 'copro' => $reservasi_temp['copro'],
                 'keperluan' => $reservasi_temp['keperluan'],
                 'anggota' => $reservasi_temp['anggota'],
-                'pic_perjalanan' => $reservasi_temp['pic_perjalanan'],
+                'pic_perjalanan' => $this->input->post('pic'),
                 'tglberangkat' => $reservasi_temp['tglberangkat'],
                 'jamberangkat' => $reservasi_temp['jamberangkat'],
                 'tglkembali' => $reservasi_temp['tglkembali'],
@@ -585,6 +592,10 @@ class Reservasi extends CI_Controller
                 'tol' => $reservasi_temp['tol'],
                 'parkir' => $reservasi_temp['parkir'],
                 'total' => $reservasi_temp['total'],
+                'div_id' => $this->session->userdata('div_id'),
+                'dept_id' => $this->session->userdata('dept_id'),
+                'sect_id' => $this->session->userdata('sect_id'),
+                'ka_dept' => $ka_dept['nama'],
                 'status' => '1'
             ];
             $this->db->insert('reservasi', $data);
@@ -883,6 +894,14 @@ class Reservasi extends CI_Controller
                 'karyawan_nama' => $karyawan['nama'],
                 'karyawan_dept' => $dept['nama'],
                 'karyawan_posisi' => $posisi['nama'],
+                'karyawan_gol' => $karyawan['gol_id'],
+                'uang_saku' => 0,
+                'insentif_pagi' => 0,
+                'um_pagi' => 0,
+                'um_siang' => 0,
+                'um_malam' => 0,
+                'total' => 0,
+                'status_pembayaran' => 'BELUM DIBAYAR',
                 'status' => '0'
             ];
             $this->db->insert('perjalanan_anggota', $peserta);
@@ -925,18 +944,18 @@ class Reservasi extends CI_Controller
         }
 
         if ($this->input->post('checkoperasional') == null) {
-            $kendaraan = 'Non Operasional';
+            $kendaraan = null;
             $nopol = null;
             $kepemilikan = 'Non Operasional';
         } else {
             if ($this->input->post('kendaraan') == 'Taksi' or $this->input->post('kendaraan') == 'Sewa' or $this->input->post('kendaraan') == 'Pribadi') {
                 $nopol = null;
-                $kendaraan = 'Non Operasional';
-                $kepemilikan = $this->input->post('kendaraan');
+                $kendaraan = $this->input->post('kendaraan');
+                $kepemilikan = 'Non Operasional';
             } else {
                 $kr = $this->db->get_where('kendaraan', ['nama' => $this->input->post('kendaraan')])->row_array();
                 $nopol = $kr['nopol'];
-                $kendaraan = $this->input->post('kendaraan');
+                $kendaraan = $kr['nama'];
                 $kepemilikan = 'Operasional';
             }
         }
@@ -962,7 +981,22 @@ class Reservasi extends CI_Controller
         $this->db->where('id', $reservasi_temp['id']);
         $this->db->update('reservasi_temp');
 
-        redirect('reservasi/dl3z');
+        redirect('reservasi/dl3b');
+    }
+
+    public function dl3b()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Reservasi';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['reservasi_temp'] = $this->db->order_by('id', "DESC");
+        $data['reservasi_temp'] = $this->db->get_where('reservasi_temp', ['npk' => $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('reservasi/dl3b', $data);
+        $this->load->view('templates/footer');
     }
 
     public function dl3z()
@@ -996,6 +1030,10 @@ class Reservasi extends CI_Controller
             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
+            $this->db->where('posisi_id', '3');
+            $this->db->where('dept_id', $this->session->userdata('dept_id'));
+            $ka_dept = $this->db->get('karyawan')->row_array();
+
             $tahun = date("Y", strtotime($reservasi_temp['tglberangkat']));
             $bulan = date("m", strtotime($reservasi_temp['tglberangkat']));
             $this->db->where('year(tglberangkat)', $tahun);
@@ -1007,12 +1045,14 @@ class Reservasi extends CI_Controller
             $data = [
                 'id' => $id,
                 'tglreservasi' => date('Y-m-d H:i:s'),
+                'jenis_perjalanan' => $reservasi_temp['jenis_perjalanan'],
                 'npk' => $reservasi_temp['npk'],
                 'nama' => $reservasi_temp['nama'],
                 'tujuan' => $reservasi_temp['tujuan'],
                 'copro' => $reservasi_temp['copro'],
                 'keperluan' => $reservasi_temp['keperluan'],
                 'anggota' => $reservasi_temp['anggota'],
+                'pic_perjalanan' => $this->input->post('pic'),
                 'tujuan' => $reservasi_temp['tujuan'],
                 'tglberangkat' => $reservasi_temp['tglberangkat'],
                 'jamberangkat' => $reservasi_temp['jamberangkat'],
@@ -1027,7 +1067,10 @@ class Reservasi extends CI_Controller
                 'atasan1' => $atasan1['inisial'],
                 'atasan2' => $atasan2['inisial'],
                 'catatan' => $this->input->post('catatan'),
-                'jenis_perjalanan' => $reservasi_temp['jenis_perjalanan'],
+                'div_id' => $this->session->userdata('div_id'),
+                'dept_id' => $this->session->userdata('dept_id'),
+                'sect_id' => $this->session->userdata('sect_id'),
+                'ka_dept' => $ka_dept['nama'],
                 'status' => '1'
             ];
             $this->db->insert('reservasi', $data);
@@ -1166,10 +1209,10 @@ class Reservasi extends CI_Controller
             ];
             $this->db->insert('perjalanan_jadwal', $jadwal);
 
-            redirect('reservasi/dl3z');
+            redirect('reservasi/dl3b');
         } else {
             $this->session->set_flashdata('message', 'backjadwal');
-            redirect('reservasi/dl3z');
+            redirect('reservasi/dl3b');
         }
     }
 
@@ -1178,7 +1221,7 @@ class Reservasi extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('perjalanan_jadwal');
 
-        redirect('reservasi/dl3z');
+        redirect('reservasi/dl3b');
     }
 
     // public function tambahpeserta()

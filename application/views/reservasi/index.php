@@ -13,10 +13,10 @@
           <div class="card-body">
             <div class="toolbar">
               <!--        Here you can write extra buttons/actions for the toolbar              -->
-              <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-rose mb-2" role="button" aria-disabled="false">Reservasi Perjalanan Baru</a>
+              <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-facebook mb-2" role="button" aria-disabled="false">Reservasi Perjalanan Baru</a>
             </div>
             <div class="material-datatables">
-              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+              <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
                     <th>No. Reservasi</th>
@@ -27,7 +27,7 @@
                     <th>Tujuan</th>
                     <th>Keperluan</th>
                     <th>Peserta</th>
-                    <th>Keberangkatan</th>
+                    <th>Berangkat</th>
                     <th>Kembali</th>
                     <th>Catatan</th>
                     <th>Status</th>
@@ -45,7 +45,7 @@
                     <th>Tujuan</th>
                     <th>Keperluan</th>
                     <th>Peserta</th>
-                    <th>Keberangkatan</th>
+                    <th>Berangkat</th>
                     <th>Kembali</th>
                     <th>Catatan</th>
                     <th>Status</th>
@@ -71,13 +71,11 @@
                       <td><?= $status['nama']; ?></td>
                       <td class="text-right">
                         <?php date_default_timezone_set('asia/jakarta'); ?>
-                        <?php if ($rsv['status'] == 0 and $rsv['tglberangkat'] == date("Y-m-d")) { ?>
-                          <a href="<?= base_url('reservasi/aktifkan/') . $rsv['id']; ?>" class="badge badge-success">AKTIFKAN</a>
-                        <?php } elseif ($rsv['status'] == 1 or $rsv['status'] == 2 or $rsv['status'] == 3) { ?>
+                        <?php if ($rsv['status'] >= 1 and $rsv['status'] <= 6) { ?>
                           <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">BATALKAN</a>
                         <?php }; ?>
                       </td>
-                      <td><a href="<?= base_url('reservasi/status/') . $rsv['id']; ?>" class="badge badge-info">CEK STATUS</a></td>
+                      <!-- <td><a href="<?= base_url('reservasi/status/') . $rsv['id']; ?>" class="badge badge-info">CEK STATUS</a></td> -->
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -99,22 +97,23 @@
     <div class="modal-content">
       <div class="card card-signup card-plain">
         <div class="modal-header">
-          <div class="card-header card-header-primary text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              <i class="material-icons">clear</i>
-            </button>
-            <h4 class="card-title">ALASAN PEMBATALAN</h4>
+          <div class="card-header card-header-info text-center">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  <i class="material-icons">clear</i>
+              </button>
+              <h4 class="card-title">ALASAN PEMBATALAN</h4>
           </div>
-        </div>
-        <form class="form" method="post" action="<?= base_url('reservasi/batalrsv'); ?>">
+      </div>
+      <form class="form" method="post" action="<?= base_url('reservasi/batalrsv'); ?>">
           <div class="modal-body">
-            <input type="text" class="form-control disabled" name="id">
-            <textarea rows="2" class="form-control" name="catatan" required></textarea>
+              <input type="hidden" class="form-control disabled" name="id" >
+              <textarea rows="3" class="form-control" name="catatan" placeholder="Contoh : Tidak jadi berangkat" required></textarea>
           </div>
-          <div class="modal-footer justify-content-center">
-            <button type="submit" class="btn btn-danger">BATALKAN PERJALANAN INI!</button>
+          <div class="modal-footer justify-content-right">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+              <button type="submit" class="btn btn-danger">BATALKAN!</button>
           </div>
-        </form>
+      </form>
       </div>
     </div>
   </div>
