@@ -1011,4 +1011,15 @@ class Perjalanan extends CI_Controller
             $this->load->view('templates/footer');
         }
     }
+
+    public function pdf($params=null,$id=null)
+    {
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if ($params == 'ta' and $id != null){
+        
+            $data['perjalanan'] = $this->db->get_where('perjalanan_ta', ['id' => $id])->row_array();
+            $this->load->view('perjalananta/pdf_surat_tugas_ta', $data);
+        }
+    }
 }

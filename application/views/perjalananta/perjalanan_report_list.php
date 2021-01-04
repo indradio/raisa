@@ -66,20 +66,20 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    foreach ($perjalanan as $pdl) : ?>
+                                    foreach ($perjalanan as $row) : ?>
                                         <tr>
-                                            <td><?= $pdl['id']; ?></td>
-                                            <td><?= $pdl['nama']; ?></td>
-                                            <td><?= $pdl['anggota']; ?></td>
-                                            <td><?= $pdl['tujuan']; ?></td>
-                                            <td><?= $pdl['keperluan']; ?></td>
-                                            <td><?= date('d/m/Y', strtotime($pdl['tglberangkat'])) . ' ' . date('H:i', strtotime($pdl['jamberangkat'])); ?></td>
-                                            <td><?= date('d/m/Y', strtotime($pdl['tglkembali'])) . ' ' . date('H:i', strtotime($pdl['jamkembali'])); ?></td>
-                                            <td><?= $pdl['catatan']; ?></td>
-                                            <?php $status = $this->db->get_where('perjalanan_status', ['id' => $pdl['status']])->row_array(); ?>
+                                            <td><?= $row['id']; ?></td>
+                                            <td><?= $row['nama']; ?></td>
+                                            <td><?= $row['anggota']; ?></td>
+                                            <td><?= $row['tujuan']; ?></td>
+                                            <td><?= $row['keperluan']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($row['tglberangkat'])) . ' ' . date('H:i', strtotime($row['jamberangkat'])); ?></td>
+                                            <td><?= date('d/m/Y', strtotime($row['tglkembali'])) . ' ' . date('H:i', strtotime($row['jamkembali'])); ?></td>
+                                            <td><?= $row['catatan']; ?></td>
+                                            <?php $status = $this->db->get_where('perjalanan_status', ['id' => $row['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('perjalanandl/surattugas/') . $pdl['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
+                                                <a href="<?= base_url('perjalanan/pdf/ta/') . $row['id']; ?>" class="btn btn-link btn-info btn-just-icon" target="_blank"><i class="material-icons">print</i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
