@@ -33,7 +33,7 @@
                 <tbody>
                   <?php 
                   // $kry = $this->db->get_where('karyawan', ['sect_id' => $this->session->userdata('sect_id')])->result_array();
-                  $this->db->where('sect_id', $this->session->userdata('sect_id'));
+                  $this->db->where('atasan1', $this->session->userdata('inisial'));
                   $this->db->where('status', 1);
                   $jamkerja = $this->db->get_where('jamkerja')->result_array();
                   foreach ($jamkerja as $jk) : 
@@ -84,6 +84,7 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
+    <?php if ($this->session->userdata('posisi_id')!=3){ ?>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -165,6 +166,7 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
+    <?php } ?>
   </div>
 </div>
 <!-- Modal Revisi Jam Kerja-->

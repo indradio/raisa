@@ -481,10 +481,21 @@ class Jamkerja extends CI_Controller
         }
     }
 
-    public function persetujuan($role)
+    public function persetujuan($role=null)
     {
-        if ($role=='koordinator'){
-            date_default_timezone_set('asia/jakarta');
+        date_default_timezone_set('asia/jakarta');
+        if ($role==null){
+            $data['bulan'] = date('m');
+            $data['tahun'] = date('Y');
+            $data['sidemenu'] = 'Approval Dept';
+            $data['sidesubmenu'] = 'Approval Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/persetujuan_koordinator', $data);
+            $this->load->view('templates/footer');
+        }elseif ($role=='koordinator'){
             $data['bulan'] = date('m');
             $data['tahun'] = date('Y');
             $data['sidemenu'] = 'Koordinator';
@@ -496,7 +507,6 @@ class Jamkerja extends CI_Controller
             $this->load->view('jamkerja/persetujuan_koordinator', $data);
             $this->load->view('templates/footer');
         }elseif ($role=='ppic'){
-            date_default_timezone_set('asia/jakarta');
             $data['bulan'] = date('m');
             $data['tahun'] = date('Y');
             $data['sidemenu'] = 'PPIC';

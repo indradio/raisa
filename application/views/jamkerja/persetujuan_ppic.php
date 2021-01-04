@@ -33,6 +33,7 @@
                 <tbody>
                   <?php
                   date_default_timezone_set('asia/jakarta');
+                  $this->db->where('is_active', 1);
                   $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                   $this->db->where('status', 2);
                   $jamkerja = $this->db->get_where('jamkerja')->result_array();
