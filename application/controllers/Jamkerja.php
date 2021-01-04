@@ -487,7 +487,7 @@ class Jamkerja extends CI_Controller
         if ($role==null){
             $data['bulan'] = date('m');
             $data['tahun'] = date('Y');
-            $data['sidemenu'] = 'Approval Dept';
+            $data['sidemenu'] = 'Approval';
             $data['sidesubmenu'] = 'Approval Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
             $this->load->view('templates/header', $data);
