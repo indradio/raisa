@@ -397,7 +397,7 @@
                                 </div>
                               </td>
                               <td>
-                                <?= $rn['nopol']; ?>
+                                <?= $rn['nopol'] . ' (' .$rn['kendaraan'].')'; ?>
                                 <br />
                                 #<?= $rn['id']; ?>
                                 <br />
@@ -450,7 +450,7 @@
                                   </div>
                                 </td>
                                 <td>
-                                  <?= $pn['nopol']; ?>
+                                  <?= $pn['nopol'] . ' (' .$pn['kendaraan'].')'; ?>
                                   <br />
                                   #<?= $pn['id']; ?>
                                   <br />
@@ -463,7 +463,7 @@
                                   </div>
                                 </td>
                                 <td>
-                                  <?= $pn['nopol']; ?>
+                                  <?= $pn['nopol'] . ' (' .$pn['kendaraan'].')'; ?>
                                   <br />
                                   #<?= $pn['id']; ?>
                                   <br />
@@ -476,7 +476,7 @@
                                   </div>
                                 </td>
                                 <td>
-                                  <?= $pn['nopol']; ?>
+                                  <?= $pn['nopol'] . ' (' .$pn['kendaraan'].')'; ?>
                                   <br />
                                   #<?= $pn['id']; ?>
                                   <br />

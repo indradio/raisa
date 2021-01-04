@@ -32,7 +32,6 @@
                     <th>Catatan</th>
                     <th>Status</th>
                     <th class="disabled-sorting text-right">Actions</th>
-                    <th class="disabled-sorting"></th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -50,7 +49,6 @@
                     <th>Catatan</th>
                     <th>Status</th>
                     <th class="text-right">Actions</th>
-                    <th></th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -75,7 +73,6 @@
                           <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">BATALKAN</a>
                         <?php }; ?>
                       </td>
-                      <!-- <td><a href="<?= base_url('reservasi/status/') . $rsv['id']; ?>" class="badge badge-info">CEK STATUS</a></td> -->
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

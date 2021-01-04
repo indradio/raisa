@@ -196,7 +196,7 @@
                   <label class="col-md-2 col-form-label"></label>
                   <div class="col-md-5">
                     <div class="form-group has-default">
-                    <input type="text" class="form-control" id="akomodasi" name="akomodasi">
+                    <input type="text" class="form-control" id="akomodasi" name="akomodasi" placeholder="Kebutuhan akomodasi lainnya."  >
                     </div>
                   </div>
                 </div>
