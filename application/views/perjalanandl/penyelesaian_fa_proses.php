@@ -245,7 +245,7 @@
                                     if ($perjalanan['selisih']==0){
                                         echo '<button type="submit" class="btn btn-fill btn-success">SELESAI</button>';
                                     }else{
-                                        echo '<button type="submit" class="btn btn-fill btn-default disabled">SILAHKAN BAYAR DULU</button>';
+                                        echo '<button type="submit" class="btn btn-fill btn-default">SILAHKAN BAYAR DULU</button>';
                                     }?>
                                         <a href="#" class="btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiPenyelesaian" data-id="<?= $perjalanan['id']; ?>">REVISI</a>
                                         <a href="<?= base_url('perjalanandl/payment/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
