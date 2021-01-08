@@ -130,8 +130,9 @@
                                                                 $ewallet2 = 'GO-PAY - '.$peserta['ewallet_1'];
                                                             } ?>
                                                             <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-tunj="<?= $tunjPeserta; ?>" data-ewallet1="<?= $ewallet1; ?>" data-ewallet2="<?= $ewallet2; ?>">BAYAR SEKARANG!</a></td>
-                                                        <?php }elseif ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta == 0){ 
-                                                            echo '<td><a href="#" class="btn btn-sm btn-fill btn-default disabled">TIDAK DIBAYAR</a></td>';
+                                                        <?php 
+                                                        // }elseif ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta == 0){ 
+                                                        //     echo '<td><a href="#" class="btn btn-sm btn-fill btn-default disabled">TIDAK DIBAYAR</a></td>';
                                                         }else{
                                                             echo '<td><a href="#" class="btn btn-sm btn-fill btn-success disabled">SUDAH DIBAYAR</a></td>';
                                                          } ?>
@@ -245,7 +246,7 @@
                                     if ($perjalanan['selisih']==0){
                                         echo '<button type="submit" class="btn btn-fill btn-success">SELESAI</button>';
                                     }else{
-                                        echo '<button type="submit" class="btn btn-fill btn-default">SILAHKAN BAYAR DULU</button>';
+                                        echo '<button type="submit" class="btn btn-fill btn-default disabled">SILAHKAN BAYAR DULU</button>';
                                     }?>
                                         <a href="#" class="btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiPenyelesaian" data-id="<?= $perjalanan['id']; ?>">REVISI</a>
                                         <a href="<?= base_url('perjalanandl/payment/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
