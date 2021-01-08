@@ -15,6 +15,13 @@
               <form class="form" method="post" action="<?= base_url('hr/download/presensi'); ?>">
                 <div class="form-group">
                   <!-- <label for="copro">Project*</label> -->
+                  <select class="selectpicker" data-style="btn btn-link" id="year" name="year" title="Pilih Tahun" data-size="7" data-live-search="true" required>
+                    <option value="2020">Januari</option>
+                    <option value="2021" selected>Februari</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <!-- <label for="copro">Project*</label> -->
                   <select class="selectpicker" data-style="btn btn-link" id="month" name="month" title="Pilih Bulan" onchange='this.form.submit()' data-size="7" data-live-search="true" required>
                     <option value="01">Januari</option>
                     <option value="02">Februari</option>
@@ -28,13 +35,6 @@
                     <option value="10">Oktober</option>
                     <option value="11">November</option>
                     <option value="12">Desember</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <!-- <label for="copro">Project*</label> -->
-                  <select class="selectpicker" data-style="btn btn-link" id="year" name="year" title="Pilih Tahun" data-size="7" data-live-search="true" required>
-                    <option value="2020">Januari</option>
-                    <option value="2021" selected>Februari</option>
                   </select>
                 </div>
               </form>
