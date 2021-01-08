@@ -96,9 +96,7 @@
                                                 $peserta = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); ?>
                                                     <tr>
                                                         <td><?= $a['karyawan_inisial']; ?></td>
-                                                        <?php if ($perjalanan['pic_perjalanan'] == $a['karyawan_inisial']){ 
-                                                            $tunj_pic = $a['total']; 
-                                                            ?>
+                                                        <?php if ($a['karyawan_inisial']==$perjalanan['pic_perjalanan']){ ?>
                                                             <td><?= '<a href="#" class="btn btn-link btn-success btn-just-icon" data-toggle="tooltip" data-placement="top" title="PIC Perjalanan"><i class="material-icons">military_tech</i></a>'.$a['karyawan_nama']; ?></td>
                                                         <?php }else{ ?>
                                                             <td><?= '<a href="#" class="btn btn-link btn-default btn-just-icon" data-toggle="tooltip" data-placement="top" title="Peserta"><i class="material-icons">military_tech</i></a>'.$a['karyawan_nama']; ?></td>
@@ -131,10 +129,10 @@
                                                             } ?>
                                                             <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-tunj="<?= $tunjPeserta; ?>" data-ewallet1="<?= $ewallet1; ?>" data-ewallet2="<?= $ewallet2; ?>">BAYAR SEKARANG!</a></td>
                                                         <?php 
-                                                        // }elseif ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta == 0){ 
-                                                        //     echo '<td><a href="#" class="btn btn-sm btn-fill btn-default disabled">TIDAK DIBAYAR</a></td>';
+                                                        }elseif ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta == 0){ 
+                                                            echo '<td><a href="#" class="btn btn-sm btn-fill btn-default disabled">LUNAS*</a></td>';
                                                         }else{
-                                                            echo '<td><a href="#" class="btn btn-sm btn-fill btn-success disabled">SUDAH DIBAYAR</a></td>';
+                                                            echo '<td><a href="#" class="btn btn-sm btn-fill btn-success disabled">LUNAS</a></td>';
                                                          } ?>
                                                     </tr>
                                                 <?php 
@@ -246,7 +244,9 @@
                                     if ($perjalanan['selisih']==0){
                                         echo '<button type="submit" class="btn btn-fill btn-success">SELESAI</button>';
                                     }else{
-                                        echo '<button type="submit" class="btn btn-fill btn-default disabled">SILAHKAN BAYAR DULU</button>';
+                                        // echo '<button type="submit" class="btn btn-fill btn-default disabled">SILAHKAN BAYAR DULU</button>';
+                                        echo '<small>Masih ada peserta yang belum dibayar</small></br>';
+                                        echo '<a href="#" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#selesaiPenyelesaian" data-id="'. $perjalanan['id'] .'">SILAHKAN BAYAR/SELESAIKAN</a>';
                                     }?>
                                         <a href="#" class="btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiPenyelesaian" data-id="<?= $perjalanan['id']; ?>">REVISI</a>
                                         <a href="<?= base_url('perjalanandl/payment/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
@@ -344,6 +344,31 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="selesaiPenyelesaian" tabindex="-1" role="dialog" aria-labelledby="selesaiPenyelesaianTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-info text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">SELESAIKAN PERJALANAN INI?</h4>
+          </div>
+        </div>
+        <form class="form" method="post" action="<?= base_url('perjalanandl/payment/submit'); ?>">
+          <div class="modal-body">
+            <input type="hidden" class="form-control" name="id">
+          </div>
+          <div class="modal-footer justify-content-right">
+            <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+            <button type="submit" class="btn btn-success">SUBMIT</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#payment').on('show.bs.modal', function(event) {
@@ -362,6 +387,13 @@
         })
 
         $('#revisiPenyelesaian').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id') // Extract info from data-* attributes
+        var modal = $(this)
+        modal.find('.modal-body input[name="id"]').val(id)
+        })
+
+        $('#selesaiPenyelesaian').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id') // Extract info from data-* attributes
         var modal = $(this)

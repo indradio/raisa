@@ -1791,26 +1791,41 @@ class Perjalanandl extends CI_Controller
                 $this->load->view('perjalanandl/penyelesaian_fa_daftar', $data);
                 $this->load->view('templates/footer');
             } elseif ($parameter == 'submit') {
-                $this->db->set('payment_by', $this->session->userdata('inisial'));
-                $this->db->set('payment_at', date('Y-m-d H:i:s'));
-                $this->db->set('status', '9');
-                $this->db->where('id', $this->input->post('id'));
-                $this->db->update('perjalanan');
+                $perjalanan = $this->db->get_where('perjalanan', ['id' => $this->input->post('id')])->row_array();
 
                 $this->db->where('perjalanan_id', $this->input->post('id'));
                 $this->db->where('status_pembayaran', 'BELUM DIBAYAR');
                 $unpayment = $this->db->get('perjalanan_anggota')->result_array();
 
                 foreach ($unpayment as $row) :
+                    if ($row['karyawan_inisial']==$perjalanan['pic_perjalanan']){
+                        $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
+                        $kas = $perjalanan['kasbon'];
+                    }else{
+                        $bp = 0;
+                        $kas = 0;
+                    }
+                    $this->db->set('perjalanan', $bp);
+                    $this->db->set('kasbon', $kas);
                     $this->db->set('bayar', 0);
-                    $this->db->set('payment_by', $this->session->userdata('inisial'));
+                    $this->db->set('ewallet', '-');
+                    $this->db->set('payment_by', 'SYSTEM');
                     $this->db->set('payment_at', date('Y-m-d H:i:s'));
-                    $this->db->set('status_pembayaran','SUDAH DIBAYAR');
+                    $this->db->set('status_pembayaran','LUNAS');
                     $this->db->set('status', '9');
                     $this->db->where('perjalanan_id', $this->input->post('id'));
                     $this->db->where('npk', $row['npk']);
                     $this->db->update('perjalanan_anggota');
                 endforeach;
+
+                $selisih = $perjalanan['total']-($perjalanan['kasbon']+$perjalanan['bayar']);
+   
+                $this->db->set('selisih',$selisih);
+                $this->db->set('payment_by', $this->session->userdata('inisial'));
+                $this->db->set('payment_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '9');
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('perjalanan');
 
                 redirect('perjalanandl/payment/daftar');
             }
@@ -1886,6 +1901,8 @@ class Perjalanandl extends CI_Controller
             $ewallet = $this->input->post('ewallet1');
         }
 
+        $this->db->set('perjalanan', $bp);
+        $this->db->set('kasbon', $kas);
         $this->db->set('bayar', $tp);
         $this->db->set('payment_by', $this->session->userdata('inisial'));
         $this->db->set('payment_at', date('Y-m-d H:i:s'));
