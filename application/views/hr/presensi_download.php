@@ -30,6 +30,13 @@
                     <option value="12">Desember</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <!-- <label for="copro">Project*</label> -->
+                  <select class="selectpicker" data-style="btn btn-link" id="year" name="year" title="Pilih Tahun" data-size="7" data-live-search="true" required>
+                    <option value="2020">Januari</option>
+                    <option value="2021" selected>Februari</option>
+                  </select>
+                </div>
               </form>
             </div>
             <div class="material-datatables">

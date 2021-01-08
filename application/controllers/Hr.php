@@ -274,10 +274,11 @@ class Hr extends CI_Controller
         if ($menu == 'presensi') {
             if (empty($this->input->post('month'))) {
                 $data['bulan'] = date('m');
+                $data['tahun'] = date('Y');
             } else {
                 $data['bulan'] = $this->input->post('month');
+                $data['tahun'] = $this->input->post('year');
             }
-            $data['tahun'] = date('Y');
             $data['sidemenu'] = 'HR';
             $data['sidesubmenu'] = 'Kehadiran';
             $this->load->view('templates/header', $data);
