@@ -36,13 +36,13 @@ if (flashData == 'masuk') {
       window.close();
     }
   }).catch(swal.noop)
-} else if (flashData == 'Xsudahsetujudl') {
+} else if (flashData == 'terimakasih') {
   swal({
     title: "Terimakasih!",
-    text: "Perjalanan ini telah Telah disetujui oleh Kepala Departemen.",
+    text: "Data telah diproses.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
-    type: "info"
+    type: "success"
   }).catch(swal.noop)
 } else if (flashData == 'nopolsalah') {
   swal({
@@ -191,7 +191,7 @@ if (flashData == 'masuk') {
 } else if (flashData == 'clockFailed') {
   swal({
     title: "Maaf!",
-    text: "Kehadiraan kamu gagal. \n Sabar dan tunggu sesuai jendela waktu yang telah ditentukan ya! \n (Kalo peta tidak muncul, hubungi RAISA/DIO segera!)",
+    text: "Kehadiraan kamu gagal. \n Yang diupload harus foto (jpg/png) max 5Mb! \n (Kalo peta tidak muncul, hubungi RAISA/DIO segera!)",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-success",
     type: "error"
