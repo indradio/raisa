@@ -138,13 +138,7 @@
                         <textarea rows="3" class="form-control" id="location" name="location" required="true"></textarea>
                         <input type="text" class="form-control" id="platform" name="platform" required="true" />
                     </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div id="modalMap" class="map" style="width:100%;height:380px;"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mt-3 ml-auto mr-auto">
+                      <div class="row col-md-6 ml-auto mr-auto">
                         <div class="fileinput fileinput-new text-center" style="margin:auto;" data-provides="fileinput" >
                             <div class="fileinput-new thumbnail">
                                 <img src="<?= base_url(); ?>assets/img/selfie.jpg" alt="foto" name="foto">
@@ -161,7 +155,6 @@
                             </div>
                         </div>
                       </div>
-                    </div>
                     <div class="row">
                       <div class="col-md-12 ml-auto mr-auto">
                         <div class="form-group has-default">  
@@ -193,14 +186,10 @@
                     </div>
                     </p>
                     <div class="row">
-                      <div class="col-md-12 ml-auto mr-auto">
-                        <div class="form-group">
-                          <label for="note" class="bmd-label-floating"> Catatan * <small><i>(yang akan/sudah kamu kerjakan hari ini)</i></small></label>
-                          <textarea rows="3" class="form-control" id="note" name="note" required="true"></textarea>
-                        </div>
+                      <div class="col-md-12">
+                        <div id="modalMap" class="map" style="width:100%;height:380px;"></div>
                       </div>
                     </div>
-                    </p>
                     <div class="row">
                       <div class="col-md-12 ml-auto mr-auto">
                         <div class="form-group">
@@ -209,6 +198,15 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-12 ml-auto mr-auto">
+                        <div class="form-group">
+                          <label for="note" class="bmd-label-floating"> Catatan * <small><i>(yang akan/sudah kamu kerjakan hari ini)</i></small></label>
+                          <textarea rows="5" class="form-control" id="note" name="note" required="true"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    </p>
                     <div class="form-check mr-auto">
                       <label class="form-check-label">
                       <input class="form-check-input" type="checkbox" id="check" value="" required>
