@@ -74,7 +74,7 @@
                       echo '<th>' . $p['nama'] . '</th>';
                       echo '<th>' . date('H:i', strtotime($p['time'])) . '</th>';
                       echo '<th>' . $p['state'] . '</th>';
-                      echo '<th>' . $p['new_state'] . '</th>';
+                      echo '<th>' . $p['work_state'] . '</th>';
                       if ($sect){
                           echo '<th>' . $sect['nama'] . '</th>';
                         }else{
@@ -85,7 +85,7 @@
                         }else{
                             echo '<th></th>';
                         }
-                        echo '<th>' . $p['loc'] . '</th>';
+                        echo '<th>' . $p['location'] . '</th>';
                         echo '<th>' . $p['platform'] . '</th>';
                     endforeach;
                     ?>
