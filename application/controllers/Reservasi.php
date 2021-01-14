@@ -160,7 +160,7 @@ class Reservasi extends CI_Controller
 
         if ($this->input->post('tujuan') == null and $this->input->post('tlainnya') == null) {
             $this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger" role="alert">Silahkan tentukan tujuan perjalanan anda terlebih dahulu.</div>');
-            redirect('reservasi/dl1c1');
+            redirect('reservasi/dl1d');
         } elseif ($this->input->post('tlainnya') == null) {
             foreach ($this->input->post('tujuan') as $t) :
                 $customer = $this->db->get_where('customer', ['inisial' => $t])->row_array();
