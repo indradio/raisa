@@ -7,10 +7,11 @@
         <i class="material-icons">close</i>
       </button>
       <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
-      <span data-notify="message">Pastikan hal berikut sebelum absen :</span>
-      <span data-notify="message">1. Pastikan GPS kamu aktif</span>
-      <span data-notify="message">2. Klik Terima/Allow jika muncul permintaan akses</span>
-      <span data-notify="message">3. Pastikan Peta muncul</span>
+      <span data-notify="message">Kategori Absen :</span>
+      <span data-notify="message">1. SHIFT Untuk kamu yang kerja normal, langsung dari/ke Customer</span>
+      <span data-notify="message">2. WFH Untuk kamu yang saat ini <strong>KERJA</strong> dari rumah</span>
+      <span data-notify="message">3. OFF DAY Untuk kamu yang harus standby di rumah</span>
+      <span data-notify="message">4. ISOMAN Untuk kamu yang sedang berjuang melawan COVID-19, Semangat!</span>
     </div>
     <div class="row">
       <div class="col-md-12" hidden>
