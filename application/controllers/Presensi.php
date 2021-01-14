@@ -441,18 +441,6 @@ class Presensi extends CI_Controller
         redirect('presensi');
     }
 
-    public function pik()
-    {
-        date_default_timezone_set('asia/jakarta');
-
-        $data = [
-            'npk' => $this->session->userdata('npk'),
-            'nama' => $this->session->userdata('nama')
-        ];
-        $this->db->insert('idcard', $data);
-        redirect('presensi');
-    }
-
     public function data()
     {
         date_default_timezone_set('asia/jakarta');
@@ -471,134 +459,6 @@ class Presensi extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('presensi/data', $data);
         $this->load->view('templates/footer');
-    }
-
-    public function notifikasi($menu)
-    {
-        date_default_timezone_set('asia/jakarta');
-
-        if ($menu == 'index') {
-            $data['sidemenu'] = 'Kehadiran';
-            $data['sidesubmenu'] = 'Data';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $this->load->helper('url');
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('presensi/notifikasi', $data);
-            $this->load->view('templates/footer');
-        } elseif ($menu == 'clin') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('group', 'A');
-            $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
-                //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFORMASI : REIMBURSE PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSelain berkunjung ke klinik atau rumah sakit terdekat, mulai Sekarang kamu bisa melakukan pengobatan (berobat) secara online melalui aplikasi kesehatan seperti halodoc, alodokter, Grab Health dan lainnya." .
-                        "\r\n \r\nBiaya akan direimburse oleh *GARDA MEDIKA* dengan prosedur yang mirip seperti berobat di klinik/rs umum." .
-                        "\r\nMasih bingung? Syarat dan ketentuan kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
-                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
-                        "\r\n#DiRumahAja"
-                );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
-            endforeach;
-            redirect('presensi/notifikasi/index');
-        } elseif ($menu == 'clrest') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('group', 'B');
-            $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
-                //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFORMASI : REIMBURSE PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSelain berkunjung ke klinik atau rumah sakit terdekat, mulai Sekarang kamu bisa melakukan pengobatan (berobat) secara online melalui aplikasi kesehatan seperti halodoc, alodokter, Grab Health dan lainnya." .
-                        "\r\n \r\nBiaya akan direimburse oleh *GARDA MEDIKA* dengan prosedur yang mirip seperti berobat di klinik/rs umum." .
-                        "\r\nMasih bingung? Syarat dan ketentuan kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
-                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
-                        "\r\n#DiRumahAja"
-                );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
-            endforeach;
-            redirect('presensi/notifikasi/index');
-        } elseif ($menu == 'clout') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('group', 'C');
-            $karyawan = $this->db->get('karyawan')->result_array();
-            foreach ($karyawan as $k) :
-                //Notifikasi ke USER
-                $postData = array(
-                    'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                    'number' => $k['phone'],
-                    'message' => "*INFORMASI : REIMBURSE PENGOBATAN MELALUI APLIKASI KESEHATAN ONLINE*" .
-                        "\r\n \r\nSemangat Pagi, Hai *" . $k['nama'] . "*" .
-                        "\r\nSelain berkunjung ke klinik atau rumah sakit terdekat, mulai Sekarang kamu bisa melakukan pengobatan (berobat) secara online melalui aplikasi kesehatan seperti halodoc, alodokter, Grab Health dan lainnya." .
-                        "\r\n \r\nBiaya akan direimburse oleh *GARDA MEDIKA* dengan prosedur yang mirip seperti berobat di klinik/rs umum." .
-                        "\r\nMasih bingung? Syarat dan ketentuan kamu bisa tanyakan langsung ke bagian HR atau pimpinan kerja masing-masing." .
-                        "\r\n \r\n*Obat terbaik adalah mencegah sakit*" .
-                        "\r\nTetap jaga kesehatan kamu dan keluarga dengan menerapkan pola hidup sehat, selalu menggunakan masker jika keluar rumah, dan rajin mencuci tangan." .
-                        "\r\n#DiRumahAja"
-                );
-
-                $ch = curl_init();
-
-                curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                $headers = array();
-                $headers[] = 'Accept: application/json';
-                $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
-            endforeach;
-            redirect('presensi/notifikasi/index');
-        }
     }
 
     public function peta()
@@ -631,9 +491,9 @@ class Presensi extends CI_Controller
         $output = array();
         foreach ($presensi as $row) {
             $output[] = array(
-                $row['nama'].'<br>'.$row['loc'], 
-                $row['lat'], 
-                $row['lng']
+                $row['nama'].'<br>'.$row['location'], 
+                $row['latitude'], 
+                $row['longitude']
             );
         }
 
