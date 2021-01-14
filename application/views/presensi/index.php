@@ -165,14 +165,17 @@
                               <label class="btn btn-default" id="labelOption2" style="width: 100%;">
                                       <input type="radio" name="options" id="option2" autocomplete="off" value="SHIFT2" required>SHIFT2 (07:00-16:30)
                                   </label>
-                              <label class="btn btn-default" id="labelOption3" style="width: 100%;">
+                              <!-- <label class="btn btn-default" id="labelOption3" style="width: 100%;">
                                       <input type="radio" name="options" id="option3" autocomplete="off" value="SHIFT3" required>SHIFT3 (16:30-00:00)
-                                  </label>
+                                  </label> -->
                               <label class="btn btn-default" id="labelOption4" style="width: 100%;">
                                       <input type="radio" name="options" id="option4" autocomplete="off" value="WFH" required>WORK FROM HOME
                                   </label>
                               <label class="btn btn-default" id="labelOption5" style="width: 100%;">
-                                      <input type="radio" name="options" id="option5" autocomplete="off" value="OFF" required>OFF DAY / QUARANTINE
+                                      <input type="radio" name="options" id="option5" autocomplete="off" value="OFF" required>OFF DAY
+                                  </label>
+                              <label class="btn btn-default" id="labelOption6" style="width: 100%;">
+                                      <input type="radio" name="options" id="option6" autocomplete="off" value="ISOMAN" required>ISOMAN / QUARANTINE
                                   </label>
                               <!-- <label class="btn btn-info">
                                       <input type="radio" name="options" id="option4" autocomplete="off" value="D" required>D
@@ -201,7 +204,7 @@
                     <div class="row">
                       <div class="col-md-12 ml-auto mr-auto">
                         <div class="form-group">
-                          <label for="note" class="bmd-label-floating"> Catatan * <small><i>(yang akan/sudah kamu kerjakan hari ini)</i></small></label>
+                          <label for="note" class="bmd-label-floating"> Catatan * <small><i>(yang akan/sudah kamu kerjakan hari ini atau kondisi kesehatan kamu)</i></small></label>
                           <textarea rows="5" class="form-control" id="note" name="note" required="true"></textarea>
                         </div>
                       </div>
@@ -394,9 +397,10 @@ function srvTime() {
 
     // var labelOption1 = document.getElementById('labelOption1');
     var labelOption2 = document.getElementById('labelOption2');
-    var labelOption3 = document.getElementById('labelOption3');
+    // var labelOption3 = document.getElementById('labelOption3');
     var labelOption4 = document.getElementById('labelOption4');
     var labelOption5 = document.getElementById('labelOption5');
+    var labelOption6 = document.getElementById('labelOption6');
 
     // var option1 = document.getElementById('option1');
     // // when unchecked or checked, run the function
@@ -406,6 +410,9 @@ function srvTime() {
     //     labelOption1.style.background = '#00aec5';
     //     labelOption2.style.background = '#999999';
     //     labelOption3.style.background = '#999999';
+    //     labelOption4.style.background = '#999999';
+    //     labelOption5.style.background = '#999999';
+    //     labelOption6.style.background = '#999999';
     //   }
     // }
 
@@ -416,35 +423,38 @@ function srvTime() {
         document.getElementById('work_state').value = 'SHIFT2';
         // labelOption1.style.background = '#999999';
         labelOption2.style.background = '#00aec5';
-        labelOption3.style.background = '#999999';
+        // labelOption3.style.background = '#999999';
         labelOption4.style.background = '#999999';
         labelOption5.style.background = '#999999';
+        labelOption6.style.background = '#999999';
       }
     }
 
-    var option3 = document.getElementById('option3');
-    // when unchecked or checked, run the function
-    option3.onchange = function() {
-      if (this.checked) {
-        document.getElementById('work_state').value = 'SHIFT3';
-        // labelOption1.style.background = '#999999';
-        labelOption2.style.background = '#999999';
-        labelOption3.style.background = '#00aec5';
-        labelOption4.style.background = '#999999';
-        labelOption5.style.background = '#999999';
-      }
-    }
+    // var option3 = document.getElementById('option3');
+    // // when unchecked or checked, run the function
+    // option3.onchange = function() {
+    //   if (this.checked) {
+    //     document.getElementById('work_state').value = 'SHIFT3';
+    //     // labelOption1.style.background = '#999999';
+    //     labelOption2.style.background = '#999999';
+    //     labelOption3.style.background = '#00aec5';
+    //     labelOption4.style.background = '#999999';
+    //     labelOption5.style.background = '#999999';
+    //     labelOption6.style.background = '#999999';
+    //   }
+    // }
 
     var option4 = document.getElementById('option4');
     // when unchecked or checked, run the function
     option4.onchange = function() {
       if (this.checked) {
-        document.getElementById('work_state').value = 'OFF';
+        document.getElementById('work_state').value = 'WFH';
         // labelOption1.style.background = '#999999';
         labelOption2.style.background = '#999999';
-        labelOption3.style.background = '#999999';
+        // labelOption3.style.background = '#999999';
         labelOption4.style.background = '#00aec5';
         labelOption5.style.background = '#999999';
+        labelOption6.style.background = '#999999';
       }
     }
 
@@ -455,9 +465,24 @@ function srvTime() {
         document.getElementById('work_state').value = 'OFF';
         // labelOption1.style.background = '#999999';
         labelOption2.style.background = '#999999';
-        labelOption3.style.background = '#999999';
+        // labelOption3.style.background = '#999999';
         labelOption4.style.background = '#999999';
         labelOption5.style.background = '#00aec5';
+        labelOption6.style.background = '#999999';
+      }
+    }
+
+    var option6 = document.getElementById('option6');
+    // when unchecked or checked, run the function
+    option6.onchange = function() {
+      if (this.checked) {
+        document.getElementById('work_state').value = 'ISOMAN';
+        // labelOption1.style.background = '#999999';
+        labelOption2.style.background = '#999999';
+        // labelOption3.style.background = '#999999';
+        labelOption4.style.background = '#999999';
+        labelOption5.style.background = '#999999';
+        labelOption6.style.background = '#00aec5';
       }
     }
 

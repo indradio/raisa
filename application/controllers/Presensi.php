@@ -54,157 +54,160 @@ class Presensi extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function submit()
-    {
-        date_default_timezone_set('asia/jakarta');
-        $id = date('ymd') . $this->session->userdata('npk') . '-' . $this->input->post('state');
-        if (date('D') == 'Sat' or date('D') == 'Sun') {
-            $day = 'DayOff';
-        } else {
-            $day = 'WorkDay';
-        }
-        if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
-            $state = 'C/In';
-        } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-            $state = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
-            $state = 'C/Out';
-        } else {
-            $state = 'notime';
-        }
+    // public function submit()
+    // {
+    //     date_default_timezone_set('asia/jakarta');
+    //     $id = date('ymd') . $this->session->userdata('npk') . '-' . $this->input->post('state');
+    //     if (date('D') == 'Sat' or date('D') == 'Sun') {
+    //         $day = 'DayOff';
+    //     } else {
+    //         $day = 'WorkDay';
+    //     }
+    //     if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+    //         $state = 'C/In';
+    //     } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
+    //         $state = 'C/Rest';
+    //     } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+    //         $state = 'C/Out';
+    //     } else {
+    //         $state = 'notime';
+    //     }
 
-        if ($state != 'notime') {
-            if (!empty($this->input->post('loc')) or !empty($this->input->post('lat')) or !empty($this->input->post('lng'))) {
-                $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
-                if (empty($presensi)) {
-                    $data = [
-                        'id' => $id,
-                        'npk' => $this->session->userdata('npk'),
-                        'nama' => $this->session->userdata('nama'),
-                        'time' => date('Y-m-d H:i:s'),
-                        'state' => $this->input->post('state'),
-                        'new_state' => $this->input->post('newstate'),
-                        'loc' => $this->input->post('loc'),
-                        'lat' => $this->input->post('lat'),
-                        'lng' => $this->input->post('lng'),
-                        'platform' => $this->input->post('platform'),
-                        'div_id' => $this->session->userdata('div_id'),
-                        'dept_id' => $this->session->userdata('dept_id'),
-                        'sect_id' => $this->session->userdata('sect_id'),
-                        'day_state' => $day,
-                        'temperature' => $this->input->post('temperature'),
-                        'radang' => $this->input->post('radang'),
-                        'flu' => $this->input->post('flu'),
-                        'sesak' => $this->input->post('sesak'),
-                        'condition' => $this->input->post('condition')
-                    ];
-                    $this->db->insert('presensi', $data);
+    //     if ($state != 'notime') {
+    //         if (!empty($this->input->post('loc')) or !empty($this->input->post('lat')) or !empty($this->input->post('lng'))) {
+    //             $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
+    //             if (empty($presensi)) {
+    //                 $data = [
+    //                     'id' => $id,
+    //                     'npk' => $this->session->userdata('npk'),
+    //                     'nama' => $this->session->userdata('nama'),
+    //                     'time' => date('Y-m-d H:i:s'),
+    //                     'state' => $this->input->post('state'),
+    //                     'new_state' => $this->input->post('newstate'),
+    //                     'loc' => $this->input->post('loc'),
+    //                     'lat' => $this->input->post('lat'),
+    //                     'lng' => $this->input->post('lng'),
+    //                     'platform' => $this->input->post('platform'),
+    //                     'div_id' => $this->session->userdata('div_id'),
+    //                     'dept_id' => $this->session->userdata('dept_id'),
+    //                     'sect_id' => $this->session->userdata('sect_id'),
+    //                     'day_state' => $day,
+    //                     'temperature' => $this->input->post('temperature'),
+    //                     'radang' => $this->input->post('radang'),
+    //                     'flu' => $this->input->post('flu'),
+    //                     'sesak' => $this->input->post('sesak'),
+    //                     'condition' => $this->input->post('condition')
+    //                 ];
+    //                 $this->db->insert('presensi', $data);
 
-                    //Work Contract Check
-                    if ($this->session->userdata('contract') == 'Direct Labor') {
-                        //Presensi 3X Check
-                        $tahun = date("Y");
-                        $bulan = date("m");
-                        $tanggal = date("d");
+    //                 //Work Contract Check
+    //                 if ($this->session->userdata('contract') == 'Direct Labor') {
+    //                     //Presensi 3X Check
+    //                     $tahun = date("Y");
+    //                     $bulan = date("m");
+    //                     $tanggal = date("d");
 
-                        $this->db->where('year(time)', $tahun);
-                        $this->db->where('month(time)', $bulan);
-                        $this->db->where('day(time)', $tanggal);
-                        $this->db->where('npk', $this->session->userdata('npk'));
-                        $this->db->where('new_state', 'OFFDAY');
-                        $total_presensi = $this->db->get('presensi');
-                        if ($total_presensi->num_rows() == 3) {
-                            //Jemkerja Check           
-                            $this->db->where('year(tglmulai)', $tahun);
-                            $this->db->where('month(tglmulai)', $bulan);
-                            $this->db->where('day(tglmulai)', $tanggal);
-                            $this->db->where('npk', $this->session->userdata('npk'));
-                            $jamkerja = $this->db->get('jamkerja')->row_array();
-                            if (empty($jamkerja['id'])) {
-                                //Insert jamkerja
-                                $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+    //                     $this->db->where('year(time)', $tahun);
+    //                     $this->db->where('month(time)', $bulan);
+    //                     $this->db->where('day(time)', $tanggal);
+    //                     $this->db->where('npk', $this->session->userdata('npk'));
+    //                     $this->db->where('new_state', 'OFFDAY');
+    //                     $total_presensi = $this->db->get('presensi');
+    //                     if ($total_presensi->num_rows() == 3) {
+    //                         //Jemkerja Check           
+    //                         $this->db->where('year(tglmulai)', $tahun);
+    //                         $this->db->where('month(tglmulai)', $bulan);
+    //                         $this->db->where('day(tglmulai)', $tanggal);
+    //                         $this->db->where('npk', $this->session->userdata('npk'));
+    //                         $jamkerja = $this->db->get('jamkerja')->row_array();
+    //                         if (empty($jamkerja['id'])) {
+    //                             //Insert jamkerja
+    //                             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
-                                $tglmulai = date('Y-m-d 07:30:00');
-                                $tglselesai = date('Y-m-d 16:30:00');
+    //                             $tglmulai = date('Y-m-d 07:30:00');
+    //                             $tglselesai = date('Y-m-d 16:30:00');
 
-                                $this->db->where('year(tglmulai)', $tahun);
-                                $this->db->where('month(tglmulai)', $bulan);
-                                $hitung_jamkerja = $this->db->get('jamkerja');
-                                $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
-                                $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
+    //                             $this->db->where('year(tglmulai)', $tahun);
+    //                             $this->db->where('month(tglmulai)', $bulan);
+    //                             $hitung_jamkerja = $this->db->get('jamkerja');
+    //                             $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
+    //                             $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
 
-                                $create = time();
-                                $due = strtotime(date('Y-m-d 18:00:00'));
-                                $respon = $due - $create;
+    //                             $create = time();
+    //                             $due = strtotime(date('Y-m-d 18:00:00'));
+    //                             $respon = $due - $create;
 
-                                if ($this->session->userdata('posisi_id') == 7) {
-                                    $statusjk = '1';
-                                } else {
-                                    $statusjk = '2';
-                                }
+    //                             if ($this->session->userdata('posisi_id') == 7) {
+    //                                 $statusjk = '1';
+    //                             } else {
+    //                                 $statusjk = '2';
+    //                             }
 
-                                $data_jk = [
-                                    'id' => $id_jk,
-                                    'npk' => $this->session->userdata('npk'),
-                                    'nama' => $this->session->userdata('nama'),
-                                    'tglmulai' => $tglmulai,
-                                    'tglselesai' => $tglselesai,
-                                    'durasi' => '08:00:00',
-                                    'atasan1' => $atasan1['inisial'],
-                                    'posisi_id' => $this->session->userdata('posisi_id'),
-                                    'div_id' => $this->session->userdata('div_id'),
-                                    'dept_id' => $this->session->userdata('dept_id'),
-                                    'sect_id' => $this->session->userdata('sect_id'),
-                                    'produktifitas' => '0',
-                                    'shift' => 'SHIFT2',
-                                    'create' => date('Y-m-d H:i:s'),
-                                    'respon_create' => $respon,
-                                    'status' => $statusjk
-                                ];
-                                $this->db->insert('jamkerja', $data_jk);
+    //                             $data_jk = [
+    //                                 'id' => $id_jk,
+    //                                 'npk' => $this->session->userdata('npk'),
+    //                                 'nama' => $this->session->userdata('nama'),
+    //                                 'tglmulai' => $tglmulai,
+    //                                 'tglselesai' => $tglselesai,
+    //                                 'durasi' => '08:00:00',
+    //                                 'atasan1' => $atasan1['inisial'],
+    //                                 'posisi_id' => $this->session->userdata('posisi_id'),
+    //                                 'div_id' => $this->session->userdata('div_id'),
+    //                                 'dept_id' => $this->session->userdata('dept_id'),
+    //                                 'sect_id' => $this->session->userdata('sect_id'),
+    //                                 'produktifitas' => '0',
+    //                                 'shift' => 'SHIFT2',
+    //                                 'create' => date('Y-m-d H:i:s'),
+    //                                 'respon_create' => $respon,
+    //                                 'status' => $statusjk
+    //                             ];
+    //                             $this->db->insert('jamkerja', $data_jk);
 
-                                //Insert aktivitas
-                                $id_akt = date("ymd") . $this->session->userdata('npk') . time();
-                                $data_akt = [
-                                    'id' => $id_akt,
-                                    'npk' => $this->session->userdata('npk'),
-                                    'link_aktivitas' => $id_jk,
-                                    'jenis_aktivitas' => 'JAM KERJA',
-                                    'tgl_aktivitas' => date("Y-m-d"),
-                                    'tglmulai' => $tglmulai,
-                                    'tglselesai' => $tglselesai,
-                                    'kategori' => '3',
-                                    'aktivitas' => 'No Loading',
-                                    'deskripsi_hasil' => 'Off Day',
-                                    'durasi' => 8,
-                                    'progres_hasil' => '100',
-                                    'dibuat_oleh' => $this->session->userdata('inisial'),
-                                    'dept_id' => $this->session->userdata('dept_id'),
-                                    'sect_id' => $this->session->userdata('sect_id'),
-                                    'contract' => $this->session->userdata('contract'),
-                                    'status' => '1'
-                                ];
-                                $this->db->insert('aktivitas', $data_akt);
-                            }
-                        }
-                    }
+    //                             //Insert aktivitas
+    //                             $id_akt = date("ymd") . $this->session->userdata('npk') . time();
+    //                             $data_akt = [
+    //                                 'id' => $id_akt,
+    //                                 'npk' => $this->session->userdata('npk'),
+    //                                 'link_aktivitas' => $id_jk,
+    //                                 'jenis_aktivitas' => 'JAM KERJA',
+    //                                 'tgl_aktivitas' => date("Y-m-d"),
+    //                                 'tglmulai' => $tglmulai,
+    //                                 'tglselesai' => $tglselesai,
+    //                                 'kategori' => '3',
+    //                                 'aktivitas' => 'No Loading',
+    //                                 'deskripsi_hasil' => 'Off Day',
+    //                                 'durasi' => 8,
+    //                                 'progres_hasil' => '100',
+    //                                 'dibuat_oleh' => $this->session->userdata('inisial'),
+    //                                 'dept_id' => $this->session->userdata('dept_id'),
+    //                                 'sect_id' => $this->session->userdata('sect_id'),
+    //                                 'contract' => $this->session->userdata('contract'),
+    //                                 'status' => '1'
+    //                             ];
+    //                             $this->db->insert('aktivitas', $data_akt);
+    //                         }
+    //                     }
+    //                 }
 
-                    $this->session->set_flashdata('message', 'clockSuccess');
-                } else {
-                    $this->session->set_flashdata('message', 'clockSuccess2');
-                }
-            } else {
-                $this->session->set_flashdata('message', 'clockFailed');
-            }
-        } else {
-            $this->session->set_flashdata('message', 'clockFailed');
-        }
-        redirect('presensi');
-    }
+    //                 $this->session->set_flashdata('message', 'clockSuccess');
+    //             } else {
+    //                 $this->session->set_flashdata('message', 'clockSuccess2');
+    //             }
+    //         } else {
+    //             $this->session->set_flashdata('message', 'clockFailed');
+    //         }
+    //     } else {
+    //         $this->session->set_flashdata('message', 'clockFailed');
+    //     }
+    //     redirect('presensi');
+    // }
 
     public function clocktime()
     {
         date_default_timezone_set('asia/jakarta');
+        $tahun = date("Y");
+        $bulan = date("m");
+        $tanggal = date("d");
         
         if (date('D') == 'Sat' or date('D') == 'Sun') {
             $day = 'WEEKEND';
@@ -221,17 +224,6 @@ class Presensi extends CI_Controller
         $id = date('ymd') . $this->session->userdata('inisial') . $st;
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
-        // if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
-        //     $state = 'C/In';
-        // } elseif (date('H:i') >= '11:30' and date('H:i') <= '13:00') {
-        //     $state = 'C/Rest';
-        // } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
-        //     $state = 'C/Out';
-        // } else {
-        //     $state = 'notime';
-        // }
-
-        // if ($state != 'notime') {
             if (!empty($this->input->post('location')) or !empty($this->input->post('latitude')) or !empty($this->input->post('logitude'))) {
                 $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
                 if (empty($presensi)) {
@@ -250,7 +242,6 @@ class Presensi extends CI_Controller
                             'file_name' => date('ym').'/'.$this->upload->data('file_name'),
                             'npk' => $this->session->userdata('npk'),
                             'nama' => $this->session->userdata('nama'),
-                            // 'time' => date('Y-m-d H:i:s'),
                             'state' => $this->input->post('state'),
                             'work_state' => $this->input->post('work_state'),
                             'location' => $this->input->post('location'),
@@ -262,104 +253,182 @@ class Presensi extends CI_Controller
                             'sect_id' => $this->session->userdata('sect_id'),
                             'atasan1' => $atasan1['inisial'],
                             'day_state' => $day,
-                            // 'temperature' => $this->input->post('temperature'),
-                            // 'radang' => $this->input->post('radang'),
-                            // 'flu' => $this->input->post('flu'),
-                            // 'sesak' => $this->input->post('sesak'),
                             'note' => $this->input->post('note')
                         ];
                         $this->db->insert('presensi', $data);
 
                         $this->session->set_flashdata('message', 'clockSuccess');
 
-                    //Work Contract Check
-                    // if ($this->session->userdata('contract') == 'Direct Labor') {
-                    //     //Presensi 3X Check
-                    //     $tahun = date("Y");
-                    //     $bulan = date("m");
-                    //     $tanggal = date("d");
+                        // Work Contract Check for Off
+                        if ($this->session->userdata('contract') == 'Direct Labor' and $this->input->post('state') == 'C/Out' and $this->input->post('work_state')=='OFF') {
+                
+                            $this->db->where('year(time)', $tahun);
+                            $this->db->where('month(time)', $bulan);
+                            $this->db->where('day(time)', $tanggal);
+                            $this->db->where('npk', $this->session->userdata('npk'));
+                            $this->db->where('state', 'C/In');
+                            $this->db->where('new_state', 'OFF');
+                            $presensiOff = $this->db->get('presensi')->row_array();
+                            if ($presensiOff) {
+                                //Jemkerja Check           
+                                $this->db->where('year(tglmulai)', $tahun);
+                                $this->db->where('month(tglmulai)', $bulan);
+                                $this->db->where('day(tglmulai)', $tanggal);
+                                $this->db->where('npk', $this->session->userdata('npk'));
+                                $jamkerja = $this->db->get('jamkerja')->row_array();
+                                if (empty($jamkerja)) {
+                                    
+                                    //Insert jamkerja
+                                    $tglmulai = date('Y-m-d 07:30:00');
+                                    $tglselesai = date('Y-m-d 16:30:00');
 
-                    //     $this->db->where('year(time)', $tahun);
-                    //     $this->db->where('month(time)', $bulan);
-                    //     $this->db->where('day(time)', $tanggal);
-                    //     $this->db->where('npk', $this->session->userdata('npk'));
-                    //     $this->db->where('new_state', 'OFFDAY');
-                    //     $total_presensi = $this->db->get('presensi');
-                    //     if ($total_presensi->num_rows() == 3) {
-                    //         //Jemkerja Check           
-                    //         $this->db->where('year(tglmulai)', $tahun);
-                    //         $this->db->where('month(tglmulai)', $bulan);
-                    //         $this->db->where('day(tglmulai)', $tanggal);
-                    //         $this->db->where('npk', $this->session->userdata('npk'));
-                    //         $jamkerja = $this->db->get('jamkerja')->row_array();
-                    //         if (empty($jamkerja['id'])) {
-                    //             //Insert jamkerja
-                    //             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
+                                    $this->db->where('year(tglmulai)', $tahun);
+                                    $this->db->where('month(tglmulai)', $bulan);
+                                    $hitung_jamkerja = $this->db->get('jamkerja');
+                                    $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
+                                    $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
 
-                    //             $tglmulai = date('Y-m-d 07:30:00');
-                    //             $tglselesai = date('Y-m-d 16:30:00');
+                                    $create = time();
+                                    $due = strtotime(date('Y-m-d 18:00:00'));
+                                    $respon = $due - $create;
 
-                    //             $this->db->where('year(tglmulai)', $tahun);
-                    //             $this->db->where('month(tglmulai)', $bulan);
-                    //             $hitung_jamkerja = $this->db->get('jamkerja');
-                    //             $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
-                    //             $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
+                                    if ($this->session->userdata('posisi_id') == 7) {
+                                        $statusjk = '1';
+                                    } else {
+                                        $statusjk = '2';
+                                    }
 
-                    //             $create = time();
-                    //             $due = strtotime(date('Y-m-d 18:00:00'));
-                    //             $respon = $due - $create;
+                                    $data_jk = [
+                                        'id' => $id_jk,
+                                        'npk' => $this->session->userdata('npk'),
+                                        'nama' => $this->session->userdata('nama'),
+                                        'tglmulai' => $tglmulai,
+                                        'tglselesai' => $tglselesai,
+                                        'durasi' => '08:00:00',
+                                        'atasan1' => $atasan1['inisial'],
+                                        'posisi_id' => $this->session->userdata('posisi_id'),
+                                        'div_id' => $this->session->userdata('div_id'),
+                                        'dept_id' => $this->session->userdata('dept_id'),
+                                        'sect_id' => $this->session->userdata('sect_id'),
+                                        'produktifitas' => '0',
+                                        'shift' => 'SHIFT2',
+                                        'create' => date('Y-m-d H:i:s'),
+                                        'respon_create' => $respon,
+                                        'status' => $statusjk
+                                    ];
+                                    $this->db->insert('jamkerja', $data_jk);
 
-                    //             if ($this->session->userdata('posisi_id') == 7) {
-                    //                 $statusjk = '1';
-                    //             } else {
-                    //                 $statusjk = '2';
-                    //             }
+                                    //Insert aktivitas
+                                    $id_akt = date("ymd") . $this->session->userdata('npk') . time();
+                                    $data_akt = [
+                                        'id' => $id_akt,
+                                        'npk' => $this->session->userdata('npk'),
+                                        'link_aktivitas' => $id_jk,
+                                        'jenis_aktivitas' => 'JAM KERJA',
+                                        'tgl_aktivitas' => date("Y-m-d"),
+                                        'tglmulai' => $tglmulai,
+                                        'tglselesai' => $tglselesai,
+                                        'kategori' => '3',
+                                        'aktivitas' => 'No Loading',
+                                        'deskripsi_hasil' => 'Off Day',
+                                        'durasi' => 8,
+                                        'progres_hasil' => '100',
+                                        'dibuat_oleh' => $this->session->userdata('inisial'),
+                                        'dept_id' => $this->session->userdata('dept_id'),
+                                        'sect_id' => $this->session->userdata('sect_id'),
+                                        'contract' => $this->session->userdata('contract'),
+                                        'status' => '1'
+                                    ];
+                                    $this->db->insert('aktivitas', $data_akt);
+                                }
+                            }
+                        }
 
-                    //             $data_jk = [
-                    //                 'id' => $id_jk,
-                    //                 'npk' => $this->session->userdata('npk'),
-                    //                 'nama' => $this->session->userdata('nama'),
-                    //                 'tglmulai' => $tglmulai,
-                    //                 'tglselesai' => $tglselesai,
-                    //                 'durasi' => '08:00:00',
-                    //                 'atasan1' => $atasan1['inisial'],
-                    //                 'posisi_id' => $this->session->userdata('posisi_id'),
-                    //                 'div_id' => $this->session->userdata('div_id'),
-                    //                 'dept_id' => $this->session->userdata('dept_id'),
-                    //                 'sect_id' => $this->session->userdata('sect_id'),
-                    //                 'produktifitas' => '0',
-                    //                 'shift' => 'SHIFT2',
-                    //                 'create' => date('Y-m-d H:i:s'),
-                    //                 'respon_create' => $respon,
-                    //                 'status' => $statusjk
-                    //             ];
-                    //             $this->db->insert('jamkerja', $data_jk);
+                        // Work Contract Check for Isoman
+                        if ($this->session->userdata('contract') == 'Direct Labor' and $this->input->post('state') == 'C/Out' and $this->input->post('work_state')=='ISOMAN') {
 
-                    //             //Insert aktivitas
-                    //             $id_akt = date("ymd") . $this->session->userdata('npk') . time();
-                    //             $data_akt = [
-                    //                 'id' => $id_akt,
-                    //                 'npk' => $this->session->userdata('npk'),
-                    //                 'link_aktivitas' => $id_jk,
-                    //                 'jenis_aktivitas' => 'JAM KERJA',
-                    //                 'tgl_aktivitas' => date("Y-m-d"),
-                    //                 'tglmulai' => $tglmulai,
-                    //                 'tglselesai' => $tglselesai,
-                    //                 'kategori' => '3',
-                    //                 'aktivitas' => 'No Loading',
-                    //                 'deskripsi_hasil' => 'Off Day',
-                    //                 'durasi' => 8,
-                    //                 'progres_hasil' => '100',
-                    //                 'dibuat_oleh' => $this->session->userdata('inisial'),
-                    //                 'dept_id' => $this->session->userdata('dept_id'),
-                    //                 'sect_id' => $this->session->userdata('sect_id'),
-                    //                 'contract' => $this->session->userdata('contract'),
-                    //                 'status' => '1'
-                    //             ];
-                    //             $this->db->insert('aktivitas', $data_akt);
-                    //         }
-                    //     }
-                    // }
+                            $this->db->where('year(time)', $tahun);
+                            $this->db->where('month(time)', $bulan);
+                            $this->db->where('day(time)', $tanggal);
+                            $this->db->where('npk', $this->session->userdata('npk'));
+                            $this->db->where('state', 'C/In');
+                            $this->db->where('new_state', 'ISOMAN');
+                            $presensiOff = $this->db->get('presensi')->row_array();
+                            if ($presensiOff) {
+                                //Jemkerja Check           
+                                $this->db->where('year(tglmulai)', $tahun);
+                                $this->db->where('month(tglmulai)', $bulan);
+                                $this->db->where('day(tglmulai)', $tanggal);
+                                $this->db->where('npk', $this->session->userdata('npk'));
+                                $jamkerja = $this->db->get('jamkerja')->row_array();
+                                if (empty($jamkerja)) {
+                                    
+                                    //Insert jamkerja
+                                    $tglmulai = date('Y-m-d 07:30:00');
+                                    $tglselesai = date('Y-m-d 16:30:00');
+
+                                    $this->db->where('year(tglmulai)', $tahun);
+                                    $this->db->where('month(tglmulai)', $bulan);
+                                    $hitung_jamkerja = $this->db->get('jamkerja');
+                                    $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
+                                    $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
+
+                                    $create = time();
+                                    $due = strtotime(date('Y-m-d 18:00:00'));
+                                    $respon = $due - $create;
+
+                                    if ($this->session->userdata('posisi_id') == 7) {
+                                        $statusjk = '1';
+                                    } else {
+                                        $statusjk = '2';
+                                    }
+
+                                    $data_jk = [
+                                        'id' => $id_jk,
+                                        'npk' => $this->session->userdata('npk'),
+                                        'nama' => $this->session->userdata('nama'),
+                                        'tglmulai' => $tglmulai,
+                                        'tglselesai' => $tglselesai,
+                                        'durasi' => '08:00:00',
+                                        'atasan1' => $atasan1['inisial'],
+                                        'posisi_id' => $this->session->userdata('posisi_id'),
+                                        'div_id' => $this->session->userdata('div_id'),
+                                        'dept_id' => $this->session->userdata('dept_id'),
+                                        'sect_id' => $this->session->userdata('sect_id'),
+                                        'produktifitas' => '0',
+                                        'shift' => 'SHIFT2',
+                                        'create' => date('Y-m-d H:i:s'),
+                                        'respon_create' => $respon,
+                                        'status' => $statusjk
+                                    ];
+                                    $this->db->insert('jamkerja', $data_jk);
+
+                                    //Insert aktivitas
+                                    $id_akt = date("ymd") . $this->session->userdata('npk') . time();
+                                    $data_akt = [
+                                        'id' => $id_akt,
+                                        'npk' => $this->session->userdata('npk'),
+                                        'link_aktivitas' => $id_jk,
+                                        'jenis_aktivitas' => 'JAM KERJA',
+                                        'tgl_aktivitas' => date("Y-m-d"),
+                                        'tglmulai' => $tglmulai,
+                                        'tglselesai' => $tglselesai,
+                                        'kategori' => '3',
+                                        'aktivitas' => 'No Loading',
+                                        'deskripsi_hasil' => 'Isolasi Mandiri',
+                                        'durasi' => 8,
+                                        'progres_hasil' => '100',
+                                        'dibuat_oleh' => $this->session->userdata('inisial'),
+                                        'dept_id' => $this->session->userdata('dept_id'),
+                                        'sect_id' => $this->session->userdata('sect_id'),
+                                        'contract' => $this->session->userdata('contract'),
+                                        'status' => '1'
+                                    ];
+                                    $this->db->insert('aktivitas', $data_akt);
+                                }
+                            }
+                        }
+
                     }else{
                         $this->session->set_flashdata('message', 'clockFailed');
                     }
@@ -369,9 +438,6 @@ class Presensi extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', 'clockFailed');
             }
-        // } else {
-        //     $this->session->set_flashdata('message', 'clockFailed');
-        // }
         redirect('presensi');
     }
 
