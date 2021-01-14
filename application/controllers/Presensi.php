@@ -271,10 +271,6 @@ class Presensi extends CI_Controller
                         $this->db->insert('presensi', $data);
 
                         $this->session->set_flashdata('message', 'clockSuccess');
-                    }else{
-                        $this->session->set_flashdata('message', 'clockFailed');
-                    }
-                    
 
                     //Work Contract Check
                     // if ($this->session->userdata('contract') == 'Direct Labor') {
@@ -364,6 +360,9 @@ class Presensi extends CI_Controller
                     //         }
                     //     }
                     // }
+                    }else{
+                        $this->session->set_flashdata('message', 'clockFailed');
+                    }
                 } else {
                     $this->session->set_flashdata('message', 'clockSuccess2');
                 }
