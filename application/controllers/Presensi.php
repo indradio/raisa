@@ -239,7 +239,7 @@ class Presensi extends CI_Controller
                     $config['file_name']            = $id;
                     $config['upload_path']          = './assets/img/presensi/'.date('ym').'/';
                     $config['allowed_types']        = 'jpg|jpeg|png';
-                    $config['max_size']             = '5120';
+                    // $config['max_size']             = '5120';
 
                     if(!is_dir($config['upload_path'])) mkdir($config['upload_path'], 0777, TRUE);
                     $this->load->library('upload', $config);
