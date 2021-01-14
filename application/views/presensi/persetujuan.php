@@ -16,6 +16,7 @@
                         <tr>
                           <th class="text-center"></th>
                           <th>Nama</th>
+                          <th class="th-description">Time</th>
                           <th class="th-description">Flag</th>
                           <th class="th-description">Status</th>
                           <th class="th-description">Catatan</th>
@@ -34,6 +35,9 @@
                             <a href="#"><?= $row['nama']; ?></a>
                             <br>
                             <small><?= $row['location']; ?></small>
+                          </td>
+                          <td> 
+                          <?= date('d-m-Y H:i', strtotime($row['time'])); ?>
                           </td>
                           <td> 
                           <?= $row['state']; ?>
