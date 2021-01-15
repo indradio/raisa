@@ -137,6 +137,12 @@ class Auth extends CI_Controller
                 ];
                 $this->session->set_userdata($data);
                 $this->session->set_flashdata('message', 'masuk');
+
+                $data = [
+                    'npk' => $karyawan['npk'],
+                    'activity' => 'Login to RAISA'
+                ];
+
                 redirect('dashboard');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-rose">
@@ -171,9 +177,6 @@ class Auth extends CI_Controller
 
     public function backdoor()
     {
-        if (empty($this->input->post('npk'))){
-            $this->load->view('auth/backdoor');
-        }else{
         $npk = $this->input->post('npk');
         $password = $this->input->post('pwd');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
@@ -262,6 +265,5 @@ class Auth extends CI_Controller
             </div> </br>');
             redirect('auth');
         }
-    }
     }
 }
