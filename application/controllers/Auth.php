@@ -138,10 +138,11 @@ class Auth extends CI_Controller
                 $this->session->set_userdata($data);
                 $this->session->set_flashdata('message', 'masuk');
 
-                $data = [
+                $log = [
                     'npk' => $karyawan['npk'],
                     'activity' => 'Login to RAISA'
                 ];
+                $this->db->insert('log', $log);
 
                 redirect('dashboard');
             } else {
