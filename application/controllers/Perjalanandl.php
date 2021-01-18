@@ -2037,8 +2037,10 @@ class Perjalanandl extends CI_Controller
             $data['perjalanan'] = $this->db->order_by('id', 'DESC');
             $data['perjalanan'] = $this->db->limit('100');
             $data['perjalanan'] = $this->db->where('kasbon_out >', 0);
+            $data['perjalanan'] = $this->db->where('status >', 0);
             $data['perjalanan'] = $this->db->where('status <', 9);
             $data['perjalanan'] = $this->db->or_where('kasbon >', 0);
+            $data['perjalanan'] = $this->db->where('status >', 0);
             $data['perjalanan'] = $this->db->where('status <', 9);
             $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
             $this->load->view('templates/header', $data);
