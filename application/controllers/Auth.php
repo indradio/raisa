@@ -257,14 +257,14 @@ class Auth extends CI_Controller
                 <strong>Login Gagal</strong>
                 <span>Maaf, Password yang kamu masukan salah.</span>
                 </div> </br>');
-                redirect('auth');
+                 $this->load->view('auth/backdoor');
             }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-rose">
             <strong>Login Gagal</strong>
             <span>Maaf, NPK Kamu tidak ditemukan.</span>
             </div> </br>');
-            redirect('auth');
+             $this->load->view('auth/backdoor');
         }
     }
 }
