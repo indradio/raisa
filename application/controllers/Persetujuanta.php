@@ -63,6 +63,7 @@ class Persetujuanta extends CI_Controller
                 $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_div', date('Y-m-d H:i:s'));
                 $this->db->set('status', '5');
+                $this->db->set('last_notify', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
     
@@ -103,6 +104,7 @@ class Persetujuanta extends CI_Controller
                 $this->db->set('div_ttd', "Disetujui oleh " . $this->session->userdata['inisial']);
                 $this->db->set('tgl_div', date('Y-m-d H:i:s'));
                 $this->db->set('status', '6');
+                $this->db->set('last_notify', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
     

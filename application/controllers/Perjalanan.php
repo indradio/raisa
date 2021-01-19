@@ -514,12 +514,13 @@ class Perjalanan extends CI_Controller
             $reservasi = $this->db->get_where('reservasi', ['id' => $id])->row_array();
             $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $id])->row_array();
 
-            $this->db->where('year(tglberangkat)', date('Y'));
-            $this->db->where('month(tglberangkat)', date('m'));
-            $this->db->from('perjalanan');
+            // $this->db->where('year(tglberangkat)', date('Y'));
+            // $this->db->where('month(tglberangkat)', date('m'));
+            // $this->db->from('perjalanan');
+            // $totaldl = $this->db->get()->num_rows() + 1;
 
-            $totaldl = $this->db->get()->num_rows() + 1;
-            $iddl = 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . sprintf("%04s", $totaldl);
+            $this->load->helper('string');
+            $iddl = 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . random_string('alnum',8);
             $kasbon = $this->input->post('kasbon') > 0 ? "REQUEST" : "CLOSED";
           
             if (empty($perjalanan)){
@@ -798,6 +799,7 @@ class Perjalanan extends CI_Controller
                 $this->db->set('admin_hr', $this->session->userdata('inisial'));
                 $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
                 $this->db->set('status', '6');
+                $this->db->set('last_notify', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 
@@ -990,6 +992,7 @@ class Perjalanan extends CI_Controller
 
             $data['reservasi'] = $this->db->where('jenis_perjalanan', 'TA');
             $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '5'])->result_array();
+            
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);

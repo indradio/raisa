@@ -69,7 +69,7 @@ class Persetujuandl extends CI_Controller
         }
 
         $user = $this->db->get_where('karyawan', ['npk' => $rsv['npk']])->row_array();
-        if (date('H:i', strtotime($rsv['jamberangkat'])) != date("H:i", strtotime($this->input->post('jamberangkat'))) and date('H:i', strtotime($rsv['jamkembali'])) != date("H:i", strtotime($this->input->post('jamkembali')))) {
+        if (date('H:i', strtotime($rsv['jamberangkat'])) != date("H:i", strtotime($this->input->post('jamberangkat'))) OR date('H:i', strtotime($rsv['jamkembali'])) != date("H:i", strtotime($this->input->post('jamkembali')))) {
             $client = new \GuzzleHttp\Client();
             $response = $client->post(
                 'https://region01.krmpesan.com/api/v2/message/send-text',
@@ -86,7 +86,7 @@ class Persetujuandl extends CI_Controller
                         "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
                         "\r\n \r\n*BERUBAH MENJADI*" .
                         "\r\nBerangkat : " . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - *' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
-                        "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - *' . date("H:i", strtotime($rsv['jamkembali'])) . "*" .
+                        "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - *' . date("H:i", strtotime($this->input->post('jamkembali'))) . "*" .
                         "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                     ],
                 ]
@@ -143,6 +143,7 @@ class Persetujuandl extends CI_Controller
             if ($rsv['jenis_perjalanan'] == 'DLPP') {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '6');
+                $this->db->set('last_notify', date('Y-m-d H:i:s'));
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('reservasi');
 

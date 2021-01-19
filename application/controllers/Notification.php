@@ -436,6 +436,12 @@ class Notification extends CI_Controller
             $jam   = floor($durasi / (60 * 60));
             $menit   = floor($durasi / 60);
             $user = $this->db->get_where('karyawan', ['npk' => $p['npk']])->row_array();
+
+                         $this->db->where('sect_id', $p['sect_id']);
+                         $this->db->where('posisi_id', $user['atasan1']);
+            $sect_head = $this->db->get('karyawan')->row_array();
+
+            $dept_head = $this->db->get_where('karyawan', ['nama' => $p['ka_dept']])->row_array();
             
             if ($menit > 1) {
                 $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
@@ -463,6 +469,32 @@ class Notification extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+
+                    if ($sect_head){
+                        //Notify to Section Head
+                        $client = new \GuzzleHttp\Client();
+                        $response = $client->post(
+                            'https://region01.krmpesan.com/api/v2/message/send-text',
+                            [
+                                'headers' => [
+                                    'Content-Type' => 'application/json',
+                                    'Accept' => 'application/json',
+                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                                ],
+                                'json' => [
+                                    'phone' => $sect_head['phone'],
+                                    'message' => "*PERJALANAN DINAS INI HARUS SEGERA BERANGKAT*". 
+                                        "\r\n \r\nPerjalanan dinas kamu dengan No. PERJALANAN : *" . $p['id'] . "*" .
+                                        "\r\nPeserta : *" . $p['anggota'] . "*" .
+                                        "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                        "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
+                                        "\r\n \r\nWaktu keberangkatan perjalanan ini *Telah Tiba*."
+                                ],
+                            ]
+                        );
+                        $body = $response->getBody();
+                    }
+
                     echo '<p>#'. $p['id'] .' [INFO] Kirim Notif Waktu perjalanan telah tiba - Berhasil';
 
                     $data = array(
@@ -499,6 +531,33 @@ class Notification extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+
+                    if ($dept_head){
+                        //Notify to Dept Head
+                        $client = new \GuzzleHttp\Client();
+                        $response = $client->post(
+                            'https://region01.krmpesan.com/api/v2/message/send-text',
+                            [
+                                'headers' => [
+                                    'Content-Type' => 'application/json',
+                                    'Accept' => 'application/json',
+                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                                ],
+                                'json' => [
+                                    'phone' => $sect_head['phone'],
+                                    'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS SUDAH LEWAT 30 MENIT*". 
+                                        "\r\n \r\nPerjalanan dinas dengan No. PERJALANAN : *" . $p['id'] . "*" .
+                                        "\r\nPeserta : *" . $p['anggota'] . "*" .
+                                        "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                        "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _rencana_" .
+                                        "\r\n \r\nWaktu keberangkatan perjalanan Ini *Telah Lewat 30 Menit*." . 
+                                        "\r\nJika tidak melakukan perjalanan dalam dalam *30 Menit* kedepan maka perjalanan akan dibatalkan."
+                                ],
+                            ]
+                        );
+                        $body = $response->getBody();
+                    }
+
                     echo '<p>#'. $p['id'] .' [INFO] Kirim Notif Waktu perjalanan lewat 30 menit - Berhasil';
 
                     $data = array(
@@ -553,6 +612,64 @@ class Notification extends CI_Controller
                 $body = $response->getBody();
                 echo '<p>#'. $p['id'] .' [DIBATALKAN] Kirim Notif perjalanan dibatalkan - Berhasil';
             }
+        endforeach;
+// ----------------------------------------------------------------------------------------
+
+        //Notifikasi perjalanan pagi - belum selesai
+        $n = time();
+        $t = date('Y-m-d', strtotime('+1 days'));
+
+                    $this->db->where('tglberangkat', $t);
+                    $this->db->where('jamberangkat <=', '07:30:00');
+                    $this->db->where('status', '6');
+        $dlPagi =   $this->db->get('reservasi')->result_array();
+
+        foreach ($dlPagi as $row) :
+            // cari selisih
+            // $berangkat = strtotime($row['jamberangkat']);
+            // $duedate = strtotime('07:30:00');
+            // $durasi = $selesai - $mulai;
+            // $jam   = floor($durasi / (60 * 60));
+            // $menit   = floor($durasi / 60);
+            $last_notify = strtotime(date('Y-m-d H:i:s', strtotime('+2 hours', strtotime($row['last_notify']))));
+
+                        $this->db->where('sect_id', '214');
+            $ga_admin = $this->db->get('karyawan_admin')->row_array();
+            
+            if ($last_notify < $t) {
+                $notifyCheck = $this->db->get_where('notifikasi', ['id' => $p['id']])->row_array();
+                if (empty($notifyCheck)){
+                    //Notify to GA
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(
+                        'https://region01.krmpesan.com/api/v2/message/send-text',
+                        [
+                            'headers' => [
+                                'Content-Type' => 'application/json',
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                            ],
+                            'json' => [
+                                'phone' => $ga_admin['phone'],
+                                'message' => "*[MENUGGU APPROVAL] PERJALANAN DINAS HARUS DIBERANGKAT PAGI*". 
+                                    "\r\n \r\nPerjalanan Dinas dengan No. PERJALANAN : *" . $row['id'] . "*" .
+                                    "\r\nPeserta : *" . $row['anggota'] . "*" .
+                                    "\r\nTujuan : *" . $row['tujuan'] . "*" .
+                                    "\r\nBerangkat : *" . date('d-M', strtotime($row['tglberangkat'])) . "* *" . date('H:i', strtotime($row['jamberangkat'])) . "* _rencana_" .
+                                    "\r\n \r\nWaktu keberangkatan perjalanan ini harus *DIBERANGKATKAN PAGI*." .
+                                    "\r\n \r\nMohon untuk approval segera!."
+                            ],
+                        ]
+                    );
+                    $body = $response->getBody();
+                    echo '<p>#'. $p['id'] .' [INFO] Kirim Notif Waktu perjalanan telah tiba - Berhasil';
+
+                    $this->db->set('last_notify', date('Y-m-d H:i:s'));
+                    $this->db->where('id', $row['id']);
+                    $this->db->update('reservasi');
+                }
+            }
+
         endforeach;
 // ----------------------------------------------------------------------------------------
         // Notif Kehadiran hari ini to Atasan
