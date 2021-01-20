@@ -520,7 +520,7 @@ class Perjalanan extends CI_Controller
             // $totaldl = $this->db->get()->num_rows() + 1;
 
             $this->load->helper('string');
-            $iddl = 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . random_string('alnum',8);
+            $iddl = 'DL' . date("ym", strtotime($reservasi['tglberangkat'])) . random_string('alnum',3);
             $kasbon = $this->input->post('kasbon') > 0 ? "REQUEST" : "CLOSED";
           
             if (empty($perjalanan)){
