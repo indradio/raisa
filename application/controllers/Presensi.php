@@ -414,7 +414,7 @@ class Presensi extends CI_Controller
                                         'tglmulai' => $tglmulai,
                                         'tglselesai' => $tglselesai,
                                         'kategori' => '3',
-                                        'aktivitas' => 'No Loading',
+                                        'aktivitas' => 'Sakit',
                                         'deskripsi_hasil' => 'Isolasi Mandiri',
                                         'durasi' => 8,
                                         'progres_hasil' => '100',
