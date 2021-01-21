@@ -360,7 +360,7 @@ class Perjalanan extends CI_Controller
                 $um_siang = $query->row()->um_siang;
             }elseif ($perjalanan['jamberangkat'] <= $um['um3'] and $perjalanan['jamkembali'] <= $um['um3'] and $perjalanan['tglkembali'] > $perjalanan['tglberangkat']) {
                 $this->db->select_sum('um_siang');
-                $this->db->where('perjalanan_id', $parameter);
+                $this->db->where('perjalanan_id', $perjalanan['id']);
                 $query = $this->db->get('perjalanan_anggota');
                 $um_siang = $query->row()->um_siang;
             } else {
