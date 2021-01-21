@@ -50,9 +50,9 @@ class Jamkerja extends CI_Controller
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
         if ($this->input->post('shift')=='SHIFT1'){
-            $tglmulai = date('Y-m-d 00:00:00', strtotime($tanggal));
+            $tglmulai = date('Y-m-d 00:30:00', strtotime($tanggal));
             $tglselesai = date('Y-m-d 07:30:00', strtotime($tanggal));
-            $due = strtotime(date('Y-m-d 00:00:00', strtotime('+1 days', strtotime($tanggal))));
+            $due = strtotime(date('Y-m-d 00:30:00', strtotime('+1 days', strtotime($tanggal))));
         }elseif($this->input->post('shift')=='SHIFT2'){
             $tglmulai = date('Y-m-d 07:30:00', strtotime($tanggal));
             $tglselesai = date('Y-m-d 16:30:00', strtotime($tanggal));

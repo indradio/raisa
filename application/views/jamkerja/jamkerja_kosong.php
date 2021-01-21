@@ -83,7 +83,7 @@
                                 <div class="col-md-7">
                                     <div class="form-group has-default">
                                         <select class="form-control selectpicker" data-size="5" data-style="btn btn-link" id="shift" name="shift" title="Pilih Shift" required="true">
-                                            <option value="SHIFT1" disabled>Shift 1 (00:00)</option>
+                                            <option value="SHIFT1">Shift 1 (00:30)</option>
                                             <option value="SHIFT2">Shift 2 (07:30)</option>
                                             <option value="SHIFT3">Shift 3 (16:30)</option>
                                         </select>
