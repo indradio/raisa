@@ -159,6 +159,11 @@ class Perjalanan extends CI_Controller
                     $this->db->where('perjalanan_id', $parameter);
                     $query = $this->db->get('perjalanan_anggota');
                     $um_siang = $query->row()->um_siang;
+                }elseif ($perjalanan['jamberangkat'] <= $um['um3'] and $perjalanan['jamkembali'] <= $um['um3'] and $perjalanan['tglkembali'] > $perjalanan['tglberangkat']) {
+                    $this->db->select_sum('um_siang');
+                    $this->db->where('perjalanan_id', $parameter);
+                    $query = $this->db->get('perjalanan_anggota');
+                    $um_siang = $query->row()->um_siang;
                 } else {
                     $um_siang = 0;
                 };
@@ -351,6 +356,11 @@ class Perjalanan extends CI_Controller
             if ($perjalanan['jamberangkat'] <= $um['um3'] and $perjalanan['jamkembali'] >= $um['um3']) {
                 $this->db->select_sum('um_siang');
                 $this->db->where('perjalanan_id', $perjalanan['id']);
+                $query = $this->db->get('perjalanan_anggota');
+                $um_siang = $query->row()->um_siang;
+            }elseif ($perjalanan['jamberangkat'] <= $um['um3'] and $perjalanan['jamkembali'] <= $um['um3'] and $perjalanan['tglkembali'] > $perjalanan['tglberangkat']) {
+                $this->db->select_sum('um_siang');
+                $this->db->where('perjalanan_id', $parameter);
                 $query = $this->db->get('perjalanan_anggota');
                 $um_siang = $query->row()->um_siang;
             } else {
