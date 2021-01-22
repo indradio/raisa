@@ -109,11 +109,16 @@ class Lembur extends CI_Controller
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
 
-        $this->db->where('year(tglmulai_rencana)', date('Y'));
-        $this->db->where('month(tglmulai_rencana)', date('m'));
-        $lembur = $this->db->get('lembur');
-        $total_lembur = $lembur->num_rows()+1;
-        $id = 'OT'.date('ym'). sprintf("%04s", $total_lembur);
+        // $this->db->where('year(tglmulai_rencana)', date('Y'));
+        // $this->db->where('month(tglmulai_rencana)', date('m'));
+        // $lembur = $this->db->get('lembur');
+        // $total_lembur = $lembur->num_rows()+1;
+        
+        $this->load->helper('string');
+
+        $id = 'OT'.date('ym'). random_string('alnum',3);
+        $existid = $this->db->get_where('lembur', ['id' => $id])->row_array();
+        if (!empty($existid)){$id = 'OT'.date('ym'). random_string('alnum',4);}
 
         if (date('H:i:s') <= date('16:30:00')) {
             $tglmulai = date('Y-m-d 16:30:00');
@@ -166,11 +171,17 @@ class Lembur extends CI_Controller
         $bulan = date("m", strtotime($this->input->post('tglmulai')));
 
         if (date("Y-m-d", strtotime($this->input->post('tglmulai'))) > date('Y-m-d')) {
-            $this->db->where('year(tglmulai_rencana)', $tahun);
-            $this->db->where('month(tglmulai_rencana)', $bulan);
-            $lembur = $this->db->get('lembur');
-            $total_lembur = $lembur->num_rows()+1;
-            $id = 'OT'.date('ym', strtotime($this->input->post('tglmulai'))). sprintf("%04s", $total_lembur);
+            // $this->db->where('year(tglmulai_rencana)', $tahun);
+            // $this->db->where('month(tglmulai_rencana)', $bulan);
+            // $lembur = $this->db->get('lembur');
+            // $total_lembur = $lembur->num_rows()+1;
+            // $id = 'OT'.date('ym', strtotime($this->input->post('tglmulai'))). sprintf("%04s", $total_lembur);
+
+            $this->load->helper('string');
+
+            $id = 'OT'.date('ym', strtotime($this->input->post('tglmulai'))). random_string('alnum',3);
+            $existid = $this->db->get_where('lembur', ['id' => $id])->row_array();
+            if (!empty($existid)){$id = 'OT'.date('ym'). random_string('alnum',4);}
 
             if (date('D', strtotime($this->input->post('tglmulai'))) == 'Sat' OR date('D', strtotime($this->input->post('tglmulai'))) == 'Sun') {
                 $hari = 2;
