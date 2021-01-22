@@ -1801,15 +1801,13 @@ class Perjalanandl extends CI_Controller
                     if ($row['karyawan_inisial']==$perjalanan['pic_perjalanan']){
                         $bp = $perjalanan['taksi']+$perjalanan['bbm']+$perjalanan['tol']+$perjalanan['parkir'];
                         $kas = $perjalanan['kasbon'];
-                        $bayar = $row['total'] + $bp ;
                     }else{
                         $bp = 0;
                         $kas = 0;
-                        $bayar = $row['total'];
                     }
                     $this->db->set('perjalanan', $bp);
                     $this->db->set('kasbon', $kas);
-                    $this->db->set('bayar', $bayar);
+                    $this->db->set('bayar', $kas);
                     $this->db->set('ewallet', '-');
                     $this->db->set('payment_by', 'SYSTEM');
                     $this->db->set('payment_at', date('Y-m-d H:i:s'));
