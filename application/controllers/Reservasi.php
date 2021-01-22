@@ -596,7 +596,8 @@ class Reservasi extends CI_Controller
                 'dept_id' => $this->session->userdata('dept_id'),
                 'sect_id' => $this->session->userdata('sect_id'),
                 'ka_dept' => $ka_dept['nama'],
-                'status' => '1'
+                'status' => '1',
+                'last_notify' => date('Y-m-d H:i:s')
             ];
             $this->db->insert('reservasi', $data);
 
@@ -1071,7 +1072,8 @@ class Reservasi extends CI_Controller
                 'dept_id' => $this->session->userdata('dept_id'),
                 'sect_id' => $this->session->userdata('sect_id'),
                 'ka_dept' => $ka_dept['nama'],
-                'status' => '1'
+                'status' => '1',
+                'last_notify' => date('Y-m-d H:i:s')
             ];
             $this->db->insert('reservasi', $data);
 
