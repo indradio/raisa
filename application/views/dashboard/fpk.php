@@ -143,7 +143,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="b2" class="bmd-label-floating">B2. Di lingkungan tempat tinggal dengan radius <b>100 M</b> dari rumah, ada tetangga yang dinyatakan positif COVID-19 atau sedang menjalani Isolasi Mandiri</label>
+                <label for="b2" class="bmd-label-floating">B2. Di lingkungan tempat tinggal dengan radius <b>1 rumah kanan kiri langsung, rumah depan, dan rumah kanan kiri depan rumah</b>, ada tetangga yang dinyatakan positif COVID-19 atau sedang menjalani Isolasi Mandiri</label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="b2" name="b2" title="Silahkan Pilih" data-size="2" data-live-search="false" required>
                   <option value="YA">YA, ADA</option>
                   <option value="TIDAK">TIDAK ADA</option>

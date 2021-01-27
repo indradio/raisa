@@ -415,7 +415,7 @@ class Presensi extends CI_Controller
                                         'tglselesai' => $tglselesai,
                                         'kategori' => '3',
                                         'aktivitas' => 'Sakit',
-                                        'deskripsi_hasil' => 'Isolasi Mandiri',
+                                        'deskripsi_hasil' => 'Isolasi Mandiri Covid-19',
                                         'durasi' => 8,
                                         'progres_hasil' => '100',
                                         'dibuat_oleh' => $this->session->userdata('inisial'),
