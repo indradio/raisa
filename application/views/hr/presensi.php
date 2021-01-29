@@ -51,16 +51,15 @@
                     <tr>
                       <th rowspan="2">Nama</th>
                       <th rowspan="2">Tanggal</th>
-                      <th colspan="2" style="text-align: center;">MASUK</th>
-                      <th colspan="2" style="text-align: center;">ISTIRAHAT</th>
-                      <th colspan="2" style="text-align: center;">KELUAR</th>
+                      <th colspan="3" style="text-align: center;">MASUK</th>
+                      <th colspan="3" style="text-align: center;">KELUAR</th>
                     </tr>
                     <tr>
                       <th>Waktu</th>
+                      <th>Status</th>
                       <th>Lokasi</th>
                       <th>Waktu</th>
-                      <th>Lokasi</th>
-                      <th>Waktu</th>
+                      <th>Status</th>
                       <th>Lokasi</th>
                     </tr>
                   </thead>
@@ -105,24 +104,21 @@
                         }
                         if (!empty($in)) {
                           echo '<th>' . date('H:i', strtotime($in['time'])) . '</th>';
-                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $in['lat'] . ',' . $in['lng'] . '" class="text-secondary" target="_blank"><u>' . $in['loc'] . '</u></a></th>';
+                          echo '<th>' . $in['work_state'] . '</th>';
+                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $in['latitude'] . ',' . $in['longitude'] . '" class="text-secondary" target="_blank"><u>' . $in['location'] . '</u></a></th>';
                         } else {
-                          echo '<th class="table-danger"></th>';
-                          echo '<th class="table-danger"></th>';
-                        }
-                        if (!empty($rest)) {
-                          echo '<th>' . date('H:i', strtotime($rest['time'])) . '</th>';
-                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $rest['lat'] . ',' . $rest['lng'] . '" class="text-secondary" target="_blank"><u>' . $rest['loc'] . '</u></a></th>';
-                        } else {
-                          echo '<th class="table-danger"></th>';
-                          echo '<th class="table-danger"></th>';
+                          echo '<th class="bg-danger"></th>';
+                          echo '<th class="bg-danger"></th>';
+                          echo '<th class="bg-danger"></th>';
                         }
                         if (!empty($out)) {
                           echo '<th>' . date('H:i', strtotime($out['time'])) . '</th>';
-                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $out['lat'] . ',' . $out['lng'] . '" class="text-secondary" target="_blank"><u>' . $out['loc'] . '</u></a></th>';
+                          echo '<th>' . $out['work_state'] . '</th>';
+                          echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $out['latitude'] . ',' . $out['longitude'] . '" class="text-secondary" target="_blank"><u>' . $out['location'] . '</u></a></th>';
                         } else {
-                          echo '<th class="table-danger"></th>';
-                          echo '<th class="table-danger"></th>';
+                          echo '<th class="bg-danger"></th>';
+                          echo '<th class="bg-danger"></th>';
+                          echo '<th class="bg-danger"></th>';
                         }
                         echo '</tr>';
                       }
