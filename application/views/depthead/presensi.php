@@ -59,13 +59,13 @@
                 <table id="dt-presensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
-                      <th>Tanggal</th>
+                      <th>Date</th>
                       <th>Name</th>
                       <th>Time</th>
                       <th>State</th>
-                      <th>New State</th>
+                      <th>Work State</th>
                       <th>Location</th>
-                      <th>Health</th>
+                      <th>Description</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -90,13 +90,13 @@
                         echo '<th></th>';
                       }
 
-                      echo '<th>' . $p['new_state'] . '</th>';
+                      echo '<th>' . $p['work_state'] . '</th>';
                       if ($p['loc']) {
-                        echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $p['lat'] . ',' . $p['lng'] . '" class="text-secondary" target="_blank"><u>' . $p['loc'] . '</u></a></th>';
+                        echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $p['latitude'] . ',' . $p['longitude'] . '" class="text-secondary" target="_blank"><u>' . $p['location'] . '</u></a></th>';
                       } else {
                         echo '<th></th>';
                       }
-                      echo '<th>' . $p['condition'] . '</th>';
+                      echo '<th>' . $p['note'] . '</th>';
                     endforeach;
                     ?>
                   </tbody>
