@@ -57,16 +57,15 @@
                     <tr>
                       <th rowspan="2">Nama</th>
                       <th rowspan="2">Tanggal</th>
-                      <th colspan="2" style="text-align: center;">MASUK</th>
-                      <th colspan="2" style="text-align: center;">ISTIRAHAT</th>
-                      <th colspan="2" style="text-align: center;">KELUAR</th>
+                      <th colspan="3" style="text-align: center;">MASUK</th>
+                      <th colspan="3" style="text-align: center;">KELUAR</th>
                     </tr>
                     <tr>
                       <th>Waktu</th>
+                      <th>Status</th>
                       <th>Lokasi</th>
                       <th>Waktu</th>
-                      <th>Lokasi</th>
-                      <th>Waktu</th>
+                      <th>Status</th>
                       <th>Lokasi</th>
                     </tr>
                   </thead>
