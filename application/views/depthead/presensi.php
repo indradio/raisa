@@ -91,7 +91,7 @@
                       }
 
                       echo '<th>' . $p['work_state'] . '</th>';
-                      if ($p['loc']) {
+                      if ($p['location']) {
                         echo '<th><a href="https://www.google.com/maps/search/?api=1&query=' . $p['latitude'] . ',' . $p['longitude'] . '" class="text-secondary" target="_blank"><u>' . $p['location'] . '</u></a></th>';
                       } else {
                         echo '<th></th>';
