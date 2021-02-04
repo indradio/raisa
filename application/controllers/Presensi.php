@@ -267,7 +267,7 @@ class Presensi extends CI_Controller
                             $this->db->where('day(time)', $tanggal);
                             $this->db->where('npk', $this->session->userdata('npk'));
                             $this->db->where('state', 'C/In');
-                            $this->db->where('new_state', 'OFF');
+                            $this->db->where('work_state', 'OFF');
                             $presensiOff = $this->db->get('presensi')->row_array();
                             if ($presensiOff) {
                                 //Jemkerja Check           
@@ -352,7 +352,7 @@ class Presensi extends CI_Controller
                             $this->db->where('day(time)', $tanggal);
                             $this->db->where('npk', $this->session->userdata('npk'));
                             $this->db->where('state', 'C/In');
-                            $this->db->where('new_state', 'ISOMAN');
+                            $this->db->where('work_state', 'ISOMAN');
                             $presensiOff = $this->db->get('presensi')->row_array();
                             if ($presensiOff) {
                                 //Jemkerja Check           
