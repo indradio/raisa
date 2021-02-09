@@ -203,6 +203,9 @@ class Layanan extends CI_Controller
             $this->db->where('status', '1');
             $this->db->where('group', 'F');
             $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'Z') {
+            $this->db->where('npk', '0282');
+            $karyawan = $this->db->get('karyawan')->result_array();
         }
 
         foreach ($karyawan as $k) :
