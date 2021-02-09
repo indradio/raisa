@@ -218,12 +218,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO HR : SISTEM RAWAT JALAN DENGAN MEKANISME GESEK KARTU GARDA MEDIKA SUDAH KEMBALI NORMAL*" .
+                            'message' => "*INFO : PEMADAMAN LISTRIK*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nDengan ini kami informasikan layanan rawat jalan dengan kartu fisik garda medika *via mesin EDC sudah kembali berfungsi*." .
-                            "\r\n \r\nMohon maaf atas kendala yg terjadi." .
-                            "\r\n \r\nHormat Kami,".
-                            "\r\n*Human Capital*" .
+                            "\r\nBerdasarkan informasi dari pihak PLN, bahwa akan diadakan pemadaman listrik hari ini *Selasa, 09 Feb 2021 Pukul 10:00-12:30*." .
+                            "\r\n \r\nMaka pada waktu tersebut pastikan untuk mematikan perangkat elektronik yang menggunakan daya listrik langsung." .
+                            "\r\n \r\n*Koneksi Jaringan dan Server akan dimatikan pada waktu tersebut*".
+                            "\r\n*General Affair*" .
                             "\r\n*PT Astra Otoparts Tbk Divisi Winteq*"
                         ],
                     ]
