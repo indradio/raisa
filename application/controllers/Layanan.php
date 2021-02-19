@@ -223,15 +223,14 @@ class Layanan extends CI_Controller
                             'phone' => $k['phone'],
                             'message' => "*INFO : PEMADAMAN LISTRIK*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nBerdasarkan informasi dari pihak PLN, bahwa akan diadakan pemadaman listrik Pada :" .
-                            "\r\n \r\nhari : *Selasa*" .
-                            "\r\nTanggal : *09 Feb 2021*" .
-                            "\r\nPukul : *10:00 s/d 12:30*" .
-                            "\r\n \r\nMaka pada waktu tersebut pastikan untuk mematikan perangkat elektronik yang menggunakan daya listrik langsung." .
-                            "\r\n \r\n*Koneksi Jaringan dan Server akan dimatikan pada waktu tersebut*".
+                            "\r\nDalam rangka pemuktakhiran data kekaryawanan, kami minta tolong bantuan rekan2 semua untuk mengisi Form terlampir ya." .
+                            "\r\n \r\nPengisian survey paling lambat sampai dengan *Senin, 22 Februari 2021 Pukul 15:00*" .
+                            "\r\n \r\nSurvey dapat diisi melalui tautan/link berikut :" .
+                            "\r\n \r\nhttps://docs.google.com/forms/d/e/1FAIpQLSecvZBH1NCWZGbhogw6HnFXaa9OiwOoHhrNvOyzw9h0ZXEiTQ/viewform?usp=sf_link" .
                             "\r\n \r\nHormat Kami,".
-                            "\r\n*General Affair*" .
-                            "\r\n*PT Astra Otoparts Tbk Divisi Winteq*"
+                            "\r\n*Human Capital*" .
+                            "\r\n*PT Astra Otoparts Tbk Divisi Winteq*".
+                            "\r\n \r\n_#IngetPesanIbu dengan menjalankan 3M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, dan Menjaga Jarak_"
                         ],
                     ]
                 );
