@@ -221,10 +221,10 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*INFO : PEMADAMAN LISTRIK*" .
+                            'message' => "*PENTING : PEMUTAKHIRAN DATA KEKARYAWANAN*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nDalam rangka pemuktakhiran data kekaryawanan, kami minta tolong bantuan rekan2 semua untuk mengisi Form terlampir ya." .
-                            "\r\n \r\nPengisian survey paling lambat sampai dengan *Senin, 22 Februari 2021 Pukul 15:00*" .
+                            "\r\n \r\nPengisian form paling lambat sampai dengan *Senin, 22 Februari 2021 Pukul 15:00*" .
                             "\r\n \r\nSurvey dapat diisi melalui tautan/link berikut :" .
                             "\r\n \r\nhttps://docs.google.com/forms/d/e/1FAIpQLSecvZBH1NCWZGbhogw6HnFXaa9OiwOoHhrNvOyzw9h0ZXEiTQ/viewform?usp=sf_link" .
                             "\r\n \r\nHormat Kami,".
