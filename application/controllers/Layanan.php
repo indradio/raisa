@@ -221,14 +221,15 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*Mau saldo AstraPay cuma-cuma?*" .
+                            'message' => "*[Vaksin COVID-19] Mitos VS Fakta*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nKabar gembira untuk kita semua! Sekarang fitur QRIS AstraPay sudah bisa digunakan, lho. Melakukan transaksi apa saja jadi lebih gampang." .
-                            "\r\n \r\nSelain itu kamu juga punya kesempatan untuk mendapatkan saldo AstraPay sebesar Rp.20.000,-." .
-                            "\r\n \r\nKhusus Karyawan Grup Astra aja! Jangan sampai terlewat, karena hanya untuk 250 orang pertama. Simak caranya di banner!" .
-                            "\r\n \r\nPeriode: 26 Februari - 4 Maret 2021" .
-                            "\r\n \r\nLink banner: https://raisa.winteq-astra.com/assets/img/info/astrapay.jpg".
-                            "\r\n \r\n#PintarLebihGampang dengan AstraPay".
+                            "\r\nTak kenal maka tak kebal, Yuk kenalan dengan vaksin." .
+                            "\r\n \r\nhari : Rabu" .
+                            "\r\n \r\nWaktu : 03 Maret 2021 13:30" .
+                            "\r\n \r\nTema: Vaksin COVID-19. Mitos VS Fakta" .
+                            "\r\n \r\nPembicara: Dr. Yitro A.C. Wilar, MKK, Sp, OK" .
+                            "\r\n \r\nLink Ms Team: https://teams.microsoft.com/l/meetup-join/19%3ameeting_MTgxZjZmMzUtNmQ1NC00NTc1LTk0Y2YtMzcyMjI3ODdhNDg2%40thread.v2/0?context=%7b%22Tid%22%3a%22f5332409-fcd5-4d5d-aaf7-b5189010d0d0%22%2c%22Oid%22%3a%223509aa3d-d95b-4588-824e-a17f86b4063e%22%7d" .
+                            "\r\n \r\nLink banner: https://raisa.winteq-astra.com/assets/img/info/vaksin.jpg".
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 3M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, dan Menjaga Jarak_"
                         ],
                     ]
