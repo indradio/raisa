@@ -225,9 +225,9 @@ class Layanan extends CI_Controller
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nTak kenal maka tak kebal, Yuk kenalan dengan vaksin." .
                             "\r\n \r\nhari : Rabu" .
-                            "\r\n \r\nWaktu : 03 Maret 2021 13:30" .
-                            "\r\n \r\nTema: Vaksin COVID-19. Mitos VS Fakta" .
-                            "\r\n \r\nPembicara: Dr. Yitro A.C. Wilar, MKK, Sp, OK" .
+                            "\r\nWaktu : 03 Maret 2021 13:30" .
+                            "\r\nTema: Vaksin COVID-19. Mitos VS Fakta" .
+                            "\r\nPembicara: Dr. Yitro A.C. Wilar, MKK, Sp, OK" .
                             "\r\n \r\nLink Ms Team: https://teams.microsoft.com/l/meetup-join/19%3ameeting_MTgxZjZmMzUtNmQ1NC00NTc1LTk0Y2YtMzcyMjI3ODdhNDg2%40thread.v2/0?context=%7b%22Tid%22%3a%22f5332409-fcd5-4d5d-aaf7-b5189010d0d0%22%2c%22Oid%22%3a%223509aa3d-d95b-4588-824e-a17f86b4063e%22%7d" .
                             "\r\n \r\nLink banner: https://raisa.winteq-astra.com/assets/img/info/vaksin.jpg".
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 3M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, dan Menjaga Jarak_"
