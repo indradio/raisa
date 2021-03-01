@@ -221,15 +221,14 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*PENTING : PEMUTAKHIRAN DATA KEKARYAWANAN*" .
+                            'message' => "*Mau saldo AstraPay cuma-cuma?*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nDalam rangka Pemutakhiran data kekaryawanan, kami minta tolong bantuan rekan-rekan semua untuk mengisi Form terlampir ya." .
-                            "\r\n \r\nPengisian form paling lambat sampai dengan *Senin, 22 Februari 2021 Pukul 15:00*" .
-                            "\r\n \r\nForm dapat diisi melalui tautan/link berikut :" .
-                            "\r\n \r\nhttps://docs.google.com/forms/d/e/1FAIpQLSecvZBH1NCWZGbhogw6HnFXaa9OiwOoHhrNvOyzw9h0ZXEiTQ/viewform?usp=sf_link" .
-                            "\r\n \r\nHormat Kami,".
-                            "\r\n*Human Capital*" .
-                            "\r\n*PT Astra Otoparts Tbk Divisi Winteq*".
+                            "\r\nKabar gembira untuk kita semua! Sekarang fitur QRIS AstraPay sudah bisa digunakan, lho. Melakukan transaksi apa saja jadi lebih gampang." .
+                            "\r\n \r\nSelain itu kamu juga punya kesempatan untuk mendapatkan saldo AstraPay sebesar Rp.20.000,-." .
+                            "\r\n \r\nKhusus Karyawan Grup Astra aja! Jangan sampai terlewat, karena hanya untuk 250 orang pertama. Simak caranya di banner!" .
+                            "\r\n \r\nPeriode: 26 Februari - 4 Maret 2021" .
+                            "\r\n \r\nLink banner: https://raisa.winteq-astra.com/assets/img/info/astrapay.jpg".
+                            "\r\n \r\n#PintarLebihGampang dengan AstraPay".
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 3M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, dan Menjaga Jarak_"
                         ],
                     ]
