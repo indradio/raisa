@@ -65,6 +65,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#addProject">Project Baru</a>
+                            <a href="#" class="btn btn-linkedin" role="button" aria-disabled="false" data-toggle="modal" data-target="#importProject">Import Project</a>
                         </div>
                         <div class="material-datatables">
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -242,6 +243,47 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importProject" tabindex="-1" role="dialog" aria-labelledby="importProjectTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Project</h4>
+                    </div>
+                </div>
+                <?= form_open_multipart('project/importproject'); ?>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- <label class="col-md-3 col-form-label">Select File </label> -->
+                                <!-- <div class="fileinput fileinput-new" data-provides="fileinput"> -->
+                                
+                                    <!-- <input type="file" class="inputFileHidden"> -->
+                                    <div class="input-group">
+                                        <input type="file" name="copro" id="copro" class="form-control inputFileVisible" placeholder="Single File">
+                                        <!-- <span class="input-group-btn">
+                                            <button type="file" class="btn btn-fab btn-round btn-primary">
+                                                <i class="material-icons">attach_file</i>
+                                            </button>
+                                        </span> -->
+                                    </div>
+                                <!-- </div> -->
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-success btn-round">Import</button>
+                            </div>
+                        </div>
+                    </div>
+                <?= form_close(); ?>
             </div>
         </div>
     </div>

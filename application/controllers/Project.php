@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Spout Library
+require_once APPPATH . 'third_party/spout/Autoloader/autoload.php';
+ 
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+
 class Project extends CI_Controller
 {
     public function __construct()
@@ -227,6 +232,87 @@ class Project extends CI_Controller
             $this->load->view('templates/footer');
         }
     }
+
+    public function importProject()
+    {
+        //  ketika button submit diklik
+        //  if ($this->input->post('submit', TRUE) == 'upload') {
+        $config['upload_path']      = './assets/temp_excel/'; //siapkan path untuk upload file
+        $config['allowed_types']    = 'xlsx|xls'; //siapkan format file
+        $config['file_name']        = 'import_' . time(); //rename file yang diupload
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('copro')) {
+            //fetch data upload
+            $file   = $this->upload->data();
+
+            $reader = ReaderEntityFactory::createXLSXReader(); //buat xlsx reader
+            $reader->open('assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
+
+            //looping pembacaat sheet dalam file        
+            foreach ($reader->getSheetIterator() as $sheet) {
+                $numRow = 1;
+
+                //siapkan variabel array kosong untuk menampung variabel array data
+                $save   = array();
+
+                //looping pembacaan row dalam sheet
+                foreach ($sheet->getRowIterator() as $row) {
+
+                    if ($numRow > 1) {
+                        //ambil cell
+                        $cells = $row->getCells();
+
+                        $data = array(
+                            'copro'             => $cells[0],
+                            'material'          => $cells[1],
+                            'customer_inisial'  => $cells[2],
+                            'deskripsi'         => $cells[3],
+                            'status'            => $cells[4]
+                        );
+
+                        //tambahkan array $data ke $save
+                        // array_push($save, $data);
+
+                        //simpan data ke database
+                        $copro = $this->db->get_where('project', ['copro' => $data['copro']])->row_array();
+                        if (empty($copro))
+                        {
+                            $this->db->insert('project', $data);
+                        }else{
+                            $this->db->set('status', $data['status']);
+                            $this->db->where('copro', $data['copro']);
+                            $this->db->update('project');
+                        }
+                    }
+
+
+                    $numRow++;
+                }
+                //simpan data ke database all
+                // $this->db->insert_batch('project', $save);
+
+                //tutup spout reader
+                $reader->close();
+
+                //hapus file yang sudah diupload
+                unlink('assets/temp_excel/' . $file['file_name']);
+
+                //tampilkan pesan success dan redirect ulang ke index controller import
+                echo    '<script type="text/javascript">
+                          alert(\'Data berhasil disimpan\');
+                          window.location.replace("' . base_url() . '");
+                      </script>';
+            }
+        } else {
+            echo "Error :" . $this->upload->display_errors(); //tampilkan pesan error jika file gagal diupload
+        }
+    // }
+
+    redirect('project/project/fa');
+    }
+    // }
     
     public function addProject()
     {
