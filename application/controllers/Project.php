@@ -248,7 +248,7 @@ class Project extends CI_Controller
             $file   = $this->upload->data();
 
             $reader = ReaderEntityFactory::createXLSXReader(); //buat xlsx reader
-            $reader->open('assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
+            $reader->open('./assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
 
             //looping pembacaat sheet dalam file        
             foreach ($reader->getSheetIterator() as $sheet) {
@@ -287,7 +287,6 @@ class Project extends CI_Controller
                         }
                     }
 
-
                     $numRow++;
                 }
                 //simpan data ke database all
@@ -297,7 +296,7 @@ class Project extends CI_Controller
                 $reader->close();
 
                 //hapus file yang sudah diupload
-                unlink('assets/temp_excel/' . $file['file_name']);
+                unlink('./assets/temp_excel/' . $file['file_name']);
 
                 //tampilkan pesan success dan redirect ulang ke index controller import
                 echo    '<script type="text/javascript">
