@@ -5,6 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require_once APPPATH . 'third_party/spout/Autoloader/autoload.php';
  
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use Box\Spout\Common\Type;
 
 class Project extends CI_Controller
 {
