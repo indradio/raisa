@@ -266,8 +266,8 @@ class Project extends CI_Controller
 
                         $data = array(
                             'copro'             => $cells[0],
-                            'material'          => $cells[1],
-                            'customer_inisial'  => $cells[2],
+                            'customer_inisial'  => $cells[1],
+                            'material'          => $cells[2],
                             'deskripsi'         => $cells[3],
                             'status'            => $cells[4]
                         );
