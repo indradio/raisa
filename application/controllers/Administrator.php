@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class AdministratorAdmin extends CI_Controller
+class Administrator extends CI_Controller
 {
     public function __construct()
     {
@@ -11,7 +11,7 @@ class AdministratorAdmin extends CI_Controller
 
     public function index()
     {
-        phpinfo();
+        $this->load->view('dashboard/info');
     }
 
     public function active()
