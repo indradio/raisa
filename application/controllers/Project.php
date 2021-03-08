@@ -233,7 +233,7 @@ class Project extends CI_Controller
         }
     }
 
-    public function importProject()
+    public function importproject()
     {
         //  ketika button submit diklik
         //  if ($this->input->post('submit', TRUE) == 'upload') {
