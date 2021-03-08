@@ -11,6 +11,7 @@ class AdministratorAdmin extends CI_Controller
 
     public function index()
     {
+        phpinfo();
     }
 
     public function active()
