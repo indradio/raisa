@@ -107,13 +107,13 @@ EOD;
      */
     public function startSheet(Worksheet $worksheet)
     {
-        $sheetFilePointer = \fopen($worksheet->getFilePath(), 'w');
+        $sheetFilePointer = fopen($worksheet->getFilePath(), 'w');
         $this->throwIfSheetFilePointerIsNotAvailable($sheetFilePointer);
 
         $worksheet->setFilePointer($sheetFilePointer);
 
-        \fwrite($sheetFilePointer, self::SHEET_XML_FILE_HEADER);
-        \fwrite($sheetFilePointer, '<sheetData>');
+        fwrite($sheetFilePointer, self::SHEET_XML_FILE_HEADER);
+        fwrite($sheetFilePointer, '<sheetData>');
     }
 
     /**
@@ -153,19 +153,21 @@ EOD;
      */
     private function addNonEmptyRow(Worksheet $worksheet, Row $row)
     {
+        $cellIndex = 0;
         $rowStyle = $row->getStyle();
-        $rowIndexOneBased = $worksheet->getLastWrittenRowIndex() + 1;
+        $rowIndex = $worksheet->getLastWrittenRowIndex() + 1;
         $numCells = $row->getNumCells();
 
-        $rowXML = '<row r="' . $rowIndexOneBased . '" spans="1:' . $numCells . '">';
+        $rowXML = '<row r="' . $rowIndex . '" spans="1:' . $numCells . '">';
 
-        foreach ($row->getCells() as $columnIndexZeroBased => $cell) {
-            $rowXML .= $this->applyStyleAndGetCellXML($cell, $rowStyle, $rowIndexOneBased, $columnIndexZeroBased);
+        foreach ($row->getCells() as $cell) {
+            $rowXML .= $this->applyStyleAndGetCellXML($cell, $rowStyle, $rowIndex, $cellIndex);
+            $cellIndex++;
         }
 
         $rowXML .= '</row>';
 
-        $wasWriteSuccessful = \fwrite($worksheet->getFilePointer(), $rowXML);
+        $wasWriteSuccessful = fwrite($worksheet->getFilePointer(), $rowXML);
         if ($wasWriteSuccessful === false) {
             throw new IOException("Unable to write data in {$worksheet->getFilePath()}");
         }
@@ -175,15 +177,14 @@ EOD;
      * Applies styles to the given style, merging the cell's style with its row's style
      * Then builds and returns xml for the cell.
      *
-     * @param Cell  $cell
+     * @param Cell $cell
      * @param Style $rowStyle
-     * @param int   $rowIndexOneBased
-     * @param int   $columnIndexZeroBased
-     *
+     * @param int $rowIndex
+     * @param int $cellIndex
      * @throws InvalidArgumentException If the given value cannot be processed
      * @return string
      */
-    private function applyStyleAndGetCellXML(Cell $cell, Style $rowStyle, $rowIndexOneBased, $columnIndexZeroBased)
+    private function applyStyleAndGetCellXML(Cell $cell, Style $rowStyle, $rowIndex, $cellIndex)
     {
         // Apply row and extra styles
         $mergedCellAndRowStyle = $this->styleMerger->merge($cell->getStyle(), $rowStyle);
@@ -192,24 +193,23 @@ EOD;
 
         $registeredStyle = $this->styleManager->registerStyle($newCellStyle);
 
-        return $this->getCellXML($rowIndexOneBased, $columnIndexZeroBased, $cell, $registeredStyle->getId());
+        return $this->getCellXML($rowIndex, $cellIndex, $cell, $registeredStyle->getId());
     }
 
     /**
      * Builds and returns xml for a single cell.
      *
-     * @param int  $rowIndexOneBased
-     * @param int  $columnIndexZeroBased
+     * @param int $rowIndex
+     * @param int $cellNumber
      * @param Cell $cell
-     * @param int  $styleId
-     *
+     * @param int $styleId
      * @throws InvalidArgumentException If the given value cannot be processed
      * @return string
      */
-    private function getCellXML($rowIndexOneBased, $columnIndexZeroBased, Cell $cell, $styleId)
+    private function getCellXML($rowIndex, $cellNumber, Cell $cell, $styleId)
     {
-        $columnLetters = CellHelper::getColumnLettersFromColumnIndex($columnIndexZeroBased);
-        $cellXML = '<c r="' . $columnLetters . $rowIndexOneBased . '"';
+        $columnIndex = CellHelper::getCellIndexFromColumnIndex($cellNumber);
+        $cellXML = '<c r="' . $columnIndex . $rowIndex . '"';
         $cellXML .= ' s="' . $styleId . '"';
 
         if ($cell->isString()) {
@@ -218,9 +218,6 @@ EOD;
             $cellXML .= ' t="b"><v>' . (int) ($cell->getValue()) . '</v></c>';
         } elseif ($cell->isNumeric()) {
             $cellXML .= '><v>' . $cell->getValue() . '</v></c>';
-        } elseif ($cell->isError() && is_string($cell->getValueEvenIfError())) {
-            // only writes the error value if it's a string
-            $cellXML .= ' t="e"><v>' . $cell->getValueEvenIfError() . '</v></c>';
         } elseif ($cell->isEmpty()) {
             if ($this->styleManager->shouldApplyStyleOnEmptyCell($styleId)) {
                 $cellXML .= '/>';
@@ -230,7 +227,7 @@ EOD;
                 $cellXML = '';
             }
         } else {
-            throw new InvalidArgumentException('Trying to add a value with an unsupported type: ' . \gettype($cell->getValue()));
+            throw new InvalidArgumentException('Trying to add a value with an unsupported type: ' . gettype($cell->getValue()));
         }
 
         return $cellXML;
@@ -266,12 +263,12 @@ EOD;
     {
         $worksheetFilePointer = $worksheet->getFilePointer();
 
-        if (!\is_resource($worksheetFilePointer)) {
+        if (!is_resource($worksheetFilePointer)) {
             return;
         }
 
-        \fwrite($worksheetFilePointer, '</sheetData>');
-        \fwrite($worksheetFilePointer, '</worksheet>');
-        \fclose($worksheetFilePointer);
+        fwrite($worksheetFilePointer, '</sheetData>');
+        fwrite($worksheetFilePointer, '</worksheet>');
+        fclose($worksheetFilePointer);
     }
 }

@@ -92,14 +92,6 @@ class Cell
     }
 
     /**
-     * @return mixed
-     */
-    public function getValueEvenIfError()
-    {
-        return $this->value;
-    }
-
-    /**
      * @param Style|null $style
      */
     public function setStyle($style)

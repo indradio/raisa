@@ -47,14 +47,12 @@ class RowManager
      */
     public function fillMissingIndexesWithEmptyCells(Row $row)
     {
-        $numCells = $row->getNumCells();
-
-        if ($numCells === 0) {
+        if ($row->getNumCells() === 0) {
             return $row;
         }
 
         $rowCells = $row->getCells();
-        $maxCellIndex = $numCells;
+        $maxCellIndex = max(array_keys($rowCells));
 
         for ($cellIndex = 0; $cellIndex < $maxCellIndex; $cellIndex++) {
             if (!isset($rowCells[$cellIndex])) {

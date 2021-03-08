@@ -85,14 +85,8 @@ class StyleMerger
         if (!$style->hasSetWrapText() && $baseStyle->shouldWrapText()) {
             $styleToUpdate->setShouldWrapText();
         }
-        if (!$style->hasSetCellAlignment() && $baseStyle->shouldApplyCellAlignment()) {
-            $styleToUpdate->setCellAlignment($baseStyle->getCellAlignment());
-        }
         if (!$style->getBorder() && $baseStyle->shouldApplyBorder()) {
             $styleToUpdate->setBorder($baseStyle->getBorder());
-        }
-        if (!$style->getFormat() && $baseStyle->shouldApplyFormat()) {
-            $styleToUpdate->setFormat($baseStyle->getFormat());
         }
         if (!$style->shouldApplyBackgroundColor() && $baseStyle->shouldApplyBackgroundColor()) {
             $styleToUpdate->setBackgroundColor($baseStyle->getBackgroundColor());
