@@ -43,10 +43,10 @@ class InternalEntityFactory
     }
 
     /**
-     * @return \ZipArchive
+     * @return \Ziparchive
      */
     public function createZipArchive()
     {
-        return new \ZipArchive();
+        return new \Ziparchive();
     }
 }
