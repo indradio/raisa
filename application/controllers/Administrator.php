@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Administrator extends CI_Controller
+class AdministratorAdmin extends CI_Controller
 {
     public function __construct()
     {
@@ -11,7 +11,6 @@ class Administrator extends CI_Controller
 
     public function index()
     {
-        
     }
 
     public function active()
@@ -25,5 +24,23 @@ class Administrator extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('dashboard/active', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function alldata()
+    {
+        // $output = array(
+        //     "data" => $this->db->get('idcard')->result()
+        // );
+
+        $data = $this->db->get('idcard')->result_array();
+        foreach ($data as $row) {
+                $output['data'][] = array(
+                    $row['id'],
+                    $row['npk'],
+                    $row['nama']
+                );
+        }
+		//output to json format
+        echo json_encode($output);
     }
 }

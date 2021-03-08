@@ -114,10 +114,10 @@ class InternalEntityFactory implements InternalEntityFactoryInterface
     }
 
     /**
-     * @return \Ziparchive
+     * @return \ZipArchive
      */
     public function createZipArchive()
     {
-        return new \Ziparchive();
+        return new \ZipArchive();
     }
 }
