@@ -221,15 +221,15 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[Vaksin COVID-19] Mitos VS Fakta*" .
+                            'message' => "*[UPDATE] Perubahan COE 2021*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nTak kenal maka tak kebal, Yuk kenalan dengan vaksin." .
-                            "\r\n \r\nhari : Rabu" .
-                            "\r\nWaktu : 03 Maret 2021 13:30" .
-                            "\r\nTema: Vaksin COVID-19. Mitos VS Fakta" .
-                            "\r\nPembicara: Dr. Yitro A.C. Wilar, MKK, Sp, OK" .
-                            "\r\n \r\nLink Ms Team: https://teams.microsoft.com/l/meetup-join/19%3ameeting_MTgxZjZmMzUtNmQ1NC00NTc1LTk0Y2YtMzcyMjI3ODdhNDg2%40thread.v2/0?context=%7b%22Tid%22%3a%22f5332409-fcd5-4d5d-aaf7-b5189010d0d0%22%2c%22Oid%22%3a%223509aa3d-d95b-4588-824e-a17f86b4063e%22%7d" .
-                            "\r\n \r\nLink banner: https://raisa.winteq-astra.com/assets/img/info/vaksin.jpg".
+                            "\r\nMerujuk kepada SKB 3 Menteri No 281 Tahun 2021 tentang Perubahan atas Hari Libur Nasional, & Cuti Bersama Tahun 2021 dan Kebutuhan Kegiatan Operasional PT Astra Otoparts. Tbk - Divisi Winteq , maka dengan ini kami informasikan perubahan COE 2021 sebagai berikut :" .
+                            "\r\n \r\n1. Tanggal 11 Maret 2021		: Isra Mi’raj Nabi Muhammad SAW" .
+                            "\r\n2. Tanggal 12 Maret 2021		: *Masuk seperti biasa*" .
+                            "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
+                            "\r\n \r\nHormat Kami,".
+                            "\r\nHuman Capital".
+                            "\r\nPT Astra Otoparts Tbk Divisi Winteq".
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 3M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, dan Menjaga Jarak_"
                         ],
                     ]
