@@ -188,6 +188,17 @@ class Jamkerja extends CI_Controller
         }
     }
 
+    public function selectAktivitas()
+    {
+        $kategori_id = $_POST['kategori'];
+        $dept_id = $_POST['deptid'];
+        $getAktivitas = $this->db->query("SELECT * FROM jamkerja_lain WHERE kategori_id = '$kategori_id' AND dept_id = '$dept_id' ")->result_array();
+  
+        foreach ($getAktivitas as $a) {
+            echo '<option value="'.$a['aktivitas'].'">'.$a['aktivitas'].'</option>';   
+        }
+    }
+
     function fetch_project()
     {
         echo $this->jamkerja_model->fetch_project();

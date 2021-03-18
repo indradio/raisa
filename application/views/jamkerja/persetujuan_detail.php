@@ -28,8 +28,8 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title"><?= $jamkerja['nama']; ?>
-            <small> - <?= date("d M Y", strtotime($jamkerja['tglmulai'])); ?></small>
+            <h4 class="card-title">#<?= $jamkerja['id'].' - '. $jamkerja['shift']; ?></br>
+            <small><?= $jamkerja['nama'].' - '.date("d M Y", strtotime($jamkerja['tglmulai'])); ?></small>
           </h4>
           </div>
           <div class="card-body">
@@ -37,6 +37,20 @@
               <?php
               $link = $jamkerja['id'];
               $durasi = $jamkerja['durasi'];
+              
+              if ($durasi < 4) {
+                $sisaDurasi = 4;
+              } else {
+                if ($jamkerja['shift']=='SHIFT1'){
+                    $sisaDurasi = 6 - $durasi;
+                }elseif ($jamkerja['shift']=='SHIFT2'){
+                    $sisaDurasi = 8 - $durasi;
+                }elseif ($jamkerja['shift']=='SHIFT3'){
+                    $sisaDurasi = 7 - $durasi;
+                }
+              }
+              $jam = $this->db->get_where('jam', ['id <=' =>  $sisaDurasi])->result();
+              
               if ($jamkerja['shift']=='SHIFT1'){
                 $shift = 6;
               }elseif ($jamkerja['shift']=='SHIFT2'){
@@ -125,8 +139,9 @@
                               }else{
                                 echo '<a href="#" class="btn btn-sm btn-default disabled" role="button" aria-disabled="true">NON PROJEK</a>';
                               }
+                              echo '<a href="#" class="btn btn-sm  btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $a['id'] .'">HAPUS</a>';
                             }else{
-                              echo '<a href="#" class="badge badge-pill badge-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalAktivitas" data-id="'. $a['id'] .'">BATALKAN</a>';
+                              echo '<a href="#" class="btn btn-sm  btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $a['id'] .'">HAPUS</a>';
                             } ?>
                             </td>
                         </tr>
@@ -372,6 +387,7 @@
                             <div class="form-group" hidden="true">
                                 <label for="id">id</label>
                                 <input type="text" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+                                <input type="text" class="form-control" id="deptid" name="deptid" value="<?= $jamkerja['dept_id']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="kategori">Kategori*</label>
@@ -411,13 +427,6 @@
                                 <label for="durasi">Durasi*</label>
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="durasi" name="durasi" title="Pilih Durasi" data-size="5" required>
                                     <?php
-                                    $durasi = $jamkerja['durasi'];
-                                    if ($durasi <= 4) {
-                                      $sisadurasi = 4;
-                                  } else {
-                                      $sisadurasi = 8 - $durasi;
-                                  }
-                                  $jam = $this->db->get_where('jam', ['id <=' =>  $sisadurasi])->result();
                                     foreach ($jam as $row) {
                                         echo '<option value="' . $row->id . '">' . $row->nama . '</option>';
                                     }
@@ -447,11 +456,11 @@
 </div>
 
 <!-- Modal batal Aktivitas-->
-<div class="modal fade" id="batalAktivitas" tabindex="-1" role="dialog" aria-labelledby="batalAktivitasLabel" aria-hidden="true">
+<div class="modal fade" id="hapusAktivitas" tabindex="-1" role="dialog" aria-labelledby="hapusAktivitasLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="batalAktivitasLabel">Kamu yakin ingin membatalkan aktivitas ini?</h5>
+        <h5 class="modal-title" id="hapusAktivitasLabel">Kamu yakin ingin menghapus aktivitas ini?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -465,7 +474,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
-        <button type="submit" class="btn btn-danger">YA, BATALKAN!</button>
+        <button type="submit" class="btn btn-danger">YA, HAPUS!</button>
       </div>
       </form>
     </div>
@@ -523,10 +532,11 @@
             }
             $('#kategori').change(function(){
                 var kategori = $('#kategori').val();
+                var deptid = $('#deptid').val();
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('jamkerja/ajax')?>",
-                    data: {kategori:kategori},
+                    url: "<?php echo site_url('jamkerja/selectAktivitas')?>",
+                    data: {kategori:kategori, deptid: deptid},
                     success: function(data) {
                         // alert(data)
                         $('#aktivitas_lain').html(data); 
