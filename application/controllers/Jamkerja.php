@@ -99,14 +99,14 @@ class Jamkerja extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $strdate = strtotime($this->input->post('tanggal'));
         $strnow =  time();
-        $strlastyear = strtotime(date('2019-12-31'));
+        $strlastyear = strtotime(date('2020-12-31'));
 
         if ($strdate>=$strnow){
             redirect('jamkerja');
         }elseif ($strdate<=$strlastyear){
             redirect('jamkerja');
-        }elseif (date('D', strtotime($this->input->post('tanggal')))=='Sat' or date('D', strtotime($this->input->post('tanggal')))=='Sun'){
-            redirect('jamkerja');
+        // }elseif (date('D', strtotime($this->input->post('tanggal')))=='Sat' or date('D', strtotime($this->input->post('tanggal')))=='Sun'){
+        //     redirect('jamkerja');
         }else{
             redirect('jamkerja/tanggal/'.$this->input->post('tanggal'));
         }
@@ -124,8 +124,8 @@ class Jamkerja extends CI_Controller
             redirect('jamkerja');
         }elseif ($strdate<=$strlastyear){
             redirect('jamkerja');
-        }elseif (date('D', strtotime($date))=='Sat' or date('D', strtotime($date))=='Sun'){
-            redirect('jamkerja');
+        // }elseif (date('D', strtotime($date))=='Sat' or date('D', strtotime($date))=='Sun'){
+        //     redirect('jamkerja');
         }else{
             redirect('jamkerja/tanggal/'.$date);
         }
