@@ -439,7 +439,7 @@ class Jamkerja extends CI_Controller
             'dibuat_oleh' => $this->session->userdata('inisial'),
             'dept_id' => $this->session->userdata('dept_id'),
             'sect_id' => $this->session->userdata('sect_id'),
-            'contract' => $this->session->userdata('contract'),
+            'contract' => 'Direct Labor',
             'status' => '1'
         ];
         $this->db->insert('aktivitas', $data);
