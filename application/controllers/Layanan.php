@@ -221,16 +221,28 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[UPDATE] Perubahan COE 2021*" .
+                            'message' => "*[INFORMASI] PENDATAAN AWAL PROGRAM VAKSIN*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nMerujuk kepada SKB 3 Menteri No 281 Tahun 2021 tentang Perubahan atas Hari Libur Nasional, & Cuti Bersama Tahun 2021 dan Kebutuhan Kegiatan Operasional PT Astra Otoparts. Tbk - Divisi Winteq , maka dengan ini kami informasikan perubahan COE 2021 sebagai berikut :" .
-                            "\r\n \r\n1. Tanggal 11 Maret 2021		: Isra Mi’raj Nabi Muhammad SAW" .
-                            "\r\n2. Tanggal 12 Maret 2021		: *Masuk seperti biasa*" .
-                            "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannya" .
+                            "\r\nSehubungan Vaksin Program Pemerintah ,dengan ini dari PT Astra Otoparts.Tbk akan melakukan *pendataan awal* sesuai dengan tahapan dari pemerintah. " .
+                            "\r\n \r\nAdapun pendataannya adalah untuk :" .
+                            "\r\n \r\nKeluarga atau Kerabat karyawan yang masuk kategori Lansia. Lansia yang dimaksud pemerintah *saat ini yang sudah berusia 60 tahun keatas per 1 Mei 2021 (lahir sebelum 1 Mei 1961)*" .
+                            "\r\n \r\nAdapun sentra vaksin akan berada di :" .
+                            "\r\n*1. ICE BSD, Tangerang - Banten*" .
+                            "\r\n*2. Jakarta Garden City (JGC), Jakarta Timur*" .
+                            "\r\n \r\n(Untuk waktunya akan diinformasikan kemudian oleh panitia)" .
+                            "\r\n \r\nSebagai tambahan informasi, :" .
+                            "\r\n1. Untuk penyintas COVID 19 baru dapat divaksin jika sudah melalui 3 bulan setelah negatif." .
+                            "\r\n2. Karyawan (suami/istri) Non Lansia dapat menjadi Pendamping yang menerima vaksin jika mendaftarkan 2 (dua) Lansia Keluarga/Kerabatnya." .
+                            "\r\n3. KTP Lansia diperkenankan untuk KTP dari kota seluruh Indonesia." .
+                            "\r\n4. KTP Pendamping dari Jabodetabek dan Banten, jika tidak ber KTP Jabodetabek dan Banten maka memerlukan surat keterangan domisili dari RT RW." .
+                            "\r\n \r\nPendaftaran bisa dilakukan oleh karyawan langsung paling lambat, Selasa, 27 April 2021 melalui link form :".
+                            "\r\n \r\nhttp://bit.ly/DataVaksinKeluargaAOPGroup ".
+                            "\r\n \r\nJika terdapat pertanyaan berkaitan dengan proses pengumpulan data maupun detail dapat menghubungi PIC HR : Sulthon Aulia/Lia Hendra Gianti.".
+                            "\r\n \r\nDemikian yang dapat kami sampaikan, terima  kasih atas perhatian dan bantuannya.".
                             "\r\n \r\nHormat Kami,".
                             "\r\nHuman Capital".
                             "\r\nPT Astra Otoparts Tbk Divisi Winteq".
-                            "\r\n \r\n_#IngetPesanIbu dengan menjalankan 3M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, dan Menjaga Jarak_"
+                            "\r\n \r\n_#IngetPesanIbu dengan menjalankan 5M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, Menjaga Jarak, Menjauhi kerumunan dan Membatasi mobilisasi dan interaksi._"
                         ],
                     ]
                 );
