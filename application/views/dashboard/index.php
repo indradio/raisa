@@ -1,19 +1,17 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>UPDATE : TENTUKAN EWALLET UTAMA KAMU</strong>
+          <strong>ABSEN SEKARANG!</strong>
           </br>
           </br>Semangat pagi <strong><?= $karyawan['nama']; ?></strong>,
-          </br>
-          </br>Sekarang kamu bisa tentukan ewallet utama kamu. 
-          </br>Cek profil kamu ya!
-          </br><strong>Pastikan nomor eWallet yang terdaftar atasnama kamu, ewallet atasnama orang lain tidak akan diproses.</strong>
+          </br>Apakah kamu sudah absen hari ini?
+          </br><a href="<?= base_url('presensi'); ?>" class="btn btn-success" role="button" aria-disabled="true">Klik untuk Absen</a>
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- End Banner -->
     <div class="row">
       <?php
@@ -542,8 +540,13 @@
                             <td><?= date('H:i', strtotime($l['tglmulai'])); ?> - <?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                             <td><?= $l['lokasi']; ?></td>
                             <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
-                            <?php $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $l['konsumsi']])->row_array(); ?>
-                            <td><?= $konsumsi['nama']; ?></td>
+                            <?php $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $l['konsumsi']])->row_array(); 
+                            if ($konsumsi){$makan = $konsumsi['nama'];
+                            }else{
+                              $makan = 'Menunggu Verifikasi GA';
+                            }
+                            ?>
+                            <td><?= $l['konsumsi'] == '' ? "Menunggu Verifikasi GA" : $konsumsi['nama']; ?></td>
                             </tr>
                           <?php endforeach; ?>
                         </tbody>

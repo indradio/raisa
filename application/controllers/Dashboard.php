@@ -84,6 +84,7 @@ class Dashboard extends CI_Controller
         }
 
         $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
+        
         //Auto batalkan perjalanan
         $queryPerjalanan = "SELECT *
         FROM `perjalanan`
