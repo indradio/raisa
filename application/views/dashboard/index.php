@@ -6,9 +6,12 @@
         <div class="alert alert-default" role="alert">
           <strong>ABSEN SEKARANG!</strong>
           </br>
-          </br>Semangat pagi <strong><?= $karyawan['nama']; ?></strong>,
+          </br>Mulai <b>1 mei 2021</b> absensi menggunakan jendela waktu berikut : </br>
+            Check In  : <b>07:00 s/d 08:30</b></br>
+            Rest Time : <b>11:30 s/d 13:00</b></br>
+            Check Out : <b>16:00 s/d 17:00</b></br>
           </br>Apakah kamu sudah absen hari ini?
-          </br><a href="<?= base_url('presensi'); ?>" class="btn btn-success" role="button" aria-disabled="true">Klik untuk Absen</a>
+          </br><a href="<?= base_url('presensi'); ?>" class="btn btn-success text-white" role="button" aria-disabled="true">Klik untuk Absen</a>
         </div>
       </div>
     </div>
@@ -20,7 +23,7 @@
         FROM `informasi`
         WHERE `berlaku` >= CURDATE()
         ORDER BY `id` DESC
-    ";
+      ";
       $layinfo = $this->db->query($queryLayInfo)->row_array();
       $total = $layinfo['COUNT(*)'];
       if ($total != 0) {
