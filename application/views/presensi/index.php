@@ -21,6 +21,7 @@
                   $this->db->where('year(time)',date("Y"));
                   $this->db->where('month(time)',date("m"));
                   $this->db->where('day(time)',date("d"));
+                  $this->db->where('npk',$this->session->userdata('npk'));
                   $this->db->order_by('time DESC');
                   $presensi = $this->db->get('presensi')->result_array();
                   foreach ($presensi as $row) :
