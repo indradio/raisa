@@ -53,7 +53,7 @@ class Presensi extends CI_Controller
         $this->db->where('day(time)',$tanggal);
         $presensi = $this->db->get('presensi')->row_array();
         
-        if ($presensi) {
+        if (!empty($presensi)) {
             $data['workstate'] = $presensi['work_state'];
         } else {
             $data['workstate'] = 'not found';
