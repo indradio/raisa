@@ -90,7 +90,7 @@
                   </label>
                 </div> -->
               </div>
-              <?php } else { echo $workstate; ?>
+              <?php } else { ?>
                 <input type="text" class="form-control" id="workstate" name="workstate" value="<?= $workstate ; ?>" hidden="true" />
               <?php } ?>
               <div class="form-group">

@@ -51,6 +51,7 @@ class Presensi extends CI_Controller
         $this->db->where('year(time)',$tahun);
         $this->db->where('month(time)',$bulan);
         $this->db->where('day(time)',$tanggal);
+        $this->db->where('npk',$this->session->userdata('npk'));
         $presensi = $this->db->get('presensi')->row_array();
         
         if (!empty($presensi)) {
