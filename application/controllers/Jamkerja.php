@@ -66,11 +66,7 @@ class Jamkerja extends CI_Controller
         $create = time();
         $respon = $due - $create;
 
-        $this->db->where('year(tglmulai)', $tahun);
-        $this->db->where('month(tglmulai)', $bulan);
-        $hitung_jamkerja = $this->db->get('jamkerja');
-        $total_jamkerja = $hitung_jamkerja->num_rows()+1;
-        $id = 'WH'.date('ym', strtotime($tanggal)). sprintf("%04s", $total_jamkerja);
+        $id = 'WH'.date('ym', strtotime($tanggal)). $this->session->userdata('npk') . random_string('alnum',4);;
 
         $data = [
             'id' => $id,
@@ -137,7 +133,7 @@ class Jamkerja extends CI_Controller
         
         $tahun = date("Y", strtotime($date));
         $bulan = date("m", strtotime($date));
-        $tanggal =  date("d", strtotime($date));
+        $tanggal = date("d", strtotime($date));
     
         $this->db->where('year(tglmulai)',$tahun);
         $this->db->where('month(tglmulai)',$bulan);

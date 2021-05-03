@@ -173,11 +173,7 @@ class Presensi extends CI_Controller
                                     $tglmulai = date('Y-m-d 07:30:00');
                                     $tglselesai = date('Y-m-d 16:30:00');
 
-                                    $this->db->where('year(tglmulai)', $tahun);
-                                    $this->db->where('month(tglmulai)', $bulan);
-                                    $hitung_jamkerja = $this->db->get('jamkerja');
-                                    $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
-                                    $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
+                                    $id_jk = 'WH'.date('ym'). $this->session->userdata('npk') . random_string('alnum',4);
 
                                     $create = time();
                                     $due = strtotime(date('Y-m-d 18:00:00'));
@@ -258,11 +254,7 @@ class Presensi extends CI_Controller
                                     $tglmulai = date('Y-m-d 07:30:00');
                                     $tglselesai = date('Y-m-d 16:30:00');
 
-                                    $this->db->where('year(tglmulai)', $tahun);
-                                    $this->db->where('month(tglmulai)', $bulan);
-                                    $hitung_jamkerja = $this->db->get('jamkerja');
-                                    $total_jamkerja = $hitung_jamkerja->num_rows() + 1;
-                                    $id_jk = 'WH' . date('ym') . sprintf("%04s", $total_jamkerja);
+                                    $id_jk = 'WH'.date('ym'). $this->session->userdata('npk') . random_string('alnum',4);
 
                                     $create = time();
                                     $due = strtotime(date('Y-m-d 18:00:00'));
