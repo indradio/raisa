@@ -31,7 +31,7 @@
     <!-- Plugin for PhotoSwipe  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script>
     window.OneSignal = window.OneSignal || [];
     OneSignal.push(function() {
@@ -43,5 +43,5 @@
             },
         });
     });
-    </script>
+    </script> -->
 </head>
