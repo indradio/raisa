@@ -66,7 +66,7 @@ class Jamkerja extends CI_Controller
         $create = time();
         $respon = $due - $create;
 
-        $id = 'WH'.date('ym', strtotime($tanggal)). $this->session->userdata('npk') . random_string('alnum',4);;
+        $id = 'WH'.date('ym'). $this->session->userdata('npk') . random_string('alnum',4);;
 
         $data = [
             'id' => $id,
