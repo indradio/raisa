@@ -221,24 +221,15 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] PENDATAAN AWAL PROGRAM VAKSIN*" .
+                            'message' => "*[INFORMASI] LIBUR IDUL FITRI 1442 H*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nSehubungan Vaksin Program Pemerintah ,dengan ini dari PT Astra Otoparts.Tbk akan melakukan *pendataan awal* sesuai dengan tahapan dari pemerintah. " .
-                            "\r\n \r\nAdapun pendataannya adalah untuk :" .
-                            "\r\n \r\nKeluarga atau Kerabat karyawan yang masuk kategori Lansia. Lansia yang dimaksud pemerintah *saat ini yang sudah berusia 60 tahun keatas per 1 Mei 2021 (lahir sebelum 1 Mei 1961)*" .
-                            "\r\n \r\nAdapun sentra vaksin akan berada di :" .
-                            "\r\n*1. ICE BSD, Tangerang - Banten*" .
-                            "\r\n*2. Jakarta Garden City (JGC), Jakarta Timur*" .
-                            "\r\n \r\n(Untuk waktunya akan diinformasikan kemudian oleh panitia)" .
-                            "\r\n \r\nSebagai tambahan informasi, :" .
-                            "\r\n1. Untuk penyintas COVID 19 baru dapat divaksin jika sudah melalui 3 bulan setelah negatif." .
-                            "\r\n2. Karyawan (suami/istri) Non Lansia dapat menjadi Pendamping yang menerima vaksin jika mendaftarkan 2 (dua) Lansia Keluarga/Kerabatnya." .
-                            "\r\n3. KTP Lansia diperkenankan untuk KTP dari kota seluruh Indonesia." .
-                            "\r\n4. KTP Pendamping dari Jabodetabek dan Banten, jika tidak ber KTP Jabodetabek dan Banten maka memerlukan surat keterangan domisili dari RT RW." .
-                            "\r\n \r\nPendaftaran bisa dilakukan oleh karyawan langsung paling lambat, Selasa, 27 April 2021 melalui link form :".
-                            "\r\n \r\nhttp://bit.ly/DataVaksinKeluargaAOPGroup ".
-                            "\r\n \r\nJika terdapat pertanyaan berkaitan dengan proses pengumpulan data maupun detail dapat menghubungi PIC HR : Sulthon Aulia/Lia Hendra Gianti.".
-                            "\r\n \r\nDemikian yang dapat kami sampaikan, terima  kasih atas perhatian dan bantuannya.".
+                            "\r\nBerdasarkan Calender Of Event (COE) pT Astra Otoparts Tbk Divisi Winteq tahun 202l,maka dengan ini kami informasikan hari libur vang telah ditetapkan adalah sebagai berikut:" .
+                            "\r\n \r\n*1. Cuti Bersama Perusahaan : 10,11,17,18 Mei 2021*" .
+                            "\r\n*2. Cuti Bersama Pemerintah : 12 Mei 2021*" .
+                            "\r\n*3. Hari Raya ldul Fitri : 13,14 Mei 2021*" .
+                            "\r\n*4. Masuk Kerja Kembali : 19 Mei 2021*" .
+                            "\r\n \r\nDemikian infornrasi tni kami sampaikan. Terima kasih atas perhatiannva. " .
+                            "\r\n \r\n*Selamat Hari Raya Idul Fitri 1442 H*" .
                             "\r\n \r\nHormat Kami,".
                             "\r\nHuman Capital".
                             "\r\nPT Astra Otoparts Tbk Divisi Winteq".
