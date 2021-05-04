@@ -221,7 +221,7 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] LIBUR IDUL FITRI 1442 H*" .
+                            'message' => "*🗓️[INFORMASI] LIBUR IDUL FITRI 1442 H*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 202l,maka dengan ini kami informasikan hari libur yang telah ditetapkan adalah sebagai berikut:" .
                             "\r\n \r\n*1. Cuti Bersama Perusahaan : 10,11,17,18 Mei 2021*" .
