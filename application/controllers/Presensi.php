@@ -36,11 +36,11 @@ class Presensi extends CI_Controller
 
         $this->load->helper('url');
 
-        if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+        if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
             $flag = 'Check In';
-        } elseif (date('H:i') >= '10:30' and date('H:i') <= '13:00') {
+        } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
             $flag = 'Rest Time';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+        } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
             $flag = 'Check Out';
         } else {
             $flag = 'notime';
@@ -105,11 +105,11 @@ class Presensi extends CI_Controller
         }
 
         //State Check by Time
-        if (date('H:i') >= '07:00' and date('H:i') <= '08:30') {
+        if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
             $state = 'C/In';
-        } elseif (date('H:i') >= '10:30' and date('H:i') <= '13:00') {
+        } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
             $state = 'C/Rest';
-        } elseif (date('H:i') >= '16:00' and date('H:i') <= '17:30') {
+        } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
             $state = 'C/Out';
         } else {
             $state = 'notime';

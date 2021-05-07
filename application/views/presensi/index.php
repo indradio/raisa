@@ -118,9 +118,9 @@
               <?php }else{ ?>
                 <div class="form-check mr-auto">
                 <label class="form-check-label">
-                  <i> Check In  : <b>07:00 s/d 08:30</b></br>
-                      Rest Time : <b>11:30 s/d 13:00</b></br>
-                      Check Out : <b>16:00 s/d 17:00</b></br>
+                  <i> Check In  : <b>06:00 s/d 08:00</b></br>
+                      Rest Time : <b>11:00 s/d 14:00</b></br>
+                      Check Out : <b>17:00 s/d 19:00</b></br>
                       Jangan lewatkan setiap jendela waktu ya!
                   </i>
                 </label>
