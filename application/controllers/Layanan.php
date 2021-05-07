@@ -221,18 +221,19 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*🗓️[INFORMASI] LIBUR IDUL FITRI 1442 H*" .
+                            'message' => "*🗺️[INFORMASI] LARANGAN MUDIK DAN ABSENSI SELAMA LIBUR LEBARAN 📍*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 202l,maka dengan ini kami informasikan hari libur yang telah ditetapkan adalah sebagai berikut:" .
-                            "\r\n \r\n*1. Cuti Bersama Perusahaan : 10,11,17,18 Mei 2021*" .
-                            "\r\n \r\n*2. Cuti Bersama Pemerintah : 12 Mei 2021*" .
-                            "\r\n \r\n*3. Hari Raya ldul Fitri : 13,14 Mei 2021*" .
-                            "\r\n \r\n*4. Masuk Kerja Kembali : 19 Mei 2021*" .
+                            "\r\nDalam upaya pengendalian penyebaran _Corona Virus Disease (COVID-19)_ dan mematuhi kebijakan pemerintah tentang peniadaan kegiatan mudik hari raya idul fitri 1442 hijriah." .
+                            "\r\n \r\nDengan ini menghimbau kepada seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *mematuhi peraturan* tersebut." .
+                            "\r\n \r\nAdapaun upaya untuk mendukung pelaksanaan peraturan tersebut :" .
+                            "\r\n \r\n1. Seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *Tidak melakukan kegiatan mudik hari raya idul fitri 1442 hijriah.*" .
+                            "\r\n \r\n2. Seluruh karyawan PT. Astra Otoparts Divisi WINTEQ *Wajib melaporkan posisinya* melalui aplikasi RAISA pada jendela waktu yang sudah ditentukan." .
+                            "\r\n \r\nApabila karyawan melakukan kegiatan mudik, maka *harus melaporkannya ke atasan* dan mendapat ijin masuk kerja kembali setelah melakukan *isolasi mandiri* selama waktu tertentu dengan memotong *sisa cuti* karyawan ybs jika melewati masa libur perusahaan dan menunjukan bukti *tes antigen dengan hasil negatif*" .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\n*Selamat Hari Raya Idul Fitri 1442 H*" .
-                            "\r\n \r\nHormat Kami,".
-                            "\r\nHuman Capital".
-                            "\r\nPT Astra Otoparts Tbk Divisi Winteq".
+                            "\r\n \r\nHormat Kami," .
+                            "\r\nHuman Capital" .
+                            "\r\nPT Astra Otoparts Tbk Divisi Winteq" .
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 5M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, Menjaga Jarak, Menjauhi kerumunan dan Membatasi mobilisasi dan interaksi._"
                         ],
                     ]
