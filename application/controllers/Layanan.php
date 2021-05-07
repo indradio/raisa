@@ -223,13 +223,14 @@ class Layanan extends CI_Controller
                             'phone' => $k['phone'],
                             'message' => "*🗺️[INFORMASI] LARANGAN MUDIK DAN ABSENSI SELAMA LIBUR LEBARAN 📍*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nDalam upaya pengendalian penyebaran _Corona Virus Disease (COVID-19)_ dan mematuhi kebijakan pemerintah tentang peniadaan kegiatan mudik hari raya idul fitri 1442 hijriah." .
+                            "\r\nDalam upaya pengendalian penyebaran COVID-19 dan mematuhi kebijakan pemerintah tentang pelarangan mudik Hari Raya Idul Fitri 1442H." .
                             "\r\n \r\nDengan ini menghimbau kepada seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *mematuhi peraturan* tersebut." .
                             "\r\n \r\nAdapaun upaya untuk mendukung pelaksanaan peraturan tersebut :" .
-                            "\r\n \r\n1. Seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *Tidak melakukan kegiatan mudik hari raya idul fitri 1442 hijriah.*" .
-                            "\r\n \r\n2. Seluruh karyawan PT. Astra Otoparts Divisi WINTEQ *Wajib melaporkan posisinya* melalui aplikasi RAISA pada jendela waktu yang sudah ditentukan." .
+                            "\r\n \r\n1. Seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *Tidak melakukan kegiatan mudik hari raya idul fitri 1442H.*" .
+                            "\r\n \r\n2. Seluruh karyawan PT. Astra Otoparts Divisi WINTEQ *Wajib melakukan absen online* melalui aplikasi RAISA pada jendela waktu yang sudah ditentukan." .
                             "\r\n*Absensi diberlakukan pada 8 Mei 2021 - 18 Mei 2021*" .
-                            "\r\n \r\nApabila karyawan melakukan kegiatan mudik, maka *harus melaporkannya ke atasan* dan mendapat ijin masuk kerja kembali setelah melakukan *isolasi mandiri* selama waktu tertentu dengan memotong *sisa cuti* karyawan ybs jika melewati masa libur perusahaan dan menunjukan bukti *tes antigen dengan hasil negatif*" .
+                            "\r\n \r\nApabila karyawan melakukan kegiatan mudik, maka *harus melaporkannya ke pimpinan kerja* dan mendapat ijin masuk kerja kembali setelah melakukan *isolasi mandiri* selama waktu tertentu dengan memotong *sisa cuti* karyawan ybs jika melewati masa libur perusahaan dan menunjukan bukti *tes antigen dengan hasil negatif*" .
+                            "\r\nUntuk aturan, ketentuan dan prosedur lebih detail silahkan menghubungi pimpinan masing-masing " .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\n*Selamat Hari Raya Idul Fitri 1442 H*" .
                             "\r\n \r\nHormat Kami," .

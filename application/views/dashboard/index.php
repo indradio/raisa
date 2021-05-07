@@ -7,9 +7,9 @@
           <strong>ABSEN SEKARANG!</strong>
           </br>
           </br>Mulai <b>1 mei 2021</b> absensi menggunakan jendela waktu berikut : </br>
-            Check In  : <b>07:00 s/d 08:30</b></br>
-            Rest Time : <b>11:30 s/d 13:00</b></br>
-            Check Out : <b>16:00 s/d 17:00</b></br>
+          </br>Check In  : <b>06:00 s/d 08:00</b></br>
+            Rest Time : <b>11:00 s/d 14:00</b></br>
+            Check Out : <b>17:00 s/d 19:00</b></br>
           </br>Apakah kamu sudah absen hari ini?
           </br><a href="<?= base_url('presensi'); ?>" class="btn btn-success text-white" role="button" aria-disabled="true">Klik untuk Absen</a>
         </div>
