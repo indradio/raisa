@@ -22,8 +22,8 @@
     <script src="<?= base_url(); ?>assets/js/plugins/tinymce.min.js"></script>
     <script src="<?= base_url(); ?>assets/js/plugins/jquery.mask.js"></script>
     <script src="<?= base_url(); ?>assets/js/plugins/jquery.mask.min.js"></script>
-    <script src="<?= base_url(); ?>assets/js/plugins/OneSignalSDKUpdaterWorker.js"></script>
-    <script src="<?= base_url(); ?>assets/js/plugins/OneSignalSDKWorker.js"></script>
+    <!-- <script src="<?= base_url(); ?>assets/js/plugins/OneSignalSDKUpdaterWorker.js"></script> -->
+    <!-- <script src="<?= base_url(); ?>assets/js/plugins/OneSignalSDKWorker.js"></script> -->
     <!-- Plugin for jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
