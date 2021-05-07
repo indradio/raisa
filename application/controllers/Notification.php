@@ -707,7 +707,7 @@ class Notification extends CI_Controller
 
                         $users = '';
                         foreach ($presensi as $row) :
-                            $users = $users . "\r\nNama : " .$row['nama']. "\r\nWaktu : " .date('H:i', strtotime($row['time'])). "\r\nKategori : " .$row['new_state']. "\r\nSuhu : " .$row['temperature']. "\r\nKondisi : " .$row['condition']. "\r\nLokasi : " .$row['loc'] . "\r\n \r\n";
+                            $users = $users . "\r\nNama : " .$row['nama']. "\r\nWaktu : " .date('H:i', strtotime($row['time'])). "\r\nKategori : " .$row['new_state']. "\r\nCatatan : " .$row['description']. "\r\nLokasi : " .$row['location'] . "\r\n \r\n https://www.google.com/maps/search/?api=1&query=" .$row['latitude'] . "," .$row['longitude'];
                         endforeach;
 
                         $client = new \GuzzleHttp\Client();
@@ -762,7 +762,7 @@ class Notification extends CI_Controller
 
                         $users = '';
                         foreach ($presensi as $row) :
-                            $users = $users . "\r\nNama : " .$row['nama']. "\r\nWaktu : " .date('H:i', strtotime($row['time'])). "\r\nKategori : " .$row['new_state']. "\r\nSuhu : " .$row['temperature']. "\r\nKondisi : " .$row['condition']. "\r\nLokasi : " .$row['loc'] . "\r\n \r\n";
+                            $users = $users . "\r\nNama : " .$row['nama']. "\r\nWaktu : " .date('H:i', strtotime($row['time'])). "\r\nKategori : " .$row['new_state']. "\r\nCatatan : " .$row['description']. "\r\nLokasi : " .$row['location'] . "\r\n \r\n https://www.google.com/maps/search/?api=1&query=" .$row['latitude'] . "," .$row['longitude'];
                         endforeach;
 
                         $client = new \GuzzleHttp\Client();
