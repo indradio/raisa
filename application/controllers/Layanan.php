@@ -228,6 +228,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nAdapaun upaya untuk mendukung pelaksanaan peraturan tersebut :" .
                             "\r\n \r\n1. Seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *Tidak melakukan kegiatan mudik hari raya idul fitri 1442 hijriah.*" .
                             "\r\n \r\n2. Seluruh karyawan PT. Astra Otoparts Divisi WINTEQ *Wajib melaporkan posisinya* melalui aplikasi RAISA pada jendela waktu yang sudah ditentukan." .
+                            "\r\n*Absensi diberlakukan pada 8 Mei 2021 - 18 Mei 2021*" .
                             "\r\n \r\nApabila karyawan melakukan kegiatan mudik, maka *harus melaporkannya ke atasan* dan mendapat ijin masuk kerja kembali setelah melakukan *isolasi mandiri* selama waktu tertentu dengan memotong *sisa cuti* karyawan ybs jika melewati masa libur perusahaan dan menunjukan bukti *tes antigen dengan hasil negatif*" .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\n*Selamat Hari Raya Idul Fitri 1442 H*" .
