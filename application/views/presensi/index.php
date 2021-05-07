@@ -68,6 +68,7 @@
               <div class="form-group">
                 <label for="workstate" class="bmd-label-floating"> Work State *</label>
                 <select class="form-control selectpicker" data-style="btn btn-link" id="workstate" name="workstate" title="Silahkan Pilih" data-size="7" data-live-search="false" onchange="workstateSelect(this);" required>
+                  <option value="LIBUR LEBARAN" selected>LIBUR LEBARAN</option>
                   <option value="SHIFT2">SHIFT</option>
                   <option value="WFH">WORK FROM HOME</option>
                   <option value="OFF">OFF DAY</option>
