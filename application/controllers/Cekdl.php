@@ -243,7 +243,7 @@ class Cekdl extends CI_Controller
                         "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
                         "\r\n Peserta : *" . $perjalanan['anggota'] . "*" .
                         "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "*" .
-                        "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "*" .
+                        "\r\n Kembali : *" . date("Y-m-d") . "* *" . date("H:i:s") . "*" .
                         "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
                         "\r\n \r\nPerjalanan ini telah kembali, JANGAN LUPA UNTUK SEGERA MELAKUKAN PENYELESAIAN.".
                         "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul 07:00-09:00 (dibayarkan hari yang sama).".

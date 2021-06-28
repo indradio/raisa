@@ -1,19 +1,31 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12">
         <div class="alert alert-default" role="alert">
-          <strong>ABSEN SEKARANG!</strong>
+          <strong>Butuh bantuan RAISA?</strong>
           </br>
-          </br>Mulai <b>1 mei 2021</b> absensi menggunakan jendela waktu berikut : </br>
-          </br>Check In  : <b>06:00 s/d 08:00</b></br>
-            Rest Time : <b>11:00 s/d 14:00</b></br>
-            Check Out : <b>17:00 s/d 19:00</b></br>
-          </br>Apakah kamu sudah absen hari ini?
-          </br><a href="<?= base_url('presensi'); ?>" class="btn btn-success text-white" role="button" aria-disabled="true">Klik untuk Absen</a>
+          </br>Silahkan isi form berikut ya!
+          </br><a href="#" class="btn btn-info text-white" role="button" aria-disabled="true" data-toggle="modal" data-target="#openTicket">Butuh bantuan? Klik sekarang</a>
         </div>
       </div>
+    </div> -->
+    <div class="row">
+      <div class="col-md-4">
+          <div class="card">
+            <div class="card-header card-header-info card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title"><strong>Butuh bantuan RAISA?</strong></h4>
+            </div>
+            <div class="card-body">
+          </br>Silahkan isi form berikut ya!
+          </br><a href="#" class="btn btn-info text-white" role="button" aria-disabled="true" data-toggle="modal" data-target="#openTicket">Butuh bantuan? Klik sekarang</a>
+          </div>
+      </div>
+    </div>
     </div>
     <!-- End Banner -->
     <div class="row">
@@ -991,6 +1003,55 @@
       </form>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="openTicket" tabindex="-1" role="dialog" aria-labelledby="openTicketTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Ada yang bisa kami bantu?</h4>
+                    </div>
+                </div>
+                <form id="ticket" class="form" method="post" action="<?= base_url('ticket/new'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Menu</label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" data-size="5" data-style="select-with-transition" id="menu" name="menu" title="Pilih menu" required="true">
+                                            <option value="PERJALANAN">Perjalanan</option>
+                                            <option value="JAM KERJA">Jam Kerja</option>
+                                            <option value="LEMBUR">Lembur</option>
+                                            <option value="GANTI HARI">Ganti Hari</option>
+                                            <option value="LAINNYA">Lainnya...</option>                                           
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">Kasus </br><small><i>Ceritakan</i></small></label>
+                                <div class="col-md-8">
+                                    <div class="form-group has-default">
+                                        <textarea class="form-control" id="case" name="case" rows="5" required="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-right">
+                                <button class="btn btn-default btn-link" data-dismiss="modal">TUTUP</button>
+                                <button type="submit" class="btn btn-success btn-round">LAPORKAN!</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Add Claim Medical Modal -->

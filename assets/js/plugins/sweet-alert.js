@@ -220,6 +220,14 @@ if (flashData == 'masuk') {
     confirmButtonClass: "btn btn-warning",
     type: "warning"
   }).catch(swal.noop)
+} else if (flashData == 'openticket') {
+  swal({
+    title: "Terimakasih!",
+    text: "Laporan kamu segera kami tindak lanjuti.",
+    buttonsStyling: false,
+    confirmButtonClass: "btn btn-success",
+    type: "success"
+  }).catch(swal.noop)
 }
 
 
