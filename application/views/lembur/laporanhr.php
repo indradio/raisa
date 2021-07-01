@@ -50,6 +50,7 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
+                                    <th>catatan</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                     <th class="disabled-sorting"></th>
                                 </tr>
@@ -65,6 +66,7 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
+                                    <th>catatan</th>
                                     <th class="text-right">Actions</th>
                                     <th></th>
                                 </tr>
@@ -85,6 +87,7 @@
                                     <td><?= date('m/d/Y', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= $l['durasi']; ?> Jam </td>
+                                    <td><?= $l['catatan']; ?> Jam </td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>
                                             <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
