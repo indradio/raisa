@@ -14,17 +14,17 @@
       <span data-notify="message">4. ISOMAN Untuk kamu yang sedang berjuang melawan COVID-19, Semangat!</span>
     </div>
     <div class="row">
-    <div class="col-md-3">
+      <div class="col-md-3">
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
-          <?php if ($workstate == 'not found'){ ?>
-            <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
-              <img class="img" src="<?= base_url(); ?>/assets/img/clock-in.jpg">
-            </a>
-          <?php }else{ ?>
-            <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">
-              <img class="img" src="<?= base_url(); ?>/assets/img/clock-out.jpg">
-            </a>
+            <?php if ($workstate == 'not found'){ ?>
+              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
+                <img class="img" src="<?= base_url(); ?>/assets/img/clock-in.jpg">
+              </a>
+            <?php }else{ ?>
+              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">
+                <img class="img" src="<?= base_url(); ?>/assets/img/clock-out.jpg">
+              </a>
             <?php } ?>
           </div>
           <div class="card-body">
@@ -64,7 +64,9 @@
           </div> -->
         </div>
       </div>
-    <div class="col-md-12">
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-text card-header-primary">
             <div class="card-text">
@@ -77,6 +79,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-12" hidden>
         <form id="timePrecense" class="form" method="post" action="<?= base_url('presensi/submit'); ?>">
           <div class="card ">

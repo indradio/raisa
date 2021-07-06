@@ -12,6 +12,7 @@ class Presensi_model extends CI_Model
     {
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('state', 'C/In');
+        $this->db->limit(93);
         return $this->db->get("presensi");
     }
     public function GET_MY_OUT($date)
