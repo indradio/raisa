@@ -209,41 +209,6 @@
 </div>
 
 <script>
-var xmlHttp;
-
-function srvTime() {
-  try {
-    //FF, Opera, Safari, Chrome
-    xmlHttp = new XMLHttpRequest();
-  } catch (err1) {
-    //IE
-    try {
-      xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
-    } catch (err2) {
-      try {
-        xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
-      } catch (eerr3) {
-        //AJAX not supported, use CPU time.
-        alert("AJAX not supported");
-      }
-    }
-  }
-  xmlHttp.open('HEAD', window.location.href.toString(), false);
-  xmlHttp.setRequestHeader("Content-Type", "text/html");
-  xmlHttp.send('');
-  return xmlHttp.getResponseHeader("Date");
-}
-
-// function displayRadioValue() { 
-//     var ele = document.getElementsByName('options'); 
-      
-//     for(i = 0; i < ele.length; i++) { 
-//         if(ele[i].checked) 
-//         document.getElementById("demo").value
-//                 = "Gender: "+ele[i].value; 
-//     } 
-// } 
-
   $(document).ready(function() {
     var x = document.getElementById("browser");
 
@@ -460,9 +425,7 @@ function srvTime() {
     }
 
     setInterval(function() {
-      srvTime(st);
-      var st = srvTime();
-      var date = new Date(st);
+      var date = new Date();
       document.getElementById("time").value = date;
     }, 1000);
 
