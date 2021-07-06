@@ -132,6 +132,7 @@ class Presensi extends CI_Controller
                 if (empty($presensi)) {
                     $data = [
                                 'id' => $id,
+                                'date' => date('Y-m-d'),
                                 'npk' => $this->session->userdata('npk'),
                                 'nama' => $this->session->userdata('nama'),
                                 'state' => $this->input->post('state'),
