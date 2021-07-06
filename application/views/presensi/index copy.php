@@ -14,7 +14,41 @@
       <span data-notify="message">4. ISOMAN Untuk kamu yang sedang berjuang melawan COVID-19, Semangat!</span>
     </div>
     <div class="row">
-      <div class="col-md-12" hidden>
+    <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-warning">
+            <div class="card-text">
+              <h4 class="card-title">Last Attendance</h4>
+              <p class="card-category"><?= $this->session->userdata('nama'); ?></p>
+            </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>State</th>
+                <th>Time</th>
+              </tr></thead>
+              <tbody>
+              <?php
+                  $this->db->where('year(time)',date("Y"));
+                  $this->db->where('month(time)',date("m"));
+                  $this->db->where('day(time)',date("d"));
+                  $this->db->where('npk',$this->session->userdata('npk'));
+                  $this->db->order_by('time DESC');
+                  $presensi = $this->db->get('presensi')->result_array();
+                  foreach ($presensi as $row) :
+              ?>
+                <tr>
+                  <td><?= $row['state']; ?></td>
+                  <td><?= date("H:i", strtotime($row['time'])); ?></td>
+                </tr>
+               <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
         <form id="timePrecense" class="form" method="post" action="<?= base_url('presensi/submit'); ?>">
           <div class="card ">
             <div class="card-header card-header-info card-header-icon">
@@ -37,7 +71,7 @@
           </div>
         </form>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
@@ -76,7 +110,7 @@
           </div> -->
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">

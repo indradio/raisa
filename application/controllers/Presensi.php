@@ -12,7 +12,7 @@ class Presensi extends CI_Controller
         is_logged_in();
         date_default_timezone_set('asia/jakarta');
         
-        $this->load->model('presensi_model', 'presensi');
+        $this->load->model('Presensi_model');
 
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('date', date('Y-m-d'));
@@ -36,22 +36,23 @@ class Presensi extends CI_Controller
 
         $this->load->helper('url');
 
-        if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
-            $flag = 'Check In';
-        } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
-            $flag = 'Rest Time';
-        } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
-            $flag = 'Check Out';
-        } else {
-            $flag = 'notime';
-        }
+        // if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
+        //     $flag = 'Check In';
+        // } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
+        //     $flag = 'Rest Time';
+        // } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
+        //     $flag = 'Check Out';
+        // } else {
+        //     $flag = 'notime';
+        // }
     
-        $data['flag'] = $flag;
+        // $data['flag'] = $flag;
 
         $this->db->where('year(time)',$tahun);
         $this->db->where('month(time)',$bulan);
         $this->db->where('day(time)',$tanggal);
         $this->db->where('npk',$this->session->userdata('npk'));
+        $this->db->where('state','C/In');
         $presensi = $this->db->get('presensi')->row_array();
         
         if (!empty($presensi)) {
@@ -93,41 +94,39 @@ class Presensi extends CI_Controller
     public function submit()
     {
         date_default_timezone_set('asia/jakarta');
-        $tahun = date("Y");
-        $bulan = date("m");
-        $tanggal = date("d");
+        $tahun      = date("Y");
+        $bulan      = date("m");
+        $tanggal    = date("d");
 
         // Day Check
         if (date('D') == 'Sat' or date('D') == 'Sun') {
-            $day = 'Weekend';
+            $day = 'WEEKEND';
         } else {
-            $day = 'Weekday';
+            $day = 'WEEKDAY';
         }
 
         //State Check by Time
-        if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
-            $state = 'C/In';
-        } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
-            $state = 'C/Rest';
-        } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
-            $state = 'C/Out';
-        } else {
-            $state = 'notime';
-        }
+        // if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
+        //     $state = 'C/In';
+        // } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
+        //     $state = 'C/Rest';
+        // } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
+        //     $state = 'C/Out';
+        // } else {
+        //     $state = 'notime';
+        // }
         
         //State convert to Decimal
-        if ($state == 'C/In') {
-            $st = '1';
-        } elseif ($state == 'C/Out') {
-            $st = '0';
-        } else {
-            $st = '2';
-        }
+        ($this->input->post('state') == 'C/In') ? $state = '1' : $state = '0';
+        // if () {
+        //     $st = '1';
+        // } elseif ($this->input->post('state') == 'C/Out') {
+        //     $st = '0';
+        // }
         
-        $id = date('ymd') . $this->session->userdata('inisial') . $st;
+        $id = date('ymd') . $this->session->userdata('inisial') . $state;
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
-        if ($state != 'notime') {
             if (!empty($this->input->post('location')) or !empty($this->input->post('latitude')) or !empty($this->input->post('longitude'))) {
                 $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
                 if (empty($presensi)) {
@@ -135,7 +134,7 @@ class Presensi extends CI_Controller
                                 'id' => $id,
                                 'npk' => $this->session->userdata('npk'),
                                 'nama' => $this->session->userdata('nama'),
-                                'state' => $state,
+                                'state' => $this->input->post('state'),
                                 'work_state' => $this->input->post('workstate'),
                                 'location' => $this->input->post('location'),
                                 'latitude' => $this->input->post('latitude'),
@@ -319,9 +318,7 @@ class Presensi extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', 'clockFailed');
             }
-        } else {
-            $this->session->set_flashdata('message', 'clockFailed');
-        }
+        
         redirect('presensi');
     }
 
@@ -385,9 +382,9 @@ class Presensi extends CI_Controller
     public function clocktime()
     {
         date_default_timezone_set('asia/jakarta');
-        $tahun = date("Y");
-        $bulan = date("m");
-        $tanggal = date("d");
+        $tahun      = date("Y");
+        $bulan      = date("m");
+        $tanggal    = date("d");
         
         if (date('D') == 'Sat' or date('D') == 'Sun') {
             $day = 'WEEKEND';
@@ -761,5 +758,30 @@ class Presensi extends CI_Controller
         }else{
             redirect('error404');
         }
+    }
+
+    public function GET_MY_IN()
+    {
+        // Our Start and End Dates
+        $events = $this->Presensi_model->GET_MY_IN();
+        $data_events = array();
+
+        foreach ($events->result() as $r) {
+            $out = $this->Presensi_model->GET_MY_OUT($r->date)->row();
+            if (empty($out)){
+                $end = $r->time;
+            }else{
+                $end = $out->time;
+            }
+
+            $data_events[] = array(
+                "id" => $r->id,
+                "title" => $r->work_state,
+                "start" => $r->time,
+                "end" => $end
+            );
+        }
+        echo json_encode(array("events" => $data_events));
+        exit();
     }
 }

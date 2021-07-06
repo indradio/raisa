@@ -7,4 +7,18 @@ class Presensi_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
+
+    public function GET_MY_IN()
+    {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('state', 'C/In');
+        return $this->db->get("presensi");
+    }
+    public function GET_MY_OUT($date)
+    {
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('date', $date);
+        $this->db->where('state', 'C/Out');
+        return $this->db->get("presensi");
+    }
 }
