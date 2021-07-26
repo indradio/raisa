@@ -10,6 +10,7 @@ class Jamkerja extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         
         $this->load->model("jamkerja_model");
+        $this->load->model("Aktivitas_model");
 
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('date', date('Y-m-d'));
@@ -769,6 +770,19 @@ class Jamkerja extends CI_Controller
 
             redirect('jamkerja/persetujuan/ppic');
         }
+    }
+
+    public function hapus()
+    {
+        // Hapus Aktivitas
+        $this->db->where('link_aktivitas', $this->input->post('id'));
+        $this->db->delete('aktivitas');
+
+        // Hapus Jam Kerja
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('jamkerja');
+
+        redirect('jamkerja/persetujuan/ppic');
     }
 
     public function status()

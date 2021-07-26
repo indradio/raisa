@@ -101,27 +101,4 @@ class Jamkerja_model extends CI_Model
         return $this->db->get("aktivitas");
     }
 
-    // function fetch_milestone($copro)
-    // {
-    //     $this->db->where('copro', $copro);
-    //     $this->db->where('level', '1');
-    //     $this->db->order_by('id', 'ASC');
-    //     $query = $this->db->get('wbs');
-    //     return $query->result();
-
-    // $output = '<option value="">Pilih Milestone</option>';
-    // foreach ($milestone as $row) {
-    //     $output = '<option value="' . $row['milestone'] . '">' . $row['milestone'] . '</option>';
-    // }
-    // return $output;
-    // }
-
-    // function fetch_aktivitas($milestone)
-    // {
-    //     $this->db->where("milestone", $milestone);
-    //     $this->db->where("level", "1");
-    //     $this->db->order_by("id", "ASC");
-    //     $query = $this->db->get("wbs");
-    //     return $query->result_array();
-    // }
 }

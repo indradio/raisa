@@ -171,7 +171,8 @@
                                 <!-- Button SUBMIT -->
                                 <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#acceptJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
                                 <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-default" role="button">Kembali</a>
+                                <a href="#" class="btn btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusJamkerja" data-id="<?= $jamkerja['id']; ?>">HAPUS</a>
+                                <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-link" role="button">Kembali</a>
                             <?php }else{ ?>
                                 <!-- Button SUBMIT -->
                                 <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){ ?>
@@ -360,6 +361,36 @@
           </div>
           <div class="modal-footer justify-content-center">
             <button type="submit" class="btn btn-facebook mb-2">REVISI LAPORAN INI!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Revisi Jam Kerja-->
+<div class="modal fade" id="hapusJamkerja" tabindex="-1" role="dialog" aria-labelledby="hapusJamkerjaTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-danger text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">YAKIN MAU MENGHAPUS JAM KERJA INI?</h4>
+          </div>
+        </div>
+        <form class="form" method="post" action="<?= base_url('jamkerja/hapus'); ?>">
+          <div class="modal-body">
+            <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+            <h4 class="card-title text-center">#<?= $jamkerja['id'].' - '. $jamkerja['nama']; ?></br>
+            <small><?= date("d M Y", strtotime($jamkerja['tglmulai'])).' - '.$jamkerja['nama']; ?></small>
+            </br>
+            <small class="text-danger"><i>INGAT! Jam kerja yang dihapus tidak dapat diaktifkan kembali.</i></small>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-facebook mb-2">YA, SAYA YAKIN!</button>
           </div>
         </form>
       </div>
