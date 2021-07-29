@@ -647,7 +647,7 @@ class Jamkerja extends CI_Controller
             $jamkerja = $this->db->get_where('jamkerja', ['id' => $this->input->post('id')])->row_array();
             $this->db->set('ppic', $this->session->userdata('inisial'));
             $this->db->set('tgl_ppic', date("Y-m-d H:i:s"));
-            $this->db->set('poin_ppic', $this->input->post('poin'));
+            // $this->db->set('poin_ppic', $this->input->post('poin'));
             $this->db->set('rev', 0);
             $this->db->set('status', 9);
             $this->db->where('id', $this->input->post('id'));

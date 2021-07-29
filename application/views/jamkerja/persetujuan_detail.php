@@ -169,10 +169,13 @@
                             <div class="col-md-12">
                             <?php if($this->session->userdata('sect_id')==143){ ?>
                                 <!-- Button SUBMIT -->
-                                <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#acceptJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
-                                <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="#" class="btn btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusJamkerja" data-id="<?= $jamkerja['id']; ?>">HAPUS</a>
-                                <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-link" role="button">Kembali</a>
+                                <form class="form" method="post" action="<?= base_url('jamkerja/approve/ppic'); ?>">
+                                  <input type="text" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+                                  <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
+                                  <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
+                                  <a href="#" class="btn btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusJamkerja" data-id="<?= $jamkerja['id']; ?>">HAPUS</a>
+                                  <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-link" role="button">Kembali</a>
+                                </form>
                             <?php }else{ ?>
                                 <!-- Button SUBMIT -->
                                 <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){ ?>
