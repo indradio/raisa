@@ -221,18 +221,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*🗺️[INFORMASI] LARANGAN MUDIK DAN ABSENSI SELAMA LIBUR LEBARAN 📍*" .
+                            'message' => "*[INFORMASI] Libur Tahun Baru Islam 1443 H*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nDalam upaya pengendalian penyebaran COVID-19 dan mematuhi kebijakan pemerintah tentang pelarangan mudik Hari Raya Idul Fitri 1442H." .
-                            "\r\n \r\nDengan ini menghimbau kepada seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *mematuhi peraturan* tersebut." .
-                            "\r\n \r\nAdapaun upaya untuk mendukung pelaksanaan peraturan tersebut :" .
-                            "\r\n \r\n1. Seluruh keluarga besar Karyawan PT. Astra Otoparts Divisi WINTEQ untuk *Tidak melakukan kegiatan mudik hari raya idul fitri 1442H.*" .
-                            "\r\n \r\n2. Seluruh karyawan PT. Astra Otoparts Divisi WINTEQ *Wajib melakukan absen online* melalui aplikasi RAISA pada jendela waktu yang sudah ditentukan." .
-                            "\r\n*Absensi diberlakukan pada 8 Mei 2021 - 18 Mei 2021*" .
-                            "\r\n \r\nApabila karyawan melakukan kegiatan mudik, maka *harus melaporkannya ke pimpinan kerja* dan mendapat ijin masuk kerja kembali setelah melakukan *isolasi mandiri* selama waktu tertentu dengan memotong *sisa cuti* karyawan ybs jika melewati masa libur perusahaan dan menunjukan bukti *tes antigen dengan hasil negatif*" .
-                            "\r\nUntuk aturan, ketentuan dan prosedur lebih detail silahkan menghubungi pimpinan masing-masing " .
+                            "\r\nBerdasarkan SKB No. 712 Tahun 2021, No. 1 Tahun 2021, No. 3 Tahun 2021 Tentang Perubahan Hari Libur Nasional dan Cuti Bersama Tahun 2021, maka dengan ini kami informasikan bahwa hari libur Tahun Baru Islam 1443 H yang semula jatuh pada tanggal 10 Agustus 2021 digeser menjadi tanggal *11 Agustus 2021*." .
+                            "\r\n \r\n*Sehingga pada tanggal 10 Agustus 2021 berlaku sebagai Hari Kerja*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
-                            "\r\n \r\n*Selamat Hari Raya Idul Fitri 1442 H*" .
+                            "\r\n \r\n*Selamat Tahun Baru Hijriyah 1443 H*" .
                             "\r\n \r\nHormat Kami," .
                             "\r\nHuman Capital" .
                             "\r\nPT Astra Otoparts Tbk Divisi Winteq" .
