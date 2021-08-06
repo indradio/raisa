@@ -13,18 +13,8 @@ class Dashboard extends CI_Controller
         $this->load->model("dashboard_model");
     }
 
-    public function index()
+    public function notifications()
     {
-        date_default_timezone_set('asia/jakarta');
-
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('date', date('Y-m-d'));
-        $complete = $this->db->get('kesehatan')->row_array();
-
-        if (empty($complete)){
-            redirect('dashboard/sehat');
-        }
-
         //Notif lembur hari ini to GA
         $n = time();
         $m = strtotime(date('Y-m-d 16:00:00'));
@@ -274,6 +264,25 @@ class Dashboard extends CI_Controller
                 }
             }
         endforeach;
+    }
+
+    public function index()
+    {
+        $this->notifications();
+
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('date', date('Y-m-d'));
+        $complete = $this->db->get('kesehatan')->row_array();
+
+        if (empty($complete)){
+            redirect('dashboard/sehat');
+        }
+
+        // List Kendaraan
+        $this->db->where('is_active', '1');
+        $this->db->where('id !=', '1');
+        $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
+
 
         $this->db->where('year(tglmulai)', date('Y'));
         $this->db->where('month(tglmulai)', date('m'));
