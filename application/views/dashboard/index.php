@@ -1,32 +1,16 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="container-fluid">
-    <!-- <div class="row">
-      <div class="col-md-12">
-        <div class="alert alert-default" role="alert">
-          <strong>Butuh bantuan RAISA?</strong>
-          </br>
-          </br>Silahkan isi form berikut ya!
-          </br><a href="#" class="btn btn-info text-white" role="button" aria-disabled="true" data-toggle="modal" data-target="#openTicket">Butuh bantuan? Klik sekarang</a>
-        </div>
-      </div>
-    </div> -->
-    <div class="row">
-      <div class="col-md-4">
-          <div class="card">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">assignment</i>
-              </div>
-              <h4 class="card-title"><strong>Butuh bantuan RAISA?</strong></h4>
-            </div>
-            <div class="card-body">
-          </br>Silahkan isi form berikut ya!
-          </br><a href="#" class="btn btn-info text-white" role="button" aria-disabled="true" data-toggle="modal" data-target="#openTicket">Butuh bantuan? Klik sekarang</a>
+    <div class="container-fluid">
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-default" role="alert">
+            <strong>Butuh bantuan RAISA?</strong>
+            </br>
+            </br>Silahkan isi form berikut ya!
+            </br><a href="#" class="btn btn-info text-white" role="button" aria-disabled="true" data-toggle="modal" data-target="#openTicket">Butuh bantuan? Klik sekarang</a>
           </div>
-      </div>
-    </div>
-    </div>
+        </div>
+      </div> -->
     <!-- End Banner -->
     <div class="row">
       <?php
@@ -165,609 +149,382 @@
       <!-- end row -->
       <!-- END OUTSTANDING JAM KERJA -->
     <?php } ?>
+  
     <div class="row">
-      <div class="col-md-12">
-        <div class="page-categories">
-          <!-- <h3 class="title text-center">Page Subcategories</h3> -->
-          <!-- <br /> -->
-          <ul class="nav nav-pills nav-pills-info nav-pills-icons justify-content-center" role="tablist">
-            <!-- <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
-                <i class="material-icons">info</i> Description
-              </a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link active" data-toggle="tab" href="#tabperjalanan" role="tablist">
-                <i class="material-icons">emoji_transportation</i> Perjalanan <br>Dinas
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#tablembur" role="tablist">
-                <i class="material-icons">update</i> Lembur
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#tabmedical" role="tablist">
-                <i class="material-icons">local_hospital</i> Claim <br>Medical
-              </a>
-            </li> -->
-            <!-- <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#proschedule" role="tablist">
-                <i class="material-icons">event_note</i> Project <br>Schedule
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
-                <i class="material-icons">help_outline</i> Help Center
-              </a>
-            </li> -->
-          </ul>
-          <div class="tab-content tab-space tab-subcategories">
-            <!-- <div class="tab-pane" id="link7">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title">Description about product</h4>
-                  <p class="card-category">
-                    More information here
-                  </p>
-                </div>
-                <div class="card-body">
-                  Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
-                  <br>
-                  <br> Dramatically visualize customer directed convergence without revolutionary ROI.
-                </div>
-              </div>
-            </div> -->
-            <div class="tab-pane active" id="tabperjalanan">
-              <div class="card">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">directions_car</i>
-                  </div>
-                  <h4 class="card-title">Perjalanan Dinas Hari Ini <?= date("d-M-Y"); ?></h4>
-                </div>
-                <div class="card-body">
-                  <div class="toolbar">
-                    <!--        Here you can write extra buttons/actions for the toolbar              -->
-                  </div>
-                  <div class="table-responsive">
-                    <div class="material-datatables">
-                      <table id="" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                          <tr>
-                            <th class="text-center"></th>
-                            <th>Kendaraan</th>
-                            <th>Peserta</th>
-                            <th>Tujuan</th>
-                            <th>Keperluan</th>
-                            <th>Berangkat</th>
-                            <th>Kembali</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                          <tr>
-                            <th class="text-center"></th>
-                            <th></th>
-                          </tr>
-                        </tfoot>
-                        <tbody>
-                          <?php
-                          $queryKendaraan = "SELECT *
-                                                      FROM `kendaraan`
-                                                      WHERE `kontrak` >= CURDATE() AND `is_active` = 1 AND `id` != 1
-                                                      ORDER BY `id` ASC
-                                                  ";
-                          $kendaraan = $this->db->query($queryKendaraan)->result_array();
-                          foreach ($kendaraan as $k) : ?>
-                            <tr>
-                              <?php
-                              $nopol = $k['nopol'];
-                              $queryPerjalanan = "SELECT *
-                                                  FROM `perjalanan`
-                                                  WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  (`status` = 1 OR `status` = 2 OR `status` = 8)
-                                                  ";
-                              $p = $this->db->query($queryPerjalanan)->row_array();
-                              if (!empty($p)) { ?>
-                                  <?php $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); ?>
-                                  <?php if ($p['status'] == 1) { ?>
-                                  <td class="text-center">
-                                    <div class="img-container" style="width:100px; height:90px;">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                  <?php foreach ($kendaraan as $rowCars) : ?>
+                    <div class="col-lg-2 col-md-4 col-sm-6 mt-0 mb-0">
+                      <!-- Search from PERJALANAN -->
+                      <?php
+                      $nopol = $rowCars['nopol'];
+                      $queryPerjalanan = "SELECT *
+                                          FROM `perjalanan`
+                                          WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  (`status` = 1 OR `status` = 2 OR `status` = 8)
+                                          ";
+                      $p = $this->db->query($queryPerjalanan)->row_array();
+                      if ($p) {
+                      $status = $this->db->get_where('perjalanan_status', ['id' => $p['status']])->row_array(); 
+                      $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array();
+                      $tujuan = $this->db->get_where('perjalanan_tujuan', ['perjalanan_id' => $p['id']])->result_array(); ?>
+
+                        <div class="card">
+                          <div class="card-header <?= ($p['status'] == 2)? 'card-header-danger' : 'card-header-info';?> card-header-icon">
+                              <div class="card-icon">
+                                <i class="material-icons">emoji_transportation</i>
+                              </div>
+                              <h4 class="card-title"><?= ($p['status'] == 2)? 'ON DUTY' : 'READY';?></h4>
+                           
+                          </div>
+                          <div class="card-body text-center">
+                              <div class="img-container">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($p['status'] == 2)? 'ON DUTY' : 'READY';?>.png" alt="...">
+                              </div>
+                              <?php if ($p['status'] == 1) { ?>
+                                  <span class="btn btn-round btn-sm btn-info">STARTING ENGINE</span>
+                                <?php } elseif ($p['status'] == 2) { ?>
+                                  <span class="btn btn-round btn-sm btn-danger">On Duty</span>
+                                <?php }; ?>
+                              </div>
+                              <div class="card-footer" style="display:block;">
+                                <div class="bootstrap-tagsinput info-badge">
+                                    <?php foreach ($peserta as $row) : ?>
+                                      <span class="tag badge" data-toggle="tooltip" data-placement="top" title="<?= $row['karyawan_nama']; ?>"><?= $row['karyawan_inisial']; ?></span><span data-role="remove"></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <div data-toggle="tooltip" data-placement="top" title="<?php 
+                                  foreach ($tujuan as $row) :
+                                    echo $row['nama']. "\r\n";
+                                  endforeach; ?>">
+                                &nbsp;<i class="fa fa-map-marker text-success"></i> &nbsp;<?= $p['tujuan']; ?>
+                            </div>
+                              <i class="fa fa-clock-o text-success"> </i>
+                              <?php if ($p['jenis_perjalanan']=='TA') : 
+                                echo date('d-M', strtotime($p['tglberangkat'])) . ' ' . date('H:i', strtotime($p['jamberangkat'])) ." - ". date('d-M', strtotime($p['tglkembali'])) . ' ' . date('H:i', strtotime($p['jamkembali'])); 
+                              else :
+                                echo date('H:i', strtotime($p['jamberangkat'])) ." - <small>". date('H:i', strtotime($p['jamkembali']))."</small>"; 
+                              endif; ?></br>
+                              <i class="fa fa-car text-success"> </i> <?= $p['nopol']; ?> - <small><?= $p['kendaraan']; ?></small>
+                              <div id="accordion" role="tablist">
+                                <div class="card card-collapse">
+                                  <div class="card-header" role="tab" id="heading<?=$p['id']; ?>">
+                                    <h5 class="mb-0">
+                                      <a class="collapsed" data-toggle="collapse" href="#collapse<?=$p['id']; ?>" aria-expanded="false" aria-controls="collapse<?=$p['id']; ?>">
+                                        Details
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                      </a>
+                                    </h5>
+                                  </div>
+                                  <div id="collapse<?=$p['id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$p['id']; ?>" data-parent="#accordion">
+                                    <div class="card-body">
+                                      <div><?=$p['copro']; ?></div>
+                                      <div><?=$p['keperluan']; ?></div>
                                     </div>
-                                  </td>
-                                  <td>
-                                    <?= $k['nopol']; ?>
-                                    <br />
-                                    #<?= $p['id']; ?>
-                                    <br />
-                                    <a href="#" class="badge badge-info" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
-                                  </td>
-                                  <?php } elseif ($p['status'] == 2) { ?>
-                                  <td class="text-center">
-                                    <div class="img-container" style="width:100px; height:90px;">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan4.png" alt="...">
+                                  </div>
+                                </div>
+                                <div class="card card-collapse">
+                                  <div class="card-header" role="tab" id="heading<?=$rowCars['device_id']; ?>">
+                                    <h5 class="mb-0">
+                                      <a class="collapsed" data-toggle="collapse" href="#collapse<?=$rowCars['device_id']; ?>" aria-expanded="false" aria-controls="collapse<?=$rowCars['device_id']; ?>">
+                                        Track
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                      </a>
+                                    </h5>
+                                  </div>
+                                  <div id="collapse<?=$rowCars['device_id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$rowCars['device_id']; ?>" data-parent="#accordion">
+                                    <div class="card-body">
+                                      <div id="<?=$rowCars['device_id']; ?>" class="map" style="width:100%;margin:0px;"></div>
+                                      <small><div id="loc<?=$rowCars['device_id']; ?>"></div></small>
                                     </div>
-                                  </td>
-                                  <td>
-                                    <?= $k['nopol']; ?>
-                                    <br />
-                                    #<?= $p['id']; ?>
-                                    <br />
-                                    <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
-                                  </td>
-                                  <?php } elseif ($p['status'] == 8) { ?>
-                                  <td class="text-center">
-                                    <div class="img-container" style="width:100px; height:90px;">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <?= $k['nopol']; ?>
-                                    <br />
-                                    #<?= $p['id']; ?>
-                                    <br />
-                                    <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><?= $status['nama']; ?></a>
-                                  </td>
-                                  <?php }; ?>
-                                <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array(); ?>
-                                <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($peserta);$i++){
-                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
-                                  } ?>">
-                                <?= $p['anggota']; ?></td>
-                                <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['perjalanan_id' => $p['id']])->result_array(); ?>
-                                <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($tujuan);$i++){
-                                    echo $tujuan[$i]['nama']. "\r\n";
-                                  } ?>">
-                                  <?= $p['tujuan']; ?></td>
-                                <td><?= $p['keperluan']; ?></td>
-                                <td><?= date('d-M', strtotime($p['tglberangkat'])) . ' ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
-                                <td><?= date('d-M', strtotime($p['tglkembali'])) . ' ' . date('H:i', strtotime($p['jamkembali'])); ?></td>
-                                <?php } else {
-                                $queryReservasi = "SELECT *
-                                                    FROM `reservasi`
-                                                    WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
-                                                    ";
-                                $r = $this->db->query($queryReservasi)->row_array();
-                                if (!empty($r)) { ?>
-                                  <td class="text-center">
-                                    <div class="img-container" style="width:100px; height:90px;">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan2.png" alt="...">
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <?= $k['nopol']; ?>
-                                    <br />
-                                    #<?= $r['id']; ?>
-                                    <br />
-                                    <?php if ($r['status'] == 1) { ?>
-                                      <span class="badge badge-warning">Menunggu Persetujuan <?= $r['atasan1']; ?></span>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+
+                      <?php } else { 
+                        $queryReservasi = "SELECT *
+                                          FROM `reservasi`
+                                          WHERE `nopol` = '$nopol' AND `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND  `status` != 0 AND `status` != 9
+                                          ";
+                        $r = $this->db->query($queryReservasi)->row_array();
+                        if ($r) { 
+                          $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array(); 
+                          $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $r['id']])->result_array();
+                          $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $r['id']])->result_array(); ?>
+                        
+                        <div class="card">
+                            <div class="card-header card-header-warning card-header-icon">
+                              <div class="card-icon">
+                                <i class="material-icons">emoji_transportation</i>
+                              </div>
+                              <h4 class="card-title">RESERVED</h4>
+                            </div>
+                          <div class="card-body text-center">
+                              <div class="img-container">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/reserved.png" alt="...">
+                              </div>
+                              <?php if ($r['status'] == 1) { ?>
+                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $r['atasan1']; ?></span>
                                     <?php } elseif ($r['status'] == 2) { ?>
-                                      <span class="badge badge-warning">Menunggu Persetujuan <?= $r['atasan2']; ?></span>
+                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $r['atasan2']; ?></span>
                                     <?php } elseif ($r['status'] == 3) { ?>
-                                      <span class="badge badge-warning">Menunggu Persetujuan DWA</span>
+                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | ???</span>
                                     <?php } elseif ($r['status'] == 4) { ?>
-                                      <span class="badge badge-warning">Menunggu Persetujuan EJU</span>
+                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | EJU</span>
                                     <?php } elseif ($r['status'] == 5) { ?>
-                                      <span class="badge badge-warning">Menunggu Persetujuan HR</span>
+                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | HR</span>
                                     <?php } elseif ($r['status'] == 6) { ?>
-                                      <span class="badge badge-warning">Menunggu Persetujuan GA</span>
+                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | GA</span>
                                     <?php }; ?>
-                                  </td>
-                                  <?php $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $r['id']])->result_array(); ?>
-                                  <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($peserta);$i++){
-                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
-                                  } ?>"><?= $r['anggota']; ?></td>
-                                  <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $r['id']])->result_array(); ?>
-                                <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($tujuan);$i++){
-                                    echo $tujuan[$i]['nama']. "\r\n";
-                                  } ?>">
-                                  <?= $r['tujuan']; ?></td>
-                                  <td><?= $r['keperluan']; ?></td>
-                                  <td><?= date('d-M', strtotime($r['tglberangkat'])) . ' ' . date('H:i', strtotime($r['jamberangkat'])); ?></td>
-                                  <td><?= date('d-M', strtotime($r['tglkembali'])) . ' ' . date('H:i', strtotime($r['jamkembali'])); ?></td>
-                                <?php } else { ?>
-                                  <td class="text-center">
-                                    <div class="img-container" style="width:100px; height:90px;">
-                                      <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan1.png" alt="...">
+                          </div>
+                          <div class="card-footer" style="display:block;">
+                            <div class="bootstrap-tagsinput info-badge">
+                                <?php foreach ($peserta as $row) : ?>
+                                  <span class="tag badge" data-toggle="tooltip" data-placement="top" title="<?= $row['karyawan_nama']; ?>"><?= $row['karyawan_inisial']; ?></span><span data-role="remove"></span>
+                                <?php endforeach; ?>
+                            </div>
+                            <div data-toggle="tooltip" data-placement="top" title="<?php 
+                                  foreach ($tujuan as $row) :
+                                    echo $row['nama']. "\r\n";
+                                  endforeach; ?>">
+                                &nbsp;<i class="fa fa-map-marker text-success"></i> &nbsp;<?= $r['tujuan']; ?>
+                            </div>
+                              <i class="fa fa-clock-o text-success"> </i>
+                              <?php if ($r['jenis_perjalanan']=='TA') : 
+                                echo date('d-M', strtotime($r['tglberangkat'])) . ' ' . date('H:i', strtotime($r['jamberangkat'])) ." - ". date('d-M', strtotime($r['tglkembali'])) . ' ' . date('H:i', strtotime($r['jamkembali'])); 
+                              else :
+                                echo date('H:i', strtotime($r['jamberangkat'])) ." - ". date('H:i', strtotime($r['jamkembali'])); 
+                              endif; ?></br>
+                              <i class="fa fa-car text-success"> </i> <?= $r['nopol']; ?> - <small><?= $r['kendaraan']; ?></small>
+                            
+                            <div id="accordion" role="tablist">
+                              <div class="card card-collapse">
+                                <div class="card-header" role="tab" id="heading<?=$r['id']; ?>">
+                                  <h5 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapse<?=$r['id']; ?>" aria-expanded="false" aria-controls="collapse<?=$r['id']; ?>">
+                                      Details
+                                      <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                  </h5>
+                                </div>
+                                <div id="collapse<?=$r['id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$r['id']; ?>" data-parent="#accordion">
+                                  <div class="card-body">
+                                    <div><?=$r['copro']; ?></div>
+                                    <div><?=$r['keperluan']; ?></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card card-collapse">
+                                  <div class="card-header" role="tab" id="heading<?=$rowCars['device_id']; ?>">
+                                    <h5 class="mb-0">
+                                      <a class="collapsed" data-toggle="collapse" href="#collapse<?=$rowCars['device_id']; ?>" aria-expanded="false" aria-controls="collapse<?=$rowCars['device_id']; ?>">
+                                        Track
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                      </a>
+                                    </h5>
+                                  </div>
+                                  <div id="collapse<?=$rowCars['device_id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$rowCars['device_id']; ?>" data-parent="#accordion">
+                                    <div class="card-body">
+                                      <div id="<?=$rowCars['device_id']; ?>" class="map" style="width:100%;margin:0px;"></div>
+                                      <small><div id="loc<?=$rowCars['device_id']; ?>"></div></small>
                                     </div>
-                                  </td>
-                                  <td>
-                                    <?= $k['nopol']; ?>
-                                    <br />
-                                    <?= $k['nama']; ?>
-                                    <br />
-                                    <a href="<?= base_url('reservasi/dl'); ?>" class="badge badge-success">Tersedia</a>
-                                    <a href="#" data-toggle="modal" data-target="#detail" data-id="<?= $k['device_id']; ?>"><i class="material-icons">place</i></a>
-                                  </td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                              <?php }
-                              } ?>
-                            </tr>
-                          <?php endforeach; ?>
-                        </tbody>
-                        <!-- Reservasi Non Operasional -->
-                        <tbody>
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <?php } else { ?>
+                          <div class="card">
+                            <div class="card-header card-header-success card-header-icon">
+                              <div class="card-icon">
+                                <i class="material-icons">emoji_transportation</i>
+                              </div>
+                              <h4 class="card-title">AVAILABLE</h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="img-container">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/available.png" alt="...">
+                                </div>
+                                  <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-round btn-sm btn-success">Pesan Sekarang!</a>
+                            </div>
+                                <div class="card-footer" style="display:block;">
+                                <i class="fa fa-car text-success"> </i> <?= $rowCars['nopol']; ?> - <small><?= $rowCars['nama']; ?></small>
+                                <div id="accordion" role="tablist">
+                                  <div class="card card-collapse">
+                                    <div class="card-header" role="tab" id="heading<?=$rowCars['device_id']; ?>">
+                                      <h5 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapse<?=$rowCars['device_id']; ?>" aria-expanded="false" aria-controls="collapse<?=$rowCars['device_id']; ?>">
+                                          Track
+                                          <i class="material-icons">keyboard_arrow_down</i>
+                                        </a>
+                                      </h5>
+                                    </div>
+                                    <div id="collapse<?=$rowCars['device_id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$rowCars['device_id']; ?>" data-parent="#accordion">
+                                      <div class="card-body">
+                                        <div id="<?=$rowCars['device_id']; ?>" class="map" style="width:100%;margin:0px;"></div>
+                                        <small><div id="loc<?=$rowCars['device_id']; ?>"></div></small>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        <?php }; ?>
+                      <?php }; ?>
+                    </div>
+                  <?php endforeach; ?>
+                  <!-- Perjalanan Non Operasional -->
+                  <?php
+                          $queryPerjalananNon = "SELECT *
+                                            FROM `perjalanan`
+                                                WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND (`status` = 1 OR `status` = 2 OR `status` = 8)
+                                                ORDER BY `kepemilikan` ASC ";
+                          $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
+                          foreach ($perjalananNon as $pn) : 
+                            $status = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); 
+                            $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $pn['id']])->result_array();
+                            $tujuan = $this->db->get_where('perjalanan_tujuan', ['perjalanan_id' => $pn['id']])->result_array(); ?>
+                      <div class="col-lg-2 col-md-4 col-sm-6 mt-0 mb-0">
+                        <div class="card">
+                          <div class="card-header <?= ($pn['status'] == 2)? 'card-header-danger' : 'card-header-info';?> card-header-icon">
+                              <div class="card-icon">
+                                <i class="material-icons">emoji_transportation</i>
+                              </div>
+                              <h4 class="card-title"><?= ($pn['status'] == 2)? 'ON DUTY' : 'READY';?></h4>
+                           
+                          </div>
+                          <div class="card-body text-center">
+                              <div class="img-container">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($pn['status'] == 2)? 'ON DUTY' : 'READY';?>.png" alt="...">
+                              </div>
+                              <?php if ($pn['status'] == 1) { ?>
+                                  <span class="btn btn-round btn-sm btn-info">STARTING ENGINE</span>
+                                <?php } elseif ($pn['status'] == 2) { ?>
+                                  <span class="btn btn-round btn-sm btn-danger">On Duty</span>
+                                <?php }; ?>
+                              </div>
+                              <div class="card-footer" style="display:block;">
+                                <div class="bootstrap-tagsinput info-badge">
+                                    <?php foreach ($peserta as $row) : ?>
+                                      <span class="tag badge" data-toggle="tooltip" data-placement="top" title="<?= $row['karyawan_nama']; ?>"><?= $row['karyawan_inisial']; ?></span><span data-role="remove"></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <div data-toggle="tooltip" data-placement="top" title="<?php 
+                                  foreach ($tujuan as $row) :
+                                    echo $row['nama']. "\r\n";
+                                  endforeach; ?>">
+                                &nbsp;<i class="fa fa-map-marker text-success"></i> &nbsp;<?= $pn['tujuan']; ?>
+                            </div>
+                              <i class="fa fa-clock-o text-success"> </i>
+                              <?php if ($pn['jenis_perjalanan']=='TA') : 
+                                echo date('d-M', strtotime($pn['tglberangkat'])) . ' ' . date('H:i', strtotime($pn['jamberangkat'])) ." - ". date('d-M', strtotime($pn['tglkembali'])) . ' ' . date('H:i', strtotime($pn['jamkembali'])); 
+                              else :
+                                echo date('H:i', strtotime($pn['jamberangkat'])) ." - <small>". date('H:i', strtotime($pn['jamkembali']))."</small>"; 
+                              endif; ?></br>
+                              <i class="fa fa-car text-success"> </i> <?= $pn['nopol']; ?> - <small><?= $pn['kendaraan']; ?></small>
+                              <div id="accordion" role="tablist">
+                                <div class="card card-collapse">
+                                  <div class="card-header" role="tab" id="heading<?=$pn['id']; ?>">
+                                    <h5 class="mb-0">
+                                      <a class="collapsed" data-toggle="collapse" href="#collapse<?=$pn['id']; ?>" aria-expanded="false" aria-controls="collapse<?=$pn['id']; ?>">
+                                        Details
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                      </a>
+                                    </h5>
+                                  </div>
+                                  <div id="collapse<?=$pn['id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$pn['id']; ?>" data-parent="#accordion">
+                                    <div class="card-body">
+                                      <div><?=$pn['copro']; ?></div>
+                                      <div><?=$pn['keperluan']; ?></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                        </div>
+                        <?php endforeach; ?>
+                         <!-- Reservasi Non Operasional -->
                           <?php
                           $queryReservasiNon = "SELECT *
                                               FROM `reservasi`
                                               WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND `status` > 0 AND `status` < 7
                                               ORDER BY `kepemilikan` ASC ";
                           $reservasiNon = $this->db->query($queryReservasiNon)->result_array();
-                          foreach ($reservasiNon as $rn) : ?>
-                            <tr>
-                              <td class="text-center">
-                                <div class="img-container" style="width:100px; height:90px;">
-                                  <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                          foreach ($reservasiNon as $rn) : 
+                            $status = $this->db->get_where('reservasi_status', ['id' => $rn['status']])->row_array(); 
+                            $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $rn['id']])->result_array();
+                            $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $rn['id']])->result_array(); ?>
+                          <div class="col-lg-2 col-md-4 col-sm-6 mt-0 mb-0">
+                            <div class="card">
+                              <div class="card-header card-header-warning card-header-icon">
+                                <div class="card-icon">
+                                  <i class="material-icons">emoji_transportation</i>
                                 </div>
-                              </td>
-                              <td>
-                                <?= $rn['nopol'] . ' (' .$rn['kendaraan'].')'; ?>
-                                <br />
-                                #<?= $rn['id']; ?>
-                                <br />
+                                <h4 class="card-title">RESERVED</h4>
+                              </div>
+                              <div class="card-body text-center">
+                                <div class="img-container">
+                                    <img src="<?= base_url(); ?>assets/img/kendaraan/reserved.png" alt="...">
+                                </div>
                                 <?php if ($rn['status'] == 1) { ?>
-                                  <span class="badge badge-warning">Menunggu Persetujuan <?= $rn['atasan1']; ?></span>
-                                <?php } elseif ($rn['status'] == 2) { ?>
-                                  <span class="badge badge-warning">Menunggu Persetujuan <?= $rn['atasan2']; ?></span>
-                                <?php } elseif ($rn['status'] == 3) { ?>
-                                  <span class="badge badge-warning">Menunggu Persetujuan DWA</span>
-                                <?php } elseif ($rn['status'] == 4) { ?>
-                                  <span class="badge badge-warning">Menunggu Persetujuan EJU</span>
-                                <?php } elseif ($rn['status'] == 5) { ?>
-                                  <span class="badge badge-warning">Menunggu Persetujuan HR</span>
-                                <?php } elseif ($rn['status'] == 6) { ?>
-                                  <span class="badge badge-warning">Menunggu Persetujuan GA</span>
-                                <?php }; ?>
-                              </td>
-                              <?php $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $rn['id']])->result_array(); ?>
-                                  <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($peserta);$i++){
-                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
-                                  } ?>"><?= $rn['anggota']; ?></td>
-                                  <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $rn['id']])->result_array(); ?>
-                                <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($tujuan);$i++){
-                                    echo $tujuan[$i]['nama']. "\r\n";
-                                  } ?>">
-                                  <?= $rn['tujuan']; ?></td>
-                              <td><?= $rn['keperluan']; ?></td>
-                              <td><?= date('d-M', strtotime($rn['tglberangkat'])) . ' ' . date('H:i', strtotime($rn['jamberangkat'])); ?></td>
-                              <td><?= date('d-M', strtotime($rn['tglkembali'])) . ' ' . date('H:i', strtotime($rn['jamkembali'])); ?></td>
-                            </tr>
-                          <?php endforeach; ?>
-                        </tbody>
-                        <!-- Perjalanan Non Operasional -->
-                        <tbody>
-                          <?php
-                          $queryPerjalananNon = "SELECT *
-                                            FROM `perjalanan`
-                                                WHERE `tglberangkat` <= CURDATE() AND `tglkembali` >= CURDATE() AND `kepemilikan` != 'Operasional' AND (`status` = 1 OR `status` = 2 OR `status` = 8)
-                                                ORDER BY `kepemilikan` ASC ";
-                          $perjalananNon = $this->db->query($queryPerjalananNon)->result_array();
-                          foreach ($perjalananNon as $pn) : ?>
-                            <tr>
-                                <?php $status_pn = $this->db->get_where('perjalanan_status', ['id' => $pn['status']])->row_array(); ?>
-                                <?php if ($pn['status'] == 1) { ?>
-                                <td class="text-center">
-                                  <div class="img-container" style="width:100px; height:90px;">
-                                    <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
+                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $rn['atasan1']; ?></span>
+                                      <?php } elseif ($rn['status'] == 2) { ?>
+                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $rn['atasan2']; ?></span>
+                                      <?php } elseif ($rn['status'] == 3) { ?>
+                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | ???</span>
+                                      <?php } elseif ($rn['status'] == 4) { ?>
+                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | EJU</span>
+                                      <?php } elseif ($rn['status'] == 5) { ?>
+                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | HR</span>
+                                      <?php } elseif ($rn['status'] == 6) { ?>
+                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | GA</span>
+                                      <?php }; ?>
+                              </div>
+                              <div class="card-footer" style="display:block;">
+                                <div class="bootstrap-tagsinput info-badge">
+                                    <?php foreach ($peserta as $row) : ?>
+                                      <span class="tag badge" data-toggle="tooltip" data-placement="top" title="<?= $row['karyawan_nama']; ?>"><?= $row['karyawan_inisial']; ?></span><span data-role="remove"></span>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div data-toggle="tooltip" data-placement="top" title="<?php 
+                                      foreach ($tujuan as $row) :
+                                        echo $row['nama']. "\r\n";
+                                      endforeach; ?>">
+                                    &nbsp;<i class="fa fa-map-marker text-success"></i> &nbsp;<?= $rn['tujuan']; ?>
+                                </div>
+                                  <i class="fa fa-clock-o text-success"> </i>
+                                  <?php if ($rn['jenis_perjalanan']=='TA') : 
+                                    echo date('d-M', strtotime($rn['tglberangkat'])) . ' ' . date('H:i', strtotime($rn['jamberangkat'])) ." - ". date('d-M', strtotime($rn['tglkembali'])) . ' ' . date('H:i', strtotime($rn['jamkembali'])); 
+                                  else :
+                                    echo date('H:i', strtotime($rn['jamberangkat'])) ." - ". date('H:i', strtotime($rn['jamkembali'])); 
+                                  endif; ?></br>
+                                  <i class="fa fa-car text-success"> </i> <?= $rn['nopol']; ?> - <small><?= $rn['kendaraan']; ?></small>
+                              
+                                <div id="accordion" role="tablist">
+                                  <div class="card card-collapse">
+                                    <div class="card-header" role="tab" id="heading<?=$rn['id']; ?>">
+                                      <h5 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapse<?=$rn['id']; ?>" aria-expanded="false" aria-controls="collapse<?=$rn['id']; ?>">
+                                          Details
+                                          <i class="material-icons">keyboard_arrow_down</i>
+                                        </a>
+                                      </h5>
+                                    </div>
+                                    <div id="collapse<?=$rn['id']; ?>" class="collapse" role="tabpanel" aria-labelledby="heading<?=$rn['id']; ?>" data-parent="#accordion">
+                                      <div class="card-body">
+                                        <div><?=$rn['copro']; ?></div>
+                                        <div><?=$rn['keperluan']; ?></div>
+                                      </div>
+                                    </div>
                                   </div>
-                                </td>
-                                <td>
-                                  <?= $pn['nopol'] . ' (' .$pn['kendaraan'].')'; ?>
-                                  <br />
-                                  #<?= $pn['id']; ?>
-                                  <br />
-                                  <span class="badge badge-info"><?= $status_pn['nama']; ?></span>
-                                </td>
-                                <?php } elseif ($pn['status'] == 2) { ?>
-                                <td class="text-center">
-                                  <div class="img-container" style="width:100px; height:90px;">
-                                    <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
-                                  </div>
-                                </td>
-                                <td>
-                                  <?= $pn['nopol'] . ' (' .$pn['kendaraan'].')'; ?>
-                                  <br />
-                                  #<?= $pn['id']; ?>
-                                  <br />
-                                  <span class="badge badge-danger"><?= $status_pn['nama']; ?></span>
-                                </td>
-                                <?php } elseif ($pn['status'] == 8 or $pn['status'] == 11) { ?>
-                                <td class="text-center">
-                                  <div class="img-container" style="width:100px; height:90px;">
-                                    <img src="<?= base_url(); ?>assets/img/kendaraan/kendaraan3.png" alt="...">
-                                  </div>
-                                </td>
-                                <td>
-                                  <?= $pn['nopol'] . ' (' .$pn['kendaraan'].')'; ?>
-                                  <br />
-                                  #<?= $pn['id']; ?>
-                                  <br />
-                                  <span class="badge badge-warning"><?= $status_pn['nama']; ?></span>
-                                </td>
-                                <?php }; ?>
-                              <?php $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $pn['id']])->result_array(); ?>
-                                <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($peserta);$i++){
-                                    echo $peserta[$i]['karyawan_nama']. "\r\n";
-                                  } ?>">
-                                <?= $pn['anggota']; ?></td>
-                                <?php $tujuan = $this->db->get_where('perjalanan_tujuan', ['perjalanan_id' => $pn['id']])->result_array(); ?>
-                                <td data-toggle="tooltip" data-placement="top" title="<?php 
-                                  for($i=0;$i<count($tujuan);$i++){
-                                    echo $tujuan[$i]['nama']. "\r\n";
-                                  } ?>">
-                                  <?= $pn['tujuan']; ?></td>
-                              <td><?= $pn['keperluan']; ?></td>
-                              <td><?= date('d-M', strtotime($pn['tglberangkat'])) . ' ' . date('H:i', strtotime($pn['jamberangkat'])); ?></td>
-                              <td><?= date('d-M', strtotime($pn['tglkembali'])) . ' ' . date('H:i', strtotime($pn['jamkembali'])); ?></td>
-                            </tr>
-                          <?php endforeach; ?>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--  end card  -->
-            </div>
-            <div class="tab-pane" id="tablembur">
-              <div class="card">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">assignment</i>
-                  </div>
-                  <h4 class="card-title">Lembur Hari Ini <?= date("d-M-Y"); ?></h4>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <div class="material-datatables">
-                      <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                          <tr>
-                            <th>Nama</th>
-                            <th>Jam</th>
-                            <th>Lokasi</th>
-                            <th>Approved <small>(atasan1)</small></th>
-                            <th>Konsumsi</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php foreach ($listlembur as $l) : ?>
-                            <?php if ($l['konsumsi'] > 0) {
-                              echo '<tr class="table-success">';
-                            } else if ($l['konsumsi'] == '0') {
-                              echo '<tr class="table-danger">';
-                            } else {
-                              echo '<tr>';
-                            } ?>
-                            <td><?= $l['nama']; ?> <small>(<?= $l['id']; ?>)</small></td>
-                            <td><?= date('H:i', strtotime($l['tglmulai'])); ?> - <?= date('H:i', strtotime($l['tglselesai'])); ?></td>
-                            <td><?= $l['lokasi']; ?></td>
-                            <td><?= date('d-M H:i', strtotime($l['tgl_atasan1_rencana'])); ?></td>
-                            <?php $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $l['konsumsi']])->row_array(); 
-                            if ($konsumsi){$makan = $konsumsi['nama'];
-                            }else{
-                              $makan = 'Menunggu Verifikasi GA';
-                            }
-                            ?>
-                            <td><?= $l['konsumsi'] == '' ? "Menunggu Verifikasi GA" : $konsumsi['nama']; ?></td>
-                            </tr>
-                          <?php endforeach; ?>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="row">
-                    <div class="col-md-12">
-                      *Konsumsi akan diupdate pada jam 16:00 atau lebih.
-                      </br>Pastikan Rencana Lembur kamu sudah disetujui oleh atasan1 paling lambat atau sebelum jam 16:00.
-                    </div>
-                  </div>
-                </div>
-                <!-- end content-->
-              </div>
-              <!--  end card  -->
-            </div>
-            <div class="tab-pane" id="tabmedical">
-              <div class="card">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">assignment</i>
-                  </div>
-                  <h4 class="card-title">Claim Medical</h4>
-                </div>
-                <div class="card-body">
-                  <div class="toolbar text-right mb-2">
-                    <!--        Here you can write extra buttons/actions for the toolbar              -->
-                    <?php if ($this->session->userdata('sect_id') == 212) {
-                      echo '<a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahClaim">Tambah Claim Medical</a>';
-                      echo '<a href="#" class="btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#emptyClaim">Hapus Semua Medical</a>';
-                    }
-                    ?>
-                  </div>
-                  <div class="table-responsive">
-                    <div class="material-datatables">
-                      <table id="medical" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                          <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Tanggal Transfer</th>
-                            <?php if ($this->session->userdata('sect_id') == 212) {
-                              echo '<th>Actions</th>';
-                            }
-                            ?>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php
-                          $no = 1;
-
-                          foreach ($listclaim as $row) : ?>
-                            <tr>
-                              <td><?= $no++; ?></td>
-                              <td><?= $row->nama ?></td>
-                              <td><?= date('d M Y', strtotime($row->transfer_at)) ?></td>
-                              <?php if ($this->session->userdata('sect_id') == 212) {
-                                echo '<td><a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="modal" data-target="#hapusClaim" data-id="' . $row->id . '"><i class="material-icons">close</i></a></td>';
-                              }
-                              ?>
-                            </tr>
-                          <?php endforeach; ?>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <!-- end content-->
-              </div>
-              <!--  end card  -->
-            </div>
-            <div class="tab-pane" id="proschedule">
-              <div class="card">
-                <!-- <div class="card-header">
-                  <h4 class="card-title">Help center</h4>
-                  <p class="card-category">
-                    More information here
-                  </p>
-                </div> -->
-                <div class="card-body text-center">
-
-                  <!-- <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery"> -->
-
-
-                  <!-- <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                      <a href="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="contentUrl" data-size="1440x720">
-                          <img class="img-responsive" src="<?= base_url(); ?>assets/img/info/wbs.jpg" itemprop="thumbnail" alt="Image description" />
-                      </a>
-                      <figcaption itemprop="caption description">Image caption  1</figcaption>
-                    </figure> -->
-
-                  <!-- <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                      <a href="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_b.jpg" itemprop="contentUrl" data-size="964x1024">
-                          <img src="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_m.jpg" itemprop="thumbnail" alt="Image description" />
-                      </a>
-                      <figcaption itemprop="caption description">Image caption 2</figcaption>
-                    </figure>
-
-                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                      <a href="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_b.jpg" itemprop="contentUrl" data-size="1024x683">
-                          <img src="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_m.jpg" itemprop="thumbnail" alt="Image description" />
-                      </a>
-                      <figcaption itemprop="caption description">Image caption 3</figcaption>
-                    </figure>
-
-                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                      <a href="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_b.jpg" itemprop="contentUrl" data-size="1024x768">
-                          <img src="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_m.jpg" itemprop="thumbnail" alt="Image description" />
-                      </a>
-                      <figcaption itemprop="caption description">Image caption 4</figcaption>
-                    </figure> -->
-
-
-                  <!-- </div> -->
-
-                  <!-- Root element of PhotoSwipe. Must have class pswp. -->
-                  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-                    <!-- Background of PhotoSwipe. 
-                          It's a separate element, as animating opacity is faster than rgba(). -->
-                    <div class="pswp__bg"></div>
-
-                    <!-- Slides wrapper with overflow:hidden. -->
-                    <div class="pswp__scroll-wrap">
-
-                      <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
-                      <!-- don't modify these 3 pswp__item elements, data is added later on. -->
-                      <div class="pswp__container">
-                        <div class="pswp__item"></div>
-                        <div class="pswp__item"></div>
-                        <div class="pswp__item"></div>
-                      </div>
-
-                      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-                      <div class="pswp__ui pswp__ui--hidden">
-
-                        <div class="pswp__top-bar">
-
-                          <!--  Controls are self-explanatory. Order can be changed. -->
-
-                          <div class="pswp__counter"></div>
-
-                          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                          <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                          <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
-                          <!-- element will get class pswp__preloader--active when preloader is running -->
-                          <div class="pswp__preloader">
-                            <div class="pswp__preloader__icn">
-                              <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-
-                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                          <div class="pswp__share-tooltip"></div>
-                        </div>
-
-                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                        </button>
-
-                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                        </button>
-
-                        <div class="pswp__caption">
-                          <div class="pswp__caption__center"></div>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-            </div>
-            <!-- <div class="tab-pane" id="link10">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title">Help center</h4>
-                  <p class="card-category">
-                    More information here
-                  </p>
-                </div>
-                <div class="card-body">
-                  From the seamless transition of glass and metal to the streamlined profile, every detail was carefully considered to enhance your experience. So while its display is larger, the phone feels just right.
-                  <br>
-                  <br> Another Text. The first thing you notice when you hold the phone is how great it feels in your hand. The cover glass curves down around the sides to meet the anodized aluminum enclosure in a remarkable, simplified design.
-                </div>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </div>
+                          <?php endforeach; ?>
     </div>
+
     <?php if ($this->session->userdata('posisi_id') == 1 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 3) { ?>
       <div class="row">
         <div class="col-md-12">
@@ -1005,55 +762,6 @@
   </div>
 </div>
 
-<div class="modal fade" id="openTicket" tabindex="-1" role="dialog" aria-labelledby="openTicketTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-info text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">Ada yang bisa kami bantu?</h4>
-                    </div>
-                </div>
-                <form id="ticket" class="form" method="post" action="<?= base_url('ticket/new'); ?>">
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Menu</label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" data-size="5" data-style="select-with-transition" id="menu" name="menu" title="Pilih menu" required="true">
-                                            <option value="PERJALANAN">Perjalanan</option>
-                                            <option value="JAM KERJA">Jam Kerja</option>
-                                            <option value="LEMBUR">Lembur</option>
-                                            <option value="GANTI HARI">Ganti Hari</option>
-                                            <option value="LAINNYA">Lainnya...</option>                                           
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Kasus </br><small><i>Ceritakan</i></small></label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <textarea class="form-control" id="case" name="case" rows="5" required="true"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-right">
-                                <button class="btn btn-default btn-link" data-dismiss="modal">TUTUP</button>
-                                <button type="submit" class="btn btn-success btn-round">LAPORKAN!</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Add Claim Medical Modal -->
 <div class="modal fade" id="emptyClaim" tabindex="-1" role="dialog" aria-labelledby="emptyClaimLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -1099,66 +807,60 @@
       });
     }, 60000);
 
-    $('#detail').on('show.bs.modal', function(event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
-      var id = button.data('id') // Extract info from data-* attributes
-      var modal = $(this)
-      modal.find('.modal-body input[name="device_id"]').val(id)
+    // $('#detail').on('show.bs.modal', function(event) {
+    //   var button = $(event.relatedTarget) // Button that triggered the modal
+    //   var id = button.data('id') // Extract info from data-* attributes
+    //   var modal = $(this)
+    //   modal.find('.modal-body input[name="device_id"]').val(id)
 
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
+      const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
 
-      //Send the proper header information along with the request
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      for (let i = 0; i < cars.length; i++) {
 
-      xhr.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          var myObj = JSON.parse(this.responseText);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
 
-          if (id) {
-            x = myObj.data[id]['device_info']['name'];
-            y = myObj.data[id]['realtime']['location'];
-            z = myObj.data[id]['realtime']['ignition_status'];
-            lat = myObj.data[id]['realtime']['latitude'];
-            lng = myObj.data[id]['realtime']['longitude'];
-            document.getElementById("nopol").value = x;
-            document.getElementById("lokasi").value = y;
-            document.getElementById("ignition").value = z;
-            // Request finished. Do processing here.
-          } else {
-            document.getElementById("nopol").value = null;
-            document.getElementById("lokasi").value = null;
-            document.getElementById("ignition").value = null;
-            lat = null;
-            lng = null;
+        //Send the proper header information along with the request
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            var myObj = JSON.parse(this.responseText);
+            var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
+            var idloc = "loc" + cars[i];
+            var lat = "lat" + cars[i];
+            var lng = "lng" + cars[i]; 
+            
+            loc = myObj.data[cars[i]]['realtime']['location'];
+            // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
+            lat = myObj.data[cars[i]]['realtime']['latitude'];
+            lng = myObj.data[cars[i]]['realtime']['longitude'];
+            
+            var mapCanvas = document.getElementById(cars[i]);
+            document.getElementById(idloc).innerHTML = loc;
+            
+            var location = new google.maps.LatLng(lat, lng);
+            var mapOptions = {
+              center: location,
+              zoom: 15,
+              mapTypeId: "satellite",
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+
+            var marker = new google.maps.Marker({
+              position: location,
+              icon: image
+            });
+            
+            marker.setMap(map);
           }
-
-          var location = new google.maps.LatLng(lat, lng);
-
-          var mapCanvas = document.getElementById('map');
-
-          var mapOptions = {
-            center: location,
-            zoom: 15,
-            mapTypeId: "satellite",
-
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          }
-          var map = new google.maps.Map(mapCanvas, mapOptions);
-          var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
-          var marker = new google.maps.Marker({
-            position: location,
-            icon: image
-          });
-
-          marker.setMap(map);
-
         }
-      }
       xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
       // xhr.send(new Int8Array()); 
       // xhr.send(element);
-    })
+    // })
+      }
 
     var dataMultipleBarsChart = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -1512,6 +1214,6 @@
       select: function(start, end, info) {
         window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
       },
-    });
+    });    
   });
 </script>
