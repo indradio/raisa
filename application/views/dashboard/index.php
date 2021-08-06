@@ -176,7 +176,7 @@
                           </div>
                           <div class="card-body text-center">
                               <div class="img-container">
-                                  <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($p['status'] == 2)? 'ON DUTY' : 'READY';?>.png" alt="...">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($p['status'] == 2)? 'onduty' : 'ready';?>.png" alt="...">
                               </div>
                               <?php if ($p['status'] == 1) { ?>
                                   <span class="btn btn-round btn-sm btn-info">STARTING ENGINE</span>
@@ -395,7 +395,7 @@
                           </div>
                           <div class="card-body text-center">
                               <div class="img-container">
-                                  <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($pn['status'] == 2)? 'ON DUTY' : 'READY';?>.png" alt="...">
+                                  <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($pn['status'] == 2)? 'onduty' : 'ready';?>.png" alt="...">
                               </div>
                               <?php if ($pn['status'] == 1) { ?>
                                   <span class="btn btn-round btn-sm btn-info">STARTING ENGINE</span>
