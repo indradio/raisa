@@ -839,29 +839,10 @@ class Perjalanandl extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('perjalanan');
 
-        $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-        $this->db->set('status', '6');
-        $this->db->where('id', $perjalanan['reservasi_id']);
-        $this->db->update('reservasi');
-
-        // $this->db->where('npk', $perjalanan['npk']);
-        // $karyawan = $this->db->get('karyawan')->row_array();
-        // $my_apikey = "NQXJ3HED5LW2XV440HCG";
-        // $destination = $karyawan['phone'];
-        // $message = "*PERJALANAN DINAS DIAKTIFKAN KEMBALI*\r\n \r\n No. Perjalanan : *" . $perjalanan['id'] . "*" .
-        //     "\r\n Nama : *" . $perjalanan['nama'] . "*" .
-        //     "\r\n Tujuan : *" . $perjalanan['tujuan'] . "*" .
-        //     "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
-        //     "\r\n Peserta : *" . $perjalanan['anggota'] . "*" .
-        //     "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "* _estimasi_" .
-        //     "\r\n Kembali : *" . $perjalanan['tglkembali'] . "* *" . $perjalanan['jamkembali'] . "* _estimasi_" .
-        //     "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "*" .
-        //     " ) \r\n \r\nPerjalanan kamu telah *DIAKTIFKAN* kembali untuk *2 JAM* berikutnya. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com";
-        // $api_url = "http://panel.apiwha.com/send_message.php";
-        // $api_url .= "?apikey=" . urlencode($my_apikey);
-        // $api_url .= "&number=" . urlencode($destination);
-        // $api_url .= "&text=" . urlencode($message);
-        // json_decode(file_get_contents($api_url, false));
+        // $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+        // $this->db->set('status', '6');
+        // $this->db->where('id', $perjalanan['reservasi_id']);
+        // $this->db->update('reservasi');
 
         $this->session->set_flashdata('message', 'barudl');
         redirect('perjalanandl/perjalanan');
