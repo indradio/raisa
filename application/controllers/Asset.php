@@ -95,19 +95,38 @@ class Asset extends CI_Controller
     public function opname()
     {
         $opnamed = $this->db->get_where('asset_opnamed', ['id' => $this->input->post('id')])->row_array();
-        if ($data['asset']['status']=='0'){
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('asset/opname', $data);
-            $this->load->view('templates/footer');
-        }else{    
-            $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('asset/opnamed', $data);
-            $this->load->view('templates/footer');
+
+        if (empty($opnamed)) {
+
+            $config['file_name']            = $id;
+            $config['upload_path']          = './assets/img/presensi/'.date('ym').'/';
+            $config['allowed_types']        = 'jpg|jpeg|png';
+            // $config['max_size']             = '5120';
+
+            if(!is_dir($config['upload_path'])) mkdir($config['upload_path'], 0777, TRUE);
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('foto')) {
+                $data = [
+                    'id' => $id,
+                    'file_name' => date('ym').'/'.$this->upload->data('file_name'),
+                    'npk' => $this->session->userdata('npk'),
+                    'nama' => $this->session->userdata('nama'),
+                    'state' => $this->input->post('state'),
+                    'work_state' => $this->input->post('work_state'),
+                    'location' => $this->input->post('location'),
+                    'latitude' => $this->input->post('latitude'),
+                    'longitude' => $this->input->post('longitude'),
+                    'platform' => $this->input->post('platform'),
+                    'div_id' => $this->session->userdata('div_id'),
+                    'dept_id' => $this->session->userdata('dept_id'),
+                    'sect_id' => $this->session->userdata('sect_id'),
+                    'atasan1' => $atasan1['inisial'],
+                    'day_state' => $day,
+                    'note' => $this->input->post('note')
+                ];
+                $this->db->insert('presensi', $data);
+            }
         }
     }
 

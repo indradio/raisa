@@ -163,7 +163,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="status" name="status" required="true" />
-                        <input type="text" class="form-control" id="id" name="id" required="true" />
+                        <input type="hidden" class="form-control" id="id" name="id" required="true" />
                     </div>
                     <div class="row col-md-6 ml-auto mr-auto">
                         <div class="fileinput fileinput-new text-center" style="margin:auto;" data-provides="fileinput" >
