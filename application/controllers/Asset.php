@@ -21,18 +21,14 @@ class Asset extends CI_Controller
         $data['assetTotal'] = $total->num_rows();
 
         $this->db->where('npk',$this->session->userdata('npk'));
-        $this->db->where('status', '0');
-        $remains = $this->db->get('asset');
-        $data['assetRemains'] = $remains->num_rows();
-
-        $this->db->where('npk',$this->session->userdata('npk'));
-        $this->db->where('status >', '1');
-        $opnamed = $this->db->get('asset');
+        $opnamed = $this->db->get('asset_opnamed');
         $data['assetOpnamed'] = $opnamed->num_rows();
 
-        if ($this->session->userdata('npk')=='0282'){
-            $data['asset'] = $this->db->get('asset')->result_array();
-        }
+        $data['assetRemains'] = $total->num_rows() - $opnamed->num_rows();
+
+        // if ($this->session->userdata('npk')=='0282'){
+        //     $data['asset'] = $this->db->get('asset')->result_array();
+        // }
                 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -96,12 +92,9 @@ class Asset extends CI_Controller
     //     $this->load->view('templates/footer');
     // }
 
-    public function opname($id)
+    public function opname()
     {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'AssetKu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
+        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $this->input->post('id')])->row_array();
         if ($data['asset']['status']=='0'){
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

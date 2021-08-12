@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller
 {
     public function __construct()
     {
+        date_default_timezone_set('asia/jakarta');
         parent::__construct();
         is_logged_in();
         $this->load->model("dashboard_model");
@@ -268,6 +269,7 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
+        date_default_timezone_set('asia/jakarta');
         $this->notifications();
 
         $this->db->where('npk', $this->session->userdata('npk'));
