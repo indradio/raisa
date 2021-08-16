@@ -224,7 +224,7 @@ class Layanan extends CI_Controller
                             'message' => "*[INFORMASI] ASSET OPNAME periode 2021*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname 1 tahun 1 kali, maka Winteq akan mengadakan agenda asset opname pada tanggal 23-31 Agustus 2021 (untuk kategori Asset & LVA)." .
-                            "\r\n \r\nSilahkan mengecek asset yang dimiliki pada menu *asset->Assetku* lalu silahkan melakukan Asset opname *(diharuskan mengupload foto barang)*." .
+                            "\r\n \r\nSilahkan mengecek asset yang dimiliki pada menu *asset - Assetku* lalu silahkan melakukan Asset opname *(diharuskan mengupload foto barang)*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\nApabila ada pertanyaan bisa menghubungi *Dwi Septianingrum*" .
                             "\r\n \r\nHormat Kami," .
