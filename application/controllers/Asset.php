@@ -89,8 +89,8 @@ class Asset extends CI_Controller
             // if ($asset['npk']==$this->input->post('pic')){
             //     $changePic = 'Y';
             // }
-            $changePic = ($asset['npk']==$this->input->post('pic'))? 'Y' : 'N';
-            $changeLoc = ($asset['lokasi']==$this->input->post('lokasi'))? 'Y' : 'N';
+            $changePic = ($asset['npk']==$this->input->post('pic'))? 'N' : 'Y';
+            $changeLoc = ($asset['lokasi']==$this->input->post('lokasi'))? 'N' : 'Y';
         }else{
             $pic = $asset['npk'];
             $lokasi = $asset['lokasi'];
