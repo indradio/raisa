@@ -221,14 +221,14 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] Libur Tahun Baru Islam 1443 H*" .
+                            'message' => "*[INFORMASI] ASSET OPNAME periode 2021*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nBerdasarkan SKB No. 712 Tahun 2021, No. 1 Tahun 2021, No. 3 Tahun 2021 Tentang Perubahan Hari Libur Nasional dan Cuti Bersama Tahun 2021, maka dengan ini kami informasikan bahwa hari libur Tahun Baru Islam 1443 H yang semula jatuh pada tanggal 10 Agustus 2021 digeser menjadi tanggal *11 Agustus 2021*." .
-                            "\r\n \r\n*Sehingga pada tanggal 10 Agustus 2021 berlaku sebagai Hari Kerja*." .
+                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname 1 tahun 1 kali, maka Winteq akan mengadakan agenda asset opname pada tanggal 23-31 Agustus 2021 (untuk kategori Asset & LVA)." .
+                            "\r\n \r\nSilahkan mengecek asset yang dimiliki pada menu *asset->Assetku* lalu silahkan melakukan Asset opname *(diharuskan mengupload foto barang)*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
-                            "\r\n \r\n*Selamat Tahun Baru Hijriyah 1443 H*" .
+                            "\r\n \r\nApabila ada pertanyaan bisa menghubungi *Dwi Septianingrum*" .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nHuman Capital" .
+                            "\r\nFin & Acct" .
                             "\r\nPT Astra Otoparts Tbk Divisi Winteq" .
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 5M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, Menjaga Jarak, Menjauhi kerumunan dan Membatasi mobilisasi dan interaksi._"
                         ],
