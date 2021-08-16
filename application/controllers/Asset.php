@@ -15,17 +15,18 @@ class Asset extends CI_Controller
         $data['sidesubmenu'] = 'AssetKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['asset'] = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result_array();
-
+        
         $this->db->where('npk',$this->session->userdata('npk'));
         $total = $this->db->get('asset');
         $data['assetTotal'] = $total->num_rows();
-
-        $this->db->where('npk',$this->session->userdata('npk'));
+        
+        $this->db->where('ex_npk',$this->session->userdata('npk'));
         $opnamed = $this->db->get('asset_opnamed');
         $data['assetOpnamed'] = $opnamed->num_rows();
-
+        
         $data['assetRemains'] = $total->num_rows() - $opnamed->num_rows();
-
+        
+        $data['asset_opnamed'] = $this->db->get_where('asset_opnamed', ['npk' => $this->session->userdata('npk')])->result_array();
         // if ($this->session->userdata('npk')=='0282'){
         //     $data['asset'] = $this->db->get('asset')->result_array();
         // }
@@ -79,27 +80,29 @@ class Asset extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // public function opname()
-    // {
-    //     $data['sidemenu'] = 'Asset';
-    //     $data['sidesubmenu'] = 'Opname Asset';
-    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-    //     $data['asset'] = $this->db->get_where('asset_opname', ['npklama' =>  $this->session->userdata('npk')])->result_array();
-    //     $this->load->view('templates/header', $data);
-    //     $this->load->view('templates/sidebar', $data);
-    //     $this->load->view('templates/navbar', $data);
-    //     $this->load->view('asset/opname', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     public function opname()
     {
+        $asset = $this->db->get_where('asset', ['id' => $this->input->post('id')])->row_array();
+        if ($this->input->post('status')=='2'){
+            $pic = $this->input->post('pic');
+            $lokasi = $this->input->post('lokasi');
+            // if ($asset['npk']==$this->input->post('pic')){
+            //     $changePic = 'Y';
+            // }
+            $changePic = ($asset['npk']==$this->input->post('pic'))? 'Y' : 'N';
+            $changeLoc = ($asset['lokasi']==$this->input->post('lokasi'))? 'Y' : 'N';
+        }else{
+            $pic = $asset['npk'];
+            $lokasi = $asset['lokasi'];
+            $changePic = 'N';
+            $changeLoc = 'N';
+        }
+        
         $opnamed = $this->db->get_where('asset_opnamed', ['id' => $this->input->post('id')])->row_array();
-
         if (empty($opnamed)) {
 
-            $config['file_name']            = $id;
-            $config['upload_path']          = './assets/img/presensi/'.date('ym').'/';
+            $config['file_name']            = $this->input->post('id');
+            $config['upload_path']          = './assets/img/asset/';
             $config['allowed_types']        = 'jpg|jpeg|png';
             // $config['max_size']             = '5120';
 
@@ -108,26 +111,26 @@ class Asset extends CI_Controller
 
             if ($this->upload->do_upload('foto')) {
                 $data = [
-                    'id' => $id,
-                    'file_name' => date('ym').'/'.$this->upload->data('file_name'),
-                    'npk' => $this->session->userdata('npk'),
-                    'nama' => $this->session->userdata('nama'),
-                    'state' => $this->input->post('state'),
-                    'work_state' => $this->input->post('work_state'),
-                    'location' => $this->input->post('location'),
-                    'latitude' => $this->input->post('latitude'),
-                    'longitude' => $this->input->post('longitude'),
-                    'platform' => $this->input->post('platform'),
+                    'id' => $this->input->post('id'),
+                    'asset_foto' => $this->upload->data('file_name'),
+                    'npk' => $pic,
+                    'ex_npk' => $asset['npk'],
+                    'lokasi' => $lokasi,
+                    'status' => $this->input->post('status'),
+                    'catatan' => $this->input->post('note'),
+                    'change_pic' => $changePic,
+                    'change_lokasi' => $changeLoc,
+                    'catatan' => $this->input->post('note'),
                     'div_id' => $this->session->userdata('div_id'),
                     'dept_id' => $this->session->userdata('dept_id'),
                     'sect_id' => $this->session->userdata('sect_id'),
-                    'atasan1' => $atasan1['inisial'],
-                    'day_state' => $day,
-                    'note' => $this->input->post('note')
+                    'opnamed_by' => $this->session->userdata('nama'),
+                    'opnamed_at' => date('Y-m-d')
                 ];
-                $this->db->insert('presensi', $data);
+                $this->db->insert('asset_opnamed', $data);
             }
         }
+        redirect('asset');
     }
 
     public function id($id)

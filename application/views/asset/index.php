@@ -1,150 +1,136 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
-        <?php if ($sidesubmenu == 'AssetKu'){ ?>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="card card-stats">
-                        <div class="card-header card-header-info card-header-icon">
-                            <div class="card-icon">
-                                <i class="fa fa-twitter"></i>
-                            </div>
-                            <p class="card-category">Total</p>
-                            <h3 class="card-title"><?= $assetTotal; ?></h3>
-                        </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="material-icons">update</i> Just Updated
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">store</i>
-                    </div>
-                    <p class="card-category">Opnamed</p>
-                    <h3 class="card-title"><?= $assetOpnamed; ?></h3>
-                    </div>
-                    <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-rose card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">equalizer</i>
-                    </div>
-                    <p class="card-category">Remaining</p>
-                    <h3 class="card-title"><?= $assetRemains; ?></h3>
-                    </div>
-                    <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <?php } ?>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header card-header-primary card-header-icon">
-                            <div class="card-icon">
-                                <i class="material-icons">assignment</i>
-                            </div>
-                            <h4 class="card-title">Data Asset</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="toolbar">
-                                <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            </div>
-                            <div class="material-datatables">
-                                <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="disabled-sorting"></th>
-                                            <th>Asset</th>
-                                            <th class="th-description">Tgl Opname</th>
-                                            <th class="disabled-sorting th-description text-right">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        foreach ($asset as $row) : 
-                                            $opnamed = $this->db->get_where('asset_opnamed', ['id' => $row['id']])->row_array();
-                                            $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
-                                            if (empty($opnamed)){    
-                                        ?>
-                                            <tr onclick="#" role="button" data-toggle="modal" data-target="#opname" data-id="<?= $row['id']; ?>">
-                                                <td>
-                                                    <div class="img-container" style="width:100px; height:100px;">
-                                                        <img src="<?= base_url(); ?>assets/img/asset/sto-icon.jpg" alt="...">
-                                                    </div>
-                                                </td>
-                                                <td class="td-name">
-                                                    <?= $row['asset_description']; ?>
-                                                    <br />
-                                                    <small><?= $row['asset_no'] . '-' . $row['asset_sub_no']; ?> (<?= $row['kategori']; ?>)</small>
-                                                    <br />
-                                                    <small><?= $pic['nama']; ?></small>
-                                                </td>
-                                                <td></td>
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-sm btn-fill btn-danger" role="button" data-toggle="modal" data-target="#opname">OPNAME </br>SEKARANG!</a>
-                                                </td>
-                                            </tr>
-                                        <?php }else{ ?>
-                                            <!-- <tr onclick="window.location='<?= base_url('asset/opname/' . $row['id']); ?>'">
-                                                <td>
-                                                    <div class="img-container" style="width:100px; height:100px;">
-                                                        <img src="<?= base_url(); ?>assets/img/asset/<?= $opnamed['asset_foto']; ?>" alt="...">
-                                                    </div>
-                                                </td>
-                                                <td class="td-name">
-                                                    <a><?= $row['asset_deskripsi']; ?></a>
-                                                    <br />
-                                                    <small><?= $row['asset_no'] . '-' . $row['asset_sub_no']; ?> (<?= $row['kategori']; ?>)</small>
-                                                    <br />
-                                                    <small><?= $pic['nama']; ?></small>
-                                                </td>
-                                                <td><?= date('d M Y', strtotime($opnamed['opname_at'])); ?></td>
-                                                <td class="text-right">
-                                                <?php if($row['status']==1){?>
-                                                    <a href="<?= base_url('asset/opname/' . $row['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIVERIFIKASI</a>
-                                                <?php }elseif ($row['status']==2){?>
-                                                    <a href="<?= base_url('asset/opname/' . $row['id']); ?>" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIAPPROVE</a>
-                                                <?php }elseif ($row['status']==9){?>
-                                                    <a href="<?= base_url('asset/opname/' . $row['id']); ?>" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIOPNAME</a>
-                                                <?php } ?>
-                                                </td>
-                                            </tr> -->
-                                            <?php } ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th class="text-center"></th>
-                                            <th>Asset</th>
-                                            <th class="th-description">Tgl Opname</th>
-                                            <th class="th-description text-right">Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-rose">
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title">Asset:</span>
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                            <a class="nav-link active" href="#profile" data-toggle="tab">
+                                <i class="material-icons">info</i> Remaining (<?= $assetRemains; ?>)
+                                <div class="ripple-container"></div>
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="#messages" data-toggle="tab">
+                                <i class="material-icons">done</i> Opnamed (<?= $assetOpnamed; ?>)
+                                <div class="ripple-container"></div>
+                            </a>
+                            </li>
+                        </ul>
                         </div>
                     </div>
-                    <!--  end card  -->
+                    </div>
+                    <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="profile">
+                            <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="disabled-sorting"></th>
+                                        <th>Asset</th>
+                                        <th class="disabled-sorting th-description text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($asset as $row) : 
+                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $row['id']])->row_array();
+                                        $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
+                                        if (empty($opnamed)){    
+                                    ?>
+                                        <tr onclick="#" role="button" data-toggle="modal" data-target="#opname" data-id="<?= $row['id']; ?>">
+                                            <td>
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url(); ?>assets/img/asset/sto-icon.jpg" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $row['asset_description']; ?>
+                                                <br />
+                                                <small><?= $row['asset_no'] . '-' . $row['asset_sub_no']; ?> (<?= $row['kategori']; ?>)</small>
+                                                <br />
+                                                <small><?= $pic['nama']; ?></small>
+                                            </td>
+                                            <td class="text-right">
+                                                <a href="#" class="btn btn-sm btn-fill btn-danger" role="button" data-toggle="modal" data-target="#opname">OPNAME </br>SEKARANG!</a>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                    <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th>Asset</th>
+                                        <th class="th-description text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="messages">
+                        <table id="datatables2" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="disabled-sorting"></th>
+                                        <th>Asset</th>
+                                        <th>Status</th>
+                                        <th class="disabled-sorting th-description text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($asset as $row) : 
+                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $row['id']])->row_array();
+                                        $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
+                                        if ($opnamed){    
+
+                                            $pic = $this->db->get_where('karyawan', ['npk' => $opnamed['npk']])->row_array();
+                                            $status = $this->db->get_where('asset_status', ['id' => $opnamed['status']])->row_array();
+
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $row['asset_description']; ?>
+                                                <br />
+                                                <small><?= $row['asset_no'] . '-' . $row['asset_sub_no']; ?> (<?= $row['kategori']; ?>)</small>
+                                                <br />
+                                                <small><?= $pic['nama']; ?></small>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $status['name']; ?>
+                                            </td>
+                                            <td class="text-right">
+                                                <a href="#" class="btn btn-sm btn-fill btn-success disabled" role="button">TERIMA</br>KASIH!</a>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                        <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th>Asset</th>
+                                        <th>Status</th>
+                                        <th class="th-description text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-                <!-- end col-md-12 -->
             </div>
-            <!-- end row -->
+        </div>
+        <!-- end row -->
     </div>
     <!-- end container-fluid-->
 </div>
@@ -183,10 +169,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-10 ml-auto mr-auto">
+                    <div class="col-md-10 ml-auto mr-auto">
                         <div class="form-group has-default">  
-                          <div class="btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-default" id="labelOption1" style="width: 100%;">
                                 <input type="radio" name="options" id="option1" autocomplete="off" value="1" required>BAIK-ADA-DIGUNAKAN
                             </label>
@@ -199,43 +184,36 @@
                             <label class="btn btn-default" id="labelOption4" style="width: 100%;">
                                 <input type="radio" name="options" id="option4" autocomplete="off" value="4" required>HILANG
                             </label>
-                          </div>   
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row" id="pic">
-                        <div class="col-md-10 ml-auto mr-auto">
-                            <div class="form-group">
-                                <label class="col-form-label"><small>PIC*</small></label>
-                                <select class="selectpicker" name="npk" id="selectpic" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
-                                    <?php $karyawan = $this->db->get('karyawan')->result_array();
-                                    foreach ($karyawan as $row) :
-                                        echo '<option value="' . $row['npk'] . '">' . $row['nama'] . '</option>' . "\n";
-                                    endforeach; ?>
-                                </select>
-                            </div>
+                            </div>   
                         </div>
                     </div>
-                    <div class="row" id="lokasi">
-                        <div class="col-md-10 ml-auto mr-auto">
-                            <div class="form-group">
-                                <label class="col-form-label"><small>LOKASI*</small></label>
-                                <select class="selectpicker" name="lokasi" id="selectlokasi" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
-                                    <?php $lokasi = $this->db->get('asset_lokasi')->result_array();
-                                    foreach ($lokasi as $row) :
-                                        echo '<option value="' . $row['id'] . '">' . $row['id'] . '</option>' . "\n";
-                                    endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-10 ml-auto mr-auto">
+                    <div class="col-md-10 ml-auto mr-auto" id="pic">
                         <div class="form-group">
-                          <label for="note" class="bmd-label-floating"> Keterangan*<small><i>(jika rusak/hilang harus memberikan keterangan)</i></small></label>
-                          <textarea rows="5" class="form-control" id="note" name="note"></textarea>
+                            <label class="col-form-label"><small>PIC*</small></label>
+                            <select class="selectpicker" name="pic" id="selectpic" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
+                                <?php $karyawan = $this->db->get('karyawan')->result_array();
+                                foreach ($karyawan as $row) :
+                                    echo '<option value="' . $row['npk'] . '">' . $row['nama'] . '</option>' . "\n";
+                                endforeach; ?>
+                            </select>
                         </div>
-                      </div>
+                    </div>
+                    <div class="col-md-10 ml-auto mr-auto"  id="lokasi">
+                        <div class="form-group">
+                            <label class="col-form-label"><small>LOKASI*</small></label>
+                            <select class="selectpicker" name="lokasi" id="selectlokasi" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
+                                <?php $lokasi = $this->db->get('asset_lokasi')->result_array();
+                                foreach ($lokasi as $row) :
+                                    echo '<option value="' . $row['id'] . '">' . $row['id'] . '</option>' . "\n";
+                                endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-10 ml-auto mr-auto">
+                        <div class="form-group">
+                            <label for="note" class="bmd-label-floating"> Keterangan*<small><i>(jika rusak/hilang harus memberikan keterangan)</i></small></label>
+                            <textarea rows="5" class="form-control" id="note" name="note"></textarea>
+                        </div>
                     </div>
                     </p>
                     <div class="modal-footer">
