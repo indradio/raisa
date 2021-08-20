@@ -57,7 +57,7 @@
                                                 <small><?= $pic['nama']; ?></small>
                                             </td>
                                             <td class="text-right">
-                                                <a href="#" class="btn btn-sm btn-fill btn-danger" role="button" data-toggle="modal" data-target="#opname">OPNAME </br>SEKARANG!</a>
+                                                <a href="#" class="btn btn-sm btn-fill btn-danger" role="button">OPNAME </br>SEKARANG!</a>
                                             </td>
                                         </tr>
                                         <?php } ?>
