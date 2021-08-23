@@ -10,14 +10,20 @@
                         <span class="nav-tabs-title">Asset:</span>
                         <ul class="nav nav-tabs" data-tabs="tabs">
                             <li class="nav-item">
-                            <a class="nav-link active" href="#profile" data-toggle="tab">
+                            <a class="nav-link" href="#profile" data-toggle="tab">
                                 <i class="material-icons">info</i> Remaining (<?= $assetRemains; ?>)
                                 <div class="ripple-container"></div>
                             </a>
                             </li>
                             <li class="nav-item">
+                          <a class="nav-link active" href="#settings" data-toggle="tab">
+                            <i class="material-icons">done</i> Verification (<?= $assetVerify; ?>)
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                            <li class="nav-item">
                             <a class="nav-link" href="#messages" data-toggle="tab">
-                                <i class="material-icons">done</i> Opnamed (<?= $assetOpnamed; ?>)
+                                <i class="material-icons">done_all</i> Opnamed (<?= $assetOpnamed; ?>)
                                 <div class="ripple-container"></div>
                             </a>
                             </li>
@@ -27,7 +33,7 @@
                     </div>
                     <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane active" id="profile">
+                        <div class="tab-pane" id="profile">
                             <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
@@ -72,6 +78,96 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <div class="tab-pane active" id="settings">
+                        <table id="datatables3" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="disabled-sorting"></th>
+                                        <th>Asset</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
+                                        <th>Keterangan</th>
+                                        <th>Status</th>
+                                        <th>Date|By</th>
+                                        <th class="disabled-sorting th-description text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($asset as $row) : 
+                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $row['id']])->row_array();
+                                        $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
+                                        if ($opnamed){
+                                            if (empty($opnamed['verify_by'])){
+                                            $pic = $this->db->get_where('karyawan', ['npk' => $opnamed['npk']])->row_array();
+                                            $ex_pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
+                                            $status = $this->db->get_where('asset_status', ['id' => $opnamed['status']])->row_array();
+
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <div class="img-container" style="width:100px; height:100px;">
+                                                    <img src="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" alt="...">
+                                                </div>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $row['asset_description']; ?>
+                                                <br />
+                                                <small><?= $row['asset_no'] . '-' . $row['asset_sub_no']; ?> (<?= $row['kategori']; ?>)</small>
+                                            </td>
+                                            <td>
+                                               <?php if ($row['npk']==$opnamed['npk'])
+                                                {
+                                                   echo $pic['nama']; 
+                                                }else{
+                                                    echo $pic['nama'];
+                                                    echo '</br><a class="text-danger"><small>'. $ex_pic['nama'].'</small></a>';
+                                                }   
+                                                ?>
+                                            </td>
+                                            <td>
+                                            <?php if ($row['lokasi']==$opnamed['lokasi'])
+                                                {
+                                                   echo $row['lokasi']; 
+                                                }else{
+                                                    echo $opnamed['lokasi'];
+                                                    echo '</br><a class="text-danger"><small>'. $row['lokasi'].'</small></a>';
+                                                }   
+                                                ?>
+                                            </td>
+                                            <td>
+                                               <?= $opnamed['catatan']; ?>
+                                            </td>
+                                            <td class="td-name">
+                                                <?= $status['name']; ?>
+                                            </td>
+                                            <td>
+                                                <?= date('d-m-Y H:i', strtotime($opnamed['opnamed_at'])); ?>
+                                                </br><?= $opnamed['opnamed_by']; ?>
+                                            </td>
+                                            <td class="text-right">
+
+                                                <a href="<?= base_url('asset/verify/'.$row['id']); ?>" class="btn btn-md btn-fill btn-success" role="button">Verify</a>
+                                                <a href="#" class="btn btn-sm btn-fill btn-danger" role="button" data-toggle="modal" data-target="#reopname" data-id="<?= $row['id']; ?>">ReOpname</a>
+                                            </td>
+                                        </tr>
+                                        <?php }
+                                            }
+                                        endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center"></th>
+                                        <th>Asset</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
+                                        <th>Keterangan</th>
+                                        <th>Status</th>
+                                        <th>Date|By</th>
+                                        <th class="th-description text-right">Actions</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                         <div class="tab-pane" id="messages">
                         <table id="datatables2" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -87,7 +183,7 @@
                                         $opnamed = $this->db->get_where('asset_opnamed', ['id' => $row['id']])->row_array();
                                         $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
                                         if ($opnamed){    
-
+                                            if ($opnamed['verify_by']){
                                             $pic = $this->db->get_where('karyawan', ['npk' => $opnamed['npk']])->row_array();
                                             $status = $this->db->get_where('asset_status', ['id' => $opnamed['status']])->row_array();
 
@@ -112,8 +208,9 @@
                                                 <a href="#" class="btn btn-sm btn-fill btn-success disabled" role="button">TERIMA</br>KASIH!</a>
                                             </td>
                                         </tr>
-                                        <?php } ?>
-                                        <?php endforeach; ?>
+                                        <?php }
+                                            } 
+                                        endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -227,9 +324,54 @@
         </div>
     </div>
 
+<div class="modal fade" id="reopname" tabindex="-1" role="dialog" aria-labelledby="reopnameLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reopnameLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?= form_open_multipart('asset/reopname'); ?>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="id" name="id" required="true" />
+                    </div>
+                    <div class="col-md-10 ml-auto mr-auto">
+                        <div class="form-group">
+                            <label for="note" class="bmd-label-floating"> Keterangan*<small><i>(jika rusak/hilang harus memberikan keterangan)</i></small></label>
+                            <textarea rows="5" class="form-control" id="note" name="note"></textarea>
+                        </div>
+                    </div>
+                    </p>
+                    <div class="modal-footer">
+                        <div class="ml-auto">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                          <button type="submit" id="submit" class="btn btn-success">SUBMIT</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
 <script>
     $(document).ready(function() {
+
+        $('#datatables3').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
 
         $('#opname').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)

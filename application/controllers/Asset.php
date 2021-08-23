@@ -9,33 +9,67 @@ class Asset extends CI_Controller
         is_logged_in();
     }
 
-    public function index()
+    public function index($access=null)
     {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'AssetKu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result_array();
-        
-        $this->db->where('npk',$this->session->userdata('npk'));
-        $total = $this->db->get('asset');
-        $data['assetTotal'] = $total->num_rows();
-        
-        $this->db->where('ex_npk',$this->session->userdata('npk'));
-        $opnamed = $this->db->get('asset_opnamed');
-        $data['assetOpnamed'] = $opnamed->num_rows();
-        
-        $data['assetRemains'] = $total->num_rows() - $opnamed->num_rows();
-        
-        $data['asset_opnamed'] = $this->db->get_where('asset_opnamed', ['npk' => $this->session->userdata('npk')])->result_array();
-        // if ($this->session->userdata('npk')=='0282'){
-        //     $data['asset'] = $this->db->get('asset')->result_array();
-        // }
-                
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/index', $data);
-        $this->load->view('templates/footer');
+        if ($access=='fa'){
+         
+            $data['sidemenu'] = 'FA';
+            $data['sidesubmenu'] = 'Asset';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    
+            $data['asset'] = $this->db->get('asset')->result_array();
+            
+            $asset = $this->db->get('asset');
+            $data['asset'] = $asset->result_array();
+            $data['assetTotal'] = $asset->num_rows();
+            
+            $this->db->where('verify_by', NULL);
+            $verify = $this->db->get('asset_opnamed');
+            $data['verify'] = $verify->result_array();
+            $data['assetVerify'] = $verify->num_rows();
+    
+            $this->db->where('verify_by !=', NULL);
+            $opnamed = $this->db->get('asset_opnamed');
+            $data['opnamed'] = $opnamed->result_array();
+            $data['assetOpnamed'] = $opnamed->num_rows();
+            
+            $data['assetRemains'] = $asset->num_rows() - ($verify->num_rows() + $opnamed->num_rows());
+                    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/index-fa', $data);
+            $this->load->view('templates/footer');
+
+        }else{
+
+            $data['sidemenu'] = 'Asset';
+            $data['sidesubmenu'] = 'AssetKu';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['asset'] = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result_array();
+            
+            $this->db->where('npk',$this->session->userdata('npk'));
+            $total = $this->db->get('asset');
+            $data['assetTotal'] = $total->num_rows();
+            
+            $this->db->where('ex_npk',$this->session->userdata('npk'));
+            $opnamed = $this->db->get('asset_opnamed');
+            $data['assetOpnamed'] = $opnamed->num_rows();
+            
+            $data['assetRemains'] = $total->num_rows() - $opnamed->num_rows();
+            
+            $data['asset_opnamed'] = $this->db->get_where('asset_opnamed', ['npk' => $this->session->userdata('npk')])->result_array();
+            // if ($this->session->userdata('npk')=='0282'){
+            //     $data['asset'] = $this->db->get('asset')->result_array();
+            // }
+                    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/index', $data);
+            $this->load->view('templates/footer');
+        }
+
     }
 
     public function remains()
