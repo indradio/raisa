@@ -191,7 +191,9 @@
                         <div class="form-group">
                             <label class="col-form-label"><small>PIC*</small></label>
                             <select class="selectpicker" name="pic" id="selectpic" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
-                                <?php $karyawan = $this->db->get('karyawan')->result_array();
+                                <?php               $this->db->where('is_active','1');
+                                                    $this->db->where('status','1');
+                                        $karyawan = $this->db->get('karyawan')->result_array();
                                 foreach ($karyawan as $row) :
                                     echo '<option value="' . $row['npk'] . '">' . $row['nama'] . '</option>' . "\n";
                                 endforeach; ?>
