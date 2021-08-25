@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+
 class Asset extends CI_Controller
 {
     public function __construct()
@@ -185,80 +188,6 @@ class Asset extends CI_Controller
         }
     }
 
-    public function opname_proses()
-    {
-        date_default_timezone_set('asia/jakarta');
-        if ($this->input->post('checkpic') == 1){
-            $pic = $this->input->post('new_npk');
-            $notepic = 'PIC ('.$this->input->post('old_npk').' -> '.$this->input->post('new_npk').'), ';
-            $changePic = 1;
-        }else{
-            $pic = $this->input->post('old_npk');
-            $notepic = '';
-            $changePic = 0;
-        }
-        
-        if ($this->input->post('checkloc') == 1){
-            $notelokasi = 'Lokasi ('.$this->input->post('old_lokasi').' -> '.$this->input->post('new_lokasi').'), ';
-            $lokasi = $this->input->post('new_lokasi');
-            $changeLokasi = 1;
-        }else{
-            $notelokasi = '';
-            $lokasi = $this->input->post('old_lokasi');
-            $changeLokasi = 0;
-        }
-
-        $old_pic = $this->db->get_where('karyawan', ['npk' => $this->input->post('old_npk')])->row_array();
-        $new_pic = $this->db->get_where('karyawan', ['npk' => $pic])->row_array();
-   
-
-        $asset = $this->db->get_where('asset', ['id' => $this->input->post('id')])->row_array();
-        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $this->input->post('id')])->row_array();
-        if (empty($opnamed)){
-            $data = [
-                'id' => $this->input->post('id'),
-                'asset_no' => $asset['asset_no'],
-                'asset_sub_no' => $asset['asset_sub_no'],
-                'asset_deskripsi' => $asset['asset_deskripsi'],
-                'kategori' => $asset['kategori'],
-                'old_npk' => $this->input->post('old_npk'),
-                'old_pic' => $old_pic['nama'],
-                'new_npk' => $pic,
-                'new_pic' => $new_pic['nama'],
-                'old_lokasi' => $this->input->post('old_lokasi'),
-                'new_lokasi' => $lokasi,
-                'status' => $this->input->post('status'),
-                'catatan' => $notepic. $notelokasi. $this->input->post('catatan'),
-                'opname_at' => date('Y-m-d H:i:s'),
-                'opname_by' => $this->session->userdata('nama'),
-                'change_pic' => $changePic, 
-                'change_lokasi' => $changeLokasi,
-                'dept_id' => $this->session->userdata('dept_id'),
-                'div_id' => $this->session->userdata('div_id')
-            ];
-            $this->db->insert('asset_opnamed', $data);
-
-            $config['upload_path']          = './assets/img/asset/';
-            $config['allowed_types']        = 'jpg|jpeg|png';
-            $config['max_size']             = '2048';
-            $this->load->library('upload', $config);
-            if ($this->upload->do_upload('foto')) {
-                $this->db->set('asset_foto', $this->upload->data('file_name'));
-                $this->db->where('id', $this->input->post('id'));
-                $this->db->update('asset_opnamed');
-            }
-
-            //Updated status opname
-            $this->db->set('status', '1');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('asset');
-        }else{
-
-        }
-
-        redirect('asset/remains');
-    }
-
     public function reopname_proses()
     {
         date_default_timezone_set('asia/jakarta');
@@ -277,218 +206,101 @@ class Asset extends CI_Controller
         }
     }
 
-    public function verify($id=false)
+    public function verify($id)
     {
-        $this->db->where('id', $id);
-        $this->db->where('status', '1');
-        $asset = $this->db->get_where('asset')->row_array();
+        $asset = $this->db->get_where('asset_opnamed',['id' => $id])->row_array();
         if (!empty($asset)){
-            $data['sidemenu'] = 'FA';
-            $data['sidesubmenu'] = 'Verifikasi Opname';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-            $data['asset'] = $asset;
-            $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('asset/verify', $data);
-            $this->load->view('templates/footer');
-        }
-    }
-
-    public function verify_proses()
-    {
-        date_default_timezone_set('asia/jakarta');
-        
-        //Updated verify opname
-        $this->db->set('verify_at', date('Y-m-d H:i:s'));
-        $this->db->set('verify_by', $this->session->userdata('nama'));
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('asset_opnamed');
-
-        //Updated status opname
-        $this->db->set('status', '2');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('asset');
-
-        redirect('f221/verify');
-    }
-
-    public function approval()
-    {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'Approval';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-
-        if ($this->session->userdata('posisi_id') == 3){
-            $this->db->where('verify_by !=' , null);
-            $this->db->where('approve_by' , null);
-            $data['asset'] = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
-
-            $this->db->where('dept_id',$this->session->userdata('dept_id'));
-            $this->db->where('status', '1');
-            $stats1 = $this->db->get('asset_opnamed');
-            $data['assetStats1'] = $stats1->num_rows();
-
-            $this->db->where('dept_id',$this->session->userdata('dept_id'));
-            $this->db->where('status', '2');
-            $stats2 = $this->db->get('asset_opnamed');
-            $data['assetStats2'] = $stats2->num_rows();
-
-            $this->db->where('dept_id',$this->session->userdata('dept_id'));
-            $this->db->where('status', '3');
-            $stats3 = $this->db->get('asset_opnamed');
-            $data['assetStats3'] = $stats3->num_rows();
-
-            $this->db->where('dept_id',$this->session->userdata('dept_id'));
-            $this->db->where('status', '4');
-            $stats4 = $this->db->get('asset_opnamed');
-            $data['assetStats4'] = $stats4->num_rows();
-        } elseif ($this->session->userdata('posisi_id') == 2){
-            $this->db->where('verify_by !=' , null);
-            $this->db->where('approve_by' , null);
-            $data['asset'] = $this->db->get_where('asset_opnamed', ['div_id' => $this->session->userdata('div_id')])->result_array();
-    
-            $this->db->where('div_id',$this->session->userdata('div_id'));
-            $this->db->where('status', '1');
-            $stats1 = $this->db->get('asset_opnamed');
-            $data['assetStats1'] = $stats1->num_rows();
-    
-            $this->db->where('div_id',$this->session->userdata('div_id'));
-            $this->db->where('status', '2');
-            $stats2 = $this->db->get('asset_opnamed');
-            $data['assetStats2'] = $stats2->num_rows();
-    
-            $this->db->where('div_id',$this->session->userdata('div_id'));
-            $this->db->where('status', '3');
-            $stats3 = $this->db->get('asset_opnamed');
-            $data['assetStats3'] = $stats3->num_rows();
-    
-            $this->db->where('div_id',$this->session->userdata('div_id'));
-            $this->db->where('status', '4');
-            $stats4 = $this->db->get('asset_opnamed');
-            $data['assetStats4'] = $stats4->num_rows();
-        }else{
-            redirect('asset');
-        }
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/approval', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function approve()
-    {
-        date_default_timezone_set('asia/jakarta');
-        
-        $this->db->where('verify_by !=', null);
-        $this->db->where('approve_by', null);
-        $asset = $this->db->get_where('asset_opnamed', ['dept_id' => $this->session->userdata('dept_id')])->result_array();
-
-        foreach ($asset as $a) : 
-            //Updated approve opname
-            $this->db->set('approve_at', date('Y-m-d H:i:s'));
-            $this->db->set('approve_by', $this->session->userdata('nama'));
-            $this->db->where('id', $a['id']);
-            $this->db->update('asset_opnamed');
-
             //Updated status opname
-            $this->db->set('status', '9');
-            $this->db->where('id', $a['id']);
-            $this->db->update('asset');
-        endforeach;
-        redirect('asset/approval');
+            $this->db->set('verify_by', $this->session->userdata('nama'));
+            $this->db->set('verify_at', date('Y-m-d H:i:s'));
+            $this->db->where('id', $id);
+            $this->db->update('asset_opnamed');
+        }
+        redirect('asset/index/fa');
     }
 
-    public function verifikasi2()
+    public function reopname()
     {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Verifikasi Opname';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset_opname', ['status_opname' => '2'])->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/opname_verifikasi', $data);
-        $this->load->view('templates/footer');
+        date_default_timezone_set('asia/jakarta');
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('asset_opnamed');
+
+        $asset = $this->db->get_where('asset',['id' => $this->input->post('id')])->row_array();
+        $this->db->where('npk', $asset['npk']);
+        $user = $this->db->get('karyawan',['npk', $asset['npk']])->row_array();
+     
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*TOLONG OPNAME KEMBALI ASSET BERIKUT*" . 
+                    "\r\n \r\nNo Asset : *" . $asset['asset_no'] . "-". $asset['asset_sub_no']."*" .
+                    "\r\nDeskripsi : *" . $asset['asset_description'] . "*" .
+                    "\r\nCatatan FA : *" . $this->input->post('note') . "*" .
+                    "\r\n \r\nMohon segera lakukan opname sebelum tanggal 31 Agustus 2021.".
+                    "\r\n \r\nMasuk menu asset klik link berikut https://raisa.winteq-astra.com/asset"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+
+        redirect('asset/index/fa');
     }
 
-    public function do_verifikasi($no, $sub)
+    public function opname_by_fa()
     {
-        $this->db->set('status_opname', '3');
-        $this->db->set('catatan', 'Diverifikasi oleh ' . $this->session->userdata('inisial'));
-        $this->db->where('asset_no', $no);
-        $this->db->where('asset_sub_no', $sub);
-        $this->db->update('asset');
+        $asset = $this->db->get_where('asset', ['id' => $this->input->post('id')])->row_array();
+        if ($this->input->post('status')=='2'){
+            $pic = $this->input->post('pic');
+            $lokasi = $this->input->post('lokasi');
+            $changePic = ($asset['npk']==$this->input->post('pic'))? 'N' : 'Y';
+            $changeLoc = ($asset['lokasi']==$this->input->post('lokasi'))? 'N' : 'Y';
+        }else{
+            $pic = $asset['npk'];
+            $lokasi = $asset['lokasi'];
+            $changePic = 'N';
+            $changeLoc = 'N';
+        }
+        
+        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $this->input->post('id')])->row_array();
+        if (empty($opnamed)) {
 
-        $this->db->set('status_opname', '2');
-        $this->db->set('tim_opname', $this->session->userdata('inisial'));
-        $this->db->where('asset_no', $no);
-        $this->db->where('asset_sub_no', $sub);
-        $this->db->update('asset_opname');
+            $config['file_name']            = $this->input->post('id');
+            $config['upload_path']          = './assets/img/asset/';
+            $config['allowed_types']        = 'jpg|jpeg|png';
+            // $config['max_size']             = '5120';
 
-        $this->session->set_flashdata('message', 'berhasilverifikasi');
-        redirect('asset/verifikasi');
-    }
+            if(!is_dir($config['upload_path'])) mkdir($config['upload_path'], 0777, TRUE);
+            $this->load->library('upload', $config);
 
-    public function asset($id)
-    {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'Approval';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
-        $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/opnamed', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function opname2()
-    {
-        $data['sidemenu'] = 'FA';
-        $data['sidesubmenu'] = 'Asset Manajemen';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->where('status_opname', '2');
-        $data['asset'] = $this->db->or_where('status_opname', '3');
-        $data['asset'] = $this->db->get('asset')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/asset', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function assetku1()
-    {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'AssetKu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->where('npk', $this->session->userdata('npk'));
-        $data['asset'] = $this->db->where('status_opname', '1');
-        $data['asset'] = $this->db->get('asset')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/index', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function assetku2()
-    {
-        $data['sidemenu'] = 'Asset';
-        $data['sidesubmenu'] = 'AssetKu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->where('npk', $this->session->userdata('npk'));
-        $data['asset'] = $this->db->where('status_opname !=', '1');
-        $data['asset'] = $this->db->get('asset')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/index', $data);
-        $this->load->view('templates/footer');
+            if ($this->upload->do_upload('foto')) {
+                $data = [
+                    'id' => $this->input->post('id'),
+                    'asset_foto' => $this->upload->data('file_name'),
+                    'npk' => $pic,
+                    'ex_npk' => $asset['npk'],
+                    'lokasi' => $lokasi,
+                    'status' => $this->input->post('status'),
+                    'catatan' => $this->input->post('note'),
+                    'change_pic' => $changePic,
+                    'change_lokasi' => $changeLoc,
+                    'catatan' => $this->input->post('note'),
+                    'div_id' => $this->session->userdata('div_id'),
+                    'dept_id' => $this->session->userdata('dept_id'),
+                    'sect_id' => $this->session->userdata('sect_id'),
+                    'opnamed_by' => $this->session->userdata('nama'),
+                    'opnamed_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('asset_opnamed', $data);
+            }
+        }
+        redirect('asset/index/fa');
     }
 }

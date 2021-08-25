@@ -242,7 +242,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-            <?= form_open_multipart('asset/opname'); ?>
+            <?= form_open_multipart('asset/opname_by_fa'); ?>
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="status" name="status" required="true" />
@@ -374,6 +374,13 @@
     });
 
         $('#opname').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+        })
+
+        $('#reopname').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
             var modal = $(this)
