@@ -14,7 +14,7 @@ class Asset extends CI_Controller
 
     public function index($access=null)
     {
-        if ($access=='fa'){
+        if ($access=='fa' or $this->session->userdata('npk')=='6086'){
          
             $data['sidemenu'] = 'FA';
             $data['sidesubmenu'] = 'Asset';
@@ -48,7 +48,7 @@ class Asset extends CI_Controller
 
             $data['sidemenu'] = 'Asset';
             $data['sidesubmenu'] = 'AssetKu';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
             $data['asset'] = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result_array();
             
             $this->db->where('npk',$this->session->userdata('npk'));
@@ -62,9 +62,6 @@ class Asset extends CI_Controller
             $data['assetRemains'] = $total->num_rows() - $opnamed->num_rows();
             
             $data['asset_opnamed'] = $this->db->get_where('asset_opnamed', ['npk' => $this->session->userdata('npk')])->result_array();
-            // if ($this->session->userdata('npk')=='0282'){
-            //     $data['asset'] = $this->db->get('asset')->result_array();
-            // }
                     
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
