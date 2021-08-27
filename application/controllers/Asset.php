@@ -185,22 +185,21 @@ class Asset extends CI_Controller
         }
     }
 
-    public function reopname_proses()
+    public function laporan()
     {
-        date_default_timezone_set('asia/jakarta');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->delete('asset_opnamed');
+         
+            $data['sidemenu'] = 'FA';
+            $data['sidesubmenu'] = 'Laporan Asset';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    
+            $data['asset'] = $this->db->get('asset')->result_array();
+                    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/asset-report', $data);
+            $this->load->view('templates/footer');
 
-        //Updated status opname
-        $this->db->set('status', '0');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('asset');
-
-        if ($this->input->post('role')=='fac'){
-            redirect('f221/verify');
-        }else {
-            redirect('asset/opname/'.$this->input->post('id'));
-        }
     }
 
     public function verify($id)

@@ -34,101 +34,85 @@
                                         <th>Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
                                         <th>Verifikasi</th>
-                                        <th>Disetujui</th>
                                         <th>Dept</th>
                                         <th>Status</th>
-                                        <th class="disabled-sorting th-description text-right">Actions</th>
+                                        <th>Ganti PIC</th>
+                                        <th>Ganti Lokasi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($asset as $a) : 
-                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $a['id']])->row_array();
+                                    foreach ($asset as $row) : 
+                                        $opnamed = $this->db->get_where('asset_opnamed', ['id' => $row['id']])->row_array();
                                         if (empty($opnamed)){    
                                     ?>
-                                        <tr>
+                                        <tr class="table-danger">
                                             <td>
-                                                <?= $a['asset_no']; ?>
+                                                <?= $row['asset_no']; ?>
                                             </td>
                                             <td>
-                                                <?= $a['asset_sub_no']; ?>
+                                                <?= $row['asset_sub_no']; ?>
                                             </td>
                                             <td class="td-name">
-                                                <?= $a['asset_deskripsi']; ?>
+                                                <?= $row['asset_description']; ?>
                                             </td>
                                             <td>
-                                                <?= $a['kategori']; ?>)
+                                                <?= $row['kategori']; ?>
                                             </td>
                                             <td></td>
                                             <td></td>
-                                            <td><?= $a['npk']; ?></td>
-                                            <?php $pic = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); ?>
+                                            <td><?= $row['npk']; ?></td>
+                                            <?php $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
                                             <td><?= $pic['nama']; ?></td>
                                             <td></td>
-                                            <td><?= $a['lokasi']; ?></td>
-                                            <td><?= $a['first_acq']; ?></td>
-                                            <td><?= $a['value_acq']; ?></td>
-                                            <td><?= $a['cost_center']; ?></td>
+                                            <td><?= $row['lokasi']; ?></td>
+                                            <td><?= $row['first_acq']; ?></td>
+                                            <td><?= $row['value_acq']; ?></td>
+                                            <td><?= $row['cost_center']; ?></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td>BELUM DIOPNAME</td>
                                             <td></td>
                                             <td></td>
-                                            <td class="text-right">
-                                                <a href="#" class="btn btn-sm btn-fill btn-danger disabled">BELUM </br>DIOPNAME</a>
-                                            </td>
                                         </tr>
                                     <?php }else{ 
-                                        if ($opnamed['status']==1){
-                                            $status = 'BAIK-ADA-DIGUNAKAN';
-                                        }elseif ($opnamed['status']==2) {
-                                            $status = 'BAIK-TIDAK SESUAI';
-                                        }elseif ($opnamed['status']==3) {
-                                            $status = 'RUSAK';
-                                        }elseif ($opnamed['status']==4) {
-                                            $status = 'HILANG';
-                                        }
+                                        $status = $this->db->get_where('asset_status', ['id' => $opnamed['status']])->row_array();
                                             ?>
                                         <tr>
                                             
                                             <td>
-                                                <?= $a['asset_no']; ?>
+                                                <?= $row['asset_no']; ?>
                                             </td>
                                             <td>
-                                                <?= $a['asset_sub_no']; ?>
+                                                <?= $row['asset_sub_no']; ?>
                                             </td>
                                             <td class="td-name">
-                                                <?= $a['asset_deskripsi']; ?>
+                                                <?= $row['asset_description']; ?>
                                             </td>
                                             <td>
-                                                <?= $a['kategori']; ?>)
+                                                <?= $row['kategori']; ?>
                                             </td>
-                                            <td><?= $opnamed['new_npk']; ?></td>
-                                            <td><?= $opnamed['new_pic']; ?></td>
-                                            <td><?= $opnamed['old_npk']; ?></td>
-                                            <td><?= $opnamed['old_pic']; ?></td>
-                                            <td><?= $opnamed['new_lokasi']; ?></td>
-                                            <td><?= $opnamed['old_lokasi']; ?></td>
-                                            <td><?= $a['first_acq']; ?></td>
-                                            <td><?= $a['value_acq']; ?></td>
-                                            <td><?= $a['cost_center']; ?></td>
+                                            <td><?= $row['npk']; ?></td>
+                                            <?php $pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
+                                            <td><?= $pic['nama']; ?></td>
+                                            <td><?= $opnamed['npk']; ?></td>
+                                            <?php $ex_pic = $this->db->get_where('karyawan', ['npk' => $opnamed['npk']])->row_array(); ?>
+                                            <td><?= $ex_pic['nama']; ?></td>
+                                            <td><?= $opnamed['lokasi']; ?></td>
+                                            <td><?= $row['lokasi']; ?></td>
+                                            <td><?= $row['first_acq']; ?></td>
+                                            <td><?= $row['value_acq']; ?></td>
+                                            <td><?= $row['cost_center']; ?></td>
                                             <td><?= $opnamed['catatan']; ?></td>
-                                            <td><?= date('d M Y', strtotime($opnamed['opname_at'])).' Oleh '.$opnamed['opname_by']; ?></td>
+                                            <td><?= date('d M Y', strtotime($opnamed['opnamed_at'])).' Oleh '.$opnamed['opnamed_by']; ?></td>
                                             <td><?= date('d M Y', strtotime($opnamed['verify_at'])).' Oleh '.$opnamed['verify_by']; ?></td>
-                                            <td><?= date('d M Y', strtotime($opnamed['approve_at'])).' Oleh '.$opnamed['approve_by']; ?></td>
                                             <?php $dept = $this->db->get_where('karyawan_dept', ['id' => $opnamed['dept_id']])->row_array(); ?>
                                             <td><?= $dept['nama']; ?></td>
-                                            <td><?= $status; ?></td>
-                                            <td class="text-right">
-                                                <?php if ($a['status']==1){ ?>
-                                                    <a href="#" class="btn btn-sm btn-fill btn-danger">BELUM </br>DIVERIFIKASI</a>
-                                                <?php } elseif ($a['status']==2){ ?>
-                                                    <a href="#" class="btn btn-sm btn-fill btn-warning">BELUM </br>DIAPPROVE</a>
-                                                <?php } elseif ($a['status']==9){ ?>
-                                                    <a href="#" class="btn btn-sm btn-fill btn-success">SUDAH </br>DIOPNAME</a>
-                                                <?php } ?>
-                                            </td>
+                                            <td><?= $status['name']; ?></td>
+                                            <td><?= $opnamed['change_pic']; ?></td>
+                                            <td><?= $opnamed['change_lokasi']; ?></td>
                                         </tr>
                                         <?php } ?>
                                     <?php endforeach; ?>
@@ -151,9 +135,10 @@
                                         <th>Catatan</th>
                                         <th class="th-description">Tgl Opname</th>
                                         <th>Verifikasi</th>
-                                        <th>Disetujui</th>
                                         <th>Dept</th>
-                                        <th class="disabled-sorting th-description text-right">Actions</th>
+                                        <th>Status</th>
+                                        <th>Ganti PIC</th>
+                                        <th>Ganti Lokasi</th>
                                     </tr>
                                 </tfoot>
                             </table>

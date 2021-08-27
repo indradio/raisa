@@ -34,7 +34,7 @@
                     <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane" id="profile">
-                            <table id="datatables" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="datatables11" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="disabled-sorting"></th>
@@ -79,7 +79,7 @@
                             </table>
                         </div>
                         <div class="tab-pane active" id="settings">
-                        <table id="datatables3" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="datatables12" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="disabled-sorting"></th>
@@ -169,7 +169,7 @@
                             </table>
                         </div>
                         <div class="tab-pane" id="messages">
-                        <table id="datatables2" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="datatables13" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="disabled-sorting"></th>
@@ -360,18 +360,42 @@
 <script>
     $(document).ready(function() {
 
-        $('#datatables3').DataTable({
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "All"]
-        ],
-        scrollX: true,
-        language: {
-            search: "_INPUT_",
-            searchPlaceholder: "Search records",
-        }
-    });
+        $('#datatables11').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+        $('#datatables12').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+        $('#datatables13').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            scrollX: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
 
         $('#opname').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
