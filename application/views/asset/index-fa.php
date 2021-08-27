@@ -105,8 +105,10 @@
                                     ?>
                                         <tr>
                                             <td>
-                                                <div class="img-container" style="width:100px; height:100px;">
-                                                    <img src="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" alt="...">
+                                                <div class="img-container img-thumbnail" style="width:100px; height:100px;">
+                                                    <a href="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" target="_blank">
+                                                        <img src="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" alt="...">
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td class="td-name">
@@ -174,7 +176,12 @@
                                     <tr>
                                         <th class="disabled-sorting"></th>
                                         <th>Asset</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
+                                        <th>Keterangan</th>
                                         <th>Status</th>
+                                        <th>Opname|By</th>
+                                        <th>Verify|By</th>
                                         <th class="disabled-sorting th-description text-right">Actions</th>
                                     </tr>
                                 </thead>
@@ -185,24 +192,56 @@
                                         if ($opnamed){    
                                             if ($opnamed['verify_by']){
                                             $pic = $this->db->get_where('karyawan', ['npk' => $opnamed['npk']])->row_array();
+                                            $ex_pic = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array();
                                             $status = $this->db->get_where('asset_status', ['id' => $opnamed['status']])->row_array();
 
                                     ?>
                                         <tr>
                                             <td>
-                                                <div class="img-container" style="width:100px; height:100px;">
-                                                    <img src="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" alt="...">
+                                                <div class="img-container img-thumbnail" style="width:100px; height:100px;">
+                                                    <a href="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" target="_blank">
+                                                        <img src="<?= base_url().'assets/img/asset/'.$opnamed['asset_foto']; ?>" alt="...">
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td class="td-name">
                                                 <?= $row['asset_description']; ?>
                                                 <br />
                                                 <small><?= $row['asset_no'] . '-' . $row['asset_sub_no']; ?> (<?= $row['kategori']; ?>)</small>
-                                                <br />
-                                                <small><?= $pic['nama']; ?></small>
+                                            </td>
+                                            <td>
+                                               <?php if ($row['npk']==$opnamed['npk'])
+                                                {
+                                                   echo $pic['nama']; 
+                                                }else{
+                                                    echo $pic['nama'];
+                                                    echo '</br><a class="text-danger"><small>'. $ex_pic['nama'].'</small></a>';
+                                                }   
+                                                ?>
+                                            </td>
+                                            <td>
+                                            <?php if ($row['lokasi']==$opnamed['lokasi'])
+                                                {
+                                                   echo $row['lokasi']; 
+                                                }else{
+                                                    echo $opnamed['lokasi'];
+                                                    echo '</br><a class="text-danger"><small>'. $row['lokasi'].'</small></a>';
+                                                }   
+                                                ?>
+                                            </td>
+                                            <td>
+                                               <?= $opnamed['catatan']; ?>
                                             </td>
                                             <td class="td-name">
                                                 <?= $status['name']; ?>
+                                            </td>
+                                            <td>
+                                                <?= date('d-m-Y H:i', strtotime($opnamed['opnamed_at'])); ?>
+                                                </br><?= $opnamed['opnamed_by']; ?>
+                                            </td>
+                                            <td>
+                                                <?= date('d-m-Y H:i', strtotime($opnamed['verify_at'])); ?>
+                                                </br><?= $opnamed['verify_by']; ?>
                                             </td>
                                             <td class="text-right">
                                                 <a href="#" class="btn btn-sm btn-fill btn-success disabled" role="button">TERIMA</br>KASIH!</a>
@@ -216,7 +255,12 @@
                                     <tr>
                                         <th class="text-center"></th>
                                         <th>Asset</th>
+                                        <th>PIC</th>
+                                        <th>Lokasi</th>
+                                        <th>Keterangan</th>
                                         <th>Status</th>
+                                        <th>Opname|By</th>
+                                        <th>Verify|By</th>
                                         <th class="th-description text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -370,7 +414,10 @@
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }
+            },
+            "order": [
+                [ 1, "asc" ]
+            ]
         });
         $('#datatables12').DataTable({
             "pagingType": "full_numbers",
@@ -382,7 +429,10 @@
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }
+            },
+            "order": [
+                [ 1, "asc" ]
+            ]
         });
         $('#datatables13').DataTable({
             "pagingType": "full_numbers",
@@ -394,7 +444,10 @@
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }
+            },
+            "order": [
+                [ 1, "asc" ]
+            ]
         });
 
         $('#opname').on('show.bs.modal', function(event) {
@@ -486,5 +539,20 @@
                 document.getElementById("note").required = true;
             }
         }
+
+        $('.image-popup-no-margins').magnificPopup({
+            type: 'image',
+            closeOnContentClick: true,
+            closeBtnInside: false,
+            fixedContentPos: true,
+            mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+            image: {
+                verticalFit: true
+            },
+            zoom: {
+                enabled: true,
+                duration: 300 // don't foget to change the duration also in CSS
+            }
+	    });
     });
 </script>

@@ -73,7 +73,7 @@
                             </table>
                         </div>
                         <div class="tab-pane" id="messages">
-                        <table id="datatables2" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="datatables2" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="disabled-sorting"></th>

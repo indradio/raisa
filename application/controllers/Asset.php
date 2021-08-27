@@ -144,6 +144,7 @@ class Asset extends CI_Controller
             $this->load->library('upload', $config);
 
             if ($this->upload->do_upload('foto')) {
+
                 $data = [
                     'id' => $this->input->post('id'),
                     'asset_foto' => $this->upload->data('file_name'),
