@@ -38,12 +38,23 @@
                                     foreach ($perjalanan as $p) :
                                         $this->db->where('inisial', $p['pic_perjalanan']);
                                         $pic = $this->db->get('karyawan')->row_array();
+                                        if (empty($pic['ewallet_1'])){
+                                            $ewallet1 = '';
+                                        }else{
+                                            $ewallet1 = $pic['ewallet_1'];
+                                        }
+                                        if (empty($pic['ewallet_2'])){
+                                            $ewallet2 = '';
+                                        }else{
+                                            $ewallet2 = $pic['ewallet_2'];
+                                        }
+
                                         if ( $p['kasbon_status']=='REQUEST'){
-                                            echo '<tr data-toggle="modal" data-target="#kasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $pic['ewallet_1'].'" data-ewallet2="'. $pic['ewallet_2'].'" data-total="'. $p['total'].'" data-kasbon="'. $p['kasbon'].'">';
+                                            echo '<tr data-toggle="modal" data-target="#kasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $ewallet1 .'" data-ewallet2="'. $ewallet2.'" data-total="'. $p['total'].'" data-kasbon="'. $p['kasbon'].'">';
                                         }elseif ( $p['kasbon_status']=='OUTSTANDING'){
                                             echo '<tr class="table-danger" data-toggle="modal" data-target="#detailKasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet="'. $p['kasbon_ewallet'].'" data-total="'. number_format($p['total'], 0, ',', '.').'" data-kasbon_out="'. number_format($p['kasbon_out'], 0, ',', '.').'"data-kasbon_in="'. number_format($p['kasbon_in'], 0, ',', '.').'"data-kasbon="'. number_format($p['kasbon'], 0, ',', '.').'"data-kasbon_by="'. $p['kasbon_by'].' at '.date("d-m-Y H:i", strtotime($p['kasbon_at'])).'">';
                                         } else {
-                                            echo '<tr data-toggle="modal" data-target="#detailKasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $pic['ewallet_1'].'" data-ewallet2="'. $pic['ewallet_2'].'" data-total="'. number_format($p['total'], 0, ',', '.').'" data-kasbon_out="'. number_format($p['kasbon_out'], 0, ',', '.').'"data-kasbon_in="'. number_format($p['kasbon_in'], 0, ',', '.').'"data-kasbon="'. number_format($p['kasbon'], 0, ',', '.').'"data-kasbon_by="'. $p['kasbon_by'].' at '.date("d-m-Y H:i", strtotime($p['kasbon_at'])).'">';
+                                            echo '<tr data-toggle="modal" data-target="#detailKasbon" data-id="'. $p['id'].'" data-phone="'. $pic['phone'].'" data-nama="'. $pic['nama'].'" data-ewallet1="'. $ewallet1 .'" data-ewallet2="'. $ewallet2.'" data-total="'. number_format($p['total'], 0, ',', '.').'" data-kasbon_out="'. number_format($p['kasbon_out'], 0, ',', '.').'"data-kasbon_in="'. number_format($p['kasbon_in'], 0, ',', '.').'"data-kasbon="'. number_format($p['kasbon'], 0, ',', '.').'"data-kasbon_by="'. $p['kasbon_by'].' at '.date("d-m-Y H:i", strtotime($p['kasbon_at'])).'">';
                                         }?>
                                         <td><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></td>
                                         <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
