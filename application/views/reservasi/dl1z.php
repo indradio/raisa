@@ -188,7 +188,7 @@
                                                         <td>Insentif Pagi</br><small>Berangkat < 05:00</small> </td> <td><?= number_format($reservasi_temp['insentif_pagi'], 0, ',', '.'); ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Makan Pagi <small>(TAPP)</br>Berangkat < 07:00</small> </td> <td><?= number_format($reservasi_temp['um_pagi'], 0, ',', '.'); ?></td>
+                                                        <td>Makan Pagi <small>(TAPP)</br>Berangkat < 06:00</small> </td> <td><?= number_format($reservasi_temp['um_pagi'], 0, ',', '.'); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Makan Siang</td>

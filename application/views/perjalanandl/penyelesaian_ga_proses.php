@@ -166,7 +166,7 @@
                                                         <td><a href="#" class="btn btn-fill btn-sm btn-info disabled">AUTO</a></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Makan Pagi <small>(TAPP)</br>Berangkat < 07:00</small> </td> <td><?= number_format($perjalanan['um_pagi'], 0, ',', '.'); ?></td>
+                                                        <td>Makan Pagi <small>(TAPP)</br>Berangkat < 06:00</small> </td> <td><?= number_format($perjalanan['um_pagi'], 0, ',', '.'); ?></td>
                                                         <td><a href="#" class="btn btn-fill btn-sm btn-info disabled">AUTO</a></td>
                                                     </tr>
                                                     <tr>
