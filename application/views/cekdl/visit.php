@@ -20,22 +20,24 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Waktu Kunjungan</th>
                                         <th>Nama</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
                                         <th>PIC yg dituju</th>
-                                        <th>Waktu Kunjungan</th>
+                                        <th>Sertifikat</th>
                                         <th class="disabled-sorting">Actions</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                    <th>ID</th>
+                                        <th>ID</th>
+                                        <th>Waktu Kunjungan</th>
                                         <th>Nama</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
                                         <th>PIC yg dituju</th>
-                                        <th>Waktu Kunjungan</th>
+                                        <th>Sertifikat</th>
                                         <th>Actions</th>
                                     </tr>
                                 </tfoot>
@@ -43,13 +45,14 @@
                                     <?php
                                     foreach ($visit as $v) : ?>
                                             <td><?= $v['id']; ?></td>
+                                            <td><?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?></td>
                                             <td><?= $v['nama']; ?></td>
                                             <td><?= $v['perusahaan']; ?></td>
                                             <td><?= $v['keperluan']; ?></td>
                                             <td><?= $v['pic']; ?></td>
-                                            <td><?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?></td>
+                                            <td><?= $v['sertifikat']; ?></td>
                                             <td>
-                                                <a href="#" class="btn btn-round btn-success" data-toggle="modal" data-target="#cekVisit" 
+                                                <a href="#" class="btn btn-sm btn-round btn-success" data-toggle="modal" data-target="#cekVisit" 
                                                 data-id="<?= $v['id']; ?>"
                                                 data-kunjungan="<?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?>"
                                                 data-nama="<?= $v['nama']; ?>"
@@ -63,7 +66,9 @@
                                                 data-point4="<?= $v['point4']; ?>"
                                                 data-point5="<?= $v['point5']; ?>"
                                                 data-point6="<?= $v['point6']; ?>"
+                                                data-sertifikat="<?= $v['sertifikat']; ?>"
                                                 >Proses</a>
+                                                <a href="<?= base_url('visit/batal/').$v['id']; ?>" class="btn btn-sm btn-round btn-danger">Batalkan</a>
                                             </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -202,6 +207,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            <label class="col-md-10 col-form-label">Sertifikat yang akan ditunjukan</label>
+                            <div class="col-md-2">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control disabled" id="sertifikat" name="sertifikat">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <label class="col-md-4 col-form-label">PIC</label>
                             <div class="col-md-7">
                                 <div class="form-group has-default">
@@ -296,6 +309,7 @@
         var point4 = button.data('point4') 
         var point5 = button.data('point5') 
         var point6 = button.data('point6') 
+        var sertifikat = button.data('sertifikat') 
         var modal = $(this)
         modal.find('.modal-body input[name="id"]').val(id)
         modal.find('.modal-body input[name="kunjungan"]').val(kunjungan)
@@ -310,6 +324,7 @@
         modal.find('.modal-body input[name="point4"]').val(point4)
         modal.find('.modal-body input[name="point5"]').val(point5)
         modal.find('.modal-body input[name="point6"]').val(point6)
+        modal.find('.modal-body input[name="sertifikat"]').val(sertifikat)
       
         });
     })

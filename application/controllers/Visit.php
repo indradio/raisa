@@ -55,39 +55,21 @@ class Visit extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('visit');
 
-        if ($this->input->post('pic') != 'WH') {
-            $pic = $this->db->get_where('karyawan', ['inisial' => $this->input->post('pic')])->row_array();
-            $postData = array(
-                'deviceid' => 'ed59bffb-7ffd-4ac2-b039-b4725fdd4010',
-                'number' => $pic['phone'],
-                'message' => "*TAMU KAMU SUDAH TIBA DI WINTEQ*" .
-                    "\r\n \r\nNama: *" . $this->input->post('nama') . "*" .
-                    "\r\nPerusahaan : *" . $this->input->post('perusahaan') . "*" .
-                    "\r\nKeperluan : *" . $this->input->post('keperluan') . "*" .
-                    "\r\nHasil Permeriksaan" .
-                    "\r\nSuhu Tubuh: *" . $this->input->post('suhu') . "°C*" .
-                    "\r\nHasil : *DI" . $this->input->post('hasil') . "*" .
-                    "\r\n \r\nTetap jaga kesehatan kamu ya!"
-            );
-
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, 'https://ws.premiumfast.net/api/v1/message/send');
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            $headers = array();
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer 4495c8929e574477a9167352d529969cded0eb310cd936ecafa011dc48f2921b';
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($ch);
-        }
-
         $this->session->set_flashdata('message', 'terimakasih');
+        redirect('visit/guest');
+    }
+
+    public function batal($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->db->set('hasil', 'DIBATALKAN');
+        $this->db->set('catatan', 'TIDAK ADA KUNJUNGAN');
+        $this->db->set('check_by', $this->session->userdata('inisial'));
+        $this->db->set('check_at', date("Y-m-d H:i:s"));
+        $this->db->set('status', '0');
+        $this->db->where('id', $id);
+        $this->db->update('visit');
+
         redirect('visit/guest');
     }
 }
