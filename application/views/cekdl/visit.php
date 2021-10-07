@@ -45,12 +45,17 @@
                                     <?php
                                     foreach ($visit as $v) : ?>
                                             <td><?= $v['id']; ?></td>
-                                            <td><?= date('d M H:i', strtotime($v['waktu_kunjungan'])); ?></td>
+                                            <td><?= date('d M Y H:i', strtotime($v['waktu_kunjungan'])); ?></td>
                                             <td><?= $v['nama']; ?></td>
                                             <td><?= $v['perusahaan']; ?></td>
                                             <td><?= $v['keperluan']; ?></td>
                                             <td><?= $v['pic']; ?></td>
-                                            <td><?= $v['sertifikat']; ?></td>
+                                            <?php if ($v['sertifikat']=='ANTIGEN'){
+                                                echo '<td>'.$v['sertifikat'].' - '.date('d M Y', strtotime($v['antigen_at'])).'</td>';
+                                            }else{
+                                                echo '<td>'.$v['sertifikat'].'</td>';
+                                            }
+                                            ?>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-round btn-success" data-toggle="modal" data-target="#cekVisit" 
                                                 data-id="<?= $v['id']; ?>"
