@@ -18,6 +18,7 @@
                                     <tr>
                                         <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
+                                        <th>Dokumen</th>
                                         <th>Warga Negara</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
@@ -41,6 +42,7 @@
                                     <tr>
                                         <th>Rencana Kunjungan</th>
                                         <th>Nama</th>
+                                        <th>Dokumen</th>
                                         <th>Warga Negara</th>
                                         <th>Perusahaan</th>
                                         <th>Keperluan</th>
@@ -72,6 +74,12 @@
                                         ?>
                                             <td><?= date('Y-m-d H:i', strtotime($v['waktu_kunjungan'])); ?></td>
                                             <td><?= $v['nama']; ?></td>
+                                            <?php if ($v['sertifikat']=='ANTIGEN'){
+                                                echo '<td>'.$v['sertifikat'].' - '.date('d M Y', strtotime($v['antigen_at'])).'</td>';
+                                            }else{
+                                                echo '<td>'.$v['sertifikat'].'</td>';
+                                            }
+                                            ?>
                                             <td><?= $v['warganegara'].' - '.$v['negara']; ?></td>
                                             <td><?= $v['perusahaan']; ?></td>
                                             <td><?= $v['keperluan']; ?></td>
@@ -88,14 +96,21 @@
                                                 <td>-</td>
                                                 <td>-</td>
                                                 <td>-</td>
-                                                <td>Belum Berkunjung</td>
-                                            <?php }else{ ?>
+                                                <td>-</td>
+                                            <?php }elseif ($v['status']==2){ ?>
                                                 <td><?= $v['suhu']; ?></td>
                                                 <td>DI<?= $v['hasil']; ?></td>
                                                 <td><?= $v['check_by']; ?></td>
                                                 <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
                                                 <td><?= $v['kategori']; ?></td>
-                                                <td>Sedang/Sudah Berkunjung</td>
+                                                <td>Selesai</td>
+                                            <?php }else{ ?>
+                                                <td>-</td>
+                                                <td><?= $v['hasil']; ?></td>
+                                                <td><?= $v['check_by']; ?></td>
+                                                <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
+                                                <td>-</td>
+                                                <td>Dibatalkan</td>
                                             <?php } ?>
                                             </tr>
                                         <?php endforeach; ?>

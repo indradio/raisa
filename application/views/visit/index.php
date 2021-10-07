@@ -89,12 +89,18 @@
                                                 <td>-</td>
                                                 <td>-</td>
                                                 <td>Belum Berkunjung</td>
-                                            <?php }else{ ?>
+                                            <?php }elseif ($v['status']==2){ ?>
                                                 <td><?= $v['suhu']; ?></td>
                                                 <td>DI<?= $v['hasil']; ?></td>
                                                 <td><?= $v['check_by']; ?></td>
                                                 <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
                                                 <td>Sedang/Sudah Berkunjung</td>
+                                            <?php }else{ ?>
+                                                <td>-</td>
+                                                <td><?= $v['hasil']; ?></td>
+                                                <td><?= $v['check_by']; ?></td>
+                                                <td><?= date('d M H:i', strtotime($v['check_at'])); ?></td>
+                                                <td>Tidak jadi Berkunjung</td>
                                             <?php } ?>
                                             </tr>
                                         <?php endforeach; ?>
