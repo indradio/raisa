@@ -10,14 +10,6 @@ class Hr extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         
         $this->load->model("Karyawan_model");
-
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('date', date('Y-m-d'));
-        $complete = $this->db->get('kesehatan')->row_array();
-
-        if (empty($complete)){
-            redirect('dashboard/sehat');
-        }
     }
 
     public function karyawan()
