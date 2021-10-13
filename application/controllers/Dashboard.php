@@ -272,14 +272,6 @@ class Dashboard extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $this->notifications();
 
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('date', date('Y-m-d'));
-        $complete = $this->db->get('kesehatan')->row_array();
-
-        if (empty($complete)){
-            redirect('dashboard/sehat');
-        }
-
         // List Kendaraan
         $this->db->where('is_active', '1');
         $this->db->where('id !=', '1');

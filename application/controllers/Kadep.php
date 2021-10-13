@@ -8,14 +8,6 @@ class Kadep extends CI_Controller
         parent::__construct();
         is_logged_in();
         date_default_timezone_set('asia/jakarta');
-
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('date', date('Y-m-d'));
-        $complete = $this->db->get('kesehatan')->row_array();
-
-        if (empty($complete)){
-            redirect('dashboard/sehat');
-        }
     }
 
     public function index()
