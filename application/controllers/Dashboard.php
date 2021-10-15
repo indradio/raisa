@@ -272,6 +272,12 @@ class Dashboard extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $this->notifications();
 
+        $complete = $this->db->get_where('survei_ga', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if (empty($complete)){
+            redirect('dashboard/survei');
+        }
+
         // List Kendaraan
         $this->db->where('is_active', '1');
         $this->db->where('id !=', '1');
@@ -360,6 +366,53 @@ class Dashboard extends CI_Controller
         }else{
             redirect('dashboard');
         }
+    }
+
+    public function survei()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $complete = $this->db->get_where('survei_ga', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if (empty($complete)){
+            $data['sidemenu'] = 'Dashboard';
+            $data['sidesubmenu'] = '';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('dashboard/survei', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('dashboard');
+        }
+    }
+
+    public function submit_survei()
+    {
+                $data = [
+                    'npk' => $this->session->userdata('npk'),
+                    'nama' => $this->session->userdata('nama'),
+                    'nama' => $this->session->userdata('nama'),
+                    'p1' => $this->input->post('pertanyaan1'),
+                    'p2' => $this->input->post('pertanyaan2'),
+                    'p3' => $this->input->post('pertanyaan3'),
+                    'p4' => $this->input->post('pertanyaan4'),
+                    'p5' => $this->input->post('pertanyaan5'),
+                    'p6' => $this->input->post('pertanyaan6'),
+                    'p7' => $this->input->post('pertanyaan7'),
+                    'p8' => $this->input->post('pertanyaan8'),
+                    'p9' => $this->input->post('pertanyaan9'),
+                    'p10' => $this->input->post('pertanyaan10'),
+                    'kritik' => $this->input->post('kritik'),
+                    'saran' => $this->input->post('saran'),
+                    'sect_id' => $this->session->userdata('sect_id'),
+                    'dept_id' => $this->session->userdata('dept_id'),
+                    'div_id' => $this->session->userdata('div_id')
+                ];
+                $this->db->insert('survei_ga', $data);
+    
+            redirect('dashboard/survei');
+        
     }
 
 }
