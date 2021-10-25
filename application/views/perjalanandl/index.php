@@ -302,7 +302,8 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                                  $this->db->limit(50);
+                                                  $this->db->limit(100);
+                                                  $this->db->order_by('tglberangkat', 'desc');
                                                   $this->db->where('status' , '9');
                                     $perjalanan = $this->db->get_where('perjalanan', ['npk' => $this->session->userdata('npk')])->result_array();
                                     foreach ($perjalanan as $row) : ?>
