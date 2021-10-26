@@ -3,14 +3,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-info alert-with-icon" data-notify="container">
+                <div class="alert alert-danger alert-with-icon" data-notify="container">
                     <i class="material-icons" data-notify="icon">notifications</i>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <i class="material-icons">close</i>
                     </button>
-                    <span data-notify="message"><strong>UPDATE nomor GO-PAY Admin!</strong></span>
-                    </br>Untuk pengembalian kasbon ke akaun GO-PAY sekarang ke nomor <strong>081311010378 a/n Dwi Septianingrum</strong>
-                    </br>Jangan sampai salah transfer ya!
+                    <span data-notify="message"><strong>PENTING! PASTIKAN SEMUA DATA PERJALANAN SUDAH BENAR</strong></span>
+                    </br>Periksa kembali apakah data perjalanan anda telah sesuai seperti <strong> Waktu Keberangkatan dan Kembali, Peserta, Kilometer, Jenis Perjalanan, Tunjangan Perjalanan, dll</strong>
+                    </br>Jika ada hal yang perlu direvisi segera hubungi admin (dio)
+                    </br><strong>RESIKO ATAS BIAYA YANG TERJADI SETELAH PENYELESAIAN DI KLAIM ADALAH SEPENUHNYA TANGGUNG JAWAB PESERTA PERJALANAN</strong>
                 </div>
             </div>
         </div>
