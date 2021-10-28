@@ -272,7 +272,7 @@ class Dashboard extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $this->notifications();
 
-        $complete = $this->db->get_where('survei_ga', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $complete = $this->db->get_where('survei_payment', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         if (empty($complete)){
             redirect('dashboard/survei');
@@ -368,22 +368,42 @@ class Dashboard extends CI_Controller
         }
     }
 
-    public function survei()
+    public function survei($param=null)
     {
-        date_default_timezone_set('asia/jakarta');
-        $complete = $this->db->get_where('survei_ga', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        if ($param=='submit')
+        {
+            $jawaban = array(
+                $this->input->post('a1'),$this->input->post('a2'),$this->input->post('a3'),$this->input->post('a4'),$this->input->post('a5'),$this->input->post('a6'),$this->input->post('lainnya')
+            );
+            $jawaban = array_filter($jawaban);
+            // $data = implode("::", $result);
+    
+            $data = [
+                'npk' => $this->session->userdata('npk'),
+                'nama' => $this->session->userdata('nama'),
+                'a1' => $this->input->post('a1'),
+                'a2' => $this->input->post('a2'),
+                'a3' => $this->input->post('a3'),
+                'a4' => $this->input->post('a4'),
+                'a5' => $this->input->post('a5'),
+                'a6' => $this->input->post('a6'),
+                'jawaban' => implode(', ', $jawaban),
+                'create_at' => date('Y-m-d H:i:s')
+            ];
+            $this->db->insert('survei_payment', $data);
 
-        if (empty($complete)){
+            redirect('dashboard');
+        }else{
+       
             $data['sidemenu'] = 'Dashboard';
             $data['sidesubmenu'] = '';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('dashboard/survei', $data);
+            $this->load->view('dashboard/survei_payment', $data);
             $this->load->view('templates/footer');
-        }else{
-            redirect('dashboard');
+
         }
     }
 
