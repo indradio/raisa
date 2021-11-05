@@ -221,11 +221,11 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] JANGAN LUPA CHECK IN & CHECK OUT PEDULI LINDUNGI*" .
+                            'message' => "*[INFORMASI] JANGAN LUPA SCAN PEDULI LINDUNGI*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nSejalan dengan semangat Astra Otoparts untuk mencegah penyebaran covid-19 di lingkungan perusahaan." .
-                            "\r\n \r\nAkan segera diberlakukan check in dan check out untuk masuk area Winteq baik karyawan maupun tamu menggunakan aplikasi PeduliLindungi (sebelumnya masih percobaan)." .
-                            "\r\n \r\nSegera unduh aplikasi PeduliLindungi atau bisa menggunakannya didalam aplikasi Tokopedia, Shopee, Gojek, Grab, dll." .
+                            "\r\n \r\nAkan segera diberlakukan *check in dan check out* untuk masuk area Winteq baik karyawan maupun tamu menggunakan aplikasi *PeduliLindungi* (sebelumnya masih percobaan)." .
+                            "\r\n \r\nSegera unduh aplikasi *PeduliLindungi* atau bisa menggunakannya didalam aplikasi *Tokopedia, Shopee, Gojek, Grab, dll*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\nHormat Kami," .
                             "\r\nTIM GUGUS TUGAS" .
