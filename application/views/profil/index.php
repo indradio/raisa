@@ -109,66 +109,55 @@
                             <div class="card-icon">
                                 <i class="material-icons">perm_identity</i>
                             </div>
-                            <h4 class="card-title">Data Diri</h4>
+                            <h4 class="card-title">Dompet Digital</h4>
                         </div>
                         <div class="card-body">
                             <form>
-                                    <?php 
-                                    if (substr($karyawan['ewallet_1'], 0, 2)=='GO'){
-                                        $gopay = substr($karyawan['ewallet_1'], 9);
-                                    }elseif(substr($karyawan['ewallet_2'], 0, 2)=='GO'){
-                                        $gopay = substr($karyawan['ewallet_2'], 9);
-                                    }elseif(substr($karyawan['ewallet_1'], 0, 3)=='DAN' or substr($karyawan['ewallet_1'], 0, 3)=='OVO'){
-                                        $gopay ="";
-                                    }else{
-                                        $gopay = $karyawan['ewallet_1'];
-                                    }
-
-                                    if (substr($karyawan['ewallet_1'], 0, 4)=='DANA'){
-                                        $dana = substr($karyawan['ewallet_1'], 7);
-                                    }elseif(substr($karyawan['ewallet_2'], 0, 4)=='DANA'){
-                                        $dana = substr($karyawan['ewallet_2'], 7);
-                                    }elseif(substr($karyawan['ewallet_2'], 0, 2)=='GO' or substr($karyawan['ewallet_2'], 0, 3)=='OVO'){
-                                        $dana = "";
-                                    }else{
-                                        $dana = $karyawan['ewallet_2'];
-                                    }
-
-                                    if (substr($karyawan['ewallet_1'], 0, 3)=='OVO'){
-                                        $ovo = substr($karyawan['ewallet_1'], 6);
-                                    }elseif(substr($karyawan['ewallet_2'], 0, 3)=='OVO'){
-                                        $ovo = substr($karyawan['ewallet_2'], 6);
-                                    }else{
-                                        $ovo = "";
-                                    }
-                                    ?>
                                 <div class="row">
-                                    <div class="col-md-6 mt-2">
+                                <div class="col-md-12 mt-2">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">GO-PAY</label>
+                                            <label class="bmd-label-floating">ASTRAPAY</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" value="<?= $gopay; ?>" disabled>
+                                                <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="GOPAY" data-rek="<?= $gopay; ?>"><i class="material-icons">edit</i></a>
+                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="ASTRAPAY" data-rek="<?= $karyawan['ewallet_3']; ?>"><i class="material-icons">edit</i></a>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <?php if ($karyawan['ewallet_utama']=='GO-PAY'){
+                                            <?php if ($karyawan['ewallet_utama']=='ASTRAPAY'){
                                                 echo '<a href="#" class="btn btn-sm btn-info disabled" role="button" aria-disabled="false">Utama</a>';
                                             }else{
-                                                echo '<a href="'.base_url('profil/ewallet_utama/GO-PAY'). '" class="btn btn-sm btn-warning" role="button" aria-disabled="false">Jadikan Utama</a>';
+                                                echo '<a href="'.base_url('profil/ewallet_utama/ASTRAPAY'). '" class="btn btn-sm btn-warning" role="button" aria-disabled="false">Jadikan Utama</a>';
                                             } ?>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mt-2">
+                                    <div class="col-md-12 mt-2">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">GOPAY</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" value="<?= $karyawan['ewallet_1']; ?>" disabled>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="GOPAY" data-rek="<?= $karyawan['ewallet_1']; ?>"><i class="material-icons">edit</i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <?php if ($karyawan['ewallet_utama']=='GOPAY'){
+                                                echo '<a href="#" class="btn btn-sm btn-info disabled" role="button" aria-disabled="false">Utama</a>';
+                                            }else{
+                                                echo '<a href="'.base_url('profil/ewallet_utama/GOPAY'). '" class="btn btn-sm btn-warning" role="button" aria-disabled="false">Jadikan Utama</a>';
+                                            } ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">DANA</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" value="<?= $dana; ?>" disabled>
+                                                <input type="text" class="form-control" value="<?= $karyawan['ewallet_2']; ?>" disabled>
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="DANA" data-rek="<?= $dana; ?>"><i class="material-icons">edit</i></a>
+                                                        <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet" data-ewallet="DANA" data-rek="<?= $karyawan['ewallet_2']; ?>"><i class="material-icons">edit</i></a>
                                                     </span>
                                                 </div>
                                             </div>
@@ -180,60 +169,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Fist Name</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Last Name</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Adress</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">City</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Country</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Postal Code</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea class="form-control" rows="5"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-rose pull-right">Update Profile</button> -->
                                 <div class="clearfix"></div>
                             </form>
                         </div>

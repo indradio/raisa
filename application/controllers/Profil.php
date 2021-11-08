@@ -93,6 +93,7 @@ class Profil extends CI_Controller
         if ($this->input->post('ewallet')=='GOPAY')
         {
             $this->db->set('ewallet_1', $this->input->post('rek'));
+            $this->db->set('ewallet_utama', 'GOPAY');
             $this->db->where('npk', $this->session->userdata('npk'));
             $this->db->update('karyawan');
 
@@ -100,6 +101,15 @@ class Profil extends CI_Controller
         }elseif ($this->input->post('ewallet')=='DANA')
         {
             $this->db->set('ewallet_2', $this->input->post('rek'));
+            $this->db->set('ewallet_utama', 'DANA');
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->update('karyawan');
+
+            redirect('profil');
+        }elseif ($this->input->post('ewallet')=='ASTRAPAY')
+        {
+            $this->db->set('ewallet_3', $this->input->post('rek'));
+            $this->db->set('ewallet_utama', 'ASTRAPAY');
             $this->db->where('npk', $this->session->userdata('npk'));
             $this->db->update('karyawan');
 

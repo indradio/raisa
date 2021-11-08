@@ -149,7 +149,35 @@
       <!-- end row -->
       <!-- END OUTSTANDING JAM KERJA -->
     <?php } ?>
-  
+    <?php if (empty($karyawan['ewallet_3'])){ ?>
+    <div class="row">
+      <div class="col-md-4 mt-2">
+      <div class="card">
+            <div class="card-header card-header-icon card-header-info">
+              <div class="card-icon">
+                <i class="material-icons">account_balance_wallet</i>
+              </div>
+              <h4 class="card-title">ASTRAPAY
+                <small> - Dompet Digital</small>
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                  <label class="bmd-label-floating">NO HP</label>
+                  <div class="input-group">
+                      <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">
+                              <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktivasi</a>
+                          </span>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <?php }; ?>
     <div class="row">
                   <?php foreach ($kendaraan as $rowCars) : ?>
                     <div class="col-lg-2 col-md-4 col-sm-6 mt-0 mb-0">
@@ -739,25 +767,37 @@
   </div>
 </div>
 
-<!-- Add Claim Medical Modal -->
-<div class="modal fade" id="hapusClaim" tabindex="-1" role="dialog" aria-labelledby="hapusClaimLabel" aria-hidden="true">
+<!-- Aktivasi ASTRAPAY Modal -->
+<div class="modal fade" id="updateEwallet" tabindex="-1" role="dialog" aria-labelledby="#updateEwalletTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Kamu yakin mau menghapus ini?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-info text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">ASTRAPAY</h4>
+          </div>
+        </div>
+        <form class="form" method="post" action="<?= base_url('profil/update_ewallet'); ?>">
+          <div class="modal-body">
+            <input type="hidden" class="form-control" name="ewallet" id="ewallet" value="ASTRAPAY"/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Nomor Handphone*</label>
+                        <input type="text" class="form-control" name="rek" id="rek" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-right">
+              <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                <button type="submit" class="btn btn-success">AKTIVASI</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <form class="form" method="post" action="<?= base_url('dashboard/medical/delete'); ?>">
-        <div class="modal-body">
-          <input type="hidden" class="form-control" id="id" name="id">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
-          <button type="submit" class="btn btn-danger">YA, HAPUS!</button>
-        </div>
-      </form>
     </div>
   </div>
 </div>
