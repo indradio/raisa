@@ -302,11 +302,6 @@ class Layanan extends CI_Controller
                             "\r\nSegera Download dan Daftar akun ASTRAPAY-mu sekarang!" .
                             "\r\n \r\nMulai *10 November 2021* untuk Gol4 dan Gol4up diutamakan untuk menggunakan *ASTRAPAY* Sebagai dompet digital." .
                             "\r\n \r\nAktifkan ASTRAPAY di RAISA dengan mendaftarkan nomor ASTRAPAY-mu dan jadikan sebagai ewallet UTAMA." .
-                            "\r\n \r\nKamu bisa melihat kode referral kamu dengan cara sebagai berikut:" .
-                            "\r\n1. Login ke akun AstraPay kam" .
-                            "\r\n2. Pilih icon setting di pojok kanan halaman awal aplikasi" .
-                            "\r\n3. Pilih menu “Kode Referral”" .
-                            "\r\n4. Kamu akan melihat Kode Referral yang kamu miliki. Kamu bisa klik “Share” untuk membagikan Kode Referral milikmu ke temanmu dan ajak temanmu untuk install aplikasi AstraPay dari link yang kamu kirimkan." .
                             "\r\n \r\n_Informasi lebik lengkap klik : https://www.astrapay.com/_"
                         ],
                     ]
