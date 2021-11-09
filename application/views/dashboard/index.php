@@ -168,7 +168,7 @@
                       <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
                       <div class="input-group-prepend">
                           <span class="input-group-text">
-                              <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktivasi</a>
+                              <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktifkan</a>
                           </span>
                       </div>
                   </div>
@@ -793,7 +793,7 @@
             </div>
             <div class="modal-footer justify-content-right">
               <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
-                <button type="submit" class="btn btn-success">AKTIVASI</button>
+                <button type="submit" class="btn btn-success">AKTIFKAN</button>
             </div>
           </div>
         </form>
