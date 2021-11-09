@@ -12,6 +12,35 @@
         </div>
       </div> -->
     <!-- End Banner -->
+    <?php if (empty($karyawan['ewallet_3'])){ ?>
+    <div class="row">
+      <div class="col-md-4 mt-2">
+      <div class="card">
+            <div class="card-header card-header-icon card-header-info">
+              <div class="card-icon">
+                <i class="material-icons">account_balance_wallet</i>
+              </div>
+              <h4 class="card-title">ASTRAPAY
+                <small> - Dompet Digital</small>
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                  <label class="bmd-label-floating">NO HP</label>
+                  <div class="input-group">
+                      <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">
+                              <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktifkan</a>
+                          </span>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <?php }; ?>
     <div class="row">
       <?php
       date_default_timezone_set('asia/jakarta');
@@ -149,35 +178,7 @@
       <!-- end row -->
       <!-- END OUTSTANDING JAM KERJA -->
     <?php } ?>
-    <?php if (empty($karyawan['ewallet_3'])){ ?>
-    <div class="row">
-      <div class="col-md-4 mt-2">
-      <div class="card">
-            <div class="card-header card-header-icon card-header-info">
-              <div class="card-icon">
-                <i class="material-icons">account_balance_wallet</i>
-              </div>
-              <h4 class="card-title">ASTRAPAY
-                <small> - Dompet Digital</small>
-              </h4>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                  <label class="bmd-label-floating">NO HP</label>
-                  <div class="input-group">
-                      <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
-                      <div class="input-group-prepend">
-                          <span class="input-group-text">
-                              <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktifkan</a>
-                          </span>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-      </div>
-    </div>
-    <?php }; ?>
+    
     <div class="row">
                   <?php foreach ($kendaraan as $rowCars) : ?>
                     <div class="col-lg-2 col-md-4 col-sm-6 mt-0 mb-0">
