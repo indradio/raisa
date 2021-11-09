@@ -300,7 +300,7 @@ class Layanan extends CI_Controller
                             'message' => "📢*PEMBAYARAN PERJALANAN DINAS VIA ASTRAPAY*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nSegera Download dan Daftar akun ASTRAPAY-mu sekarang!" .
-                            "\r\n \r\nMulai *10 November 2021* untuk Gol4 dan Gol4up diutamakan untuk menggunakan *ASTRAPAY* Sebagai dompet digital." .
+                            "\r\nMulai *10 November 2021* untuk Gol 4 dan Gol 4up diutamakan untuk menggunakan *ASTRAPAY* Sebagai dompet digital di RAISA." .
                             "\r\n \r\nAktifkan ASTRAPAY di RAISA dengan mendaftarkan nomor ASTRAPAY-mu dan jadikan sebagai ewallet UTAMA." .
                             "\r\n \r\n_Informasi lebik lengkap klik : https://www.astrapay.com/_"
                         ],
