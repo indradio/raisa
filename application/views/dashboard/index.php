@@ -1,6 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
+      <!-- 1. Notification -->
       <!-- <div class="row">
         <div class="col-md-12">
           <div class="alert alert-default" role="alert">
@@ -11,7 +12,9 @@
           </div>
         </div>
       </div> -->
-    <!-- End Banner -->
+    <!-- End Notification -->
+
+    <!-- 1.1 Temp Dompet ASTRAPAY -->
     <?php if (empty($karyawan['ewallet_3'])){ ?>
     <div class="row">
       <div class="col-md-4 mt-2">
@@ -41,6 +44,8 @@
       </div>
     </div>
     <?php }; ?>
+
+    <!-- 2. Banner -->
     <div class="row">
       <?php
       date_default_timezone_set('asia/jakarta');
@@ -87,98 +92,8 @@
       } ?>
     </div>
     <!-- end banner -->
-    <!-- 16:9 aspect ratio -->
-    <!-- <div class="embed-responsive embed-responsive-16by9">
-      <iframe src="https://experience.arcgis.com/experience/57237ebe9c5b4b1caa1b93e79c920338"></iframe>
-      </div>
-    </br> -->
-    <?php if ($this->session->userdata('contract') == 'Direct Labor') { ?>
-      <!-- START OUTSTANDING JAM KERJA -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">assignment</i>
-              </div>
-              <?php
-              $tahun = date('Y');
-              $bulan = date('m');
-              ?>
-              <h4 class="card-title">Laporan Jam Kerja</h4>
-            </div>
-            <div class="card-body">
-              <div class="toolbar">
-                <!-- <a href="<?= base_url('jamkerja/tanggal/' . date('Y-m-d')); ?>" class="btn btn-facebook" role="button" aria-disabled="false">Laporkan Jam Kerja</a> -->
-              </div>
-              <div id="calendarJamkerja"></div>
-
-              <!-- <div class="material-datatables">
-                <div class="table-responsive">
-                  <table id="dt-status" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                    <thead>
-                      <tr>
-                        <?php
-                        $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-                        for ($i = 1; $i < $tanggal + 1; $i++) {
-                          echo '<th>' . date('D, d', strtotime($tahun . '-' . $bulan . '-' . $i)) . '</th>';
-                        } ?>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      for ($i = 1; $i < $tanggal + 1; $i++) {
-                        echo '<td>';
-                        $this->db->where('npk', $this->session->userdata('npk'));
-                        $this->db->where('year(tglmulai)', $tahun);
-                        $this->db->where('month(tglmulai)', $bulan);
-                        $this->db->where('day(tglmulai)', $i);
-                        $this->db->where('status >', 0);
-                        $jamkerja = $this->db->get_where('jamkerja')->row_array();
-
-                        if (date('D', strtotime($tahun . '-' . $bulan . '-' . $i)) == 'Sat' or date('D', strtotime($tahun . '-' . $bulan . '-' . $i)) == 'Sun') {
-                          echo '<i class="fa fa-circle text-default"></i>';
-                        } else {
-                          if (!empty($jamkerja)) {
-                            if ($jamkerja['status'] == 9) {
-                              echo '<i class="fa fa-circle text-success"></i>';
-                            } elseif ($jamkerja['status'] == 1) {
-                              echo '<i class="fa fa-circle text-warning"></i>';
-                            } elseif ($jamkerja['status'] == 2) {
-                              echo '<i class="fa fa-circle text-info"></i>';
-                            }
-                          } else {
-                            echo '<i class="fa fa-circle text-danger"></i>';
-                          }
-                        }
-                      } ?>
-                      </tr>
-                    </tbody>
-
-                  </table>
-                </div>
-              </div> -->
-            </div>
-            <div class="card-footer">
-              <!-- <div class="row">
-                <div class="col-md-12">
-                  <i class="fa fa-circle text-success"></i> Laporan Jam Kerja Selesai. | <i class="fa fa-circle text-warning"></i> Laporan Jam Kerja sedang diproses oleh RDA/Koordinator.
-                  | <i class="fa fa-circle text-info"></i> Laporan Jam Kerja Sedang diproses oleh PPIC.
-                  | <i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan).
-                  | <i class="fa fa-circle text-default"></i> Hari libur akhir pekan.
-                </div>
-              </div> -->
-            </div>
-            <!-- end content-->
-          </div>
-          <!--  end card  -->
-        </div>
-        <!-- end col-md-12 -->
-      </div>
-      <!-- end row -->
-      <!-- END OUTSTANDING JAM KERJA -->
-    <?php } ?>
     
+    <!-- 3. Perjalanan -->
     <div class="row">
                   <?php foreach ($kendaraan as $rowCars) : ?>
                     <div class="col-lg-2 col-md-4 col-sm-6 mt-0 mb-0">
@@ -200,18 +115,16 @@
                               <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
                               </div>
-                              <h4 class="card-title"><?= ($p['status'] == 2)? 'ON DUTY' : 'READY';?></h4>
-                           
+                                <?php if ($p['status'] == 1) { ?>
+                                  <h4 class="card-title"><a href="#" class="btn btn-sm btn-info">READY</a></h4>
+                                <?php } elseif ($p['status'] == 2) { ?>
+                                  <h4 class="card-title"><a href="#" class="btn btn-sm btn-danger">ON DUTY</a></h4>
+                                <?php }; ?>
                           </div>
                           <div class="card-body text-center">
                               <div class="img-container">
                                   <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($p['status'] == 2)? 'onduty' : 'ready';?>.png" alt="...">
                               </div>
-                              <?php if ($p['status'] == 1) { ?>
-                                  <span class="btn btn-round btn-sm btn-info">STARTING ENGINE</span>
-                                <?php } elseif ($p['status'] == 2) { ?>
-                                  <span class="btn btn-round btn-sm btn-danger">On Duty</span>
-                                <?php }; ?>
                               </div>
                               <div class="card-footer" style="display:block;">
                                 <div class="bootstrap-tagsinput info-badge">
@@ -285,25 +198,24 @@
                               <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
                               </div>
-                              <h4 class="card-title">RESERVED</h4>
+                              <?php if ($r['status'] == 1) { ?>
+                                <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | <?= $r['atasan1']; ?></a></h4>
+                                <?php } elseif ($r['status'] == 2) { ?>
+                                  <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | <?= $r['atasan2']; ?></a></h4>
+                                  <?php } elseif ($r['status'] == 3) { ?>
+                                    <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | FIN</a></h4>
+                                    <?php } elseif ($r['status'] == 4) { ?>
+                                      <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | EJU</a></h4>
+                                      <?php } elseif ($r['status'] == 5) { ?>
+                                        <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | HR</a></h4>
+                                        <?php } elseif ($r['status'] == 6) { ?>
+                                          <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | GA</a></h4>
+                                    <?php }; ?>
                             </div>
                           <div class="card-body text-center">
                               <div class="img-container">
                                   <img src="<?= base_url(); ?>assets/img/kendaraan/reserved.png" alt="...">
                               </div>
-                              <?php if ($r['status'] == 1) { ?>
-                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $r['atasan1']; ?></span>
-                                    <?php } elseif ($r['status'] == 2) { ?>
-                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $r['atasan2']; ?></span>
-                                    <?php } elseif ($r['status'] == 3) { ?>
-                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | ???</span>
-                                    <?php } elseif ($r['status'] == 4) { ?>
-                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | EJU</span>
-                                    <?php } elseif ($r['status'] == 5) { ?>
-                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | HR</span>
-                                    <?php } elseif ($r['status'] == 6) { ?>
-                                      <span class="btn btn-round btn-sm btn-warning">Waiting Approval | GA</span>
-                                    <?php }; ?>
                           </div>
                           <div class="card-footer" style="display:block;">
                             <div class="bootstrap-tagsinput info-badge">
@@ -368,13 +280,12 @@
                               <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
                               </div>
-                              <h4 class="card-title">AVAILABLE</h4>
+                              <h4 class="card-title"><a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-sm btn-success">AVAILABLE</a></h4>
                             </div>
                             <div class="card-body text-center">
                                 <div class="img-container">
                                   <img src="<?= base_url(); ?>assets/img/kendaraan/available.png" alt="...">
                                 </div>
-                                  <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-round btn-sm btn-success">Pesan Sekarang!</a>
                             </div>
                                 <div class="card-footer" style="display:block;">
                                 <i class="fa fa-car text-success"> </i> <?= $rowCars['nopol']; ?> - <small><?= $rowCars['nama']; ?></small>
@@ -419,19 +330,18 @@
                               <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
                               </div>
-                              <h4 class="card-title"><?= ($pn['status'] == 2)? 'ON DUTY' : 'READY';?></h4>
+                                <?php if ($pn['status'] == 1) { ?>
+                                  <h4 class="card-title"><a href="#" class="btn btn-sm btn-info">READY</a></h4>
+                                <?php } elseif ($pn['status'] == 2) { ?>
+                                  <h4 class="card-title"><a href="#" class="btn btn-sm btn-danger">ON DUTY</a></h4>
+                                <?php }; ?>
                            
                           </div>
                           <div class="card-body text-center">
                               <div class="img-container">
                                   <img src="<?= base_url(); ?>assets/img/kendaraan/<?= ($pn['status'] == 2)? 'onduty' : 'ready';?>.png" alt="...">
                               </div>
-                              <?php if ($pn['status'] == 1) { ?>
-                                  <span class="btn btn-round btn-sm btn-info">STARTING ENGINE</span>
-                                <?php } elseif ($pn['status'] == 2) { ?>
-                                  <span class="btn btn-round btn-sm btn-danger">On Duty</span>
-                                <?php }; ?>
-                              </div>
+                            </div>
                               <div class="card-footer" style="display:block;">
                                 <div class="bootstrap-tagsinput info-badge">
                                     <?php foreach ($peserta as $row) : ?>
@@ -497,18 +407,18 @@
                                     <img src="<?= base_url(); ?>assets/img/kendaraan/reserved.png" alt="...">
                                 </div>
                                 <?php if ($rn['status'] == 1) { ?>
-                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $rn['atasan1']; ?></span>
-                                      <?php } elseif ($rn['status'] == 2) { ?>
-                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | <?= $rn['atasan2']; ?></span>
-                                      <?php } elseif ($rn['status'] == 3) { ?>
-                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | ???</span>
-                                      <?php } elseif ($rn['status'] == 4) { ?>
-                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | EJU</span>
+                                <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | <?= $rn['atasan1']; ?></a></h4>
+                                <?php } elseif ($rn['status'] == 2) { ?>
+                                  <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | <?= $rn['atasan2']; ?></a></h4>
+                                  <?php } elseif ($rn['status'] == 3) { ?>
+                                    <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | FIN</a></h4>
+                                    <?php } elseif ($rn['status'] == 4) { ?>
+                                      <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | EJU</a></h4>
                                       <?php } elseif ($rn['status'] == 5) { ?>
-                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | HR</span>
-                                      <?php } elseif ($rn['status'] == 6) { ?>
-                                        <span class="btn btn-round btn-sm btn-warning">Waiting Approval | GA</span>
-                                      <?php }; ?>
+                                        <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | HR</a></h4>
+                                        <?php } elseif ($rn['status'] == 6) { ?>
+                                          <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | GA</a></h4>
+                                    <?php }; ?>
                               </div>
                               <div class="card-footer" style="display:block;">
                                 <div class="bootstrap-tagsinput info-badge">
@@ -553,7 +463,9 @@
                           </div>
                           <?php endforeach; ?>
     </div>
+    <!-- end Perjalanan -->
 
+    <!-- 3. Sales Report -->
     <?php if ($this->session->userdata('posisi_id') == 1 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 3) { ?>
       <div class="row">
         <div class="col-md-12">
@@ -647,10 +559,13 @@
       </div>
       <!-- end row -->
     <?php }; ?>
+    <!-- end Sales Report -->
+
   </div>
   <!-- end container-fluid -->
 </div>
 <!-- end content -->
+
 <!-- Modal Detail -->
 <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="detailTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -768,6 +683,29 @@
   </div>
 </div>
 
+<!-- Clear Claim Medical Modal -->
+<div class="modal fade" id="emptyClaim" tabindex="-1" role="dialog" aria-labelledby="emptyClaimLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Kamu yakin mau menghapus semua data ini?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form" method="post" action="<?= base_url('dashboard/medical/empty'); ?>">
+        <div class="modal-body">
+          <input type="hidden" class="form-control" id="id" name="id">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+          <button type="submit" class="btn btn-danger">YA, HAPUS!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Aktivasi ASTRAPAY Modal -->
 <div class="modal fade" id="updateEwallet" tabindex="-1" role="dialog" aria-labelledby="#updateEwalletTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -803,29 +741,7 @@
   </div>
 </div>
 
-<!-- Add Claim Medical Modal -->
-<div class="modal fade" id="emptyClaim" tabindex="-1" role="dialog" aria-labelledby="emptyClaimLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Kamu yakin mau menghapus semua data ini?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form class="form" method="post" action="<?= base_url('dashboard/medical/empty'); ?>">
-        <div class="modal-body">
-          <input type="hidden" class="form-control" id="id" name="id">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
-          <button type="submit" class="btn btn-danger">YA, HAPUS!</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
+<!-- Javascript -->
 <script>
   $(document).ready(function() {
 

@@ -159,8 +159,8 @@ class Layanan extends CI_Controller
 
     public function broadcast()
     {
-        $data['sidemenu'] = 'Kehadiran';
-        $data['sidesubmenu'] = 'Data';
+        $data['sidemenu'] = 'Layanan';
+        $data['sidesubmenu'] = 'Broadcast';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
@@ -231,6 +231,83 @@ class Layanan extends CI_Controller
                             "\r\nTIM GUGUS TUGAS" .
                             "\r\nPT Astra Otoparts Tbk Divisi Winteq" .
                             "\r\n \r\n_#IngetPesanIbu dengan menjalankan 5M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, Menjaga Jarak, Menjauhi kerumunan dan Membatasi mobilisasi dan interaksi._"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+        endforeach;
+        redirect('layanan/broadcast');
+    }
+
+    public function broadcast_send_up($parameter)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($parameter == 'A') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'A');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'B') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'B');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'C') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'C');
+            // $this->db->where('npk', '0282');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'D') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'D');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'E') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'E');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'F') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'F');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'Z') {
+            $this->db->where('npk', '0282');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        }
+
+        foreach ($karyawan as $k) :
+                //Notifikasi ke USER
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $k['phone'],
+                            'message' => "📢*PEMBAYARAN PERJALANAN DINAS VIA ASTRAPAY*" .
+                            "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
+                            "\r\nSegera Download dan Daftar akun ASTRAPAY-mu sekarang!" .
+                            "\r\n \r\nMulai *10 November 2021* untuk Gol4 dan Gol4up diutamakan untuk menggunakan *ASTRAPAY* Sebagai dompet digital." .
+                            "\r\n \r\nAktifkan ASTRAPAY di RAISA dengan mendaftarkan nomor ASTRAPAY-mu dan jadikan sebagai ewallet UTAMA." .
+                            "\r\n \r\nKamu bisa melihat kode referral kamu dengan cara sebagai berikut:" .
+                            "\r\n1. Login ke akun AstraPay kam" .
+                            "\r\n2. Pilih icon setting di pojok kanan halaman awal aplikasi" .
+                            "\r\n3. Pilih menu “Kode Referral”" .
+                            "\r\n4. Kamu akan melihat Kode Referral yang kamu miliki. Kamu bisa klik “Share” untuk membagikan Kode Referral milikmu ke temanmu dan ajak temanmu untuk install aplikasi AstraPay dari link yang kamu kirimkan." .
+                            "\r\n \r\n_Informasi lebik lengkap klik : https://www.astrapay.com/_"
                         ],
                     ]
                 );
