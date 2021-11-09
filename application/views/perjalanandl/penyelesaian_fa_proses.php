@@ -119,15 +119,20 @@
                                                             $tunjPeserta = number_format($a['total'], 0, ',', '.'); ?>
                                                             <td><?= $tunjPeserta; ?></td>
                                                         <?php } ?>
-                                                        <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta > 0){ 
-                                                            if ($peserta['ewallet_utama']=='GO-PAY'){ 
-                                                                $ewallet1 = 'GO-PAY - '.$peserta['ewallet_1'];
-                                                                $ewallet2 = 'DANA - '.$peserta['ewallet_2'];
-                                                            } else {
-                                                                $ewallet1 = 'DANA - '.$peserta['ewallet_2'];
-                                                                $ewallet2 = 'GO-PAY - '.$peserta['ewallet_1'];
-                                                            } ?>
-                                                            <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-tunj="<?= $tunjPeserta; ?>" data-ewallet1="<?= $ewallet1; ?>" data-ewallet2="<?= $ewallet2; ?>">BAYAR SEKARANG!</a></td>
+                                                        <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta > 0){
+                                                            if ($peserta['ewallet_utama']=='GOPAY'){ 
+                                                                $ewallet = 'GOPAY - '.$peserta['ewallet_1'];
+                                                            } elseif ($peserta['ewallet_utama']=='DANA'){ 
+                                                                $ewallet = 'DANA - '.$peserta['ewallet_2'];
+                                                            } elseif ($peserta['ewallet_utama']=='ASTRAPAY'){ 
+                                                                $ewallet = 'ASTRAPAY - '.$peserta['ewallet_3'];
+                                                            } 
+                                                            
+                                                                $astrapay = 'ASTRAPAY - '.$peserta['ewallet_3'];
+                                                                $gopay = 'GOPAY - '.$peserta['ewallet_1'];
+                                                                $dana = 'DANA - '.$peserta['ewallet_2'];
+                                                            ?>
+                                                            <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-tunj="<?= $tunjPeserta; ?>" data-ewallet="<?= $ewallet; ?>" data-astrapay="<?= $astrapay; ?>" data-gopay="<?= $gopay; ?>" data-dana="<?= $dana; ?>">BAYAR SEKARANG!</a></td>
                                                         <?php 
                                                         }elseif ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta == 0){ 
                                                             echo '<td><a href="#" class="btn btn-sm btn-fill btn-default disabled">LUNAS*</a></td>';
@@ -275,32 +280,55 @@
                     <input type="hidden" class="form-control" id="id" name="id">
                     <input type="hidden" class="form-control" id="npk" name="npk">
                     <div class="row">
-                        <label class="col-md-5 col-form-label">Tunjangan</label>
+                        <label class="col-md-4 col-form-label">Tunjangan</label>
                         <div class="col-md-6">
                             <div class="form-group has-default">
                                 <input type="text" class="form-control bg-white ml-4" id="tunj" name="tunj" readonly/>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <label class="col-md-4 col-form-label">Dompet</label>
+                        <div class="col-md-6">
+                            <div class="form-group has-default">
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="utama" checked required/>
+                                <input type="text" class="form-control bg-white ml-4" id="no_ewallet" name="no_ewallet" readonly/>
+                            </div>
+                        </div>
+                    </div>
                     <p>
+                    <div class="progress" style="width: 100%">
+                        <div class="progress-bar progress-bar-info" role="progressbar" style="width: 100%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
+                    </div>
+                    <h6>
                     <div class="row">
-                        <label class="col-md-5 col-form-label">Utama</label>
-                        <div class="col-md-6">
+                        <label class="col-md-2 col-form-label">ASTRAPAY</label>
+                        <div class="col-md-8">
                             <div class="form-group has-default">
-                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="primary" checked required/>
-                                <input type="text" class="form-control bg-white ml-4" id="ewallet1" name="ewallet1" readonly/>
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="astrapay" required/>
+                                <input type="text" class="form-control bg-white ml-4" id="astrapay" name="astrapay" readonly/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-md-5 col-form-label">Cadangan</label>
-                        <div class="col-md-6">
+                        <label class="col-md-2 col-form-label">GOPAY </br><small>(GOL1-3)</small></label>
+                        <div class="col-md-8">
                             <div class="form-group has-default">
-                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="secondary" required/>
-                                <input type="text" class="form-control bg-white ml-4" id="ewallet2" name="ewallet2" readonly/>
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="gopay" required/>
+                                <input type="text" class="form-control bg-white ml-4" id="gopay" name="gopay" readonly/>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <label class="col-md-2 col-form-label">DANA</label>
+                        <div class="col-md-8">
+                            <div class="form-group has-default">
+                                <input class="form-check-input d-inline-block ml-1" type="radio" name="ewallet" value="dana" required/>
+                                <input type="text" class="form-control bg-white ml-4" id="dana" name="dana" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                                </h6>
                 </div>
                 <div class="modal-footer">
                     <div class="row">
@@ -376,14 +404,18 @@
             var id = button.data('id')
             var npk = button.data('npk')
             var tunj = button.data('tunj')
-            var ewallet1 = button.data('ewallet1')
-            var ewallet2 = button.data('ewallet2')
+            var ewallet = button.data('ewallet')
+            var astrapay = button.data('astrapay')
+            var gopay = button.data('gopay')
+            var dana = button.data('dana')
             var modal = $(this)
             modal.find('.modal-body input[name="id"]').val(id)
             modal.find('.modal-body input[name="npk"]').val(npk)
             modal.find('.modal-body input[name="tunj"]').val(tunj)
-            modal.find('.modal-body input[name="ewallet1"]').val(ewallet1)
-            modal.find('.modal-body input[name="ewallet2"]').val(ewallet2)
+            modal.find('.modal-body input[name="no_ewallet"]').val(ewallet)
+            modal.find('.modal-body input[name="astrapay"]').val(astrapay)
+            modal.find('.modal-body input[name="gopay"]').val(gopay)
+            modal.find('.modal-body input[name="dana"]').val(dana)
         })
 
         $('#revisiPenyelesaian').on('show.bs.modal', function (event) {

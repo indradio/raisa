@@ -786,7 +786,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="bmd-label-floating">Nomor Handphone*</label>
+                        <label class="bmd-label-floating">Nomor HP*</label>
                         <input type="text" class="form-control" name="rek" id="rek" value=""/>
                     </div>
                 </div>

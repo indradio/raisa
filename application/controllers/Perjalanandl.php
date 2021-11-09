@@ -1868,10 +1868,15 @@ class Perjalanandl extends CI_Controller
             $tb = $p_peserta['total'];
         }
         
-        if ($this->input->post('ewallet')=="secondary"){
-            $ewallet = $this->input->post('ewallet2');
-        } else {
-            $ewallet = $this->input->post('ewallet1');
+        $peserta = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
+        if ($this->input->post('ewallet')=="utama"){
+            $ewallet = $this->input->post('no_ewallet');
+        } elseif ($this->input->post('ewallet')=="astrapay"){
+            $ewallet = $this->input->post('astrapay');
+        } elseif ($this->input->post('ewallet')=="gopay"){
+            $ewallet = $this->input->post('gopay');
+        } elseif ($this->input->post('ewallet')=="dana"){
+            $ewallet = $this->input->post('dana');
         }
 
         $this->db->set('perjalanan', $bp);
