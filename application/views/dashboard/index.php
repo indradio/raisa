@@ -400,12 +400,6 @@
                                 <div class="card-icon">
                                   <i class="material-icons">emoji_transportation</i>
                                 </div>
-                                <h4 class="card-title">RESERVED</h4>
-                              </div>
-                              <div class="card-body text-center">
-                                <div class="img-container">
-                                    <img src="<?= base_url(); ?>assets/img/kendaraan/reserved.png" alt="...">
-                                </div>
                                 <?php if ($rn['status'] == 1) { ?>
                                 <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | <?= $rn['atasan1']; ?></a></h4>
                                 <?php } elseif ($rn['status'] == 2) { ?>
@@ -419,6 +413,11 @@
                                         <?php } elseif ($rn['status'] == 6) { ?>
                                           <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | GA</a></h4>
                                     <?php }; ?>
+                              </div>
+                              <div class="card-body text-center">
+                                <div class="img-container">
+                                    <img src="<?= base_url(); ?>assets/img/kendaraan/reserved.png" alt="...">
+                                </div>
                               </div>
                               <div class="card-footer" style="display:block;">
                                 <div class="bootstrap-tagsinput info-badge">
