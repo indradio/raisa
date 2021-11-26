@@ -17,9 +17,10 @@
               
             </div>
             <div class="material-datatables">
-              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+              <table id="dt-data" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Tanggal</th>
                     <th>Mobil</th>
                     <th>Tujuan</th>
@@ -32,6 +33,7 @@
                 </thead>
                 <tfoot>
                   <tr>
+                  <th>ID</th>
                   <th>Tanggal</th>
                     <th>Mobil</th>
                     <th>Tujuan</th>
@@ -71,3 +73,29 @@
   <!-- end container-fluid -->
 </div>
 <!-- end content -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dt-data').DataTable( {
+            "pagingType": "full_numbers",
+            scrollX: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy',
+                {
+                    extend: 'excelHtml5',
+                    title: 'DATA OPNAME ASSET 2020',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    footer: true
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+    });
+</script>
