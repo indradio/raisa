@@ -45,7 +45,8 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($perjalanan as $row) : ?>
+                  <?php foreach ($perjalanan as $row) : 
+                    $total = $row['taksi']+$row['tol']+$row['parkir']?>
                     <tr>
                       <td><?= $row['id']; ?></td>
                       <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
@@ -55,7 +56,7 @@
                       <td><?= $row['taksi']; ?></td>
                       <td><?= $row['tol']; ?></td>
                       <td><?= $row['parkir']; ?></td>
-                      <td><?= $row['total']; ?></td>
+                      <td><?= $total; ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
