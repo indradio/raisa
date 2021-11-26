@@ -43,13 +43,7 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php 
-                  $queryPerjalanan = "SELECT *
-                  FROM `perjalanan`
-                  WHERE `tglberangkat` = CURRENT_DATE() 
-                  AND `status` = '9' ";
-                  $perjalanan = $this->db->query($queryPerjalanan)->result_array();
-                  foreach ($perjalanan as $row) : ?>
+                  <?php foreach ($perjalanan as $row) : ?>
                     <tr>
                       <td><?= $row['id']; ?></td>
                       <td><?= date('d M Y', strtotime($row['tglberangkat'])); ?></td>
