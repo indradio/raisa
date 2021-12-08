@@ -221,16 +221,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] JANGAN LUPA SCAN PEDULI LINDUNGI*" .
+                            'message' => "*[INFORMASI] PENGHAPUSAN LIBUR BERSAMA PERUSAHAAN*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nSejalan dengan semangat Astra Otoparts untuk mencegah penyebaran covid-19 di lingkungan perusahaan." .
-                            "\r\n \r\nAkan segera diberlakukan *check in dan check out* untuk masuk area Winteq baik karyawan maupun tamu menggunakan aplikasi *PeduliLindungi* (sebelumnya masih percobaan)." .
-                            "\r\n \r\nSegera unduh aplikasi *PeduliLindungi* atau bisa menggunakannya didalam aplikasi *Tokopedia, Shopee, Gojek, Grab, dll*." .
+                            "\r\nDengan mempertimbangkan loading pekerjaan sampai akhir tahun, bersama ini disampaikan tanggal 27 Desember 2021 yang semula ditetapkan sebagai Cuti Bersama Perusahaan pada Calender Of Event Revisi_4 dilakukan perubahan untuk *DIHAPUSKAN* dan menambah jatah Cuti Tahunan Karyawan, *sehingga tanggal 27 Desember berlaku sebagai Hari Kerja*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nTIM GUGUS TUGAS" .
-                            "\r\nPT Astra Otoparts Tbk Divisi Winteq" .
-                            "\r\n \r\n_#IngetPesanIbu dengan menjalankan 5M : Memakai MASKER, Mencuci Tangan dengan sabun/hand sanitizer, Menjaga Jarak, Menjauhi kerumunan dan Membatasi mobilisasi dan interaksi._"
+                            "\r\nHuman Capital"
                         ],
                     ]
                 );
