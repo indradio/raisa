@@ -484,11 +484,14 @@ class Perjalanan extends CI_Controller
 
         if (empty($params) and empty($id)){
             $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '6'])->result_array();
+                                 $this->db->where('tglberangkat', date('Y-m-d'));
+            $data['cancelled'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
             $this->load->view('perjalanan/reservasi_list', $data);
             $this->load->view('templates/footer');
+
         }elseif ($params=='id' and !empty($id)){
             $reservasi = $this->db->where('status', '6');
             $reservasi = $this->db->get_where('reservasi', ['id' => $id])->row_array();
@@ -510,6 +513,22 @@ class Perjalanan extends CI_Controller
             }else{
                 redirect('perjalanan/reservasi');
             }
+
+        }elseif ($params=='aktivated' and !empty($id)){
+            $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $id])->row_array();
+
+            if (empty($perjalanan)){
+                $this->db->set('jamberangkat', date('H:i:s'));
+                $this->db->set('catatan', '');
+                $this->db->set('status', '6');
+                $this->db->where('id', $id);
+                $this->db->update('reservasi');
+
+                redirect('perjalanan/reservasi/id/'.$id);
+            }else{
+                redirect('perjalanan/reservasi');
+            }
+
         }elseif ($params=='submit' and empty($id)){
             $id = $this->input->post('id');
             $reservasi = $this->db->where('status', '6');
