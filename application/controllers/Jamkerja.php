@@ -781,11 +781,13 @@ class Jamkerja extends CI_Controller
     {
             date_default_timezone_set('asia/jakarta');
             if($this->input->post('bulan')){
+                $data['tahun'] = $this->input->post('tahun');
                 $data['bulan'] = $this->input->post('bulan');
             }else{
+                $data['tahun'] = date('Y');
                 $data['bulan'] = date('m');
             }
-            $data['tahun'] = date('Y');
+            
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Status Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();

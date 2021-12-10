@@ -15,19 +15,28 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group has-default">
+                    <select class="selectpicker" name="tahun" id="tahun" data-style="select-with-transition" title="Pilih tahun" data-size="3" required>
+                      <?php for ($y = date('Y')-3; $y <= date('Y'); $y++) { ?>
+                          <option value="<?= $y; ?>" <?php echo ($tahun == $y) ? 'selected' : ''; ?>><?= $y; ?></option>
+                      <?php };?>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group has-default">
                     <select class="selectpicker" name="bulan" id="bulan" data-style="select-with-transition" title="Pilih Bulan" data-size="7" required>
-                      <option value="01">Januari</option>
-                      <option value="02">Februari</option>
-                      <option value="03">Maret</option>
-                      <option value="04">April</option>
-                      <option value="05">Mei</option>
-                      <option value="06">Juni</option>
-                      <option value="07">Juli</option>
-                      <option value="08">Agustus</option>
-                      <option value="09">September</option>
-                      <option value="10">Oktober</option>
-                      <option value="11">November</option>
-                      <option value="12">Desember</option>
+                      <option value="01"<?php echo ($bulan == '01') ? 'selected' : ''; ?>>Januari</option>
+                      <option value="02"<?php echo ($bulan == '02') ? 'selected' : ''; ?>>Februari</option>
+                      <option value="03"<?php echo ($bulan == '03') ? 'selected' : ''; ?>>Maret</option>
+                      <option value="04"<?php echo ($bulan == '04') ? 'selected' : ''; ?>>April</option>
+                      <option value="05"<?php echo ($bulan == '05') ? 'selected' : ''; ?>>Mei</option>
+                      <option value="06"<?php echo ($bulan == '06') ? 'selected' : ''; ?>>Juni</option>
+                      <option value="07"<?php echo ($bulan == '07') ? 'selected' : ''; ?>>Juli</option>
+                      <option value="08"<?php echo ($bulan == '08') ? 'selected' : ''; ?>>Agustus</option>
+                      <option value="09"<?php echo ($bulan == '09') ? 'selected' : ''; ?>>September</option>
+                      <option value="10"<?php echo ($bulan == '10') ? 'selected' : ''; ?>>Oktober</option>
+                      <option value="11"<?php echo ($bulan == '11') ? 'selected' : ''; ?>>November</option>
+                      <option value="12"<?php echo ($bulan == '12') ? 'selected' : ''; ?>>Desember</option>
                     </select>
                   </div>
                 </div>
@@ -270,7 +279,7 @@
                           <tr>
                             <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                             <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
-                            <td><?= $jamkerja['shift']; ?></td>
+                            <td></td>
                             <td><?= $k['nama']; ?></td>
                             <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
                             <td><?= $sect['nama']; ?></td>
