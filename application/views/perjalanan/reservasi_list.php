@@ -93,7 +93,7 @@
                         <div class="card-icon">
                             <i class="material-icons">emoji_transportation</i>
                         </div>
-                        <h4 class="card-title">Data Reservasi</h4>
+                        <h4 class="card-title">Aktifkan Reservasi</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
