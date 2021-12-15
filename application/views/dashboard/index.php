@@ -45,6 +45,29 @@
     </div>
     <?php }; ?>
 
+    
+    <!-- 1.2 Survey  -->
+    <div class="row">
+      <div class="col-md-4 mt-2">
+      <div class="card">
+            <div class="card-header card-header-icon card-header-info">
+              <div class="card-icon">
+                <i class="material-icons">account_balance_wallet</i>
+              </div>
+              <h4 class="card-title">CUTI
+                <small> - Segera Hadir</small>
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <h4 class="card-title"><b>Kalo ada fitur cuti di-raisa, apa sih yg jadi ekspektasi kamu?</b></h4>
+                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#surveyCuti">Kirim ide!</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
     <!-- 2. Banner -->
     <div class="row">
       <?php
@@ -732,6 +755,40 @@
             <div class="modal-footer justify-content-right">
               <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
                 <button type="submit" class="btn btn-success">AKTIFKAN</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Survei Cuti Modal -->
+<div class="modal fade" id="surveyCuti" tabindex="-1" role="dialog" aria-labelledby="#surveyCutiTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-info text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="material-icons">clear</i>
+            </button>
+            <h4 class="card-title">CUTI</h4>
+          </div>
+        </div>
+        <form class="form" method="post" action="<?= base_url('dashboard/survei/cuti'); ?>">
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Raisa cuti itu harusnya!</label>
+                        <textarea class="form-control has-success" id="ide" name="ide" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-right">
+              <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                <button type="submit" class="btn btn-success">SAMPAIKAN!</button>
             </div>
           </div>
         </form>

@@ -388,11 +388,23 @@ class Dashboard extends CI_Controller
                 'a5' => $this->input->post('a5'),
                 'a6' => $this->input->post('a6'),
                 'jawaban' => implode(', ', $jawaban),
-                'create_at' => date('Y-m-d H:i:s')
+                'created_at' => date('Y-m-d H:i:s')
             ];
             $this->db->insert('survei_payment', $data);
 
             redirect('dashboard');
+        }elseif ($param=='cuti')
+            {
+        
+                $data = [
+                    'npk' => $this->session->userdata('npk'),
+                    'nama' => $this->session->userdata('nama'),
+                    'ide' => $this->input->post('ide'),
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('survei_cuti', $data);
+    
+                redirect('dashboard');
         }else{
        
             $data['sidemenu'] = 'Dashboard';
