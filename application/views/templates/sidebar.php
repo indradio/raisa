@@ -105,8 +105,8 @@
                         <?php if ($m['menu'] == 'COVID-19') {
                           echo '<span class="badge badge-danger badge-sm">+</span>';
                         } ?>
-                        <?php if ($m['menu'] == 'Kehadiran') {
-                          echo '<span class="badge badge-success badge-sm">Baru</span>';
+                        <?php if ($m['menu'] == 'Cuti') {
+                          echo '<span class="badge badge-info badge-sm">Segera</span>';
                         } ?>
                         <b class="caret"></b>
                       </p>
@@ -121,8 +121,8 @@
                               <?php if ($m['menu'] == 'COVID-19') {
                                 echo '<span class="badge badge-danger badge-sm">+</span>';
                               } ?>
-                              <?php if ($m['menu'] == 'Kehadiran') {
-                                echo '<span class="badge badge-success badge-sm">Baru</span>';
+                              <?php if ($m['menu'] == 'Cuti') {
+                                echo '<span class="badge badge-info badge-sm">Segera</span>';
                               } ?>
                               <b class="caret"></b>
                             </p>
