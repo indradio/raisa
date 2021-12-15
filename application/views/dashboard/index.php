@@ -15,8 +15,8 @@
     <!-- End Notification -->
 
     <!-- 1.1 Temp Dompet ASTRAPAY -->
-    <?php if (empty($karyawan['ewallet_3'])){ ?>
     <div class="row">
+    <?php if (empty($karyawan['ewallet_3'])){ ?>
       <div class="col-md-4 mt-2">
       <div class="card">
             <div class="card-header card-header-icon card-header-info">
@@ -42,17 +42,17 @@
             </div>
           </div>
       </div>
-    </div>
+    
     <?php }; ?>
 
     
     <!-- 1.2 Survey  -->
-    <div class="row">
+    
       <div class="col-md-4 mt-2">
       <div class="card">
             <div class="card-header card-header-icon card-header-info">
               <div class="card-icon">
-                <i class="material-icons">account_balance_wallet</i>
+                <i class="material-icons">event_busy</i>
               </div>
               <h4 class="card-title">CUTI
                 <small> - Segera Hadir</small>
