@@ -48,7 +48,7 @@
     
     <!-- 1.2 Survey  -->
     
-      <div class="col-md-4 mt-2">
+      <!-- <div class="col-md-4 mt-2">
       <div class="card">
             <div class="card-header card-header-icon card-header-info">
               <div class="card-icon">
@@ -66,7 +66,7 @@
             </div>
           </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 2. Banner -->
     <div class="row">
