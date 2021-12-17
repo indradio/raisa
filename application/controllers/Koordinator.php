@@ -9,13 +9,13 @@ class Koordinator extends CI_Controller
         is_logged_in();
         date_default_timezone_set('asia/jakarta');
 
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('date', date('Y-m-d'));
-        $complete = $this->db->get('kesehatan')->row_array();
+        // $this->db->where('npk', $this->session->userdata('npk'));
+        // $this->db->where('date', date('Y-m-d'));
+        // $complete = $this->db->get('kesehatan')->row_array();
 
-        if (empty($complete)){
-            redirect('dashboard/sehat');
-        }
+        // if (empty($complete)){
+        //     redirect('dashboard/sehat');
+        // }
     }
 
     public function index()
