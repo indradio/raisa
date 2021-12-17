@@ -120,6 +120,7 @@
                                                             <td><?= $tunjPeserta; ?></td>
                                                         <?php } ?>
                                                         <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta > 0){
+                                                            
                                                             if ($peserta['ewallet_utama']=='GOPAY'){ 
                                                                 $ewallet = 'GOPAY - '.$peserta['ewallet_1'];
                                                             } elseif ($peserta['ewallet_utama']=='DANA'){ 

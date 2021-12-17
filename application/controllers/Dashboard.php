@@ -275,7 +275,7 @@ class Dashboard extends CI_Controller
         $complete = $this->db->get_where('survei_payment', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         if (empty($complete)){
-            redirect('dashboard/survei');
+            // redirect('dashboard/survei');
         }
 
         // List Kendaraan

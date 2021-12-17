@@ -1,0 +1,560 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+//load Guzzle Library
+require_once APPPATH.'third_party/guzzle/autoload.php';
+//load Spout Library
+require_once APPPATH.'third_party/spout/src/Spout/Autoloader/autoload.php';
+ 
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use Box\Spout\Reader\ReaderFactory;
+use Box\Spout\Common\Type;
+
+class Cuti extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        is_logged_in();
+
+        $this->load->model('Cuti_model');
+    }
+
+    public function index()
+    {
+        $data['sidemenu'] = 'Cuti';
+        $data['sidesubmenu'] = 'CutiKu';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        $this->db->select_sum('saldo');
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('status', 'AKTIF');
+        $query = $this->db->get('cuti_saldo');
+        $data['saldo_total'] = $query->row()->saldo;
+        
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('saldo >', 0);
+        $this->db->where('status', 'AKTIF');
+        $saldo = $this->db->get('cuti_saldo');
+        $data['saldo'] = $saldo->result_array();
+
+        $data['cuti'] = $this->db->get_where('cuti', ['npk' => $this->session->userdata('npk')])->result_array();
+        $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => '1'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->load->helper('string');
+        $this->load->helper('date');
+
+        $id = 'CT'.date('ym').random_string('alnum',3);
+        $cuti1 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl_cuti1'))));
+        $cuti2 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl_cuti2'))));
+        $day2 = date('D', strtotime($this->input->post('tgl_cuti2')));
+        
+        $daterange  = new DatePeriod($cuti1, new DateInterval('P1D'), $cuti2);
+        
+        //mendapatkan range antara dua tanggal dan di looping
+
+        $i   = 0;
+        $x   = 1;
+        $end = 1;
+
+        foreach($daterange as $date){
+            $daterange = $date->format("Y-m-d");
+            $datetime  = DateTime::createFromFormat('Y-m-d', $daterange);
+
+            //Convert tanggal untuk mendapatkan nama hari
+            $day         = $datetime->format('D');
+
+            //Check untuk menghitung yang bukan hari sabtu dan minggu
+            if($day!="Sun" && $day!="Sat") {
+                
+                $x += $end-$i;
+
+                $data = [
+                    'cuti_id' => $id,
+                    'tgl' => $daterange,
+                    'npk' => $this->session->userdata('npk'),
+                    'nama' => $this->session->userdata('nama'),
+                    'keterangan' => $this->input->post('keterangan'),
+                    'status' => '1'
+                ];
+                $this->db->insert('cuti_detail', $data);
+            }
+
+            $end++;
+            $i++;
+        }    
+
+        if($day2!="Sun" && $day2!="Sat") {
+                
+            $data = [
+                'cuti_id' => $id,
+                'tgl' => date('Y-m-d', strtotime($this->input->post('tgl_cuti2'))),
+                'npk' => $this->session->userdata('npk'),
+                'nama' => $this->session->userdata('nama'),
+                'keterangan' => $this->input->post('keterangan'),
+                'status' => '1'
+            ];
+            $this->db->insert('cuti_detail', $data);
+        }
+
+        $saldo = $this->db->get_where('cuti_saldo', ['id' => $this->input->post('kategori')])->row_array();
+        if ($saldo){
+            if ($saldo['saldo']<$x){
+
+                $this->db->where('cuti_id', $id);
+                $this->db->delete('cuti_detail');
+
+                redirect('/cuti');
+            }else{
+                $kategori = $saldo['kategori'];
+                $t = $saldo['saldo_digunakan'] + $x;
+                $sisa = $saldo['saldo_awal'] - $t;
+
+                $this->db->set('saldo_digunakan', $t);
+                $this->db->set('saldo', $sisa);
+                $this->db->where('id', $this->input->post('kategori'));
+                $this->db->update('cuti_saldo');
+
+                $this->db->set('kategori', $kategori);
+                $this->db->where('cuti_id', $id);
+                $this->db->update('cuti_detail');
+            }
+        }else{
+            $searchKategori = $this->db->get_where('cuti_kategori', ['cuti_id' => $this->input->post('kategori')])->row_array();
+            $kategori =  $searchKategori['kategori'];
+
+            $this->db->set('kategori', $kategori);
+            $this->db->where('cuti_id', $id);
+            $this->db->update('cuti_detail');
+        }
+
+        $data = [
+            'id' => $id,
+            'tgl' => date('Y-m-d H:i:s'),
+            'npk' => $this->session->userdata('npk'),
+            'nama' => $this->session->userdata('nama'),
+            'tgl_cuti1' => date('Y-m-d', strtotime($this->input->post('tgl_cuti1'))),
+            'tgl_cuti2' => date('Y-m-d', strtotime($this->input->post('tgl_cuti2'))),
+            'lama' => $x,
+            'kategori' => $kategori,
+            'keterangan' => $this->input->post('keterangan'),
+            'saldo_id' => $this->input->post('kategori'),
+            'atasan1' => $this->session->userdata('atasan1_inisial'),
+            'atasan2' => $this->session->userdata('atasan2_inisial'),
+            'sect_id' => $this->session->userdata('sect_id'),
+            'dept_id' => $this->session->userdata('dept_id'),
+            'div_id' => $this->session->userdata('div_id'),
+            'gol_id' => $this->session->userdata('gol_id'),
+            'posisi_id' => $this->session->userdata('posisi_id'),
+            'contract' => $this->session->userdata('contract'),
+            'status' => '1'
+        ];
+        $this->db->insert('cuti', $data);
+
+        //     $client = new \GuzzleHttp\Client();
+        //     $response = $client->post(
+        //         'https://region01.krmpesan.com/api/v2/message/send-text',
+        //         [
+        //             'headers' => [
+        //                 'Content-Type' => 'application/json',
+        //                 'Accept' => 'application/json',
+        //                 'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //             ],
+        //             'json' => [
+        //                 'phone' => '081311196988',
+        //                 'message' => "*NEW TICKET ".$data['menu']."*". 
+        //                 "\r\n \r\n No. Ticket : *" . $data['id'] . "*" .
+        //                 "\r\n Nama : *" . $data['nama'] . "*" .
+        //                 "\r\n Kasus : *" . $data['case'] . "*"
+        //             ],
+        //         ]
+        //     );
+        //     $body = $response->getBody();
+
+        $this->session->set_flashdata('message', 'openticket');
+        redirect('/cuti');
+    }
+
+    public function approval()
+    {
+        $data['sidemenu'] = 'Approval';
+        $data['sidesubmenu'] = 'Approval Cuti';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        
+        $queryCuti = "SELECT *
+        FROM `cuti`
+        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+        $data['cuti'] = $this->db->query($queryCuti)->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/approval', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function approve()
+    {
+        $id = $this->input->post('id');
+        $cuti = $this->db->get_where('cuti', ['id' => $id])->row_array();
+
+        if ($this->session->userdata('inisial') == $cuti['atasan1'])
+        {
+            $this->db->set('acc_atasan1', 'Disetujui oleh '.$this->session->userdata('inisial'));
+            $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
+            $this->db->set('status', '2');
+            $this->db->where('id', $id);
+            $this->db->update('cuti');
+
+            //Notifikasi ke ATASAN 2
+            if ($this->session->userdata('inisial') != $cuti['atasan2'])
+            {
+                $atasan2 = $this->db->get_where('karyawan', ['inisial' => $cuti['atasan2']])->row_array();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $atasan2['phone'],
+                            'message' => "*[NOTIF] PENGAJUAN CUTI*" .
+                            "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
+                            "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl_cuti1'])) . "*" .
+                            "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
+                            "\r\n \r\nCuti ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
+                            "\r\nHarap segera respon *Setujui/Batalkan*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/approval"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+            }
+        }
+
+        if ($this->session->userdata('inisial') == $cuti['atasan2'])
+        {
+            $this->db->set('acc_atasan2', 'Disetujui oleh '.$this->session->userdata('inisial'));
+            $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+            $this->db->set('status', '3');
+            $this->db->where('id', $id);
+            $this->db->update('cuti');
+
+            $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row_array();
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $admin_hr['phone'],
+                        'message' => "*[NOTIF] PENGAJUAN CUTI*" .
+                        "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
+                        "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl_cuti1'])) . "*" .
+                        "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
+                        "\r\n \r\nCuti ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
+                        "\r\nHarap segera respon *Setujui/Batalkan*".
+                        "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/hr_approval"
+                    ],
+                ]
+            );
+            $body = $response->getBody();
+        }
+
+        redirect('cuti/approval');
+
+    }
+
+    public function reject()
+    {
+        $id = $this->input->post('id');
+        $cuti = $this->db->get_where('cuti', ['id' => $id])->row_array();
+
+        $this->db->set('reject_by', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+        $this->db->set('reject_at', date('Y-m-d H:i:s'));
+        $this->db->set('reject_reason', $this->input->post('keterangan'));
+        $this->db->set('status', '0');
+        $this->db->set('reject_status', $cuti['status']);
+        $this->db->where('id', $id);
+        $this->db->update('cuti');
+
+        $this->db->set('status', '0');
+        $this->db->where('cuti_id', $id);
+        $this->db->update('cuti_detail');
+
+        //Notifikasi ke USER
+        $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*[NOTIF] PEMBATALAN CUTI*" .
+                    "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
+                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl_cuti1'])) . "*" .
+                    "\r\nLama : *" . $cuti['lama'] ." Hari* " .
+                    "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
+                    "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+              
+        redirect('cuti/approval');
+    }
+
+    public function hr_approval()
+    {
+        $data['sidemenu'] = 'HR Cuti';
+        $data['sidesubmenu'] = 'Approval Cuti';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        
+        $queryCuti = "SELECT * FROM `cuti` WHERE`status`= '3' ";
+        $data['cuti'] = $this->db->query($queryCuti)->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/hr/approval', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hr_approve()
+    {
+        $id = $this->input->post('id');
+        $cuti = $this->db->get_where('cuti', ['id' => $id])->row_array();
+
+        $this->db->set('acc_hr', 'Disetujui oleh '.$this->session->userdata('inisial'));
+        $this->db->set('tgl_hr', date('Y-m-d H:i:s'));
+        $this->db->set('status', '9');
+        $this->db->where('id', $id);
+        $this->db->update('cuti');
+
+        //Notifikasi ke USER
+        $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*[NOTIF] CUTI KAMU TELAH DISETUJUI*" .
+                    "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
+                    "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl_cuti1'])) . "*" .
+                    "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
+                    "\r\n \r\nCuti kamu telah disetujui.".
+                    "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+        
+    }
+
+    public function hr_reject()
+    {
+        $id = $this->input->post('id');
+        $cuti = $this->db->get_where('cuti', ['id' => $id])->row_array();
+
+        $this->db->set('reject_by', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+        $this->db->set('reject_at', date('Y-m-d H:i:s'));
+        $this->db->set('reject_reason', $this->input->post('keterangan'));
+        $this->db->set('status', '0');
+        $this->db->set('reject_status', $cuti['status']);
+        $this->db->where('id', $id);
+        $this->db->update('cuti');
+
+        $this->db->set('status', '0');
+        $this->db->where('cuti_id', $id);
+        $this->db->update('cuti_detail');
+
+        //Notifikasi ke USER
+        $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*[NOTIF] PEMBATALAN CUTI*" .
+                    "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
+                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl_cuti1'])) . "*" . 
+                    "\r\nLama : *" . $cuti['lama'] ." Hari* " .
+                    "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
+                    "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+              
+        redirect('cuti/hr_approval');
+    }
+
+    public function hr_saldo($params=null)
+    {
+        date_default_timezone_set('asia/jakarta');
+        
+        if (empty($params)){
+            $today = date('Y-m-d');
+            $querySaldo = "SELECT *
+                FROM `cuti_saldo`
+                WHERE `expired_at` < '{$today}' ";
+                $expired = $this->db->query($querySaldo)->result_array();
+            if ($expired){
+                $this->saldo_expired();
+            }
+
+            $data['sidemenu'] = 'HR Cuti';
+            $data['sidesubmenu'] = 'Saldo Cuti';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                                $this->db->where('is_active', '1');
+                                $this->db->where('status', '1');
+            $data['allkaryawan'] = $this->db->get('karyawan')->result_array();
+            $data['saldo'] = $this->db->get('cuti_saldo')->result_array();
+            $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => NULL])->result_array();
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('cuti/hr/saldo', $data);
+            $this->load->view('templates/footer');
+        }elseif ($params=='add') {
+
+            $this->load->helper('string');
+
+            $id = date('y').$this->input->post('karyawan').random_string('alnum',3);
+            $data = [
+                'id' => $id,
+                'npk' => $this->input->post('karyawan'),
+                'kategori' => $this->input->post('kategori'),
+                'saldo_awal' => $this->input->post('saldo'),
+                'saldo_digunakan' => '0',
+                'saldo' => $this->input->post('saldo'),
+                'expired_at' => date('Y-m-d', strtotime($this->input->post('expired'))),
+                'keterangan' => $this->input->post('keterangan'),
+                'created_by' => $this->session->userdata('inisial'),
+                'created_at' => date('Y-m-d'),
+                'status' => 'AKTIF'
+            ];
+            $this->db->insert('cuti_saldo', $data);
+
+            redirect('cuti/hr_saldo');
+        }elseif ($params='import') {
+                //  ketika button submit diklik
+            //  if ($this->input->post('submit', TRUE) == 'upload') {
+            $config['upload_path']      = './assets/temp_excel/'; //siapkan path untuk upload file
+            $config['allowed_types']    = 'xlsx|xls'; //siapkan format file
+            $config['file_name']        = 'import_' . time(); //rename file yang diupload
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('data')) {
+                $this->load->helper('string');
+
+                //fetch data upload
+                $file   = $this->upload->data();
+
+                $reader = ReaderEntityFactory::createXLSXReader(); //buat xlsx reader
+                $reader->open('./assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
+
+                //looping pembacaat sheet dalam file        
+                foreach ($reader->getSheetIterator() as $sheet) {
+                    $numRow = 1;
+
+                    //siapkan variabel array kosong untuk menampung variabel array data
+                    $save   = array();
+
+                    //looping pembacaan row dalam sheet
+                    foreach ($sheet->getRowIterator() as $row) {
+
+                        if ($numRow > 1) {
+                            //ambil cell
+                            $cells = $row->getCells();
+                            
+                            $id = date('y').$cells[0].random_string('alnum',3);
+
+                            $data = array(
+                                'id'                => $id,
+                                'npk'               => $cells[0],
+                                'kategori'          => $cells[1],
+                                'saldo_awal'        => $cells[2],
+                                'saldo_digunakan'   => 0,
+                                'saldo'             => $cells[2],
+                                'keterangan'        => $cells[3],
+                                'expired_at'        => $cells[4],
+                                'created_at'        => $this->session->userdata('inisial'),
+                                'created_by'        => date('Y-m-d'),
+                                'status'            => 'AKTIF'
+                            );
+
+                            //tambahkan array $data ke $save
+                            // array_push($save, $data);
+                            //simpan data ke database
+                            $this->db->insert('cuti_saldo', $data);
+                        }
+
+                        $numRow++;
+                    }
+                    //simpan data ke database all
+                    // $this->db->insert_batch('project', $save);
+
+                    //tutup spout reader
+                    $reader->close();
+
+                    //hapus file yang sudah diupload
+                    unlink('./assets/temp_excel/' . $file['file_name']);
+
+                    //tampilkan pesan success dan redirect ulang ke index controller import
+                    echo    '<script type="text/javascript">
+                            alert(\'Data berhasil disimpan\');
+                            window.location.replace("' . base_url() . '");
+                        </script>';
+                }
+            } else {
+                echo "Error :" . $this->upload->display_errors(); //tampilkan pesan error jika file gagal diupload
+            }
+        // }
+
+        redirect('cuti/hr_saldo');
+        }
+    }
+
+    public function saldo_expired()
+    {
+        $this->db->set('status', 'EXPIRED');
+        $this->db->where('expired_at <', date('Y-m-d'));
+        $this->db->update('cuti_saldo');
+    }
+
+}

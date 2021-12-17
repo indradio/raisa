@@ -54,7 +54,7 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <?= $this->session->flashdata('message'); ?>
-            <form class="form" method="post" action="<?= base_url('auth/backdoor'); ?>">
+            <form class="form" method="post" action="<?= base_url('auth/backdoor/login'); ?>">
               <div class="card card-login card-hidden">
                 <div class="card-header card-header-info text-center">
                   <h4 class="card-title">Login</h4>
