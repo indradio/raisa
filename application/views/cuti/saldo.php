@@ -69,7 +69,7 @@
                       <td><?= $row['saldo']; ?></td>
                       <td><?= $row['kategori']; ?></td>
                       <td><?= $row['keterangan']; ?></td>
-                      <td><?= date('d M Y', strtotime($row['expired_at'])); ?></td>
+                      <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
                       <td><?= $row['status']; ?></td>
                     </tr>
                   <?php endforeach; ?>

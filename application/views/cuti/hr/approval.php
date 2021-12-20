@@ -39,13 +39,13 @@
                     <tr onclick="#" data-toggle="modal" data-target="#approveCuti" 
                     data-id="<?= $row['id']; ?>" 
                     data-nama="<?= $row['nama']; ?>" 
-                    data-tglcuti="<?= date('d M Y', strtotime($row['tgl_cuti1'])).' - '.date('d M Y', strtotime($row['tgl_cuti2'])); ?>" 
+                    data-tglcuti="<?= date('d M Y', strtotime($row['tgl1'])).' - '.date('d M Y', strtotime($row['tgl2'])); ?>" 
                     data-lama="<?= $row['lama']; ?> Hari" 
                     data-kategori="<?= $row['kategori']; ?>" 
                     data-keterangan="<?= $row['keterangan']; ?>">
                         <td><?= $row['id']; ?></td>
                         <td><?= $row['nama']; ?></td>
-                        <td><?= date('d M Y', strtotime($row['tgl_cuti1'])); ?></td>
+                        <td><?= date('d M Y', strtotime($row['tgl1'])); ?></td>
                         <td><?= $row['lama']; ?></td>
                     </tr>
                   <?php endforeach; ?>

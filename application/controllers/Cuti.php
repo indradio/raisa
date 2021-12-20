@@ -53,9 +53,9 @@ class Cuti extends CI_Controller
         $this->load->helper('date');
 
         $id = 'CT'.date('ym').random_string('alnum',3);
-        $cuti1 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl_cuti1'))));
-        $cuti2 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl_cuti2'))));
-        $day2 = date('D', strtotime($this->input->post('tgl_cuti2')));
+        $cuti1 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl1'))));
+        $cuti2 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl2'))));
+        $day2 = date('D', strtotime($this->input->post('tgl2')));
         
         $daterange  = new DatePeriod($cuti1, new DateInterval('P1D'), $cuti2);
         
@@ -96,7 +96,7 @@ class Cuti extends CI_Controller
                 
             $data = [
                 'cuti_id' => $id,
-                'tgl' => date('Y-m-d', strtotime($this->input->post('tgl_cuti2'))),
+                'tgl' => date('Y-m-d', strtotime($this->input->post('tgl2'))),
                 'npk' => $this->session->userdata('npk'),
                 'nama' => $this->session->userdata('nama'),
                 'keterangan' => $this->input->post('keterangan'),
@@ -128,7 +128,7 @@ class Cuti extends CI_Controller
                 $this->db->update('cuti_detail');
             }
         }else{
-            $searchKategori = $this->db->get_where('cuti_kategori', ['cuti_id' => $this->input->post('kategori')])->row_array();
+            $searchKategori = $this->db->get_where('cuti_kategori', ['saldo_id' => $this->input->post('kategori')])->row_array();
             $kategori =  $searchKategori['kategori'];
 
             $this->db->set('kategori', $kategori);
@@ -138,11 +138,11 @@ class Cuti extends CI_Controller
 
         $data = [
             'id' => $id,
-            'tgl' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
             'npk' => $this->session->userdata('npk'),
             'nama' => $this->session->userdata('nama'),
-            'tgl_cuti1' => date('Y-m-d', strtotime($this->input->post('tgl_cuti1'))),
-            'tgl_cuti2' => date('Y-m-d', strtotime($this->input->post('tgl_cuti2'))),
+            'tgl1' => date('Y-m-d', strtotime($this->input->post('tgl1'))),
+            'tgl2' => date('Y-m-d', strtotime($this->input->post('tgl2'))),
             'lama' => $x,
             'kategori' => $kategori,
             'keterangan' => $this->input->post('keterangan'),
@@ -231,7 +231,7 @@ class Cuti extends CI_Controller
                             'phone' => $atasan2['phone'],
                             'message' => "*[NOTIF] PENGAJUAN CUTI*" .
                             "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
-                            "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl_cuti1'])) . "*" .
+                            "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
                             "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
                             "\r\n \r\nCuti ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
                             "\r\nHarap segera respon *Setujui/Batalkan*".
@@ -265,7 +265,7 @@ class Cuti extends CI_Controller
                         'phone' => $admin_hr['phone'],
                         'message' => "*[NOTIF] PENGAJUAN CUTI*" .
                         "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
-                        "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl_cuti1'])) . "*" .
+                        "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
                         "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
                         "\r\n \r\nCuti ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
                         "\r\nHarap segera respon *Setujui/Batalkan*".
@@ -312,7 +312,7 @@ class Cuti extends CI_Controller
                     'phone' => $user['phone'],
                     'message' => "*[NOTIF] PEMBATALAN CUTI*" .
                     "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
-                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl_cuti1'])) . "*" .
+                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl1'])) . "*" .
                     "\r\nLama : *" . $cuti['lama'] ." Hari* " .
                     "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
                     "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
@@ -366,7 +366,7 @@ class Cuti extends CI_Controller
                     'phone' => $user['phone'],
                     'message' => "*[NOTIF] CUTI KAMU TELAH DISETUJUI*" .
                     "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
-                    "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl_cuti1'])) . "*" .
+                    "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
                     "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
                     "\r\n \r\nCuti kamu telah disetujui.".
                     "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti"
@@ -409,7 +409,7 @@ class Cuti extends CI_Controller
                     'phone' => $user['phone'],
                     'message' => "*[NOTIF] PEMBATALAN CUTI*" .
                     "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
-                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl_cuti1'])) . "*" . 
+                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl1'])) . "*" . 
                     "\r\nLama : *" . $cuti['lama'] ." Hari* " .
                     "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
                     "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
@@ -429,7 +429,7 @@ class Cuti extends CI_Controller
             $today = date('Y-m-d');
             $querySaldo = "SELECT *
                 FROM `cuti_saldo`
-                WHERE `expired_at` < '{$today}' ";
+                WHERE `expired` < '{$today}' ";
                 $expired = $this->db->query($querySaldo)->result_array();
             if ($expired){
                 $this->saldo_expired();
@@ -441,6 +441,10 @@ class Cuti extends CI_Controller
                                 $this->db->where('is_active', '1');
                                 $this->db->where('status', '1');
             $data['allkaryawan'] = $this->db->get('karyawan')->result_array();
+            $this->db->select_sum('saldo');
+            $this->db->where('status', 'AKTIF');
+            $query = $this->db->get('cuti_saldo');
+            $data['saldo_total'] = $query->row()->saldo;
             $data['saldo'] = $this->db->get('cuti_saldo')->result_array();
             $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => NULL])->result_array();
     
@@ -452,7 +456,6 @@ class Cuti extends CI_Controller
         }elseif ($params=='add') {
 
             $this->load->helper('string');
-
             $id = date('y').$this->input->post('karyawan').random_string('alnum',3);
             $data = [
                 'id' => $id,
@@ -461,7 +464,7 @@ class Cuti extends CI_Controller
                 'saldo_awal' => $this->input->post('saldo'),
                 'saldo_digunakan' => '0',
                 'saldo' => $this->input->post('saldo'),
-                'expired_at' => date('Y-m-d', strtotime($this->input->post('expired'))),
+                'expired' => date('Y-m-d', strtotime($this->input->post('expired'))),
                 'keterangan' => $this->input->post('keterangan'),
                 'created_by' => $this->session->userdata('inisial'),
                 'created_at' => date('Y-m-d'),
@@ -512,16 +515,18 @@ class Cuti extends CI_Controller
                                 'saldo_digunakan'   => 0,
                                 'saldo'             => $cells[2],
                                 'keterangan'        => $cells[3],
-                                'expired_at'        => $cells[4],
+                                'expired'        => $cells[4],
                                 'created_at'        => $this->session->userdata('inisial'),
                                 'created_by'        => date('Y-m-d'),
                                 'status'            => 'AKTIF'
                             );
 
-                            //tambahkan array $data ke $save
-                            // array_push($save, $data);
-                            //simpan data ke database
-                            $this->db->insert('cuti_saldo', $data);
+                            $searchNPK = $this->db->get_where('karyawan', ['npk' => $cells[0]])->row_array();
+                            
+                            if ($searchNPK){
+                                //simpan data ke database
+                                $this->db->insert('cuti_saldo', $data);
+                            }
                         }
 
                         $numRow++;
@@ -553,7 +558,7 @@ class Cuti extends CI_Controller
     public function saldo_expired()
     {
         $this->db->set('status', 'EXPIRED');
-        $this->db->where('expired_at <', date('Y-m-d'));
+        $this->db->where('expired <', date('Y-m-d'));
         $this->db->update('cuti_saldo');
     }
 

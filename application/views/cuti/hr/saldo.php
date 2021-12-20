@@ -9,13 +9,12 @@
               <i class="material-icons">weekend</i>
             </div>
             <p class="card-category">Saldo Cuti</p>
-            <!-- <h3 class="card-title"><?=$karyawan['saldo_cuti']; ?> hari</h3> -->
-            <h3 class="card-title">Segera Hadir</h3>
+            <h3 class="card-title"><?=$saldo_total; ?> hari</h3>
           </div>
           <div class="card-footer">
             <div class="stats"></div>
-              <a href="#" class="btn btn-facebook btn-block" data-toggle="modal" data-target="#tambahCuti">Tambah Cuti</a>
-              <a href="#" class="btn btn-linkedin" role="button" aria-disabled="false" data-toggle="modal" data-target="#importCuti">Import Cuti</a>
+              <a href="#" class="btn btn-facebook btn-block" data-toggle="modal" data-target="#tambahCuti">Tambah</a>
+              <a href="#" class="btn btn-linkedin btn-block" role="button" aria-disabled="false" data-toggle="modal" data-target="#importCuti">Import</a>
             </div>
         </div>
       </div>
@@ -34,29 +33,29 @@
               
             </div>
             <div class="material-datatables">
-              <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Saldo Awal</th>
-                    <th>Sisa Saldo</th>
+                    <th>Status</th>
                     <th>Kategori</th>
+                    <th>Nama</th>
+                    <th>Saldo <small>(digunakan)</small></th>
+                    <th>Sisa Saldo</th>
                     <th>Keterangan</th>
                     <th>Berlaku Sampai</th>
-                    <th>Status</th>
+                    <th>No</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>No. Cuti</th>
-                    <th>Nama</th>
-                    <th>Saldo Awal</th>
-                    <th>Sisa Saldo</th>
+                    <th>Status</th>
                     <th>Kategori</th>
+                    <th>Nama</th>
+                    <th>Saldo</th>
+                    <th>Sisa Saldo</th>
                     <th>Keterangan</th>
                     <th>Berlaku</th>
-                    <th>Status</th>
+                    <th>No. Cuti</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -64,14 +63,14 @@
                     $status = $this->db->get_where('cuti_status', ['id' => $row['status']])->row_array();
                     $user = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
                     <tr>
-                      <td><?= $row['id']; ?></td>
-                      <td><?= $user['nama']; ?></td>
-                      <td><?= $row['saldo_awal']; ?></td>
-                      <td><?= $row['saldo']; ?></td>
-                      <td><?= $row['kategori']; ?></td>
-                      <td><?= $row['keterangan']; ?></td>
-                      <td><?= date('d M Y', strtotime($row['expired_at'])); ?></td>
                       <td><?= $row['status']; ?></td>
+                      <td><?= $row['kategori']; ?></td>
+                      <td><?= $user['nama']; ?></td>
+                      <td><?= $row['saldo_awal'].' ('.$row['saldo_digunakan'].')'; ?></td>
+                      <td><?= $row['saldo']; ?></td>
+                      <td><?= $row['keterangan']; ?></td>
+                      <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
+                      <td><?= $row['id']; ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -219,6 +218,7 @@
                                     </div>
                                 <!-- </div> -->
                             </div>
+                            <a href="<?= base_url('assets/temp_excel/template_upload_saldo_cuti.xlsx'); ?>" class="btn btn-linkedin btn-link" role="button" aria-disabled="false">DONWLOAD TEMPLATE</a>
                             <div class="modal-footer">
                     <div class="row">
                         <!-- <small></small> -->
