@@ -520,6 +520,8 @@ class Cuti extends CI_Controller
                                 $cells = $row->getCells();
                                 
                                 $id = date('y').$cells[0].random_string('alnum',3);
+                                $valid = date('Y-m-d',strtotime($cells[4]));
+                                $expired = date('Y-m-d',strtotime($cells[5]));
 
                                 $data = array(
                                     'id'                => $id,
@@ -529,8 +531,8 @@ class Cuti extends CI_Controller
                                     'saldo_digunakan'   => 0,
                                     'saldo'             => $cells[2],
                                     'keterangan'        => $cells[3],
-                                    'valid'             => $cells[4],
-                                    'expired'           => $cells[5],
+                                    'valid'             => $valid,
+                                    'expired'           => $expired,
                                     'created_at'        => $this->session->userdata('inisial'),
                                     'created_by'        => date('Y-m-d'),
                                     'status'            => 'AKTIF'
