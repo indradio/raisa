@@ -159,25 +159,29 @@ class Cuti extends CI_Controller
         ];
         $this->db->insert('cuti', $data);
 
-        //     $client = new \GuzzleHttp\Client();
-        //     $response = $client->post(
-        //         'https://region01.krmpesan.com/api/v2/message/send-text',
-        //         [
-        //             'headers' => [
-        //                 'Content-Type' => 'application/json',
-        //                 'Accept' => 'application/json',
-        //                 'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-        //             ],
-        //             'json' => [
-        //                 'phone' => '081311196988',
-        //                 'message' => "*NEW TICKET ".$data['menu']."*". 
-        //                 "\r\n \r\n No. Ticket : *" . $data['id'] . "*" .
-        //                 "\r\n Nama : *" . $data['nama'] . "*" .
-        //                 "\r\n Kasus : *" . $data['case'] . "*"
-        //             ],
-        //         ]
-        //     );
-        //     $body = $response->getBody();
+        $atasan1 = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('atasan1_inisial')])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $atasan1['phone'],
+                    'message' => "*[NOTIF] PENGAJUAN CUTI*" .
+                    "\r\n \r\nNama    : *" . $data['nama'] . "*" .
+                    "\r\nTanggal  : *" . date('d M Y', strtotime($data['tgl1'])) . "*" .
+                    "\r\nLama      : *" . $data['lama'] ." Hari* " .
+                    "\r\nKeterangan : *" . $data['keterangan'] . "*" .
+                    "\r\nHarap segera respon *Setujui/Batalkan*".
+                    "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/approval"
+                ],
+            ]
+        );
+        $body = $response->getBody();
 
         $this->session->set_flashdata('message', 'openticket');
         redirect('/cuti');
@@ -231,8 +235,9 @@ class Cuti extends CI_Controller
                             'phone' => $atasan2['phone'],
                             'message' => "*[NOTIF] PENGAJUAN CUTI*" .
                             "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
-                            "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
-                            "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
+                            "\r\nTanggal  : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
+                            "\r\nLama      : *" . $cuti['lama'] ." Hari* " .
+                            "\r\nKeterangan : *" . $cuti['keterangan'] . "*" .
                             "\r\n \r\nCuti ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
                             "\r\nHarap segera respon *Setujui/Batalkan*".
                             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/approval"
@@ -265,8 +270,9 @@ class Cuti extends CI_Controller
                         'phone' => $admin_hr['phone'],
                         'message' => "*[NOTIF] PENGAJUAN CUTI*" .
                         "\r\n \r\nNama    : *" . $cuti['nama'] . "*" .
-                        "\r\nTanggal : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
-                        "\r\nLama     : *" . $cuti['lama'] ." Hari* " .
+                        "\r\nTanggal  : *" . date('d M Y', strtotime($cuti['tgl1'])) . "*" .
+                        "\r\nLama      : *" . $cuti['lama'] ." Hari* " .
+                        "\r\nKeterangan : *" . $cuti['keterangan'] . "*" .
                         "\r\n \r\nCuti ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
                         "\r\nHarap segera respon *Setujui/Batalkan*".
                         "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/hr_approval"
