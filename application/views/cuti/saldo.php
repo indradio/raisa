@@ -8,7 +8,7 @@
             <div class="card-icon">
               <i class="material-icons">weekend</i>
             </div>
-            <p class="card-category">Saldo Cuti</p>
+            <p class="card-category">Saldo</p>
             <!-- <h3 class="card-title"><?=$karyawan['saldo_cuti']; ?> hari</h3> -->
             <h3 class="card-title">Segera Hadir</h3>
           </div>
@@ -24,7 +24,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Riwayat Cuti</h4>
+            <h4 class="card-title">Riwayat</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">

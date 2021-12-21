@@ -314,6 +314,7 @@ class Cuti extends CI_Controller
                     "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
                     "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl1'])) . "*" .
                     "\r\nLama : *" . $cuti['lama'] ." Hari* " .
+                    "\r\nAlasan : *" . $this->input->post('keterangan') . "*" .
                     "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
                     "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
                 ],
@@ -327,7 +328,7 @@ class Cuti extends CI_Controller
     public function hr_approval()
     {
         $data['sidemenu'] = 'HR Cuti';
-        $data['sidesubmenu'] = 'Approval Cuti';
+        $data['sidesubmenu'] = 'Approval';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         
         $queryCuti = "SELECT * FROM `cuti` WHERE`status`= '3' ";
@@ -411,6 +412,7 @@ class Cuti extends CI_Controller
                     "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
                     "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl1'])) . "*" . 
                     "\r\nLama : *" . $cuti['lama'] ." Hari* " .
+                    "\r\nAlasan : *" . $this->input->post('keterangan') . "*" .
                     "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
                     "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
                 ],
@@ -429,14 +431,14 @@ class Cuti extends CI_Controller
             $today = date('Y-m-d');
             $querySaldo = "SELECT *
                 FROM `cuti_saldo`
-                WHERE `expired` < '{$today}' ";
+                WHERE `valid` > '{$today}' OR `expired` < '{$today}' ";
                 $expired = $this->db->query($querySaldo)->result_array();
             if ($expired){
-                $this->saldo_expired();
+                $this->saldo_update();
             }
 
             $data['sidemenu'] = 'HR Cuti';
-            $data['sidesubmenu'] = 'Saldo Cuti';
+            $data['sidesubmenu'] = 'Saldo';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
                                 $this->db->where('is_active', '1');
                                 $this->db->where('status', '1');
@@ -444,7 +446,8 @@ class Cuti extends CI_Controller
             $this->db->select_sum('saldo');
             $this->db->where('status', 'AKTIF');
             $query = $this->db->get('cuti_saldo');
-            $data['saldo_total'] = $query->row()->saldo;
+            $data['saldo_aktif'] = $query->row()->saldo;
+
             $data['saldo'] = $this->db->get('cuti_saldo')->result_array();
             $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => NULL])->result_array();
     
@@ -453,110 +456,126 @@ class Cuti extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('cuti/hr/saldo', $data);
             $this->load->view('templates/footer');
-        }elseif ($params=='add') {
+        
+        }else{
+            
+            // Tambah Saldo per Karyawan
+            if ($params=='add') {
 
-            $this->load->helper('string');
-            $id = date('y').$this->input->post('karyawan').random_string('alnum',3);
-            $data = [
-                'id' => $id,
-                'npk' => $this->input->post('karyawan'),
-                'kategori' => $this->input->post('kategori'),
-                'saldo_awal' => $this->input->post('saldo'),
-                'saldo_digunakan' => '0',
-                'saldo' => $this->input->post('saldo'),
-                'expired' => date('Y-m-d', strtotime($this->input->post('expired'))),
-                'keterangan' => $this->input->post('keterangan'),
-                'created_by' => $this->session->userdata('inisial'),
-                'created_at' => date('Y-m-d'),
-                'status' => 'AKTIF'
-            ];
-            $this->db->insert('cuti_saldo', $data);
-
-            redirect('cuti/hr_saldo');
-        }elseif ($params='import') {
-                //  ketika button submit diklik
-            //  if ($this->input->post('submit', TRUE) == 'upload') {
-            $config['upload_path']      = './assets/temp_excel/'; //siapkan path untuk upload file
-            $config['allowed_types']    = 'xlsx|xls'; //siapkan format file
-            $config['file_name']        = 'import_' . time(); //rename file yang diupload
-
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('data')) {
                 $this->load->helper('string');
+                $id = date('y').$this->input->post('karyawan').random_string('alnum',3);
+                $data = [
+                    'id' => $id,
+                    'npk' => $this->input->post('karyawan'),
+                    'kategori' => $this->input->post('kategori'),
+                    'saldo_awal' => $this->input->post('saldo'),
+                    'saldo_digunakan' => '0',
+                    'saldo' => $this->input->post('saldo'),
+                    'valid' => date('Y-m-d', strtotime($this->input->post('valid'))),
+                    'expired' => date('Y-m-d', strtotime($this->input->post('expired'))),
+                    'keterangan' => $this->input->post('keterangan'),
+                    'created_by' => $this->session->userdata('inisial'),
+                    'created_at' => date('Y-m-d'),
+                    'status' => 'AKTIF'
+                ];
+                $this->db->insert('cuti_saldo', $data);
 
-                //fetch data upload
-                $file   = $this->upload->data();
+            // Import Batch Saldo
+            }elseif ($params=='import') {
+                //  ketika button submit diklik
+                //  if ($this->input->post('submit', TRUE) == 'upload') {
+                $config['upload_path']      = './assets/temp_excel/'; //siapkan path untuk upload file
+                $config['allowed_types']    = 'xlsx|xls'; //siapkan format file
+                $config['file_name']        = 'import_' . time(); //rename file yang diupload
 
-                $reader = ReaderEntityFactory::createXLSXReader(); //buat xlsx reader
-                $reader->open('./assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
+                $this->load->library('upload', $config);
 
-                //looping pembacaat sheet dalam file        
-                foreach ($reader->getSheetIterator() as $sheet) {
-                    $numRow = 1;
+                if ($this->upload->do_upload('data')) {
+                    $this->load->helper('string');
 
-                    //siapkan variabel array kosong untuk menampung variabel array data
-                    $save   = array();
+                    //fetch data upload
+                    $file   = $this->upload->data();
 
-                    //looping pembacaan row dalam sheet
-                    foreach ($sheet->getRowIterator() as $row) {
+                    $reader = ReaderEntityFactory::createXLSXReader(); //buat xlsx reader
+                    $reader->open('./assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
 
-                        if ($numRow > 1) {
-                            //ambil cell
-                            $cells = $row->getCells();
-                            
-                            $id = date('y').$cells[0].random_string('alnum',3);
+                    //looping pembacaat sheet dalam file        
+                    foreach ($reader->getSheetIterator() as $sheet) {
+                        $numRow = 1;
 
-                            $data = array(
-                                'id'                => $id,
-                                'npk'               => $cells[0],
-                                'kategori'          => $cells[1],
-                                'saldo_awal'        => $cells[2],
-                                'saldo_digunakan'   => 0,
-                                'saldo'             => $cells[2],
-                                'keterangan'        => $cells[3],
-                                'expired'        => $cells[4],
-                                'created_at'        => $this->session->userdata('inisial'),
-                                'created_by'        => date('Y-m-d'),
-                                'status'            => 'AKTIF'
-                            );
+                        //siapkan variabel array kosong untuk menampung variabel array data
+                        $save   = array();
 
-                            $searchNPK = $this->db->get_where('karyawan', ['npk' => $cells[0]])->row_array();
-                            
-                            if ($searchNPK){
-                                //simpan data ke database
-                                $this->db->insert('cuti_saldo', $data);
+                        //looping pembacaan row dalam sheet
+                        foreach ($sheet->getRowIterator() as $row) {
+
+                            if ($numRow > 1) {
+                                //ambil cell
+                                $cells = $row->getCells();
+                                
+                                $id = date('y').$cells[0].random_string('alnum',3);
+
+                                $data = array(
+                                    'id'                => $id,
+                                    'npk'               => $cells[0],
+                                    'kategori'          => $cells[1],
+                                    'saldo_awal'        => $cells[2],
+                                    'saldo_digunakan'   => 0,
+                                    'saldo'             => $cells[2],
+                                    'keterangan'        => $cells[3],
+                                    'valid'             => $cells[4],
+                                    'expired'           => $cells[5],
+                                    'created_at'        => $this->session->userdata('inisial'),
+                                    'created_by'        => date('Y-m-d'),
+                                    'status'            => 'AKTIF'
+                                );
+
+                                $searchNPK = $this->db->get_where('karyawan', ['npk' => $cells[0]])->row_array();
+                                
+                                if ($searchNPK){
+                                    //simpan data ke database
+                                    $this->db->insert('cuti_saldo', $data);
+                                }
                             }
+
+                            $numRow++;
                         }
+                        //simpan data ke database all
+                        // $this->db->insert_batch('project', $save);
 
-                        $numRow++;
+                        //tutup spout reader
+                        $reader->close();
+
+                        //hapus file yang sudah diupload
+                        unlink('./assets/temp_excel/' . $file['file_name']);
+
+                        //tampilkan pesan success dan redirect ulang ke index controller import
+                        echo    '<script type="text/javascript">
+                                alert(\'Data berhasil disimpan\');
+                                window.location.replace("' . base_url() . '");
+                            </script>';
                     }
-                    //simpan data ke database all
-                    // $this->db->insert_batch('project', $save);
-
-                    //tutup spout reader
-                    $reader->close();
-
-                    //hapus file yang sudah diupload
-                    unlink('./assets/temp_excel/' . $file['file_name']);
-
-                    //tampilkan pesan success dan redirect ulang ke index controller import
-                    echo    '<script type="text/javascript">
-                            alert(\'Data berhasil disimpan\');
-                            window.location.replace("' . base_url() . '");
-                        </script>';
+                } else {
+                    echo "Error :" . $this->upload->display_errors(); //tampilkan pesan error jika file gagal diupload
                 }
-            } else {
-                echo "Error :" . $this->upload->display_errors(); //tampilkan pesan error jika file gagal diupload
-            }
-        // }
 
-        redirect('cuti/hr_saldo');
+            // Delete Saldo belum digunakan
+            }elseif ($params=='del') {
+
+                $this->db->where('id',$this->input->post('id'));
+                $this->db->delete('cuti_saldo');
+
+            }
+            redirect('cuti/hr_saldo');
         }
     }
 
-    public function saldo_expired()
+    public function saldo_update()
     {
+        $this->db->set('status', 'WAITING');
+        $this->db->where('valid >', date('Y-m-d'));
+        $this->db->update('cuti_saldo');
+
         $this->db->set('status', 'EXPIRED');
         $this->db->where('expired <', date('Y-m-d'));
         $this->db->update('cuti_saldo');

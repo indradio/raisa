@@ -4,11 +4,11 @@
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">weekend</i>
             </div>
-            <p class="card-category">Saldo Cuti</p>
+            <p class="card-category">Saldo</p>
             <h3 class="card-title"><?=$saldo_total; ?> hari</h3>
           </div>
           <div class="card-footer">
@@ -28,25 +28,25 @@
                 </div>
                 <div id="collapseSaldo" class="collapse" role="tabpanel" aria-labelledby="headingSaldo" data-parent="#accordion">
                   <div class="card-body">
-                  <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Kategori</th>
-                    <th>Saldo</th>
-                    <th>Masa Berlaku</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($saldo as $row) : 
-                    $user = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
-                    <tr>
-                      <td><?= $row['kategori']. ' </br><small>('.$row['id'].')</small>'; ?></td>
-                      <td><?= $row['saldo']; ?></td>
-                      <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
+                    <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Kategori</th>
+                          <th>Saldo</th>
+                          <th>Masa Berlaku</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($saldo as $row) : 
+                          $user = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
+                          <tr>
+                            <td><?= $row['kategori']. ' </br><small>('.$row['id'].')</small>'; ?></td>
+                            <td><?= $row['saldo']; ?></td>
+                            <td><?= date('d M Y', strtotime($row['valid'])).'</br>',date('d M Y', strtotime($row['expired'])); ?></td>
+                          </tr>
+                        <?php endforeach; ?>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -56,11 +56,11 @@
       </div>
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Riwayat Cuti</h4>
+            <h4 class="card-title">Riwayat</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -74,7 +74,7 @@
                   <tr>
                     <th>No</th>
                     <th>Tanggal</th>
-                    <th>Lama</th>
+                    <th>Lama <small>(Hari)</small></th>
                     <th>Keterangan</th>
                     <th>Status</th>
                   </tr>
@@ -159,18 +159,6 @@
                     <div class="row">
                       <div class="col-md-12">
                           <div class="form-group">
-                              <label class="bmd-label">Dari*</label></br>
-                              <input type="text" class="form-control datepicker" name="tgl1" id="tgl1" required/>
-                          </div>
-                      </div>
-                      <div class="col-md-12">
-                          <div class="form-group">
-                              <label class="bmd-label">Sampai*</label></br>
-                              <input type="text" class="form-control datepicker" name="tgl2" id="tgl2" required/>
-                          </div>
-                      </div>
-                      <div class="col-md-12">
-                          <div class="form-group">
                               <label class="bmd-label">Kategori*</label></br>
                                 <select class="selectpicker" name="kategori" id="kategori" title="Pilih" data-style="select-with-transition" data-size="5" data-width="block" data-live-search="false" onchange="kategoriSelect(this);" required>
                                     <?php foreach ($saldo as $s) : ?>
@@ -180,6 +168,23 @@
                                         <option value="<?= $k['saldo_id']; ?>"><?= $k['kategori']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                          </div>
+                      </div>
+                      <div class="col-md-12" id="catatan" style="display:none;">
+                          <div class="form-group">
+                              <label class="bmd-label text-danger">*Harap segera menunjukan dokumen sebagai bukti ke-HR</label></br>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label class="bmd-label">Dari*</label></br>
+                              <input type="text" class="form-control datepicker" name="tgl1" id="tgl1" required/>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label class="bmd-label">Sampai*</label></br>
+                              <input type="text" class="form-control datepicker" name="tgl2" id="tgl2" required/>
                           </div>
                       </div>
                       <div class="col-md-12">
@@ -193,15 +198,47 @@
                 </div>
                 <div class="modal-footer">
                     <div class="row">
-                        <!-- <small></small> -->
-                        <!-- <label class="col-md-5 col-form-label"></label> -->
-                        <div class="col-md-12 mr-4">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-                            <button type="submit" class="btn btn-success">AJUKAN</button>
-                        </div>
+                      <div class="col-md-12 mr-1">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <button type="submit" class="btn btn-success">AJUKAN</button>
+                      </div>
                     </div>
                 </div>
-            </form>
+              </form>
+              <div class="col-md-12 ml-1">
+                        <div id="accordion" role="tablist">
+                          <div class="card card-collapse">
+                            <div class="card-header" role="tab" id="headingPanduan">
+                              <h5 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
+                                  Panduan
+                                  <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                              </h5>
+                            </div>
+                            <div id="collapsePanduan" class="collapse" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
+                              <div class="card-body">
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
         </div>
     </div>
 </div>
+
+<!-- script ajax Kategori-->
+<script type="text/javascript">
+        function kategoriSelect(valueSelect)
+            {
+                var kategori = valueSelect.options[valueSelect.selectedIndex].value;
+                var x = document.getElementById("catatan");
+                if(kategori === "KED" || kategori === "NIK" || kategori === "MEL" || kategori === "KEG" || kategori === "KHI" || kategori === "WIS" || kategori === "UMR" || kategori === "HAJ" || kategori === "PEN" || kategori === "DLL"){
+                  x.style.display = "block";
+                }else{
+                  x.style.display = "none";
+                }
+               
+            }        
+    </script>
