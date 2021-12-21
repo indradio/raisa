@@ -9,47 +9,22 @@
               <i class="material-icons">weekend</i>
             </div>
             <p class="card-category">Saldo Cuti</p>
-            <h3 class="card-title"><?=$saldo_total; ?> hari</h3>
+            <h3 class="card-title"></h3>
           </div>
+          <form class="form" method="post" action="<?= base_url('role'); ?>">
+          <div class="card-body">
+                          <div class="form-group">
+                              <label class="bmd-label">Kategori*</label></br>
+                                <select class="selectpicker" name="user_role" id="user_role" title="Pilih" data-style="select-with-transition" data-size="5" data-width="block" data-live-search="false" onchange='this.form.submit()' required>
+                                    <?php foreach ($user_role as $row) : ?>
+                                        <option value="<?= $row['id']; ?>"><?= $row['role'].' ('.$row['name'].')'; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                          </div>
+            </div>
           <div class="card-footer">
             <div class="stats"></div>
               <a href="#" class="btn btn-facebook btn-block" data-toggle="modal" data-target="#tambahCuti">Ajukan Cuti</a>
-            </div>
-            <div class="col-md-12">
-              <div id="accordion" role="tablist">
-              <div class="card card-collapse">
-                <div class="card-header" role="tab" id="headingSaldo">
-                  <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" href="#collapseSaldo" aria-expanded="false" aria-controls="collapseSaldo">
-                      Details
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseSaldo" class="collapse" role="tabpanel" aria-labelledby="headingSaldo" data-parent="#accordion">
-                  <div class="card-body">
-                  <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Kategori</th>
-                    <th>Saldo</th>
-                    <th>Masa Berlaku</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($saldo as $row) : 
-                    $user = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
-                    <tr>
-                      <td><?= $row['kategori']. ' </br><small>('.$row['id'].')</small>'; ?></td>
-                      <td><?= $row['saldo']; ?></td>
-                      <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-                  </div>
-                </div>
-              </div>
             </div>
         </div>
         </div>
@@ -72,31 +47,29 @@
               <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Tanggal</th>
-                    <th>Lama</th>
-                    <th>Keterangan</th>
-                    <th>Status</th>
+                    <th>Role</th>
+                    <th>Name</th>
+                    <th>Menu</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>No. Cuti</th>
-                    <th>Tanggal</th>
-                    <th>Lama</th>
-                    <th>Keterangan</th>
-                    <th>Status</th>
+                    <th>Role</th>
+                    <th>Name</th>
+                    <th>Menu</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($cuti as $row) : 
-                    $status = $this->db->get_where('cuti_status', ['id' => $row['status']])->row_array(); ?>
+                  <?php foreach ($role as $row) : 
+                    $user = $this->db->get_where('user_role', ['id' => $row['role_id']])->row_array();
+                    $menu = $this->db->get_where('user_menu', ['id' => $row['menu_id']])->row_array(); ?>
                     <tr>
-                    <td><?= $row['kategori']. ' </br><small>('.$row['id'].')</small>'; ?></td>
-                      <td><?= date('d M Y', strtotime($row['tgl1'])); ?></td>
-                      <td><?= $row['lama']; ?></td>
-                      <td><?= $row['keterangan']; ?></td>
-                      <td><?= $status['nama']; ?></td>
+                    <td><?= $menu['menu'];?></td>
+                      <td><?= $user['role']; ?></td>
+                      <td><?= $user['name']; ?></td>
+                      <td><a href="<?= base_url('role/delete/'.$row['id']); ?>" class="btn btn-danger btn-sm">Delete</a></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
