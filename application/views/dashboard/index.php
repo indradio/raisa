@@ -47,36 +47,51 @@
 
     
     <!-- 1.2 Survey  -->
-    <?php 
-    $emisi = $this->db->get_where('survei_emisi', ['npk' =>  $this->session->userdata('npk')])->row_array();
-    if (empty($emisi)){ ?>
+   
       <div class="col-md-4 mt-2">
       <div class="card">
             <div class="card-header card-header-icon card-header-info">
               <div class="card-icon">
-                <i class="material-icons">event_busy</i>
+                <i class="material-icons">pie_chart</i>
               </div>
               <h4 class="card-title">UJI EMISI
                 <small> - Paket Promo Uji Emisi Karyawan</small>
               </h4>
             </div>
-            <form class="form" method="post" action="<?= base_url('dashboard/emisi/YA'); ?>">
-              <div class="card-body">
-                <div class="form-group">
-                  <h4 class="card-title"><b>Kalo ada promo uji emisi khusus karyawan dengan harga Rp 75.000, Apakah kamu mau daftar?</b></h4>
-                  <h4 class="card-title"><b>Motor maupun mobil bisa kok!</b></h4>
-                  </br><h5 class="card-title">Kalo mau tanya-tanya dulu bisa langsung hubungi tim GA (Pak Agus).</h5>
-                </div>
-              </div>
-              <div class="modal-footer justify-content-center">
-                  <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#surveyEmisi">Skip Dulu Deh</a>
-                  <button type="submit" class="btn btn-success">YA, MAU DONG!</button>
-              </div>
-            </form>
+            <div class="card-body">
+                    <div id="chartPreferences" class="ct-chart"></div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h6 class="card-category">Hasil</h6>
+                      </div>
+                      <div class="col-md-12">
+                        <i class="fa fa-circle text-info"></i> Ya
+                        <i class="fa fa-circle text-danger"></i> Tidak
+                      </div>
+                    </div>
+                  </div>
+                  <?php 
+                  $emisi = $this->db->get_where('survei_emisi', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                  if (empty($emisi)){ ?>
+                  <form class="form" method="post" action="<?= base_url('dashboard/emisi/YA'); ?>">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <h4 class="card-title"><b>Kalo ada promo uji emisi khusus karyawan dengan harga Rp 75.000, Apakah kamu mau daftar?</b></h4>
+                        <h4 class="card-title"><b>Motor maupun mobil bisa kok!</b></h4>
+                        </br><h5 class="card-title">Kalo mau tanya-tanya dulu bisa langsung hubungi tim GA (Pak Agus).</h5>
+                      </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#surveyEmisi">Skip Dulu Deh</a>
+                        <button type="submit" class="btn btn-success">YA, MAU DONG!</button>
+                    </div>
+                  </form>
+                  <?php }; ?>
           </div>
       </div>
     </div>
-    <?php }; ?>
 
     <!-- 2. Banner -->
     <div class="row">
@@ -884,6 +899,27 @@
       // xhr.send(element);
     // })
       }
+
+      /*  **************** Public Preferences - Pie Chart ******************** */
+      <?php
+          $emisiYa = $this->db->get_where('survei_emisi', ['daftar' => 'YA'])->num_rows();
+          $emisiTdk = $this->db->get_where('survei_emisi', ['daftar' => 'TIDAK'])->num_rows();
+          $emisiTotal = $this->db->get('survei_emisi')->num_rows();
+          $emisiYaPercent = ($emisiYa/$emisiTotal)*100;
+          $emisiTdkPercent = ($emisiTdk/$emisiTotal)*100;
+      ?>
+      var dataPreferences = {
+        labels: [<?php echo $emisiYa.','. $emisiTdk; ?>],
+        series: [<?php echo $emisiYaPercent.','. $emisiTdkPercent; ?>]
+      };
+
+      var optionsPreferences = {
+        height: '230px'
+      };
+
+      Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
+
+      /*  **************** Multiple Bar Chart - barchart ******************** */
 
     var dataMultipleBarsChart = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
