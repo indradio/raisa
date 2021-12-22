@@ -67,8 +67,8 @@
                         <h6 class="card-category">Hasil</h6>
                       </div>
                       <div class="col-md-12">
-                        <i class="fa fa-circle text-info"></i> Ya
-                        <i class="fa fa-circle text-danger"></i> Tidak
+                        <i class="fa fa-circle text-info"></i> Yang Mau
+                        <i class="fa fa-circle text-danger"></i> Skip Dulu
                       </div>
                     </div>
                   </div>
