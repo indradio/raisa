@@ -27,19 +27,19 @@
                 <small> - Dompet Digital</small>
               </h4>
             </div>
-            <div class="card-body">
-              <div class="form-group">
-                  <label class="bmd-label-floating">NO HP</label>
-                  <div class="input-group">
-                      <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
-                      <div class="input-group-prepend">
-                          <span class="input-group-text">
-                              <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktifkan</a>
-                          </span>
-                      </div>
-                  </div>
+              <div class="card-body">
+                <div class="form-group">
+                    <label class="bmd-label-floating">NO HP</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktifkan</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
               </div>
-            </div>
           </div>
       </div>
     
@@ -47,26 +47,36 @@
 
     
     <!-- 1.2 Survey  -->
-    
-      <!-- <div class="col-md-4 mt-2">
+    <?php 
+    $emisi = $this->db->get_where('survei_emisi', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    if (empty($emisi)){ ?>
+      <div class="col-md-4 mt-2">
       <div class="card">
             <div class="card-header card-header-icon card-header-info">
               <div class="card-icon">
                 <i class="material-icons">event_busy</i>
               </div>
-              <h4 class="card-title">CUTI
-                <small> - Segera Hadir</small>
+              <h4 class="card-title">UJI EMISI
+                <small> - Paket Promo Uji Emisi Karyawan</small>
               </h4>
             </div>
-            <div class="card-body">
-              <div class="form-group">
-                <h4 class="card-title"><b>Kalo ada fitur cuti di-raisa, apa sih yg jadi ekspektasi kamu?</b></h4>
-                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#surveyCuti">Kirim ide!</a>
+            <form class="form" method="post" action="<?= base_url('dashboard/emisi/YA'); ?>">
+              <div class="card-body">
+                <div class="form-group">
+                  <h4 class="card-title"><b>Kalo ada promo uji emisi khusus karyawan dengan harga Rp 75.000, Apakah kamu mau daftar?</b></h4>
+                  <h4 class="card-title"><b>Motor maupun mobil bisa kok!</b></h4>
+                  </br><h5 class="card-title">Kalo mau tanya-tanya dulu bisa langsung hubungi tim GA (Pak Agus).</h5>
+                </div>
               </div>
-            </div>
+              <div class="modal-footer justify-content-center">
+                  <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#surveyEmisi">Skip Dulu Deh</a>
+                  <button type="submit" class="btn btn-success">YA, MAU DONG!</button>
+              </div>
+            </form>
           </div>
       </div>
-    </div> -->
+    </div>
+    <?php }; ?>
 
     <!-- 2. Banner -->
     <div class="row">
@@ -763,8 +773,8 @@
   </div>
 </div>
 
-<!-- Survei Cuti Modal -->
-<div class="modal fade" id="surveyCuti" tabindex="-1" role="dialog" aria-labelledby="#surveyCutiTitle" aria-hidden="true">
+<!-- Survei Emisi Modal -->
+<div class="modal fade" id="surveyEmisi" tabindex="-1" role="dialog" aria-labelledby="#surveyEmisiTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="card card-signup card-plain">
@@ -773,22 +783,22 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
               <i class="material-icons">clear</i>
             </button>
-            <h4 class="card-title">CUTI</h4>
+            <h4 class="card-title">Promo Uji Emisi</h4>
           </div>
         </div>
-        <form class="form" method="post" action="<?= base_url('dashboard/survei/cuti'); ?>">
+        <form class="form" method="post" action="<?= base_url('dashboard/emisi/TIDAK'); ?>">
           <div class="modal-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="bmd-label-floating">Raisa cuti itu harusnya!</label>
-                        <textarea class="form-control has-success" id="ide" name="ide" rows="5" required></textarea>
+                        <label class="bmd-label"><b>Harga Uji Emisi di-luaran sekitar Rp 150.000an</b></label>
+                        <label class="bmd-label"><b>Kesempatan ini gak dateng 2x Loh! Yakin mau dilewatkan?</b></label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-right">
               <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
-                <button type="submit" class="btn btn-success">SAMPAIKAN!</button>
+                <button type="submit" class="btn btn-danger">UDAH YAKIN BANGET!</button>
             </div>
           </div>
         </form>

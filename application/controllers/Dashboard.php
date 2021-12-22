@@ -447,4 +447,18 @@ class Dashboard extends CI_Controller
         
     }
 
+    public function emisi($params)
+    {
+                $data = [
+                    'npk' => $this->session->userdata('npk'),
+                    'nama' => $this->session->userdata('nama'),
+                    'daftar' => $params,
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('survei_emisi', $data);
+    
+            redirect('dashboard');
+        
+    }
+
 }
