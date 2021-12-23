@@ -14,11 +14,12 @@
       </div> -->
     <!-- End Notification -->
 
-    <!-- 1.1 Temp Dompet ASTRAPAY -->
     <div class="row">
-    <?php if (empty($karyawan['ewallet_3'])){ ?>
+      
+      <!-- 1.1 Temp Dompet ASTRAPAY -->
+      <?php if (empty($karyawan['ewallet_3'])){ ?>
       <div class="col-md-4 mt-2">
-      <div class="card">
+        <div class="card">
             <div class="card-header card-header-icon card-header-info">
               <div class="card-icon">
                 <i class="material-icons">account_balance_wallet</i>
@@ -42,54 +43,51 @@
               </div>
           </div>
       </div>
+      <?php }; ?>
     
-    <?php }; ?>
-
-    
-    <!-- 1.2 Survey  -->
-   
+      <!-- 1.2 Survey  -->
       <div class="col-md-4 mt-2">
-      <div class="card">
-            <div class="card-header card-header-icon card-header-info">
-              <div class="card-icon">
-                <i class="material-icons">pie_chart</i>
-              </div>
-              <h4 class="card-title">UJI EMISI
-                <small> - Paket Promo Uji Emisi Karyawan</small>
-              </h4>
+        <div class="card">
+          <div class="card-header card-header-icon card-header-info">
+            <div class="card-icon">
+              <i class="material-icons">pie_chart</i>
             </div>
-            <div class="card-body">
-                    <div id="chartPreferences" class="ct-chart"></div>
-                  </div>
-                  <div class="card-footer">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <h6 class="card-category">Hasil</h6>
-                      </div>
-                      <div class="col-md-12">
-                        <i class="fa fa-circle text-info"></i> Yang Mau
-                        <i class="fa fa-circle text-danger"></i> Skip Dulu
-                      </div>
-                    </div>
-                  </div>
-                  <?php 
-                  $emisi = $this->db->get_where('survei_emisi', ['npk' =>  $this->session->userdata('npk')])->row_array();
-                  if (empty($emisi)){ ?>
-                  <form class="form" method="post" action="<?= base_url('dashboard/emisi/YA'); ?>">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <h4 class="card-title"><b>Kalo ada promo uji emisi khusus karyawan dengan harga Rp 75.000, Apakah kamu mau daftar?</b></h4>
-                        <h4 class="card-title"><b>Motor maupun mobil bisa kok!</b></h4>
-                        </br><h5 class="card-title">Kalo mau tanya-tanya dulu bisa langsung hubungi tim GA (Pak Agus).</h5>
-                      </div>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#surveyEmisi">Skip Dulu Deh</a>
-                        <button type="submit" class="btn btn-success">YA, MAU DONG!</button>
-                    </div>
-                  </form>
-                  <?php }; ?>
+            <h4 class="card-title">UJI EMISI
+              <small> - Paket Promo Uji Emisi Karyawan</small>
+            </h4>
           </div>
+          <div class="card-body">
+            <div id="chartPreferences" class="ct-chart"></div>
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-md-12">
+                <h6 class="card-category">Hasil</h6>
+              </div>
+              <div class="col-md-12">
+                <i class="fa fa-circle text-info"></i> Yang Mau
+                <i class="fa fa-circle text-danger"></i> Skip Dulu
+              </div>
+            </div>
+          </div>
+          <?php 
+          $emisi = $this->db->get_where('survei_emisi', ['npk' =>  $this->session->userdata('npk')])->row_array();
+          if (empty($emisi)){ ?>
+          <form class="form" method="post" action="<?= base_url('dashboard/emisi/YA'); ?>">
+            <div class="card-body">
+              <div class="form-group">
+                <h4 class="card-title"><b>Kalo ada promo uji emisi khusus karyawan dengan harga Rp 75.000, Apakah kamu mau daftar?</b></h4>
+                <h4 class="card-title"><b>Motor maupun mobil bisa kok!</b></h4>
+                </br><h5 class="card-title">Kalo mau tanya-tanya dulu bisa langsung hubungi tim GA (Pak Agus).</h5>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#surveyEmisi">Skip Dulu Deh</a>
+                <button type="submit" class="btn btn-success">YA, MAU DONG!</button>
+            </div>
+          </form>
+          <?php }; ?>
+        </div>
       </div>
     </div>
 
@@ -900,7 +898,7 @@
     // })
       }
 
-      /*  **************** Public Preferences - Pie Chart ******************** */
+      /*  **************** Survei Emisi - Pie Chart ******************** */
       <?php
           $emisiYa = $this->db->get_where('survei_emisi', ['daftar' => 'YA'])->num_rows();
           $emisiTdk = $this->db->get_where('survei_emisi', ['daftar' => 'TIDAK'])->num_rows();
@@ -919,7 +917,7 @@
 
       Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
 
-      /*  **************** Multiple Bar Chart - barchart ******************** */
+      /*  **************** Revenue - Multiple Bar Chart ******************** */
 
     var dataMultipleBarsChart = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

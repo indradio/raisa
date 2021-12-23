@@ -221,9 +221,9 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] PENGHAPUSAN LIBUR BERSAMA PERUSAHAAN*" .
+                            'message' => "*[INFORMASI] Perubahan Cuti Bersama 2021*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nDengan mempertimbangkan loading pekerjaan sampai akhir tahun, bersama ini disampaikan tanggal 27 Desember 2021 yang semula ditetapkan sebagai Cuti Bersama Perusahaan pada Calender Of Event Revisi_4 dilakukan perubahan untuk *DIHAPUSKAN* dan menambah jatah Cuti Tahunan Karyawan, *sehingga tanggal 27 Desember berlaku sebagai Hari Kerja*." .
+                            "\r\nBerdasarkan SKB No. 712 Tahun 2021, No. 1 Tahun 2021, No. 3 Tahun 2021 Tentang Perubahan Hari Libur Nasional dan Cuti Bersama Tahun 2021, maka dengan ini kami mengingatkan kembali sesuai COE revisi_4 tahun 2021 bahwa *tanggal 24 Desember 2021 berlaku sebagai Hari Kerja*." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan. Terima kasih atas perhatiannva. " .
                             "\r\n \r\nHormat Kami," .
                             "\r\nHuman Capital"
