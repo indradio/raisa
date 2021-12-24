@@ -1,117 +1,75 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-  <div class="container-fluid">
-  <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6">
-                                <?php 
-                                    $bulan = date('m');
-                                    $tahun = date('Y');
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+                <?php 
+                    $bulan = date('m');
+                    $tahun = date('Y');
 
-                                    $this->db->where('npk', $this->session->userdata('npk'));
-                                    $this->db->where('year(tglmulai)',$tahun);
-                                    $this->db->where('month(tglmulai)',$bulan);
-                                    $this->db->where('status', '9');
-                                    $total_lembur = $this->db->get('lembur');
-                                ?>
-                            <div class="card card-stats">
-                              <div class="card-header card-header-rose card-header-icon">
-                                <div class="card-icon">
-                                  <i class="material-icons">date_range</i>
-                                </div>
-                                <p class="card-category">Total</p>
-                                <h3 class="card-title"><?= $total_lembur->num_rows(); ?></h3>
-                              </div>
-                              <div class="card-footer">
-                                <div class="stats">
-                               TOTAL Lembur kamu di bulan ini
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- <div class="col-lg-3 col-md-6 col-sm-6">
-                                <?php   
-                                    $this->db->where('status >', '2');
-                                    $this->db->where('day(tglmulai)',$tanggal);
-                                    $this->db->where('lokasi','WTQ');
-                                    $lembur_wtq = $this->db->get('lembur');
-                                ?>
-                            <div class="card card-stats">
-                              <div class="card-header card-header-warning card-header-icon">
-                                <div class="card-icon">
-                                  <i class="material-icons">store</i>
-                                </div>
-                                <p class="card-category">Total</p>
-                                <h3 class="card-title"><?= $lembur_wtq->num_rows(); ?></h3>
-                              </div>
-                              <div class="card-footer">
-                                <div class="stats">
-                                <i class="material-icons">date_range</i> Lembur HARI INI di WTQ
-                                </div>
-                              </div>
-                            </div>
-                          </div> -->
-                          <div class="col-lg-4 col-md-6 col-sm-6">
-                                <?php 
-                                  $this->db->select('SUM(durasi) as total');
-                                  $this->db->where('npk', $this->session->userdata('npk'));
-                                  $this->db->where('year(tglmulai)',$tahun);
-                                  $this->db->where('month(tglmulai)',$bulan);
-                                  $this->db->where('status', '9');
-                                  $this->db->from('lembur');
-                           
-                                  $totalDurasi = $this->db->get()->row()->total;
-                                ?>
-                            <div class="card card-stats">
-                              <div class="card-header card-header-success card-header-icon">
-                                <div class="card-icon">
-                                  <i class="material-icons">schedule</i>
-                                </div>
-                                <p class="card-category">JAM</p>
-                                <h3 class="card-title"><?= $totalDurasi; ?></h3>
-                              </div>
-                              <div class="card-footer">
-                                <div class="stats">
-                                 Total JAM LEMBUR Kamu bulan ini
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6 col-sm-6">
-                          <?php 
-                                 $this->db->select('SUM(tul) as total');
-                                 $this->db->where('npk', $this->session->userdata('npk'));
-                                 $this->db->where('status', '9');
-                                 $this->db->where('month(tglmulai)',$bulan);
-                                 $this->db->where('year(tglmulai)',$tahun);
-                                 $this->db->from('lembur');
-                          
-                                 $totalTUL = $this->db->get()->row()->total;
-                                ?>
-                            <div class="card card-stats">
-                              <div class="card-header card-header-info card-header-icon">
-                                <div class="card-icon">
-                                <i class="material-icons">attach_money</i>
-                                </div>
-                                <p class="card-category">TUL</p>
-                                <h3 class="card-title"><?= $totalTUL; ?></h3>
-                              </div>
-                              <div class="card-footer">
-                                <div class="stats">
-                                Total TUL LEMBUR Kamu bulan ini
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-</div>
-    <div class="row">
+                    $this->db->where('npk', $this->session->userdata('npk'));
+                    $this->db->where('year(tglmulai)',$tahun);
+                    $this->db->where('month(tglmulai)',$bulan);
+                    $this->db->where('status', '9');
+                    $total_lembur = $this->db->get('lembur');
+                ?>
+            <div class="card card-stats">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">date_range</i>
+                </div>
+                <p class="card-category">Total</p>
+                <h3 class="card-title"><?= $total_lembur->num_rows(); ?></h3>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-facebook btn-block" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+                <?php 
+                  $this->db->select('SUM(durasi) as total');
+                  $this->db->where('npk', $this->session->userdata('npk'));
+                  $this->db->where('year(tglmulai)',$tahun);
+                  $this->db->where('month(tglmulai)',$bulan);
+                  $this->db->where('status', '9');
+                  $this->db->from('lembur');
+            
+                  $totalDurasi = $this->db->get()->row()->total;
+                
+                  $this->db->select('SUM(tul) as total');
+                  $this->db->where('npk', $this->session->userdata('npk'));
+                  $this->db->where('status', '9');
+                  $this->db->where('month(tglmulai)',$bulan);
+                  $this->db->where('year(tglmulai)',$tahun);
+                  $this->db->from('lembur');
+            
+                  $totalTUL = $this->db->get()->row()->total;
+                  
+                  ?>
+            <div class="card card-stats">
+              <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">schedule</i>
+                </div>
+                <p class="card-category">JAM/TUL</p>
+                <h3 class="card-title"><?= $totalDurasi.'/'.$totalTUL ;?></h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  Total JAM & TUL LEMBUR Kamu bulan ini
+                </div>
+              </div>
+            </div>
+          </div>
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-info card-header-icon">
+          <!-- <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
             <h4 class="card-title">Data Lembur</h4>
-          </div>
+          </div> -->
           <div class="card-body">
             <div class="toolbar">
               <!--        Here you can write extra buttons/actions for the toolbar              -->
@@ -209,7 +167,6 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
-  </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="historyLembur" tabindex="-1" role="dialog" aria-labelledby="historyLemburTitle" aria-hidden="true">
@@ -372,6 +329,41 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Lembur Hari Lain Aktivitas-->
+<div class="modal fade" id="tambahLembur" tabindex="-1" role="dialog" aria-labelledby="tambahLemburTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">RENCANA LEMBUR</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/tambah_harilain'); ?>">
+                    <div class="modal-body">
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Mulai Lembur</label>
+                            <div class="col-md-7">
+                                <div class="form-group has-default">
+                                    <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">SELANJUTNYA</button>
+                            <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-default">Kembali</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
         $('#historyLembur').on('show.bs.modal', function (event) {

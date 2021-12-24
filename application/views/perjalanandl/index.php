@@ -2,12 +2,27 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-        <div class="col-md-12">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                        <i class="material-icons">emoji_transportation</i>
+                        </div>
+                        <p class="card-category">Perjalanan</p>
+                        <h3 class="card-title"></h3>
+                    </div>
+                        <div class="card-footer">
+                            <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-facebook btn-block">Reservasi</a>
+                        </div>
+                    </div>
+                </div>
+           
+            <div class="col-md-12">
               <div class="card ">
                 <div class="card-header">
                   <h4 class="card-title">
                     <!-- <small class="description">PerjalananKu</small> -->
-                  </h4>
+                </h4>
                 </div>
                 <div class="card-body ">
                 <div class="table-responsive">

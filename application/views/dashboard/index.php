@@ -14,6 +14,90 @@
       </div> -->
     <!-- End Notification -->
 
+    <!-- 2. Banner -->
+    <div class="row">
+      <?php
+      date_default_timezone_set('asia/jakarta');
+      $queryLayInfo = "SELECT COUNT(*)
+        FROM `informasi`
+        WHERE `berlaku` >= CURDATE()
+        ORDER BY `id` DESC
+      ";
+      $layinfo = $this->db->query($queryLayInfo)->row_array();
+      $total = $layinfo['COUNT(*)'];
+      if ($total != 0) {
+        $lay = 12 / $total;
+        $queryInfo = "SELECT *
+                    FROM `informasi`
+                    WHERE `berlaku` >= CURDATE()
+                    ORDER BY `id` DESC
+                  ";
+        $informasi = $this->db->query($queryInfo)->result_array();
+      ?>
+        <?php foreach ($informasi as $info) : ?>
+          <div class="col-md-<?= $lay; ?>">
+            <div class="card card-product">
+              <div class="card-header card-header-image" data-header-animation="true">
+                <a href="#pablo">
+                  <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
+                </a>
+              </div>
+              <div class="card-body">
+                <div class="card-actions text-center">
+                  <button type="button" class="btn btn-info btn-link fix-broken-card">
+                    <i class="material-icons">build</i> Muat Ulang!
+                  </button>
+                  <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url(); ?>assets/img/info/<?= $info['gambar_konten']; ?>">
+                    Selengkapnya...
+                  </a>
+                </div>
+                <h4 class="card-title">
+                  <?= $info['judul']; ?>
+                </h4>
+              </div>
+            </div>
+          </div>
+      <?php endforeach;
+      } ?>
+    </div>
+    <!-- end banner -->
+
+    <div class="row">
+      <div class="col-md-12 d-block d-sm-none ">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-4 text-center">
+                          <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-taxi"></i>
+                          </a>
+                          <a class="card-title"><small>PerjalananKu</small></a>
+                      </div>
+                      <div class="col-4 text-center">
+                          <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-clock-o"></i>
+                          </a>
+                          <a class="card-title"><small>LemburKu</small></a>
+                      </div>
+                      <div class="col-4 text-center">
+                          <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-calendar-times-o"></i>
+                          </a>
+                          <a class="card-title"><small>CutiKu</small></a>
+                      </div>
+                      <div class="col-4 text-center">
+                          <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-street-view"></i>
+                          </a>
+                          <a class="card-title"><small>Kehadiran</small></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!--  end card  -->
+      </div>  
+    </div>
+
     <div class="row">
       
       <!-- 1.1 Temp Dompet ASTRAPAY -->
@@ -67,6 +151,7 @@
               <div class="col-md-12">
                 <i class="fa fa-circle text-info"></i> Yang Mau
                 <i class="fa fa-circle text-danger"></i> Skip Dulu
+                <footer class="blockquote-footer">Polling Sampai <cite title="Source Title">24 Desember 2021</cite></footer>
               </div>
             </div>
           </div>
@@ -90,54 +175,6 @@
         </div>
       </div>
     </div>
-
-    <!-- 2. Banner -->
-    <div class="row">
-      <?php
-      date_default_timezone_set('asia/jakarta');
-      $queryLayInfo = "SELECT COUNT(*)
-        FROM `informasi`
-        WHERE `berlaku` >= CURDATE()
-        ORDER BY `id` DESC
-      ";
-      $layinfo = $this->db->query($queryLayInfo)->row_array();
-      $total = $layinfo['COUNT(*)'];
-      if ($total != 0) {
-        $lay = 12 / $total;
-        $queryInfo = "SELECT *
-                    FROM `informasi`
-                    WHERE `berlaku` >= CURDATE()
-                    ORDER BY `id` DESC
-                  ";
-        $informasi = $this->db->query($queryInfo)->result_array();
-      ?>
-        <?php foreach ($informasi as $info) : ?>
-          <div class="col-md-<?= $lay; ?>">
-            <div class="card card-product">
-              <div class="card-header card-header-image" data-header-animation="true">
-                <a href="#pablo">
-                  <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
-                </a>
-              </div>
-              <div class="card-body">
-                <div class="card-actions text-center">
-                  <button type="button" class="btn btn-info btn-link fix-broken-card">
-                    <i class="material-icons">build</i> Muat Ulang!
-                  </button>
-                  <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url(); ?>assets/img/info/<?= $info['gambar_konten']; ?>">
-                    Selengkapnya...
-                  </a>
-                </div>
-                <h4 class="card-title">
-                  <?= $info['judul']; ?>
-                </h4>
-              </div>
-            </div>
-          </div>
-      <?php endforeach;
-      } ?>
-    </div>
-    <!-- end banner -->
     
     <!-- 3. Perjalanan -->
     <div class="row">
