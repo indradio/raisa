@@ -589,7 +589,7 @@ class Cuti extends CI_Controller
         $this->db->update('cuti_saldo');
     }
 
-    public function report()
+    public function hr_report()
     {
         date_default_timezone_set('asia/jakarta');
         

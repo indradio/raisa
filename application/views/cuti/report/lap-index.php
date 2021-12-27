@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
-                            <form class="form-horizontal" action="<?= base_url('cuti/report'); ?>" method="post">
+                            <form class="form-horizontal" action="<?= base_url('cuti/hr_report'); ?>" method="post">
               <div class="row">
                 <div class="col-sm-6 col-lg-3">
                   <div class="form-group has-default">
