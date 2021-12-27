@@ -172,7 +172,7 @@
                       </div>
                       <div class="col-md-12" id="catatan" style="display:none;">
                           <div class="form-group">
-                              <label class="bmd-label text-danger">*Harap segera menunjukan dokumen sebagai bukti ke-HR</label></br>
+                              <label class="bmd-label text-danger">*Harap menunjukan dokumen terkait sebagai bukti ke-HR</label></br>
                           </div>
                       </div>
                       <div class="col-md-12">
@@ -240,5 +240,37 @@
                   x.style.display = "none";
                 }
                
-            }        
+            }   
+            
+    $(document).ready(function(){
+     <?php if ($this->session->flashdata('notify')=='success'){ ?>
+       
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Berhasil!</b> Pastikan saat kamu cuti tidak ada deadline/janji di tanggal tersebut ya."
+      }, {
+        type: "success",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+
+     <?php }elseif ($this->session->flashdata('notify')=='overquota'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Saldo cuti kamu tidak cukup."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+     
+      <?php } ?>
+    });
     </script>

@@ -112,6 +112,7 @@ class Cuti extends CI_Controller
                 $this->db->where('cuti_id', $id);
                 $this->db->delete('cuti_detail');
 
+                $this->session->set_flashdata('notify', 'overquota');
                 redirect('/cuti');
             }else{
                 $kategori = $saldo['kategori'];
@@ -183,7 +184,7 @@ class Cuti extends CI_Controller
         );
         $body = $response->getBody();
 
-        $this->session->set_flashdata('message', 'openticket');
+        $this->session->set_flashdata('notify', 'success');
         redirect('/cuti');
     }
 

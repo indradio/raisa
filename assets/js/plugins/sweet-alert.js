@@ -3,7 +3,7 @@ console.log(flashData);
 if (flashData == 'masuk') {
   swal({
     title: "Semangat Pagi!",
-    text: "Berdasarkan SKB No. 712 Tahun 2021, No. 1 Tahun 2021, No. 3 Tahun 2021 Tentang Perubahan Hari Libur Nasional dan Cuti Bersama Tahun 2021, maka dengan ini kami mengingatkan kembali sesuai COE revisi_4 tahun 2021 bahwa tanggal  24 Desember 2021 berlaku sebagai Hari Kerja.",
+    text: "Berdasarkan SKB No. 712 Tahun 2021, No. 1 Tahun 2021, No. 3 Tahun 2021 Tentang Perubahan Hari Libur Nasional dan Cuti Bersama Tahun 2021, maka dengan ini kami mengingatkan kembali sesuai COE revisi_4 tahun 2021 bahwa tanggal 31 Desember 2021 berlaku sebagai Hari Kerja.",
     buttonsStyling: false,
     confirmButtonClass: "btn btn-info",
     type: "info"
@@ -436,6 +436,8 @@ sweet = {
       }).catch(swal.noop)
     }
   },
+
+  //End Of SweetAlert
 
   initGoogleMaps: function () {
     var myLatlng = new google.maps.LatLng(40.748817, -73.985428);

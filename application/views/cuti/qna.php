@@ -249,3 +249,26 @@
         </div>
     </div>
 </div>
+<script>
+   $(document).ready(function(){
+     <?php if ($this->session->flashdata('notify')=='test'){ ?>
+       
+      $.notify("Hello World");
+
+     <?php }else{ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+     
+      <?php } ?>
+    });
+    </script>
