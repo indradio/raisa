@@ -283,26 +283,30 @@ class Dashboard extends CI_Controller
         $this->db->where('id !=', '1');
         $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
 
+        $queryReservasi = "SELECT *
+        FROM `reservasi`
+        WHERE (`atasan1` = '{$this->session->userdata('inisial')}' and `status` = 1) or (`atasan2` = '{$this->session->userdata('inisial')}' and `status` = 2) ";
+        $data['Reservasi'] = $this->db->query($queryReservasi)->result_array();
 
-        $this->db->where('year(tglmulai)', date('Y'));
-        $this->db->where('month(tglmulai)', date('m'));
-        $this->db->where('day(tglmulai)', date('d'));
-        $this->db->where('konsumsi', 'YA');
-        $this->db->where('status >', '2');
-        $data['lembur_makan_malam'] = $this->db->get('lembur')->result_array();
+        $queryRencanaLembur = "SELECT *
+        FROM `lembur`
+        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '2') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '3') ";
+        $data['RencanaLembur'] = $this->db->query($queryRencanaLembur)->result_array();
 
-        $this->db->where('year(tglmulai)', date('Y'));
-        $this->db->where('month(tglmulai)', date('m'));
-        $this->db->where('day(tglmulai)', date('d'));
-        $this->db->where('status >', '2');
-        $data['listlembur'] = $this->db->get('lembur')->result_array();
-        $data['listclaim'] = $this->dashboard_model->get_claim();
-        $data['listkaryawan'] = $this->dashboard_model->get_karyawan();
+        $queryRealisasiLembur = "SELECT *
+        FROM `lembur`
+        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '5') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '6') ";
+        $data['RealisasiLembur'] = $this->db->query($queryRealisasiLembur)->result_array();
 
+        $queryCuti = "SELECT *
+        FROM `cuti`
+        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+        $data['Cuti'] = $this->db->query($queryCuti)->result_array();
+    
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
         $data['sidesubmenu'] = '';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['pendapatan'] = $this->db->get('pendapatan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

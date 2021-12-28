@@ -102,15 +102,7 @@
     <div class="row">
 
     <!-- Outstanding Approval Perjalanan -->
-    <?php 
-    $queryReservasi = "SELECT *
-    FROM `reservasi`
-    WHERE (`atasan1` = '{$karyawan['inisial']}' and `status` = 1) or (`atasan2` = '{$karyawan['inisial']}' and `status` = 2) ";
-    $Reservasi = $this->db->query($queryReservasi)->result_array();
-
-    if ($Reservasi != null)
-    {
-    ?>
+    <?php if ($Reservasi != null){ ?>
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-header card-header-text card-header-warning">
@@ -142,20 +134,7 @@
     <?php }; ?>
       
     <!-- Outstanding Approval Lembur -->
-    <?php 
-    $queryRencanaLembur = "SELECT *
-    FROM `lembur`
-    WHERE(`atasan1` = '{$karyawan['inisial']}' AND `status`= '2') OR (`atasan2` = '{$karyawan['inisial']}' AND `status`= '3') ";
-    $RencanaLembur = $this->db->query($queryRencanaLembur)->result_array();
-
-    $queryRealisasiLembur = "SELECT *
-    FROM `lembur`
-    WHERE(`atasan1` = '{$karyawan['inisial']}' AND `status`= '5') OR (`atasan2` = '{$karyawan['inisial']}' AND `status`= '6') ";
-    $RealisasiLembur = $this->db->query($queryRealisasiLembur)->result_array();
-
-    if ($RencanaLembur != null or $RealisasiLembur != null)
-    {
-    ?>
+    <?php if ($RencanaLembur != null or $RealisasiLembur != null){ ?>
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-header card-header-text card-header-warning">
@@ -194,15 +173,7 @@
     <?php }; ?>
 
     <!-- Outstanding Approval Cuti -->
-    <?php 
-    $queryCuti = "SELECT *
-    FROM `cuti`
-    WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
-    $Cuti = $this->db->query($queryCuti)->result_array();
-
-    if ($Cuti != null)
-    {
-    ?>
+    <?php if ($Cuti != null){ ?>
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-header card-header-text card-header-warning">
