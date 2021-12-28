@@ -283,6 +283,7 @@ class Cuti extends CI_Controller
             $body = $response->getBody();
         }
 
+        $this->session->set_flashdata('notify', 'approve');
         redirect('cuti/approval');
 
     }
@@ -329,6 +330,7 @@ class Cuti extends CI_Controller
         );
         $body = $response->getBody();
               
+        $this->session->set_flashdata('notify', 'reject');
         redirect('cuti/approval');
     }
 
@@ -382,7 +384,9 @@ class Cuti extends CI_Controller
             ]
         );
         $body = $response->getBody();
-        
+
+        $this->session->set_flashdata('notify', 'approve');
+        redirect('cuti/hr_approval');
     }
 
     public function hr_reject()
@@ -427,6 +431,7 @@ class Cuti extends CI_Controller
         );
         $body = $response->getBody();
               
+        $this->session->set_flashdata('notify', 'reject');
         redirect('cuti/hr_approval');
     }
 

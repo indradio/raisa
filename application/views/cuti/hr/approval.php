@@ -169,7 +169,7 @@
                     <div class="row">
                       <div class="col-md-12">
                           <div class="form-group">
-                              <label class="bmd-label-floating"><small>Keterangan</small></label></br>
+                              <label class="bmd-label-floating"><small>Alasan</small></label></br>
                               <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3"></textarea>
                           </div>
                       </div>
@@ -216,5 +216,35 @@
             var modal = $(this)
             modal.find('.modal-body input[name="id"]').val(id)
         })  
+
+        <?php if ($this->session->flashdata('notify')=='approve'){ ?>
+       
+       $.notify({
+         icon: "add_alert",
+         message: "<b>Terima kasih!</b> Pengajuan cuti telah anda setujui."
+       }, {
+         type: "success",
+         timer: 3000,
+         placement: {
+           from: "top",
+           align: "center"
+         }
+       });
+ 
+      <?php }elseif ($this->session->flashdata('notify')=='reject'){ ?>
+       
+       $.notify({
+         icon: "add_alert",
+         message: "<b>Oops!</b> Pengajuan cuti telah anda tolak."
+       }, {
+         type: "danger",
+         timer: 3000,
+         placement: {
+           from: "top",
+           align: "center"
+         }
+       });
+      
+       <?php } ?>
     });
 </script>

@@ -62,6 +62,7 @@
     </div>
     <!-- end banner -->
 
+    <!-- Icon for Mobile -->
     <div class="row">
       <div class="col-md-12 d-block d-sm-none ">
           <div class="card">
@@ -128,53 +129,6 @@
           </div>
       </div>
       <?php }; ?>
-    
-      <!-- 1.2 Survey  -->
-      <div class="col-md-4 mt-2">
-        <div class="card">
-          <div class="card-header card-header-icon card-header-info">
-            <div class="card-icon">
-              <i class="material-icons">pie_chart</i>
-            </div>
-            <h4 class="card-title">UJI EMISI
-              <small> - Paket Promo Uji Emisi Karyawan</small>
-            </h4>
-          </div>
-          <div class="card-body">
-            <div id="chartPreferences" class="ct-chart"></div>
-          </div>
-          <div class="card-footer">
-            <div class="row">
-              <div class="col-md-12">
-                <h6 class="card-category">Hasil</h6>
-              </div>
-              <div class="col-md-12">
-                <i class="fa fa-circle text-info"></i> Yang Mau
-                <i class="fa fa-circle text-danger"></i> Skip Dulu
-                <footer class="blockquote-footer">Polling Sampai <cite title="Source Title">24 Desember 2021</cite></footer>
-              </div>
-            </div>
-          </div>
-          <?php 
-          $emisi = $this->db->get_where('survei_emisi', ['npk' =>  $this->session->userdata('npk')])->row_array();
-          if (empty($emisi)){ ?>
-          <form class="form" method="post" action="<?= base_url('dashboard/emisi/YA'); ?>">
-            <div class="card-body">
-              <div class="form-group">
-                <h4 class="card-title"><b>Kalo ada promo uji emisi khusus karyawan dengan harga Rp 75.000, Apakah kamu mau daftar?</b></h4>
-                <h4 class="card-title"><b>Motor maupun mobil bisa kok!</b></h4>
-                </br><h5 class="card-title">Kalo mau tanya-tanya dulu bisa langsung hubungi tim GA (Pak Agus).</h5>
-              </div>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#surveyEmisi">Skip Dulu Deh</a>
-                <button type="submit" class="btn btn-success">YA, MAU DONG!</button>
-            </div>
-          </form>
-          <?php }; ?>
-        </div>
-      </div>
-    </div>
     
     <!-- 3. Perjalanan -->
     <div class="row">
@@ -823,39 +777,7 @@
   </div>
 </div>
 
-<!-- Survei Emisi Modal -->
-<div class="modal fade" id="surveyEmisi" tabindex="-1" role="dialog" aria-labelledby="#surveyEmisiTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="card card-signup card-plain">
-        <div class="modal-header">
-          <div class="card-header card-header-info text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              <i class="material-icons">clear</i>
-            </button>
-            <h4 class="card-title">Promo Uji Emisi</h4>
-          </div>
-        </div>
-        <form class="form" method="post" action="<?= base_url('dashboard/emisi/TIDAK'); ?>">
-          <div class="modal-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="bmd-label"><b>Harga Uji Emisi di-luaran sekitar Rp 150.000an</b></label>
-                        <label class="bmd-label"><b>Kesempatan ini gak dateng 2x Loh! Yakin mau dilewatkan?</b></label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer justify-content-right">
-              <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
-                <button type="submit" class="btn btn-danger">UDAH YAKIN BANGET!</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- Javascript -->
 <script>
@@ -935,25 +857,6 @@
     // })
       }
 
-      /*  **************** Survei Emisi - Pie Chart ******************** */
-      <?php
-          $emisiYa = $this->db->get_where('survei_emisi', ['daftar' => 'YA'])->num_rows();
-          $emisiTdk = $this->db->get_where('survei_emisi', ['daftar' => 'TIDAK'])->num_rows();
-          $emisiTotal = $this->db->get('survei_emisi')->num_rows();
-          $emisiYaPercent = ($emisiYa/$emisiTotal)*100;
-          $emisiTdkPercent = ($emisiTdk/$emisiTotal)*100;
-      ?>
-      var dataPreferences = {
-        labels: [<?php echo $emisiYa.','. $emisiTdk; ?>],
-        series: [<?php echo $emisiYaPercent.','. $emisiTdkPercent; ?>]
-      };
-
-      var optionsPreferences = {
-        height: '230px'
-      };
-
-      Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
-
       /*  **************** Revenue - Multiple Bar Chart ******************** */
 
     var dataMultipleBarsChart = {
@@ -1007,6 +910,7 @@
     var checker = document.getElementById('check');
     var sendbtn = document.getElementById('submit');
     sendbtn.disabled = true;
+    
     // when unchecked or checked, run the function
     checker.onchange = function() {
       if (this.checked) {
@@ -1016,219 +920,6 @@
       }
     }
 
-  });
-
-  var initPhotoSwipeFromDOM = function(gallerySelector) {
-
-    // parse slide data (url, title, size ...) from DOM elements 
-    // (children of gallerySelector)
-    var parseThumbnailElements = function(el) {
-      var thumbElements = el.childNodes,
-        numNodes = thumbElements.length,
-        items = [],
-        figureEl,
-        linkEl,
-        size,
-        item;
-
-      for (var i = 0; i < numNodes; i++) {
-
-        figureEl = thumbElements[i]; // <figure> element
-
-        // include only element nodes 
-        if (figureEl.nodeType !== 1) {
-          continue;
-        }
-
-        linkEl = figureEl.children[0]; // <a> element
-
-        size = linkEl.getAttribute('data-size').split('x');
-
-        // create slide object
-        item = {
-          src: linkEl.getAttribute('href'),
-          w: parseInt(size[0], 10),
-          h: parseInt(size[1], 10)
-        };
-
-
-
-        if (figureEl.children.length > 1) {
-          // <figcaption> content
-          item.title = figureEl.children[1].innerHTML;
-        }
-
-        if (linkEl.children.length > 0) {
-          // <img> thumbnail element, retrieving thumbnail url
-          item.msrc = linkEl.children[0].getAttribute('src');
-        }
-
-        item.el = figureEl; // save link to element for getThumbBoundsFn
-        items.push(item);
-      }
-
-      return items;
-    };
-
-    // find nearest parent element
-    var closest = function closest(el, fn) {
-      return el && (fn(el) ? el : closest(el.parentNode, fn));
-    };
-
-    // triggers when user clicks on thumbnail
-    var onThumbnailsClick = function(e) {
-      e = e || window.event;
-      e.preventDefault ? e.preventDefault() : e.returnValue = false;
-
-      var eTarget = e.target || e.srcElement;
-
-      // find root element of slide
-      var clickedListItem = closest(eTarget, function(el) {
-        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
-      });
-
-      if (!clickedListItem) {
-        return;
-      }
-
-      // find index of clicked item by looping through all child nodes
-      // alternatively, you may define index via data- attribute
-      var clickedGallery = clickedListItem.parentNode,
-        childNodes = clickedListItem.parentNode.childNodes,
-        numChildNodes = childNodes.length,
-        nodeIndex = 0,
-        index;
-
-      for (var i = 0; i < numChildNodes; i++) {
-        if (childNodes[i].nodeType !== 1) {
-          continue;
-        }
-
-        if (childNodes[i] === clickedListItem) {
-          index = nodeIndex;
-          break;
-        }
-        nodeIndex++;
-      }
-
-
-
-      if (index >= 0) {
-        // open PhotoSwipe if valid index found
-        openPhotoSwipe(index, clickedGallery);
-      }
-      return false;
-    };
-
-    // parse picture index and gallery index from URL (#&pid=1&gid=2)
-    var photoswipeParseHash = function() {
-      var hash = window.location.hash.substring(1),
-        params = {};
-
-      if (hash.length < 5) {
-        return params;
-      }
-
-      var vars = hash.split('&');
-      for (var i = 0; i < vars.length; i++) {
-        if (!vars[i]) {
-          continue;
-        }
-        var pair = vars[i].split('=');
-        if (pair.length < 2) {
-          continue;
-        }
-        params[pair[0]] = pair[1];
-      }
-
-      if (params.gid) {
-        params.gid = parseInt(params.gid, 10);
-      }
-
-      return params;
-    };
-
-    var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
-      var pswpElement = document.querySelectorAll('.pswp')[0],
-        gallery,
-        options,
-        items;
-
-      items = parseThumbnailElements(galleryElement);
-
-      // define options (if needed)
-      options = {
-
-        // define gallery index (for URL)
-        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-
-        getThumbBoundsFn: function(index) {
-          // See Options -> getThumbBoundsFn section of documentation for more info
-          var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
-            pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-            rect = thumbnail.getBoundingClientRect();
-
-          return {
-            x: rect.left,
-            y: rect.top + pageYScroll,
-            w: rect.width
-          };
-        }
-
-      };
-
-      // PhotoSwipe opened from URL
-      if (fromURL) {
-        if (options.galleryPIDs) {
-          // parse real index when custom PIDs are used 
-          // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
-          for (var j = 0; j < items.length; j++) {
-            if (items[j].pid == index) {
-              options.index = j;
-              break;
-            }
-          }
-        } else {
-          // in URL indexes start from 1
-          options.index = parseInt(index, 10) - 1;
-        }
-      } else {
-        options.index = parseInt(index, 10);
-      }
-
-      // exit if index not found
-      if (isNaN(options.index)) {
-        return;
-      }
-
-      if (disableAnimation) {
-        options.showAnimationDuration = 0;
-      }
-
-      // Pass data to PhotoSwipe and initialize it
-      gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
-      gallery.init();
-    };
-
-    // loop through all gallery elements and bind events
-    var galleryElements = document.querySelectorAll(gallerySelector);
-
-    for (var i = 0, l = galleryElements.length; i < l; i++) {
-      galleryElements[i].setAttribute('data-pswp-uid', i + 1);
-      galleryElements[i].onclick = onThumbnailsClick;
-    }
-
-    // Parse URL and open gallery if it contains #&pid=3&gid=1
-    var hashData = photoswipeParseHash();
-    if (hashData.pid && hashData.gid) {
-      openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
-    }
-  };
-
-  // execute above function
-  initPhotoSwipeFromDOM('.my-gallery');
-
-  $(document).ready(function() {
     var cJamkerja = $('#calendarJamkerja');
 
     today = new Date();
@@ -1309,5 +1000,6 @@
         window.location = 'https://raisa.winteq-astra.com/jamkerja/tanggal/' + start.format();
       },
     });    
+
   });
 </script>
