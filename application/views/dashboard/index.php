@@ -100,7 +100,139 @@
     </div>
 
     <div class="row">
+
+    <!-- Outstanding Approval Perjalanan -->
+    <?php 
+    $queryReservasi = "SELECT *
+    FROM `reservasi`
+    WHERE (`atasan1` = '{$karyawan['inisial']}' and `status` = 1) or (`atasan2` = '{$karyawan['inisial']}' and `status` = 2) ";
+    $Reservasi = $this->db->query($queryReservasi)->result_array();
+
+    if ($Reservasi != null)
+    {
+    ?>
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header card-header-text card-header-warning">
+          <div class="card-text">
+            <h4 class="card-title">Outstanding</h4>
+            <p class="card-category">Perjalanan</p>
+          </div>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover">
+            <thead class="text-warning">
+              <th>Peserta</th>
+              <th>Tujuan</th>
+              <th>Waktu</th>
+            </thead>
+            <tbody>
+            <?php foreach ($Reservasi as $row) : ?>
+            <tr onclick="window.location='<?= base_url('persetujuandl'); ?>'" >
+              <td><?= $row['anggota']; ?></td>
+              <td><?= $row['tujuan']; ?></td>
+              <td><?= date('d-M', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <?php }; ?>
       
+    <!-- Outstanding Approval Lembur -->
+    <?php 
+    $queryRencanaLembur = "SELECT *
+    FROM `lembur`
+    WHERE(`atasan1` = '{$karyawan['inisial']}' AND `status`= '2') OR (`atasan2` = '{$karyawan['inisial']}' AND `status`= '3') ";
+    $RencanaLembur = $this->db->query($queryRencanaLembur)->result_array();
+
+    $queryRealisasiLembur = "SELECT *
+    FROM `lembur`
+    WHERE(`atasan1` = '{$karyawan['inisial']}' AND `status`= '5') OR (`atasan2` = '{$karyawan['inisial']}' AND `status`= '6') ";
+    $RealisasiLembur = $this->db->query($queryRealisasiLembur)->result_array();
+
+    if ($RencanaLembur != null or $RealisasiLembur != null)
+    {
+    ?>
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header card-header-text card-header-warning">
+          <div class="card-text">
+            <h4 class="card-title">Outstanding</h4>
+            <p class="card-category">Lembur</p>
+          </div>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover">
+            <thead class="text-warning">
+              <th>Nama</th>
+              <th>Waktu</th>
+              <th>Durasi</th>
+            </thead>
+            <tbody>
+            <?php foreach ($RencanaLembur as $row) : ?>
+            <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $row['id']; ?>'" >
+              <td><?= $row['nama']; ?> <small>(Rencana)</small></td>
+              <td><?= date('d-M H:i', strtotime($row['tglmulai_rencana'])); ?></td>
+              <td><?= $row['durasi_rencana']; ?> Jam</td>
+            </tr>
+            <?php endforeach; ?>
+            <?php foreach ($RealisasiLembur as $row) : ?>
+            <tr onclick="window.location='<?= base_url('lembur/persetujuan_realisasi/') . $row['id']; ?>'" >
+              <td><?= $row['nama']; ?> <small>(Realisasi)</small></td>
+              <td><?= date('d-M H:i', strtotime($row['tglmulai'])); ?></td>
+              <td><?= $row['durasi']; ?> Jam</td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <?php }; ?>
+
+    <!-- Outstanding Approval Cuti -->
+    <?php 
+    $queryCuti = "SELECT *
+    FROM `cuti`
+    WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+    $Cuti = $this->db->query($queryCuti)->result_array();
+
+    if ($Cuti != null)
+    {
+    ?>
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header card-header-text card-header-warning">
+          <div class="card-text">
+            <h4 class="card-title">Outstanding</h4>
+            <p class="card-category">Cuti</p>
+          </div>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover">
+            <thead class="text-warning">
+              <th>Nama</th>
+              <th>Waktu</th>
+              <th>Lama</th>
+            </thead>
+            <tbody>
+            <?php foreach ($Cuti as $row) : ?>
+            <tr onclick="window.location='<?= base_url('cuti/approval'); ?>'" >
+              <td><?= $row['nama']; ?></td>
+              <td><?= date('d-M', strtotime($row['tgl1'])); ?></td>
+              <td><?= $row['lama']; ?> Hari</td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <?php }; ?>
+
       <!-- 1.1 Temp Dompet ASTRAPAY -->
       <?php if (empty($karyawan['ewallet_3'])){ ?>
       <div class="col-md-4 mt-2">
@@ -129,6 +261,7 @@
           </div>
       </div>
       <?php }; ?>
+    </div>
     
     <!-- 3. Perjalanan -->
     <div class="row">
@@ -910,7 +1043,7 @@
     var checker = document.getElementById('check');
     var sendbtn = document.getElementById('submit');
     sendbtn.disabled = true;
-    
+
     // when unchecked or checked, run the function
     checker.onchange = function() {
       if (this.checked) {
