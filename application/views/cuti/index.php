@@ -172,6 +172,7 @@
                       </div>
                       <div class="col-md-12" id="catatan" style="display:none;">
                           <div class="form-group">
+                              <label class="bmd-label text-danger">*Pastikan kamu sudah mengetahui ketentuan cuti dispensasi. Jika membutuhkan waktu lebih lama, silahkan mengajukan cuti (Tahunan, Besar atau Tabungan) tambahan yang kamu miliki.</label></br>
                               <label class="bmd-label text-danger">*Harap menunjukan dokumen terkait sebagai bukti ke-HR</label></br>
                           </div>
                       </div>
@@ -185,6 +186,11 @@
                           <div class="form-group">
                               <label class="bmd-label">Sampai*</label></br>
                               <input type="text" class="form-control datepicker" name="tgl2" id="tgl2" required/>
+                          </div>
+                      </div>
+                      <div class="col-md-12" id="">
+                          <div class="form-group">
+                              <label class="bmd-label">*Jika diantara Cuti kamu terdapat <b>Hari Libur Nasional</b>, Harap dibuat menjadi 2x pengajuan cuti.</label></br>
                           </div>
                       </div>
                       <div class="col-md-12">

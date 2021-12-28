@@ -2,11 +2,13 @@ const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
   swal({
-    title: "Semangat Pagi!",
-    text: "Berdasarkan SKB No. 712 Tahun 2021, No. 1 Tahun 2021, No. 3 Tahun 2021 Tentang Perubahan Hari Libur Nasional dan Cuti Bersama Tahun 2021, maka dengan ini kami mengingatkan kembali sesuai COE revisi_4 tahun 2021 bahwa tanggal 31 Desember 2021 berlaku sebagai Hari Kerja.",
+    title: "",
+    text: "“You are never too old to set another goal or to dream a new dream.” — C.S. Lewis",
     buttonsStyling: false,
-    confirmButtonClass: "btn btn-info",
-    type: "info"
+    showConfirmButton: false,
+    // confirmButtonClass: "btn btn-info",
+    // type: "info",
+    timer: "3000"
   }).catch(swal.noop)
 } else if (flashData == 'setujudl') {
   swal({

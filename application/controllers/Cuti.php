@@ -304,6 +304,18 @@ class Cuti extends CI_Controller
         $this->db->set('status', '0');
         $this->db->where('cuti_id', $id);
         $this->db->update('cuti_detail');
+        
+        $saldo = $this->db->get_where('cuti_saldo', ['id' => $cuti['saldo_id']])->row_array();
+        if ($saldo)
+        {
+            $i = $saldo['saldo_digunakan'] - $cuti['lama'];
+            $sisa = $saldo['saldo_awal'] - $i;
+
+            $this->db->set('saldo_digunakan', $i);
+            $this->db->set('saldo', $sisa);
+            $this->db->where('id', $cuti['saldo_id']);
+            $this->db->update('cuti_saldo');
+        }
 
         //Notifikasi ke USER
         $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
@@ -405,6 +417,18 @@ class Cuti extends CI_Controller
         $this->db->set('status', '0');
         $this->db->where('cuti_id', $id);
         $this->db->update('cuti_detail');
+
+        $saldo = $this->db->get_where('cuti_saldo', ['id' => $cuti['saldo_id']])->row_array();
+        if ($saldo)
+        {
+            $i = $saldo['saldo_digunakan'] - $cuti['lama'];
+            $sisa = $saldo['saldo_awal'] - $i;
+
+            $this->db->set('saldo_digunakan', $i);
+            $this->db->set('saldo', $sisa);
+            $this->db->where('id', $cuti['saldo_id']);
+            $this->db->update('cuti_saldo');
+        }
 
         //Notifikasi ke USER
         $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
