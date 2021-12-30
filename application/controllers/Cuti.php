@@ -507,7 +507,7 @@ class Cuti extends CI_Controller
                     'expired' => date('Y-m-d', strtotime($this->input->post('expired'))),
                     'keterangan' => $this->input->post('keterangan'),
                     'created_by' => $this->session->userdata('inisial'),
-                    'created_at' => date('Y-m-d'),
+                    'created_at' => date('Y-m-d H:i:s'),
                     'status' => 'AKTIF'
                 ];
                 $this->db->insert('cuti_saldo', $data);
