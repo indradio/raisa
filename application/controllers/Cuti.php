@@ -190,6 +190,64 @@ class Cuti extends CI_Controller
         redirect('/cuti');
     }
 
+    public function cancel()
+    {
+        $id = $this->input->post('id');
+        $cuti = $this->db->get_where('cuti', ['id' => $id])->row_array();
+
+        $this->db->set('reject_by', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+        $this->db->set('reject_at', date('Y-m-d H:i:s'));
+        $this->db->set('reject_reason', $this->input->post('keterangan'));
+        $this->db->set('status', '0');
+        $this->db->set('reject_status', $cuti['status']);
+        $this->db->where('id', $id);
+        $this->db->update('cuti');
+
+        $this->db->set('status', '0');
+        $this->db->where('cuti_id', $id);
+        $this->db->update('cuti_detail');
+        
+        $saldo = $this->db->get_where('cuti_saldo', ['id' => $cuti['saldo_id']])->row_array();
+        if ($saldo)
+        {
+            $i = $saldo['saldo_digunakan'] - $cuti['lama'];
+            $sisa = $saldo['saldo_awal'] - $i;
+
+            $this->db->set('saldo_digunakan', $i);
+            $this->db->set('saldo', $sisa);
+            $this->db->where('id', $cuti['saldo_id']);
+            $this->db->update('cuti_saldo');
+        }
+
+        //Notifikasi ke USER
+        $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*[NOTIF] PEMBATALAN CUTI*" .
+                    "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
+                    "\r\nTanggal : *" . date('d-M', strtotime($cuti['tgl1'])) . "*" .
+                    "\r\nLama : *" . $cuti['lama'] ." Hari* " .
+                    "\r\nAlasan : *" . $this->input->post('keterangan') . "*" .
+                    "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
+                    "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+              
+        $this->session->set_flashdata('notify', 'cancel');
+        redirect('cuti');
+    }
+
     public function approval()
     {
         $data['sidemenu'] = 'Approval';
@@ -334,7 +392,7 @@ class Cuti extends CI_Controller
                     'phone' => $user['phone'],
                     'message' => "*[NOTIF] PEMBATALAN CUTI*" .
                     "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
-                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl1'])) . "*" .
+                    "\r\nTanggal : *" . date('d-M', strtotime($cuti['tgl1'])) . "*" .
                     "\r\nLama : *" . $cuti['lama'] ." Hari* " .
                     "\r\nAlasan : *" . $this->input->post('keterangan') . "*" .
                     "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".
@@ -447,7 +505,7 @@ class Cuti extends CI_Controller
                     'phone' => $user['phone'],
                     'message' => "*[NOTIF] PEMBATALAN CUTI*" .
                     "\r\n \r\nNama : *" . $cuti['nama'] . "*" .
-                    "\r\nTanggal : *" . date('d-M H:i', strtotime($cuti['tgl1'])) . "*" . 
+                    "\r\nTanggal : *" . date('d-M', strtotime($cuti['tgl1'])) . "*" . 
                     "\r\nLama : *" . $cuti['lama'] ." Hari* " .
                     "\r\nAlasan : *" . $this->input->post('keterangan') . "*" .
                     "\r\n \r\nCuti ini telah *DIBATALKAN oleh ". $this->session->userdata('inisial') ."*".

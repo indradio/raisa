@@ -91,7 +91,7 @@
                       <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
                       <td class="text-right">
                         <?php if ($row['saldo_digunakan']==0): ?>
-                          <a href="#" class="btn btn-danger btn-link" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteCuti" data-id="<?= $row['id']; ?>"><i class="material-icons">delete_forever</i></a>
+                          <a href="#" class="btn btn-link btn-danger btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteCuti" data-id="<?= $row['id']; ?>"><i class="material-icons">delete_forever</i></a>
                           <?php endif; ?>
                       </td>
                     </tr>
