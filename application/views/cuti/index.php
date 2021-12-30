@@ -190,7 +190,8 @@
                       </div>
                       <div class="col-md-12" id="">
                           <div class="form-group">
-                              <label class="bmd-label">*Jika diantara Cuti kamu terdapat <b>Hari Libur Nasional</b>, Harap dibuat menjadi 2x pengajuan cuti.</label></br>
+                              <label class="bmd-label"><mark>*Pengajuan cuti paling lambat <b>H-1 pukul 21:00</b>.</mark></label></br>
+                              <label class="bmd-label"><mark>*Jika diantara cuti kamu terdapat <b>Hari Libur Nasional</b> di hari kerja, Harap dibuat menjadi 2x pengajuan cuti.</mark></label></br>
                           </div>
                       </div>
                       <div class="col-md-12">
@@ -211,25 +212,25 @@
                     </div>
                 </div>
               </form>
-              <div class="col-md-12 ml-1">
-                        <div id="accordion" role="tablist">
-                          <div class="card card-collapse">
-                            <div class="card-header" role="tab" id="headingPanduan">
-                              <h5 class="mb-0">
-                                <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
-                                  Panduan
-                                  <i class="material-icons">keyboard_arrow_down</i>
-                                </a>
-                              </h5>
-                            </div>
-                            <div id="collapsePanduan" class="collapse" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
-                              <div class="card-body">
-                                
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+              <!-- <div class="col-md-12 ml-1">
+                <div id="accordion" role="tablist">
+                  <div class="card card-collapse">
+                    <div class="card-header" role="tab" id="headingPanduan">
+                      <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
+                          Panduan
+                          <i class="material-icons">keyboard_arrow_down</i>
+                        </a>
+                      </h5>
+                    </div>
+                    <div id="collapsePanduan" class="collapse" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
+                      <div class="card-body">
+                        
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
         </div>
     </div>
 </div>

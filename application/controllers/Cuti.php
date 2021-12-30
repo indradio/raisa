@@ -22,6 +22,7 @@ class Cuti extends CI_Controller
 
     public function index()
     {
+        $this->saldo_update();
         $data['sidemenu'] = 'Cuti';
         $data['sidesubmenu'] = 'CutiKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -34,6 +35,7 @@ class Cuti extends CI_Controller
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('saldo >', 0);
         $this->db->where('status', 'AKTIF');
+        $this->db->order_by('expired', 'ASC');
         $saldo = $this->db->get('cuti_saldo');
         $data['saldo'] = $saldo->result_array();
 
@@ -464,14 +466,8 @@ class Cuti extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         
         if (empty($params)){
-            $today = date('Y-m-d');
-            $querySaldo = "SELECT *
-                FROM `cuti_saldo`
-                WHERE `valid` > '{$today}' OR `expired` < '{$today}' ";
-                $expired = $this->db->query($querySaldo)->result_array();
-            if ($expired){
-                $this->saldo_update();
-            }
+            
+            $this->saldo_update();
 
             $data['sidemenu'] = 'HR Cuti';
             $data['sidesubmenu'] = 'Saldo';
@@ -610,13 +606,37 @@ class Cuti extends CI_Controller
 
     public function saldo_update()
     {
-        $this->db->set('status', 'WAITING');
-        $this->db->where('valid >', date('Y-m-d'));
-        $this->db->update('cuti_saldo');
+        date_default_timezone_set('asia/jakarta');
+        $today = date('Y-m-d');
+        
+        $this->db->where('valid <', $today);
+        $this->db->where('expired >', $today);
+        $this->db->where('status !=', 'AKTIF');
+        $activated = $this->db->get_where('cuti_saldo')->result();
+            foreach ($activated as $row) :
+                $this->db->set('status', 'AKTIF');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
 
-        $this->db->set('status', 'EXPIRED');
-        $this->db->where('expired <', date('Y-m-d'));
-        $this->db->update('cuti_saldo');
+        $this->db->where('valid >', $today);
+        $this->db->where('status !=', 'WAITING');
+        $waiting = $this->db->get_where('cuti_saldo')->result();
+            foreach ($waiting as $row) :
+                $this->db->set('status', 'WAITING');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+
+        $this->db->where('expired <', $today);
+        $this->db->where('status !=', 'EXPIRED');
+        $expired = $this->db->get_where('cuti_saldo')->result();
+            foreach ($expired as $row) :
+                $this->db->set('status', 'EXPIRED');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+
     }
 
     public function hr_report()
