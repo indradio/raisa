@@ -559,8 +559,8 @@ class Cuti extends CI_Controller
                                     'keterangan'        => $cells[3],
                                     'valid'             => $valid,
                                     'expired'           => $expired,
-                                    'created_at'        => $this->session->userdata('inisial'),
-                                    'created_by'        => date('Y-m-d'),
+                                    'created_at'        => date('Y-m-d H:i:s'),
+                                    'created_by'        => $this->session->userdata('inisial'),
                                     'status'            => 'AKTIF'
                                 );
 
