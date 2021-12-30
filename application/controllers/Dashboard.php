@@ -272,11 +272,11 @@ class Dashboard extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $this->notifications();
 
-        $complete = $this->db->get_where('survei_payment', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        // $complete = $this->db->get_where('survei_payment', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
-        if (empty($complete)){
-            // redirect('dashboard/survei');
-        }
+        // if (empty($complete)){
+        //     redirect('dashboard/survei');
+        // }
 
         // List Kendaraan
         $this->db->where('is_active', '1');

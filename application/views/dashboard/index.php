@@ -99,6 +99,29 @@
       </div>  
     </div>
 
+    <!-- Icon for Mobile -->
+    <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+          <div class="card-header card-header-text card-header-info">
+          <div class="card-text">
+            <h4 class="card-title">Calendar Of Events</h4>
+            <p class="card-category">2022</p>
+          </div>
+        </div>
+              <div class="card-body">
+                  <div class="embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/COE-2022.pdf"></iframe>
+                  </div>
+                  <a href="<?= base_url(); ?>assets/pdf/COE-2022.pdf" class="btn btn-link btn-twitter" target="_blank">
+                          <i class="fa fa-download"></i> Download
+                        <div class="ripple-container"></div></a>
+              </div>
+          </div>
+          <!--  end card  -->
+      </div>  
+    </div>
+
     <div class="row">
 
     <!-- Outstanding Approval Perjalanan -->
