@@ -224,7 +224,7 @@ class Layanan extends CI_Controller
                             'message' => "*[INFORMASI] Pengajuan CUTI melalui RAISA*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
                             "\r\nMulai 3 Januari 2022 pengajuan CUTI sudah dapat dilakukan melalui RAISA." .
-                            "\r\nJika ada pertanyaan mengenai cuti di-RAISA, jangan ragu untuk menghubungi nomor raisa." .
+                            "\r\nJika ada pertanyaan mengenai cuti di-RAISA, jangan ragu untuk menghubungi admin raisa." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nRAISA X Human Capital"
                         ],
