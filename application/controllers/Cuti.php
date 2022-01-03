@@ -651,6 +651,17 @@ class Cuti extends CI_Controller
                     echo "Error :" . $this->upload->display_errors(); //tampilkan pesan error jika file gagal diupload
                 }
 
+            // Edit Saldo belum digunakan
+            }elseif ($params=='edit') {
+
+                $this->db->set('valid', date('Y-m-d', strtotime($this->input->post('valid'))));
+                $this->db->set('expired', date('Y-m-d', strtotime($this->input->post('expired'))));
+                $this->db->set('saldo_awal', $this->input->post('saldo'));
+                $this->db->set('saldo', $this->input->post('saldo'));
+                $this->db->set('keterangan', $this->input->post('keterangan'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('cuti_saldo');
+
             // Delete Saldo belum digunakan
             }elseif ($params=='del') {
 
