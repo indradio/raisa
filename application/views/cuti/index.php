@@ -231,7 +231,7 @@
                     <div class="row">
                       <div class="col-md-12">
                           <div class="form-group">
-                              <label class="bmd-label-floating"><small>Alasan</small></label></br>
+                              <label class="bmd-label-floating"><small>Kenapa mau dibatalkan? (Alasan)</small></label></br>
                               <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3" required="true"></textarea>
                           </div>
                       </div>
