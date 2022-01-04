@@ -19,6 +19,9 @@
 
     <!-- CSS Files -->
     <link href="<?= base_url(); ?>assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert2.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert2.min.css">
 
     <!-- CSS PhotoSwipe -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" rel="stylesheet" />

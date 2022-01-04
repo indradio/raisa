@@ -1,15 +1,45 @@
 const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
 if (flashData == 'masuk') {
+  
   swal({
     title: "",
-    text: "“You are never too old to set another goal or to dream a new dream.” — C.S. Lewis",
+    text: "“Keterbukaan informasi dikedepankan dibanding ngedumel di belakang.” — @bapak2ID",
     buttonsStyling: false,
     showConfirmButton: false,
     // confirmButtonClass: "btn btn-info",
     // type: "info",
-    timer: "3000"
+    timer: "5000",
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+      // const b = Swal.getHtmlContainer().querySelector('b')
+      timerInterval = setInterval(() => {
+        b.textContent = Swal.getTimerLeft()
+      }, 100)
+  },
+  willClose: () => {
+    clearInterval(timerInterval)
+  }
   }).catch(swal.noop)
+
+} else if (flashData == 'approved') {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    type: 'success',
+    title: 'Approved'
+  })
 } else if (flashData == 'setujudl') {
   swal({
     title: "Terimakasih!",

@@ -910,6 +910,27 @@
 <script>
   $(document).ready(function() {
 
+    <?php if ($this->session->flashdata('message')=='masuk'){ ?>
+       
+       let timerInterval
+       Swal.fire({
+         title: 'Quote',
+         html: '“Keterbukaan informasi dikedepankan dibanding ngedumel di belakang.” — @bapak2ID',
+         timer: 5000,
+         timerProgressBar: true,
+         showConfirmButton: false,
+         willClose: () => {
+           clearInterval(timerInterval)
+         }
+       }).then((result) => {
+         /* Read more about handling dismissals below */
+         if (result.dismiss === Swal.DismissReason.timer) {
+           console.log('I was closed by the timer')
+         }
+       })
+       
+     <?php } ?>
+
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
       var id = button.data('id') // Extract info from data-* attributes
