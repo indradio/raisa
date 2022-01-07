@@ -221,12 +221,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] Pengajuan CUTI melalui RAISA*" .
+                            'message' => "*[INFORMASI] Grab Taksi untuk Perjalanan Dinas Kamu*" .
                             "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nMulai 3 Januari 2022 pengajuan CUTI sudah dapat dilakukan melalui RAISA." .
-                            "\r\nJika ada pertanyaan mengenai cuti di-RAISA, jangan ragu untuk menghubungi admin raisa." .
+                            "\r\nGuna mempermudah pemesanan taksi untuk keperluan Dinas Luar kami bermaksud untuk menggunakan *Grab Corporate*." .
+                            "\r\nTerkait hal tersebut, dibutuhkan pendataan karyawan untuk menunjang kegiatan tersebut. Untuk itu kami minta kesediaan Bapak-Bapak & Ibu-Ibu berpartisipasi untuk mengisi Google Form berikut :" .
+                            "\r\nhttps://s.id/dlgrab" .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nRAISA X Human Capital"
+                            "\r\nGeneral Affair"
                         ],
                     ]
                 );

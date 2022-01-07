@@ -112,7 +112,8 @@
                 </thead>
                 <tbody>
                   <?php 
-                  $kry = $this->db->get_where('karyawan', ['sect_id' => $this->session->userdata('sect_id')])->result_array();
+                  $this->db->where('sect_id', $this->session->userdata('sect_id'));
+                  $kry = $this->db->get_where('karyawan', ['is_active' => '1'])->result_array();
                   foreach ($kry as $k) : ?>
                   <tr>
                     <td><?=$k['nama']; ?></td>
