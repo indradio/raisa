@@ -18,11 +18,12 @@ class Cuti extends CI_Controller
         is_logged_in();
 
         $this->load->model('Cuti_model');
+        $this->saldo_update();
+        $this->approval_coo();
     }
 
     public function index()
     {
-        $this->saldo_update();
         $data['sidemenu'] = 'Cuti';
         $data['sidesubmenu'] = 'CutiKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -747,6 +748,89 @@ class Cuti extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('cuti/qna', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function approval_coo()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $today = date('Y-m-d');
+        $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row_array();
+        
+        $this->db->where('tgl1 >=', $today);
+        $this->db->where('atasan1', 'DNO');
+        $outstanding1 = $this->db->get_where('cuti')->result();
+            foreach ($outstanding1 as $row) :
+                $this->db->set('acc_atasan1', 'Disetujui oleh DNO');
+                $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
+                $this->db->set('acc_atasan2', 'Disetujui oleh DNO');
+                $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+                $this->db->set('status', '3');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti');
+
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $admin_hr['phone'],
+                            'message' => "*[NOTIF] PENGAJUAN CUTI*" .
+                            "\r\n \r\nNama    : *" . $row->nama . "*" .
+                            "\r\nTanggal  : *" . date('d M Y', strtotime($row->tgl1)) . "*" .
+                            "\r\nLama      : *" . $row->lama ." Hari* " .
+                            "\r\nKeterangan : *" . $row->keterangan . "*" .
+                            "\r\n \r\nCuti ini telah DISETUJUI oleh DNO (by System)".
+                            "\r\nHarap segera respon *Setujui/Batalkan*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/hr_approval"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+            endforeach;
+
+        $this->db->where('tgl1 <=', $today);
+        $this->db->where('atasan2', 'DNO');
+        $outstanding1 = $this->db->get_where('cuti')->result();
+            foreach ($outstanding1 as $row) :
+                $this->db->set('acc_atasan2', 'Disetujui oleh DNO');
+                $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+                $this->db->set('status', '3');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti');
+
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $admin_hr['phone'],
+                            'message' => "*[NOTIF] PENGAJUAN CUTI*" .
+                            "\r\n \r\nNama    : *" . $row->nama . "*" .
+                            "\r\nTanggal  : *" . date('d M Y', strtotime($row->tgl1)) . "*" .
+                            "\r\nLama      : *" . $row->lama ." Hari* " .
+                            "\r\nKeterangan : *" . $row->keterangan . "*" .
+                            "\r\n \r\nCuti ini telah DISETUJUI oleh DNO (by System)".
+                            "\r\nHarap segera respon *Setujui/Batalkan*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/hr_approval"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+                
+            endforeach;
+
+        
+
     }
 
 }
