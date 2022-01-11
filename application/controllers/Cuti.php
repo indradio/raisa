@@ -415,6 +415,10 @@ class Cuti extends CI_Controller
         
         $queryCuti = "SELECT * FROM `cuti` WHERE`status`= '3' ";
         $data['cuti'] = $this->db->query($queryCuti)->result_array();
+        
+        $last31 = date('Y-m-d', strtotime("-31 day", strtotime(date("Y-m-d"))));
+        $querylast31 = "SELECT * FROM `cuti` WHERE `tgl1` >= '{$last31}' AND `status` = '9'";
+        $data['last31'] = $this->db->query($querylast31)->result_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -756,8 +760,10 @@ class Cuti extends CI_Controller
         $today = date('Y-m-d');
         $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row_array();
         
+        
         $this->db->where('tgl1 >=', $today);
         $this->db->where('atasan1', 'DNO');
+        $this->db->where('status', '1');
         $outstanding1 = $this->db->get_where('cuti')->result();
             foreach ($outstanding1 as $row) :
                 $this->db->set('acc_atasan1', 'Disetujui oleh DNO');
@@ -795,6 +801,7 @@ class Cuti extends CI_Controller
 
         $this->db->where('tgl1 <=', $today);
         $this->db->where('atasan2', 'DNO');
+        $this->db->where('status', '2');
         $outstanding1 = $this->db->get_where('cuti')->result();
             foreach ($outstanding1 as $row) :
                 $this->db->set('acc_atasan2', 'Disetujui oleh DNO');
@@ -828,8 +835,6 @@ class Cuti extends CI_Controller
                 $body = $response->getBody();
                 
             endforeach;
-
-        
 
     }
 
