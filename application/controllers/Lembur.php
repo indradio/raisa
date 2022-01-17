@@ -11,8 +11,31 @@ class Lembur extends CI_Controller
         parent::__construct();
         is_logged_in();
         date_default_timezone_set('asia/jakarta');
+        $this->update();
         
         $this->load->model("project_model");
+    }
+
+    public function update()
+    {
+         //Auto batalkan LEMBUR
+         $this->db->where('status', '1');
+         $this->db->where('life', '0');
+         $rencanalembur = $this->db->get('lembur')->result_array();
+ 
+         foreach ($rencanalembur as $l) :
+             // cari selisih
+             $sekarang = strtotime(date('Y-m-d H:i:s'));
+             $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+1 hours', strtotime($l['tglmulai_rencana']))));
+ 
+             if ($tempo < $sekarang) {
+                 $this->db->set('catatan', "Waktu RENCANA LEMBUR kamu telah HABIS - Dibatalkan oleh SISTEM");
+                 $this->db->set('status', '0');
+                 $this->db->where('id', $l['id']);
+                 $this->db->update('lembur');
+             }
+         endforeach;
+         // End Auto Batalkan RENCANA LEMBUR
     }
 
     public function ajax()
@@ -41,25 +64,6 @@ class Lembur extends CI_Controller
 
     public function rencana()
     {
-        //Auto batalkan LEMBUR
-        $this->db->where('status', '1');
-        $this->db->where('life', '0');
-        $rencanalembur = $this->db->get('lembur')->result_array();
-
-        foreach ($rencanalembur as $l) :
-            // cari selisih
-            $sekarang = strtotime(date('Y-m-d H:i:s'));
-            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+1 hours', strtotime($l['tglmulai_rencana']))));
-
-            if ($tempo < $sekarang) {
-                $this->db->set('catatan', "Waktu RENCANA LEMBUR kamu telah HABIS - Dibatalkan oleh SISTEM");
-                $this->db->set('status', '0');
-                $this->db->where('id', $l['id']);
-                $this->db->update('lembur');
-            }
-        endforeach;
-        // End Auto Batalkan RENCANA LEMBUR
-
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Rencana';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -560,11 +564,11 @@ class Lembur extends CI_Controller
         $this->db->update('lembur');
 
             if($lembur['status']=='1'){
-                $this->session->set_flashdata('message', 'hapus');
+                // $this->session->set_flashdata('message', 'hapus');
                 redirect('lembur/rencana_aktivitas/' . $aktivitas['link_aktivitas']);
             }
             else if ($lembur['status']=='2' OR $lembur['status']=='3'){
-                $this->session->set_flashdata('message', 'hapus');
+                // $this->session->set_flashdata('message', 'hapus');
                 redirect('lembur/persetujuan_rencana/' . $aktivitas['link_aktivitas']);
             }
             elseif ($lembur['status']=='7'){
@@ -741,10 +745,10 @@ class Lembur extends CI_Controller
         $this->db->update('lembur');
 
         if($lembur['status']=='4'){
-            $this->session->set_flashdata('message', 'hapus');
+            // $this->session->set_flashdata('message', 'hapus');
             redirect('lembur/realisasi_aktivitas/' . $lembur['id']);
         } elseif ($lembur['status']=='7'){
-            $this->session->set_flashdata('message', 'hapus');
+            // $this->session->set_flashdata('message', 'hapus');
             redirect('lembur/proses/hr/' . $lembur['id']);
         }
     }
