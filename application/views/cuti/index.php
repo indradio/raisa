@@ -176,42 +176,53 @@
                           </div>
                       </div>
                       <div class="col-md-12">
-                          <div class="form-group">
-                              <label class="bmd-label">Keterangan*</label></br>
-                              <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3" required></textarea>
-                          </div>
+                        <div class="form-group">
+                          <label class="bmd-label">Keterangan*</label></br>
+                          <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3" required></textarea>
+                        </div>
                       </div>
                     </div>
                     <p>
-                </div>
-                <div class="modal-footer">
-                    <div class="row">
-                      <div class="col-md-12 mr-1">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                      <div class="col-md-12 ml-1">
+                            <div id="accordion" role="tablist">
+                              <div class="card card-collapse">
+                                <div class="card-header" role="tab" id="headingPanduan">
+                                  <h5 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
+                                      Syarat dan ketentuan cuti di RAISA:
+                                      <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                  </h5>
+                                </div>
+                                <div id="collapsePanduan" class="collapse show" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
+                                  <div class="card-body">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label class="bmd-label">1. Form di RAISA hanya menggantikan form fisik sebelumnya tanpa mengubah pola interaksi, tetap informasikan pengajuan cuti Anda kepada pimpinan-pimpinan Anda secara langsung.</label></br>
+                                          <label class="bmd-label">2. Kondisi darurat adalah kondisi yang tidak diharapkan DAN terjadi secara mendadak seperti kecelakaan, meninggal dunia, bencana alam, kerusuhan, kebakaran, serangan jantung, dan anak/istri sakit (dibuktikan dengan surat dokter). Selain kondisi-kondisi tersebut maka dianggap bukan kondisi darurat walaupun tidak diharapkan.</label></br>
+                                          <label class="bmd-label">3. Ajukan cuti maksimal H-1 pukul 21.00 kecuali dalam kondisi darurat tersebut di atas.</label></br>
+                                          <label class="bmd-label">4. Karyawan tidak boleh melakukan cutinya sebelum disetujui oleh atasan 1 dan atasan 2.</label></br>
+                                          <label class="bmd-label">5. Raisa tidak bertanggung jawab atas permohonan cuti yang tidak kunjung disetujui oleh pimpinan terkait, tetap lakukan komunikasi dengan pimpinan-pimpinan terkait.</label></br>
+                                          <label class="bmd-label">6. Karyawan yang melakukan cuti sebelum pengajuan cutinya disetujui pihak terkait, maka dianggap mangkir dan konsekuensinya akan mengikuti aturan perusahaan.</label></br>
+                                          <label class="bmd-label">7. Ketentuan ini berlaku mulai 17 Januari 2022.</label></br>
+                                      </div>
+                                  </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="row">
+                          <div class="col-md-12 mr-1">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
                         <button type="submit" class="btn btn-success">AJUKAN</button>
                       </div>
                     </div>
                 </div>
               </form>
-              <!-- <div class="col-md-12 ml-1">
-                <div id="accordion" role="tablist">
-                  <div class="card card-collapse">
-                    <div class="card-header" role="tab" id="headingPanduan">
-                      <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
-                          Panduan
-                          <i class="material-icons">keyboard_arrow_down</i>
-                        </a>
-                      </h5>
-                    </div>
-                    <div id="collapsePanduan" class="collapse" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
-                      <div class="card-body">
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+              
         </div>
     </div>
 </div>
