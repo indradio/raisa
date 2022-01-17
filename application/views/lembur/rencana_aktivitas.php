@@ -62,7 +62,7 @@
                                             <td><?= $a['durasi']; ?> Jam</td>
                                             <?php if ($lembur['status'] == '1') { ?>
                                                 <td class="text-right">
-                                                    <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
+                                                    <a href="<?= base_url('lembur/hapus_aktivitas/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm">Batalkan</a>
                                                 </td>
                                             <?php }; ?>
                                         </tr>
@@ -150,33 +150,31 @@
                                         <textarea rows="3" class="form-control disabled" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
                                     </div>
                                 <?php }; ?>
-                            
-                        
-                        </p>
-                        <h4>Penting : </h4>
-                        1. Durasi LEMBUR kamu termasuk <mark><b>JAM ISTIRAHAT</b></mark> pada saat lembur. 
-                        <br>2. Untuk kamu <mark><b> DIRECT LABOR</b></mark>, Silahkan tambahkan istirahat ke dalam aktivitas <mark>(NON PROJEK -> Istirahat Siang / Malam)</mark>
-                        <br>3. Untuk <b>GANTI HARI</b> atau <b>TABUNGAN CUTI</b> pastikan <b>DURASI 9 JAM</b> (Termasuk Istirahat) jika KURANG atau LEBIH maka tidak bisa dilakukan REALISASI!.
-                        <br>4. Pastikan <b>JAM LEMBUR</b> kamu sesuai dengan <b>JAM PRESENSI</b> kamu ya!.
-                        </p>
-                        <!-- Button SUBMIT -->
-                        <?php if ($lembur['status'] == 1 AND $lembur['aktivitas_rencana'] >= 1) {
+                                </p>
+                            <h4>Penting : </h4>
+                            1. Durasi LEMBUR kamu termasuk <mark><b>JAM ISTIRAHAT</b></mark> pada saat lembur. 
+                            <br>2. Untuk kamu <mark><b> DIRECT LABOR</b></mark>, Silahkan tambahkan istirahat ke dalam aktivitas <mark>(NON PROJEK -> Istirahat Siang / Malam)</mark>
+                            <br>3. Untuk <b>GANTI HARI</b> atau <b>TABUNGAN CUTI</b> pastikan <b>DURASI 9 JAM</b> (Termasuk Istirahat) jika KURANG atau LEBIH maka tidak bisa dilakukan REALISASI!.
+                            <br>4. Pastikan <b>JAM LEMBUR</b> kamu sesuai dengan <b>JAM PRESENSI</b> kamu ya!.
+                            </p>
+                            <!-- Button SUBMIT -->
+                            <?php if ($lembur['status'] == 1 AND $lembur['aktivitas_rencana'] >= 1) {
 
-                            if ($lembur['pemohon'] != $this->session->userdata('inisial')){
-                                echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">TERIMA</button>';
-                            } else {
-                                echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>';
-                            }
+                                if ($lembur['pemohon'] != $this->session->userdata('inisial')){
+                                    echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">TERIMA</button>';
+                                } else {
+                                    echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success">SUBMIT</button>';
+                                }
 
-                        } else { 
+                            } else { 
+                                
+                                echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>';
                             
-                            echo '<button type="submit" id="ajukan" class="btn btn-sm btn-success disabled">SUBMIT</button>';
-                        
-                        } ?>
-                        <!-- Button BATALKAN & KEMBALI -->
-                            <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
-                            <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-sm btn-default" role="button">KEMBALI</a>
-                        </form>
+                            } ?>
+                            <!-- Button BATALKAN & KEMBALI -->
+                                <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                                <a href="<?= base_url('lembur/rencana/') ?>" class="btn btn-sm btn-default" role="button">KEMBALI</a>
+                            </form>
                 </div>
                 <!-- end content-->
             </div>
