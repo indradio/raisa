@@ -196,12 +196,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p>
+                                <!-- <p>
                                 <div class="row col-md-11 ml-auto mr-auto">
                                     <div class="progress" style="width: 100%">
                                         <div class="progress-bar progress-bar-info" role="progressbar" style="width: 100%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row">
                                     <label class="col-md-3 col-form-label">Nama Institusi</br><small>Pendidikan</small></label>
                                     <div class="col-md-8">
@@ -466,15 +466,18 @@
                           <div class="form-group">
                               <label class="bmd-label">Pekerjaan*</label></br>
                                 <select class="selectpicker" name="pekerjaan" id="pekerjaan" title="Pilih" data-style="select-with-transition" data-size="5" data-width="100%" data-live-search="false" required>
-                                        <option value="IBU RUMAH TANGGA">IBU RUMAH TANGGA</option>
-                                        <option value="PELAJAR">PELAJAR</option>
-                                        <option value="KARYAWAN SWASTA">KARYAWAN SWASTA</option>
-                                        <option value="PEGAWAI NEGERI SIPIL">PEGAWAI NEGERI SIPIL</option>
-                                        <option value="WIRAUSAHA">WIRAUSAHA</option>
+                                        <option value="IRT">Ibu rumah Tangga</option>
+                                        <option value="PENGAJAR">Pengajar (Guru, Dosen Dll)</option>
+                                        <option value="NAKES">Tenaga kesehatan</option>
+                                        <option value="PEKERJA">Pekerja</option>
+                                        <option value="PNS">Pegawai Negeri Sipil</option>
+                                        <option value="ENTERPRENEUR">Enterpreneur</option>
+                                        <option value="PELAJAR">Pelajar</option>
+                                        <option value="ARTIS">Artis, Designer, Youtuber Dll</option>
                                 </select>
                           </div>
                       </div>
-                      <div class="col-md-12">
+                      <!-- <div class="col-md-12">
                           <div class="form-group">
                               <label class="bmd-label">Vaksin*</label></br>
                               <select class="selectpicker show-tick" name="vaksin_nama" id="vaksin_nama" title="Pilih" data-style="select-with-transition" data-size="5" data-width="100%" data-live-search="false" required="true">
@@ -495,7 +498,7 @@
                                     <option value="2">2</option>
                                 </select>
                           </div>
-                      </div>
+                      </div> -->
                     </div>
                     <p>
                 </div>

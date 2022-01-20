@@ -102,11 +102,11 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'COVID-19') {
-                          echo '<span class="badge badge-danger badge-sm">+</span>';
+                        <?php if ($m['menu'] == 'Info HR') {
+                          echo '<span class="badge badge-info badge-sm">Baru</span>';
                         } ?>
                         <?php if ($m['menu'] == 'Cuti') {
-                          echo '<span class="badge badge-info badge-sm">Segera</span>';
+                          echo '<span class="badge badge-info badge-sm">Baru</span>';
                         } ?>
                         <b class="caret"></b>
                       </p>
@@ -118,11 +118,11 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'COVID-19') {
-                                echo '<span class="badge badge-danger badge-sm">+</span>';
+                              <?php if ($m['menu'] == 'Info HR') {
+                                echo '<span class="badge badge-info badge-sm">Baru</span>';
                               } ?>
                               <?php if ($m['menu'] == 'Cuti') {
-                                echo '<span class="badge badge-info badge-sm">Segera</span>';
+                                echo '<span class="badge badge-info badge-sm">Baru</span>';
                               } ?>
                               <b class="caret"></b>
                             </p>
