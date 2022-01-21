@@ -59,7 +59,7 @@ class Perjalanan extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
-                $this->db->where('sect_id', '214');
+                $this->db->where('sect_id', '215');
                 $ga_admin = $this->db->get('karyawan_admin')->row_array();
 
                 $client = new \GuzzleHttp\Client();
@@ -1046,5 +1046,23 @@ class Perjalanan extends CI_Controller
             $data['perjalanan'] = $this->db->get_where('perjalanan_ta', ['id' => $id])->row_array();
             $this->load->view('perjalananta/pdf_surat_tugas_ta', $data);
         }
+    }
+
+    public function today()
+    {
+        // Halaman dashboard
+        $data['sidemenu'] = 'Perjalanan Dinas';
+        $data['sidesubmenu'] = 'Hari Ini';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        // List Kendaraan
+        $this->db->where('is_active', '1');
+        $this->db->where('id !=', '1');
+        $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanan/today', $data);
+        $this->load->view('templates/footer');
     }
 }
