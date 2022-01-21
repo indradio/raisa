@@ -683,8 +683,8 @@ class Cuti extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $today = date('Y-m-d');
         
-        $this->db->where('valid <', $today);
-        $this->db->where('expired >', $today);
+        $this->db->where('valid <=', $today);
+        $this->db->where('expired =>', $today);
         $this->db->where('status !=', 'AKTIF');
         $activated = $this->db->get_where('cuti_saldo')->result();
             foreach ($activated as $row) :
@@ -693,7 +693,7 @@ class Cuti extends CI_Controller
                 $this->db->update('cuti_saldo');
             endforeach;
 
-        $this->db->where('valid >', $today);
+        $this->db->where('valid =>', $today);
         $this->db->where('status !=', 'WAITING');
         $waiting = $this->db->get_where('cuti_saldo')->result();
             foreach ($waiting as $row) :
@@ -702,7 +702,7 @@ class Cuti extends CI_Controller
                 $this->db->update('cuti_saldo');
             endforeach;
 
-        $this->db->where('expired <', $today);
+        $this->db->where('expired =<', $today);
         $this->db->where('status !=', 'EXPIRED');
         $expired = $this->db->get_where('cuti_saldo')->result();
             foreach ($expired as $row) :
