@@ -133,7 +133,8 @@ class Profil extends CI_Controller
         if (empty($details)){
 
             $data = [
-                'npk' => $this->session->userdata('npk')
+                'npk' => $this->session->userdata('npk'),
+                'nama' => $this->session->userdata('nama')
             ];
             $this->db->insert('karyawan_details', $data);
         }
@@ -205,6 +206,8 @@ class Profil extends CI_Controller
         $this->db->set('kerabat_kontak', $this->input->post('kerabat_kontak'));
         $this->db->set('kerabat_alamat', $this->input->post('kerabat_alamat'));
         $this->db->set('domisili_ktp', $this->input->post('checkdomisili'));
+        $this->db->set('updated_by', $this->session->userdata('inisial'));
+        $this->db->set('updated_at', date('Y-m-d H:i:s'));
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->update('karyawan_details');
 

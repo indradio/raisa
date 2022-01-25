@@ -47,7 +47,7 @@
                                     <label class="col-md-3 col-form-label">Tanggal Lahir</label>
                                     <div class="col-md-8">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control datepicker" name="lahir_tanggal" value="<?= (!empty($details)) ? $details['lahir_tanggal'] : ''; ?>" required="true"/>
+                                            <input type="text" class="form-control datepicker" name="lahir_tanggal" value="<?= (!empty($details)) ? date('d-m-Y', strtotime($details['lahir_tanggal'])) : ''; ?>" required="true"/>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <label class="col-md-3 col-form-label">Vaksin</label>
                                     <div class="col-md-8">
                                         <div class="form-group has-default">
@@ -285,15 +285,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                <!-- </div>
-                                <div class="row"> -->
                                     <label class="col-md-3 col-form-label">Tanggal Vaksin </br><small>Terakhir</small></label>
                                     <div class="col-md-8">
                                         <div class="form-group has-default">
                                             <input type="text" class="form-control datepicker" name="vaksin_tanggal" id="vaksin_tanggal" value="<?= (!empty($details)) ? $details['vaksin_tanggal'] : ''; ?>" required="true"/>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <p>
                                 <div class="row col-md-11 ml-auto mr-auto">
                                     <div class="progress" style="width: 100%">
