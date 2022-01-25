@@ -7,6 +7,7 @@ class Profil extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        date_default_timezone_set('asia/jakarta');
     }
 
     public function index()
