@@ -107,7 +107,8 @@
                                                         <?php if ($perjalanan['um_siang']>0){ echo '<td><small>'.number_format($a['um_siang'], 0, ',', '.').'</small></td>';} ?>
                                                         <?php if ($perjalanan['um_malam']>0){ echo '<td><small>'.number_format($a['um_malam'], 0, ',', '.').'</small></td>';} ?>
                                                         <?php if ($perjalanan['pic_perjalanan'] == $a['karyawan_inisial']){ 
-                                                            $tunjPeserta = number_format($a['total'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'] - $perjalanan['kasbon'], 0, ',', '.'); ?>
+                                                            $tunjPeserta = number_format($a['total'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'] - $perjalanan['kasbon'], 0, ',', '.');
+                                                            $sisa = number_format(($a['total'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - ($perjalanan['kasbon'] + $a['bayar']), 0, ',', '.'); ?>
                                                             <td>
                                                             <?= $tunjPeserta; ?><br>
                                                             <small>Rincian :</small><br>
@@ -116,7 +117,8 @@
                                                             <small>- <?= number_format($perjalanan['kasbon'], 0, ',', '.'); ?> (Kasbon)</small>
                                                             </td>
                                                         <?php }else{ 
-                                                            $tunjPeserta = number_format($a['total'], 0, ',', '.'); ?>
+                                                            $tunjPeserta = number_format($a['total'], 0, ',', '.');
+                                                            $sisa = number_format($a['total'] - $a['bayar'], 0, ',', '.'); ?>
                                                             <td><?= $tunjPeserta; ?></td>
                                                         <?php } ?>
                                                         <?php if ($a['status_pembayaran'] == 'BELUM DIBAYAR' AND $tunjPeserta > 0){
@@ -132,8 +134,7 @@
                                                                 $astrapay = 'ASTRAPAY - '.$peserta['ewallet_3'];
                                                                 $gopay = 'GOPAY - '.$peserta['ewallet_1'];
                                                                 $dana = 'DANA - '.$peserta['ewallet_2'];
-
-                                                                $sisa = $tunjPeserta - $a['bayar'];
+                                                                
                                                             ?>
                                                             <td><a href="<?= base_url('perjalanandl/bayar/'.$perjalanan['id'].'/'.$a['npk']); ?>" class="btn btn-sm btn-fill btn-danger" data-toggle="modal" data-target="#payment" data-id="<?= $perjalanan['id']; ?>" data-npk="<?= $a['npk']; ?>" data-tunj="<?= $tunjPeserta; ?>" data-bayar="<?= $a['bayar']; ?>" data-sisa="<?= $sisa; ?>" data-ewallet="<?= $ewallet; ?>" data-astrapay="<?= $astrapay; ?>" data-gopay="<?= $gopay; ?>" data-dana="<?= $dana; ?>">BAYAR SEKARANG!</a></td>
                                                         <?php 
