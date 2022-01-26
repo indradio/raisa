@@ -443,8 +443,8 @@
                           <div class="form-group">
                               <label class="bmd-label">Jenis Kelamin*</label></br>
                               <select class="selectpicker" name="jenis_kelamin" id="jenis_kelamin" title="Pilih" data-style="select-with-transition" data-size="5" data-width="100%" data-live-search="false" required>
-                                  <option value="L">Laki-Laki</option>
-                                  <option value="P">Perempuan</option>
+                                  <option value="Laki-Laki">Laki-Laki</option>
+                                  <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
                         </div>

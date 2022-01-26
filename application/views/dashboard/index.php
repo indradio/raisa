@@ -891,8 +891,9 @@
        
        let timerInterval
        Swal.fire({
-         title: 'Quote',
-         html: '“Keterbukaan informasi dikedepankan dibanding ngedumel di belakang.” — @bapak2ID',
+         title: 'Update Data',
+         icon: 'info',
+         html: 'Pastikan data diri dan keluarga kamu sudah terdaftar, </br> Kamu bisa update melalui menu <b>Info HR -> Update Data</b>',
          timer: 5000,
          timerProgressBar: true,
          showConfirmButton: false,
