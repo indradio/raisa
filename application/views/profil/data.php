@@ -470,8 +470,9 @@
                                         <option value="PEKERJA">Pekerja</option>
                                         <option value="PNS">Pegawai Negeri Sipil</option>
                                         <option value="ENTERPRENEUR">Enterpreneur</option>
-                                        <option value="PELAJAR">Pelajar</option>
                                         <option value="ARTIS">Artis, Designer, Youtuber Dll</option>
+                                        <option value="PELAJAR">Pelajar</option>
+                                        <option value="BALITA">Balita (Pra Sekolah)</option>
                                 </select>
                           </div>
                       </div>
