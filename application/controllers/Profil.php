@@ -149,7 +149,7 @@ class Profil extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('profil/data', $data);
+        $this->load->view('profil/data/index', $data);
         $this->load->view('templates/footer');
     }
 
@@ -243,28 +243,18 @@ class Profil extends CI_Controller
     {
         if ($var=='get'){
             $keluarga = $this->db->get_where('karyawan_keluarga', ['npk' => $this->session->userdata('npk')])->result();
-            
-            // $i = 1;
-            // foreach ($vendor as $row) :
-            //     $totalServing = $this->MenuModel->countServingbyVendorDate($row->date,$row->vendor,$row->canteen)->get()->getRow('serving');
-            //     $totalUsed = $this->LunchModel->getLunchbyVendorDate($row->date,$row->vendor,$row->canteen)->countAllResults();
 
-            //     $output['data'][] = array(
-            //         'no' => $i,
-            //         'date' => $row->date,
-            //         'canteen' => $row->canteen,
-            //         'serving' => $totalServing,
-            //         'total' => $totalUsed,
-            //         // 'person_card' => $row['person_card'],
-            //         // 'canteen' => $row['canteen'],
-            //         // 'vendor' => $row['vendor']
-            //     );
-            //     $i++;
-            // endforeach;
-
-            $output = array(
-                'data' => $keluarga
-            );
+            foreach ($keluarga as $row) :
+                $output['data'][] = array(
+                    'hubungan' => $row->hubungan,
+                    'nik' => $row->nik,
+                    'nama' => $row->nama,
+                    'lahir_tempat' => $row->lahir_tempat,
+                    'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
+                    'jenis_kelamin' => $row->jenis_kelamin,
+                    'pekerjaan' => $row->pekerjaan
+                );
+            endforeach;
             
             // var_dump($output);
 
@@ -289,11 +279,161 @@ class Profil extends CI_Controller
             ];
             $this->db->insert('karyawan_keluarga', $data);
 
+            $data = [
+                'id' => $id,
+                'npk' => $this->session->userdata('npk'),
+                'nik' => $this->input->post('nik'),
+                'nama' => $this->input->post('nama'),
+                'hubungan_keluarga' => $this->input->post('hubungan'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_by' => $this->session->userdata('inisial')
+            ];
+            $this->db->insert('vaksin_data', $data);
+
+        }elseif($var=='edit'){
+
+            $this->db->set('lahir_tempat', $this->input->post('lahir_tempat'));
+            $this->db->set('lahir_tanggal', date('Y-m-d', strtotime($this->input->post('lahir_tanggal'))));
+            $this->db->set('pekerjaan', $this->input->post('pekerjaan'));
+            $this->db->where('nik', $this->input->post('nik'));
+            $this->db->where('nama', $this->input->post('nama'));
+            $this->db->update('karyawan_keluarga');
+
         }elseif($var=='delete'){
 
             $this->db->where('nik', $this->input->post('nik'));
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->delete('karyawan_keluarga');
+
+            $this->db->where('nik', $this->input->post('nik'));
+            $this->db->where('nama', $this->input->post('nama'));
+            $this->db->delete('vaksin_data');
+
+        }
+    }
+
+    public function select_pekerjaan()
+    {
+
+        echo '<option value="IRT">Ibu rumah Tangga</option>';
+        echo '<option value="PENGAJAR" selected>Pengajar (Guru, Dosen Dll)</option>';
+        echo '<option value="NAKES">Tenaga kesehatan</option>';
+        echo '<option value="PEKERJA">Pekerja</option>';
+        echo '<option value="PNS">Pegawai Negeri Sipil</option>';
+        echo '<option value="ENTERPRENEUR">Enterpreneur</option>';
+        echo '<option value="ARTIS">Artis, Designer, Youtuber Dll</option>';
+        echo '<option value="PELAJAR">Pelajar</option>';
+        echo '<option value="BALITA">Balita (Pra Sekolah)</option>';
+
+    }
+
+    public function vaksin($var = null)
+    {
+        if ($var == 'get'){
+            $data = $this->db->get_where('vaksin_data', ['npk' => $this->session->userdata('npk')])->result();
+
+            foreach ($data as $row) :
+                $output['data'][] = array(
+                    'id' => $row->id,
+                    'nik' => $row->nik,
+                    'nama' => $row->nama,
+                    'hubungan' => $row->hubungan_keluarga,
+                    'vaksin1' => $row->vaksin1,
+                    'vaksin1_nama' => $row->vaksin1_nama,
+                    'vaksin1_tanggal' => date('d-m-Y', strtotime($row->vaksin1_tanggal)),
+                    'vaksin2' => $row->vaksin2,
+                    'vaksin2_nama' => $row->vaksin2_nama,
+                    'vaksin2_tanggal' => date('d-m-Y', strtotime($row->vaksin2_tanggal)),
+                    'vaksin3' => $row->vaksin3,
+                    'vaksin3_nama' => $row->vaksin3_nama,
+                    'vaksin3_tanggal' => date('d-m-Y', strtotime($row->vaksin3_tanggal))
+                );
+            endforeach;
+            
+            // var_dump($output);
+
+            //output to json format
+            echo json_encode($output);
+
+        }elseif ($var == 'getbyname'){
+                    $this->db->where('nik', $this->input->post('nik'));
+            $row = $this->db->get_where('vaksin_data', ['nama' => $this->input->post('nama')])->row();
+
+                $output['data'] = array(
+                    'id' => $row->id,
+                    'nik' => $row->nik,
+                    'nama' => $row->nama,
+                    'hubungan' => $row->hubungan_keluarga,
+                    'vaksin1' => $row->vaksin1,
+                    'vaksin1_nama' => $row->vaksin1_nama,
+                    'vaksin1_tanggal' => date('d-m-Y', strtotime($row->vaksin1_tanggal)),
+                    'vaksin2' => $row->vaksin2,
+                    'vaksin2_nama' => $row->vaksin2_nama,
+                    'vaksin2_tanggal' => date('d-m-Y', strtotime($row->vaksin2_tanggal)),
+                    'vaksin3' => $row->vaksin3,
+                    'vaksin3_nama' => $row->vaksin3_nama,
+                    'vaksin3_tanggal' => date('d-m-Y', strtotime($row->vaksin3_tanggal))
+                );
+            
+            // var_dump($output);
+
+            //output to json format
+            echo json_encode($output);
+
+        }elseif($var=='update'){
+
+            if ($this->input->post('vaksin1')=='YA')
+            {
+                $vaksin1_nama = $this->input->post('vaksin1_nama');
+                $vaksin1_tanggal = date('Y-m-d', strtotime($this->input->post('vaksin1_tanggal')));
+            }else{
+                $vaksin1_nama = "";
+                $vaksin1_tanggal = "";
+            }
+            if ($this->input->post('vaksin2')=='YA')
+            {
+                $vaksin2_nama = $this->input->post('vaksin2_nama');
+                $vaksin2_tanggal = date('Y-m-d', strtotime($this->input->post('vaksin2_tanggal')));
+            }else{
+                $vaksin2_nama = "";
+                $vaksin2_tanggal = "";
+            }
+            if ($this->input->post('vaksin3')=='YA')
+            {
+                $vaksin3_nama = $this->input->post('vaksin3_nama');
+                $vaksin3_tanggal = date('Y-m-d', strtotime($this->input->post('vaksin3_tanggal')));
+            }else{
+                $vaksin3_nama = "";
+                $vaksin3_tanggal = "";
+            }
+
+            $this->db->set('vaksin1', $this->input->post('vaksin1'));
+            $this->db->set('vaksin1_nama', $vaksin1_nama);
+            $this->db->set('vaksin1_tanggal', $vaksin1_tanggal);
+            $this->db->set('vaksin2', $this->input->post('vaksin2'));
+            $this->db->set('vaksin2_nama', $vaksin2_nama);
+            $this->db->set('vaksin2_tanggal', $vaksin2_tanggal);
+            $this->db->set('vaksin3', $this->input->post('vaksin3'));
+            $this->db->set('vaksin3_nama', $vaksin3_nama);
+            $this->db->set('vaksin3_tanggal', $vaksin3_tanggal);
+            $this->db->set('vaksin3_tiket', $vaksin3_tiket);
+            $this->db->where('nik', $this->input->post('nik'));
+            $this->db->where('nama', $this->input->post('nama'));
+            $this->db->update('vaksin_data');
+
+        }else{
+            
+            $data['sidemenu'] = 'Info HR';
+            $data['sidesubmenu'] = 'Update Vaksin';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['details'] = $this->db->get_where('karyawan_details', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['keluarga'] = $this->db->get_where('karyawan_keluarga', ['npk' =>  $this->session->userdata('npk')])->result();
+            $data['provinsi'] = $this->db->get('wilayah_provinsi')->result();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('profil/data/vaksin', $data);
+            $this->load->view('templates/footer');
 
         }
     }
