@@ -12,7 +12,7 @@
                         <h3 class="card-title"></h3>
                     </div>
                         <div class="card-footer">
-                            <a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-facebook btn-block">Reservasi</a>
+                            <a href="#" id="btn_reservasi" class="btn btn-facebook btn-block">Reservasi</a>
                         </div>
                     </div>
                 </div>
@@ -521,6 +521,43 @@
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
+            }
+        });
+
+        $('#btn_reservasi').on('click',function(){
+    
+            var now_d = '<?= date('D') ?>';
+            let now_t = <?= strtotime(date('H:i:s')) ?>;
+            let min_t = <?= strtotime(date('07:30:00')) ?>;
+            let max_t = <?= strtotime(date('16:30:00')) ?>;
+
+            if (now_d == 'Sat' || now_d == 'Sun' || now_t < min_t || now_t > max_t) {
+
+                Swal.fire({
+                title: 'Perhatian!',
+                icon: 'warning',
+                html:
+                'Kamu mengajukan permohonan di luar jam kerja, untuk itu harap kontak langsung pimpinan-pimpinan kamu dan pihak yang berkepentingan untuk merelease permohonan kamu.</p> ' +
+                'Sudah mengajukan di RAISA tidak berarti menyerahkan tanggung jawab kamu ke RAISA, RAISA tidak bertanggung jawab atas permohonan kamu yang tidak kunjung disetujui, kamu tetap harus proaktif.',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Saya Mengerti',
+                showClass: {
+                    popup: 'animate__animated animate__heartBeat'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut'
+                }
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "<?= base_url('reservasi/dl'); ?>";
+                }
+                });
+
+            }else{
+
+                window.location.href = "<?= base_url('reservasi/dl'); ?>";
+
             }
         });
     });
