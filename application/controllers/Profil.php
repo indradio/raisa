@@ -309,6 +309,18 @@ class Profil extends CI_Controller
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->delete('vaksin_data');
 
+        }else{
+            $data['sidemenu'] = 'Info HR';
+            $data['sidesubmenu'] = 'Update Keluarga';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['details'] = $this->db->get_where('karyawan_details', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['keluarga'] = $this->db->get_where('karyawan_keluarga', ['npk' =>  $this->session->userdata('npk')])->result();
+            $data['provinsi'] = $this->db->get('wilayah_provinsi')->result();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('profil/data/keluarga', $data);
+            $this->load->view('templates/footer');
         }
     }
 
