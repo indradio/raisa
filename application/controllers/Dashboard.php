@@ -138,9 +138,12 @@ class Dashboard extends CI_Controller
         endforeach;
 
         //Auto LEMBUR
-        $lembur = $this->db->get('lembur')->result_array();
+
+                    $this->db->where('tglmulai >=', Date('Y-m-d', strtotime('-31 days')));
+        $lembur =   $this->db->get('lembur')->result_array();
 
         foreach ($lembur as $l) :
+            
             // cari selisih
             $sekarang = strtotime(date('Y-m-d H:i:s'));
             $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai_rencana']))));
