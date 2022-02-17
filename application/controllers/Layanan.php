@@ -161,7 +161,7 @@ class Layanan extends CI_Controller
     {
         $data['sidemenu'] = 'Layanan';
         $data['sidesubmenu'] = 'Broadcast';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -208,7 +208,8 @@ class Layanan extends CI_Controller
             $karyawan = $this->db->get('karyawan')->result_array();
         }
 
-        foreach ($karyawan as $k) :
+        foreach ($karyawan as $row) :
+                $voucher = $this->db->get_where('hut_voucher', ['npk' => $row['npk']])->row();
                 //Notifikasi ke USER
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(
@@ -220,14 +221,16 @@ class Layanan extends CI_Controller
                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
                         ],
                         'json' => [
-                            'phone' => $k['phone'],
-                            'message' => "*[INFORMASI] Grab Taksi untuk Perjalanan Dinas Kamu*" .
-                            "\r\n \r\nSemangat pagi *" . $k['nama'] . "*," .
-                            "\r\nGuna mempermudah pemesanan taksi untuk keperluan Dinas Luar kami bermaksud untuk menggunakan *Grab Corporate*." .
-                            "\r\nTerkait hal tersebut, dibutuhkan pendataan karyawan untuk menunjang kegiatan tersebut. Untuk itu kami minta kesediaan Bapak-Bapak & Ibu-Ibu berpartisipasi untuk mengisi Google Form berikut :" .
-                            "\r\nhttps://s.id/dlgrab" .
-                            "\r\n \r\nHormat Kami," .
-                            "\r\nGeneral Affair"
+                            'phone' => $row['phone'],
+                            'message' => "*Panduan Akses dan Kode Vpucher HUT ke-65 Astra*" .
+                            "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                            "\r\nAyo ikuti keseruan rangkaian acara inspratif HUT ke-65 Astra karena ada berbagai agenda menarik yang diisi oleh narasumber inspiratif." .
+                            "\r\n \r\nKita dapat bersama menyaksikannya melalui InnovNation Webinar dan Experiental Learning, Serta Virtual Exhibition dan Sustainability Showcase Grup Astra." .
+                            "\r\nCaranya dengan mengikuti panduan berikut ini ya!" .
+                            "\r\nhttps://raisa.winteq-astra.com/assets/pdf/Panduan%20Akses%20HUT%20ke-65%20Astra.pdf" .
+                            "\r\n \r\nkode Voucher kamu adalah *" . $voucher->voucher . "*" .
+                            "\r\n \r\nAyo, Semangat Bergerak dan Tumbuh Bersama melalui beragam inspirasi!" .
+                            "\r\n#65TahunAstra"
                         ],
                     ]
                 );

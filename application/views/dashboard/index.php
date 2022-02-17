@@ -207,7 +207,7 @@
     <!-- Banner Panduan HUT Astra -->
        <?php $voucher = $this->db->get_where('hut_voucher', ['npk' => $this->session->userdata('npk')])->row();
        if ($voucher) { ?>
-       <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
               <div class="card-header card-header-info card-header-icon">
                 <div class="card-icon">
@@ -217,12 +217,10 @@
                 <h3 class="card-title"><?= $voucher->voucher; ?></h3>
               </div>
               <div class="card-footer">
-                <div class="stats">
-                  
-                </div>
+                <div class="stats"></div>
               </div>
             </div>
-      </div>
+        </div>
       <?php }; ?>
     <div class="col-md-12">
       <div class="card">
