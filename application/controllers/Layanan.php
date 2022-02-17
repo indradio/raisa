@@ -222,9 +222,9 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Panduan Akses dan Kode Vpucher HUT ke-65 Astra*" .
+                            'message' => "*Panduan Akses dan Kode Voucher HUT ke-65 Astra*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nAyo ikuti keseruan rangkaian acara inspratif HUT ke-65 Astra karena ada berbagai agenda menarik yang diisi oleh narasumber inspiratif." .
+                            "\r\nAyo ikuti keseruan rangkaian acara inspiratif HUT ke-65 Astra karena ada berbagai agenda menarik yang diisi oleh narasumber inspiratif." .
                             "\r\n \r\nKita dapat bersama menyaksikannya melalui InnovNation Webinar dan Experiental Learning, Serta Virtual Exhibition dan Sustainability Showcase Grup Astra." .
                             "\r\nCaranya dengan mengikuti panduan berikut ini ya!" .
                             "\r\nhttps://raisa.winteq-astra.com/assets/pdf/Panduan%20Akses%20HUT%20ke-65%20Astra.pdf" .
