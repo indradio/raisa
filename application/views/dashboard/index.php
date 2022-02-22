@@ -217,28 +217,14 @@
                 <h3 class="card-title"><?= $voucher->voucher; ?></h3>
               </div>
               <div class="card-footer">
-                <div class="stats"></div>
+                <div class="stats">
+                <a href="<?= base_url(); ?>assets/pdf/Panduan Akses HUT ke-65 Astra.pdf" target="_blank">Panduan Akses HUT ke-65 Astra</a>
+                </div>
               </div>
             </div>
         </div>
       <?php }; ?>
-    <div class="col-md-12">
-      <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Panduan Akses HUT ke-65 Astra</h4>
-                <p class="card-category">
-                  Ikuti keseruan perayaan HUT ke-65 Astra
-                </p>
-            </div>
-            <div class="card-body">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/Panduan Akses HUT ke-65 Astra.pdf"></iframe>
-                </div>
-                </br>
-                <a href="<?= base_url(); ?>assets/pdf/Panduan Akses HUT ke-65 Astra.pdf" target="_blank">Klik Disini untuk download</a>
-            </div>
-      </div>
-    </div>
+    
       <!-- 1.1 Temp Dompet ASTRAPAY -->
       <?php if (empty($karyawan['ewallet_3'])){ ?>
       <div class="col-md-4 mt-2">
