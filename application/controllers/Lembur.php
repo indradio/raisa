@@ -38,6 +38,35 @@ class Lembur extends CI_Controller
          // End Auto Batalkan RENCANA LEMBUR
     }
 
+    public function getData($params = null)
+    {
+        if ($params = null){
+
+        }elseif ($params=='telat'){
+
+                    $this->db->where('status', '0');
+                    $this->db->where('last_status', '4');
+            $lembur = $this->db->get_where('lembur', ['atasan2' => $this->session->userdata('inisial')])->result();
+    
+                foreach ($lembur as $row) :
+                    $output['data'][] = array(
+                        'hubungan' => $row->hubungan,
+                        'nik' => $row->nik,
+                        'nama' => $row->nama,
+                        'lahir_tempat' => $row->lahir_tempat,
+                        'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
+                        'jenis_kelamin' => $row->jenis_kelamin,
+                        'pekerjaan' => $row->pekerjaan
+                    );
+                endforeach;
+                
+                // var_dump($output);
+    
+                //output to json format
+                echo json_encode($output);
+        }
+    }
+
     public function ajax()
     {
         $kategori_id = $_POST['kategori'];
@@ -80,21 +109,36 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function realisasi()
+    public function realisasi($params=null)
     {
-        $data['sidemenu'] = 'Lembur';
-        $data['sidesubmenu'] = 'Realisasi';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $npk = $this->session->userdata('npk');
-        $queryLembur = "SELECT *
-        FROM `lembur`
-        WHERE (`status`= '4' OR `status`= '5' OR `status`= '6') and `npk`= '$npk' ";
-        $data['lembur'] = $this->db->query($queryLembur)->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('lembur/realisasi', $data);
-        $this->load->view('templates/footer');
+        if ($params==null){
+
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'Realisasi';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $npk = $this->session->userdata('npk');
+            $queryLembur = "SELECT *
+            FROM `lembur`
+            WHERE (`status`= '4' OR `status`= '5' OR `status`= '6') and `npk`= '$npk' ";
+            $data['lembur'] = $this->db->query($queryLembur)->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/realisasi', $data);
+            $this->load->view('templates/footer');
+
+        }elseif ($params=='telat'){
+            
+            $data['sidemenu'] = 'DH Lembur';
+            $data['sidesubmenu'] = 'Realisasi';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/dh/dibatalkan', $data);
+            $this->load->view('templates/footer');
+
+        }
     }
 
     public function tambah_hariini()

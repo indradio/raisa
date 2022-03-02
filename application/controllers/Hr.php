@@ -14,7 +14,7 @@ class Hr extends CI_Controller
 
     public function karyawan()
     {
-        $data['sidemenu'] = 'HR';
+        $data['sidemenu'] = 'HR Karyawan';
         $data['sidesubmenu'] = 'Data Karyawan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['datakaryawan'] = $this->db->where('npk !=', '1111');
@@ -23,8 +23,105 @@ class Hr extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('karyawan/index', $data);
+        $this->load->view('hr/karyawan/index', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function addKaryawan($param=null)
+    {
+        $data['sidemenu'] = 'HR Karyawan';
+        $data['sidesubmenu'] = 'Data Karyawan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('hr/karyawan/add', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function getKaryawan()
+    {
+        
+        $result = $this->Karyawan_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+            foreach ($result as $r) :
+                $posisi = $this->db->get_where('karyawan_posisi', ['id' => $r->posisi_id])->row();
+                $div = $this->db->get_where('karyawan_div', ['id' =>  $r->div_id])->row();
+                $dept = $this->db->get_where('karyawan_dept', ['id' =>  $r->dept_id])->row();
+                $sect = $this->db->get_where('karyawan_sect', ['id' =>  $r->sect_id])->row();
+                $is_active = ($r->is_active == '1') ? 'AKTIF' : 'NON AKTIF';
+                $status = ($r->status == '1') ? 'KARYAWAN' : 'NON KARYAWAN';
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $r->npk;
+                $row[] = $r->inisial;
+                $row[] = $r->nama;
+                $row[] = $r->email;
+                $row[] = $r->phone;
+                $row[] = $posisi->nama;
+                $row[] = $div->nama;
+                $row[] = $dept->nama;
+                $row[] = $sect->nama;
+                $row[] = $status;
+                $row[] = $is_active;
+            
+                $data[] = $row;
+            endforeach;
+            
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->Karyawan_model->count_all(),
+                "recordsFiltered" => $this->Karyawan_model->count_filtered(),
+                "data" => $data,
+            );
+
+            //output to json format
+            echo json_encode($output);
+    }
+
+    public function getData()
+    {
+        
+            $result = $this->Karyawan_model->getAll();
+
+            foreach ($result as $r) :
+                $div = $this->db->get_where('karyawan_div', ['id' =>  $r->div_id])->row();
+                $dept = $this->db->get_where('karyawan_dept', ['id' =>  $r->dept_id])->row();
+                $sect = $this->db->get_where('karyawan_sect', ['id' =>  $r->sect_id])->row();
+                $posisi = $this->db->get_where('karyawan_posisi', ['id' => $r->posisi_id])->row();
+                $gol = $this->db->get_where('karyawan_gol', ['id' => $r->gol_id])->row();
+                $fasilitas = $this->db->get_where('karyawan_fasilitas', ['id' => $r->fasilitas_id])->row();
+                $is_active = ($r->is_active == '1') ? 'AKTIF' : 'NON AKTIF';
+                $status = ($r->status == '1') ? 'KARYAWAN' : 'NON KARYAWAN';
+                $row = array();
+                $row['npk'] = $r->npk;
+                $row['inisial'] = $r->inisial;
+                $row['nama'] = $r->nama;
+                $row['email'] = $r->email;
+                $row['phone'] = $r->phone;
+                $row['div'] = $div->nama;
+                $row['dept'] = $dept->nama;
+                $row['sect'] = $sect->nama;
+                $row['posisi'] = $posisi->nama;
+                $row['gol'] = $gol->nama;
+                $row['fasilitas'] = $fasilitas->nama;
+                $row['cost_center'] = $r->cost_center;
+                $row['work_contract'] = $r->work_contract;
+                $row['status'] = $status;
+                $row['is_active'] = $is_active;
+            
+                $data[] = $row;
+            endforeach;
+            
+            $output = array(
+                "data" => $data
+            );
+
+            //output to json format
+            echo json_encode($output);
     }
 
     public function dept()
@@ -49,26 +146,26 @@ class Hr extends CI_Controller
 
     public function tambah()
     {
-        $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+        // $this->load->library('ciqrcode'); //pemanggilan library QR CODE
 
-        $config['cacheable']    = true; //boolean, the default is true
-        $config['cachedir']     = './assets/'; //string, the default is application/cache/
-        $config['errorlog']     = './assets/'; //string, the default is application/logs/
-        $config['imagedir']     = './assets/img/qrcode/'; //direktori penyimpanan qr code
-        $config['quality']      = true; //boolean, the default is true
-        $config['size']         = '1024'; //interger, the default is 1024
-        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
-        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
-        $this->ciqrcode->initialize($config);
+        // $config['cacheable']    = true; //boolean, the default is true
+        // $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        // $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        // $config['imagedir']     = './assets/img/qrcode/'; //direktori penyimpanan qr code
+        // $config['quality']      = true; //boolean, the default is true
+        // $config['size']         = '1024'; //interger, the default is 1024
+        // $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        // $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        // $this->ciqrcode->initialize($config);
 
-        $qrcode = $this->input->post('inisial') . $this->input->post('npk');
-        $image_name = $qrcode . '.png'; //buat name dari qr code sesuai dengan nim
+        // $qrcode = $this->input->post('inisial') . $this->input->post('npk');
+        // $image_name = $qrcode . '.png'; //buat name dari qr code sesuai dengan nim
 
-        $params['data'] = $qrcode; //data yang akan di jadikan QR CODE
-        $params['level'] = 'H'; //H=High
-        $params['size'] = 10;
-        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
-        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+        // $params['data'] = $qrcode; //data yang akan di jadikan QR CODE
+        // $params['level'] = 'H'; //H=High
+        // $params['size'] = 10;
+        // $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
+        // $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
 
         $data = [
             'npk' => $this->input->post('npk'),
@@ -77,16 +174,18 @@ class Hr extends CI_Controller
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
             'foto' => 'user.jpg',
-            'posisi_id' => $this->input->post('posisi'),
             'div_id' => $this->input->post('div'),
             'dept_id' => $this->input->post('dept'),
             'sect_id' => $this->input->post('sect'),
+            'posisi_id' => $this->input->post('posisi'),
             'gol_id' => $this->input->post('gol'),
             'fasilitas_id' => $this->input->post('fasilitas'),
+            'cost_center' => $this->input->post('cost_center'),
+            'work_contract' => $this->input->post('work_contract'),
             'atasan1' => $this->input->post('atasan1'),
             'atasan2' => $this->input->post('atasan2'),
             'password' => password_hash("winteq", PASSWORD_DEFAULT),
-            'qrcode' => $qrcode,
+            'status' => $this->input->post('status'),
             'role_id' => $this->input->post('role'),
             'is_active' => 1
         ];
@@ -94,7 +193,6 @@ class Hr extends CI_Controller
 
         $config['upload_path']          = './assets/img/faces/';
         $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 1024;
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('foto')) {
             $this->db->set('foto', $this->upload->data('file_name'));
@@ -102,7 +200,7 @@ class Hr extends CI_Controller
             $this->db->update('karyawan');
         }
 
-        redirect('karyawan');
+        redirect('hr/karyawan');
     }
 
     public function ubah($npk)
