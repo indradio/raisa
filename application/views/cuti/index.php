@@ -13,7 +13,8 @@
           </div>
           <div class="card-footer">
             <div class="stats"></div>
-              <a href="#" class="btn btn-facebook btn-block" data-toggle="modal" data-target="#tambahCuti">Ajukan Cuti</a>
+              <a href="#" id="btn_tambahCuti" class="btn btn-facebook btn-block" >Ajukan Cuti</a>
+              <!-- data-toggle="modal" data-target="#tambahCuti" -->
             </div>
             <div class="col-md-12">
               <div id="accordion" role="tablist">
@@ -204,7 +205,7 @@
                                           <label class="bmd-label">4. Karyawan tidak boleh melakukan cutinya sebelum disetujui oleh atasan 1 dan atasan 2.</label></br>
                                           <label class="bmd-label">5. Raisa tidak bertanggung jawab atas permohonan cuti yang tidak kunjung disetujui oleh pimpinan terkait, tetap lakukan komunikasi dengan pimpinan-pimpinan terkait.</label></br>
                                           <label class="bmd-label">6. Karyawan yang melakukan cuti sebelum pengajuan cutinya disetujui pihak terkait, maka dianggap mangkir dan konsekuensinya akan mengikuti aturan perusahaan.</label></br>
-                                          <label class="bmd-label">7. Ketentuan ini berlaku mulai 17 Januari 2022.</label></br>
+                                          <label class="bmd-label">7. Permohonan cuti yang tidak diapprove sampai hari H, maka sistem langsung melakukan autoreject dan akan mengikuti ketentuan poin no 5 dan 6.</label></br>
                                       </div>
                                   </div>
                                   </div>
@@ -266,6 +267,43 @@
 
 <!-- script ajax Kategori-->
 <script type="text/javascript">
+  $('#btn_tambahCuti').on('click',function(){
+    
+    var now_d = '<?= date('D') ?>';
+    let now_t = <?= strtotime(date('H:i:s')) ?>;
+    let min_t = <?= strtotime(date('07:30:00')) ?>;
+    let max_t = <?= strtotime(date('16:30:00')) ?>;
+
+    if (now_d == 'Sat' || now_d == 'Sun' || now_t < min_t || now_t > max_t) {
+
+    Swal.fire({
+      title: 'Perhatian!',
+      icon: 'warning',
+      html:
+      'Kamu mengajukan permohonan di luar jam kerja, untuk itu harap kontak langsung pimpinan-pimpinan kamu dan pihak yang berkepentingan untuk merelease permohonan kamu.</p> ' +
+      'Sudah mengajukan di RAISA tidak berarti menyerahkan tanggung jawab kamu ke RAISA, RAISA tidak bertanggung jawab atas permohonan kamu yang tidak kunjung disetujui, kamu tetap harus proaktif.',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, Saya Mengerti',
+      showClass: {
+        popup: 'animate__animated animate__heartBeat'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOut'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $('#tambahCuti').modal("show");
+      }
+    });
+
+    }else{
+
+      $('#tambahCuti').modal("show");
+
+    }
+  });
+
         function kategoriSelect(valueSelect)
             {
                 var kategori = valueSelect.options[valueSelect.selectedIndex].value;
