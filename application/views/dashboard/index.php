@@ -101,158 +101,109 @@
 
     <div class="row">
 
-    <!-- Outstanding Approval Perjalanan -->
-    <?php if ($Reservasi != null){ ?>
-    <div class="col-lg-6 col-md-12">
-      <div class="card">
-        <div class="card-header card-header-text card-header-warning">
-          <div class="card-text">
-            <h4 class="card-title">Outstanding</h4>
-            <p class="card-category">Perjalanan</p>
-          </div>
-        </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover">
-            <thead class="text-warning">
-              <th>Peserta</th>
-              <th>Tujuan</th>
-              <th>Waktu</th>
-            </thead>
-            <tbody>
-            <?php foreach ($Reservasi as $row) : ?>
-            <tr onclick="window.location='<?= base_url('persetujuandl'); ?>'" >
-              <td><?= $row['anggota']; ?></td>
-              <td><?= $row['tujuan']; ?></td>
-              <td><?= date('d-M', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <?php }; ?>
-      
-    <!-- Outstanding Approval Lembur -->
-    <?php if ($RencanaLembur != null or $RealisasiLembur != null){ ?>
-    <div class="col-lg-6 col-md-12">
-      <div class="card">
-        <div class="card-header card-header-text card-header-warning">
-          <div class="card-text">
-            <h4 class="card-title">Outstanding</h4>
-            <p class="card-category">Lembur</p>
-          </div>
-        </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover">
-            <thead class="text-warning">
-              <th>Nama</th>
-              <th>Waktu</th>
-              <th>Durasi</th>
-            </thead>
-            <tbody>
-            <?php foreach ($RencanaLembur as $row) : ?>
-            <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $row['id']; ?>'" >
-              <td><?= $row['nama']; ?> <small>(Rencana)</small></td>
-              <td><?= date('d-M H:i', strtotime($row['tglmulai_rencana'])); ?></td>
-              <td><?= $row['durasi_rencana']; ?> Jam</td>
-            </tr>
-            <?php endforeach; ?>
-            <?php foreach ($RealisasiLembur as $row) : ?>
-            <tr onclick="window.location='<?= base_url('lembur/persetujuan_realisasi/') . $row['id']; ?>'" >
-              <td><?= $row['nama']; ?> <small>(Realisasi)</small></td>
-              <td><?= date('d-M H:i', strtotime($row['tglmulai'])); ?></td>
-              <td><?= $row['durasi']; ?> Jam</td>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <?php }; ?>
-
-    <!-- Outstanding Approval Cuti -->
-    <?php if ($Cuti != null){ ?>
-    <div class="col-lg-6 col-md-12">
-      <div class="card">
-        <div class="card-header card-header-text card-header-warning">
-          <div class="card-text">
-            <h4 class="card-title">Outstanding</h4>
-            <p class="card-category">Cuti</p>
-          </div>
-        </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover">
-            <thead class="text-warning">
-              <th>Nama</th>
-              <th>Waktu</th>
-              <th>Lama</th>
-            </thead>
-            <tbody>
-            <?php foreach ($Cuti as $row) : ?>
-            <tr onclick="window.location='<?= base_url('cuti/approval'); ?>'" >
-              <td><?= $row['nama']; ?></td>
-              <td><?= date('d-M', strtotime($row['tgl1'])); ?></td>
-              <td><?= $row['lama']; ?> Hari</td>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <?php }; ?>
-
-    <!-- Banner Panduan HUT Astra -->
-       <?php $voucher = $this->db->get_where('hut_voucher', ['npk' => $this->session->userdata('npk')])->row();
-       if ($voucher) { ?>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-              <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">cake</i>
-                </div>
-                <p class="card-category">Kode Voucher</p>
-                <h3 class="card-title"><?= $voucher->voucher; ?></h3>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                <a href="<?= base_url(); ?>assets/pdf/Panduan Akses HUT ke-65 Astra.pdf" target="_blank">Panduan Akses HUT ke-65 Astra</a>
-                </div>
-              </div>
+      <!-- Outstanding Approval Perjalanan -->
+      <?php if ($Reservasi != null){ ?>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-warning">
+            <div class="card-text">
+              <h4 class="card-title">Outstanding</h4>
+              <p class="card-category">Perjalanan</p>
             </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Peserta</th>
+                <th>Tujuan</th>
+                <th>Waktu</th>
+              </thead>
+              <tbody>
+              <?php foreach ($Reservasi as $row) : ?>
+              <tr onclick="window.location='<?= base_url('persetujuandl'); ?>'" >
+                <td><?= $row['anggota']; ?></td>
+                <td><?= $row['tujuan']; ?></td>
+                <td><?= date('d-M', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
+              </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
+      <?php }; ?>
+        
+      <!-- Outstanding Approval Lembur -->
+      <?php if ($RencanaLembur != null or $RealisasiLembur != null){ ?>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-warning">
+            <div class="card-text">
+              <h4 class="card-title">Outstanding</h4>
+              <p class="card-category">Lembur</p>
+            </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Nama</th>
+                <th>Waktu</th>
+                <th>Durasi</th>
+              </thead>
+              <tbody>
+              <?php foreach ($RencanaLembur as $row) : ?>
+              <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $row['id']; ?>'" >
+                <td><?= $row['nama']; ?> <small>(Rencana)</small></td>
+                <td><?= date('d-M H:i', strtotime($row['tglmulai_rencana'])); ?></td>
+                <td><?= $row['durasi_rencana']; ?> Jam</td>
+              </tr>
+              <?php endforeach; ?>
+              <?php foreach ($RealisasiLembur as $row) : ?>
+              <tr onclick="window.location='<?= base_url('lembur/persetujuan_realisasi/') . $row['id']; ?>'" >
+                <td><?= $row['nama']; ?> <small>(Realisasi)</small></td>
+                <td><?= date('d-M H:i', strtotime($row['tglmulai'])); ?></td>
+                <td><?= $row['durasi']; ?> Jam</td>
+              </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <?php }; ?>
+
+      <!-- Outstanding Approval Cuti -->
+      <?php if ($Cuti != null){ ?>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-warning">
+            <div class="card-text">
+              <h4 class="card-title">Outstanding</h4>
+              <p class="card-category">Cuti</p>
+            </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Nama</th>
+                <th>Waktu</th>
+                <th>Lama</th>
+              </thead>
+              <tbody>
+              <?php foreach ($Cuti as $row) : ?>
+              <tr onclick="window.location='<?= base_url('cuti/approval'); ?>'" >
+                <td><?= $row['nama']; ?></td>
+                <td><?= date('d-M', strtotime($row['tgl1'])); ?></td>
+                <td><?= $row['lama']; ?> Hari</td>
+              </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <?php }; ?>
     
-      <!-- 1.1 Temp Dompet ASTRAPAY -->
-      <?php if (empty($karyawan['ewallet_3'])){ ?>
-      <div class="col-md-4 mt-2">
-        <div class="card">
-            <div class="card-header card-header-icon card-header-info">
-              <div class="card-icon">
-                <i class="material-icons">account_balance_wallet</i>
-              </div>
-              <h4 class="card-title">ASTRAPAY
-                <small> - Dompet Digital</small>
-              </h4>
-            </div>
-              <div class="card-body">
-                <div class="form-group">
-                    <label class="bmd-label-floating">NO HP</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" value="<?= $karyawan['ewallet_3']; ?>" disabled>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <a href="#" class="btn btn-link btn-success" data-toggle="modal" data-target="#updateEwallet">Aktifkan</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-              </div>
-          </div>
-      </div>
-      <?php }; ?>
     </div>
     
     <!-- 3. Perjalanan -->
