@@ -757,7 +757,7 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
-        $expired = date('Y-m-d H:i:s', strtotime('+7 days', strtotime($lembur['tglmulai'])));
+        $expired = date('Y-m-d H:i:s', strtotime('+2 days', strtotime($lembur['tglmulai'])));
 
         if ($this->input->post('lokasi') != 'lainnya')
         {
@@ -838,6 +838,7 @@ class Lembur extends CI_Controller
                             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
                             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
                             "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+                            "\r\nBatas Waktu : *" . date('d-M H:i', strtotime($expired)) . "*" .
                             "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
                             "\r\n \r\nRespon sebelum jam 4 sore agar tim kamu *Dipesankan makan malamnya".
                             "\r\nKalau kamu belum respon, tim kamu tidak bisa melakukan realisasi".
@@ -895,9 +896,11 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        $expired = date('Y-m-d H:i:s', strtotime('+7 days', strtotime($lembur['tglmulai'])));
 
         $this->db->set('tglpengajuan_realisasi', date('Y-m-d H:i:s'));
         $this->db->set('status', 5);
+        $this->db->set('expired_at', $expired);
         $this->db->set('last_notify', date('Y-m-d H:i:s'));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
@@ -1839,5 +1842,103 @@ class Lembur extends CI_Controller
         $data['aktivitas']  = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
 
         $this->load->view('lembur/reportlbr', $data);
+    }
+
+    public function getData($params = null)
+    {
+        if ($params=='get')
+        {
+            $keluarga = $this->db->get_where('karyawan_keluarga', ['npk' => $this->session->userdata('npk')])->result();
+
+            foreach ($keluarga as $row) :
+                $output['data'][] = array(
+                    'hubungan' => $row->hubungan,
+                    'nik' => $row->nik,
+                    'nama' => $row->nama,
+                    'lahir_tempat' => $row->lahir_tempat,
+                    'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
+                    'jenis_kelamin' => $row->jenis_kelamin,
+                    'pekerjaan' => $row->pekerjaan
+                );
+            endforeach;
+            
+            // var_dump($output);
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params=='penyimpangan')
+        {
+            $this->db->where('status','0');
+            $this->db->where('life', '0');
+            $this->db->where('last_status', '4');
+            $lembur = $this->db->get('lembur')->result();
+
+            foreach ($lembur as $row) :
+                $output['data'][] = array(
+                    'id' => $row->id,
+                    'kategori' => $row->kategori,
+                    'nama' => $row->nama,
+                    'tanggal' => date('d-m-Y', strtotime($row->tglmulai_rencana)),
+                    'durasi' => $row->durasi_rencana,
+                    'catatan' => $row->catatan
+                );
+            endforeach;
+            
+            // var_dump($output);
+
+            //output to json format
+            echo json_encode($output);
+
+        }
+    }
+
+    public function penyimpangan($params = null )
+    {
+        if (empty($params))
+        {
+            $data['sidemenu'] = 'HR Lembur';
+            $data['sidesubmenu'] = 'Penyimpangan';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/hr/penyimpangan_index', $data);
+            $this->load->view('templates/footer');
+        }elseif($params=='submit')
+        {
+            // Update data LEMBUR
+            $this->db->set('status', '4');
+            $this->db->set('life', '1');
+            $this->db->set('catatan', 'Lembur ini telah diaktifkan - '.$this->session->userdata('inisial').' pada '.date('d-m-Y H:i'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+            $user = $this->db->get_where('karyawan', ['npk' => $lembur->npk ])->row();
+            //Notifikasi ke USER
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $user->phone,
+                        'message' => "*[AKTIF] LEMBURAN KAMU TELAH AKTIF*" .
+                            "\r\n \r\nNo LEMBUR : *" . $lembur->id . "*" .
+                            "\r\nNama : *" . $lembur->nama . "*" .
+                            "\r\nTanggal : *" . date('d-M H:i', strtotime($lembur->tglmulai)) . "*" .
+                            "\r\nDurasi : *" . $lembur->durasi . " Jam*" .
+                            "\r\n \r\nLEMBURAN kamu telah *DIAKTIFKAN*" .
+                            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                        ],
+                ]
+            );
+            $body = $response->getBody();
+        }
     }
 }

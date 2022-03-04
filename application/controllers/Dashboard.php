@@ -146,8 +146,8 @@ class Dashboard extends CI_Controller
             
             // cari selisih
             $sekarang = strtotime(date('Y-m-d H:i:s'));
-            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+3 days', strtotime($l['tglselesai_rencana']))));
-            $kirim_notif = strtotime(date('Y-m-d H:i:s', strtotime('+64 hours', strtotime($l['tglselesai_rencana']))));
+            $tempo = strtotime(date('Y-m-d H:i:s', strtotime('+2 days', strtotime($l['tglselesai_rencana']))));
+            $kirim_notif = strtotime(date('Y-m-d H:i:s', strtotime('+45 hours', strtotime($l['tglselesai_rencana']))));
             $expired = strtotime($l['expired_at']);
             $user = $this->db->get_where('karyawan', ['npk' => $l['npk']])->row_array();
             $last_status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array();
@@ -176,13 +176,13 @@ class Dashboard extends CI_Controller
                                 ],
                                 'json' => [
                                     'phone' => $user['phone'],
-                                    'message' => "*[MENUNGGU REALISASI] WAKTU REALISASI KAMU KURANG DARI 8 JAM*" .
+                                    'message' => "*[MENUNGGU REALISASI] WAKTU REALISASI KAMU KURANG DARI 3 JAM*" .
                                         "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
                                         "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
                                         "\r\nNama : *" . $l['nama'] . "*" .
                                         "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
                                         "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
-                                        "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *8 JAM*, Ayo segera selesaikan REALISASI kamu." .
+                                        "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *3 JAM*, Ayo segera selesaikan REALISASI kamu." .
                                         "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
                                         "\r\n \r\n" . $notifikasi['pesan']
                                         ],
@@ -194,7 +194,7 @@ class Dashboard extends CI_Controller
 
                 // Batalkan LEMBUR REALISASI
                 if ($tempo < $sekarang and $l['life'] == 0) {
-                    $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i'));
+                    $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
                     $this->db->set('status', '0');
                     $this->db->set('last_status', $l['status']);
                     $this->db->where('id', $l['id']);
@@ -218,20 +218,19 @@ class Dashboard extends CI_Controller
                                     "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
                                     "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
                                     "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
-                                    "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 3x24 Jam dari batas waktu *RENCANA SELESAI LEMBUR*." .
-                                    "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi" .
-                                    "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi" .
+                                    "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
+                                    "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR." .
                                     "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
                                     "\r\n \r\n" . $notifikasi['pesan']
-                                    ],
+                                ],
                         ]
                     );
                     $body = $response->getBody();
                 }
-            } elseif ($l['status'] > 1 and $l['status'] < 7 and $l['life'] == 0) {
+            } elseif ($l['status'] > 4 and $l['status'] < 7 and $l['life'] == 0) {
                 // Batalkan LEMBUR LEWAT 7 HARI
                 if ($expired < $sekarang) {
-                    $this->db->set('catatan', "Waktu LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
+                    $this->db->set('catatan', "Waktu LEMBUR kamu telah HABIS - Dibatalkan oleh : SYSTEM Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
                     $this->db->set('status', '0');
                     $this->db->set('last_status', $l['status']);
                     $this->db->where('id', $l['id']);
@@ -257,8 +256,8 @@ class Dashboard extends CI_Controller
                                     "\r\nStatus Terakhir : *" . $last_status['nama'] . "*" .
                                     "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
                                     "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
-                                    "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 3x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, kadivnya, dan bu dwi" .
-                                    "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadep, kadivnya, dan bu dwi" .
+                                    "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, dan kadiv." .
+                                    "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadept dan/atau kadiv." .
                                     "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
                                     "\r\n \r\n" . $notifikasi['pesan']
                                     ],
