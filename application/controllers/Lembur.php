@@ -38,34 +38,34 @@ class Lembur extends CI_Controller
          // End Auto Batalkan RENCANA LEMBUR
     }
 
-    public function getData($params = null)
-    {
-        if ($params = null){
+    // public function getData($params = null)
+    // {
+    //     if ($params = null){
 
-        }elseif ($params=='telat'){
+    //     }elseif ($params=='penyimpangan'){
 
-                    $this->db->where('status', '0');
-                    $this->db->where('last_status', '4');
-            $lembur = $this->db->get_where('lembur', ['atasan2' => $this->session->userdata('inisial')])->result();
+    //                 $this->db->where('status', '0');
+    //                 $this->db->where('last_status', '4');
+    //         $lembur = $this->db->get_where('lembur', ['atasan2' => $this->session->userdata('inisial')])->result();
     
-                foreach ($lembur as $row) :
-                    $output['data'][] = array(
-                        'hubungan' => $row->hubungan,
-                        'nik' => $row->nik,
-                        'nama' => $row->nama,
-                        'lahir_tempat' => $row->lahir_tempat,
-                        'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
-                        'jenis_kelamin' => $row->jenis_kelamin,
-                        'pekerjaan' => $row->pekerjaan
-                    );
-                endforeach;
+    //             foreach ($lembur as $row) :
+    //                 $output['data'][] = array(
+    //                     'hubungan' => $row->hubungan,
+    //                     'nik' => $row->nik,
+    //                     'nama' => $row->nama,
+    //                     'lahir_tempat' => $row->lahir_tempat,
+    //                     'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
+    //                     'jenis_kelamin' => $row->jenis_kelamin,
+    //                     'pekerjaan' => $row->pekerjaan
+    //                 );
+    //             endforeach;
                 
-                // var_dump($output);
+    //             // var_dump($output);
     
-                //output to json format
-                echo json_encode($output);
-        }
-    }
+    //             //output to json format
+    //             echo json_encode($output);
+    //     }
+    // }
 
     public function ajax()
     {
