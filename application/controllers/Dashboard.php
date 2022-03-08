@@ -12,6 +12,8 @@ class Dashboard extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model("dashboard_model");
+        $this->notifications();
+        $this->update_cuti();
     }
 
     public function notifications()
@@ -269,10 +271,104 @@ class Dashboard extends CI_Controller
         endforeach;
     }
 
+    public function update_cuti()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $today = date('Y-m-d');
+        
+        $this->db->where('valid <=', $today);
+        $this->db->where('expired >=', $today);
+        $this->db->where('status !=', 'AKTIF');
+        $activated = $this->db->get_where('cuti_saldo')->result();
+            foreach ($activated as $row) :
+                $this->db->set('status', 'AKTIF');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+
+        $this->db->where('valid >', $today);
+        $this->db->where('status !=', 'WAITING');
+        $waiting = $this->db->get_where('cuti_saldo')->result();
+            foreach ($waiting as $row) :
+                $this->db->set('status', 'WAITING');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+
+        $this->db->where('expired <', $today);
+        $this->db->where('status !=', 'EXPIRED');
+        $expired = $this->db->get_where('cuti_saldo')->result();
+            foreach ($expired as $row) :
+                $this->db->set('status', 'EXPIRED');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+            
+        $this->db->where('tgl1 <', $today);
+        $this->db->where('status >', 0);
+        $this->db->where('status <', 3);
+        $this->db->where('darurat', null);
+        $cuti = $this->db->get_where('cuti')->result();
+            foreach ($cuti as $row) :
+                $this->db->set('reject_by', 'SYSTEM');
+                $this->db->set('reject_at', date('Y-m-d H:i:s'));
+                $this->db->set('reject_reason', 'Batas waktu persetujuan telah selesai');
+                $this->db->set('status', '0');
+                $this->db->set('reject_status', $row->status);
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti');
+
+                $this->db->set('status', '0');
+                $this->db->where('cuti_id', $row->id);
+                $this->db->update('cuti_detail');
+
+                $cuti_saldo = $this->db->get_where('cuti_saldo', ['id' => $row->saldo_id])->row();
+                if ($cuti_saldo)
+                {
+                    $this->db->select_sum('lama');
+                    $this->db->where('saldo_id', $row->saldo_id);
+                    $this->db->where('status >', 0);
+                    $query = $this->db->get('cuti');
+                    $digunakan = $query->row()->lama;
+                    $sisa = $cuti_saldo->saldo_awal - $digunakan;
+
+                    $this->db->set('saldo_digunakan', $digunakan);
+                    $this->db->set('saldo', $sisa);
+                    $this->db->where('id', $row->saldo_id);
+                    $this->db->update('cuti_saldo');
+                }
+
+                //Notifikasi ke USER
+                $user = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user->phone,
+                            'message' => "*[NOTIF] PEMBATALAN CUTI*" .
+                            "\r\n \r\nNama : *" . $row->nama . "*" .
+                            "\r\nTanggal : *" . date('d-M', strtotime($row->tgl1)) . "*" .
+                            "\r\nLama : *" . $row->lama ." Hari* " .
+                            "\r\nAlasan : *Cuti kamu melewati batas waktu persetujuan atasan*" .
+                            "\r\n \r\nCuti ini telah *DIBATALKAN oleh SYSTEM*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+            endforeach;
+
+    }
+
     public function index()
     {
         date_default_timezone_set('asia/jakarta');
-        $this->notifications();
 
         // $complete = $this->db->get_where('survei_payment', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
