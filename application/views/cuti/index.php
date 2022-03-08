@@ -172,14 +172,24 @@
                       </div>
                       <div class="col-md-12" id="">
                           <div class="form-group">
-                              <label class="bmd-label"><mark>*Pengajuan cuti paling lambat <b>H-1 pukul 21:00</b>.</mark></label></br>
-                              <label class="bmd-label"><mark>*Jika diantara cuti kamu terdapat <b>Hari Libur Nasional</b> di hari kerja, Harap dibuat menjadi 2x pengajuan cuti.</mark></label></br>
+                              <label class="bmd-label"><mark>*Jika diantara Cuti kamu terdapat <b>Hari Libur Nasional</b> di hari kerja, Harap dibuat menjadi 2x pengajuan cuti.</mark></label></br>
                           </div>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label">Keterangan*</label></br>
                           <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3" required></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="togglebutton">
+                            <label>
+                              <input type="checkbox" id="darurat" name="darurat" value="1">
+                                <span class="toggle"></span>
+                                  Darurat?
+                            </label>
+                          </div>
                         </div>
                       </div>
                     </div>
