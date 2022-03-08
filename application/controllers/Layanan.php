@@ -222,15 +222,19 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Panduan Akses dan Kode Voucher HUT ke-65 Astra*" .
+                            'message' => "*Syarat dan Ketentuan Cuti Di Raisa (Rev1)*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nAyo ikuti keseruan rangkaian acara inspiratif HUT ke-65 Astra karena ada berbagai agenda menarik yang diisi oleh narasumber inspiratif." .
-                            "\r\n \r\nKita dapat bersama menyaksikannya melalui InnovNation Webinar dan Experiental Learning, Serta Virtual Exhibition dan Sustainability Showcase Grup Astra." .
-                            "\r\nCaranya dengan mengikuti panduan berikut ini ya!" .
-                            "\r\nhttps://raisa.winteq-astra.com/assets/pdf/Panduan%20Akses%20HUT%20ke-65%20Astra.pdf" .
-                            "\r\n \r\nkode Voucher kamu adalah *" . $voucher->voucher . "*" .
-                            "\r\n \r\nAyo, Semangat Bergerak dan Tumbuh Bersama melalui beragam inspirasi!" .
-                            "\r\n#65TahunAstra"
+                            "\r\nBerikut adalah syarat dan Ketentuan melakukan cuti :" .
+                            "\r\n \r\n1. Form di RAISA hanya menggantikan form fisik sebelumnya tanpa mengubah pola interaksi, tetap informasikan pengajuan cuti Anda kepada pimpinan-pimpinan Anda secara langsung." .
+                            "\r\n \r\n2. Kondisi darurat adalah kondisi yang tidak diharapkan DAN terjadi secara mendadak seperti kecelakaan, meninggal dunia, bencana alam, kerusuhan, kebakaran, serangan jantung, dan anak/istri sakit (dibuktikan dengan surat dokter). Selain kondisi-kondisi tersebut maka dianggap bukan kondisi darurat walaupun tidak diharapkan." .
+                            "\r\n \r\n3. Ajukan cuti maksimal H-1 pukul 21.00 kecuali dalam kondisi darurat tersebut di atas." .
+                            "\r\n \r\n4. Karyawan tidak boleh melakukan cutinya sebelum disetujui sampai atasan 2." .
+                            "\r\n \r\n5. Raisa tidak bertanggung jawab atas permohonan cuti yang tidak kunjung disetujui oleh pimpinan terkait, tetap lakukan komunikasi dengan pimpinan-pimpinan terkait." .
+                            "\r\n \r\n6. Karyawan yang melakukan cuti sebelum pengajuan cutinya disetujui pihak terkait, maka dianggap mangkir dan konsekuensinya akan mengikuti aturan perusahaan." .
+                            "\r\n \r\n7. Permohonan cuti yang tidak diapprove sampai hari H, maka sistem langsung melakukan autoreject dan selanjutnya akan mengikuti ketentuan poin no 5 dan 6." .
+                            "\r\n \r\n8. Ketentuan ini berlaku untuk cuti mulai per 9 Maret 2022." .
+                            "\r\n \r\nHormat Kami," .
+                            "\r\nHuman Capital"
                         ],
                     ]
                 );
