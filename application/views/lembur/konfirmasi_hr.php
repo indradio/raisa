@@ -107,7 +107,7 @@
                                                 <td><?= $a['durasi']; ?> jam</td>
                                                 <td class="text-right">
                                                     <a href="#" data-toggle="modal" data-target="#realisasiAktivitas" data-id="<?= $a['id']; ?>" data-aktivitas="<?= $a['aktivitas']; ?>" data-deskripsi_hasil="<?= $a['deskripsi_hasil']; ?>" data-progres_hasil="<?= $a['progres_hasil']; ?>" class="badge badge-pill badge-info">Revisi</a>
-                                                    <a href="<?= base_url('lembur/hapus_aktivitas_realisasi/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm btn-bataldl">Batalkan</a>
+                                                    <a href="<?= base_url('lembur/hapus_aktivitas_realisasi/') . $a['id']; ?>" class="badge badge-pill badge-danger btn-sm">Batalkan</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
