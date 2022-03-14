@@ -209,7 +209,6 @@ class Layanan extends CI_Controller
         }
 
         foreach ($karyawan as $row) :
-                $voucher = $this->db->get_where('hut_voucher', ['npk' => $row['npk']])->row();
                 //Notifikasi ke USER
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(
@@ -222,19 +221,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Syarat dan Ketentuan Cuti Di Raisa (Rev1)*" .
+                            'message' => "*Jangan Sampai Lupa! Ini Biaya Denda Tak Lapor SPT Tahunan 2022*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerikut adalah syarat dan Ketentuan melakukan cuti :" .
-                            "\r\n \r\n1. Form di RAISA hanya menggantikan form fisik sebelumnya tanpa mengubah pola interaksi, tetap informasikan pengajuan cuti Anda kepada pimpinan-pimpinan Anda secara langsung." .
-                            "\r\n \r\n2. Kondisi darurat adalah kondisi yang tidak diharapkan DAN terjadi secara mendadak seperti kecelakaan, meninggal dunia, bencana alam, kerusuhan, kebakaran, serangan jantung, dan anak/istri sakit (dibuktikan dengan surat dokter). Selain kondisi-kondisi tersebut maka dianggap bukan kondisi darurat walaupun tidak diharapkan." .
-                            "\r\n \r\n3. Ajukan cuti maksimal H-1 pukul 21.00 kecuali dalam kondisi darurat tersebut di atas." .
-                            "\r\n \r\n4. Karyawan tidak boleh melakukan cutinya sebelum disetujui sampai atasan 2." .
-                            "\r\n \r\n5. Raisa tidak bertanggung jawab atas permohonan cuti yang tidak kunjung disetujui oleh pimpinan terkait, tetap lakukan komunikasi dengan pimpinan-pimpinan terkait." .
-                            "\r\n \r\n6. Karyawan yang melakukan cuti sebelum pengajuan cutinya disetujui pihak terkait, maka dianggap mangkir dan konsekuensinya akan mengikuti aturan perusahaan." .
-                            "\r\n \r\n7. Permohonan cuti yang tidak diapprove sampai hari H, maka sistem langsung melakukan autoreject dan selanjutnya akan mengikuti ketentuan poin no 5 dan 6." .
-                            "\r\n \r\n8. Ketentuan ini berlaku untuk cuti mulai per 9 Maret 2022." .
-                            "\r\n \r\nHormat Kami," .
-                            "\r\nHuman Capital"
+                            "\r\nBatas waktu pelaporan SPT tahunan wajib pajak untuk pribadi atau individu pada *31 Maret 2022*." .
+                            "\r\nPelaporan tetap dapat dilakukan meski telah melewati batas waktu, namun wajib pajak akan dikenakan *denda* atas kelalaian tersebut." .
+                            "\r\n \r\nBerdasarkan Undang-Undang Nomor 28 Tahun 2007 tentang Perubahan Ketiga Atas UU Nomor 6 Tahun 1983 tentang Ketentuan Umum dan Tata Cara Perpajakan (KUP)." .
+                            "\r\nDenda untuk keterlambatan pelaporan SPT tahunan wajib pajak untuk pribadi atau individu yakni sebesar *100.000*." .
+                            "\r\n \r\nDemi menghindari denda, segera lakukan pelaporan SPT secara online di laman djponline.pajak.go.id."
                         ],
                     ]
                 );
