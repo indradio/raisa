@@ -221,13 +221,14 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Jangan Sampai Lupa! Ini Biaya Denda Tak Lapor SPT Tahunan 2022*" .
+                            'message' => "*Jangan Sampai Lupa! Ini Biaya Denda Telat Lapor SPT Tahunan 2022*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBatas waktu pelaporan SPT tahunan wajib pajak untuk pribadi atau individu pada *31 Maret 2022*." .
-                            "\r\nPelaporan tetap dapat dilakukan meski telah melewati batas waktu, namun wajib pajak akan dikenakan *denda* atas kelalaian tersebut." .
+                            "\r\nBatas waktu pelaporan SPT tahunan wajib pajak untuk pribadi atau individu paling lambat pada *31 Maret 2022*." .
+                            "\r\nPelaporan tetap dapat dilakukan meski telah melewati batas waktu tersebut, namun wajib pajak akan dikenakan *denda* atas kelalaian tersebut." .
                             "\r\n \r\nBerdasarkan Undang-Undang Nomor 28 Tahun 2007 tentang Perubahan Ketiga Atas UU Nomor 6 Tahun 1983 tentang Ketentuan Umum dan Tata Cara Perpajakan (KUP)." .
                             "\r\nDenda untuk keterlambatan pelaporan SPT tahunan wajib pajak untuk pribadi atau individu yakni sebesar *100.000*." .
-                            "\r\n \r\nDemi menghindari denda, segera lakukan pelaporan SPT secara online di laman djponline.pajak.go.id."
+                            "\r\n \r\nDemi menghindari denda, segera lakukan pelaporan SPT secara online di laman djponline.pajak.go.id." .
+                            "\r\n#PajakKitaUntukKita"
                         ],
                     ]
                 );
