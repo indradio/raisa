@@ -984,8 +984,13 @@ class Perjalanandl extends CI_Controller
         $data['sidemenu'] = 'Kepala Departemen';
         $data['sidesubmenu'] = 'Laporan Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['tahun'] = $this->input->post('tahun');
-        $data['bulan'] = $this->input->post('bulan');
+        if (empty($this->input->post('tahun'))){
+            $data['tahun'] = date('Y');
+            $data['bulan'] = date('m');
+        }else{
+            $data['tahun'] = $this->input->post('tahun');
+            $data['bulan'] = $this->input->post('bulan');
+        }
         if ($this->input->post('laporan') == 1) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

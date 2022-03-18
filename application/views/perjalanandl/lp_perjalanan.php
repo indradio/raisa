@@ -31,9 +31,9 @@
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="tahun" id="tahun" data-style="select-with-transition" title="Pilih Tahun" data-size="7" required>
-                                            <option value="2021">2021</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2019">2019</option>
+                                        <?php for ($y = date('Y')-2; $y <= date('Y'); $y++) { ?>
+                                            <option value="<?= $y; ?>" <?php echo ($tahun == $y) ? 'selected' : ''; ?>><?= $y; ?></option>
+                                        <?php };?>
                                         </select>
                                     </div>
                                 </div>
@@ -43,18 +43,18 @@
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="bulan" id="bulan" data-style="select-with-transition" title="Pilih Bulan" data-size="7" required>
-                                            <option value="01">Januari</option>
-                                            <option value="02">Febuari</option>
-                                            <option value="03">Maret</option>
-                                            <option value="04">April</option>
-                                            <option value="05">Mei</option>
-                                            <option value="06">Juni</option>
-                                            <option value="07">Juli</option>
-                                            <option value="08">Agustus</option>
-                                            <option value="09">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
+                                            <option value="01" <?= ($bulan == '01') ? 'selected' : ''; ?>>Januari</option>
+                                            <option value="02" <?= ($bulan == '02') ? 'selected' : ''; ?>>Febuari</option>
+                                            <option value="03" <?= ($bulan == '03') ? 'selected' : ''; ?>>Maret</option>
+                                            <option value="04" <?= ($bulan == '04') ? 'selected' : ''; ?>>April</option>
+                                            <option value="05" <?= ($bulan == '05') ? 'selected' : ''; ?>>Mei</option>
+                                            <option value="06" <?= ($bulan == '06') ? 'selected' : ''; ?>>Juni</option>
+                                            <option value="07" <?= ($bulan == '07') ? 'selected' : ''; ?>>Juli</option>
+                                            <option value="08" <?= ($bulan == '08') ? 'selected' : ''; ?>>Agustus</option>
+                                            <option value="09" <?= ($bulan == '09') ? 'selected' : ''; ?>>September</option>
+                                            <option value="10" <?= ($bulan == '10') ? 'selected' : ''; ?>>Oktober</option>
+                                            <option value="11" <?= ($bulan == '11') ? 'selected' : ''; ?>>November</option>
+                                            <option value="12" <?= ($bulan == '12') ? 'selected' : ''; ?>>Desember</option>
                                         </select>
                                     </div>
                                 </div>
