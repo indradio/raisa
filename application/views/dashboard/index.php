@@ -763,27 +763,52 @@
 <script>
   $(document).ready(function() {
 
-    <?php if ($this->session->flashdata('message')=='masuk'){ ?>
+    <?php 
+    if ($this->session->flashdata('message')=='masuk'){ 
+        $vaksin_id = $this->session->userdata('npk').'KARY';
+        $vaksin = $this->db->get_where('vaksin_data', ['id' => $vaksin_id])->row();
+
+        if ($vaksin->vaksin3 == 'YA'){
+    ?> 
+        let timerInterval
+        Swal.fire({
+          title: 'Update Data',
+          icon: 'info',
+          html: 'Pastikan data diri dan keluarga kamu sudah terdaftar, </br> Kamu bisa update melalui menu <b>Info HR -> Update Data</b>',
+          timer: 5000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          willClose: () => {
+            clearInterval(timerInterval)
+          }
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+          }
+        })
        
-       let timerInterval
-       Swal.fire({
-         title: 'Update Data',
-         icon: 'info',
-         html: 'Pastikan data diri dan keluarga kamu sudah terdaftar, </br> Kamu bisa update melalui menu <b>Info HR -> Update Data</b>',
-         timer: 5000,
-         timerProgressBar: true,
-         showConfirmButton: false,
-         willClose: () => {
-           clearInterval(timerInterval)
-         }
-       }).then((result) => {
-         /* Read more about handling dismissals below */
-         if (result.dismiss === Swal.DismissReason.timer) {
-           console.log('I was closed by the timer')
-         }
-       })
-       
-     <?php } ?>
+      <?php }else{ ?>
+        Swal.fire({
+          title: 'Yuk VAKSIN Booster!',
+          icon: 'warning',
+          html:
+          '.</p> ' +
+          'Lindungi diri dan keluarga anda dengan vaksinasi Covid-19 lengkap + Booster.</p> ' +
+          'Jika sudah melakukan',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, Saya Mengerti',
+          showClass: {
+            popup: 'animate__animated animate__heartBeat'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOut'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {}
+        });
+     <?php }} ?>
 
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal

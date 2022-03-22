@@ -12,11 +12,76 @@ class Dashboard extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model("dashboard_model");
-        $this->notifications();
+        $this->update_perjalanan();
+        $this->update_lembur();
         $this->update_cuti();
     }
 
-    public function notifications()
+    public function update_perjalanan()
+    {
+        //Auto batalkan perjalanan
+        $queryPerjalanan = "SELECT *
+        FROM `perjalanan`
+        WHERE `tglberangkat` <= CURDATE() AND (`status` = 1 OR `status` = 8)
+        ";
+        $perjalanan = $this->db->query($queryPerjalanan)->result_array();
+        foreach ($perjalanan as $p) :
+            // cari selisih
+            $mulai = strtotime($p['jamberangkat']);
+            $selesai = time();
+            $durasi = $selesai - $mulai;
+            $jam   = floor($durasi / (60 * 60));
+            $menit   = floor($durasi / 60);
+            $user = $this->db->get_where('karyawan', ['npk' => $p['npk']])->row_array();
+            
+            if (($p['copro']!='NON PROJEK' and $jam >= 1)or($p['copro']=='NON PROJEK' and $jam >= 2)) {
+                $this->db->set('status', '0');
+                $this->db->set('last_status', $p['status']);
+                $this->db->set('catatan', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
+                $this->db->where('id', $p['id']);
+                $this->db->update('perjalanan');
+
+                $this->db->set('status', '9');
+                $this->db->where('id', $p['reservasi_id']);
+                $this->db->update('reservasi');
+
+                //Notifikasi ke USER
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user['phone'],
+                            'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
+                                "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
+                                "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
+                                "\r\nPeserta : *" . $p['anggota'] . "*" .
+                                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                                "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
+                                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                                "\r\nCatatan : *" . $p['catatan'] .  "*" .
+                                "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi batas waktu keberangkatan" .
+                                "\r\nBatas Waktu keberangkatan :" .
+                                "\r\n1 Jam untuk perjalanan dengan COPRO" .
+                                "\r\n2 Jam untuk perjalanan tanpa COPRO" .
+                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
+                                "\r\n \r\n" . $notifikasi['pesan']
+                                ],
+                    ]
+                );
+                $body = $response->getBody();
+            }
+            
+        endforeach;
+    }
+
+    public function update_lembur()
     {
         //Notif lembur hari ini to GA
         $n = time();
@@ -78,70 +143,9 @@ class Dashboard extends CI_Controller
 
         $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
         
-        //Auto batalkan perjalanan
-        $queryPerjalanan = "SELECT *
-        FROM `perjalanan`
-        WHERE `tglberangkat` <= CURDATE() AND (`status` = 1 OR `status` = 8)
-        ";
-        $perjalanan = $this->db->query($queryPerjalanan)->result_array();
-        foreach ($perjalanan as $p) :
-            // cari selisih
-            $mulai = strtotime($p['jamberangkat']);
-            $selesai = time();
-            $durasi = $selesai - $mulai;
-            $jam   = floor($durasi / (60 * 60));
-            $menit   = floor($durasi / 60);
-            $user = $this->db->get_where('karyawan', ['npk' => $p['npk']])->row_array();
-            
-            if (($p['copro']!='NON PROJEK' and $jam >= 1)or($p['copro']=='NON PROJEK' and $jam >= 2)) {
-                $this->db->set('status', '0');
-                $this->db->set('last_status', $p['status']);
-                $this->db->set('catatan', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
-                $this->db->where('id', $p['id']);
-                $this->db->update('perjalanan');
-
-                $this->db->set('status', '9');
-                $this->db->where('id', $p['reservasi_id']);
-                $this->db->update('reservasi');
-
-                //Notifikasi ke USER
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $user['phone'],
-                            'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
-                                "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
-                                "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
-                                "\r\nPeserta : *" . $p['anggota'] . "*" .
-                                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
-                                "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
-                                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                                "\r\nCatatan : *" . $p['catatan'] .  "*" .
-                                "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi batas waktu keberangkatan" .
-                                "\r\nBatas Waktu keberangkatan :" .
-                                "\r\n1 Jam untuk perjalanan dengan COPRO" .
-                                "\r\n2 Jam untuk perjalanan tanpa COPRO" .
-                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                                "\r\n \r\n" . $notifikasi['pesan']
-                                ],
-                    ]
-                );
-                $body = $response->getBody();
-            }
-            
-        endforeach;
-
         //Auto LEMBUR
 
-                    $this->db->where('tglmulai >=', Date('Y-m-d', strtotime('-31 days')));
+        $this->db->where('tglmulai >=', Date('Y-m-d', strtotime('-31 days')));
         $lembur =   $this->db->get('lembur')->result_array();
 
         foreach ($lembur as $l) :
