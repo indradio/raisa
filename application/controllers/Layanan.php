@@ -209,6 +209,11 @@ class Layanan extends CI_Controller
         }
 
         foreach ($karyawan as $row) :
+
+                        $this->db->where('vaksin3', 'YA');
+            $vaksin =   $this->db->get_where('vaksin_data', ['nama' => $row['nama']])->row();
+            if (empty($vaksin))
+            {
                 //Notifikasi ke USER
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(
@@ -221,18 +226,19 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Jangan Sampai Lupa! Ini Biaya Denda Telat Lapor SPT Tahunan 2022*" .
+                            'message' => "*Yuk Segera Lengkapi Vaksinasi lengkap dan Lanjutan (Booster)*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBatas waktu pelaporan SPT tahunan wajib pajak untuk pribadi atau individu paling lambat pada *31 Maret 2022*." .
-                            "\r\nPelaporan tetap dapat dilakukan meski telah melewati batas waktu tersebut, namun wajib pajak akan dikenakan *denda* atas kelalaian tersebut." .
-                            "\r\n \r\nBerdasarkan Undang-Undang Nomor 28 Tahun 2007 tentang Perubahan Ketiga Atas UU Nomor 6 Tahun 1983 tentang Ketentuan Umum dan Tata Cara Perpajakan (KUP)." .
-                            "\r\nDenda untuk keterlambatan pelaporan SPT tahunan wajib pajak untuk pribadi atau individu yakni sebesar *100.000*." .
-                            "\r\n \r\nDemi menghindari denda, segera lakukan pelaporan SPT secara online di laman djponline.pajak.go.id." .
-                            "\r\n#PajakKitaUntukKita"
+                            "\r\nData Kementerian Kesehatan menunjukkan bahwa 70% dari 8.230 pasien meninggal akibat COVID-19 belum menerima vaksinasi lengkap." .
+                            "\r\nIni membuktikan bahwa vaksinasi lengkap dan lanjutan *(booster)* mampu mengurangi risiko dirawat dan kematian." .
+                            "\r\n \r\nTingkat Vaksinasi Lanjutan (Booster) di WINTEQ masih di bawah 50% dari total karyawan." .
+                            "\r\nAngka ini di bawah batas minimal vaksinasi yang ditetapkan untuk perusahaan." .
+                            "\r\n \r\nYuk, lindungi diri kita dan orang-orang di sekitar kita, segera vaksinasi Lanjutan *(Booster)*." .
+                            "\r\n#CepatVaksin"
                         ],
                     ]
                 );
                 $body = $response->getBody();
+            };
         endforeach;
         redirect('layanan/broadcast');
     }
