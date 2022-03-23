@@ -282,9 +282,7 @@ class Profil extends CI_Controller
             $data = [
                 'id' => $id,
                 'npk' => $this->session->userdata('npk'),
-                'nik' => $this->input->post('nik'),
                 'nama' => $this->input->post('nama'),
-                'hubungan_keluarga' => $this->input->post('hubungan'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'updated_by' => $this->session->userdata('inisial')
             ];
@@ -305,7 +303,6 @@ class Profil extends CI_Controller
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->delete('karyawan_keluarga');
 
-            $this->db->where('nik', $this->input->post('nik'));
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->delete('vaksin_data');
 
@@ -347,7 +344,6 @@ class Profil extends CI_Controller
             foreach ($data as $row) :
                 $output['data'][] = array(
                     'id' => $row->id,
-                    'nik' => $row->nik,
                     'nama' => $row->nama,
                     'hubungan' => $row->hubungan_keluarga,
                     'vaksin1' => $row->vaksin1,
@@ -358,7 +354,8 @@ class Profil extends CI_Controller
                     'vaksin2_tanggal' => date('d-m-Y', strtotime($row->vaksin2_tanggal)),
                     'vaksin3' => $row->vaksin3,
                     'vaksin3_nama' => $row->vaksin3_nama,
-                    'vaksin3_tanggal' => date('d-m-Y', strtotime($row->vaksin3_tanggal))
+                    'vaksin3_tanggal' => date('d-m-Y', strtotime($row->vaksin3_tanggal)),
+                    'vaksin3_tiket' => $row->vaksin3_tiket
                 );
             endforeach;
             
@@ -368,7 +365,6 @@ class Profil extends CI_Controller
             echo json_encode($output);
 
         }elseif ($var == 'getbyname'){
-                    $this->db->where('nik', $this->input->post('nik'));
             $row = $this->db->get_where('vaksin_data', ['nama' => $this->input->post('nama')])->row();
 
                 $output['data'] = array(
@@ -384,7 +380,8 @@ class Profil extends CI_Controller
                     'vaksin2_tanggal' => date('d-m-Y', strtotime($row->vaksin2_tanggal)),
                     'vaksin3' => $row->vaksin3,
                     'vaksin3_nama' => $row->vaksin3_nama,
-                    'vaksin3_tanggal' => date('d-m-Y', strtotime($row->vaksin3_tanggal))
+                    'vaksin3_tanggal' => date('d-m-Y', strtotime($row->vaksin3_tanggal)),
+                    'vaksin3_tiket' => $row->vaksin3_tiket
                 );
             
             // var_dump($output);
@@ -428,18 +425,38 @@ class Profil extends CI_Controller
             $this->db->set('vaksin3', $this->input->post('vaksin3'));
             $this->db->set('vaksin3_nama', $vaksin3_nama);
             $this->db->set('vaksin3_tanggal', $vaksin3_tanggal);
-            $this->db->set('vaksin3_tiket', $vaksin3_tiket);
-            $this->db->where('nik', $this->input->post('nik'));
+            $this->db->set('vaksin3_tiket', $this->input->post('vaksin3_tiket'));
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->update('vaksin_data');
 
         }else{
-            
+                       
+            $vaksin_id = $this->session->userdata('npk').'KARY';
+            $vaksin = $this->db->get_where('vaksin_data', ['id' => $vaksin_id])->row();
+            if (empty($vaksin)){
+                $data = [
+                    'id' => $vaksin_id,
+                    'npk' => $this->session->userdata('npk'),
+                    'nama' => $this->session->userdata('nama'),
+                    'hubungan_keluarga' => '-',
+                    'vaksin1' => '-',
+                    'vaksin2' => '-',
+                    'vaksin3' => '-',
+                    'vaksin1_nama' => '-',
+                    'vaksin2_nama' => '-',
+                    'vaksin3_nama' => '-',
+                    'vaksin3_tiket' => '-',
+                    'updated_by' => '-'
+                ];
+                $this->db->insert('vaksin_data', $data);
+            }
+
             $data['sidemenu'] = 'Info HR';
             $data['sidesubmenu'] = 'Update Vaksin';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['details'] = $this->db->get_where('karyawan_details', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['keluarga'] = $this->db->get_where('karyawan_keluarga', ['npk' =>  $this->session->userdata('npk')])->result();
+            
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['details'] = $this->db->get_where('karyawan_details', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['keluarga'] = $this->db->get_where('karyawan_keluarga', ['npk' => $this->session->userdata('npk')])->result();
             $data['provinsi'] = $this->db->get('wilayah_provinsi')->result();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

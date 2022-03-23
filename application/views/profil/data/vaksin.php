@@ -15,22 +15,20 @@
                     <table id="dt_vaksin" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Status</th>
-                                <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Vaksin <small> Ke-1 </small></th>
                                 <th>Vaksin <small> Ke-2 </small></th>
-                                <th>Vaksin <small> Ke-3 </small></th>
+                                <th>Vaksin <small> Booster </small></th>
+                                <th>Booster<small> Tiket </small></th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Status</th>
-                                <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Vaksin <small> Ke-1 </small></th>
                                 <th>Vaksin <small> Ke-2 </small></th>
-                                <th>Vaksin <small> Ke-3 </small></th>
+                                <th>Vaksin <small> Booster </small></th>
+                                <th>Booster<small> Tiket </small></th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -58,12 +56,6 @@
                     <div class="row">
                         <!-- <input type="hidden" class="form-control" name="nik" id="nik"/>
                         <input type="hidden" class="form-control" name="nama" id="nama"/> -->
-                      <div class="col-md-12">
-                          <div class="form-group">
-                              <label class="bmd-label">NIK*</label></br>
-                              <input type="text" class="form-control disabled" name="nik" id="nik" />
-                          </div>
-                      </div>
                       <div class="col-md-12">
                           <div class="form-group">
                               <label class="bmd-label">Nama Lengkap*</label></br>
@@ -154,7 +146,7 @@
                         <div class="col-md-12" id="col_vaksin3_tiket">
                           <div class="form-group">
                               <label class="bmd-label">Apakah sudah ada tiket vaksin booster pedulilindungi ?</label></br>
-                                <select class="selectpicker" name="vaksin3_tiket" id="vaksin3_tiket" title="Pilih" data-style="select-with-transition" data-size="5" data-width="100%" data-live-search="false" required>
+                                <select class="selectpicker" name="vaksin3_tiket" id="vaksin3_tiket" title="Pilih" data-style="select-with-transition" data-size="5" data-width="100%" data-live-search="false">
                                     <option value="YA">YA, SUDAH DAPAT</option>
                                     <option value="TIDAK">TIDAK DAPAT</option>
                                 </select>
@@ -215,12 +207,11 @@
                     "type": "POST"
                 },
             columns: [
-                { "data": "hubungan" },
-                { "data": "nik" },
                 { "data": "nama" },
                 { "data": "vaksin1" },
                 { "data": "vaksin2" },
-                { "data": "vaksin3" }
+                { "data": "vaksin3" },
+                { "data": "vaksin3_tiket" }
             ]
         });
 
@@ -228,7 +219,7 @@
             $('#updateVaksin').modal("show");
 
 
-            var vaksin1 = $('td', this).eq(3).text();
+            var vaksin1 = $('td', this).eq(1).text();
             if (vaksin1 == 'YA'){
                 document.getElementById("col_vaksin1_nama").style.display = '';
                 document.getElementById("col_vaksin1_nama").style.display = '';
@@ -236,7 +227,7 @@
                 document.getElementById("col_vaksin1_tanggal").style.display = 'none';
                 document.getElementById("col_vaksin1_tanggal").style.display = 'none';
             }
-            var vaksin2 = $('td', this).eq(4).text();
+            var vaksin2 = $('td', this).eq(2).text();
             if (vaksin2 == 'YA'){
                 document.getElementById("col_vaksin2_nama").style.display = '';
                 document.getElementById("col_vaksin2_nama").style.display = '';
@@ -244,7 +235,7 @@
                 document.getElementById("col_vaksin2_tanggal").style.display = 'none';
                 document.getElementById("col_vaksin2_tanggal").style.display = 'none';
             }
-            var vaksin3 = $('td', this).eq(5).text();
+            var vaksin3 = $('td', this).eq(3).text();
             if (vaksin3 == 'YA'){
                 document.getElementById("col_vaksin3_nama").style.display = '';
                 document.getElementById("col_vaksin3_nama").style.display = '';
@@ -255,18 +246,16 @@
                 document.getElementById("col_vaksin3_tiket").style.display = '';
             }
 
-            var nik = $('td', this).eq(1).text();
-            var nama = $('td', this).eq(2).text();
+            var nama = $('td', this).eq(0).text();
             
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('profil/vaksin/getbyname') ?>",
                 data: {
-                    nik: nik, nama:nama
+                    nama:nama
                 },
                 success: function(data) {
                     var myObj = JSON.parse(data);
-                    $('#updateVaksin').find('.modal-body input[name="nik"]').val(myObj.data['nik']);
                     $('#updateVaksin').find('.modal-body input[name="nama"]').val(myObj.data['nama']);
                   
                     $('#vaksin1').selectpicker('val', myObj.data['vaksin1']);
@@ -280,13 +269,13 @@
                     $('#vaksin3').selectpicker('val', myObj.data['vaksin3']);
                     $('#vaksin3_nama').selectpicker('val', myObj.data['vaksin3_nama']);
                     $('#updateVaksin').find('.modal-body input[name="vaksin3_tanggal"]').val(myObj.data['vaksin3_tanggal']);
+
                     $('#vaksin3_tiket').selectpicker('val', myObj.data['vaksin3_tiket']);
                 }
             });
         });
 
         $('#btn_update').on('click',function(){
-            var nik=$('#nik').val();
             var nama=$('#nama').val();
             var vaksin1=$('#vaksin1').val();
             var vaksin1_nama=$('#vaksin1_nama').val();
@@ -302,7 +291,7 @@
                 type : "POST",
                 url  : "<?= site_url('profil/vaksin/update') ?>",
                 // dataType : "JSON",
-                data : {nik:nik, nama:nama, vaksin1:vaksin1, vaksin1_nama:vaksin1_nama, vaksin1_tanggal:vaksin1_tanggal, vaksin2:vaksin2, vaksin2_nama:vaksin2_nama, vaksin2_tanggal:vaksin2_tanggal, vaksin3:vaksin3, vaksin3_nama:vaksin3_nama, vaksin3_tanggal:vaksin3_tanggal, vaksin3_tiket:vaksin3_tiket},
+                data : {nama:nama, vaksin1:vaksin1, vaksin1_nama:vaksin1_nama, vaksin1_tanggal:vaksin1_tanggal, vaksin2:vaksin2, vaksin2_nama:vaksin2_nama, vaksin2_tanggal:vaksin2_tanggal, vaksin3:vaksin3, vaksin3_nama:vaksin3_nama, vaksin3_tanggal:vaksin3_tanggal, vaksin3_tiket:vaksin3_tiket},
                 success: function(result){
                     // result = JSON.parse(result)
                     // alert(result);
