@@ -226,7 +226,7 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Yuk Segera Lengkapi Vaksinasi lengkap dan Lanjutan (Booster)*" .
+                            'message' => "*Segera Vaksinasi lengkap dan Lanjutan (Booster)*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nData Kementerian Kesehatan menunjukkan bahwa 70% dari 8.230 pasien meninggal akibat COVID-19 belum menerima vaksinasi lengkap." .
                             "\r\nIni membuktikan bahwa vaksinasi lengkap dan lanjutan *(booster)* mampu mengurangi risiko dirawat dan kematian." .
