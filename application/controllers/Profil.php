@@ -426,6 +426,8 @@ class Profil extends CI_Controller
             $this->db->set('vaksin3_nama', $vaksin3_nama);
             $this->db->set('vaksin3_tanggal', $vaksin3_tanggal);
             $this->db->set('vaksin3_tiket', $this->input->post('vaksin3_tiket'));
+            $this->db->set('updated_at', date('Y-m-d'));
+            $this->db->set('updated_by', $this->session->userdata('inisial'));
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->update('vaksin_data');
 
