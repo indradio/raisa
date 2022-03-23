@@ -339,7 +339,7 @@ class Profil extends CI_Controller
     public function vaksin($var = null)
     {
         if ($var == 'get'){
-            $data = $this->db->get_where('vaksin_data', ['nama' => $this->session->userdata('nama')])->result();
+            $data = $this->db->get_where('vaksin_data', ['npk' => $this->session->userdata('npk')])->result();
 
             foreach ($data as $row) :
                 $output['data'][] = array(
@@ -446,7 +446,8 @@ class Profil extends CI_Controller
                     'vaksin2_nama' => '-',
                     'vaksin3_nama' => '-',
                     'vaksin3_tiket' => '-',
-                    'updated_by' => '-'
+                    'updated_at' => date('Y-m-d'),
+                    'updated_by' => $this->session->userdata('inisial')
                 ];
                 $this->db->insert('vaksin_data', $data);
             }
