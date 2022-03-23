@@ -230,7 +230,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nData Kementerian Kesehatan menunjukkan bahwa 70% dari 8.230 pasien meninggal akibat COVID-19 belum menerima vaksinasi lengkap." .
                             "\r\nIni membuktikan bahwa vaksinasi lengkap dan lanjutan *(booster)* mampu mengurangi risiko dirawat dan kematian." .
-                            "\r\n \r\nTingkat Vaksinasi Lanjutan (Booster) di WINTEQ masih di bawah 50% dari total karyawan." .
+                            "\r\n \r\nTingkat Vaksinasi Lanjutan *(Booster)* di WINTEQ masih di bawah 50% dari total seluruh karyawan." .
                             "\r\nAngka ini di bawah batas minimal vaksinasi yang ditetapkan untuk perusahaan." .
                             "\r\n \r\nYuk, lindungi diri kita dan orang-orang di sekitar kita, segera vaksinasi Lanjutan *(Booster)*." .
                             "\r\n#CepatVaksin"
