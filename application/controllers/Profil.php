@@ -426,7 +426,7 @@ class Profil extends CI_Controller
             $this->db->set('vaksin3_nama', $vaksin3_nama);
             $this->db->set('vaksin3_tanggal', $vaksin3_tanggal);
             $this->db->set('vaksin3_tiket', $this->input->post('vaksin3_tiket'));
-            $this->db->set('updated_at', date('Y-m-d'));
+            $this->db->set('updated_at', date('Y-m-d H:i:s'));
             $this->db->set('updated_by', $this->session->userdata('inisial'));
             $this->db->where('nama', $this->input->post('nama'));
             $this->db->update('vaksin_data');
@@ -448,7 +448,7 @@ class Profil extends CI_Controller
                     'vaksin2_nama' => '-',
                     'vaksin3_nama' => '-',
                     'vaksin3_tiket' => '-',
-                    'updated_at' => date('Y-m-d'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                     'updated_by' => $this->session->userdata('inisial')
                 ];
                 $this->db->insert('vaksin_data', $data);
