@@ -51,6 +51,7 @@
                                             <th>Dept</th>
                                             <th>Cell / Section</th>
                                             <th>Posisi</th>
+                                            <th>#</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -68,6 +69,7 @@
                                             <th>Dept</th>
                                             <th>Cell / Section</th>
                                             <th>Posisi</th>
+                                            <th>#</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -93,6 +95,7 @@
                                                 <td><?= $sect['nama']; ?></td>
                                                 <?php $posisi = $this->db->get_where('karyawan_posisi', ['id' => $krywn['posisi_id']])->row_array(); ?>
                                                 <td><?= $posisi['nama']; ?></td>
+                                                <td><?= $lembur['id']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
