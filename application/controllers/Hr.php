@@ -439,4 +439,16 @@ class Hr extends CI_Controller
             $this->load->view('lembur/lp_lembur_week_karyawan', $data);
             $this->load->view('templates/footer');
     }
+
+    public function info($params)
+    {
+            $data['sidemenu'] = 'Info HR';
+            $data['sidesubmenu'] = 'Panduan '.$params;
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/info/'.$params, $data);
+            $this->load->view('templates/footer');
+    }
 }
