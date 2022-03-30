@@ -763,6 +763,7 @@
 <script>
   $(document).ready(function() {
 
+    let timerInterval
     <?php 
     if ($this->session->flashdata('message')=='masuk'){ 
         $vaksin_id = $this->session->userdata('npk').'KARY';
@@ -770,11 +771,13 @@
 
         if ($vaksin->vaksin3 == 'YA'){
     ?> 
-        let timerInterval
         Swal.fire({
-          title: 'Update Data',
-          icon: 'info',
-          html: 'Pastikan data diri dan keluarga kamu sudah terdaftar, </br> Kamu bisa update melalui menu <b>Info HR -> Update Data</b>',
+          title: 'Jam Kerja Ramadan 1443H',
+          html: 'Selamat Menunaikan Ibadah Puasa Ramadan 1443H',
+          imageUrl: '<?= base_url(); ?>/assets/img/info/jamkerja-puasa-1443H.jpg',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
           timer: 5000,
           timerProgressBar: true,
           showConfirmButton: false,
@@ -786,16 +789,18 @@
           if (result.dismiss === Swal.DismissReason.timer) {
             console.log('I was closed by the timer')
           }
-        })
+        });
        
       <?php }else{ ?>
+
         Swal.fire({
           title: 'Yuk VAKSIN Booster!',
           icon: 'warning',
           html:
-          '.</p> ' +
           'Lindungi diri dan keluarga anda dengan vaksinasi Covid-19 lengkap + Booster.</p> ' +
-          'Jika sudah melakukan',
+          'Jika sudah melakukan vaksin, jangan lupa update data kamu ya!',
+          timer: 5000,
+          timerProgressBar: true,
           showCancelButton: false,
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'Ya, Saya Mengerti',
@@ -806,9 +811,12 @@
             popup: 'animate__animated animate__fadeOut'
           }
         }).then((result) => {
-          if (result.isConfirmed) {}
+          // if (result.isConfirmed) {
+
+          // }
         });
-     <?php }} ?>
+     <?php };
+        }; ?>
 
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
