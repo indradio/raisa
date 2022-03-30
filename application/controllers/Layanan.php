@@ -210,10 +210,6 @@ class Layanan extends CI_Controller
 
         foreach ($karyawan as $row) :
 
-                        $this->db->where('vaksin3', 'YA');
-            $vaksin =   $this->db->get_where('vaksin_data', ['nama' => $row['nama']])->row();
-            if (empty($vaksin))
-            {
                 //Notifikasi ke USER
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(
@@ -247,7 +243,7 @@ class Layanan extends CI_Controller
                     ]
                 );
                 $body = $response->getBody();
-            };
+                
         endforeach;
         redirect('layanan/broadcast');
     }
