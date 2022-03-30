@@ -1178,56 +1178,56 @@ class Perjalanan extends CI_Controller
                             $time_atasan2_int = number_format((float)$time_atasan2_jam + ($time_atasan2_menit/60), 2, '.', '');
                             
 
-                        }elseif(date('Y-M-d', strtotime($row->tgl_atasan1)) < date('Y-M-d', strtotime($row->tgl_atasan2)))
-                        {
-                            $day_awal = strtotime(date('Y-m-d', strtotime($row->tgl_atasan1)));
-                            $day_akhir = strtotime(date('Y-m-d', strtotime($row->tgl_atasan2)));
-                            $day_gap = $day_akhir - $day_awal;
-                            $day_gap_hari = floor($day_gap / (60 * 60 * 24)) - 1;
-                            $day_gap_jam = $day_gap_hari * 9;
+                    }elseif(date('Y-M-d', strtotime($row->tgl_atasan1)) < date('Y-M-d', strtotime($row->tgl_atasan2)))
+                    {
+                        $day_awal = strtotime(date('Y-m-d', strtotime($row->tgl_atasan1)));
+                        $day_akhir = strtotime(date('Y-m-d', strtotime($row->tgl_atasan2)));
+                        $day_gap = $day_akhir - $day_awal;
+                        $day_gap_hari = floor($day_gap / (60 * 60 * 24)) - 1;
+                        $day_gap_jam = $day_gap_hari * 9;
 
-                            if (date('H:i', strtotime($row->tgl_atasan1)) < '07:30'){
-                                $atasan1_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan1)));
-                                $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1)));
-                                $day1 = $atasan1_akhir-$atasan1_awal;
-                            }elseif (date('H:i', strtotime($row->tgl_atasan1)) > '16:30') {
-                                $atasan1 = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($row->tgl_atasan1))));
-                                $day1 = 0;
-                            }else{
-                                $atasan1_awal = strtotime($row->tgl_atasan1);
-                                $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1)));
-                                $day1 = $atasan1_akhir-$atasan1_awal;
-                            }
-            
-                            if (date('H:i', strtotime($row->tgl_atasan2)) < '07:30'){
-                                $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2)));
-                                $day2 = 0;
-                            }elseif (date('H:i', strtotime($row->tgl_atasan2)) > '16:30') {
-                                $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2)));
-                                $atasan2_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan2)));
-                                $day2 = $atasan2_akhir-$atasan2_awal;
-                            }else{
-                                $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2)));
-                                $atasan2_akhir = strtotime($row->tgl_atasan2);
-                                $day2 = $atasan2_akhir-$atasan2_awal;
-                            }
-
-                            $diff = $day1 + $day2;
-                            $time_atasan2_jam = floor($diff / (60 * 60));
-                            $diff_menit = $diff - ($time_atasan2_jam * (60 * 60));
-                            $time_atasan2_menit = floor($diff_menit / 60);
-                            $time_atasan2 = $time_atasan2_jam + $day_gap_jam.' Jam '.$time_atasan2_menit.' Menit ';
-                            $time_atasan2_int = number_format((float)$time_atasan2_jam + $day_gap_jam + ($time_atasan2_menit/60), 2, '.', '');
+                        if (date('H:i', strtotime($row->tgl_atasan1)) < '07:30'){
+                            $atasan1_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan1)));
+                            $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1)));
+                            $day1 = $atasan1_akhir-$atasan1_awal;
+                        }elseif (date('H:i', strtotime($row->tgl_atasan1)) > '16:30') {
+                            $atasan1 = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($row->tgl_atasan1))));
+                            $day1 = 0;
                         }else{
-                            $time_atasan2 = '';
-                            $time_atasan2_int = '';
+                            $atasan1_awal = strtotime($row->tgl_atasan1);
+                            $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1)));
+                            $day1 = $atasan1_akhir-$atasan1_awal;
                         }
+        
+                        if (date('H:i', strtotime($row->tgl_atasan2)) < '07:30'){
+                            $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2)));
+                            $day2 = 0;
+                        }elseif (date('H:i', strtotime($row->tgl_atasan2)) > '16:30') {
+                            $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2)));
+                            $atasan2_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan2)));
+                            $day2 = $atasan2_akhir-$atasan2_awal;
+                        }else{
+                            $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2)));
+                            $atasan2_akhir = strtotime($row->tgl_atasan2);
+                            $day2 = $atasan2_akhir-$atasan2_awal;
+                        }
+
+                        $diff = $day1 + $day2;
+                        $time_atasan2_jam = floor($diff / (60 * 60));
+                        $diff_menit = $diff - ($time_atasan2_jam * (60 * 60));
+                        $time_atasan2_menit = floor($diff_menit / 60);
+                        $time_atasan2 = $time_atasan2_jam + $day_gap_jam.' Jam '.$time_atasan2_menit.' Menit ';
+                        $time_atasan2_int = number_format((float)$time_atasan2_jam + $day_gap_jam + ($time_atasan2_menit/60), 2, '.', '');
                     }else{
                         $time_atasan2 = '';
                         $time_atasan2_int = '';
                     }
+                }else{
+                    $time_atasan2 = '';
+                    $time_atasan2_int = '';
+                }
 
-                    // Atasan2 to GA 
+                // Atasan2 to GA 
 
                 if (date('Y-M-d', strtotime($row->tgl_atasan2))==date('Y-M-d', strtotime($row->tgl_ga)))
                 {
@@ -1322,6 +1322,208 @@ class Perjalanan extends CI_Controller
             endforeach;
             
             // var_dump($output);
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params=='byatasan') {
+            $this->db->distinct();
+            $this->db->select('atasan1');
+            $this->db->where('year(tglberangkat)','2022');
+            $this->db->where('month(tglberangkat)','03');
+            $this->db->where('status','9');
+            $query = $this->db->get('reservasi')->result();
+            foreach ($query as $row) :
+                if (!empty($row->atasan1)){
+
+                    $this->db->where('atasan1',$row->atasan1);
+                    $this->db->where('year(tglberangkat)','2022');
+                    $this->db->where('month(tglberangkat)','03');
+                    $this->db->where('status','9');
+                    $query_atasan1 = $this->db->get('reservasi');
+                    $data_atasan1 = $query_atasan1->result();
+
+                    $jumlah_atasan1 = $query_atasan1->num_rows();
+                    $durasi_atasan1 = 0;
+                    foreach ($data_atasan1 as $row_atasan1) :
+               
+                    // Reservasi to Atasan1 
+                        if (date('Y-M-d', strtotime($row_atasan1->tglreservasi))==date('Y-M-d', strtotime($row_atasan1->tgl_atasan1)))
+                        {
+                            if (date('H:i', strtotime($row_atasan1->tglreservasi)) < '07:30'){
+                                $rsv = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan1->tglreservasi)));
+                            }elseif (date('H:i', strtotime($row_atasan1->tglreservasi)) > '16:30') {
+                                $rsv = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan1->tglreservasi)));
+                            }else{
+                                $rsv = strtotime($row_atasan1->tglreservasi);
+                            }
+            
+                            if (date('H:i', strtotime($row_atasan1->tgl_atasan1)) < '07:30'){
+                                $atasan1 = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan1->tgl_atasan1)));
+                            }elseif (date('H:i', strtotime($row_atasan1->tgl_atasan1)) > '16:30') {
+                                $atasan1 = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan1->tgl_atasan1)));
+                            }else{
+                                $atasan1 = strtotime($row_atasan1->tgl_atasan1);
+                            }
+    
+                            $diff = $atasan1 - $rsv;
+                            $time_atasan1_jam = floor($diff / (60 * 60));
+                            $diff_menit = $diff - ($time_atasan1_jam * (60 * 60));
+                            $time_atasan1_menit = floor($diff_menit / 60);
+                            $time_atasan1 = $time_atasan1_jam.' Jam '.$time_atasan1_menit.' Menit ';
+                            $time_atasan1_int = number_format((float)$time_atasan1_jam + ($time_atasan1_menit/60), 2, '.', '');
+                            
+    
+                        }elseif(date('Y-M-d', strtotime($row_atasan1->tglreservasi)) < date('Y-M-d', strtotime($row_atasan1->tgl_atasan1)))
+                        {
+                            $day_awal = strtotime(date('Y-m-d', strtotime($row_atasan1->tglreservasi)));
+                            $day_akhir = strtotime(date('Y-m-d', strtotime($row_atasan1->tgl_atasan1)));
+                            $day_gap = $day_akhir - $day_awal;
+                            $day_gap_hari = floor($day_gap / (60 * 60 * 24)) - 1;
+                            $day_gap_jam = $day_gap_hari * 9;
+    
+                            if (date('H:i', strtotime($row_atasan1->tglreservasi)) < '07:30'){
+                                $rsv_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan1->tglreservasi)));
+                                $rsv_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan1->tglreservasi)));
+                                $day1 = $rsv_akhir-$rsv_awal;
+                            }elseif (date('H:i', strtotime($row_atasan1->tglreservasi)) > '16:30') {
+                                $rsv = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($row_atasan1->tglreservasi))));
+                                $day1 = 0;
+                            }else{
+                                $rsv_awal = strtotime($row_atasan1->tglreservasi);
+                                $rsv_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan1->tglreservasi)));
+                                $day1 = $rsv_akhir-$rsv_awal;
+                            }
+            
+                            if (date('H:i', strtotime($row_atasan1->tgl_atasan1)) < '07:30'){
+                                $atasan1_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan1->tgl_atasan1)));
+                                $day2 = 0;
+                            }elseif (date('H:i', strtotime($row_atasan1->tgl_atasan1)) > '16:30') {
+                                $atasan1_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan1->tgl_atasan1)));
+                                $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan1->tgl_atasan1)));
+                                $day2 = $atasan1_akhir-$atasan1_awal;
+                            }else{
+                                $atasan1_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan1->tgl_atasan1)));
+                                $atasan1_akhir = strtotime($row_atasan1->tgl_atasan1);
+                                $day2 = $atasan1_akhir-$atasan1_awal;
+                            }
+    
+                            $diff = $day1 + $day2;
+                            $time_atasan1_jam = floor($diff / (60 * 60));
+                            $diff_menit = $diff - ($time_atasan1_jam * (60 * 60));
+                            $time_atasan1_menit = floor($diff_menit / 60);
+                            $time_atasan1 = $time_atasan1_jam + $day_gap_jam.' Jam '.$time_atasan1_menit.' Menit ';
+                            $time_atasan1_int = number_format((float)$time_atasan1_jam + $day_gap_jam + ($time_atasan1_menit/60), 2, '.', '');
+                        }else{
+                            $time_atasan1 = '';
+                            $time_atasan1_int = 0;
+                        }
+
+                        $durasi_atasan1 = $durasi_atasan1 + $time_atasan1_int;
+
+                    endforeach;
+
+                    $this->db->where('atasan1 !=',$row->atasan1);
+                    $this->db->where('atasan2',$row->atasan1);
+                    $this->db->where('year(tglberangkat)','2022');
+                    $this->db->where('month(tglberangkat)','03');
+                    $this->db->where('status','9');
+                    $query_atasan2 = $this->db->get('reservasi');
+                    $data_atasan2 = $query_atasan2->result();
+
+                    $jumlah_atasan2 = $query_atasan2->num_rows();
+                    $durasi_atasan2 = 0;
+                    foreach ($data_atasan2 as $row_atasan2) :
+               
+                    // Atasan1 to Atasan2 
+
+                        if (date('Y-M-d', strtotime($row_atasan2->tgl_atasan1))==date('Y-M-d', strtotime($row_atasan2->tgl_atasan2)))
+                            {
+                                if (date('H:i', strtotime($row_atasan2->tgl_atasan1)) < '07:30'){
+                                    $atasan1 = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan2->tgl_atasan1)));
+                                }elseif (date('H:i', strtotime($row_atasan2->tgl_atasan1)) > '16:30') {
+                                    $atasan1 = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan2->tgl_atasan1)));
+                                }else{
+                                    $atasan1 = strtotime($row_atasan2->tgl_atasan1);
+                                }
+                
+                                if (date('H:i', strtotime($row_atasan2->tgl_atasan2)) < '07:30'){
+                                    $atasan2 = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan2->tgl_atasan2)));
+                                }elseif (date('H:i', strtotime($row_atasan2->tgl_atasan2)) > '16:30') {
+                                    $atasan2 = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan2->tgl_atasan2)));
+                                }else{
+                                    $atasan2 = strtotime($row_atasan2->tgl_atasan2);
+                                }
+    
+                                $diff = $atasan2 - $atasan1;
+                                $time_atasan2_jam = floor($diff / (60 * 60));
+                                $diff_menit = $diff - ($time_atasan2_jam * (60 * 60));
+                                $time_atasan2_menit = floor($diff_menit / 60);
+                                $time_atasan2 = $time_atasan2_jam.' Jam '.$time_atasan2_menit.' Menit ';
+                                $time_atasan2_int = number_format((float)$time_atasan2_jam + ($time_atasan2_menit/60), 2, '.', '');
+                                
+    
+                        }elseif(date('Y-M-d', strtotime($row_atasan2->tgl_atasan1)) < date('Y-M-d', strtotime($row_atasan2->tgl_atasan2)))
+                        {
+                            $day_awal = strtotime(date('Y-m-d', strtotime($row_atasan2->tgl_atasan1)));
+                            $day_akhir = strtotime(date('Y-m-d', strtotime($row_atasan2->tgl_atasan2)));
+                            $day_gap = $day_akhir - $day_awal;
+                            $day_gap_hari = floor($day_gap / (60 * 60 * 24)) - 1;
+                            $day_gap_jam = $day_gap_hari * 9;
+    
+                            if (date('H:i', strtotime($row_atasan2->tgl_atasan1)) < '07:30'){
+                                $atasan1_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan2->tgl_atasan1)));
+                                $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan2->tgl_atasan1)));
+                                $day1 = $atasan1_akhir-$atasan1_awal;
+                            }elseif (date('H:i', strtotime($row_atasan2->tgl_atasan1)) > '16:30') {
+                                $atasan1 = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($row_atasan2->tgl_atasan1))));
+                                $day1 = 0;
+                            }else{
+                                $atasan1_awal = strtotime($row_atasan2->tgl_atasan1);
+                                $atasan1_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan2->tgl_atasan1)));
+                                $day1 = $atasan1_akhir-$atasan1_awal;
+                            }
+            
+                            if (date('H:i', strtotime($row_atasan2->tgl_atasan2)) < '07:30'){
+                                $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan2->tgl_atasan2)));
+                                $day2 = 0;
+                            }elseif (date('H:i', strtotime($row_atasan2->tgl_atasan2)) > '16:30') {
+                                $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan2->tgl_atasan2)));
+                                $atasan2_akhir = strtotime(date('Y-m-d 16:30:00', strtotime($row_atasan2->tgl_atasan2)));
+                                $day2 = $atasan2_akhir-$atasan2_awal;
+                            }else{
+                                $atasan2_awal = strtotime(date('Y-m-d 07:30:00', strtotime($row_atasan2->tgl_atasan2)));
+                                $atasan2_akhir = strtotime($row_atasan2->tgl_atasan2);
+                                $day2 = $atasan2_akhir-$atasan2_awal;
+                            }
+    
+                            $diff = $day1 + $day2;
+                            $time_atasan2_jam = floor($diff / (60 * 60));
+                            $diff_menit = $diff - ($time_atasan2_jam * (60 * 60));
+                            $time_atasan2_menit = floor($diff_menit / 60);
+                            $time_atasan2 = $time_atasan2_jam + $day_gap_jam.' Jam '.$time_atasan2_menit.' Menit ';
+                            $time_atasan2_int = number_format((float)$time_atasan2_jam + $day_gap_jam + ($time_atasan2_menit/60), 2, '.', '');
+                        }else{
+                            $time_atasan2 = '';
+                            $time_atasan2_int = 0;
+                        };
+
+                        $durasi_atasan2 = $durasi_atasan2 + $time_atasan2_int;
+
+                    endforeach;
+
+                    $durasi_atasan = $durasi_atasan1 + $durasi_atasan2;
+                    $jumlah_atasan = $jumlah_atasan1 + $jumlah_atasan2;
+                    $average_atasan = $durasi_atasan / $jumlah_atasan;
+
+                    $output['data'][] = array(
+                        'nama' => substr($row->atasan1, -3),
+                        'durasi_atasan' => number_format((float)$durasi_atasan, 2, '.', ''),
+                        'jumlah_atasan' => $jumlah_atasan,
+                        'average_atasan' => number_format((float)$average_atasan, 2, '.', '')
+                    );
+                };
+                
+            endforeach;
 
             //output to json format
             echo json_encode($output);
