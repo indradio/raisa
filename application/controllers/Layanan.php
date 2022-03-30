@@ -222,9 +222,9 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🕗 *Perubahan Jam Kerja Selama bulan Ramadhan 1443 H*" .
+                            'message' => "🕗 *Perubahan Jam Kerja Selama bulan Ramadan 1443 H*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSehubungan dengan datangnya Bulan Ramadhan 1443 H, maka berikut kami sampaikan pengaturan jam kerja selama Bulan Ramadhan Tahun 1443 H yang efektif berlaku mulai tanggal *04 April 2022 s/d 29 April 2022* sebagai berikut :" .
+                            "\r\nSehubungan dengan datangnya Bulan Ramadan 1443 H, maka berikut kami sampaikan pengaturan jam kerja selama Bulan Ramadan Tahun 1443 H yang efektif berlaku mulai tanggal *04 April 2022 s/d 29 April 2022* sebagai berikut :" .
                             "\r\n \r\n*Shift 2 (Normal)*" .
                             "\r\nHari : Senin - Jumat" .
                             "\r\nMasuk : 07:00" .
