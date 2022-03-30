@@ -222,28 +222,28 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Jam Kerja Selama bulan Ramadhan 1443 H*" .
+                            'message' => "🕗 *Perubahan Jam Kerja Selama bulan Ramadhan 1443 H*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nSehubungan dengan datangnya Bulan Ramadhan 1443 H, maka berikut kami sampaikan pengaturan jam kerja selama Bulan Ramadhan Tahun 1443 H yang efektif berlaku mulai tanggal *04 April 2022 s/d 29 April 2022* sebagai berikut :" .
-                            "\r\n \r\n*Shift 2 (Normal) *" .
+                            "\r\n \r\n*Shift 2 (Normal)*" .
                             "\r\nHari : Senin - Jumat" .
                             "\r\nMasuk : 07:00" .
                             "\r\nIstirahat : 12:00 - 13:00" .
                             "\r\nPulang : 16:00" .
-                            "\r\n \r\n*Shift 3 *" .
+                            "\r\n \r\n*Shift 3*" .
                             "\r\nHari : Senin - Jumat" .
                             "\r\nMasuk : 16:00" .
                             "\r\nIstirahat : 18:00 - 19:00" .
                             "\r\nPulang : 00:00" .
                             "\r\n \r\nAtas perhatian dan kerjasamanya saya ucapkan terima kasih." .
-                            "\r\nHormat Kami," .
-                            "\r\n \r\nHuman Capital" .
-                            "\r\nSelamat Menunaikan Ibadah Puasa Ramadan 1443H"
+                            "\r\n \r\nHormat Kami," .
+                            "\r\nHuman Capital" .
+                            "\r\n_Selamat Menunaikan Ibadah Puasa Ramadan 1443H_"
                         ],
                     ]
                 );
                 $body = $response->getBody();
-                
+
         endforeach;
         redirect('layanan/broadcast');
     }
