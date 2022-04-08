@@ -757,20 +757,13 @@
   </div>
 </div>
 
-
-
 <!-- Javascript -->
 <script>
   $(document).ready(function() {
 
     let timerInterval
-    <?php 
-    if ($this->session->flashdata('message')=='masuk'){ 
-        $vaksin_id = $this->session->userdata('npk').'KARY';
-        $vaksin = $this->db->get_where('vaksin_data', ['id' => $vaksin_id])->row();
-
-        if ($vaksin->vaksin3 == 'YA'){
-    ?> 
+    <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
+      
         Swal.fire({
           title: 'Jam Kerja Ramadan 1443H',
           html: 'Selamat Menunaikan Ibadah Puasa Ramadan 1443H',
@@ -791,32 +784,7 @@
           }
         });
        
-      <?php }else{ ?>
-
-        Swal.fire({
-          title: 'Yuk VAKSIN Booster!',
-          icon: 'warning',
-          html:
-          'Lindungi diri dan keluarga anda dengan vaksinasi Covid-19 lengkap + Booster.</p> ' +
-          'Jika sudah melakukan vaksin, jangan lupa update data kamu ya!',
-          timer: 5000,
-          timerProgressBar: true,
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Ya, Saya Mengerti',
-          showClass: {
-            popup: 'animate__animated animate__heartBeat'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOut'
-          }
-        }).then((result) => {
-          // if (result.isConfirmed) {
-
-          // }
-        });
-     <?php };
-        }; ?>
+     <?php }; ?>
 
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
