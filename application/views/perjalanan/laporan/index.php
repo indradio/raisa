@@ -3,18 +3,18 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4 mr-auto">
                 <div class="card ">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">directions_car</i>
                         </div>
-                        <h4 class="card-title">Laporan Perjalanan Dinas</h4>
+                        <h4 class="card-title">Laporan Perjalanan Dinas </br> (Under Development and Testing)</h4>
                     </div>
                     <div class="card-body">
                         <form class="form-horizontal" action="<?= base_url('laporan/perjalanan'); ?>" method="post">
-                        <div class="row">
-                                <label class="col-md-2 col-form-label">Laporan Berdasarkan</label>
+                        <!-- <div class="row">
+                                <label class="col-md-2 col-form-label">Laporan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="laporan" id="laporan" data-style="select-with-transition" title="Pilih Laporan" data-size="7">
@@ -25,7 +25,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         <div class="row">
                                 <label class="col-md-2 col-form-label">Tahun</label>
                                 <div class="col-md-5">
@@ -73,6 +73,254 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-text">
+                            <h4 class="card-title">Jenis Perjalanan</h4>
+                        </div>
+                    </div>
+                    <div class="card-body mt-2">
+                    <div id="kategoriBarsChart" class="ct-chart"></div>
+                  </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                        <div class="material-datatables">
+                            <table id="kategoriTable" class="table table-striped table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                    <th>KATEGORI</th>
+                                    <?php
+                                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                                    
+                                    for ($i=1; $i < $tanggal+1; $i++) { 
+                                        echo '<th>'. $i . '</th>';
+                                    }
+                                    ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>DLPP</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('jenis_perjalanan', 'DLPP');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td>TAPP</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('jenis_perjalanan', 'TAPP');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td>TA</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('jenis_perjalanan', 'TA');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td><b>TOTAL</b></td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTotalTrip = $this->db->get('perjalanan');
+                                            if ($queryTotalTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td><b>'. $queryTotalTrip->num_rows().'</b></td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-text">
+                            <h4 class="card-title">Kendaraan</h4>
+                        </div>
+                    </div>
+                    <div class="card-body mt-2">
+                    <div id="kategoriBarsChart2" class="ct-chart"></div>
+                  </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                        <div class="material-datatables">
+                            <table id="kategoriTable" class="table table-striped table-shopping" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                    <th>KATEGORI</th>
+                                    <?php
+                                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                                    
+                                    for ($i=1; $i < $tanggal+1; $i++) { 
+                                        echo '<th>'. $i . '</th>';
+                                    }
+                                    ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Operasional</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('kepemilikan', 'Operasional');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td>Taksi</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('kendaraan', 'Taksi');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td>Pribadi</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('kendaraan', 'Pribadi');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td>Sewa</td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('kendaraan', 'Sewa');
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTrip = $this->db->get('perjalanan');
+                                            if ($queryTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td>'. $queryTrip->num_rows().'</td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        <td><b>TOTAL</b></td>
+                                        <?php
+                                         for ($i=1; $i < $tanggal+1; $i++) {      
+                                            $this->db->where('year(tglberangkat)',$tahun);
+                                            $this->db->where('month(tglberangkat)',$bulan);
+                                            $this->db->where('day(tglberangkat) <=',$i);
+                                            $this->db->where('day(tglkembali) >=',$i);
+                                            $this->db->where('status','9');
+                                            $queryTotalTrip = $this->db->get('perjalanan');
+                                            if ($queryTotalTrip->num_rows()==0){
+                                                echo '<td>-</td>';
+                                            }else{
+                                                echo '<td><b>'. $queryTotalTrip->num_rows().'</b></td>';
+                                            }
+                                          } 
+                                        ?>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  end card  -->
+            </div>
+        </div>
+  
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-rose card-header-icon">
@@ -114,14 +362,195 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        // $('#bulan').change(function() {
-        //     $('#bulan').selectpicker('refresh');
-        //     $('#dt-report-leadtime').DataTable().ajax.reload();
-        // });
 
-        // $('#btn_submit').on('click',function(){
-        //     $('#dt-report-leadtime').DataTable().ajax.reload();
-        // });
+      var dataStackedBarsChart = {
+        // labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: [
+            <?php
+               for ($i=1; $i < $tanggal+1; $i++) { 
+                    echo $i . ',';
+                    }
+            ?>
+            ],
+        series: [
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+              $this->db->where('jenis_perjalanan', 'DLPP');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ],
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+              $this->db->where('jenis_perjalanan', 'TAPP');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ],
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+              $this->db->where('jenis_perjalanan', 'TA');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ]
+        ]
+      };
+
+      var optionsStackedBarsChart = {
+        seriesBarDistance: 10,
+        stackBars: true,
+        axisX: {
+          showGrid: false
+        },
+        height: '320px'
+      };
+
+      var responsiveOptionsStackedBarsChart = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+
+      var StackedBarsChart = Chartist.Bar('#kategoriBarsChart', dataStackedBarsChart, optionsStackedBarsChart, responsiveOptionsStackedBarsChart);
+
+      //start animation for the Emails Subscription Chart
+      md.startAnimationForBarChart(StackedBarsChart);
+
+      var dataStackedBarsChart = {
+        // labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: [
+            <?php
+               for ($i=1; $i < $tanggal+1; $i++) { 
+                    echo $i . ',';
+                    }
+            ?>
+            ],
+        series: [
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+            $this->db->where('kepemilikan', 'Operasional');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ],
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+            $this->db->where('kendaraan', 'Taksi');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ],
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+            $this->db->where('kendaraan', 'Pribadi');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ],
+          [
+          <?php
+            for ($i=1; $i < $tanggal+1; $i++) {      
+            $this->db->where('kendaraan', 'Sewa');
+            $this->db->where('year(tglberangkat)',$tahun);
+            $this->db->where('month(tglberangkat)',$bulan);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
+            $this->db->where('status','9');
+            $queryTrip = $this->db->get('perjalanan');
+          
+            echo $queryTrip->num_rows() .',';
+          
+            } 
+          ?>
+          ]
+       
+        ]
+      };
+
+      var optionsStackedBarsChart = {
+        seriesBarDistance: 10,
+        stackBars: true,
+        axisX: {
+          showGrid: false
+        },
+        height: '320px'
+      };
+
+      var responsiveOptionsStackedBarsChart = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+
+      var StackedBarsChart2 = Chartist.Bar('#kategoriBarsChart2', dataStackedBarsChart, optionsStackedBarsChart, responsiveOptionsStackedBarsChart);
+
+      //start animation for the Emails Subscription Chart
+      md.startAnimationForBarChart(StackedBarsChart2);
 
         $('#dt-report-leadtime').DataTable({
             "pagingType": "full_numbers",
@@ -172,48 +601,5 @@
                 { "data": "jumlah_atasan" }
             ],
         });
-
-        new Chartist.Bar('.ct-chart', {
-        labels: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-        series: [20, 60, 120, 200, 180, 200, 100]
-        }, {
-            distributeSeries: true,
-        // Default mobile configuration
-        stackBars: true,
-        axisX: {
-            labelInterpolationFnc: function(value) {
-            return value.split(/\s+/).map(function(word) {
-                return word[0];
-            }).join('');
-            }
-        },
-        axisY: {
-            offset: 20
-        }
-        }, [
-        // Options override for media > 400px
-        ['screen and (min-width: 400px)', {
-            reverseData: true,
-            horizontalBars: true,
-            axisX: {
-            labelInterpolationFnc: Chartist.noop
-            },
-            axisY: {
-            offset: 60
-            }
-        }],
-        // Options override for media > 800px
-        ['screen and (min-width: 800px)', {
-            stackBars: false,
-            seriesBarDistance: 10
-        }],
-        // Options override for media > 1000px
-        ['screen and (min-width: 1000px)', {
-            reverseData: false,
-            horizontalBars: false,
-            seriesBarDistance: 15
-        }]
-        ]);
-
     } );
 </script>
