@@ -12,12 +12,12 @@
                         <h4 class="card-title">Laporan Perjalanan Dinas</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="<?= base_url('perjalanandl/laporan'); ?>" method="post">
+                        <form class="form-horizontal" action="<?= base_url('laporan/perjalanan'); ?>" method="post">
                         <div class="row">
                                 <label class="col-md-2 col-form-label">Laporan Berdasarkan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <select class="selectpicker" name="laporan" id="laporan" data-style="select-with-transition" title="Pilih Laporan" data-size="7" required>
+                                        <select class="selectpicker" name="laporan" id="laporan" data-style="select-with-transition" title="Pilih Laporan" data-size="7">
                                             <option value="1">Kategori</option>
                                             <option value="2">Perjalanan</option>
                                             <option value="3">Kendaraan</option>
@@ -114,8 +114,15 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        // var tahun = $('#tahun').val();
-        // var bulan = $('#bulan').val();
+        // $('#bulan').change(function() {
+        //     $('#bulan').selectpicker('refresh');
+        //     $('#dt-report-leadtime').DataTable().ajax.reload();
+        // });
+
+        // $('#btn_submit').on('click',function(){
+        //     $('#dt-report-leadtime').DataTable().ajax.reload();
+        // });
+
         $('#dt-report-leadtime').DataTable({
             "pagingType": "full_numbers",
             scrollX: true,
@@ -207,10 +214,6 @@
             seriesBarDistance: 15
         }]
         ]);
-
-        $('#bulan').change(function() {
-            $('#dt-report-leadtime').DataTable().ajax.reload();
-        });
 
     } );
 </script>
