@@ -1070,8 +1070,8 @@ class Perjalanan extends CI_Controller
     {
         if ($params=='get')
         {
-            $this->db->where('year(tglberangkat)','2022');
-            $this->db->where('month(tglberangkat)','03');
+            $this->db->where('year(tglberangkat)',$this->input->post('tahun'));
+            $this->db->where('month(tglberangkat)',$this->input->post('bulan'));;
             $this->db->where('status','9');
             $query = $this->db->get('reservasi')->result();
 
@@ -1326,18 +1326,19 @@ class Perjalanan extends CI_Controller
             //output to json format
             echo json_encode($output);
         }elseif ($params=='byatasan') {
+            
             $this->db->distinct();
             $this->db->select('atasan1');
-            $this->db->where('year(tglberangkat)','2022');
-            $this->db->where('month(tglberangkat)','03');
+            $this->db->where('year(tglberangkat)',$this->input->post('tahun'));
+            $this->db->where('month(tglberangkat)',$this->input->post('bulan'));
             $this->db->where('status','9');
             $query = $this->db->get('reservasi')->result();
             foreach ($query as $row) :
                 if (!empty($row->atasan1)){
 
                     $this->db->where('atasan1',$row->atasan1);
-                    $this->db->where('year(tglberangkat)','2022');
-                    $this->db->where('month(tglberangkat)','03');
+                    $this->db->where('year(tglberangkat)',$this->input->post('tahun'));
+                    $this->db->where('month(tglberangkat)',$this->input->post('bulan'));;
                     $this->db->where('status','9');
                     $query_atasan1 = $this->db->get('reservasi');
                     $data_atasan1 = $query_atasan1->result();
@@ -1424,8 +1425,8 @@ class Perjalanan extends CI_Controller
 
                     $this->db->where('atasan1 !=',$row->atasan1);
                     $this->db->where('atasan2',$row->atasan1);
-                    $this->db->where('year(tglberangkat)','2022');
-                    $this->db->where('month(tglberangkat)','03');
+                    $this->db->where('year(tglberangkat)',$this->input->post('tahun'));
+                    $this->db->where('month(tglberangkat)',$this->input->post('bulan'));;
                     $this->db->where('status','9');
                     $query_atasan2 = $this->db->get('reservasi');
                     $data_atasan2 = $query_atasan2->result();
