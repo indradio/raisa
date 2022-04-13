@@ -3,7 +3,7 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 mr-auto">
                 <div class="card ">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-icon">
@@ -26,7 +26,7 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <div class="row">
+                        <div class="row">
                                 <label class="col-md-2 col-form-label">Tahun</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
@@ -38,11 +38,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                        <div class="row">
                                 <label class="col-md-2 col-form-label">Bulan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <select class="selectpicker" name="bulan" id="bulan" data-style="select-with-transition" title="Pilih Bulan" data-size="7" onchange='this.form.submit()' required>
+                                        <select class="selectpicker" name="bulan" id="bulan" data-style="select-with-transition" title="Pilih Bulan" data-size="7" required>
                                             <option value="01" <?= ($bulan == '01') ? 'selected' : ''; ?>>Januari</option>
                                             <option value="02" <?= ($bulan == '02') ? 'selected' : ''; ?>>Febuari</option>
                                             <option value="03" <?= ($bulan == '03') ? 'selected' : ''; ?>>Maret</option>
@@ -59,105 +59,40 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <button type="submit" class="btn btn-fill btn-success">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <?php
-              $this->db->select_sum('total');
-              $this->db->where('year(tglberangkat)',$tahun);
-              $this->db->where('month(tglberangkat)',$bulan);
-              $this->db->where('status','9');
-              $querytotal = $this->db->get('perjalanan');
-              $totalCost = $querytotal->row()->total;
-            ?>
-            <div class="col-md-3">
-                            <div class="card card-stats">
-                              <div class="card-header card-header-success card-header-icon">
-                                <div class="card-icon">
-                                  <i class="material-icons">monetization_on</i>
-                                </div>
-                                <p class="card-category">Total</p>
-                                <h3 class="card-title"><?= number_format($totalCost,0,',','.'); ?></h3>
-                              </div>
-                              <div class="card-footer">
-                                <div class="stats">
-                                  <i class="material-icons">announcement</i> Tidak termasuk biaya TOL dan BBM dari GA
-                                </div>
-                              </div>
-                            </div>
-                          </div>
         </div>
-        <?php 
-            $this->db->where('jenis_perjalanan', 'DLPP');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totaldlpp = $this->db->get('perjalanan');
-
-            $this->db->where('jenis_perjalanan', 'TAPP');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totaltapp = $this->db->get('perjalanan');
-
-            $this->db->where('jenis_perjalanan', 'TA');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totalta = $this->db->get('perjalanan');
-        ?>
         <div class="row">
-            <div class="col-md-7">
-                <div class="card card-chart">
-                  <div class="card-header card-header-icon card-header-rose">
-                    <div class="card-icon">
-                      <i class="material-icons">pie_chart</i>
-                    </div>
-                    <h4 class="card-title">Kategori</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-8">
-                            <div id="chartKategori" class="ct-chart"></div>
-                        </div>
-                        <div class="col-md-4">
-                        <h6 class="card-category">Perjalanan</h6>
-                        <i class="fa fa-circle text-success"></i> <?= $totaldlpp->num_rows(); ?> (DLPP)</br>
-                        <i class="fa fa-circle text-info"></i> <?= $totaltapp->num_rows(); ?> (TAPP)</br>
-                        <i class="fa fa-circle text-warning"></i> <?= $totalta->num_rows(); ?> (TA)</br>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    
-                      <div class="col-md-12">
-                        <div id="kategoriBarsChart" class="ct-chart"></div>
-                      </div>
-                    
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-text">
-                            <h4 class="card-title">Kategori</h4>
+                            <h4 class="card-title">Jenis Perjalanan</h4>
                         </div>
                     </div>
                     <div class="card-body mt-2">
-                    
+                    <div id="kategoriBarsChart" class="ct-chart"></div>
                   </div>
                     <div class="card-body">
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="table-responsive">
-                            <div class="material-datatables">
+                        <div class="material-datatables">
                             <table id="kategoriTable" class="table table-striped table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                    <th>KATEGORI\TGL</th>
+                                    <th>KATEGORI</th>
                                     <?php
                                     $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
                                     
@@ -251,63 +186,7 @@
                 </div>
                 <!--  end card  -->
             </div>
-        </div>
-        <?php 
-            $this->db->where('kepemilikan', 'Operasional');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totaloperasional = $this->db->get('perjalanan');
-
-            $this->db->where('kendaraan', 'Taksi');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totaltaksi = $this->db->get('perjalanan');
-
-            $this->db->where('kendaraan', 'Pribadi');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totalpribadi = $this->db->get('perjalanan');
-
-            $this->db->where('kendaraan', 'Sewa');
-            $this->db->where('year(tglberangkat)',$tahun);
-            $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('status','9');
-            $totalsewa = $this->db->get('perjalanan');
-        ?>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="card card-chart">
-                  <div class="card-header card-header-icon card-header-rose">
-                    <div class="card-icon">
-                      <i class="material-icons">pie_chart</i>
-                    </div>
-                    <h4 class="card-title">Kendaraan</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-8">
-                            <div id="chartKendaraan" class="ct-chart"></div>
-                        </div>
-                        <div class="col-md-4">
-                        <h6 class="card-category">Perjalanan</h6>
-                        <i class="fa fa-circle text-success"></i> <?= $totaloperasional->num_rows(); ?> (Operasional)</br>
-                        <i class="fa fa-circle text-info"></i> <?= $totaltaksi->num_rows(); ?> (Taksi)</br>
-                        <i class="fa fa-circle text-warning"></i> <?= $totalpribadi->num_rows(); ?> (Pribadi)</br>
-                        <i class="fa fa-circle text-danger"></i> <?= $totalsewa->num_rows(); ?> (Sewa)
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                      <div class="col-md-12">
-                        <div id="kategoriBarsChart2" class="ct-chart"></div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-text">
@@ -326,7 +205,7 @@
                             <table id="kategoriTable" class="table table-striped table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                    <th>KEND\TGL</th>
+                                    <th>KATEGORI</th>
                                     <?php
                                     $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
                                     
@@ -442,11 +321,11 @@
         </div>
   
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-text">
-                            <h4 class="card-title">Leadtime Approval</h4>
+                            <h4 class="card-title">Leadtime</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -483,64 +362,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-
-        
-
-      var data = {
-        series: [<?= $totaldlpp->num_rows().','. $totaltapp->num_rows().','. $totalta->num_rows(); ?>]
-        };
-
-        var responsiveOptions = [
-            ['screen and (min-width: 640px)', {
-                chartPadding: 30,
-                labelOffset: 100,
-                labelDirection: 'explode',
-                labelInterpolationFnc: function(value) {
-                return value;
-                }
-            }],
-            ['screen and (min-width: 1024px)', {
-                labelOffset: 80,
-                chartPadding: 20
-            }]
-        ];
-
-        var sum = function(a, b) { return a + b };
-
-        new Chartist.Pie('#chartKategori', data, {
-        labelInterpolationFnc: function(value) {
-            return Math.round(value / data.series.reduce(sum) * 100) + '%';
-
-        }
-        });
-
-      var data = {
-        series: [<?= $totaloperasional->num_rows().','. $totaltaksi->num_rows().','. $totalpribadi->num_rows().','. $totalsewa->num_rows(); ?>]
-        };
-
-        var responsiveOptions = [
-            ['screen and (min-width: 640px)', {
-                chartPadding: 30,
-                labelOffset: 100,
-                labelDirection: 'explode',
-                labelInterpolationFnc: function(value) {
-                return value;
-                }
-            }],
-            ['screen and (min-width: 1024px)', {
-                labelOffset: 80,
-                chartPadding: 20
-            }]
-        ];
-
-        var sum = function(a, b) { return a + b };
-
-        new Chartist.Pie('#chartKendaraan', data, {
-        labelInterpolationFnc: function(value) {
-            return Math.round(value / data.series.reduce(sum) * 100) + '%';
-
-        }
-        });
 
       var dataStackedBarsChart = {
         // labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -644,7 +465,8 @@
             $this->db->where('kepemilikan', 'Operasional');
             $this->db->where('year(tglberangkat)',$tahun);
             $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('day(tglberangkat)',$i);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
             $this->db->where('status','9');
             $queryTrip = $this->db->get('perjalanan');
           
@@ -659,7 +481,8 @@
             $this->db->where('kendaraan', 'Taksi');
             $this->db->where('year(tglberangkat)',$tahun);
             $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('day(tglberangkat)',$i);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
             $this->db->where('status','9');
             $queryTrip = $this->db->get('perjalanan');
           
@@ -674,7 +497,8 @@
             $this->db->where('kendaraan', 'Pribadi');
             $this->db->where('year(tglberangkat)',$tahun);
             $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('day(tglberangkat)',$i);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
             $this->db->where('status','9');
             $queryTrip = $this->db->get('perjalanan');
           
@@ -689,7 +513,8 @@
             $this->db->where('kendaraan', 'Sewa');
             $this->db->where('year(tglberangkat)',$tahun);
             $this->db->where('month(tglberangkat)',$bulan);
-            $this->db->where('day(tglberangkat)',$i);
+            $this->db->where('day(tglberangkat) <=',$i);
+            $this->db->where('day(tglkembali) >=',$i);
             $this->db->where('status','9');
             $queryTrip = $this->db->get('perjalanan');
           
@@ -754,7 +579,6 @@
                 [1, 'desc']
             ],
             scrollCollapse: true,
-            displayLength: '3',
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
