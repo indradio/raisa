@@ -98,7 +98,7 @@ class Auth extends CI_Controller
                 };
 
                 if ($karyawan['sect_id'] == '215' and $karyawan['posisi_id'] == '7') {
-                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'RBI'])->row_array();
+                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row_array();
                 }
 
                 if ($karyawan['dept_id'] == '11' and $karyawan['atasan1'] == '3') {
