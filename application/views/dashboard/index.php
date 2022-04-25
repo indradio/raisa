@@ -137,7 +137,7 @@
       <?php if ($RencanaLembur != null or $RealisasiLembur != null){ ?>
       <div class="col-lg-6 col-md-12">
         <div class="card">
-          <div class="card-header card-header-text card-header-warning">
+          <div class="card-header card-header-text card-header-danger">
             <div class="card-text">
               <h4 class="card-title">Outstanding</h4>
               <p class="card-category">Lembur</p>
@@ -176,7 +176,7 @@
       <?php if ($Cuti != null){ ?>
       <div class="col-lg-6 col-md-12">
         <div class="card">
-          <div class="card-header card-header-text card-header-warning">
+          <div class="card-header card-header-text card-header-info">
             <div class="card-text">
               <h4 class="card-title">Outstanding</h4>
               <p class="card-category">Cuti</p>
