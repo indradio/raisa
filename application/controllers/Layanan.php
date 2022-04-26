@@ -222,23 +222,17 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🕗 *Perubahan Jam Kerja Selama bulan Ramadan 1443 H*" .
+                            'message' => "🕌 *Libur Hari Raya Idul Fitri 1443 H*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSehubungan dengan datangnya Bulan Ramadan 1443 H, maka berikut kami sampaikan pengaturan jam kerja selama Bulan Ramadan Tahun 1443 H yang efektif berlaku mulai tanggal *04 April 2022 s/d 29 April 2022* sebagai berikut :" .
-                            "\r\n \r\n*Shift 2 (Normal)*" .
-                            "\r\nHari : Senin - Jumat" .
-                            "\r\nMasuk : 07:00" .
-                            "\r\nIstirahat : 12:00 - 13:00" .
-                            "\r\nPulang : 16:00" .
-                            "\r\n \r\n*Shift 3*" .
-                            "\r\nHari : Senin - Jumat" .
-                            "\r\nMasuk : 16:00" .
-                            "\r\nIstirahat : 18:00 - 19:00" .
-                            "\r\nPulang : 00:00" .
+                            "\r\nBerdasarkan Surat Keputusan Bersama (SKB) Pemerintah No. 37 tahun 2022. Dengan ini perusahaan menetapkan *Libur Hari Raya Idul Fitri 1443 H* sebagai berikut" .
+                            "\r\n \r\n*1. Cuti Bersama Perusahaan : 28 April 2022*" .
+                            "\r\n*2. Cuti Bersama Pemerintah : 29 April, 04-06 Mei 2022*" .
+                            "\r\n*3. Hari Raya ldul Fitri : 02-03 Mei 2022*" .
+                            "\r\n*4. Masuk Kerja Kembali : 09 Mei 2022*" .
                             "\r\n \r\nAtas perhatian dan kerjasamanya saya ucapkan terima kasih." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nHuman Capital" .
-                            "\r\n_Selamat Menunaikan Ibadah Puasa Ramadan 1443H_"
+                            "\r\n_Selamat Hari Raya Idul Fitri 1443 H_"
                         ],
                     ]
                 );
