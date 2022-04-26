@@ -232,7 +232,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nAtas perhatian dan kerjasamanya saya ucapkan terima kasih." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nHuman Capital" .
-                            "\r\n_Selamat Hari Raya Idul Fitri 1443 H_"
+                            "\r\n \r\n_Selamat Hari Raya Idul Fitri 1443 H_"
                         ],
                     ]
                 );
