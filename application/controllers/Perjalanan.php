@@ -59,7 +59,7 @@ class Perjalanan extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
-                $this->db->where('sect_id', '215');
+                $this->db->where('sect_id', '214');
                 $ga_admin = $this->db->get('karyawan_admin')->row_array();
 
                 $client = new \GuzzleHttp\Client();
