@@ -65,7 +65,7 @@
     <!-- Icon for Mobile -->
     <div class="row">
       <div class="col-md-12 d-block d-sm-none ">
-          <div class="card">
+        <div class="card">
               <div class="card-body">
                   <div class="row">
                       <div class="col-4 text-center">
@@ -98,6 +98,36 @@
           <!--  end card  -->
       </div>  
     </div>
+    <!-- Icon for Mobile -->
+
+    <!-- HImbauan -->
+    <div class="row">
+            <div class="col-md-6">
+                <div class="card ">
+                    <div class="card-body ">
+                        <ul class="nav nav-pills nav-pills-info" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#link1" role="tablist">
+                                    SURAT HIMBAUAN LIBUR LEBARAN
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-space">
+                            <div class="tab-pane active" id="link1">
+                                <div class="embed-responsive embed-responsive-4by3">
+                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/HIMBAUAN GUGUS TUGAS.pdf"></iframe>
+                                </div>
+                                </br>
+                                <a href="<?= base_url(); ?>assets/pdf/HIMBAUAN GUGUS TUGAS.pdf" target="_blank">Klik Disini untuk download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    <!-- End HImbauan -->
 
     <div class="row">
 
