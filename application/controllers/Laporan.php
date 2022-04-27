@@ -7,6 +7,7 @@ class Laporan extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        date_default_timezone_set('asia/jakarta');
     }
 
     public function index()
@@ -42,6 +43,72 @@ class Laporan extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('perjalanan/laporan/index', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function lembur($params)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($params=='top'){
+
+            if (empty($this->input->post('from')))
+            {
+                $data['from'] = date('Y-m-d');
+                $data['to'] = date('Y-m-d');
+            }else{
+                $data['from'] = date('Y-m-d', strtotime($this->input->post('from')));
+                $data['to'] = date('Y-m-d', strtotime($this->input->post('to')));
+            }
+
+            $data['sidemenu'] = 'Laporan';
+            $data['sidesubmenu'] = 'Lembur';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            // $data['from'] = '2020-01-01';
+            // $data['to'] = date('Y-m-d');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/laporan/top_overtime', $data);
+            $this->load->view('templates/footer');
+        }
+        elseif ($params=='se'){
+            $data['sidemenu'] = 'Sales Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_se', $data);
+            $this->load->view('templates/footer');
+        }
+        elseif ($params=='eng'){
+            $data['sidemenu'] = 'Engineering';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_eng', $data);
+            $this->load->view('templates/footer');
+        }
+        elseif ($params=='pch'){
+            $data['sidemenu'] = 'Purchase';
+            $data['sidesubmenu'] = 'Project';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['liststatus'] = $this->db->get_where("project_status", ['id !=' => '1'])->result();
+            $data['listcustomer'] = $this->db->get("customer")->result();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('project/index_pch', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
 

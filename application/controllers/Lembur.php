@@ -1985,4 +1985,32 @@ class Lembur extends CI_Controller
             $body = $response->getBody();
         }
     }
+    public function get_top($from,$to)
+    {
+            $this->db->distinct();
+            $this->db->select('nama');
+            $this->db->where('tglmulai >=',$from);
+            $this->db->where('tglselesai <=', $to);
+            $this->db->where('status','9');
+            $query = $this->db->get('lembur')->result();
+            foreach ($query as $row) :
+
+                $this->db->select('SUM(durasi) as total');
+                $this->db->where('nama', $row->nama,);
+                $this->db->where('tglmulai >=',$from);
+                $this->db->where('tglselesai <=', $to);
+                $this->db->where('status', '9');
+                $this->db->from('lembur');
+
+
+                $output['data'][] = array(
+                    'nama' => $row->nama,
+                    'total' => $this->db->get()->row()->total
+                );
+
+            endforeach;
+        //output to json format
+        echo json_encode($output);
+
+    }
 }
