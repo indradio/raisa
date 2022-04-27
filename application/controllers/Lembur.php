@@ -1996,16 +1996,23 @@ class Lembur extends CI_Controller
             foreach ($query as $row) :
 
                 $this->db->select('SUM(durasi) as total');
-                $this->db->where('nama', $row->nama,);
+                $this->db->where('nama', $row->nama);
                 $this->db->where('tglmulai >=',$from);
                 $this->db->where('tglselesai <=', $to);
                 $this->db->where('status', '9');
                 $this->db->from('lembur');
+                $queryTotal = $this->db->get()->row()->total;
 
+                $this->db->select('karyawan.*, karyawan_dept.*');
+                $this->db->where('karyawan.nama', $row->nama);
+                $this->db->from('karyawan');
+                $this->db->join('karyawan_dept', 'karyawan_dept.id = karyawan.dept_id', 'inner');
+                $queryDept = $this->db->get()->row();
 
                 $output['data'][] = array(
                     'nama' => $row->nama,
-                    'total' => $this->db->get()->row()->total
+                    'total' => $queryTotal,
+                    'dept' => $queryDept->nama
                 );
 
             endforeach;

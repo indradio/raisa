@@ -101,12 +101,14 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Total</th>
+                                        <th>Dept</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Nama</th>
                                         <th>Total</th>
+                                        <th>Dept</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -163,7 +165,8 @@
                 },
             columns: [
                 { "data": "nama" },
-                { "data": "total" }
+                { "data": "total" },
+                { "data": "dept" }
             ],
             // initComplete: function () {
             //     this.api().columns().every( function () {
