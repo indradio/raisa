@@ -222,13 +222,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🕌 *HIMBAUAN PROKES LIBUR IDUL LEBARAN*" .
+                            'message' => "🕌 *HIMBAUAN PROKES LIBUR LEBARAN 1443 H*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nWaktu cuti bersama telah tiba, saatnya kesempatan berkumpul dengan sanak keluarga dan handai taulan di kampung halaman pun terbuka. Diperkirakan mobilitas orang akan meningkat drastis, sementara potensi gangguan kesehatan juga masih ada karena status pandemi belum dicabut oleh pemerintah." .
-                            "\r\nAtas dasar hal itu, untuk tetap menjaga dan melindungi kesehatan warga WINTEQ pasca musim cuti bersama ini, kami menghimbau bagi seluruh karyawan untuk turut serta dalam upaya menjaga dan melindungi kesehatan warga WlNTEe, dengan beberapa hal sebagai berikut:" .
+                            "\r\nWaktu cuti bersama telah tiba, saatnya berkumpul dengan sanak keluarga dan handai taulan di kampung halaman. Diperkirakan mobilitas orang akan meningkat drastis, sementara potensi gangguan kesehatan juga masih ada karena status pandemi belum dicabut oleh pemerintah." .
+                            "\r\nAtas dasar hal itu, untuk tetap menjaga dan melindungi kesehatan warga WINTEQ pasca musim cuti bersama ini, kami menghimbau bagi seluruh karyawan untuk turut serta dalam upaya menjaga dan melindungi kesehatan warga WlNTEQ, dengan beberapa hal sebagai berikut:" .
                             "\r\n \r\n*1*. Tetap *disiplin* menjalankan *protokol kesehatan* yang selama ini telah dicanangkan (selalu memakai masker, selalu menjaga kebersihan dengan mencuci tangan, Menjaga jarak dan menghindari kerumunan)." .
-                            "\r\n*2*. Segera melakukan *vaksinasi booster* bagi yang telah memenuhi syarat." .
-                            "\r\n*3*. Pada saat akan masuk kerja kembali, harap memperhatikan *ketentuan berikut ini :*" .
+                            "\r\n \r\n*2*. Segera melakukan *vaksinasi booster* bagi yang telah memenuhi syarat." .
+                            "\r\n \r\n*3*. Pada saat akan masuk kerja kembali, harap memperhatikan *ketentuan berikut ini :*" .
                             "\r\nhttps://raisa.winteq-astra.com/assets/pdf/HIMBAUAN%20GUGUS%20TUGAS.pdf" .
                             "\r\n \r\nDemikian himbauan ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
                             "\r\n \r\nHormat Kami," .
