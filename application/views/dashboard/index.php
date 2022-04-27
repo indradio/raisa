@@ -795,9 +795,9 @@
     <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
       
         Swal.fire({
-          title: 'Jam Kerja Ramadan 1443H',
-          html: 'Selamat Menunaikan Ibadah Puasa Ramadan 1443H',
-          imageUrl: '<?= base_url(); ?>/assets/img/info/jamkerja-puasa-1443H.jpg',
+          title: 'Selamat Hari Raya Idul Fitri 1443H',
+          html: '',
+          imageUrl: '<?= base_url(); ?>/assets/img/info/idul-fitri-1443H.jpg',
           imageWidth: 400,
           imageHeight: 200,
           imageAlt: 'Custom image',
