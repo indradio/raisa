@@ -222,16 +222,17 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🕌 *Libur Hari Raya Idul Fitri 1443 H*" .
+                            'message' => "🕌 *HIMBAUAN PROKES LIBUR IDUL LEBARAN*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Surat Keputusan Bersama (SKB) Pemerintah No. 37 tahun 2022. Dengan ini perusahaan menetapkan *Libur Hari Raya Idul Fitri 1443 H* sebagai berikut" .
-                            "\r\n \r\n*1. Cuti Bersama Perusahaan : 28 April 2022*" .
-                            "\r\n*2. Cuti Bersama Pemerintah : 29 April, 04-06 Mei 2022*" .
-                            "\r\n*3. Hari Raya ldul Fitri : 02-03 Mei 2022*" .
-                            "\r\n*4. Masuk Kerja Kembali : 09 Mei 2022*" .
-                            "\r\n \r\nAtas perhatian dan kerjasamanya saya ucapkan terima kasih." .
+                            "\r\nWaktu cuti bersama telah tiba, saatnya kesempatan berkumpul dengan sanak keluarga dan handai taulan di kampung halaman pun terbuka. Diperkirakan mobilitas orang akan meningkat drastis, sementara potensi gangguan kesehatan juga masih ada karena status pandemi belum dicabut oleh pemerintah." .
+                            "\r\nAtas dasar hal itu, untuk tetap menjaga dan melindungi kesehatan warga WINTEQ pasca musim cuti bersama ini, kami menghimbau bagi seluruh karyawan untuk turut serta dalam upaya menjaga dan melindungi kesehatan warga WlNTEe, dengan beberapa hal sebagai berikut:" .
+                            "\r\n \r\n*1*. Tetap *disiplin* menjalankan *protokol kesehatan* yang selama ini telah dicanangkan (selalu memakai masker, selalu menjaga kebersihan dengan mencuci tangan, Menjaga jarak dan menghindari kerumunan)." .
+                            "\r\n*2*. Segera melakukan *vaksinasi booster* bagi yang telah memenuhi syarat." .
+                            "\r\n*3*. Pada saat akan masuk kerja kembali, harap memperhatikan *ketentuan berikut ini :*" .
+                            "\r\nhttps://raisa.winteq-astra.com/assets/pdf/HIMBAUAN%20GUGUS%20TUGAS.pdf" .
+                            "\r\n \r\nDemikian himbauan ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nHuman Capital" .
+                            "\r\nTim Gugus Tugas Penanganan Covid-19 WINTEQ" .
                             "\r\n \r\n_Selamat Hari Raya Idul Fitri 1443 H_"
                         ],
                     ]
