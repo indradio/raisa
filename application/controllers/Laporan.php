@@ -60,10 +60,8 @@ class Laporan extends CI_Controller
             }
 
             $data['sidemenu'] = 'Laporan';
-            $data['sidesubmenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'Laporan Lembur';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-            // $data['from'] = '2020-01-01';
-            // $data['to'] = date('Y-m-d');
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
