@@ -50,7 +50,8 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
-                                    <th>catatan</th>
+                                    <th>Dept</th>
+                                    <th>Catatan</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                     <th class="disabled-sorting"></th>
                                 </tr>
@@ -66,7 +67,8 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Jam Selesai</th>
                                     <th>Durasi/Jam</th>
-                                    <th>catatan</th>
+                                    <th>Dept</th>
+                                    <th>Catatan</th>
                                     <th class="text-right">Actions</th>
                                     <th></th>
                                 </tr>
@@ -87,6 +89,10 @@
                                     <td><?= date('m/d/Y', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= date('H:i', strtotime($l['tglselesai'])); ?></td>
                                     <td><?= $l['durasi']; ?> Jam </td>
+                                    <?php 
+                                        $dept = $this->db->get_where('karyawan_dept', ['id' => $l['dept_id']])->row_array(); 
+                                        echo '<td>'.$dept['nama'].'</td>';
+                                        ?>
                                     <td><?= $l['catatan']; ?></td>
                                     <td class="text-right">
                                         <?php if ($l['status'] == 9 ) { ?>
