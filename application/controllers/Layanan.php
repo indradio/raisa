@@ -29,6 +29,8 @@ class Layanan extends CI_Controller
         $data['sidemenu'] = 'Layanan';
         $data['sidesubmenu'] = 'Informasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['informasi'] = $this->db->where('berlaku >', date('Y-m-d'));
+        $data['informasi'] = $this->db->where('status', 'PUBLISHED');
         $data['informasi'] = $this->db->get('informasi')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
