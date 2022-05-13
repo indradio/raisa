@@ -314,4 +314,54 @@ class Layanan extends CI_Controller
         endforeach;
         redirect('layanan/broadcast');
     }
+
+    public function contest($params=null)
+    {
+        if($params=='add')
+        {
+            date_default_timezone_set('asia/jakarta');
+            $this->load->helper('string');
+            $data = [
+                'id' => random_string('alnum',8),
+                'judul' => $this->input->post('judul'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'gambar_banner' => 'default.jpg',
+                'gambar_konten' => 'default.jpg',
+                'berlaku' => date('Y-m-d', strtotime("-1 day")),
+                'status' => 'NEED A REVIEW',
+                'created_by' => $this->session->userdata('inisial'),
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+            $this->db->insert('informasi', $data);
+
+            $config['upload_path']          = './assets/img/info/';
+            $config['allowed_types']        = 'jpg|jpeg|png';
+            $config['max_size']             = 1024;
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('gambar_banner')) {
+                $this->db->set('gambar_banner', $this->upload->data('file_name'));
+                $this->db->set('gambar_konten', $this->upload->data('file_name'));
+                $this->db->where('judul', $this->input->post('judul'));
+                $this->db->update('informasi');
+            }
+
+            redirect('layanan/contest');
+        } elseif($params=='delete')
+        {
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->delete('informasi');
+        
+        }else
+        {
+            $data['sidemenu'] = 'Dashboard';
+            $data['sidesubmenu'] = '';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['banner'] = $this->db->get_where('informasi', ['created_by' =>  $this->session->userdata('inisial')])->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('layanan/contest/index', $data);
+            $this->load->view('templates/footer');
+        }
+    }
 }

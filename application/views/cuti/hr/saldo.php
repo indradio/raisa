@@ -49,7 +49,7 @@
               
             </div>
             <div class="material-datatables">
-              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+              <table id="dt-saldo" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
                     <th>Status</th>
@@ -302,11 +302,38 @@
 </div>
 
 <script type="text/javascript">
-
-  
   $(document).ready(function() {
-  setFormValidation('#formAddCuti');
-  setFormValidation('#formEditCuti');
+    setFormValidation('#formAddCuti');
+    setFormValidation('#formEditCuti');
+    
+    $('#dt-saldo').DataTable({
+      "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                'copy',
+                {
+                    extend: 'excelHtml5',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    
+                    footer: true
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text:'<i class="fa fa-file-pdf-o" aria-hidden="true" ></i>',
+                    
+                    orientation: 'landscape',
+                    pageSize: 'A3',
+                    download: 'open',
+                    footer: true
+                }
+            ],
+        scrollX: true,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+        }
+    });
+
     $('#deleteCuti').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
         var id = button.data('id')

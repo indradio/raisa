@@ -101,30 +101,18 @@
     <!-- Icon for Mobile -->
 
     <!-- HImbauan -->
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-md-6">
-            <div class="card ">
-                <div class="card-body ">
-                    <ul class="nav nav-pills nav-pills-info" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#link1" role="tablist">
-                                SURAT HIMBAUAN LIBUR LEBARAN
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content tab-space">
-                        <div class="tab-pane active" id="link1">
-                            <div class="embed-responsive embed-responsive-4by3">
-                                <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/HIMBAUAN GUGUS TUGAS.pdf"></iframe>
-                            </div>
-                            </br>
-                            <a href="<?= base_url(); ?>assets/pdf/HIMBAUAN GUGUS TUGAS.pdf" target="_blank">Klik Disini untuk download</a>
-                        </div>
-                    </div>
-                </div>
+          <div class="card card-stats">
+            <div class="card-header">
+              <p class="card-category"></p>
+              <h3 class="card-title">Mau dapetin uang jajan 20K?</h3>
+              <h4 class="card-title">Segera kirimin konten kamu ya!</h4>
+              <a href="<?= base_url('layanan/contest'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Upload sekarang!</a>
             </div>
+          </div>
         </div>
-    </div> -->
+    </div>
     <!-- End HImbauan -->
 
     <div class="row">
