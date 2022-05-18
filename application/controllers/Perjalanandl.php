@@ -1810,8 +1810,10 @@ class Perjalanandl extends CI_Controller
         } else {
             if (($this->session->userdata('sect_id')=='211' 
                     or $this->session->userdata('npk')=='0075' 
+                    or $this->session->userdata('npk')=='0049' 
                     or $this->session->userdata('npk')=='1111') 
-                    and $perjalanan['status']=='5'){
+                    and $perjalanan['status']=='5')
+            {
                 $data['sidemenu'] = 'FA Perjalanan';
                 $data['sidesubmenu'] = 'Penyelesaian';
                 $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
