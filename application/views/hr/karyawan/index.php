@@ -70,6 +70,7 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+
 <!-- Modal Tambah Karyawan -->
 <div class="modal fade" id="addKaryawan" tabindex="-1" role="dialog" aria-labelledby="addKaryawanTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -243,6 +244,25 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editKaryawan" tabindex="-1" role="dialog" aria-labelledby="editKaryawanTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+      <form class="form" id="formeditKaryawan" method="post" action="karyawan/edit">
+          <div class="modal-body">
+              <input type="hidden" class="form-control" id="npk" name="npk" />
+              <h4 class="card-title text-center">Pastikan user tidak memiliki Outstanding?</h4>
+          </div>
+          <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">KEMBALI</button>
+              <button type="submit" class="btn btn-success">LANJUTKAN</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#div').change(function() {
@@ -287,6 +307,16 @@
             searchPlaceholder: "Search records",
             zeroRecords: "Oops!",
             },
+            dom: 'Bfrtip',
+            buttons: [
+                'copy',
+                {
+                    extend: 'excelHtml5',
+                    title: 'DATA KARYAWAN',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    footer: true
+                }
+            ],
             processing: true,
             ajax: {
                     "url": "<?= site_url('hr/getData') ?>",
@@ -298,7 +328,7 @@
                 {
                     "targets": [15], //first column / numbering column
                     "orderable": false, //set not orderable
-                    "defaultContent": "<button type='button' rel='tooltip' class='btn btn-success btn-link btn-just-icon' data-original-title='' title=''><i class='material-icons'>edit</i></button>",
+                    "defaultContent": "<button type='button' rel='tooltip' class='btn btn-success btn-link btn-just-icon edit' id='btn_edit' data-original-title='' title=''><i class='material-icons'>edit</i></button>",
                 }, 
             ],
             columns: [
@@ -337,7 +367,19 @@
                         select.append( '<option value="'+d+'">'+d+'</option>' )
                     } );
                 } );
-            }
+            },
         });
+
+        var table = $('#dtKaryawan').DataTable();
+
+        // Edit record
+        table.on('click', '.edit', function() {
+            $tr = $(this).closest('tr');
+            var data = table.row( $tr ).data();
+            $('#editKaryawan').modal();
+            $('#editKaryawan').find('.modal-body input[name="npk"]').val(data['npk']);
+            // alert('You press on Row: ' + data['npk'] + '\'s row.');
+        });
+
     });
 </script>

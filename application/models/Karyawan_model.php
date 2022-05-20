@@ -79,4 +79,11 @@ class Karyawan_model extends CI_Model
     {
         return $this->db->get('karyawan')->result();
     }
+
+    public function getActive()
+    {
+            $this->db->where('npk !=', '1111');
+            $this->db->where('is_active', '1');
+        return $this->db->get('karyawan')->result();
+    }
 }

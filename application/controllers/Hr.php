@@ -12,19 +12,76 @@ class Hr extends CI_Controller
         $this->load->model("Karyawan_model");
     }
 
-    public function karyawan()
+    public function karyawan($params=null)
     {
-        $data['sidemenu'] = 'HR Karyawan';
-        $data['sidesubmenu'] = 'Data Karyawan';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['datakaryawan'] = $this->db->where('npk !=', '1111');
-        $data['datakaryawan'] = $this->db->where('is_active', '1');
-        $data['datakaryawan'] = $this->db->get('karyawan')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('hr/karyawan/index', $data);
-        $this->load->view('templates/footer');
+        if($params=='add')
+        {
+
+        }elseif($params=='edit')
+        {   
+            $data['sidemenu'] = 'HR Karyawan';
+            $data['sidesubmenu'] = 'Data Karyawan';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['data'] = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/karyawan/edit', $data);
+            $this->load->view('templates/footer');
+        }else 
+        {
+            $data['sidemenu'] = 'HR Karyawan';
+            $data['sidesubmenu'] = 'Data Karyawan';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['datakaryawan'] = $this->db->where('npk !=', '1111');
+            $data['datakaryawan'] = $this->db->where('is_active', '1');
+            $data['datakaryawan'] = $this->db->get('karyawan')->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/karyawan/index', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function modify_karyawan($params=null)
+    {
+        if($params=='add')
+        {
+
+        }elseif($params=='profile')
+        {   
+            $this->db->set('nama', $this->input->post('nama'));
+            $this->db->set('inisial', $this->input->post('inisial'));
+            $this->db->set('email', $this->input->post('email'));
+            $this->db->set('phone', $this->input->post('phone'));
+            $this->db->where('npk', $this->input->post('npk'));
+            $this->db->update('karyawan');
+        }elseif($params=='structure')
+        {   
+            $this->db->set('posisi_id', $this->input->post('posisi_id'));
+            $this->db->set('div_id', $this->input->post('div_id'));
+            $this->db->set('dept_id', $this->input->post('dept_id'));
+            $this->db->set('sect_id', $this->input->post('sect_id'));
+            $this->db->set('gol_id', $this->input->post('gol_id'));
+            $this->db->set('fasilitas_id', $this->input->post('fasilitas_id'));
+            $this->db->set('work_contract', $this->input->post('work_contract'));
+            $this->db->set('cost_center', $this->input->post('cost_center'));
+            $this->db->set('atasan1', $this->input->post('atasan1'));
+            $this->db->set('atasan2', $this->input->post('atasan2'));
+            $this->db->where('npk', $this->input->post('npk'));
+            $this->db->update('karyawan');
+        }else 
+        {
+            $data['sidemenu'] = 'HR Karyawan';
+            $data['sidesubmenu'] = 'Data Karyawan';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/karyawan/index', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function addKaryawan($param=null)
@@ -85,7 +142,7 @@ class Hr extends CI_Controller
     public function getData()
     {
         
-            $result = $this->Karyawan_model->getAll();
+            $result = $this->Karyawan_model->getActive();
 
             foreach ($result as $r) :
                 $div = $this->db->get_where('karyawan_div', ['id' =>  $r->div_id])->row();
