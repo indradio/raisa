@@ -27,7 +27,7 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <?php if ($lembur['status'] == '1' AND $this->session->userdata('contract') == 'Direct Labor'){
                                 echo '<a href="#" id="tambah_aktivitas" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">Tambah Aktivitas</a>';
-                            }elseif ($lembur['status'] == '1' AND $this->session->userdata('contract') == 'Indirect Labor'){
+                            }else{
                                 echo '<a href="#" id="tambah_aktivitas" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitasIndirect">Tambah Aktivitas</a>';
                             }; ?>
                         </div>
