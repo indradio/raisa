@@ -52,7 +52,7 @@
                                     </tr>
                                     <tr>
                                     <td>3</td>
-                                    <td>Ukuran banner menggunakan 1440x720 pixel</td>
+                                    <td>Ukuran banner menggunakan 1440x720 pixel dengan size 2MB</td>
                                     </tr>
                                     <tr>
                                     <td>4</td>

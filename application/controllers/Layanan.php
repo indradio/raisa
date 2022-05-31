@@ -55,7 +55,7 @@ class Layanan extends CI_Controller
 
         $config['upload_path']          = './assets/img/info/';
         $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 1024;
+        $config['max_size']             = 2048;
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('gambar_banner')) {
             $this->db->set('gambar_banner', $this->upload->data('file_name'));
@@ -79,7 +79,7 @@ class Layanan extends CI_Controller
 
         $config['upload_path']          = './assets/img/info/';
         $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 1024;
+        $config['max_size']             = 2048;
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('gambar_banner')) {
             $this->db->set('gambar_banner', $this->upload->data('file_name'));
@@ -335,7 +335,7 @@ class Layanan extends CI_Controller
 
             $config['upload_path']          = './assets/img/info/';
             $config['allowed_types']        = 'jpg|jpeg|png';
-            $config['max_size']             = 1024;
+            $config['max_size']             = 2048;
             $this->load->library('upload', $config);
             if ($this->upload->do_upload('gambar_banner')) {
                 $this->db->set('gambar_banner', $this->upload->data('file_name'));
