@@ -71,7 +71,7 @@
                                   <i class="material-icons">thumb_up</i>
                                 </div>
                                 <p class="card-category">LANJUTKAN 10 PERIODE</p>
-                                <h3 class="card-title"><?= $avg_ya.' ('.$avg_ya.'%)'; ?></h3>
+                                <h3 class="card-title"><?= $total_ya.' ('.$avg_ya.'%)'; ?></h3>
                               </div>
                               <div class="card-footer">
                               </div>
@@ -187,7 +187,7 @@
                             <table id="dtcatering" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Nama</th>
+                                        <!-- <th>Nama</th> -->
                                         <th>p1</th>
                                         <th>p2</th>
                                         <th>p3</th>
@@ -203,7 +203,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Nama</th>
+                                        <!-- <th>Nama</th> -->
                                         <th>p1</th>
                                         <th>p2</th>
                                         <th>p3</th>
@@ -258,7 +258,7 @@
                     "data"  : {}
                 },
             columns: [
-                { "data": "nama" },
+                // { "data": "nama" },
                 { "data": "p1" },
                 { "data": "p2" },
                 { "data": "p3" },

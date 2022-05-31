@@ -84,7 +84,7 @@ class Survei extends CI_Controller
                 
             foreach ($catering as $row) {
                 $output['data'][] = array(
-                    "nama" => $row->nama,
+                    // "nama" => $row->nama,
                     "p1" => $row->p1,
                     "p2" => $row->p2,
                     "p3" => $row->p3,
