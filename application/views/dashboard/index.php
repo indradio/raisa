@@ -102,6 +102,30 @@
 
     <!-- HImbauan -->
     <div class="row">
+    <?php $this->db->where('npk', $this->session->userdata('npk'));
+          $data = $this->db->get('survei_catering')->row();
+          if (empty($data)){ ?>
+      <div class="col-md-6">
+        <div class="card card-stats">
+          <div class="card-header">
+            <p class="card-category"></p>
+            <h3 class="card-title">Survei Kepuasan Catering</h3>
+            <h4 class="card-title">Yuk isi survei kepuasan kamu terkait layanan catering, biar selalu yang terbaik!</h4>
+            <a href="<?= base_url('survei/catering'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Isi sekarang!</a>
+          </div>
+        </div>
+      </div>
+      <?php }else{ ?>
+        <div class="col-md-6">
+          <div class="card card-stats">
+            <div class="card-header">
+              <p class="card-category"></p>
+              <h3 class="card-title">Survei Kepuasan Catering</h3>
+              <h4 class="card-title">Terimakasih kamu hebat karena telah ikut berkontribusi untuk winteq yang lebih baik!</h4>
+            </div>
+          </div>
+        </div>
+      <?php }; ?>
         <div class="col-md-6">
           <div class="card card-stats">
             <div class="card-header">
