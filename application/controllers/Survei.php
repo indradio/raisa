@@ -75,8 +75,32 @@ class Survei extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('layanan/survei/hasil', $data);
+            $this->load->view('layanan/survei/catering_hasil', $data);
             $this->load->view('templates/footer');
+
+        }elseif($params=='get_catering')
+        {
+            $catering = $this->db->get('survei_catering')->result();
+                
+            foreach ($catering as $row) {
+                $output['data'][] = array(
+                    "nama" => $row->nama,
+                    "p1" => $row->p1,
+                    "p2" => $row->p2,
+                    "p3" => $row->p3,
+                    "p4" => $row->p4,
+                    "p5" => $row->p5,
+                    "p6" => $row->p6,
+                    "p7" => $row->p7,
+                    "p8" => $row->p8,
+                    "p9" => $row->p9,
+                    "komentar" => $row->komentar,
+                    "rekomendasi" => $row->rekomendasi
+                );
+            }
+    
+            echo json_encode($output);
+            exit();
         }else{
             redirect('dashboard');
         } 
