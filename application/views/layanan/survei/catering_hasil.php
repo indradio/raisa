@@ -71,7 +71,7 @@
                                   <i class="material-icons">thumb_up</i>
                                 </div>
                                 <p class="card-category">LANJUTKAN 10 PERIODE</p>
-                                <h3 class="card-title"><?= $total_ya.' ('.$avg_ya.'%)'; ?></h3>
+                                <h3 class="card-title"><?= $total_ya.' ('.round($avg_ya).'%)'; ?></h3>
                               </div>
                               <div class="card-footer">
                               </div>
@@ -84,7 +84,7 @@
                                   <i class="material-icons">thumb_down</i>
                                 </div>
                                 <p class="card-category">GANTI AJA</p>
-                                <h3 class="card-title"><?= $total_tidak.' ('.$avg_tidak.'%)'; ?></h3>
+                                <h3 class="card-title"><?= $total_tidak.' ('.round($avg_tidak).'%)'; ?></h3>
                               </div>
                               <div class="card-footer">
                               </div>
@@ -117,47 +117,47 @@
                                         <tr>
                                             <td>1</td>
                                             <td>Variasi menu makanan</td>
-                                            <td><?= $avg_p1; ?>/5</td>
+                                            <td><?= round($avg_p1); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
                                             <td>Rasa makanan</td>
-                                            <td><?= $avg_p2; ?>/5</td>
+                                            <td><?= round($avg_p2); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
                                             <td>Kebersiahan penyajian</td>
-                                            <td><?= $avg_p3; ?>/5</td>
+                                            <td><?= round($avg_p3); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>4</td>
                                             <td>Kebersihan area makan/kantin</td>
-                                            <td><?= $avg_p4; ?>/5</td>
+                                            <td><?= round($avg_p4); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>5</td>
                                             <td>Kebersihan area pencucian piring</td>
-                                            <td><?= $avg_p5; ?>/5</td>
+                                            <td><?= round($avg_p5); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>6</td>
                                             <td>Sopan santun pelayanan</td>
-                                            <td><?= $avg_p6; ?>/5</td>
+                                            <td><?= round($avg_p6); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>7</td>
                                             <td>Cepat tanggap menerima keluhan</td>
-                                            <td><?= $avg_p7; ?>/5</td>
+                                            <td><?= round($avg_p7); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>8</td>
                                             <td>Kebersihan & kerapihan juru layan</td>
-                                            <td><?= $avg_p8; ?>/5</td>
+                                            <td><?= round($avg_p8); ?>/5</td>
                                         </tr>
                                         <tr>
                                             <td>9</td>
                                             <td>Pembuangan limbah bekas makanan</td>
-                                            <td><?= $avg_p9; ?>/5</td>
+                                            <td><?= round($avg_p9); ?>/5</td>
                                         </tr>
                                 </tbody>
                             </table>
