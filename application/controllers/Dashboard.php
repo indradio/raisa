@@ -70,8 +70,7 @@ class Dashboard extends CI_Controller
                                 "\r\nBatas Waktu keberangkatan :" .
                                 "\r\n1 Jam untuk perjalanan dengan COPRO" .
                                 "\r\n2 Jam untuk perjalanan tanpa COPRO" .
-                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                                "\r\n \r\n" . $notifikasi['pesan']
+                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
                                 ],
                     ]
                 );
@@ -189,8 +188,7 @@ class Dashboard extends CI_Controller
                                         "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
                                         "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
                                         "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *3 JAM*, Ayo segera selesaikan REALISASI kamu." .
-                                        "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                        "\r\n \r\n" . $notifikasi['pesan']
+                                        "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                         ],
                             ]
                         );
@@ -226,8 +224,7 @@ class Dashboard extends CI_Controller
                                     "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
                                     "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
                                     "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR." .
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                 ],
                         ]
                     );
@@ -264,8 +261,7 @@ class Dashboard extends CI_Controller
                                     "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
                                     "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, dan kadiv." .
                                     "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadept dan/atau kadiv." .
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com" .
-                                    "\r\n \r\n" . $notifikasi['pesan']
+                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                                     ],
                         ]
                     );
