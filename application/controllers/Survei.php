@@ -64,18 +64,22 @@ class Survei extends CI_Controller
         } 
     }
 
-    public function guest()
+    public function hasil($params=null)
     {
-        $data['sidemenu'] = 'Security';
-        $data['sidesubmenu'] = 'Kunjungan Tamu';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['visit'] = $this->db->where('status', '1');
-        $data['visit'] = $this->db->get('visit')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('cekdl/visit', $data);
-        $this->load->view('templates/footer');
+        date_default_timezone_set('asia/jakarta');
+        if($params=='catering')
+        {
+            $data['sidemenu'] = 'GA';
+            $data['sidesubmenu'] = 'Survei Catering';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('layanan/survei/hasil', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('dashboard');
+        } 
     }
 
     public function check()

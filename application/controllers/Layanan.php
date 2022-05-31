@@ -224,18 +224,15 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🕌 *HIMBAUAN PROKES LIBUR LEBARAN 1443 H*" .
+                            'message' => "🍛 *SURVEI KEPUASAN LAYANAN CATERING*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nWaktu cuti bersama telah tiba, saatnya berkumpul dengan sanak keluarga dan handai taulan di kampung halaman. Diperkirakan mobilitas orang akan meningkat drastis, sementara potensi gangguan kesehatan juga masih ada karena status pandemi belum dicabut oleh pemerintah." .
-                            "\r\nAtas dasar hal itu, untuk tetap menjaga dan melindungi kesehatan warga WINTEQ pasca musim cuti bersama ini, kami menghimbau bagi seluruh karyawan untuk turut serta dalam upaya menjaga dan melindungi kesehatan warga WlNTEQ, dengan beberapa hal sebagai berikut:" .
-                            "\r\n \r\n*1*. Tetap *disiplin* menjalankan *protokol kesehatan* yang selama ini telah dicanangkan (selalu memakai masker, selalu menjaga kebersihan dengan mencuci tangan, Menjaga jarak dan menghindari kerumunan)." .
-                            "\r\n \r\n*2*. Segera melakukan *vaksinasi booster* bagi yang telah memenuhi syarat." .
-                            "\r\n \r\n*3*. Pada saat akan masuk kerja kembali, harap memperhatikan *ketentuan berikut ini :*" .
-                            "\r\nhttps://raisa.winteq-astra.com/assets/pdf/HIMBAUAN%20GUGUS%20TUGAS.pdf" .
-                            "\r\n \r\nDemikian himbauan ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
+                            "\r\nDalam rangka meningkatkan kualitas pelayanan catering, kamu bisa banget ngasih masukan yang nantinya bisa bikin kualitas makan siang kamu jadi lebih baik lagi." .
+                            "\r\nCaranya gampang banget kok, kamu cuma isi aja survei diberikut ini :" .
+                            "\r\nhttps://raisa.winteq-astra.com/survei/catering" .
+                            "\r\n \r\nDemikian informasi ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nTim Gugus Tugas Penanganan Covid-19 WINTEQ" .
-                            "\r\n \r\n_Selamat Hari Raya Idul Fitri 1443 H_"
+                            "\r\nGeneral Affair" .
+                            "\r\n \r\n_Selamat Makan Siang di jam 12:00 ya!_"
                         ],
                     ]
                 );
@@ -319,9 +316,9 @@ class Layanan extends CI_Controller
 
     public function contest($params=null)
     {
+        date_default_timezone_set('asia/jakarta');
         if($params=='add')
         {
-            date_default_timezone_set('asia/jakarta');
             $this->load->helper('string');
             $data = [
                 'id' => random_string('alnum',8),
