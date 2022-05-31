@@ -117,7 +117,17 @@
                                                 <td><?= $i['deskripsi']; ?></td>
                                                 <td><?= $i['status']; ?></td>
                                                 <td class="text-right">
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteBanner" data-id="<?= $i['id']; ?>"><i class="material-icons">close</i></a>
+                                                    <?php if ($i['status']=='NEED A REVIEW'){
+                                                        echo '<a href="#" class="btn btn-link btn-danger btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteBanner" data-id="'.$i['id'].'"><i class="material-icons">close</i></a>';
+                                                    }elseif ($i['status']=='PUBLISHED'){
+                                                        echo 'Approved by '.$i['approved_by'];
+                                                        echo '</br>Will be Expired on '.date('d M Y', strtotime( $i['berlaku']));
+                                                    }elseif ($i['status']=='REJECTED'){
+                                                        echo 'Rejected by '.$i['approved_by'];
+                                                        echo '</br>Alasan : '.$i['deskripsi'];
+                                                    }else{
+                                                        echo 'N/A';
+                                                    } ?>
                                                 </td>
                                             </tr>
                                     <?php endforeach; ?>
@@ -209,7 +219,7 @@
       <div class="card card-signup card-plain">
       <form class="form" id="formDeleteBanner" method="post" action="#">
           <div class="modal-body">
-              <input type="text" class="form-control" id="id" name="id" />
+              <input type="hidden" class="form-control" id="id" name="id" />
               <h4 class="card-title text-center">Yakin ingin menghapus BANNER ini?</h4>
           </div>
           <div class="modal-footer justify-content-center">

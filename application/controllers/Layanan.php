@@ -350,6 +350,39 @@ class Layanan extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->delete('informasi');
         
+        } elseif($params=='review')
+        {
+            $data['sidemenu'] = 'Layanan';
+            $data['sidesubmenu'] = 'Banner ';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['banner'] = $this->db->get_where('informasi', ['status' => 'NEED A REVIEW'])->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('layanan/contest/review', $data);
+            $this->load->view('templates/footer');
+        
+        } elseif($params=='approve')
+        {
+                $this->db->set('berlaku', date('Y-m-d', strtotime($this->input->post('berlaku'))));
+                $this->db->set('status', 'PUBLISHED');
+                $this->db->set('approved_by', $this->session->userdata('inisial'));
+                $this->db->set('approved_at', date('Y-m-d H:i:s'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('informasi');
+
+                redirect('layanan/contest/review');
+
+        } elseif($params=='reject')
+        {
+                $this->db->set('status', 'REJECTED');
+                $this->db->set('deskripsi', $this->input->post('deskripsi'));
+                $this->db->set('approved_by', $this->session->userdata('inisial'));
+                $this->db->set('approved_at', date('Y-m-d H:i:s'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('informasi');
+
+                redirect('layanan/contest/review');
         }else
         {
             $data['sidemenu'] = 'Dashboard';
