@@ -47,10 +47,7 @@ class Survei extends CI_Controller
                     'p8' => $this->input->post('pertanyaan8'),
                     'p9' => $this->input->post('pertanyaan9'),
                     'komentar' => $this->input->post('komentar'),
-                    'rekomendasi' => $this->input->post('rekomendasi'),
-                    'sect_id' => $this->session->userdata('sect_id'),
-                    'dept_id' => $this->session->userdata('dept_id'),
-                    'div_id' => $this->session->userdata('div_id')
+                    'rekomendasi' => $this->input->post('rekomendasi')
                 ];
                 $this->db->insert('survei_catering', $data);
     
