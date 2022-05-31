@@ -261,8 +261,6 @@
 </div>
 
 <script type="text/javascript">
-
-  
   $(document).ready(function() {
     setFormValidation('#formAddEvent');
     setFormValidation('#formDeleteEvent');

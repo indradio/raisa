@@ -38,35 +38,6 @@ class Lembur extends CI_Controller
          // End Auto Batalkan RENCANA LEMBUR
     }
 
-    // public function getData($params = null)
-    // {
-    //     if ($params = null){
-
-    //     }elseif ($params=='penyimpangan'){
-
-    //                 $this->db->where('status', '0');
-    //                 $this->db->where('last_status', '4');
-    //         $lembur = $this->db->get_where('lembur', ['atasan2' => $this->session->userdata('inisial')])->result();
-    
-    //             foreach ($lembur as $row) :
-    //                 $output['data'][] = array(
-    //                     'hubungan' => $row->hubungan,
-    //                     'nik' => $row->nik,
-    //                     'nama' => $row->nama,
-    //                     'lahir_tempat' => $row->lahir_tempat,
-    //                     'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
-    //                     'jenis_kelamin' => $row->jenis_kelamin,
-    //                     'pekerjaan' => $row->pekerjaan
-    //                 );
-    //             endforeach;
-                
-    //             // var_dump($output);
-    
-    //             //output to json format
-    //             echo json_encode($output);
-    //     }
-    // }
-
     public function ajax()
     {
         $kategori_id = $_POST['kategori'];
@@ -91,26 +62,55 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function rencana()
+    public function rencana($params=null,$id=null)
     {
-        $data['sidemenu'] = 'Lembur';
-        $data['sidesubmenu'] = 'Rencana';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $npk = $this->session->userdata('npk');
-        $pemohon = $this->session->userdata('inisial');
-        $queryLembur = "SELECT *
-        FROM `lembur`
-        WHERE (`status`>= '1' AND `status` <= '6' AND `npk`= '$npk') OR (`status`= '1' AND `pemohon`= '$pemohon')";
-        $data['lembur'] = $this->db->query($queryLembur)->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('lembur/rencana', $data);
-        $this->load->view('templates/footer');
+        date_default_timezone_set('asia/jakarta');
+        if ($params==null or $id==null){
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'Rencana';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $npk = $this->session->userdata('npk');
+            $pemohon = $this->session->userdata('inisial');
+            $queryLembur = "SELECT *
+            FROM `lembur`
+            WHERE (`status`>= '1' AND `status` <= '6' AND `npk`= '$npk') OR (`status`= '1' AND `pemohon`= '$pemohon')";
+            $data['lembur'] = $this->db->query($queryLembur)->result_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/rencana/index', $data);
+            $this->load->view('templates/footer');
+
+        }elseif ($params=='aktivitas' and $id!=null){
+            $this->db->where('id', $id);
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->where('status', '1');
+            $lembur = $this->db->get('lembur')->row_array();
+            if (!empty($lembur)){
+                $data['sidemenu'] = 'Lembur';
+                $data['sidesubmenu'] = 'Rencana';
+                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                $data['lembur'] = $lembur;
+                // $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
+                // $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+                
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+
+                $this->load->view('lembur/rencana/aktivitas', $data);
+                $this->load->view('templates/footer');
+            }else{
+                redirect('lembur/rencana');
+            }
+        }else{
+            redirect('lembur/rencana');
+        }
     }
 
-    public function realisasi($params=null)
+    public function realisasi($params=null,$id=null)
     {
+        date_default_timezone_set('asia/jakarta');
         if ($params==null){
 
             $data['sidemenu'] = 'Lembur';
@@ -124,8 +124,106 @@ class Lembur extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/realisasi', $data);
+            $this->load->view('lembur/realisasi/index', $data);
             $this->load->view('templates/footer');
+        
+        }elseif ($params=='aktivitas' and $id!=null){
+            $this->db->where('id', $id);
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->where('tglselesai_rencana <', date('Y-m-d H:i:s'));
+            $this->db->where('status', '4');
+            $lembur = $this->db->get('lembur')->row_array();
+            if (!empty($lembur)){
+                $data['sidemenu'] = 'Lembur';
+                $data['sidesubmenu'] = 'Realisasi';
+                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                $data['lembur'] = $lembur;
+                // $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
+                // $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+                
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+
+                $this->load->view('lembur/realisasi/aktivitas', $data);
+                $this->load->view('templates/footer');
+            }else{
+                $this->session->set_flashdata('notify', 'error');
+                redirect('lembur/realisasi');
+            }
+
+        }elseif ($params=='submit' and $id==null){
+            
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+            $expired = date('Y-m-d H:i:s', strtotime('+7 days', strtotime($lembur['tglmulai'])));
+
+            if ($lembur['kategori'] != 'OT' and $lembur['durasi'] != 9){
+                redirect('lembur/realisasi/aktivitas/'.$this->input->post('id'));
+            }
+
+            $jammulai = date('H:i', strtotime($lembur['tglmulai']));
+            $jamselesai = date('H:i', strtotime($lembur['tglselesai']));
+
+            if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                $istirahat1 = 1;
+            }else{
+                $istirahat1 = 0;
+            }
+
+            if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                $istirahat2 = 0.5;
+            }else{
+                $istirahat2 = 0;
+            }
+
+            $istirahat = $istirahat1 + $istirahat2;
+
+            $durasi = $lembur['durasi'] - $istirahat;
+                $this->db->where('durasi', $durasi);
+                $this->db->where('hari', $lembur['hari']);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            $this->db->set('tglpengajuan_realisasi', date('Y-m-d H:i:s'));
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat1', $istirahat1);
+            $this->db->set('istirahat2', $istirahat2);
+            $this->db->set('istirahat3', 0);
+            $this->db->set('durasi_hr', $durasi);
+            $this->db->set('tul', $tul->tul);
+            $this->db->set('status', 5);
+            $this->db->set('expired_at', $expired);
+            $this->db->set('last_notify', date('Y-m-d H:i:s'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $this->db->set('aktivitas');
+            $this->db->where('status !=', '2');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->delete('aktivitas');
+
+            // Notification saat mengajukan REALISASI to ATASAN 1
+            $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post(
+                'https://region01.krmpesan.com/api/v2/message/send-text',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    ],
+                    'json' => [
+                        'phone' => $atasan1['phone'],
+                        'message' => "*PENGAJUAN REALISASI LEMBUR*" .
+                        "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+                        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) .
+                        "\r\nDurasi : " . $lembur['durasi'] ." Jam" .
+                        "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                    ],
+                ]
+            );
+            $body = $response->getBody();
+            redirect('lembur/realisasi/');
 
         }elseif ($params=='telat'){
             
@@ -141,35 +239,55 @@ class Lembur extends CI_Controller
         }
     }
 
+    public function lemburku($id)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+        if ($lembur['npk'] == $this->session->userdata('npk')){
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'LemburKu';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+            $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
+            $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
+            $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/lemburku', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('lembur');
+        }
+    }
+
     public function tambah_hariini()
     {
         date_default_timezone_set('asia/jakarta');
         $karyawan = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
         $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
-
-
-        // $this->db->where('year(tglmulai_rencana)', date('Y'));
-        // $this->db->where('month(tglmulai_rencana)', date('m'));
-        // $lembur = $this->db->get('lembur');
-        // $total_lembur = $lembur->num_rows()+1;
         
         $this->load->helper('string');
 
         $id = 'OT'.date('ym'). random_string('alnum',3);
         $existid = $this->db->get_where('lembur', ['id' => $id])->row_array();
         if (!empty($existid)){$id = 'OT'.date('ym'). random_string('alnum',4);}
-
-        if (date('H:i:s') <= date('16:30:00')) {
-            $tglmulai = date('Y-m-d 16:30:00');
-        }else{
+        
+        if (date('D') == 'Sat' OR date('D') == 'Sun') 
+        {
             $tglmulai = date('Y-m-d H:i:s');
-        }
-
-        if (date('D') == 'Sat' OR date('D') == 'Sun') {
-            $hari = 2;
+            $hari = 'LIBUR';
         }else{
-            $hari = 1;
+            $tglmulai = date('Y-m-d 16:30:00');
+            $event = $this->db->get_where('calendar_event_details', ['date' => date('Y-m-d')])->row_array();
+            if (empty($event))
+            {
+                $hari = 'KERJA';
+            }else{
+                $hari = $event['category'];
+            }
         }
 
         $data = [
@@ -211,12 +329,7 @@ class Lembur extends CI_Controller
         $bulan = date("m", strtotime($this->input->post('tglmulai')));
 
         if (date("Y-m-d", strtotime($this->input->post('tglmulai'))) > date('Y-m-d')) {
-            // $this->db->where('year(tglmulai_rencana)', $tahun);
-            // $this->db->where('month(tglmulai_rencana)', $bulan);
-            // $lembur = $this->db->get('lembur');
-            // $total_lembur = $lembur->num_rows()+1;
-            // $id = 'OT'.date('ym', strtotime($this->input->post('tglmulai'))). sprintf("%04s", $total_lembur);
-
+        
             $this->load->helper('string');
 
             $id = 'OT'.date('ym', strtotime($this->input->post('tglmulai'))). random_string('alnum',3);
@@ -224,9 +337,15 @@ class Lembur extends CI_Controller
             if (!empty($existid)){$id = 'OT'.date('ym'). random_string('alnum',4);}
 
             if (date('D', strtotime($this->input->post('tglmulai'))) == 'Sat' OR date('D', strtotime($this->input->post('tglmulai'))) == 'Sun') {
-                $hari = 2;
+                $hari = 'LIBUR';
             }else{
-                $hari = 1;
+                $event = $this->db->get_where('calendar_event_details', ['date' => date('Y-m-d', strtotime($this->input->post('tglmulai')))])->row_array();
+                if (empty($event))
+                {
+                    $hari = 'KERJA';
+                }else{
+                    $hari = $event['category'];
+                }
             }
 
             $data = [
@@ -255,7 +374,7 @@ class Lembur extends CI_Controller
             ];
 
             $this->db->insert('lembur', $data);
-            redirect('lembur/rencana_aktivitas/' . $data['id']);
+            redirect('lembur/rencana/aktivitas/' . $data['id']);
         }
         else{
             $this->session->set_flashdata('message', 'update');
@@ -348,16 +467,18 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+
         $tahun = date('Y', strtotime($lembur['tglmulai']));
         $bulan = date('m', strtotime($lembur['tglmulai']));
         $tanggal = date('d', strtotime($lembur['tglmulai']));
+
         $sekarang = strtotime(date('Y-m-d H:i:s'));
         $realisasi = strtotime(date('Y-m-d H:i:s', strtotime($lembur['tglselesai_rencana'])));
 
         if ($sekarang > $realisasi){
             if ($lembur['npk'] == $this->session->userdata('npk') or $lembur['pemohon'] == $this->session->userdata('inisial')){
                 if ($lembur['status']==4){
-                    if ($lembur['contract']=='Direct Labor' AND $lembur['hari']==1){
+                    if ($lembur['contract']=='Direct Labor' AND $lembur['hari']=='KERJA'){
                         $this->db->where('npk', $lembur['npk']);
                         $this->db->where('year(tglmulai)',$tahun);
                         $this->db->where('month(tglmulai)',$bulan);
@@ -365,7 +486,8 @@ class Lembur extends CI_Controller
                         $this->db->where('status >', '0'); 
                         $jamkerja = $this->db->get('jamkerja')->result();
 
-                        if (!empty($jamkerja)){
+                        if (!empty($jamkerja))
+                        {
                             $data['sidemenu'] = 'Lembur';
                             $data['sidesubmenu'] = 'Realisasi';
                             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -437,28 +559,468 @@ class Lembur extends CI_Controller
         }
     }
 
-    public function lemburku($id)
+    public function aktivitas($params1, $params2)
     {
         date_default_timezone_set('asia/jakarta');
-        $lembur = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
-        if ($lembur['npk'] == $this->session->userdata('npk')){
-            $data['sidemenu'] = 'Lembur';
-            $data['sidesubmenu'] = 'LemburKu';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
-            $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' =>  $id])->result_array();
-            $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
-            $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
 
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/lemburku', $data);
-            $this->load->view('templates/footer');
-        }else{
-            redirect('lembur');
+        if ($params1=='rencana' and $params2=='tambah'){
+
+            if ($user['work_contract'] == 'Direct Labor')
+            {
+                $kategori = $this->input->post('kategori');
+                if ($kategori=='1')
+                {
+                    $aktivitas = $this->input->post('aktivitas_projek');
+                    $copro = $this->input->post('copro');
+                }elseif ($kategori=='2')
+                {
+                    $aktivitas = $this->input->post('aktivitas_direct');
+                    if($aktivitas=="DR, Konsep")
+                    {
+                        $copro = null;
+                    }else{
+                        $copro = $this->input->post('copro');
+                    }
+                }elseif ($kategori=='3')
+                {
+                    $aktivitas = $this->input->post('aktivitas_direct');
+                    $copro = null;
+                }
+            }else{
+                $kategori = '3';
+                $aktivitas = $this->input->post('aktivitas');
+                $copro = null;
+            }
+
+            $data = [
+                'id' => $lembur['npk'] . time(),
+                'npk' => $lembur['npk'],
+                'tgl_aktivitas' => $lembur['tglmulai'],
+                'jenis_aktivitas' => 'LEMBUR',
+                'link_aktivitas' => $lembur['id'],
+                'kategori' => $kategori,
+                'aktivitas' => $aktivitas,
+                'copro' => $copro,
+                'durasi_menit' => floatval($this->input->post('durasi')) * 60,
+                'durasi' => $this->input->post('durasi'),
+                'progres_hasil' => 0,
+                'dibuat_oleh' => $this->session->userdata('inisial'),
+                'dept_id' => $user['dept_id'],
+                'sect_id' => $user['sect_id'],
+                'contract' => $user['work_contract'],
+                'status' => '1'
+            ];
+            $this->db->insert('aktivitas', $data);
+
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '1');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '1');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
+
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai_rencana'])));
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai_rencana', $tglselesai);
+            $this->db->set('durasi_rencana', $totalDJam);
+            $this->db->set('aktivitas_rencana', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam'
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='rencana' and $params2=='hapus'){
+
+            // Hapus AKTIVITAS
+            $this->db->set('aktivitas');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->delete('aktivitas');
+
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '1');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '1');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
+
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai_rencana'])));
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai_rencana', $tglselesai);
+            $this->db->set('durasi_rencana', $totalDJam);
+            $this->db->set('aktivitas_rencana', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam'
+            );
+
+            //output to json format
+            echo json_encode($output);
+
+        }elseif ($params1=='rencana' and $params2=='ubah_durasi'){
+
+            // Hapus AKTIVITAS
+            $this->db->set('durasi', $this->input->post('durasi'));
+            $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->update('aktivitas');
+
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '1');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '1');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
+
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai_rencana'])));
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai_rencana', $tglselesai);
+            $this->db->set('durasi_rencana', $totalDJam);
+            $this->db->set('aktivitas_rencana', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam'
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='realisasi' and $params2=='update'){
+
+            // Update AKTIVITAS
+            $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
+            $this->db->set('progres_hasil', $this->input->post('progres'));
+            $this->db->set('durasi', $this->input->post('durasi'));
+            $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->set('status', '2');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->update('aktivitas');
+
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
+
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->set('durasi', $totalDJam);
+            $this->db->set('aktivitas', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam'
+            );
+
+            //output to json format
+            echo json_encode($output);
+
+        }elseif ($params1=='realisasi' and $params2=='tambah'){
+
+                if ($user['work_contract'] == 'Direct Labor')
+                {
+                    $kategori = $this->input->post('kategori');
+                    if ($kategori=='1')
+                    {
+                        $aktivitas = $this->input->post('aktivitas_projek');
+                        $copro = $this->input->post('copro');
+                    }elseif ($kategori=='2')
+                    {
+                        $aktivitas = $this->input->post('aktivitas_direct');
+                        if($aktivitas=="DR, Konsep")
+                        {
+                            $copro = null;
+                        }else{
+                            $copro = $this->input->post('copro');
+                        }
+                    }elseif ($kategori=='3')
+                    {
+                        $aktivitas = $this->input->post('aktivitas_direct');
+                        $copro = null;
+                    }
+                }else{
+                    $kategori = '3';
+                    $aktivitas = $this->input->post('aktivitas');
+                    $copro = null;
+                }
+    
+                $data = [
+                    'id' => $lembur['npk'] . time(),
+                    'npk' => $lembur['npk'],
+                    'tgl_aktivitas' => $lembur['tglmulai'],
+                    'jenis_aktivitas' => 'LEMBUR',
+                    'link_aktivitas' => $lembur['id'],
+                    'kategori' => $kategori,
+                    'aktivitas' => $aktivitas,
+                    'copro' => $copro,
+                    'deskripsi_hasil' => $this->input->post('deskripsi'),
+                    'durasi_menit' => floatval($this->input->post('durasi')) * 60,
+                    'durasi' => $this->input->post('durasi'),
+                    'progres_hasil' => $this->input->post('progres'),
+                    'dibuat_oleh' => $this->session->userdata('inisial'),
+                    'dept_id' => $user['dept_id'],
+                    'sect_id' => $user['sect_id'],
+                    'contract' => $user['work_contract'],
+                    'status' => '2'
+                ];
+                $this->db->insert('aktivitas', $data);
+    
+                //Hitung total aktivitas
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalAktivitas = $this->db->get()->num_rows();
+    
+                //Hitung total durasi aktivitas
+                $this->db->select('SUM(durasi_menit) as total');
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalDMenit = $this->db->get()->row()->total;
+                $totalDJam = $totalDMenit / 60;
+    
+                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+    
+                // Update data LEMBUR
+                $this->db->set('tglselesai', $tglselesai);
+                $this->db->set('durasi', $totalDJam);
+                $this->db->set('aktivitas', $totalAktivitas);
+                $this->db->where('id', $lembur['id']);
+                $this->db->update('lembur');
+    
+                $output['data'] = array(
+                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                    'durasi' =>  $totalDJam.' Jam'
+                );
+    
+                //output to json format
+                echo json_encode($output);
+            }elseif ($params1=='realisasi' and $params2=='hapus'){
+
+                // Hapus AKTIVITAS
+                $this->db->set('aktivitas');
+                $this->db->where('id', $this->input->post('id_aktivitas'));
+                $this->db->delete('aktivitas');
+    
+                //Hitung total aktivitas
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalAktivitas = $this->db->get()->num_rows();
+    
+                //Hitung total durasi aktivitas
+                $this->db->select('SUM(durasi_menit) as total');
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalDMenit = $this->db->get()->row()->total;
+                $totalDJam = $totalDMenit / 60;
+    
+                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+    
+                // Update data LEMBUR
+                $this->db->set('tglselesai', $tglselesai);
+                $this->db->set('durasi', $totalDJam);
+                $this->db->set('aktivitas', $totalAktivitas);
+                $this->db->where('id', $lembur['id']);
+                $this->db->update('lembur');
+    
+                $output['data'] = array(
+                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                    'durasi' =>  $totalDJam.' Jam'
+                );
+    
+                //output to json format
+                echo json_encode($output);
+            }elseif ($params1=='realisasi' and $params2=='update_hr'){
+
+                // Update AKTIVITAS
+                $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
+                $this->db->set('durasi', $this->input->post('durasi'));
+                $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+                $this->db->set('status', '2');
+                $this->db->where('id', $this->input->post('id_aktivitas'));
+                $this->db->update('aktivitas');
+    
+                //Hitung total aktivitas
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalAktivitas = $this->db->get()->num_rows();
+    
+                //Hitung total durasi aktivitas
+                $this->db->select('SUM(durasi_menit) as total');
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalDMenit = $this->db->get()->row()->total;
+                $totalDJam = $totalDMenit / 60;
+    
+                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+
+                $jammulai = date('H:i', strtotime($lembur['tglmulai']));
+                $jamselesai = date('H:i', strtotime($tglselesai));
+    
+                if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                    $istirahat1 = 1;
+                }else{
+                    $istirahat1 = 0;
+                }
+    
+                if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                    $istirahat2 = 0.5;
+                }else{
+                    $istirahat2 = 0;
+                }
+    
+                $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
+    
+                $durasiHR = $totalDJam - $istirahat;
+                    $this->db->where('durasi', $durasiHR);
+                    $this->db->where('hari', $lembur['hari']);
+                $tul = $this->db->get('lembur_tul')->row();
+    
+                // Update data LEMBUR
+                $this->db->set('tglselesai', $tglselesai);
+                $this->db->set('istirahat', $istirahat);
+                $this->db->set('istirahat1', $istirahat1);
+                $this->db->set('istirahat2', $istirahat2);
+                $this->db->set('tul', $tul->tul);
+                $this->db->set('durasi_hr', $durasiHR);
+                $this->db->set('durasi', $totalDJam);
+                $this->db->set('aktivitas', $totalAktivitas);
+                $this->db->where('id', $lembur['id']);
+                $this->db->update('lembur');
+    
+                $output['data'] = array(
+                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                    'durasi' =>  $totalDJam.' Jam',
+                    'istirahat' =>  $istirahat.' Jam',
+                    'tul' =>  $tul->tul
+                );
+    
+                //output to json format
+                echo json_encode($output);
+            }elseif ($params1=='realisasi' and $params2=='hapus_hr'){
+
+                // Hapus AKTIVITAS
+                $this->db->set('aktivitas');
+                $this->db->where('id', $this->input->post('id_aktivitas'));
+                $this->db->delete('aktivitas');
+    
+                //Hitung total aktivitas
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalAktivitas = $this->db->get()->num_rows();
+    
+                //Hitung total durasi aktivitas
+                $this->db->select('SUM(durasi_menit) as total');
+                $this->db->where('link_aktivitas', $lembur['id']);
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+                $totalDMenit = $this->db->get()->row()->total;
+                $totalDJam = $totalDMenit / 60;
+    
+                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+    
+                $jammulai = date('H:i', strtotime($lembur['tglmulai']));
+                $jamselesai = date('H:i', strtotime($tglselesai));
+    
+                if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                    $istirahat1 = 1;
+                }else{
+                    $istirahat1 = 0;
+                }
+    
+                if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                    $istirahat2 = 0.5;
+                }else{
+                    $istirahat2 = 0;
+                }
+    
+                $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
+    
+                $durasiHR = $totalDJam - $istirahat;
+                    $this->db->where('durasi', $durasiHR);
+                    $this->db->where('hari', $lembur['hari']);
+                $tul = $this->db->get('lembur_tul')->row();
+    
+                // Update data LEMBUR
+                $this->db->set('tglselesai', $tglselesai);
+                $this->db->set('istirahat', $istirahat);
+                $this->db->set('istirahat1', $istirahat1);
+                $this->db->set('istirahat2', $istirahat2);
+                $this->db->set('tul', $tul->tul);
+                $this->db->set('durasi_hr', $durasiHR);
+                $this->db->set('durasi', $totalDJam);
+                $this->db->set('aktivitas', $totalAktivitas);
+                $this->db->where('id', $lembur['id']);
+                $this->db->update('lembur');
+    
+                $output['data'] = array(
+                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                    'durasi' =>  $totalDJam.' Jam',
+                    'istirahat' =>  $istirahat.' Jam',
+                    'tul' =>  $tul->tul
+                );
+    
+                //output to json format
+                echo json_encode($output);
+            
+            }else{
+
         }
+
     }
+
 
     public function tambah_aktivitas()
     {
@@ -700,57 +1262,128 @@ class Lembur extends CI_Controller
         }
     }
 
-    public function update_aktivitas_realisasi()
+    public function update_aktivitas_realisasi($params=null)
     {
         date_default_timezone_set('asia/jakarta');
-        $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row_array();
-        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link_aktivitas')])->row_array();
+        if ($params==null){
 
-        if($lembur['kategori']=='OT'){
-            $jenis = 'LEMBUR';
+        }elseif ($params=='hr'){
+            $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row_array();
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link')])->row_array();
+
+            $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
+            $this->db->set('durasi', $this->input->post('durasi'));
+            $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->set('diubah_oleh', $this->session->userdata('inisial'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('aktivitas');
+
+            //Hitung total aktivitas
+                $this->db->where('link_aktivitas', $this->input->post('link'));
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+                $this->db->select('SUM(durasi_menit) as total');
+                $this->db->where('link_aktivitas', $this->input->post('link'));
+                $this->db->where('status', '2');
+                $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+
+            $totalDJam = $totalDMenit / 60;
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+
+            $jammulai = date('H:i', strtotime($lembur['tglmulai']));
+            $jamselesai = date('H:i', strtotime($tglselesai));
+
+            if ($totalDJam >=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                $istirahat1 = 1;
+            }else{
+                $istirahat1 = 0;
+            }
+            if ($totalDJam >=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                $istirahat2 = 0.5;
+            }else{
+                $istirahat2 = 0;
+            }
+
+            $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
+
+            $durasi = $totalDJam - $istirahat;
+                $this->db->where('durasi', $durasi);
+                $this->db->where('hari', $lembur['hari']);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat1', $istirahat1);
+            $this->db->set('istirahat2', $istirahat2);
+            $this->db->set('durasi', $totalDJam);
+            $this->db->set('durasi_hr', $durasi);
+            $this->db->set('tul', $tul->tul);
+            $this->db->set('aktivitas', $totalAktivitas);
+            $this->db->where('id', $this->input->post('link'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai))
+            );
+
+            //output to json format
+            echo json_encode($output);
+        
         }else{
-            $jenis = 'JAM KERJA';
-        }
+            $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row_array();
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('link_aktivitas')])->row_array();
 
-        $this->db->set('jenis_aktivitas', $jenis);
-        $this->db->set('deskripsi_hasil', $this->input->post('deskripsi_hasil'));
-        $this->db->set('durasi_menit', $this->input->post('durasi'));
-        $this->db->set('durasi', intval($this->input->post('durasi')) / 60);
-        $this->db->set('progres_hasil', $this->input->post('progres_hasil'));
-        $this->db->set('status', '2');
-        $this->db->set('diubah_oleh', $this->session->userdata('inisial'));
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('aktivitas');
+            if($lembur['kategori']=='OT'){
+                $jenis = 'LEMBUR';
+            }else{
+                $jenis = 'JAM KERJA';
+            }
 
-       //Hitung total durasi aktivitas
-       $this->db->select('SUM(durasi_menit) as total');
-       $this->db->where('status', '2');
-       $this->db->where('link_aktivitas', $this->input->post('link_aktivitas'));
-       $this->db->from('aktivitas');
+            $this->db->set('jenis_aktivitas', $jenis);
+            $this->db->set('deskripsi_hasil', $this->input->post('deskripsi_hasil'));
+            $this->db->set('durasi_menit', $this->input->post('durasi'));
+            $this->db->set('durasi', intval($this->input->post('durasi')) / 60);
+            $this->db->set('progres_hasil', $this->input->post('progres_hasil'));
+            $this->db->set('status', '2');
+            $this->db->set('diubah_oleh', $this->session->userdata('inisial'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('aktivitas');
 
-       $totalDMenit = $this->db->get()->row()->total;
-       $totalDJam = $totalDMenit / 60;
-       $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
-       
-       //Hitung total aktivitas
-       $this->db->where('link_aktivitas', $this->input->post('link_aktivitas'));
-       $this->db->where('status', '2');
-       $this->db->from('aktivitas');
+        //Hitung total durasi aktivitas
+        $this->db->select('SUM(durasi_menit) as total');
+        $this->db->where('status', '2');
+        $this->db->where('link_aktivitas', $this->input->post('link_aktivitas'));
+        $this->db->from('aktivitas');
 
-       $totalAktivitas = $this->db->get()->num_rows();
+        $totalDMenit = $this->db->get()->row()->total;
+        $totalDJam = $totalDMenit / 60;
+        $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+        
+        //Hitung total aktivitas
+        $this->db->where('link_aktivitas', $this->input->post('link_aktivitas'));
+        $this->db->where('status', '2');
+        $this->db->from('aktivitas');
 
-       // Update data LEMBUR
-       $this->db->set('tglselesai', $tglselesai);
-       $this->db->set('durasi', $totalDJam);
-       $this->db->set('aktivitas', $totalAktivitas);
-       $this->db->where('id', $this->input->post('link_aktivitas'));
-       $this->db->update('lembur');
+        $totalAktivitas = $this->db->get()->num_rows();
 
-       
-        if ($lembur['status']=='4'){
-            redirect('lembur/realisasi_aktivitas/' . $this->input->post('link_aktivitas'));
-        } elseif ($lembur['status']=='7'){
-            redirect('lembur/proses/hr/' . $this->input->post('link_aktivitas'));
+        // Update data LEMBUR
+        $this->db->set('tglselesai', $tglselesai);
+        $this->db->set('durasi', $totalDJam);
+        $this->db->set('aktivitas', $totalAktivitas);
+        $this->db->where('id', $this->input->post('link_aktivitas'));
+        $this->db->update('lembur');
+
+        
+            if ($lembur['status']=='4'){
+                redirect('lembur/realisasi_aktivitas/' . $this->input->post('link_aktivitas'));
+            } elseif ($lembur['status']=='7'){
+                redirect('lembur/proses/hr/' . $this->input->post('link_aktivitas'));
+            }
         }
     }
 
@@ -974,6 +1607,80 @@ class Lembur extends CI_Controller
         redirect('lembur/realisasi/');
     }
 
+    public function persetujuan($params=null, $id=null)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($params==null AND $id==null){
+            $data['sidemenu'] = 'Lembur';
+            $data['sidesubmenu'] = 'Persetujuan Lembur';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $karyawan = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    
+                $queryRencanaLembur = "SELECT *
+                FROM `lembur`
+                WHERE(`atasan1` = '{$karyawan['inisial']}' AND `status`= '2') OR (`atasan2` = '{$karyawan['inisial']}' AND `status`= '3') ";
+                $data['rencana'] = $this->db->query($queryRencanaLembur)->result_array();
+    
+                $queryRealisasiLembur = "SELECT *
+                FROM `lembur`
+                WHERE(`atasan1` = '{$karyawan['inisial']}' AND `status`= '5') OR (`atasan2` = '{$karyawan['inisial']}' AND `status`= '6') ";
+                $data['realisasi'] = $this->db->query($queryRealisasiLembur)->result_array();
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/persetujuan/index', $data);
+            $this->load->view('templates/footer');
+
+        }elseif ($params=='rencana' AND $id!=null){
+            $lembur = $this->db->get_where('lembur', ['id' => $id])->row_array();
+            if ($lembur){
+                if ($lembur['atasan1']==$this->session->userdata('inisial') OR $lembur['atasan2']==$this->session->userdata('inisial'))
+                {
+                    $data['sidemenu'] = 'Lembur';
+                    $data['sidesubmenu'] = 'Persetujuan';
+                    $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                    $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+                    $this->load->view('templates/header', $data);
+                    $this->load->view('templates/sidebar', $data);
+                    $this->load->view('templates/navbar', $data);
+                    $this->load->view('lembur/persetujuan/rencana', $data);
+                    $this->load->view('templates/footer');
+                } else 
+                {
+                    redirect('lembur/persetujuan');
+                }
+            } else 
+            {
+                redirect('lembur/persetujuan');
+            }
+        }elseif ($params=='realisasi' AND $id!=null){
+            $lembur = $this->db->get_where('lembur', ['id' => $id])->row_array();
+            if ($lembur){
+                if ($lembur['atasan1']==$this->session->userdata('inisial') OR $lembur['atasan2']==$this->session->userdata('inisial'))
+                {
+                    $data['sidemenu'] = 'Lembur';
+                    $data['sidesubmenu'] = 'Persetujuan';
+                    $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+                    $data['lembur'] = $this->db->get_where('lembur', ['id' =>  $id])->row_array();
+                    $this->load->view('templates/header', $data);
+                    $this->load->view('templates/sidebar', $data);
+                    $this->load->view('templates/navbar', $data);
+                    $this->load->view('lembur/persetujuan/realisasi', $data);
+                    $this->load->view('templates/footer');
+                } else 
+                {
+                    redirect('lembur/persetujuan');
+                }
+            } else 
+            {
+                redirect('lembur/persetujuan');
+            }
+
+        }
+
+    }
+
     public function persetujuan_lembur()
     {
         $data['sidemenu'] = 'Lembur';
@@ -1119,7 +1826,7 @@ class Lembur extends CI_Controller
         }
 
         $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/persetujuan_lembur/');
+        redirect('lembur/persetujuan');
     }
 
     public function setujui_realisasi()
@@ -1187,7 +1894,7 @@ class Lembur extends CI_Controller
         }
         
         $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/persetujuan_lembur/');
+        redirect('lembur/persetujuan');
     }
 
     public function batal_lembur()
@@ -1232,71 +1939,6 @@ class Lembur extends CI_Controller
 
             redirect('lembur/persetujuan_lembur');
     }
-
-    // public function persetujuan_lemburga()
-    // {
-    //     date_default_timezone_set('asia/jakarta');
-    //     $data['sidemenu'] = 'GA';
-    //     $data['sidesubmenu'] = 'Konfirmasi Lembur';
-    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-    //     $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
-    //     $today = date('d');
-    //     $bulan = date('m');
-    //     $tahun = date('Y');
-
-    //     $this->db->where('year(tglmulai) >=',$tahun);
-    //     $this->db->where('month(tglmulai) >=',$bulan);
-    //     $this->db->where('day(tglmulai) >=',$today);
-    //     $this->db->where('admin_ga',null);
-    //     $this->db->where('status >', '2');
-    //     $this->db->order_by('tglmulai', 'ASC');
-    //     $data['lembur'] = $this->db->get('lembur')->result_array();
-
-    //     $this->db->where('year(tglmulai) >=',$tahun);
-    //     $this->db->where('month(tglmulai) >=',$bulan);
-    //     $this->db->where('day(tglmulai) >=',$today);
-    //     $this->db->where('admin_ga !=',null);
-    //     $this->db->where('status >', '2');
-    //     $data['lembur_konfirmasi'] = $this->db->get('lembur')->result_array();
-        
-    //     $this->load->view('templates/header', $data);
-    //     $this->load->view('templates/sidebar', $data);
-    //     $this->load->view('templates/navbar', $data);
-    //     $this->load->view('lembur/persetujuanga', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // public function persetujuan_lemburhr()
-    // {
-    //     $data['sidemenu'] = 'HR';
-    //     $data['sidesubmenu'] = 'Konfirmasi Lembur';
-    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-    //     $data['lembur'] = $this->db->get_where('lembur', ['status' => '7'])->result_array();
-    //     $data['lembur_ssc'] = $this->db->get_where('lembur', ['status' => '8'])->result_array();
-    //     $this->load->view('templates/header', $data);
-    //     $this->load->view('templates/sidebar', $data);
-    //     $this->load->view('templates/navbar', $data);
-    //     $this->load->view('lembur/persetujuanhr', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // public function konfirmasi_hr($id)
-    // {
-    //     date_default_timezone_set('asia/jakarta');
-    //     $data['sidemenu'] = 'HR';
-    //     $data['sidesubmenu'] = 'Konfirmasi Lembur';
-    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-    //     $data['lembur'] = $this->db->get_where('lembur', ['id' => $id])->row_array();
-    //     $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
-    //     $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
-    //     $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
-
-    //     $this->load->view('templates/header', $data);
-    //     $this->load->view('templates/sidebar', $data);
-    //     $this->load->view('templates/navbar', $data);
-    //     $this->load->view('lembur/konfirmasi_hr', $data);  
-    //     $this->load->view('templates/footer');
-    // }
 
     public function konfirmasi($section)
     {
@@ -1359,8 +2001,8 @@ class Lembur extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         if ($section=='hr'){
-            $data['sidemenu'] = 'HR';
-            $data['sidesubmenu'] = 'Konfirmasi Lembur';
+            $data['sidemenu'] = 'HR Lembur';
+            $data['sidesubmenu'] = 'Approval Lembur';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
             $data['lembur'] = $this->db->get_where('lembur', ['id' => $id])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
@@ -1439,134 +2081,6 @@ class Lembur extends CI_Controller
         redirect('lembur/konfirmasi/ga');
     }
 
-    public function submit_konfirmasi_hr()
-    {
-        date_default_timezone_set('asia/jakarta');
-        $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
-        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
-
-        if ($this->input->post('istirahat1')==1){
-            $istirahat1 = 'YA';
-        }else{
-            $istirahat1 = 'TIDAK';
-        }
-
-        if ($this->input->post('istirahat2')==0.5){
-            $istirahat2 = 'YA';
-        }else{
-            $istirahat2 = 'TIDAK';
-        }
-
-        if ($this->input->post('istirahat3')==1){
-            $istirahat3 = 'YA';
-        }else{
-            $istirahat3 = 'TIDAK';
-        }
-
-        $istirahat = $this->input->post('istirahat1') + $this->input->post('istirahat2') + $this->input->post('istirahat3');
-        $durasi_hr = $lembur['durasi'] - $istirahat;
-    
-        $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-        if ($user['work_contract']=='Direct Labor'){ 
-            $this->db->set('tul', $this->input->post('tul'));
-            $this->db->set('admin_hr', $this->session->userdata('inisial'));
-            $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
-            $this->db->set('istirahat1', $istirahat1);
-            $this->db->set('istirahat2', $istirahat2);
-            $this->db->set('istirahat3', $istirahat3);
-            $this->db->set('istirahat', $istirahat);
-            $this->db->set('durasi_hr', $durasi_hr);
-            $this->db->set('status', '8');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-
-            //Notifikasi ke USER
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' => "*HOREEE!! LEMBUR KAMU SUDAH DIKONFIRMASI OLEH HR*" .
-                        "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" . 
-                        "\r\n \r\nID *" . $lembur['id'] .'*'. 
-                        "\r\nNama : *" . $lembur['nama'] .'*'. 
-                        "\r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai'])) ." - " . date('d-M H:i', strtotime($lembur['tglselesai'])) .'*'. 
-                        "\r\nDurasi Lembur : *" . $lembur['durasi'] ." Jam* " . 
-                        "\r\nIstirahat : *" . $istirahat ." Jam* " . 
-                        "\r\nDurasi yang dibayarkan : *" . $durasi_hr . " Jam* " . 
-                        "\r\nEstimasi TUL : *" . $this->input->post('tul') .'*'. 
-                        "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
-                        "\r\n \r\nNote : Durasi yang dibayarkan adalah durasi yang sudah dikurangi dengan jam istirahat kamu" .
-                        "\r\nHitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
-                        "\r\n*Sooo* ini masih *Estimasi* ya!. Hasil final sangat mungkin berbeda dari ini." .
-                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                        "\r\n \r\n" . $notifikasi['pesan']
-                    ],
-                ]
-            );
-            $body = $response->getBody();
-        }else{
-            $this->db->set('tul', $this->input->post('tul'));
-            $this->db->set('admin_hr', $this->session->userdata('inisial'));
-            $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
-            $this->db->set('istirahat1', $istirahat1);
-            $this->db->set('istirahat2', $istirahat2);
-            $this->db->set('istirahat3', $istirahat3);
-            $this->db->set('istirahat', $istirahat);
-            $this->db->set('durasi_hr', $durasi_hr);
-            $this->db->set('status', '9');
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-
-            $this->db->set('tglmulai', $lembur['tglmulai']);
-            $this->db->set('tglselesai', $lembur['tglselesai']);
-            $this->db->set('status', 9);
-            $this->db->where('link_aktivitas', $this->input->post('id'));
-            $this->db->update('aktivitas');
-
-            //Notifikasi ke USER
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' => "*HOREEE!! LEMBUR KAMU SUDAH DIKONFIRMASI OLEH HR*" .
-                        "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" . 
-                        "\r\n \r\nID *" . $lembur['id'] .'*'. 
-                        "\r\nNama : *" . $lembur['nama'] .'*'. 
-                        "\r\nTanggal : *" . date('d-M H:i', strtotime($lembur['tglmulai'])) ." - " . date('d-M H:i', strtotime($lembur['tglselesai'])) .'*'. 
-                        "\r\nDurasi Lembur : *" . $lembur['durasi'] ." Jam* " . 
-                        "\r\nIstirahat : *" . $istirahat ." Jam* " . 
-                        "\r\nDurasi yang dibayarkan : *" . $durasi_hr . " Jam* " . 
-                        "\r\nEstimasi TUL : *" . $this->input->post('tul') .'*'. 
-                        "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
-                        "\r\n \r\nNote : Durasi yang dibayarkan adalah durasi yang sudah dikurangi dengan jam istirahat kamu" .
-                        "\r\nHitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
-                        "\r\n*Sooo* ini masih *Estimasi* ya!. Hasil final sangat mungkin berbeda dari ini." .
-                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                        "\r\n \r\n" . $notifikasi['pesan']
-                    ],
-                ]
-            );
-            $body = $response->getBody();
-        }
-
-        $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/konfirmasi/hr');
-    }
-
     public function copro()
     {
         date_default_timezone_set('asia/jakarta');
@@ -1580,25 +2094,6 @@ class Lembur extends CI_Controller
         $this->db->update('aktivitas');
 
         redirect('lembur/proses/ppic/'.$lembur['id']);
-    }
-
-    public function submit_konfirmasi_ppic()
-    {
-        date_default_timezone_set('asia/jakarta');
-        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
-
-        $this->db->set('status', 9);
-        $this->db->where('link_aktivitas', $this->input->post('id'));
-        $this->db->update('aktivitas');
-
-        $this->db->set('admin_ppic', $this->session->userdata('inisial'));
-        $this->db->set('tgl_admin_ppic', date('Y-m-d H:i:s'));
-        $this->db->set('status', '9');
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('lembur');
-
-        $this->session->set_flashdata('message', 'setujuilbrhr');
-        redirect('lembur/konfirmasi/ppic');
     }
 
     public function persetujuan_rencana($id)
@@ -1645,6 +2140,82 @@ class Lembur extends CI_Controller
         }
     }
 
+    public function persetujuan_hr()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+    
+        if ($user['work_contract']=='Direct Labor'){ 
+            $this->db->set('admin_hr', $this->session->userdata('inisial'));
+            $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
+            $this->db->set('status', '8');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+        }else{
+            $this->db->set('admin_hr', $this->session->userdata('inisial'));
+            $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
+            $this->db->set('status', '9');
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $this->db->set('tglmulai', $lembur['tglmulai']);
+            $this->db->set('tglselesai', $lembur['tglselesai']);
+            $this->db->set('status', 9);
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->update('aktivitas');
+        }
+
+        //Notifikasi ke USER
+        $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post(
+            'https://region01.krmpesan.com/api/v2/message/send-text',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                ],
+                'json' => [
+                    'phone' => $user['phone'],
+                    'message' => "*LEMBUR KAMU TELAH DIKONFIRMASI OLEH HR*" .
+                    "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" . 
+                    "\r\n \r\n# : *" . $lembur['id'] .'*'. 
+                    "\r\nWaktu : *" . date('d-M H:i', strtotime($lembur['tglmulai'])) ." - " . date('d-M H:i', strtotime($lembur['tglselesai'])) .'*'. 
+                    "\r\nDurasi (Istirahat) : *" . $lembur['durasi_hr'] ." Jam ( " . $lembur['istirahat'] ." Jam )* " . 
+                    "\r\nEstimasi TUL : *" . $lembur['tul'] .'*'. 
+                    "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
+                    "\r\n \r\nNote : Hitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
+                    "\r\nJadi ini masih *Estimasi* ya!. Hasil final sangat mungkin berbeda dari ini." .
+                    "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                ],
+            ]
+        );
+        $body = $response->getBody();
+
+        $this->session->set_flashdata('message', 'setujuilbrhr');
+        redirect('lembur/konfirmasi/hr');
+    }
+
+    public function submit_konfirmasi_ppic()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+
+        $this->db->set('status', 9);
+        $this->db->where('link_aktivitas', $this->input->post('id'));
+        $this->db->update('aktivitas');
+
+        $this->db->set('admin_ppic', $this->session->userdata('inisial'));
+        $this->db->set('tgl_admin_ppic', date('Y-m-d H:i:s'));
+        $this->db->set('status', '9');
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('lembur');
+
+        $this->session->set_flashdata('message', 'setujuilbrhr');
+        redirect('lembur/konfirmasi/ppic');
+    }
+
     public function laporan_lembur($id)
     {
         $data['sidemenu'] = 'Lembur';
@@ -1657,7 +2228,7 @@ class Lembur extends CI_Controller
         $this->load->view('lembur/reportlbr', $data);
     }
 
-     public function report_lembur_sect()
+    public function report_lembur_sect()
     {
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'Laporan Lembur';
@@ -1738,40 +2309,59 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function gtJamRencana()
+    public function ubah_jam($params=null)
     {
-        //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
         date_default_timezone_set('asia/jakarta');
-        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
-        $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai']));
-
-        $tgl = date("Y-m-d", strtotime($lembur['tglmulai']));
-        $jam = $this->input->post('jammulai');
-        $tglmulai = $tgl .' '. $jam; //Y-m-d H:i:s
-
-        if ($tglmulai < date('Y-m-d H:i'))
-        {
-            $this->session->set_flashdata('message', 'update');
-            redirect('lembur/rencana_aktivitas/' . $this->input->post('id'));
-        }else{
-                //Hitung total durasi aktivitas
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        if ($params=='rencana'){
+            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
+            $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai_rencana'])).' '.$this->input->post('jammulai');
+    
+            //Hitung total durasi aktivitas
             $this->db->select('SUM(durasi_menit) as total');
             $this->db->where('link_aktivitas', $this->input->post('id'));
             $this->db->from('aktivitas');
+            $menit = $this->db->get()->row()->total;
+            
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
 
-            $totalDMenit = $this->db->get()->row()->total;
-            $totalDJam = $totalDMenit / 60;
-            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($tglmulai)));
-
-            $this->db->set('durasi', $totalDJam);
             $this->db->set('tglmulai_rencana', $tglmulai);
             $this->db->set('tglselesai_rencana',$tglselesai);
+            $this->db->set('tglmulai', $tglmulai);
+            $this->db->set('tglselesai', $tglmulai);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
+            );
+
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='realisasi'){
+            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
+            $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai'])).' '.$this->input->post('jammulai');
+    
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('status', '2');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->from('aktivitas');
+            $menit = $this->db->get()->row()->total;
+            
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
+
             $this->db->set('tglmulai', $tglmulai);
             $this->db->set('tglselesai', $tglselesai);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
-            redirect('lembur/rencana_aktivitas/' . $this->input->post('id'));
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
+            );
+
+            echo json_encode($output);
+            exit();
         }
     }
 
@@ -1890,26 +2480,39 @@ class Lembur extends CI_Controller
 
     public function getData($params = null)
     {
-        if ($params=='get')
+        if ($params=='')
         {
-            $keluarga = $this->db->get_where('karyawan_keluarga', ['npk' => $this->session->userdata('npk')])->result();
+           
+        }elseif ($params=='lemburku'){
+          
+            $this->db->limit(365);  // Produces: LIMIT 100
+            $this->db->order_by('tglmulai DESC');
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $lembur = $this->db->get('lembur')->result();
 
-            foreach ($keluarga as $row) :
+            foreach ($lembur as $row) {
+
+                $status = $this->db->get_where('lembur_status', ['id' => $row->status])->row();
+
+                if ($row->status < 5):
+                    $durasi = $row->durasi_rencana;
+                else :
+                    $durasi = $row->durasi;
+                endif;
+
                 $output['data'][] = array(
-                    'hubungan' => $row->hubungan,
-                    'nik' => $row->nik,
-                    'nama' => $row->nama,
-                    'lahir_tempat' => $row->lahir_tempat,
-                    'lahir_tanggal' => date('d-m-Y', strtotime($row->lahir_tanggal)),
-                    'jenis_kelamin' => $row->jenis_kelamin,
-                    'pekerjaan' => $row->pekerjaan
+                    "id" => $row->id,
+                    "mulai" => date('d M y H:i', strtotime($row->tglmulai)),
+                    "selesai" => date('d M y H:i', strtotime($row->tglselesai)),
+                    "durasi" => $durasi,
+                    "catatan" => $row->catatan,
+                    "status" => $status->nama,
+                    "action" => ""
                 );
-            endforeach;
-            
-            // var_dump($output);
-
-            //output to json format
+            }
             echo json_encode($output);
+            exit();
+
         }elseif ($params=='penyimpangan')
         {
             $this->db->where('status','0');
@@ -2019,5 +2622,369 @@ class Lembur extends CI_Controller
         //output to json format
         echo json_encode($output);
 
+    }
+
+    public function count($params=null)
+    {
+        if ($params==null){
+
+        }elseif ($params=='hari'){
+            
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+            $durasi = $lembur->durasi - $lembur->istirahat;
+
+                $this->db->where('durasi', $durasi);
+                $this->db->where('hari', $this->input->post('hari'));
+            $tul = $this->db->get('lembur_tul')->row();
+
+            $this->db->set('hari', $this->input->post('hari'));
+            $this->db->set('tul', $tul->tul);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tul' => $tul->tul
+            );
+
+            echo json_encode($output);
+        }elseif ($params=='istirahat'){
+            
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+
+            $output['data'] = array(
+                'istirahat1' =>  $lembur->istirahat1,
+                'istirahat2' =>  $lembur->istirahat2,
+                'istirahat3' =>  $lembur->istirahat3
+            );
+
+            echo json_encode($output);
+        }elseif ($params=='istirahat1'){
+            
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+            $istirahat = $lembur->istirahat2 + $lembur->istirahat3 + $this->input->post('istirahat1');
+
+            $durasi = $lembur->durasi - $istirahat;
+                $this->db->where('durasi', $durasi);
+                $this->db->where('hari', $lembur->hari);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat1', $this->input->post('istirahat1'));
+            $this->db->set('durasi_hr', $durasi);
+            $this->db->set('tul', $tul->tul);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'istirahat' => $istirahat,
+                'tul' => $tul->tul
+            );
+
+            echo json_encode($output);
+        }elseif ($params=='istirahat2'){
+            
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+            $istirahat = $lembur->istirahat1 + $lembur->istirahat3 + $this->input->post('istirahat2');
+
+            $durasi = $lembur->durasi - $istirahat;
+                $this->db->where('durasi', $durasi);
+                $this->db->where('hari', $lembur->hari);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat2', $this->input->post('istirahat2'));
+            $this->db->set('durasi_hr', $durasi);
+            $this->db->set('tul', $tul->tul);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'istirahat' => $istirahat,
+                'tul' => $tul->tul
+            );
+
+            echo json_encode($output);
+        }elseif ($params=='istirahat3'){
+            
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+            $istirahat = $lembur->istirahat1 + $lembur->istirahat2 + $this->input->post('istirahat3');
+
+            $durasi = $lembur->durasi - $istirahat;
+            $this->db->where('durasi', $durasi);
+            $this->db->where('hari', $lembur->hari);
+            $tul = $this->db->get('lembur_tul')->row();
+            
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat3', $this->input->post('istirahat3'));
+            $this->db->set('durasi_hr', $durasi);
+            $this->db->set('tul', $tul->tul);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'istirahat' => $istirahat,
+                'tul' => $tul->tul
+            );
+
+            echo json_encode($output);
+        }
+    }
+
+    public function get_aktivitas($params=null)
+    {
+        if ($params==null){
+
+        }elseif ($params=='rencana'){
+            // Our Start and End Dates
+            $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result();
+
+            if (!empty($aktivitas)){
+                
+                foreach ($aktivitas as $row) {
+                    if ($row->kategori=='1')
+                    {
+                        $aktivitas = "PROJEK ".$row->copro." - ".$row->aktivitas;
+    
+                    }elseif ($row->kategori=='2')
+                    {
+                        if($aktivitas=="DR, Konsep")
+                        {
+                            $aktivitas = "LAIN-LAIN PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = "LAIN-LAIN PROJEK ".$row->copro." - ".$row->aktivitas;
+                        }
+                    }elseif ($row->kategori=='3')
+                    {
+                        $aktivitas = "NON PROJEK - ".$row->aktivitas;
+                    }
+
+                    $output['data'][] = array(
+                        "aktivitas" => $aktivitas,
+                        "durasi" => $row->durasi,
+                        "action" => "<button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>"
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "aktivitas" => '',
+                    "durasi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+            echo json_encode($output);
+            exit();
+
+        }elseif ($params=='rencana_persetujuan'){
+            // Our Start and End Dates
+            $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result();
+
+            if (!empty($aktivitas)){
+                
+                foreach ($aktivitas as $row) {
+                    if ($row->kategori=='1')
+                    {
+                        $aktivitas = "PROJEK ".$row->copro." - ".$row->aktivitas;
+    
+                    }elseif ($row->kategori=='2')
+                    {
+                        if($aktivitas=="DR, Konsep")
+                        {
+                            $aktivitas = "LAIN-LAIN PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = "LAIN-LAIN PROJEK ".$row->copro." - ".$row->aktivitas;
+                        }
+                    }elseif ($row->kategori=='3')
+                    {
+                        if($row->contract=="Direct Labor")
+                        {
+                            $aktivitas = "NON PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = $row->aktivitas;
+                        }
+                    }
+
+                    $output['data'][] = array(
+                        "aktivitas" => $aktivitas,
+                        "durasi" => $row->durasi,
+                        "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#ubahDurasi' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."' data-aktivitas='".$aktivitas."'><i class='material-icons'>more_time</i></button>
+                                     <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>"
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "aktivitas" => '',
+                    "durasi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+            echo json_encode($output);
+            exit();
+
+        }elseif ($params=='realisasi'){
+            // Our Start and End Dates
+            $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result();
+
+            if (!empty($aktivitas)){
+                
+                foreach ($aktivitas as $row) {
+                    if ($row->kategori=='1')
+                    {
+                        $aktivitas = "PROJEK ".$row->copro." - ".$row->aktivitas;
+    
+                    }elseif ($row->kategori=='2')
+                    {
+                        if($aktivitas=="DR, Konsep")
+                        {
+                            $aktivitas = "LAIN-LAIN PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = "LAIN-LAIN PROJEK ".$row->copro." - ".$row->aktivitas;
+                        }
+                    }elseif ($row->kategori=='3')
+                    {
+                        if($row->contract=="Direct Labor")
+                        {
+                            $aktivitas = "NON PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = $row->aktivitas;
+                        }
+                    }
+
+                    if ($row->status=='1')
+                    {
+                        $actions = "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#updateAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."' data-aktivitas='".$aktivitas."' data-deskripsi='".$row->deskripsi_hasil."'><i class='material-icons'>create</i></button>
+                                    <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>";
+                    }else{
+                        $actions = "<button type='button' class='btn btn-info btn-link btn-just-icon' data-toggle='modal' data-target='#updateAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."' data-aktivitas='".$aktivitas."' data-deskripsi='".$row->deskripsi_hasil."'><i class='material-icons'>task_alt</i></button>
+                                    <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>";
+                    }
+
+                    $output['data'][] = array(
+                        "aktivitas" => $aktivitas,
+                        "deskripsi" => $row->deskripsi_hasil." (".$row->progres_hasil."%)",
+                        "durasi" => $row->durasi,
+                        "action" => $actions
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "aktivitas" => '',
+                    "deskripsi" => 'There are no data to display.',
+                    "durasi" => '',
+                    "action" => ''
+                );
+            }
+            echo json_encode($output);
+            exit();
+
+        }elseif ($params=='realisasi_persetujuan'){
+            // Our Start and End Dates
+            $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result();
+
+            if (!empty($aktivitas)){
+                
+                foreach ($aktivitas as $row) {
+                    if ($row->kategori=='1')
+                    {
+                        $aktivitas = "PROJEK ".$row->copro." - ".$row->aktivitas;
+    
+                    }elseif ($row->kategori=='2')
+                    {
+                        if($aktivitas=="DR, Konsep")
+                        {
+                            $aktivitas = "LAIN-LAIN PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = "LAIN-LAIN PROJEK ".$row->copro." - ".$row->aktivitas;
+                        }
+                    }elseif ($row->kategori=='3')
+                    {
+                        if($row->contract=="Direct Labor")
+                        {
+                            $aktivitas = "NON PROJEK - ".$row->aktivitas;
+                        }else{
+                            $aktivitas = $row->aktivitas;
+                        }
+                    }
+
+                    $output['data'][] = array(
+                        "aktivitas" => $aktivitas,
+                        "durasi" => $row->durasi
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "aktivitas" => '',
+                    "durasi" => 'There are no data to display.'
+                );
+            }
+            echo json_encode($output);
+            exit();
+
+        }elseif ($params=='hr'){
+        
+            // Our Start and End Dates
+            $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result();
+
+            foreach ($aktivitas as $row) {
+
+                if ($row->kategori=='1')
+                {
+                    $aktivitas = "PROJEK ".$row->copro." - ".$row->aktivitas;
+
+                }elseif ($row->kategori=='2')
+                {
+                    if($aktivitas=="DR, Konsep")
+                    {
+                        $aktivitas = "LAIN-LAIN PROJEK - ".$row->aktivitas;
+                    }else{
+                        $aktivitas = "LAIN-LAIN PROJEK ".$row->copro." - ".$row->aktivitas;
+                    }
+                }elseif ($row->kategori=='3')
+                {
+                    if($row->contract=="Direct Labor")
+                    {
+                        $aktivitas = "NON PROJEK - ".$row->aktivitas;
+                    }else{
+                        $aktivitas = $row->aktivitas;
+                    }
+                }
+
+                $output['data'][] = array(
+                    "aktivitas" => $aktivitas,
+                    "deskripsi" => $row->deskripsi_hasil." (".$row->progres_hasil."%)",
+                    "durasi" => $row->durasi,
+                    "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#updateAktivitas' data-id_lembur='". $row->link_aktivitas ."' data-id_aktivitas='". $row->id ."' data-aktivitas='". $row->aktivitas. "' data-deskripsi_hasil='". $row->deskripsi_hasil. "' data-progres_hasil='". $row->progres_hasil. "'><i class='material-icons'>edit</i></button> 
+                                 <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>"
+                );
+            }
+            echo json_encode($output);
+            exit();
+        }else{
+
+        }
+    }
+
+    public function durasi_aktivitas()
+    {
+        $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row();
+        $jam = $this->db->get_where('jam', ['jam <=' => 4])->result();
+        foreach ($jam as $row) : 
+            echo '<option value="' . $row->jam . '" ' ;
+            if ($row->jam == $aktivitas->durasi) {
+                echo 'selected';
+            }
+            echo '>' . $row->nama . '</option>' . "\n";
+        endforeach;
+    }
+
+    public function progres_aktivitas()
+    {
+        $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row();
+        for ($i = 0; $i <= 100; $i=$i+10) {
+            echo '<option value="'. $i.'"';
+            if ($i == $aktivitas->progres_hasil) {
+                echo 'selected';
+            }
+            echo '>'.$i.'%</option>';
+        }
     }
 }

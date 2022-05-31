@@ -111,7 +111,7 @@
                                             $sisadurasi = 7 - $durasi;
                                         }
                                     }
-                                    $jam = $this->db->get_where('jam', ['id <=' =>  $sisadurasi])->result();
+                                    $jam = $this->db->get_where('jam', ['jam <=' =>  $sisadurasi])->result();
                                     ?>
                                     <div class="progress" style="width: 100%">
                                         <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1 . '%'; ?>" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
@@ -261,7 +261,7 @@
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="durasi" name="durasi" title="Pilih Durasi" data-size="5" required>
                                     <?php
                                     foreach ($jam as $row) {
-                                        echo '<option value="' . $row->id . '">' . $row->nama . '</option>';
+                                        echo '<option value="' . $row->jam . '">' . $row->nama . '</option>';
                                     }
                                     ?>
                                 </select>

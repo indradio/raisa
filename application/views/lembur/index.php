@@ -12,6 +12,15 @@
                     $this->db->where('month(tglmulai)',$bulan);
                     $this->db->where('status', '9');
                     $total_lembur = $this->db->get('lembur');
+
+                    $this->db->select('SUM(durasi) as total');
+                    $this->db->where('npk', $this->session->userdata('npk'));
+                    $this->db->where('year(tglmulai)',$tahun);
+                    $this->db->where('month(tglmulai)',$bulan);
+                    $this->db->where('status', '9');
+                    $this->db->from('lembur');
+                    $totalDurasi = $this->db->get()->row()->total;
+                  
                 ?>
             <div class="card card-stats">
               <div class="card-header card-header-info card-header-icon">
@@ -19,46 +28,10 @@
                   <i class="material-icons">date_range</i>
                 </div>
                 <p class="card-category">Total</p>
-                <h3 class="card-title"><?= $total_lembur->num_rows(); ?></h3>
+                <h3 class="card-title"><?= $total_lembur->num_rows().'x ('.$totalDurasi.' jam)'; ?></h3>
               </div>
               <div class="card-footer">
                 <a href="#" class="btn btn-facebook btn-block" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-                <?php 
-                  $this->db->select('SUM(durasi) as total');
-                  $this->db->where('npk', $this->session->userdata('npk'));
-                  $this->db->where('year(tglmulai)',$tahun);
-                  $this->db->where('month(tglmulai)',$bulan);
-                  $this->db->where('status', '9');
-                  $this->db->from('lembur');
-            
-                  $totalDurasi = $this->db->get()->row()->total;
-                
-                  $this->db->select('SUM(tul) as total');
-                  $this->db->where('npk', $this->session->userdata('npk'));
-                  $this->db->where('status', '9');
-                  $this->db->where('month(tglmulai)',$bulan);
-                  $this->db->where('year(tglmulai)',$tahun);
-                  $this->db->from('lembur');
-            
-                  $totalTUL = $this->db->get()->row()->total;
-                  
-                  ?>
-            <div class="card card-stats">
-              <div class="card-header card-header-rose card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">schedule</i>
-                </div>
-                <p class="card-category">JAM/TUL</p>
-                <h3 class="card-title"><?= $totalDurasi.'/'.$totalTUL ;?></h3>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  Total JAM & TUL LEMBUR Kamu bulan ini
-                </div>
               </div>
             </div>
           </div>
@@ -75,88 +48,29 @@
               <!--        Here you can write extra buttons/actions for the toolbar              -->
             </div>
             <div class="material-datatables">
-              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+              <table id="dtlembur" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
                     <th>No. Lembur</th>
-                    <th>Tgl Mengajukan</th>
-                    <th>Tanggal & Jam Mulai</th>
+                    <th>Mulai</th>
+                    <th>Selesai</th>
                     <th>Durasi</th>
-                    <th>TUL</th>
-                    <th>Admin GA</th>
-                    <th>Admin HR</th>
                     <th>Catatan</th>
                     <th>Status</th>
                     <th class="disabled-sorting text-right">Actions</th>
-                    <th class="disabled-sorting"></th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>No. Lembur</th>
-                    <th>Tgl Mengajukan</th>
-                    <th>Tanggal & Jam Mulai</th>
+                    <th>Mulai</th>
+                    <th>Selesai</th>
                     <th>Durasi</th>
-                    <th>TUL</th>
-                    <th>Admin GA</th>
-                    <th>Admin HR</th>
                     <th>Catatan</th>
                     <th>Status</th>
                     <th class="text-right">Actions</th>
-                    <th></th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <?php foreach ($lembur as $l) : ?>
-                    <tr>
-                      <td><?= $l['id']; ?></td>
-                      <td><?= $l['tglpengajuan_rencana']; ?></td>
-                          <?php if($l['status']== '1' or $l['status']== '2' or $l['status']== '3' or $l['status']== '4' or $l['status']== '10' or $l['status']== '11') {?>
-                            <td><?= date('d-M H:i', strtotime($l['tglmulai_rencana'])); ?></td>
-                            <td><?= $l['durasi_rencana']; ?> Jam</td>
-                          <?php } else { ?>
-                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                            <td><?= $l['durasi']; ?> Jam</td>
-                          <?php }; ?>
-                      <td><?= $l['tul']; ?></td>
-                      <td><?= $l['admin_ga']; ?></td>
-                      <td><?= $l['admin_hr']; ?></td>
-                      <td><?= $l['catatan']; ?></td>
-                      <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
-                      <td><?= $status['nama']; ?></td>
-                      <td>
-                          <?php if ($l['status'] == '4' or $l['status'] == '5' or $l['status'] == '6' or $l['status'] == '12' or $l['status'] == '13') { ?>
-                              <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                          <?php }else if ($l['status'] == '0' or $l['status'] == '7' or $l['status'] == '8' or $l['status'] == '9') { ?>
-                            <a href="<?= base_url('lembur/lemburku/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                          <?php } else { ?>
-                              <a href="<?= base_url('lembur/rencana_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                          <?php }; ?>
-                              <a href="#" class="badge badge-pill badge-info" data-toggle="modal" data-target="#historyLembur"
-                              data-tglmengajukan="<?= date('d M Y H:i', strtotime($l['tglpengajuan_rencana'])); ?>"
-                              data-atasan1="<?= $l['atasan1']; ?>"
-                              data-atasan2="<?= $l['atasan2']; ?>"
-                              data-tgl1_rencana="<?= date('d M Y H:i', strtotime($l['tgl_atasan1_rencana'])); ?>"
-                              data-tgl2_rencana="<?= date('d M Y H:i', strtotime($l['tgl_atasan2_rencana'])); ?>"
-                              data-tgl1_realisasi="<?= date('d M Y H:i', strtotime($l['tgl_atasan1_realisasi'])); ?>"
-                              data-tgl2_realisasi="<?= date('d M Y H:i', strtotime($l['tgl_atasan2_realisasi'])); ?>"
-                              data-ga="<?= $l['admin_ga']; ?>"
-                              data-hr="<?= $l['admin_hr']; ?>"
-                              data-tgl_ga="<?= date('d M Y H:i', strtotime($l['tgl_admin_ga'])); ?>"
-                              data-tgl_hr="<?= date('d M Y H:i', strtotime($l['tgl_admin_hr'])); ?>"
-                              data-status="<?= $l['status']; ?>"
-                              >history</a>
-                      </td>
-                      <td class="text-right">
-                          <?php if ($l['status'] == '9' ) { ?>
-                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit" target="_blank"><i class="material-icons">dvr</i></a>
-                          <?php } else { ?>
-                            <a href="<?= base_url('lembur/laporan_lembur/') . $l['id']; ?>" class="btn btn-link btn-warning btn-just-icon edit disabled"><i class="material-icons">dvr</i></a>
-                          <?php }; ?>
-                      </td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
               </table>
             </div>
           </div>
@@ -168,6 +82,42 @@
     </div>
     <!-- end row -->
 </div>
+<!-- Modal Lembur Hari Lain Aktivitas-->
+<div class="modal fade" id="tambahLembur" tabindex="-1" role="dialog" aria-labelledby="tambahLemburTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">RENCANA LEMBUR</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('lembur/tambah_harilain'); ?>">
+                    <div class="modal-body">
+                      <div class="col-md-12 align-content-start">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">date_range</i>
+                            </span>
+                          </div>
+                          <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" placeholder="Tanggal & Jam" required>
+                        </div>
+                      </div>
+                      <div class="modal-footer justify-content-right">
+                                <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                                <button type="submit" class="btn btn-success">SELANJUTNYA</button>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="historyLembur" tabindex="-1" role="dialog" aria-labelledby="historyLemburTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -330,42 +280,35 @@
     </div>
 </div>
 
-<!-- Modal Lembur Hari Lain Aktivitas-->
-<div class="modal fade" id="tambahLembur" tabindex="-1" role="dialog" aria-labelledby="tambahLemburTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-info text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">RENCANA LEMBUR</h4>
-                    </div>
-                </div>
-                <form class="form" method="post" action="<?= base_url('lembur/tambah_harilain'); ?>">
-                    <div class="modal-body">
-                        <div class="row">
-                            <label class="col-md-4 col-form-label">Mulai Lembur</label>
-                            <div class="col-md-7">
-                                <div class="form-group has-default">
-                                    <input type="text" class="form-control datetimepicker" id="tglmulai" name="tglmulai" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">SELANJUTNYA</button>
-                            <a href="<?= base_url('lembur/rencana'); ?>" class="btn btn-default">Kembali</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     $(document).ready(function(){
+      $('#dtlembur').DataTable({
+            "pagingType": "full_numbers",
+            scrollX: true,
+            scrollCollapse: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            serverSide: false,
+            processing: true,
+            order: [0,"desc"],
+            ajax: {
+                    "url"   : "<?= site_url('lembur/getData/lemburku') ?>",
+                    "type"  : "POST",
+                    "data"  : {id:$('#id').val()}
+                },
+            columns: [
+                { "data": "id" },
+                { "data": "mulai" },
+                { "data": "selesai" },
+                { "data": "durasi" },
+                { "data": "catatan" },
+                { "data": "status" },
+                { "data": "action", className: "text-right" }
+            ],
+        });
+
         $('#historyLembur').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var tglmengajukan = button.data('tglmengajukan')

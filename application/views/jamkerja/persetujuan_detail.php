@@ -49,7 +49,7 @@
                     $sisaDurasi = 7 - $durasi;
                 }
               }
-              $jam = $this->db->get_where('jam', ['id <=' =>  $sisaDurasi])->result();
+              $jam = $this->db->get_where('jam', ['jam <=' =>  $sisaDurasi])->result();
               
               if ($jamkerja['shift']=='SHIFT1'){
                 $shift = 6;
@@ -402,7 +402,6 @@
 </div>
 
 <!-- Modal Add Aktivitas-->
-<!-- Modal -->
 <div class="modal fade" id="aktivitasModal" tabindex="-1" role="dialog" aria-labelledby="aktivitasModalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -462,7 +461,7 @@
                                 <select class="form-control selectpicker" data-style="btn btn-link" id="durasi" name="durasi" title="Pilih Durasi" data-size="5" required>
                                     <?php
                                     foreach ($jam as $row) {
-                                        echo '<option value="' . $row->id . '">' . $row->nama . '</option>';
+                                        echo '<option value="' . $row->jam . '">' . $row->nama . '</option>';
                                     }
                                     ?>
                                 </select>
