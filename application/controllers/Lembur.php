@@ -842,180 +842,280 @@ class Lembur extends CI_Controller
     
                 //output to json format
                 echo json_encode($output);
-            }elseif ($params1=='realisasi' and $params2=='hapus'){
+        }elseif ($params1=='realisasi' and $params2=='hapus'){
 
-                // Hapus AKTIVITAS
-                $this->db->set('aktivitas');
-                $this->db->where('id', $this->input->post('id_aktivitas'));
-                $this->db->delete('aktivitas');
-    
-                //Hitung total aktivitas
-                $this->db->where('link_aktivitas', $lembur['id']);
-                $this->db->where('status', '2');
-                $this->db->from('aktivitas');
-                $totalAktivitas = $this->db->get()->num_rows();
-    
-                //Hitung total durasi aktivitas
-                $this->db->select('SUM(durasi_menit) as total');
-                $this->db->where('link_aktivitas', $lembur['id']);
-                $this->db->where('status', '2');
-                $this->db->from('aktivitas');
-                $totalDMenit = $this->db->get()->row()->total;
-                $totalDJam = $totalDMenit / 60;
-    
-                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
-    
-                // Update data LEMBUR
-                $this->db->set('tglselesai', $tglselesai);
-                $this->db->set('durasi', $totalDJam);
-                $this->db->set('aktivitas', $totalAktivitas);
-                $this->db->where('id', $lembur['id']);
-                $this->db->update('lembur');
-    
-                $output['data'] = array(
-                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
-                    'durasi' =>  $totalDJam.' Jam'
-                );
-    
-                //output to json format
-                echo json_encode($output);
-            }elseif ($params1=='realisasi' and $params2=='update_hr'){
+            // Hapus AKTIVITAS
+            $this->db->set('aktivitas');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->delete('aktivitas');
 
-                // Update AKTIVITAS
-                $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
-                $this->db->set('durasi', $this->input->post('durasi'));
-                $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
-                $this->db->set('status', '2');
-                $this->db->where('id', $this->input->post('id_aktivitas'));
-                $this->db->update('aktivitas');
-    
-                //Hitung total aktivitas
-                $this->db->where('link_aktivitas', $lembur['id']);
-                $this->db->where('status', '2');
-                $this->db->from('aktivitas');
-                $totalAktivitas = $this->db->get()->num_rows();
-    
-                //Hitung total durasi aktivitas
-                $this->db->select('SUM(durasi_menit) as total');
-                $this->db->where('link_aktivitas', $lembur['id']);
-                $this->db->where('status', '2');
-                $this->db->from('aktivitas');
-                $totalDMenit = $this->db->get()->row()->total;
-                $totalDJam = $totalDMenit / 60;
-    
-                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
 
-                $jammulai = date('H:i', strtotime($lembur['tglmulai']));
-                $jamselesai = date('H:i', strtotime($tglselesai));
-    
-                if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
-                    $istirahat1 = 1;
-                }else{
-                    $istirahat1 = 0;
-                }
-    
-                if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
-                    $istirahat2 = 0.5;
-                }else{
-                    $istirahat2 = 0;
-                }
-    
-                $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
-    
-                $durasiHR = $totalDJam - $istirahat;
-                    $this->db->where('durasi', $durasiHR);
-                    $this->db->where('hari', $lembur['hari']);
-                $tul = $this->db->get('lembur_tul')->row();
-    
-                // Update data LEMBUR
-                $this->db->set('tglselesai', $tglselesai);
-                $this->db->set('istirahat', $istirahat);
-                $this->db->set('istirahat1', $istirahat1);
-                $this->db->set('istirahat2', $istirahat2);
-                $this->db->set('tul', $tul->tul);
-                $this->db->set('durasi_hr', $durasiHR);
-                $this->db->set('durasi', $totalDJam);
-                $this->db->set('aktivitas', $totalAktivitas);
-                $this->db->where('id', $lembur['id']);
-                $this->db->update('lembur');
-    
-                $output['data'] = array(
-                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
-                    'durasi' =>  $totalDJam.' Jam',
-                    'istirahat' =>  $istirahat.' Jam',
-                    'tul' =>  $tul->tul
-                );
-    
-                //output to json format
-                echo json_encode($output);
-            }elseif ($params1=='realisasi' and $params2=='hapus_hr'){
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
 
-                // Hapus AKTIVITAS
-                $this->db->set('aktivitas');
-                $this->db->where('id', $this->input->post('id_aktivitas'));
-                $this->db->delete('aktivitas');
-    
-                //Hitung total aktivitas
-                $this->db->where('link_aktivitas', $lembur['id']);
-                $this->db->where('status', '2');
-                $this->db->from('aktivitas');
-                $totalAktivitas = $this->db->get()->num_rows();
-    
-                //Hitung total durasi aktivitas
-                $this->db->select('SUM(durasi_menit) as total');
-                $this->db->where('link_aktivitas', $lembur['id']);
-                $this->db->where('status', '2');
-                $this->db->from('aktivitas');
-                $totalDMenit = $this->db->get()->row()->total;
-                $totalDJam = $totalDMenit / 60;
-    
-                $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
-    
-                $jammulai = date('H:i', strtotime($lembur['tglmulai']));
-                $jamselesai = date('H:i', strtotime($tglselesai));
-    
-                if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
-                    $istirahat1 = 1;
-                }else{
-                    $istirahat1 = 0;
-                }
-    
-                if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
-                    $istirahat2 = 0.5;
-                }else{
-                    $istirahat2 = 0;
-                }
-    
-                $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
-    
-                $durasiHR = $totalDJam - $istirahat;
-                    $this->db->where('durasi', $durasiHR);
-                    $this->db->where('hari', $lembur['hari']);
-                $tul = $this->db->get('lembur_tul')->row();
-    
-                // Update data LEMBUR
-                $this->db->set('tglselesai', $tglselesai);
-                $this->db->set('istirahat', $istirahat);
-                $this->db->set('istirahat1', $istirahat1);
-                $this->db->set('istirahat2', $istirahat2);
-                $this->db->set('tul', $tul->tul);
-                $this->db->set('durasi_hr', $durasiHR);
-                $this->db->set('durasi', $totalDJam);
-                $this->db->set('aktivitas', $totalAktivitas);
-                $this->db->where('id', $lembur['id']);
-                $this->db->update('lembur');
-    
-                $output['data'] = array(
-                    'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
-                    'durasi' =>  $totalDJam.' Jam',
-                    'istirahat' =>  $istirahat.' Jam',
-                    'tul' =>  $tul->tul
-                );
-    
-                //output to json format
-                echo json_encode($output);
-            
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->set('durasi', $totalDJam);
+            $this->db->set('aktivitas', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam'
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='realisasi' and $params2=='update_hr'){
+
+            // Update AKTIVITAS
+            $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
+            $this->db->set('durasi', $this->input->post('durasi'));
+            $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->set('status', '2');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->update('aktivitas');
+
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
+
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+
+            $jammulai = date('H:i', strtotime($lembur['tglmulai']));
+            $jamselesai = date('H:i', strtotime($tglselesai));
+
+            if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                $istirahat1 = 1;
             }else{
+                $istirahat1 = 0;
+            }
+
+            if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                $istirahat2 = 0.5;
+            }else{
+                $istirahat2 = 0;
+            }
+
+            $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
+
+            $durasiHR = $totalDJam - $istirahat;
+                $this->db->where('durasi', $durasiHR);
+                $this->db->where('hari', $lembur['hari']);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat1', $istirahat1);
+            $this->db->set('istirahat2', $istirahat2);
+            $this->db->set('tul', $tul->tul);
+            $this->db->set('durasi_hr', $durasiHR);
+            $this->db->set('durasi', $totalDJam);
+            $this->db->set('aktivitas', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam',
+                'istirahat' =>  $istirahat.' Jam',
+                'tul' =>  $tul->tul
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='realisasi' and $params2=='hapus_hr'){
+
+            // Hapus AKTIVITAS
+            $this->db->set('aktivitas');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->delete('aktivitas');
+
+            //Hitung total aktivitas
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalAktivitas = $this->db->get()->num_rows();
+
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $lembur['id']);
+            $this->db->where('status', '2');
+            $this->db->from('aktivitas');
+            $totalDMenit = $this->db->get()->row()->total;
+            $totalDJam = $totalDMenit / 60;
+
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $totalDMenit . 'minute', strtotime($lembur['tglmulai'])));
+
+            $jammulai = date('H:i', strtotime($lembur['tglmulai']));
+            $jamselesai = date('H:i', strtotime($tglselesai));
+
+            if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                $istirahat1 = 1;
+            }else{
+                $istirahat1 = 0;
+            }
+
+            if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                $istirahat2 = 0.5;
+            }else{
+                $istirahat2 = 0;
+            }
+
+            $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
+
+            $durasiHR = $totalDJam - $istirahat;
+                $this->db->where('durasi', $durasiHR);
+                $this->db->where('hari', $lembur['hari']);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            // Update data LEMBUR
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat1', $istirahat1);
+            $this->db->set('istirahat2', $istirahat2);
+            $this->db->set('tul', $tul->tul);
+            $this->db->set('durasi_hr', $durasiHR);
+            $this->db->set('durasi', $totalDJam);
+            $this->db->set('aktivitas', $totalAktivitas);
+            $this->db->where('id', $lembur['id']);
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($tglselesai)),
+                'durasi' =>  $totalDJam.' Jam',
+                'istirahat' =>  $istirahat.' Jam',
+                'tul' =>  $tul->tul
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='realisasi' and $params2=='update_ppic'){
+
+            $kategori = $this->input->post('kategori');
+            if ($kategori == '1'){
+                $copro = $this->input->post('copro');
+            }elseif ($kategori == '2'){
+                if($this->input->post('aktivitas')=="DR, Konsep"){
+                    $copro = null;
+                }else{
+                    $copro = $this->input->post('copro');
+                }
+            }elseif ($kategori == '3'){
+                $copro = null;
+            }
+
+            // Update AKTIVITAS
+            $this->db->set('aktivitas', $this->input->post('aktivitas'));
+            $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
+            $this->db->set('copro', $copro);
+            $this->db->set('durasi', $this->input->post('durasi'));
+            $this->db->set('progres_hasil', $this->input->post('progres'));
+            $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->set('status', '2');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->update('aktivitas');
+
+            $output['data'] = array(
+                'result' => 'Success'
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='realisasi' and $params2=='tambah_ppic'){
+
+            if ($user['work_contract'] == 'Direct Labor')
+            {
+                $kategori = $this->input->post('kategori');
+                if ($kategori=='1')
+                {
+                    $aktivitas = $this->input->post('aktivitas_projek');
+                    $copro = $this->input->post('copro');
+                }elseif ($kategori=='2')
+                {
+                    $aktivitas = $this->input->post('aktivitas_direct');
+                    if($aktivitas=="DR, Konsep")
+                    {
+                        $copro = null;
+                    }else{
+                        $copro = $this->input->post('copro');
+                    }
+                }elseif ($kategori=='3')
+                {
+                    $aktivitas = $this->input->post('aktivitas_direct');
+                    $copro = null;
+                }
+            }else{
+                $kategori = '3';
+                $aktivitas = $this->input->post('aktivitas');
+                $copro = null;
+            }
+
+            $data = [
+                'id' => $lembur['npk'] . time(),
+                'npk' => $lembur['npk'],
+                'tgl_aktivitas' => $lembur['tglmulai'],
+                'jenis_aktivitas' => 'LEMBUR',
+                'link_aktivitas' => $lembur['id'],
+                'kategori' => $kategori,
+                'aktivitas' => $aktivitas,
+                'copro' => $copro,
+                'deskripsi_hasil' => $this->input->post('deskripsi'),
+                'durasi_menit' => floatval($this->input->post('durasi')) * 60,
+                'durasi' => $this->input->post('durasi'),
+                'progres_hasil' => $this->input->post('progres'),
+                'dibuat_oleh' => $this->session->userdata('inisial'),
+                'dept_id' => $user['dept_id'],
+                'sect_id' => $user['sect_id'],
+                'contract' => $user['work_contract'],
+                'status' => '2'
+            ];
+            $this->db->insert('aktivitas', $data);
+
+            $output['data'] = array(
+                'result' => 'Success'
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }elseif ($params1=='realisasi' and $params2=='hapus_ppic'){
+
+            // Hapus AKTIVITAS
+            $this->db->set('aktivitas');
+            $this->db->where('id', $this->input->post('id_aktivitas'));
+            $this->db->delete('aktivitas');
+            
+            $output['data'] = array(
+                'result' => 'Success'
+            );
+
+            //output to json format
+            echo json_encode($output);
+        }else{
 
         }
 
@@ -2197,10 +2297,10 @@ class Lembur extends CI_Controller
         redirect('lembur/konfirmasi/hr');
     }
 
-    public function submit_konfirmasi_ppic()
+    public function persetujuan_ppic()
     {
         date_default_timezone_set('asia/jakarta');
-        $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
 
         $this->db->set('status', 9);
         $this->db->where('link_aktivitas', $this->input->post('id'));
@@ -2727,6 +2827,43 @@ class Lembur extends CI_Controller
             );
 
             echo json_encode($output);
+        }elseif ($params=='jamkerja'){
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+
+            $this->db->select('SUM(durasi) as total1');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->where('kategori','1');
+            $this->db->from('aktivitas');
+            $durasi1 = $this->db->get()->row()->total1;
+
+            $this->db->select('SUM(durasi) as total2');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->where('kategori','2');
+            $this->db->from('aktivitas');
+            $durasi2 = $this->db->get()->row()->total2;
+
+            $this->db->select('SUM(durasi) as total3');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->where('kategori','3');
+            $this->db->from('aktivitas');
+            $durasi3 = $this->db->get()->row()->total3;
+
+            $total = $durasi1 + $durasi2 + $durasi3;
+
+            if ($total < $lembur->durasi or $total > $lembur->durasi){
+                $errorText = 'Total durasi tidak sama dengan durasi sebelumnya.';
+            }else{
+                $errorText = '';
+            }
+
+            $output['data'] = array(
+                'durasi1' => $durasi1,
+                'durasi2' => $durasi2,
+                'durasi3' => $durasi3,
+                'error' => $errorText
+            );
+
+            echo json_encode($output);
         }
     }
 
@@ -3025,6 +3162,18 @@ class Lembur extends CI_Controller
 
         echo json_encode($output);
         exit();
+    }
+
+    public function kategori_aktivitas()
+    {
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        $kategori_id = $_POST['kategori'];
+        $dept_id = $lembur['dept_id'];
+        $getAktivitas = $this->db->query("SELECT * FROM jamkerja_lain WHERE kategori_id = '$kategori_id' AND dept_id = '$dept_id' ")->result_array();
+  
+        foreach ($getAktivitas as $a) {
+            echo '<option value="'.$a['aktivitas'].'">'.$a['aktivitas'].'</option>';   
+        }
     }
 
     public function durasi_aktivitas()
