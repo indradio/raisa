@@ -100,12 +100,7 @@
                                 <textarea rows="3" class="form-control" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
                             </div> 
                             <!-- Button SUBMIT -->
-                            <?php if ($lembur['aktivitas_rencana'] == 0) {
-                                echo '<button type="submit"  id="setujui" class="btn btn-sm btn-success disabled">SETUJUI</button>';
-                            } else {
-                                echo '<button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>';
-                            }; ?>
-
+                            <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
                             <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
                             <a href="<?= base_url('lembur/persetujuan') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                         </div>

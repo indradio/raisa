@@ -57,11 +57,13 @@
                                     echo '<input type="text" class="form-control disabled" id="kategori_lembur" name="kategori_lembur" value="TABUNGAN CUTI">';
                                 } ?>
                             </div>
-                            <div class="toolbar">
-                            <?php if($this->session->userdata('posisi_id')>4){ ?>
-                                <!-- <a href="#" id="tambah_aktivitas" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahAktivitas">TAMBAH AKTIVITAS</a> -->
-                            <?php } ?>
+                            <?php if ($lembur['mch_kategori']){ ?>
+                            <div class="form-group">
+                                <label for="exampleKategori" class="bmd-label-floating">MCH Kategori</label>
+                                            <input type="text" class="form-control disabled" id="mch_kategori_lembur" name="mch_kategori_lembur" value="<?= $lembur['mch_kategori']; ?>">
                             </div>
+                            <?php } ?>
+                            <div class="toolbar"></div>
                             <div class="material-datatables">
                                 <table id="dtaktivitas" class="table table-striped table-no-bordered table-hover"  cellspacing="0" width="100%" style="width:100%">
                                     <thead>
@@ -92,20 +94,6 @@
                             endforeach;
                              ?>
                             </p>
-                            <?php if ($this->session->userdata('dept_id')==13 AND $this->session->userdata('posisi_id')==3){ ?>
-                            <div class="row col-md-12">
-                                <label class="col-ml-1 col-form-label">Kategori</label>
-                                <div class="col-md-7">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" name="mch_kategori" id="mch_kategori" data-style="select-with-transition" title="Pilih" data-size="3" required>
-                                            <option value="Claim dan Servis">Claim dan Servis</option>
-                                            <option value="Sesuai Jadwal WBS">Sesuai Jadwal WBS</option>
-                                            <option value="Actual Fail">Actual Fail</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php } ?>
                             <div class="form-group">
                                 <label for="exampleCatatan" class="bmd-label-floating">Catatan</label>
                                 <textarea rows="3" class="form-control disabled" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
