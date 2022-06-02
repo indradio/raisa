@@ -2245,7 +2245,7 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' =>  $this->input->post('id')])->row_array();
     
-        if ($user['work_contract']=='Direct Labor'){ 
+        if ($lembur['contract']=='Direct Labor'){ 
             $this->db->set('admin_hr', $this->session->userdata('inisial'));
             $this->db->set('tgl_admin_hr', date('Y-m-d H:i:s'));
             $this->db->set('status', '8');
