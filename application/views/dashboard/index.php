@@ -192,14 +192,14 @@
               </thead>
               <tbody>
               <?php foreach ($RencanaLembur as $row) : ?>
-              <tr onclick="window.location='<?= base_url('lembur/persetujuan_rencana/') . $row['id']; ?>'" >
+              <tr onclick="window.location='<?= base_url('lembur/persetujuan/rencana/') . $row['id']; ?>'" >
                 <td><?= $row['nama']; ?> <small>(Rencana)</small></td>
                 <td><?= date('d-M H:i', strtotime($row['tglmulai_rencana'])); ?></td>
                 <td><?= $row['durasi_rencana']; ?> Jam</td>
               </tr>
               <?php endforeach; ?>
               <?php foreach ($RealisasiLembur as $row) : ?>
-              <tr onclick="window.location='<?= base_url('lembur/persetujuan_realisasi/') . $row['id']; ?>'" >
+              <tr onclick="window.location='<?= base_url('lembur/persetujuan/realisasi/') . $row['id']; ?>'" >
                 <td><?= $row['nama']; ?> <small>(Realisasi)</small></td>
                 <td><?= date('d-M H:i', strtotime($row['tglmulai'])); ?></td>
                 <td><?= $row['durasi']; ?> Jam</td>
