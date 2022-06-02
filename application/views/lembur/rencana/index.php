@@ -58,17 +58,6 @@
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?= $status['nama']; ?></td>
                                         </tr>
-                                        <?php }elseif ($l['status']>=4 AND $l['status']<=6){ ?>
-                                        <tr onclick="window.location='<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>'" >
-                                            <td><?= $l['id'].' - '.$l['kategori']; ?></td>
-                                            <td><?= date('d M H:i', strtotime($l['tglpengajuan_realisasi'])); ?></td>
-                                            <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
-                                            <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
-                                            <td><?= $l['durasi']; ?></td>
-                                            <td><?= $l['lokasi']; ?></td>
-                                            <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
-                                            <td><?= $status['nama']; ?></td>
-                                        </tr>
                                         <?php }
                                     endforeach; ?>
                                 </tbody>
