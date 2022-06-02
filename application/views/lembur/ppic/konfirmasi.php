@@ -73,6 +73,18 @@
                                     </tfoot>
                                 </table>
                             </div>
+                            <?php 
+                            $this->db->distinct();
+                            $this->db->select('copro');
+                            $this->db->where('link_aktivitas', $lembur['id']);
+                            $copro = $this->db->get('aktivitas')->result_array();
+                            foreach ($copro as $row) : 
+                                if ($row['copro']){
+                                    $project = $this->db->get_where('project', ['copro' => $row['copro']])->row_array();
+                                    echo '<b>'.$project['copro']. '</b> : '. $project['deskripsi'] . '<br>';  
+                                }
+                            endforeach;
+                             ?>
                             <div class="form-group">
                                 <label for="exampleCatatan" class="bmd-label-floating">Catatan</label>
                                 <textarea rows="3" class="form-control disabled" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
