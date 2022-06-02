@@ -1992,7 +1992,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/persetujuanppic', $data);
+            $this->load->view('lembur/ppic/index', $data);
             $this->load->view('templates/footer');
         }
     }
@@ -2027,7 +2027,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/konfirmasi_ppic', $data);  
+            $this->load->view('lembur/ppic/konfirmasi', $data);  
             $this->load->view('templates/footer');
         }
     }
@@ -2907,13 +2907,15 @@ class Lembur extends CI_Controller
 
                     $output['data'][] = array(
                         "aktivitas" => $aktivitas,
+                        "deskripsi" => $row->deskripsi_hasil." (".$row->progres_hasil."%)",
                         "durasi" => $row->durasi
                     );
                 }
             }else{
                 $output['data'][] = array(
                     "aktivitas" => '',
-                    "durasi" => 'There are no data to display.'
+                    "deskripsi" => 'There are no data to display.',
+                    "durasi" => ''
                 );
             }
             echo json_encode($output);
@@ -2952,7 +2954,41 @@ class Lembur extends CI_Controller
                     "aktivitas" => $aktivitas,
                     "deskripsi" => $row->deskripsi_hasil." (".$row->progres_hasil."%)",
                     "durasi" => $row->durasi,
-                    "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#updateAktivitas' data-id_lembur='". $row->link_aktivitas ."' data-id_aktivitas='". $row->id ."' data-aktivitas='". $row->aktivitas. "' data-deskripsi_hasil='". $row->deskripsi_hasil. "' data-progres_hasil='". $row->progres_hasil. "'><i class='material-icons'>edit</i></button> 
+                    "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#updateAktivitas' data-id_lembur='". $row->link_aktivitas ."' data-id_aktivitas='". $row->id ."' data-deskripsi_hasil='". $row->deskripsi_hasil. "'><i class='material-icons'>edit</i></button> 
+                                 <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>"
+                );
+            }
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='ppic'){
+        
+            // Our Start and End Dates
+            $aktivitas = $this->db->get_where('aktivitas', ['link_aktivitas' => $this->input->post('id')])->result();
+
+            foreach ($aktivitas as $row) {
+
+                if ($row->kategori=='1')
+                {
+                    $aktivitas = "PROJEK ".$row->copro." - ".$row->aktivitas;
+
+                }elseif ($row->kategori=='2')
+                {
+                    if($aktivitas=="DR, Konsep")
+                    {
+                        $aktivitas = "LAIN-LAIN PROJEK - ".$row->aktivitas;
+                    }else{
+                        $aktivitas = "LAIN-LAIN PROJEK ".$row->copro." - ".$row->aktivitas;
+                    }
+                }elseif ($row->kategori=='3')
+                {
+                    $aktivitas = "NON PROJEK - ".$row->aktivitas;
+                }
+
+                $output['data'][] = array(
+                    "aktivitas" => $aktivitas,
+                    "deskripsi" => $row->deskripsi_hasil." (".$row->progres_hasil."%)",
+                    "durasi" => $row->durasi,
+                    "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#updateAktivitas".$row->kategori."' data-id_lembur='". $row->link_aktivitas ."' data-id_aktivitas='". $row->id ."' data-aktivitas='". $row->aktivitas. "' data-deskripsi_hasil='". $row->deskripsi_hasil. "' data-progres_hasil='". $row->progres_hasil. "'><i class='material-icons'>edit</i></button> 
                                  <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#hapusAktivitas' data-id_lembur='".$row->link_aktivitas."' data-id_aktivitas='".$row->id."'><i class='material-icons'>delete</i></button>"
                 );
             }
@@ -2961,6 +2997,34 @@ class Lembur extends CI_Controller
         }else{
 
         }
+    }
+
+    public function direct_aktivitas($params)
+    {
+        $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row();
+        if ($params=='1'){
+        
+            $output['data'] = array(
+                "aktivitas" => $aktivitas->aktivitas
+            );
+        }
+        if ($params=='2' or $params=='3'){
+        
+           $this->db->where('kategori_id', $aktivitas->kategori);
+           $this->db->where('dept_id', $aktivitas->dept_id);
+            $getList = $this->db->get("jamkerja_lain")->result();
+      
+            foreach ($getList as $row) {
+                echo '<option value="'.$row->aktivitas.'" ';
+                if ($row->aktivitas == $aktivitas->aktivitas) {
+                    echo 'selected';
+                }
+                echo '>'.$row->aktivitas.'</option>';   
+            }
+        }
+
+        echo json_encode($output);
+        exit();
     }
 
     public function durasi_aktivitas()
@@ -2974,6 +3038,19 @@ class Lembur extends CI_Controller
             }
             echo '>' . $row->nama . '</option>' . "\n";
         endforeach;
+    }
+
+    public function copro_aktivitas()
+    {
+        $aktivitas = $this->db->get_where('aktivitas', ['id' => $this->input->post('id')])->row();
+        $copro = $this->db->get_where('project', ['status !=' => 'CLOSED'])->result();
+        foreach ($copro as $row) :
+            echo '<option data-subtext="'. $row->deskripsi.'" value="'. $row->copro.'"';
+            if ($row->copro == $aktivitas->copro) {
+                echo 'selected';
+            }
+            echo '>'. $row->copro.'</option>';
+        endforeach; 
     }
 
     public function progres_aktivitas()

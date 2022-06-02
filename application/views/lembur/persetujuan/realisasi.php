@@ -69,12 +69,14 @@
                                     <thead>
                                         <tr>
                                             <th>Aktivitas</th>
+                                            <th>Deskripsi</th>
                                             <th>Durasi <small>(Jam)</small></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Aktivitas</th>
+                                            <th>Deskripsi</th>
                                             <th>Durasi <small>(Jam)</small></th>
                                         </tr>
                                     </tfoot>
@@ -156,6 +158,7 @@
                     },
                 columns: [
                     { "data": "aktivitas" },
+                    { "data": "deskripsi" },
                     { "data": "durasi" }
                 ],
             });
