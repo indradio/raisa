@@ -226,13 +226,14 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "🍛 *SURVEI KEPUASAN LAYANAN CATERING*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nDalam rangka meningkatkan kualitas pelayanan catering, kamu bisa banget ngasih masukan yang nantinya bisa bikin kualitas makan siang kamu jadi lebih baik lagi." .
-                            "\r\nCaranya gampang banget kok, kamu cuma isi aja survei diberikut ini :" .
+                            "\r\nKamu mau makan siang yang bagaimana sih? Menurut kamu layanan catering yang sekarang apakah sudah cukup ok buat kamu?" .
+                            "\r\nYuk kasih tau kami, Cukup dengan isi survey ini kamu udah bantu kami supaya bisa terus memberikan yang terbaik" .
                             "\r\nhttps://raisa.winteq-astra.com/survei/catering" .
-                            "\r\n \r\nDemikian informasi ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
+                            "\r\n \r\nPengisian survey akan kami tutup hari ini, jadi buruan isi ya!" .
+                            "\r\nDemikian informasi ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nGeneral Affair" .
-                            "\r\n \r\n_Selamat Makan Siang di jam 12:00 ya!_"
+                            "\r\n \r\n_Selamat Makan Siang di jam 11:30 ya!_"
                         ],
                     ]
                 );
