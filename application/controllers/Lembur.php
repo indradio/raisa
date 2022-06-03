@@ -134,6 +134,19 @@ class Lembur extends CI_Controller
             $this->db->where('status', '4');
             $lembur = $this->db->get('lembur')->row_array();
             if (!empty($lembur)){
+                if ($lembur['contract']=='Direct Labor' AND $lembur['hari']=='KERJA'){
+                    $this->db->where('npk', $lembur['npk']);
+                    $this->db->where('year(tglmulai)',date('Y', strtotime($lembur['tglmulai'])));
+                    $this->db->where('month(tglmulai)',date('m', strtotime($lembur['tglmulai'])));
+                    $this->db->where('day(tglmulai)',date('d', strtotime($lembur['tglmulai'])));
+                    $this->db->where('status >', '0'); 
+                    $jamkerja = $this->db->get('jamkerja')->result();
+                    if (empty($jamkerja))
+                    {
+                        $this->session->set_flashdata('notify', 'error');
+                        redirect('lembur/realisasi');
+                    }
+                }
                 $data['sidemenu'] = 'Lembur';
                 $data['sidesubmenu'] = 'Realisasi';
                 $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();

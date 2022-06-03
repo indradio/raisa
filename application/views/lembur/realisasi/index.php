@@ -81,7 +81,7 @@
        
        $.notify({
          icon: "add_alert",
-         message: "Tunggu sampai waktu rencana selesai lembur kamu lewat dulu ya!"
+         message: "Kamu belum mengisi jamkerja ya! atau waktu rencana lembur kamu belum selesai nih!."
        }, {
          type: "danger",
          timer: 3000,
