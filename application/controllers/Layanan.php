@@ -224,10 +224,10 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🍛 *JADWAL MEDICAL CHECK UP*" .
+                            'message' => "🩺 *JADWAL MEDICAL CHECK UP*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nMakin dini suatu penyakit terdeteksi, maka makin cepat pertolongan yang dapat diberikan." .
-                            "\r\nMaka kepada seluruh Karyawan Tetap diwajibkan untuk mengikuti Medical Check Up yang akan dilaksanakannya pada" .
+                            "\r\nMaka kepada seluruh *Karyawan Tetap* diwajibkan untuk mengikuti Medical Check Up yang akan dilaksanakannya pada" .
                             "\r\n \r\n*Hari / Tanggal : Selasa /07 Juni 2022*" .
                             "\r\n*Waktu :08.00- 13.00 MB*" .
                             "\r\n*Tempat : Ruang Serbaguna*" .
