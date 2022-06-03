@@ -294,7 +294,7 @@ class Lembur extends CI_Controller
             $tglmulai = date('Y-m-d H:i:s');
             $hari = 'LIBUR';
         }else{
-            $tglmulai = date('Y-m-d 16:30:00');
+            $tglmulai = date('Y-m-d H:i:s');
             $event = $this->db->get_where('calendar_event_details', ['date' => date('Y-m-d')])->row_array();
             if (empty($event))
             {
@@ -329,6 +329,7 @@ class Lembur extends CI_Controller
             'life' => '0'
         ];
         $this->db->insert('lembur', $data);
+
         redirect('lembur/rencana/aktivitas/' . $data['id']);
     }
 
