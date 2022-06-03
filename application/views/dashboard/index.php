@@ -136,6 +136,22 @@
             </div>
           </div>
         </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header card-header-text card-header-info">
+              <div class="card-text">
+                <h4 class="card-title"><i class="material-icons">medical_services</i> Medlcal Check Up</h4>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/MCU.pdf"></iframe>
+              </div>
+              </br>
+              <a href="<?= base_url(); ?>assets/pdf/MCU.pdf" class="btn btn-info btn-link" target="_blank"><i class="material-icons">get_app</i> Download</a>
+            </div>
+          </div>
+        </div>
     </div>
     <!-- End HImbauan -->
 
