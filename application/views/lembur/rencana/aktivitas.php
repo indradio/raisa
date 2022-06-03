@@ -3,7 +3,7 @@
     <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-rose alert-with-icon" data-notify="container">
+        <div class="alert alert-danger alert-with-icon" data-notify="container">
             <i class="material-icons" data-notify="icon">notifications</i>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <i class="material-icons">close</i>
@@ -69,8 +69,8 @@
                                     <div class="form-group has-default">
                                         <select class="selectpicker" name="kategori_lembur" id="kategori_lembur" data-style="select-with-transition" title="Pilih Kategori" data-size="7" required>
                                             <option value="OT" selected>Lembur</option>
-                                            <option value="GH">Ganti Hari</option>
-                                            <option value="TC">Tabungan Cuti</option>
+                                            <option value="GH" data-subtext="(Perbaikan Sistem)" disabled>Ganti Hari</option>
+                                            <option value="TC" data-subtext="(Perbaikan Sistem)" disabled>Tabungan Cuti</option>
                                         </select>
                                     </div>
 
