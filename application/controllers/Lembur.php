@@ -315,7 +315,7 @@ class Lembur extends CI_Controller
             'life' => '0'
         ];
         $this->db->insert('lembur', $data);
-        redirect('lembur/rencana_aktivitas/' . $data['id']);
+        redirect('lembur/rencana/aktivitas/' . $data['id']);
     }
 
     public function tambah_harilain()

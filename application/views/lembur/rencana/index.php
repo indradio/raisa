@@ -15,11 +15,6 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                             <a href="<?= base_url('lembur/tambah_hariini'); ?>" class="btn btn-facebook" role="button" aria-disabled="false">Rencana Lembur Hari ini</a>
                             <a href="#" class="btn btn-linkedin" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur Hari Lain</a>
-                            <?php // if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6){
-                                //echo '<a href="#" class="btn btn-twitter" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a>' ;
-                              // }; 
-                            ?> 
-                           <!-- <a href="#" class="btn btn-facebook" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLemburTim">Rencana Lembur Tim</a> -->
                         </div>
                         <div class="material-datatables">
                             <table id="dtdesc" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
