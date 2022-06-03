@@ -2082,7 +2082,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/persetujuanhr', $data);
+            $this->load->view('lembur/hr/index', $data);
             $this->load->view('templates/footer');
         }elseif ($section=='ppic'){
             $data['sidemenu'] = 'PPIC';
@@ -2112,7 +2112,7 @@ class Lembur extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('lembur/konfirmasi_hr', $data);  
+            $this->load->view('lembur/hr/konfirmasi', $data);  
             $this->load->view('templates/footer');
         }elseif ($section=='ppic'){
             $data['sidemenu'] = 'PPIC';
@@ -2409,62 +2409,6 @@ class Lembur extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function ubah_jam($params=null)
-    {
-        date_default_timezone_set('asia/jakarta');
-        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
-        if ($params=='rencana'){
-            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
-            $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai_rencana'])).' '.$this->input->post('jammulai');
-    
-            //Hitung total durasi aktivitas
-            $this->db->select('SUM(durasi_menit) as total');
-            $this->db->where('link_aktivitas', $this->input->post('id'));
-            $this->db->from('aktivitas');
-            $menit = $this->db->get()->row()->total;
-            
-            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
-
-            $this->db->set('tglmulai_rencana', $tglmulai);
-            $this->db->set('tglselesai_rencana',$tglselesai);
-            $this->db->set('tglmulai', $tglmulai);
-            $this->db->set('tglselesai', $tglmulai);
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-
-            $output['data'] = array(
-                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
-            );
-
-            echo json_encode($output);
-            exit();
-        }elseif ($params=='realisasi'){
-            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
-            $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai'])).' '.$this->input->post('jammulai');
-    
-            //Hitung total durasi aktivitas
-            $this->db->select('SUM(durasi_menit) as total');
-            $this->db->where('status', '2');
-            $this->db->where('link_aktivitas', $this->input->post('id'));
-            $this->db->from('aktivitas');
-            $menit = $this->db->get()->row()->total;
-            
-            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
-
-            $this->db->set('tglmulai', $tglmulai);
-            $this->db->set('tglselesai', $tglselesai);
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('lembur');
-
-            $output['data'] = array(
-                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
-            );
-
-            echo json_encode($output);
-            exit();
-        }
-    }
-
     public function gtJamRelalisai()
     {
         date_default_timezone_set('asia/jakarta');
@@ -2752,9 +2696,11 @@ class Lembur extends CI_Controller
             $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
 
             $output['data'] = array(
+                'istirahat' =>  $lembur->istirahat,
                 'istirahat1' =>  $lembur->istirahat1,
                 'istirahat2' =>  $lembur->istirahat2,
-                'istirahat3' =>  $lembur->istirahat3
+                'istirahat3' =>  $lembur->istirahat3,
+                'tul' =>  $lembur->tul
             );
 
             echo json_encode($output);
@@ -3212,5 +3158,141 @@ class Lembur extends CI_Controller
             }
             echo '>'.$i.'%</option>';
         }
+    }
+
+    public function ubah_jam($params=null)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        if ($params=='rencana'){
+            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
+            $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai_rencana'])).' '.$this->input->post('jammulai');
+    
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->from('aktivitas');
+            $menit = $this->db->get()->row()->total;
+            
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
+
+            $this->db->set('tglmulai_rencana', $tglmulai);
+            $this->db->set('tglselesai_rencana',$tglselesai);
+            $this->db->set('tglmulai', $tglmulai);
+            $this->db->set('tglselesai', $tglmulai);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
+            );
+
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='realisasi'){
+            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
+            $tglmulai = date("Y-m-d", strtotime($lembur['tglmulai'])).' '.$this->input->post('jammulai');
+    
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('status', '2');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->from('aktivitas');
+            $menit = $this->db->get()->row()->total;
+            
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
+
+            $this->db->set('tglmulai', $tglmulai);
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
+            );
+
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='konfirmasi_hr'){
+            //Update jam setelah isi aktivitas seharusnya masih diperbolehkan
+            $tglmulai = date("Y-m-d H:i:s", strtotime($this->input->post('tglmulai')));
+    
+            //Hitung total durasi aktivitas
+            $this->db->select('SUM(durasi_menit) as total');
+            $this->db->where('status', '2');
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->from('aktivitas');
+            $menit = $this->db->get()->row()->total;
+            
+            $tglselesai = date('Y-m-d H:i:s', strtotime('+' . $menit . 'minutes', strtotime($tglmulai)));
+
+            if (date('D', strtotime($tglmulai)) == 'Sat' OR date('D', strtotime($tglmulai)) == 'Sun') {
+                $hari = 'LIBUR';
+            }else{
+                $event = $this->db->get_where('calendar_event_details', ['date' => date('Y-m-d', strtotime($tglmulai))])->row_array();
+                if (empty($event))
+                {
+                    $hari = 'KERJA';
+                }else{
+                    $hari = $event['category'];
+                }
+            }
+
+            $jammulai = date('H:i', strtotime($tglmulai));
+            $jamselesai = date('H:i', strtotime($tglselesai));
+
+            if ($lembur['durasi']>=4 AND $jammulai < '12:00' AND $jamselesai > '13:00'){
+                $istirahat1 = 1;
+            }else{
+                $istirahat1 = 0;
+            }
+
+            if ($lembur['durasi']>=4 AND $jammulai < '18:30' AND $jamselesai > '19:00'){
+                $istirahat2 = 0.5;
+            }else{
+                $istirahat2 = 0;
+            }
+
+            $istirahat = $istirahat1 + $istirahat2 + $lembur['istirahat3'];
+
+            $durasi = $lembur['durasi'] - $istirahat;
+                $this->db->where('durasi', $durasi);
+                $this->db->where('hari', $hari);
+            $tul = $this->db->get('lembur_tul')->row();
+
+            $this->db->set('istirahat', $istirahat);
+            $this->db->set('istirahat1', $istirahat1);
+            $this->db->set('istirahat2', $istirahat2);
+            $this->db->set('durasi_hr', $durasi);
+            $this->db->set('tul', $tul->tul);
+            $this->db->set('tglmulai', $tglmulai);
+            $this->db->set('tglselesai', $tglselesai);
+            $this->db->set('hari', $hari);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            $this->db->set('tgl_aktivitas', date("Y-m-d", strtotime($this->input->post('tglmulai'))));
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->update('aktivitas');
+
+            $output['data'] = array(
+                'tgl' => date('d M H:i', strtotime($tglmulai)).date(' - H:i', strtotime($tglselesai))
+            );
+
+            echo json_encode($output);
+            exit();
+        }
+    }
+
+    public function hari()
+    {
+        $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
+        $hari = $this->db->get('lembur_hari')->result();
+        foreach ($hari as $row) : echo '<option value="' . $row->nama . '"';
+            if ($row->nama == $lembur['hari']) {
+                echo 'selected';
+            }
+            echo '>' . $row->nama . '</option>' . "\n";
+        endforeach;
     }
 }
