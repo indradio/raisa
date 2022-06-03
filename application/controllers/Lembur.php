@@ -135,12 +135,13 @@ class Lembur extends CI_Controller
             $lembur = $this->db->get('lembur')->row_array();
             if (!empty($lembur)){
                 if ($lembur['contract']=='Direct Labor' AND $lembur['hari']=='KERJA'){
+                    
                     $this->db->where('npk', $lembur['npk']);
                     $this->db->where('year(tglmulai)',date('Y', strtotime($lembur['tglmulai'])));
                     $this->db->where('month(tglmulai)',date('m', strtotime($lembur['tglmulai'])));
                     $this->db->where('day(tglmulai)',date('d', strtotime($lembur['tglmulai'])));
                     $this->db->where('status >', '0'); 
-                    $jamkerja = $this->db->get('jamkerja')->result();
+                    $jamkerja = $this->db->get('jamkerja')->row_array();
                     if (empty($jamkerja))
                     {
                         $this->session->set_flashdata('notify', 'error');
