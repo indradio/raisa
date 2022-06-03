@@ -224,16 +224,23 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🍛 *SURVEI KEPUASAN LAYANAN CATERING*" .
+                            'message' => "🍛 *JADWAL MEDICAL CHECK UP*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nMenurut kamu layanan catering yang sekarang apakah sudah ok buat kamu?" .
-                            "\r\nKasih tau kami ya!" .
-                            "\r\n \r\nhttps://raisa.winteq-astra.com/survei/catering" .
-                            "\r\n \r\nPengisian survey akan kami tutup *hari ini*, jadi buruan isi ya!" .
+                            "\r\nMakin dini suatu penyakit terdeteksi, maka makin cepat pertolongan yang dapat diberikan." .
+                            "\r\nMaka kepada seluruh Karyawan Tetap diwajibkan untuk mengikuti Medical Check Up yang akan dilaksanakannya pada" .
+                            "\r\n \r\n*Hari / Tanggal : Selasa /07 Juni 2022*" .
+                            "\r\n*Waktu :08.00- 13.00 MB*" .
+                            "\r\n*Tempat : Ruang Serbaguna*" .
+                            "\r\n \r\n*PENTING!*" .
+                            "\r\nl. Seluruh peserta MCU dianjurkan puasa terlebih dahulu selama 09 - 10 jam (hanya boleh minum air putih saja) sebelum melaksanakan MCU" .
+                            "\r\n2. Karyawan/karyawati diharapkan untuk menggunakan kaos pada saat pemeriksaan Thorax" .
+                            "\r\n3. Bagi karyawan yang berusia >40 tahun dimohon untuk membawa sepatu olahraga" .
+                            "\r\n4. Bagi karyawan berhalangan hadir, maka dapat melakukan MCU susulan dengan datang langsung ke RS FMC dengan melakukan konfimasi H-l ke HR" .
+                            "\r\n5. Bagi karyawan yang tidak mengikuti MCU yang sudah ditentukan dan ternyata dikemudian hari terdeteksi panyakit yang berakibat fatal, maka Perusahaan tidak akan bertanggung jawab atas biaya pengobatan tersebut" .
                             "\r\nDemikian informasi ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nGeneral Affair" .
-                            "\r\n \r\n_Selamat Makan Siang di jam 11:30 ya!_"
+                            "\r\nHuman Capital" .
+                            "\r\n \r\n_Sehat-sehat ya semuanya!_"
                         ],
                     ]
                 );
