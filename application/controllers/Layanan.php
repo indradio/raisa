@@ -237,10 +237,10 @@ class Layanan extends CI_Controller
                             "\r\n3. Bagi karyawan yang berusia >40 tahun dimohon untuk membawa sepatu olahraga" .
                             "\r\n4. Bagi karyawan berhalangan hadir, maka dapat melakukan MCU susulan dengan datang langsung ke RS FMC dengan melakukan konfimasi H-l ke HR" .
                             "\r\n5. Bagi karyawan yang tidak mengikuti MCU yang sudah ditentukan dan ternyata dikemudian hari terdeteksi panyakit yang berakibat fatal, maka Perusahaan tidak akan bertanggung jawab atas biaya pengobatan tersebut" .
-                            "\r\nDemikian informasi ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
+                            "\r\n \r\nDemikian informasi ini disampaikan untuk bisa dilaksanakan dengan sebaik baiknya." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nHuman Capital" .
-                            "\r\n \r\n_Sehat-sehat ya semuanya!_"
+                            "\r\n \r\n_Sehat-sehat ya semua!_"
                         ],
                     ]
                 );
