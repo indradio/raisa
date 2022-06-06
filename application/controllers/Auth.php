@@ -5,7 +5,20 @@ class Auth extends CI_Controller
 {
     public function index()
     {
+        $this->clear_temp();
+        // Halaman Login
+        $this->load->view('auth/index');
+    }
+
+    public function clear_temp()
+    {
         date_default_timezone_set('asia/jakarta');
+
+        //Delete log 365Days
+        $this->db->set('log');
+        $this->db->where('datetime <', Date('Y-m-d', strtotime('-365 days')));
+        $this->db->delete('log');
+        
         //Delete Lembur yg diBatalkan setelah 40 Hari
         $lembur = $this->db->get_where('lembur', ['status' => '0'])->result_array();
         foreach ($lembur as $l) :
@@ -15,14 +28,14 @@ class Auth extends CI_Controller
 
             if ($tempo < $sekarang) {
 
+                $this->db->set('lembur');
+                $this->db->where('id', $l['id']);
+                $this->db->delete('lembur');
+
                 //Hapus Aktivitas
                 $this->db->set('aktivitas');
                 $this->db->where('link_aktivitas', $l['id']);
                 $this->db->delete('aktivitas');
-
-                $this->db->set('lembur');
-                $this->db->where('id', $l['id']);
-                $this->db->delete('lembur');
             }
         endforeach;
 
@@ -57,9 +70,6 @@ class Auth extends CI_Controller
                 $this->db->delete('reservasi');
             }
         endforeach;
-
-        // Halaman Login
-        $this->load->view('auth/index');
     }
 
     public function login()
@@ -168,6 +178,10 @@ class Auth extends CI_Controller
                     'activity' => 'Login to RAISA'
                 ];
                 $this->db->insert('log', $log);
+
+                $this->db->set('last_login', date('Y-m-d H:i:s'));
+                $this->db->where('npk', $this->input->post('npk'));
+                $this->db->update('karyawan');
 
                 redirect('dashboard');
             } else {
