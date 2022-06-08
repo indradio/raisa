@@ -681,6 +681,62 @@ class Cuti extends CI_Controller
         }
     }
 
+    public function hr_report()
+    {
+        date_default_timezone_set('asia/jakarta');
+        
+        $data['sidemenu'] = 'HR Cuti';
+        $data['sidesubmenu'] = 'Laporan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        
+        if($this->input->post('bulan')){
+            $data['tahun'] = $this->input->post('tahun');
+            $data['bulan'] = $this->input->post('bulan');
+        }else{
+            $data['tahun'] = date('Y');
+            $data['bulan'] = date('m');
+        }
+        
+        $this->db->where('year(tgl1)', $data['tahun']);
+        $this->db->where('month(tgl1)', $data['bulan']);
+        $this->db->where('status >', 0);
+        $data['cuti'] = $this->db->get_where('cuti')->result();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/report/lap-index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hr_report_details()
+    {
+        date_default_timezone_set('asia/jakarta');
+        
+        $data['sidemenu'] = 'HR Cuti';
+        $data['sidesubmenu'] = 'Laporan Details';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        
+        if($this->input->post('selectedKaryawan')){
+            $data['tahun'] = $this->input->post('tahun');
+            $data['selectedKaryawan'] = $this->db->get_where('karyawan', ['npk' => $this->input->post('selectedKaryawan')])->row_array();
+        }else{
+            $data['tahun'] = date('Y');
+            $data['selectedKaryawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        }
+        
+        $this->db->where('year(tgl1)', $data['tahun']);
+        $this->db->where('npk', $data['selectedKaryawan']['npk']);
+        $this->db->where('status >', 0);
+        $data['cuti'] = $this->db->get_where('cuti')->result();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/report/lap-person-details', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function saldo_update()
     {
         date_default_timezone_set('asia/jakarta');
@@ -774,34 +830,6 @@ class Cuti extends CI_Controller
                 $body = $response->getBody();
             endforeach;
 
-    }
-
-    public function hr_report()
-    {
-        date_default_timezone_set('asia/jakarta');
-        
-        $data['sidemenu'] = 'HR Cuti';
-        $data['sidesubmenu'] = 'Laporan';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        
-        if($this->input->post('bulan')){
-            $data['tahun'] = $this->input->post('tahun');
-            $data['bulan'] = $this->input->post('bulan');
-        }else{
-            $data['tahun'] = date('Y');
-            $data['bulan'] = date('m');
-        }
-        
-        $this->db->where('year(tgl1)', $data['tahun']);
-        $this->db->where('month(tgl1)', $data['bulan']);
-        $this->db->where('status >', 0);
-        $data['cuti'] = $this->db->get_where('cuti')->result();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('cuti/report/lap-index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function qna()
