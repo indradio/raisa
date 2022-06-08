@@ -21,7 +21,7 @@ class Persetujuanta extends CI_Controller
         $data['sidesubmenu'] = 'Persetujuan TA';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $dataKu = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        if ($dataKu['div_id'] == '2' and $dataKu['posisi_id'] == '2') {
+        if ($dataKu['posisi_id'] == '2') {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
