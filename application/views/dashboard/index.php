@@ -136,7 +136,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <div class="card">
             <div class="card-header card-header-text card-header-info">
               <div class="card-text">
@@ -151,7 +151,7 @@
               <a href="<?= base_url(); ?>assets/pdf/MCU.pdf" class="btn btn-info btn-link" target="_blank"><i class="material-icons">get_app</i> Download</a>
             </div>
           </div>
-        </div>
+        </div> -->
     </div>
     <!-- End HImbauan -->
 
