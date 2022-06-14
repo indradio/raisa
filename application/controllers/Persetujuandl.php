@@ -177,8 +177,8 @@ class Persetujuandl extends CI_Controller
 
                 // $this->db->where('posisi_id', '3');
                 // $this->db->where('dept_id', '21');
-                $this->db->where('posisi_id', '1');
-                $this->db->where('div_id', '2');
+                $this->db->where('posisi_id', '2');
+                $this->db->where('div_id', '1');
                 $div_head = $this->db->get('karyawan')->row_array();
 
                 $client = new \GuzzleHttp\Client();
@@ -216,8 +216,8 @@ class Persetujuandl extends CI_Controller
 
                 // $this->db->where('posisi_id', '3');
                 // $this->db->where('dept_id', '21');
-                $this->db->where('posisi_id', '1');
-                $this->db->where('div_id', '2');
+                $this->db->where('posisi_id', '2');
+                $this->db->where('div_id', '1');
                 $div_head = $this->db->get('karyawan')->row_array();
 
                 $client = new \GuzzleHttp\Client();

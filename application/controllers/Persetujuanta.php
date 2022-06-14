@@ -139,7 +139,7 @@ class Persetujuanta extends CI_Controller
             $this->db->update('reservasi');
 
             $this->db->where('posisi_id', '2');
-            $this->db->where('div_id', '2');
+            $this->db->where('div_id', '1');
             $div_head = $this->db->get('karyawan')->row_array();
             
             $client = new \GuzzleHttp\Client();
