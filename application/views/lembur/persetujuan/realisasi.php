@@ -82,6 +82,10 @@
                                     </tfoot>
                                 </table>
                             </div>
+                            <blockquote class="blockquote">
+                                <small><cite title="Source Title">*Tidak ada rencana : Tambahan aktivitas saat realisasi.</cite></small>
+                            </blockquote>
+                            
                             </p>
                             <?php 
                             $this->db->distinct();

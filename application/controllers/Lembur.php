@@ -130,7 +130,7 @@ class Lembur extends CI_Controller
         }elseif ($params=='aktivitas' and $id!=null){
             $this->db->where('id', $id);
             $this->db->where('npk', $this->session->userdata('npk'));
-            $this->db->where('tglselesai_rencana <', date('Y-m-d H:i:s'));
+            // $this->db->where('tglselesai_rencana <', date('Y-m-d H:i:s'));
             $this->db->where('status', '4');
             $lembur = $this->db->get('lembur')->row_array();
             if (!empty($lembur)){
@@ -620,11 +620,13 @@ class Lembur extends CI_Controller
                 'copro' => $copro,
                 'durasi_menit' => floatval($this->input->post('durasi')) * 60,
                 'durasi' => $this->input->post('durasi'),
+                'durasi_rencana' => $this->input->post('durasi'),
                 'progres_hasil' => 0,
                 'dibuat_oleh' => $this->session->userdata('inisial'),
                 'dept_id' => $user['dept_id'],
                 'sect_id' => $user['sect_id'],
                 'contract' => $user['work_contract'],
+                'terencana' => '1',
                 'status' => '1'
             ];
             $this->db->insert('aktivitas', $data);
@@ -701,6 +703,7 @@ class Lembur extends CI_Controller
 
             // Hapus AKTIVITAS
             $this->db->set('durasi', $this->input->post('durasi'));
+            $this->db->set('durasi_rencana', $this->input->post('durasi'));
             $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
             $this->db->where('id', $this->input->post('id_aktivitas'));
             $this->db->update('aktivitas');
@@ -818,11 +821,13 @@ class Lembur extends CI_Controller
                     'deskripsi_hasil' => $this->input->post('deskripsi'),
                     'durasi_menit' => floatval($this->input->post('durasi')) * 60,
                     'durasi' => $this->input->post('durasi'),
+                    'durasi_rencana' => '0',
                     'progres_hasil' => $this->input->post('progres'),
                     'dibuat_oleh' => $this->session->userdata('inisial'),
                     'dept_id' => $user['dept_id'],
                     'sect_id' => $user['sect_id'],
                     'contract' => $user['work_contract'],
+                    'terencana' => '0',
                     'status' => '2'
                 ];
                 $this->db->insert('aktivitas', $data);
@@ -3003,10 +3008,20 @@ class Lembur extends CI_Controller
                         }
                     }
 
+                    if ($row->terencana=='1'){
+                        if ($row->durasi==$row->durasi_rencana){
+                            $durasi = $row->durasi;
+                        }else{
+                            $durasi = $row->durasi.' ( rencana : '.$row->durasi_rencana.' )';
+                        }
+                    }else{
+                        $durasi = $row->durasi.' ( tidak ada rencana )';
+                    }
+
                     $output['data'][] = array(
                         "aktivitas" => $aktivitas,
                         "deskripsi" => $row->deskripsi_hasil." (".$row->progres_hasil."%)",
-                        "durasi" => $row->durasi
+                        "durasi" => $durasi
                     );
                 }
             }else{

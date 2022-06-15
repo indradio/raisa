@@ -207,7 +207,7 @@
                                 </div>
                                 <div id="collapsePanduan" class="collapse show" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
                                   <div class="card-body">
-                                  <div class="col-md-12">
+                                    <div class="col-md-12">
                                       <div class="form-group">
                                           <label class="bmd-label">1. Form di RAISA hanya menggantikan form fisik sebelumnya tanpa mengubah pola interaksi, tetap informasikan pengajuan cuti Anda kepada pimpinan-pimpinan Anda secara langsung.</label></br>
                                           <label class="bmd-label">2. Kondisi darurat adalah kondisi yang tidak diharapkan DAN terjadi secara mendadak seperti kecelakaan, meninggal dunia, bencana alam, kerusuhan, kebakaran, serangan jantung, dan anak/istri sakit (dibuktikan dengan surat dokter). Selain kondisi-kondisi tersebut maka dianggap bukan kondisi darurat walaupun tidak diharapkan.</label></br>
@@ -222,16 +222,29 @@
                                 </div>
                               </div>
                             </div>
+                            <p>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="check" name="check" value="1" required>
+                                    Ya, Saya setuju dengan ketentuan di atas.
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
                           </div>
                       </div>
                       <div class="modal-footer">
                         <div class="row">
+                          <div class="col-md-12">
+                            
+                          </div>
                           <div class="col-md-12 mr-1">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-                        <button type="submit" class="btn btn-success">AJUKAN</button>
+                            <button type="submit" id="submit" class="btn btn-success">AJUKAN</button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                </div>
               </form>
               
         </div>
@@ -377,5 +390,17 @@
             var modal = $(this)
             modal.find('.modal-body input[name="id"]').val(id)
         })  
+
+        var checker = document.getElementById('check');
+        var submitbtn = document.getElementById('submit');
+        submitbtn.disabled = true;
+        // when unchecked or checked, run the function
+        checker.onchange = function() {
+            if (this.checked) {
+                submitbtn.disabled = false;
+            } else {
+                submitbtn.disabled = true;
+            }
+        }
     });
     </script>
