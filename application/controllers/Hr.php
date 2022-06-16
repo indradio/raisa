@@ -28,6 +28,17 @@ class Hr extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('hr/karyawan/edit', $data);
             $this->load->view('templates/footer');
+        }elseif($params=='lengkap')
+        {   
+            $data['sidemenu'] = 'HR Karyawan';
+            $data['sidesubmenu'] = 'Data Karyawan Lengkap';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['data'] = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/karyawan/details', $data);
+            $this->load->view('templates/footer');
         }else 
         {
             $data['sidemenu'] = 'HR Karyawan';
@@ -177,6 +188,69 @@ class Hr extends CI_Controller
                 "data" => $data
             );
 
+            //output to json format
+            echo json_encode($output);
+    }
+
+    public function getDetails()
+    {
+            $result = $this->Karyawan_model->getOrganic();
+
+            foreach ($result as $row) :
+                $details = $this->db->get_where('karyawan_details', ['npk' =>  $row->npk])->row();
+                //          $this->db->where('hubungan', 'istri');
+                // $istri = $this->db->get_where('karyawan_keluarga', ['npk' =>  $row->npk])->row();
+                //          $this->db->where('hubungan', 'anak1');
+                // $anak1 = $this->db->get_where('karyawan_keluarga', ['npk' =>  $row->npk])->row();
+                //          $this->db->where('hubungan', 'anak2');
+                // $anak2 = $this->db->get_where('karyawan_keluarga', ['npk' =>  $row->npk])->row();
+                //          $this->db->where('hubungan', 'anak3');
+                // $anak3 = $this->db->get_where('karyawan_keluarga', ['npk' =>  $row->npk])->row();
+              
+                if ($details){
+                    $output['data'][] = array(
+                        "npk" => $row->npk,
+                        "inisial" => $row->inisial,
+                        "nama" =>  $row->nama,
+                        "nik" =>  $details->nik,
+                        "tmp_lahir" =>  $details->lahir_tempat,
+                        "tgl_lahir" =>  $details->lahir_tanggal,
+                        "kontak" =>  $row->phone,
+                        "alamat_ktp" =>  $details->alamat_ktp,
+                        "provinsi_ktp" =>  $details->provinsi_ktp,
+                        "kabupaten_ktp" =>  $details->kabupaten_ktp,
+                        "kecamatan_ktp" =>  $details->kecamatan_ktp,
+                        "desa_ktp" =>  $details->desa_ktp,
+                        "alamat" =>  $details->alamat,
+                        "provinsi" =>  $details->provinsi,
+                        "kabupaten" =>  $details->kabupaten,
+                        "kecamatan" =>  $details->kecamatan,
+                        "desa" =>  $details->desa,
+                    );
+                }else{
+                    $output['data'][] = array(
+                        "npk" => $row->npk,
+                        "inisial" => $row->inisial,
+                        "nama" => $row->nama,
+                        "nik" => '',
+                        "tmp_lahir" => '',
+                        "tgl_lahir" => '',
+                        "kontak" => $row->phone,
+                        "alamat_ktp" => '',
+                        "provinsi_ktp" => '',
+                        "kabupaten_ktp" => '',
+                        "kecamatan_ktp" => '',
+                        "desa_ktp" => '',
+                        "alamat" => '',
+                        "provinsi" => '',
+                        "kabupaten" => '',
+                        "kecamatan" => '',
+                        "desa" => '',
+                    );
+                }
+
+            endforeach;
+           
             //output to json format
             echo json_encode($output);
     }

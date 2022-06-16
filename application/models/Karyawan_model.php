@@ -86,4 +86,11 @@ class Karyawan_model extends CI_Model
             $this->db->where('is_active', '1');
         return $this->db->get('karyawan')->result();
     }
+
+    public function getOrganic()
+    {
+            $this->db->where('status', '1');
+            $this->db->where('is_active', '1');
+        return $this->db->get('karyawan')->result();
+    }
 }
