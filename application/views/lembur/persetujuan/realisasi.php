@@ -37,11 +37,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleDate" class="bmd-label-floating">Tanggal & Jam</label>
-                                <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date('d M H:i', strtotime($lembur['tglmulai_rencana'])).date(' - H:i', strtotime($lembur['tglselesai_rencana'])); ?>">
+                                <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($lembur['tglselesai'])); ?>">
                             </div>
                             <div class="form-group">
                                 <label for="exampleDurasi" class="bmd-label-floating">Durasi</label>
-                                <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi_rencana']; ?> Jam">
+                                <input type="text" class="form-control disabled" id="durasi" name="durasi" value="<?= $lembur['durasi']; ?> Jam">
                             </div>
                             <div class="form-group">
                                 <label for="exampleLokasi" class="bmd-label-floating">Lokasi</label>
