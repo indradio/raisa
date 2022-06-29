@@ -922,6 +922,7 @@ class Jamkerja extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         date_default_timezone_set('asia/jakarta');
+
         if($this->input->post('tglawal')){
             $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
             $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
@@ -929,20 +930,59 @@ class Jamkerja extends CI_Controller
             $tglawal  = date('Y-m-1');
             $tglakhir = date('Y-m-31');
         }
+        
         $data['periode'] = [
             'tglawal' => $tglawal,
             'tglakhir' => $tglakhir
         ];
 
-        $data['aktivitas'] = $this->db->where('tgl_aktivitas >=',$tglawal);
-        $data['aktivitas'] = $this->db->where('tgl_aktivitas <=',$tglakhir);
-        $data['aktivitas'] = $this->db->where('contract', 'Direct Labor');
-        $data['aktivitas'] = $this->db->where('status', 9);
-        $data['aktivitas'] = $this->db->get('aktivitas')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('jamkerja/lp_acc_monthly', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function get_aktivitas()
+    {
+        $this->db->where('tgl_aktivitas >=',$this->input->post('awal'));
+        $this->db->where('tgl_aktivitas <=',$this->input->post('akhir'));
+        $this->db->where('contract', 'Direct Labor');
+        $this->db->where('status', 9);
+        $aktivitas = $this->db->get('aktivitas')->result();
+
+        foreach ($aktivitas as $row) {
+            $person = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $person->dept_id])->row();
+            $sect = $this->db->get_where('karyawan_sect', ['id' => $person->sect_id])->row();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $person->posisi_id])->row();
+            
+            $kategori =  $this->db->get_where('jamkerja_kategori', ['id' => $row->kategori])->row();
+            if ($row->copro){
+                $copro = $row->copro;
+            }else{
+                $copro = $row->aktivitas;
+            }
+
+            $output['data'][] = array(
+                "tanggal" => date('m-d-Y', strtotime($row->tgl_aktivitas)),
+                "nama" => $person->nama,
+                "npk" => $person->npk,
+                "kategori" => $kategori->nama,
+                "copro" => $copro,
+                "aktivitas" => $row->aktivitas,
+                "deskripsi" => $row->deskripsi_hasil,
+                "durasi" => $row->durasi,
+                "progres" => $row->progres_hasil,
+                "dept" => $dept->nama,
+                "sect" => $sect->nama,
+                "posisi" => $posisi->nama,
+                "jenis" => $row->jenis_aktivitas,
+                "hari" => date('D', strtotime($row->tgl_aktivitas))
+            );
+        }
+        
+        echo json_encode($output);
+        exit();
     }
 }

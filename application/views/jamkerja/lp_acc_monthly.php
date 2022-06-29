@@ -13,16 +13,18 @@
                         <div class="toolbar">
                             <form class="form-horizontal" action="<?= base_url('jamkerja/lp_acc_monthly'); ?>" method="post">
                                 <div class="row">
+                                    <input type="hidden" class="form-control" id="awal" name="awal" value="<?= $periode['tglawal']; ?>">
+                                    <input type="hidden" class="form-control" id="akhir" name="akhir" value="<?= $periode['tglakhir']; ?>">
                                     <label class="col-md-2 col-form-label">Dari Tanggal</label>
                                     <div class="col-md-2">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control datepicker" id="tglawal" name="tglawal">
+                                            <input type="text" class="form-control datepicker" id="tglawal" name="tglawal" value="<?= date('d-m-Y', strtotime($periode['tglawal'])); ?>">
                                         </div>
                                     </div>
                                     <label class="col-md-2 col-form-label">Sampai Tanggal</label>
                                     <div class="col-md-2">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control datepicker" id="tglakhir" name="tglakhir">
+                                            <input type="text" class="form-control datepicker" id="tglakhir" name="tglakhir" value="<?= date('d-m-Y', strtotime($periode['tglakhir'])); ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-1"></div>
@@ -49,10 +51,11 @@
                                         <th>Cell / Section</th>
                                         <th>Posisi</th>
                                         <th>Jenis</th>
-                                        <!-- <th>Approval</th> -->
                                         <th>Hari</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Tanggal</th>
@@ -68,41 +71,9 @@
                                         <th>Cell / Section</th>
                                         <th>Posisi</th>
                                         <th>Jenis</th>
-                                        <!-- <th>Approval</th> -->
                                         <th>Hari</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    <?php foreach ($aktivitas as $a) :
-                                        $kry = $this->db->get_where('karyawan', ['npk' => $a['npk']])->row_array(); 
-                                        ?>
-                                        <tr>
-                                            <td><?= date('m-d-Y', strtotime($a['tgl_aktivitas'])); ?></td>
-                                            <td><?= $kry['nama']; ?></td>
-                                            <td><?= $a['npk']; ?></td>
-                                            <?php $k = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                                            <td><?= $k['nama']; ?> </td>
-                                            <?php if ($a['copro']){
-                                                echo '<td>'.$a['copro'].'</td>';
-                                            }else{
-                                                echo '<td>'. $a['aktivitas'].'</td>';
-                                            } ?>
-                                            <td><?= $a['aktivitas']; ?></td>
-                                            <td><?= $a['deskripsi_hasil']; ?></td>
-                                            <td><?= $a['durasi']; ?></td>
-                                            <td><?= $a['progres_hasil']; ?>%</td>
-                                            <?php $dept = $this->db->get_where('karyawan_dept', ['id' => $kry['dept_id']])->row_array(); ?>
-                                            <td><?= $dept['inisial']; ?></td>
-                                            <?php $sect = $this->db->get_where('karyawan_sect', ['id' => $kry['sect_id']])->row_array(); ?>
-                                            <td><?= $sect['nama']; ?></td>
-                                            <?php $posisi = $this->db->get_where('karyawan_posisi', ['id' => $kry['posisi_id']])->row_array(); ?>
-                                            <td><?= $posisi['nama']; ?></td>
-                                            <td><?= $a['jenis_aktivitas']; ?></td>
-                                            
-                                            <td><?= date('D', strtotime($a['tgl_aktivitas'])); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -121,6 +92,7 @@
         $('#dtjamkerja').DataTable( {
             "pagingType": "full_numbers",
             scrollX: true,
+            scrollCollapse: true,
             dom: 'Bfrtip',
             buttons: [
                 'copy',
@@ -132,14 +104,33 @@
                     footer: true
                 }
             ],
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }
+            },
+            serverSide: false,
+            processing: true,
+            ajax: {
+                    "url"   : "<?= site_url('jamkerja/get_aktivitas') ?>",
+                    "type"  : "POST",
+                    "data"  : {awal:$('#awal').val(), akhir:$('#akhir').val()}
+                },
+            columns: [
+                { "data": "tanggal" },
+                { "data": "nama" },
+                { "data": "npk" },
+                { "data": "kategori" },
+                { "data":"copro"},
+                { "data":"aktivitas"},
+                { "data":"deskripsi"},
+                { "data":"durasi"},
+                { "data":"progres"},
+                { "data":"dept"},
+                { "data":"sect"},
+                { "data":"posisi"},
+                { "data":"jenis"},
+                { "data":"hari"}
+            ],
         });
     });
 </script>
