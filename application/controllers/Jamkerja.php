@@ -536,7 +536,7 @@ class Jamkerja extends CI_Controller
 
     public function laporan($param=false)
     {
-    if($param=="jk"){
+        if($param=="jk"){
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Cetak Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -549,7 +549,7 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/lp_jamkerja', $data);
             $this->load->view('templates/footer');
-    }elseif ($param=="ot"){
+        }elseif ($param=="ot"){
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Cetak Lembur';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -569,10 +569,10 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/lp_lembur', $data);
             $this->load->view('templates/footer');
-    }else{
-        $this->load->view('auth/denied');
+        }else{
+            $this->load->view('auth/denied');
+        }
     }
-}
 
     public function cetak($id)
     {
@@ -941,6 +941,77 @@ class Jamkerja extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('jamkerja/lp_acc_monthly', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function laporan_jk()
+    {
+        $data['sidemenu'] = 'PPIC';
+        $data['sidesubmenu'] = 'Jam Kerja Harian';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        date_default_timezone_set('asia/jakarta');
+
+        if($this->input->post('tglawal')){
+            $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+            $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
+        }else{
+            $tglawal  = date('Y-m-1');
+            $tglakhir = date('Y-m-31');
+        }
+        
+        $data['periode'] = [
+            'tglawal'   => $tglawal,
+            'tglakhir'  => $tglakhir
+        ];
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('jamkerja/lp_jk_range', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function get_aktivitas_jk()
+    {
+        $this->db->where('tgl_aktivitas >=',$this->input->post('awal'));
+        $this->db->where('tgl_aktivitas <=',$this->input->post('akhir'));
+        $this->db->where('jenis_aktivitas','JAM KERJA');
+        $this->db->where('contract','Direct Labor');
+        $this->db->where('status','9');
+        $this->db->order_by('npk', 'ASC');
+        $aktivitas = $this->db->get('aktivitas')->result();
+
+        foreach ($aktivitas as $row) {
+            $person = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+            $dept = $this->db->get_where('karyawan_dept', ['id' => $person->dept_id])->row();
+            $sect = $this->db->get_where('karyawan_sect', ['id' => $person->sect_id])->row();
+            $posisi = $this->db->get_where('karyawan_posisi', ['id' => $person->posisi_id])->row();
+            
+            $kategori =  $this->db->get_where('jamkerja_kategori', ['id' => $row->kategori])->row();
+            if ($row->copro){
+                $copro = $row->copro;
+            }else{
+                $copro = $row->aktivitas;
+            }
+
+            $output['data'][] = array(
+                "tanggal" => date('m-d-Y', strtotime($row->tgl_aktivitas)),
+                "nama" => $person->nama,
+                "npk" => $person->npk,
+                "kategori" => $kategori->nama,
+                "copro" => $copro,
+                "aktivitas" => $row->aktivitas,
+                "deskripsi" => $row->deskripsi_hasil,
+                "durasi" => $row->durasi,
+                "progres" => $row->progres_hasil,
+                "dept" => $dept->nama,
+                "sect" => $sect->nama,
+                "posisi" => $posisi->nama
+            );
+        }
+        
+        echo json_encode($output);
+        exit();
     }
 
     public function get_aktivitas()
