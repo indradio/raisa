@@ -3012,10 +3012,10 @@ class Lembur extends CI_Controller
                         if ($row->durasi==$row->durasi_rencana){
                             $durasi = $row->durasi;
                         }else{
-                            $durasi = $row->durasi.' ( rencana : '.$row->durasi_rencana.' )';
+                            $durasi = $row->durasi.' <a class="text-danger">( rencana : '.$row->durasi_rencana.' )</a>';
                         }
                     }else{
-                        $durasi = $row->durasi.' ( tidak ada rencana )';
+                        $durasi = $row->durasi.' <a class="text-danger">( tidak ada rencana )</a>';
                     }
 
                     $output['data'][] = array(
