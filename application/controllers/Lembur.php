@@ -2384,27 +2384,78 @@ class Lembur extends CI_Controller
         $this->load->view('lembur/lp_lembur_sect_pdf', $data);
     }
 
-    public function cari_lembur_hr()
+    public function laporan_hr()
     {
         $data['sidemenu'] = 'HR';
         $data['sidesubmenu'] = 'Laporan Lembur';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
-        $tglmulai = date("Y-m-d 00:00:00", strtotime($this->input->post('tglawal')));
-        $tglselesai = date("Y-m-d 23:59:00", strtotime($this->input->post('tglakhir')));
+        if($this->input->post('tglawal')){
+            $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+            $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
+        }else{
+            $tglawal  = date('Y-m-1');
+            $tglakhir = date('Y-m-31');
+        }
+        
+        $data['periode'] = [
+            'tglawal' => $tglawal,
+            'tglakhir' => $tglakhir
+        ];
 
-        $querylembur = "SELECT *
-                        FROM `lembur`
-                        WHERE `tglmulai` >= '$tglmulai' AND `tglmulai` <= '$tglselesai' AND (`status` = '9')
-                        ";
-        $data['lembur'] = $this->db->query($querylembur)->result_array();
-        $data['tglmulai'] = $tglmulai;
-        $data['tglselesai'] = $tglselesai;
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('lembur/laporanhr', $data);
+        $this->load->view('lembur/laporan/laporan_hr', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function get_data($params=null)
+    {
+        if ($params=='hr')
+        {
+
+            $this->db->where('tglmulai >=', $this->input->post('awal'));
+            $this->db->where('tglmulai <=', $this->input->post('akhir'));
+            $this->db->where('status','9');
+            $this->db->order_by('npk', 'ASC');
+            $lembur = $this->db->get('lembur')->result();
+    
+            foreach ($lembur as $row) {
+                $person = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                $kategori = $this->db->get_where('lembur_kategori', ['id' => $row->kategori])->row();
+                $dept = $this->db->get_where('karyawan_dept', ['id' => $person->dept_id])->row();
+                $sect = $this->db->get_where('karyawan_sect', ['id' => $person->sect_id])->row();
+
+                if ($row->status=='9')
+                    {
+                        $actions = "<a href='". base_url('lembur/laporan_lembur/').$row->id."' class='btn btn-link btn-warning btn-just-icon edit' target='_blank'><i class='material-icons'>dvr</i></a>";
+                    }else{
+                        $actions = "<a href='#' class='btn btn-link btn-warning btn-just-icon edit disabled'><i class='material-icons'>dvr</i></a>";
+                    }
+    
+                $output['data'][] = array(
+                    "id" => $row->id,
+                    "kategori" => $kategori->nama,
+                    "nama" => $person->nama,
+                    "npk" => $person->npk,
+                    "tanggal_mulai" => date('m/d/Y', strtotime($row->tglmulai)),
+                    "jam_mulai" => date('H:i', strtotime($row->tglmulai)),
+                    "tanggal_selesai" => date('m/d/Y', strtotime($row->tglselesai)),
+                    "jam_selesai" => date('H:i', strtotime($row->tglselesai)),
+                    "durasi" => $row->durasi,
+                    "tul" => $row->tul,
+                    "dept" => $dept->nama,
+                    "sect" => $sect->nama,
+                    "catatan" => $row->catatan,
+                    "action" => $actions
+                );
+            }
+            
+            echo json_encode($output);
+            exit();
+        }
+        
     }
 
     public function cari_lembur_ga()

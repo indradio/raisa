@@ -917,11 +917,10 @@ class Jamkerja extends CI_Controller
 
     public function lp_acc_monthly()
     {
+        date_default_timezone_set('asia/jakarta');
         $data['sidemenu'] = 'PPIC';
         $data['sidesubmenu'] = 'Laporan Jam Kerja';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-
-        date_default_timezone_set('asia/jakarta');
 
         if($this->input->post('tglawal')){
             $tglawal  = date('Y-m-d', strtotime($this->input->post('tglawal')));
