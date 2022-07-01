@@ -157,9 +157,9 @@
                 'copy',
                 {
                     extend: 'excelHtml5',
-                    title: 'DATA JAM KERJA',
+                    title: 'LAPORAN LEMBUR',
                     text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
-                    messageTop: '<?= date("d M Y", strtotime($periode['tglawal'])).' - '.date("d M Y", strtotime($periode['tglakhir'])); ?>',
+                    messageTop: 'Periode <?= date("d M Y", strtotime($periode['tglawal'])).' - '.date("d M Y", strtotime($periode['tglakhir'])); ?>',
                     footer: true
                 }
             ],
