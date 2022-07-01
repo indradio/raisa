@@ -2417,7 +2417,8 @@ class Lembur extends CI_Controller
 
             $this->db->where('tglmulai >=', $this->input->post('awal'));
             $this->db->where('tglmulai <=', $this->input->post('akhir'));
-            $this->db->order_by('npk', 'ASC');
+            $this->db->where('status','9');
+            $this->db->order_by('tglmulai', 'ASC');
             $lembur = $this->db->get('lembur')->result();
     
             foreach ($lembur as $row) {
@@ -2426,12 +2427,12 @@ class Lembur extends CI_Controller
                 $dept = $this->db->get_where('karyawan_dept', ['id' => $person->dept_id])->row();
                 $sect = $this->db->get_where('karyawan_sect', ['id' => $person->sect_id])->row();
 
-                if ($row->status=='9')
-                    {
-                        $actions = "<a href='". base_url('lembur/laporan_lembur/').$row->id."' class='btn btn-link btn-warning btn-just-icon edit' target='_blank'><i class='material-icons'>dvr</i></a>";
-                    }else{
-                        $actions = "<a href='#' class='btn btn-link btn-warning btn-just-icon edit disabled'><i class='material-icons'>dvr</i></a>";
-                    }
+                //     if ($row->status=='9')
+                //     {
+                //         $actions = "<a href='". base_url('lembur/laporan_lembur/').$row->id."' class='btn btn-link btn-warning btn-just-icon edit' target='_blank'><i class='material-icons'>dvr</i></a>";
+                //     }else{
+                //         $actions = "<a href='#' class='btn btn-link btn-warning btn-just-icon edit disabled'><i class='material-icons'>dvr</i></a>";
+                //     }
     
                 $output['data'][] = array(
                     "id" => $row->id,
@@ -2447,7 +2448,7 @@ class Lembur extends CI_Controller
                     "dept" => $dept->nama,
                     "sect" => $sect->nama,
                     "catatan" => $row->catatan,
-                    "actions" => $actions
+                    "actions" => "<a href='". base_url('lembur/laporan_lembur/').$row->id."' class='btn btn-link btn-warning btn-just-icon edit' target='_blank'><i class='material-icons'>dvr</i></a>"
                 );
             }
             
