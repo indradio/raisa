@@ -2417,7 +2417,6 @@ class Lembur extends CI_Controller
 
             $this->db->where('tglmulai >=', $this->input->post('awal'));
             $this->db->where('tglmulai <=', $this->input->post('akhir'));
-            $this->db->where('status','9');
             $this->db->order_by('npk', 'ASC');
             $lembur = $this->db->get('lembur')->result();
     
@@ -2448,7 +2447,7 @@ class Lembur extends CI_Controller
                     "dept" => $dept->nama,
                     "sect" => $sect->nama,
                     "catatan" => $row->catatan,
-                    "action" => $actions
+                    "actions" => $actions
                 );
             }
             
