@@ -154,14 +154,16 @@
             scrollCollapse: true,
             dom: 'Bfrtip',
             buttons: [
-                'copy',
                 {
                     extend: 'excelHtml5',
                     title: 'LAPORAN LEMBUR',
                     text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
                     messageTop: 'Periode <?= date("d M Y", strtotime($periode['tglawal'])).' - '.date("d M Y", strtotime($periode['tglakhir'])); ?>',
                     footer: true
-                }
+                },
+                'copy',
+                'csv', 
+                'print'
             ],
             language: {
                 search: "_INPUT_",
