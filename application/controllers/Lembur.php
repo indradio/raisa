@@ -2709,6 +2709,7 @@ class Lembur extends CI_Controller
             $this->db->select('nama');
             $this->db->where('tglmulai >=',$from);
             $this->db->where('tglselesai <=', $to);
+            $this->db->where('kategori', 'OT');
             $this->db->where('status','9');
             $query = $this->db->get('lembur')->result();
             foreach ($query as $row) :
@@ -2717,9 +2718,19 @@ class Lembur extends CI_Controller
                 $this->db->where('nama', $row->nama);
                 $this->db->where('tglmulai >=',$from);
                 $this->db->where('tglselesai <=', $to);
+                $this->db->where('kategori', 'OT');
                 $this->db->where('status', '9');
                 $this->db->from('lembur');
-                $queryTotal = $this->db->get()->row()->total;
+                $queryJam = $this->db->get()->row()->total;
+
+                $this->db->select('SUM(tul) as total');
+                $this->db->where('nama', $row->nama);
+                $this->db->where('tglmulai >=',$from);
+                $this->db->where('tglselesai <=', $to);
+                $this->db->where('kategori', 'OT');
+                $this->db->where('status', '9');
+                $this->db->from('lembur');
+                $queryTul = $this->db->get()->row()->total;
 
                 $this->db->select('karyawan.*, karyawan_dept.*');
                 $this->db->where('karyawan.nama', $row->nama);
@@ -2729,7 +2740,8 @@ class Lembur extends CI_Controller
 
                 $output['data'][] = array(
                     'nama' => $row->nama,
-                    'total' => $queryTotal,
+                    'jam' => $queryJam,
+                    'tul' => $queryTul,
                     'dept' => $queryDept->nama
                 );
 

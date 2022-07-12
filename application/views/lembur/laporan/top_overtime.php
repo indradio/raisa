@@ -100,14 +100,16 @@
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
-                                        <th>Total</th>
+                                        <th>Jam</th>
+                                        <th>Tul</th>
                                         <th>Dept</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Nama</th>
-                                        <th>Total</th>
+                                        <th>Jam</th>
+                                        <th>Tul</th>
                                         <th>Dept</th>
                                     </tr>
                                 </tfoot>
@@ -165,7 +167,8 @@
                 },
             columns: [
                 { "data": "nama" },
-                { "data": "total" },
+                { "data": "jam" },
+                { "data": "tul" },
                 { "data": "dept" }
             ],
             // initComplete: function () {
