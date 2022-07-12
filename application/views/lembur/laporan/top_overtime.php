@@ -42,31 +42,56 @@
               $this->db->select('SUM(durasi) as total');
               $this->db->where('tglmulai >=',$from);
               $this->db->where('tglselesai <=', $to);
+              $this->db->where('kategori', 'OT');
               $this->db->where('status', '9');
               $this->db->from('lembur');
               $totalDurasi = $this->db->get()->row()->total;
+
+              $this->db->select('SUM(tul) as total');
+              $this->db->where('tglmulai >=',$from);
+              $this->db->where('tglselesai <=', $to);
+              $this->db->where('kategori', 'OT');
+              $this->db->where('status', '9');
+              $this->db->from('lembur');
+              $totalTul = $this->db->get()->row()->total;
             ?>
             <div class="col-md-3">
-                            <div class="card card-stats">
-                              <div class="card-header card-header-success card-header-icon">
-                                <div class="card-icon">
-                                  <i class="material-icons">more_time</i>
-                                </div>
-                                <p class="card-category">Total</p>
-                                <h3 class="card-title"><?= $totalDurasi; ?> <small>JAM</small></h3>
-                              </div>
-                              <div class="card-footer">
-                                <div class="stats">
-                                  <i class="material-icons">announcement</i> Total durasi LEMBUR belum dikurangi Istirahat.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">more_time</i>
+                    </div>
+                    <p class="card-category">Total</p>
+                    <h3 class="card-title"><?= $totalDurasi; ?> <small>JAM</small></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">announcement</i> Total durasi LEMBUR belum dikurangi Istirahat.
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">price_check</i>
+                    </div>
+                    <p class="card-category">Total</p>
+                    <h3 class="card-title"><?= $totalTul; ?> <small>TUL</small></h3>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">announcement</i> Total Upah Lembur.
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-text">
                             <h4 class="card-title">Laporan Lembur</h4>
                         </div>
