@@ -88,22 +88,27 @@ class Auth extends CI_Controller
                 } elseif ($karyawan['atasan1'] == 2) {
                     $this->db->where('posisi_id', $karyawan['atasan1']);
                     $this->db->where('div_id', $karyawan['div_id']);
+                    $this->db->where('is_active', '1');
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan1'] == 3) {
                     $this->db->where('posisi_id', $karyawan['atasan1']);
                     $this->db->where('dept_id', $karyawan['dept_id']);
+                    $this->db->where('is_active', '1');
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan1'] == 4) {
                     $this->db->where('posisi_id', $karyawan['atasan1']);
                     $this->db->where('dept_id', $karyawan['dept_id']);
+                    $this->db->where('is_active', '1');
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan1'] == 5) {
                     $this->db->where('posisi_id', $karyawan['atasan1']);
                     $this->db->where('sect_id', $karyawan['sect_id']);
+                    $this->db->where('is_active', '1');
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan1'] == 6) {
                     $this->db->where('posisi_id', $karyawan['atasan1']);
                     $this->db->where('sect_id', $karyawan['sect_id']);
+                    $this->db->where('is_active', '1');
                     $atasan1 = $this->db->get('karyawan')->row_array();
                 };
 
@@ -131,22 +136,27 @@ class Auth extends CI_Controller
                 } elseif ($karyawan['atasan2'] == 2) {
                     $this->db->where('posisi_id', $karyawan['atasan2']);
                     $this->db->where('div_id', $karyawan['div_id']);
+                    $this->db->where('is_active', '1');
                     $atasan2 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan2'] == 3) {
                     $this->db->where('posisi_id', $karyawan['atasan2']);
                     $this->db->where('dept_id', $karyawan['dept_id']);
+                    $this->db->where('is_active', '1');
                     $atasan2 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan2'] == 4) {
                     $this->db->where('posisi_id', $karyawan['atasan2']);
                     $this->db->where('dept_id', $karyawan['dept_id']);
+                    $this->db->where('is_active', '1');
                     $atasan2 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan2'] == 5) {
                     $this->db->where('posisi_id', $karyawan['atasan2']);
                     $this->db->where('sect_id', $karyawan['sect_id']);
+                    $this->db->where('is_active', '1');
                     $atasan2 = $this->db->get('karyawan')->row_array();
                 } elseif ($karyawan['atasan2'] == 6) {
                     $this->db->where('posisi_id', $karyawan['atasan2']);
                     $this->db->where('sect_id', $karyawan['sect_id']);
+                    $this->db->where('is_active', '1');
                     $atasan2 = $this->db->get('karyawan')->row_array();
                 };
 
