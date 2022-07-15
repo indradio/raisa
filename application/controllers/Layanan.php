@@ -224,11 +224,11 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🦠 *UPDATE INFORMASI COVID-19*" .
+                            'message' => "🦠 *BOOKING RUANG MEETING ONLINE*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nIndonesia mencatat sebanyak 1.173 kasus baru COVID-19 pada Kamis (16/6/2022). Total kasus aktif kini mencapai 6.668." .
-                            "\r\n*TETAP DISIPLIN JAGA PROTOKOL KESEHATAN*" .
-                            "\r\n_Sehat-sehat ya!_"
+                            "\r\nMengingatkan kembali, mulai sekarang sudah diaktifkan kembali penggunaan ruang meeting dengan booking terlebih dahulu di web." .
+                            "\r\nPenggunaan ruang yang tidak terjadwalkan di web maka dapat digantikan oleh pengguna yang sudah menjadwalkan di web." .
+                            "\r\n#Comeback Stronger!"
                         ],
                     ]
                 );
