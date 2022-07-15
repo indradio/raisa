@@ -224,7 +224,7 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "🦠 *BOOKING RUANG MEETING ONLINE*" .
+                            'message' => "*BOOKING RUANG MEETING ONLINE*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nMengingatkan kembali, mulai sekarang sudah diaktifkan kembali penggunaan ruang meeting dengan booking terlebih dahulu di web." .
                             "\r\nPenggunaan ruang yang tidak terjadwalkan di web maka dapat digantikan oleh pengguna yang sudah menjadwalkan di web." .
