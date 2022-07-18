@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtaktivitas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
                                         <tr>
                                             <th>Tanggal Mulai</th>
@@ -112,3 +112,28 @@
     <!-- end container-fluid-->
 </div>
 <!-- end content-->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dtaktivitas').DataTable( {
+            "pagingType": "full_numbers",
+            scrollX: true,
+            scrollCollapse: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy',
+                'csv',
+                {
+                    extend: 'excelHtml5',
+                    title: 'DATA JAM KERJA',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    messageTop: '',
+                    footer: true
+                }
+            ],
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
+    });
+</script>

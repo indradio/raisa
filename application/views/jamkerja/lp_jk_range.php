@@ -92,6 +92,7 @@
             dom: 'Bfrtip',
             buttons: [
                 'copy',
+                'csv',
                 {
                     extend: 'excelHtml5',
                     title: 'DATA JAM KERJA',
