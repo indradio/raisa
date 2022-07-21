@@ -37,7 +37,7 @@
           <div class="card-footer">
               <div class="row">
                   <div class="col-4 text-center">
-                      <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
+                      <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-facebook disabled">
                           <i class="fa fa-clock-o"></i>
                       </a>
                       <a class="card-title"><small>Riwayat</small></a>
@@ -49,7 +49,7 @@
                       <a class="card-title"><small>Masuk</small></a>
                   </div>
                   <div class="col-4 text-center">
-                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">
                           <i class="fa fa-sign-out"></i>
                       </a>
                       <a class="card-title"><small>Pulang</small></a>
@@ -227,28 +227,28 @@
                           <textarea rows="5" class="form-control" id="note" name="note" required="true"></textarea>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div id="accordion" role="tablist">
-                        <div class="card card-collapse">
-                          <div class="card-header" role="tab" id="headingPanduan">
-                            <h5 class="mb-0">
-                              <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
-                              Pastikan kamu membaca ketentuan ini:
-                                <i class="material-icons">keyboard_arrow_down</i>
-                              </a>
-                            </h5>
-                          </div>
-                          <div id="collapsePanduan" class="collapse show" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
-                            <div class="card-body">
-                              <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="bmd-label">1. Absen online dilakukan untuk semua absen yang tidak dilakukan di mesin winteq, tidak terkecuali untuk yang dinas luar menginap.</label></br>
-                                    <label class="bmd-label">2. Pastikan kamu sudah koordinasi dengan atasan terkait mengapa kamu melakukan absen online ini.</label></br>
-                                    <label class="bmd-label">3. Setelah kamu submit, selanjutnya Raisa akan meminta approval atasan kamu.</label></br>
-                                    <label class="bmd-label">4. Raisa tidak bertanggung jawab atas pengajuan kamu yang tidak kunjung disetujui atasan, kamu tetap harus proaktif menginfokan atasan kamu.</label></br>
-                                    <label class="bmd-label">5. Absen online yang tidak diapprove atasan dan sampai HR dalam 1x24 jam, maka akan otomatis hangus, kamu dan/atau atasan kamu harus membuat form penyimpangan yang ditandatangani sampai Kadiv.</label></br>
-                                    <label class="bmd-label">6. HR tidak menerima penyimpangan yang tidak ditandatangani Kadiv.</label></br>
+                      <div class="col-md-12 ml-auto mr-auto">
+                        <div id="accordion" role="tablist">
+                          <div class="card card-collapse">
+                            <div class="card-header" role="tab" id="headingPanduan">
+                              <h5 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
+                                  Pastikan kamu membaca ketentuan ini:
+                                  <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                              </h5>
+                            </div>
+                            <div id="collapsePanduan" class="collapse show" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
+                              <div class="card-body">
+                                <div class="col-md-12">
+                                  <div class="form-group">
+                                      <label class="bmd-label">1. Absen online dilakukan untuk semua absen yang tidak dilakukan di mesin winteq, tidak terkecuali untuk yang dinas luar menginap.</label></br>
+                                      <label class="bmd-label">2. Pastikan kamu sudah koordinasi dengan atasan terkait mengapa kamu melakukan absen online ini.</label></br>
+                                      <label class="bmd-label">3. Setelah kamu submit, selanjutnya Raisa akan meminta approval atasan kamu.</label></br>
+                                      <label class="bmd-label">4. Raisa tidak bertanggung jawab atas pengajuan kamu yang tidak kunjung disetujui atasan, kamu tetap harus proaktif menginfokan atasan kamu.</label></br>
+                                      <label class="bmd-label">5. Absen online yang tidak diapprove atasan dan sampai HR dalam 1x24 jam, maka akan otomatis hangus, kamu dan/atau atasan kamu harus membuat form penyimpangan yang ditandatangani sampai Kadiv.</label></br>
+                                      <label class="bmd-label">6. HR tidak menerima penyimpangan yang tidak ditandatangani Kadiv.</label></br>
+                                  </div>
                                 </div>
                               </div>
                             </div>
