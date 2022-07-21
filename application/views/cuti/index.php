@@ -217,7 +217,7 @@
                                           <label class="bmd-label">6. Karyawan yang melakukan cuti sebelum pengajuan cutinya disetujui pihak terkait, maka dianggap mangkir dan konsekuensinya akan mengikuti aturan perusahaan.</label></br>
                                           <label class="bmd-label">7. Permohonan cuti yang tidak diapprove sampai hari H, maka sistem langsung melakukan autoreject dan akan mengikuti ketentuan poin no 5 dan 6.</label></br>
                                       </div>
-                                  </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>

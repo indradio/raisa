@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <div class="alert alert-info alert-with-icon" data-notify="container">
+    <!-- <div class="alert alert-info alert-with-icon" data-notify="container">
       <i class="material-icons" data-notify="icon">notifications</i>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <i class="material-icons">close</i>
@@ -12,9 +12,55 @@
       <span data-notify="message">2. WFH Untuk kamu yang saat ini <strong>KERJA</strong> dari rumah</span>
       <span data-notify="message">3. OFF DAY Untuk kamu yang harus standby di rumah</span>
       <span data-notify="message">4. ISOMAN Untuk kamu yang sedang berjuang melawan COVID-19, Semangat!</span>
-    </div>
+    </div> -->
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-12 d-block d-sm-none ">
+        <div class="card card-product">
+              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img class="d-block w-100" src="<?= base_url(); ?>/assets/img/info/default.jpg" alt="First slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img class="d-block w-100" src="<?= base_url(); ?>/assets/img/info/default.jpg" alt="Second slide">
+                  </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+          <div class="card-footer">
+              <div class="row">
+                  <div class="col-4 text-center">
+                      <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
+                          <i class="fa fa-clock-o"></i>
+                      </a>
+                      <a class="card-title"><small>Riwayat</small></a>
+                  </div>
+                  <div class="col-4 text-center">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-success" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
+                          <i class="fa fa-sign-in"></i>
+                      </a>
+                      <a class="card-title"><small>Masuk</small></a>
+                  </div>
+                  <div class="col-4 text-center">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
+                          <i class="fa fa-sign-out"></i>
+                      </a>
+                      <a class="card-title"><small>Pulang</small></a>
+                  </div>
+              </div>
+          </div>
+        </div>
+          <!--  end card  -->
+      </div>  
+
+      <div class="col-md-3 d-none d-sm-block">
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <?php if ($workstate == 'not found'){ ?>
@@ -145,24 +191,24 @@
                       <div class="col-md-12 ml-auto mr-auto">
                         <div class="form-group has-default">  
                           <div class="btn-group-toggle" data-toggle="buttons">
-                              <!-- <label class="btn btn-default" id="labelOption1" style="width: 100%;">
-                                      <input type="radio" name="options" id="option1" autocomplete="off" value="SHIFT1" required>SHIFT1
-                                  </label> -->
-                              <label class="btn btn-default" id="labelOption2" style="width: 100%;">
-                                      <input type="radio" name="options" id="option2" autocomplete="off" value="SHIFT2" required>SHIFT2 (07:00-16:30)
+                              <label class="btn btn-default" id="labelOption1" style="width: 100%;">
+                                      <input type="radio" name="options" id="option1" autocomplete="off" value="SHIFT1" required>SHIFT 1
                                   </label>
-                              <!-- <label class="btn btn-default" id="labelOption3" style="width: 100%;">
-                                      <input type="radio" name="options" id="option3" autocomplete="off" value="SHIFT3" required>SHIFT3 (16:30-00:00)
-                                  </label> -->
+                              <label class="btn btn-default" id="labelOption2" style="width: 100%;">
+                                      <input type="radio" name="options" id="option2" autocomplete="off" value="SHIFT2" required>SHIFT 2
+                                  </label>
+                              <label class="btn btn-default" id="labelOption3" style="width: 100%;">
+                                      <input type="radio" name="options" id="option3" autocomplete="off" value="SHIFT3" required>SHIFT 3
+                                  </label>
                               <label class="btn btn-default" id="labelOption4" style="width: 100%;">
                                       <input type="radio" name="options" id="option4" autocomplete="off" value="WFH" required>WORK FROM HOME
                                   </label>
-                              <label class="btn btn-default" id="labelOption5" style="width: 100%;">
+                              <!-- <label class="btn btn-default" id="labelOption5" style="width: 100%;">
                                       <input type="radio" name="options" id="option5" autocomplete="off" value="OFF" required>OFF DAY
-                                  </label>
-                              <label class="btn btn-default" id="labelOption6" style="width: 100%;">
+                                  </label> -->
+                              <!-- <label class="btn btn-default" id="labelOption6" style="width: 100%;">
                                       <input type="radio" name="options" id="option6" autocomplete="off" value="ISOMAN" required>ISOMAN / QUARANTINE
-                                  </label>
+                                  </label> -->
                               <!-- <label class="btn btn-info">
                                       <input type="radio" name="options" id="option4" autocomplete="off" value="D" required>D
                                   </label>
@@ -177,8 +223,36 @@
                     <div class="row">
                       <div class="col-md-12 ml-auto mr-auto">
                         <div class="form-group">
-                          <label for="note" class="bmd-label-floating"> Catatan * <small><i>(yang akan/sudah kamu kerjakan hari ini atau kondisi kesehatan kamu)</i></small></label>
+                          <label for="note" class="bmd-label-floating"> Catatan * <small><i>(Alasan menggunakan absen online)</i></small></label>
                           <textarea rows="5" class="form-control" id="note" name="note" required="true"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div id="accordion" role="tablist">
+                        <div class="card card-collapse">
+                          <div class="card-header" role="tab" id="headingPanduan">
+                            <h5 class="mb-0">
+                              <a class="collapsed" data-toggle="collapse" href="#collapsePanduan" aria-expanded="false" aria-controls="collapsePanduan">
+                              Pastikan kamu membaca ketentuan ini:
+                                <i class="material-icons">keyboard_arrow_down</i>
+                              </a>
+                            </h5>
+                          </div>
+                          <div id="collapsePanduan" class="collapse show" role="tabpanel" aria-labelledby="headingPanduan" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label">1. Absen online dilakukan untuk semua absen yang tidak dilakukan di mesin winteq, tidak terkecuali untuk yang dinas luar menginap.</label></br>
+                                    <label class="bmd-label">2. Pastikan kamu sudah koordinasi dengan atasan terkait mengapa kamu melakukan absen online ini.</label></br>
+                                    <label class="bmd-label">3. Setelah kamu submit, selanjutnya Raisa akan meminta approval atasan kamu.</label></br>
+                                    <label class="bmd-label">4. Raisa tidak bertanggung jawab atas pengajuan kamu yang tidak kunjung disetujui atasan, kamu tetap harus proaktif menginfokan atasan kamu.</label></br>
+                                    <label class="bmd-label">5. Absen online yang tidak diapprove atasan dan sampai HR dalam 1x24 jam, maka akan otomatis hangus, kamu dan/atau atasan kamu harus membuat form penyimpangan yang ditandatangani sampai Kadiv.</label></br>
+                                    <label class="bmd-label">6. HR tidak menerima penyimpangan yang tidak ditandatangani Kadiv.</label></br>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -189,8 +263,8 @@
                         <span class="form-check-sign">
                           <span class="check"></span>
                         </span>
-                        <i><small>Dengan ini saya menyatakan telah memberikan lokasi dan waktu yang sesuai.</br>
-                          Saya siap diproses secara hukum yang berlaku jika terbukti memanipulasi data yang saya berikan</small></i>
+                        <i>Dengan ini saya menyatakan telah memberikan lokasi dan waktu yang sesuai.</br>
+                        Saya juga sudah membaca dan menyetujui ketentuan di atas. Segala pelanggaran akan ditindak sesuai peraturan yang berlaku.</i>
                       </label>
                     </div>
                   </div>
@@ -333,96 +407,96 @@
         marker.setMap(map);
     })
 
-    // var labelOption1 = document.getElementById('labelOption1');
+    var labelOption1 = document.getElementById('labelOption1');
     var labelOption2 = document.getElementById('labelOption2');
-    // var labelOption3 = document.getElementById('labelOption3');
+    var labelOption3 = document.getElementById('labelOption3');
     var labelOption4 = document.getElementById('labelOption4');
-    var labelOption5 = document.getElementById('labelOption5');
-    var labelOption6 = document.getElementById('labelOption6');
+    // var labelOption5 = document.getElementById('labelOption5');
+    // var labelOption6 = document.getElementById('labelOption6');
 
-    // var option1 = document.getElementById('option1');
-    // // when unchecked or checked, run the function
-    // option1.onchange = function() {
-    //   if (this.checked) {
-    //     document.getElementById('workstate').value = 'NORMAL';
-    //     labelOption1.style.background = '#00aec5';
-    //     labelOption2.style.background = '#999999';
-    //     labelOption3.style.background = '#999999';
-    //     labelOption4.style.background = '#999999';
-    //     labelOption5.style.background = '#999999';
-    //     labelOption6.style.background = '#999999';
-    //   }
-    // }
+    var option1 = document.getElementById('option1');
+    // when unchecked or checked, run the function
+    option1.onchange = function() {
+      if (this.checked) {
+        document.getElementById('workstate').value = 'NORMAL';
+        labelOption1.style.background = '#00aec5';
+        labelOption2.style.background = '#999999';
+        labelOption3.style.background = '#999999';
+        labelOption4.style.background = '#999999';
+        // labelOption5.style.background = '#999999';
+        // labelOption6.style.background = '#999999';
+      }
+    }
 
     var option2 = document.getElementById('option2');
     // when unchecked or checked, run the function
     option2.onchange = function() {
       if (this.checked) {
         document.getElementById('workstate').value = 'SHIFT2';
-        // labelOption1.style.background = '#999999';
+        labelOption1.style.background = '#999999';
         labelOption2.style.background = '#00aec5';
-        // labelOption3.style.background = '#999999';
+        labelOption3.style.background = '#999999';
         labelOption4.style.background = '#999999';
-        labelOption5.style.background = '#999999';
-        labelOption6.style.background = '#999999';
+        // labelOption5.style.background = '#999999';
+        // labelOption6.style.background = '#999999';
       }
     }
 
-    // var option3 = document.getElementById('option3');
-    // // when unchecked or checked, run the function
-    // option3.onchange = function() {
-    //   if (this.checked) {
-    //     document.getElementById('workstate').value = 'SHIFT3';
-    //     // labelOption1.style.background = '#999999';
-    //     labelOption2.style.background = '#999999';
-    //     labelOption3.style.background = '#00aec5';
-    //     labelOption4.style.background = '#999999';
-    //     labelOption5.style.background = '#999999';
-    //     labelOption6.style.background = '#999999';
-    //   }
-    // }
+    var option3 = document.getElementById('option3');
+    // when unchecked or checked, run the function
+    option3.onchange = function() {
+      if (this.checked) {
+        document.getElementById('workstate').value = 'SHIFT3';
+        labelOption1.style.background = '#999999';
+        labelOption2.style.background = '#999999';
+        labelOption3.style.background = '#00aec5';
+        labelOption4.style.background = '#999999';
+        // labelOption5.style.background = '#999999';
+        // labelOption6.style.background = '#999999';
+      }
+    }
 
     var option4 = document.getElementById('option4');
     // when unchecked or checked, run the function
     option4.onchange = function() {
       if (this.checked) {
         document.getElementById('workstate').value = 'WFH';
-        // labelOption1.style.background = '#999999';
+        labelOption1.style.background = '#999999';
         labelOption2.style.background = '#999999';
-        // labelOption3.style.background = '#999999';
+        labelOption3.style.background = '#999999';
         labelOption4.style.background = '#00aec5';
-        labelOption5.style.background = '#999999';
-        labelOption6.style.background = '#999999';
+        // labelOption5.style.background = '#999999';
+        // labelOption6.style.background = '#999999';
       }
     }
 
-    var option5 = document.getElementById('option5');
-    // when unchecked or checked, run the function
-    option5.onchange = function() {
-      if (this.checked) {
-        document.getElementById('workstate').value = 'OFF';
-        // labelOption1.style.background = '#999999';
-        labelOption2.style.background = '#999999';
-        // labelOption3.style.background = '#999999';
-        labelOption4.style.background = '#999999';
-        labelOption5.style.background = '#00aec5';
-        labelOption6.style.background = '#999999';
-      }
-    }
+    // var option5 = document.getElementById('option5');
+    // // when unchecked or checked, run the function
+    // option5.onchange = function() {
+    //   if (this.checked) {
+    //     document.getElementById('workstate').value = 'OFF';
+    //     labelOption1.style.background = '#999999';
+    //     labelOption2.style.background = '#999999';
+    //     labelOption3.style.background = '#999999';
+    //     labelOption4.style.background = '#999999';
+    //     labelOption5.style.background = '#00aec5';
+    //     labelOption6.style.background = '#999999';
+    //   }
+    // }
 
-    var option6 = document.getElementById('option6');
-    // when unchecked or checked, run the function
-    option6.onchange = function() {
-      if (this.checked) {
-        document.getElementById('workstate').value = 'ISOMAN';
-        // labelOption1.style.background = '#999999';
-        labelOption2.style.background = '#999999';
-        // labelOption3.style.background = '#999999';
-        labelOption4.style.background = '#999999';
-        labelOption5.style.background = '#999999';
-        labelOption6.style.background = '#00aec5';
-      }
-    }
+    // var option6 = document.getElementById('option6');
+    // // when unchecked or checked, run the function
+    // option6.onchange = function() {
+    //   if (this.checked) {
+    //     document.getElementById('workstate').value = 'ISOMAN';
+    //     labelOption1.style.background = '#999999';
+    //     labelOption2.style.background = '#999999';
+    //     labelOption3.style.background = '#999999';
+    //     labelOption4.style.background = '#999999';
+    //     labelOption5.style.background = '#999999';
+    //     labelOption6.style.background = '#00aec5';
+    //   }
+    // }
 
     setInterval(function() {
       var date = new Date();

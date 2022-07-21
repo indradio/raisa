@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+//load Spout Library
+require_once APPPATH.'third_party/spout/src/Spout/Autoloader/autoload.php';
+ 
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use Box\Spout\Reader\ReaderFactory;
+use Box\Spout\Common\Type;
 
 class Presensi extends CI_Controller
 {
@@ -37,7 +43,6 @@ class Presensi extends CI_Controller
         // } else {
         //     $flag = 'notime';
         // }
-    
         // $data['flag'] = $flag;
 
         $this->db->where('year(time)',$tahun);
@@ -58,29 +63,6 @@ class Presensi extends CI_Controller
         $this->load->view('templates/navbar', $data);
         $this->load->view('presensi/index', $data);
         $this->load->view('templates/footer');
-
-        // $this->db->where('year(time)',$tahun);
-        // $this->db->where('month(time)',$bulan);
-        // $this->db->where('day(time)',$tanggal);
-        // $this->db->where('npk',$this->session->userdata('npk'));
-        // $this->db->where('state','C/In');
-        // $presensi = $this->db->get('presensi')->row_array();
-        // if (empty($presensi)) 
-        // {
-        //     $this->load->view('templates/header', $data);
-        //     $this->load->view('templates/sidebar', $data);
-        //     $this->load->view('templates/navbar', $data);
-        //     $this->load->view('presensi/index', $data);
-        //     $this->load->view('templates/footer');
-        // }else{
-        //     $data['presensi'] = $presensi;
-        //     $this->load->view('templates/header', $data);
-        //     $this->load->view('templates/sidebar', $data);
-        //     $this->load->view('templates/navbar', $data);
-        //     $this->load->view('presensi/cout', $data);
-        //     $this->load->view('templates/footer');
-        // }
-
     }
 
     public function submit()
@@ -776,5 +758,143 @@ class Presensi extends CI_Controller
         }
         echo json_encode(array("events" => $data_events));
         exit();
+    }
+
+    public function upload($params=null)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($params==null){
+            $data['sidemenu'] = 'HR Presensi';
+            $data['sidesubmenu'] = 'Upload Data';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('presensi/upload', $data);
+            $this->load->view('templates/footer');
+        }elseif ($params=='import'){
+            //  ketika button submit diklik
+            //  if ($this->input->post('submit', TRUE) == 'upload') {
+            $config['upload_path']      = './assets/temp_excel/'; //siapkan path untuk upload file
+            $config['allowed_types']    = 'xlsx|xls'; //siapkan format file
+            $config['file_name']        = 'import_' . time(); //rename file yang diupload
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('data')) {
+                $this->load->helper('string');
+
+                //fetch data upload
+                $file   = $this->upload->data();
+
+                $reader = ReaderEntityFactory::createXLSXReader(); //buat xlsx reader
+                $reader->open('./assets/temp_excel/' . $file['file_name']); //open file xlsx yang baru saja diunggah
+
+                //looping pembaca sheet dalam file        
+                foreach ($reader->getSheetIterator() as $sheet) {
+                    $numRow = 1;
+
+                    //siapkan variabel array kosong untuk menampung variabel array data
+                    $save   = array();
+
+                    //looping pembacaan row dalam sheet
+                    foreach ($sheet->getRowIterator() as $row) {
+
+                        if ($numRow > 1) {
+                            //ambil cell
+                            $cells = $row->getCells();
+
+                            $person = $this->db->get_where('karyawan', ['npk' => $cells[0]])->row();
+                            $id = date('ymd').$cells[0].random_string('alnum',3);
+                            $date = date('Y-m-d',strtotime($cells[1]));
+                            $time = date('Y-m-d H:i:s',strtotime($cells[1]));
+                            
+                            if (date('D', strtotime($this->input->post('tglmulai'))) == 'Sat' OR date('D', strtotime($this->input->post('tglmulai'))) == 'Sun') 
+                            {
+                                $hari = 'LIBUR';
+                            }else{
+                                $event = $this->db->get_where('calendar_event_details', ['date' => date('Y-m-d', strtotime($this->input->post('tglmulai')))])->row_array();
+                                if (empty($event))
+                                {
+                                    $hari = 'KERJA';
+                                }else{
+                                    $hari = $event['category'];
+                                }
+                            }
+
+                            if ($person)
+                            {
+
+                                $data = array(
+                                    'id'            => $id,
+                                    'date'          => $date,
+                                    'time'          => $time,
+                                    'npk'           => $cells[0],
+                                    'nama'          => $person->nama,
+                                    'state'         => $cells[2],
+                                    'work_state'    => $cells[3],
+                                    'div_id'        => $person->div_id,
+                                    'dept_id'       => $person->dept_id,
+                                    'sect_id'       => $person->sect_id,
+                                    'approved_at'   => date('Y-m-d H:i:s'),
+                                    'approved_by'   => $this->session->userdata('inisial'),
+                                    'hr_at'         => date('Y-m-d H:i:s'),
+                                    'hr_by'         => $this->session->userdata('inisial'),
+                                    'status'        => '1'
+                                );
+                         
+                                //simpan data ke database
+                                $this->db->insert('presensi', $data);
+                            }
+                        }
+
+                        $numRow++;
+                    }
+                    //simpan data ke database all
+                    // $this->db->insert_batch('project', $save);
+
+                    //tutup spout reader
+                    $reader->close();
+
+                    //hapus file yang sudah diupload
+                    unlink('./assets/temp_excel/' . $file['file_name']);
+
+                    //tampilkan pesan success dan redirect ulang ke index controller import
+                    echo    '<script type="text/javascript">
+                            alert(\'Data berhasil disimpan\');
+                            window.location.replace("' . base_url() . '");
+                        </script>';
+                }
+            }
+            redirect('presensi/upload');
+        }
+    }
+
+    public function get_data($params=null)
+    {
+        if ($params=='monthly')
+        {
+            $this->db->where('year(time)', $this->input->post('tahun'));
+            $this->db->where('month(time)', $this->input->post('bulan'));
+            $this->db->order_by('time', 'DESC');
+            $presensi = $this->db->get('presensi')->result();
+    
+            foreach ($presensi as $row) {
+                $output['data'][] = array(
+                    "id" => $row->id,
+                    "npk" => $row->npk,
+                    "name" => $row->nama,
+                    "date" => date('d-m-Y', strtotime($row->time)),
+                    "time" => date('H:i', strtotime($row->time)),
+                    "shift" => $row->work_state,
+                    "status" => $row->state
+                );
+            }
+            
+            echo json_encode($output);
+            exit();
+        }
+        
     }
 }
