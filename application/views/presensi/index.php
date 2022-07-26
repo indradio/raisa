@@ -290,7 +290,7 @@
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
-    }
+    };
 
     function showPosition(position) {
       // x.innerHTML = "Latitude: " + position.coords.latitude +
@@ -354,11 +354,8 @@
       } else {
         sendbtn.disabled = true;
       }
-    }
-  });
-
-  $(document).ready(function() {
-
+    };
+ 
     $('#clockTime').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
         var state = button.data('state')
@@ -405,7 +402,7 @@
         });
 
         marker.setMap(map);
-    })
+    });
 
     var labelOption1 = document.getElementById('labelOption1');
     var labelOption2 = document.getElementById('labelOption2');

@@ -689,16 +689,70 @@ class Cuti extends CI_Controller
         $data['sidesubmenu'] = 'Laporan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         
-        if($this->input->post('bulan')){
-            $data['tahun'] = $this->input->post('tahun');
-            $data['bulan'] = $this->input->post('bulan');
+        // if($this->input->post('bulan')){
+        //     $data['tahun'] = $this->input->post('tahun');
+        //     $data['bulan'] = $this->input->post('bulan');
+        // }else{
+        //     $data['tahun'] = date('Y');
+        //     $data['bulan'] = date('m');
+        // }
+
+        if($this->input->post('tglawal')){
+            $data['tglawal']  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+            $data['tglakhir'] = date('Y-m-d', strtotime($this->input->post('tglakhir')));
         }else{
-            $data['tahun'] = date('Y');
-            $data['bulan'] = date('m');
+            $data['tglawal']  = date('Y-m-1');
+            $data['tglakhir'] = date('Y-m-31');
         }
         
-        $this->db->where('year(tgl1)', $data['tahun']);
-        $this->db->where('month(tgl1)', $data['bulan']);
+        $data['range'] = [
+            'tglawal'   => $data['tglawal'],
+            'tglakhir'  => $data['tglakhir']
+        ];
+        
+        $this->db->where('tgl1 >=', $data['tglawal']);
+        $this->db->where('tgl2 <=', $data['tglakhir']);
+        $this->db->where('status >', 0);
+        $data['cuti'] = $this->db->get_where('cuti')->result();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/report/lap-index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hr_report_saldo()
+    {
+        date_default_timezone_set('asia/jakarta');
+        
+        $data['sidemenu'] = 'HR Cuti';
+        $data['sidesubmenu'] = 'Laporan';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        
+        // if($this->input->post('bulan')){
+        //     $data['tahun'] = $this->input->post('tahun');
+        //     $data['bulan'] = $this->input->post('bulan');
+        // }else{
+        //     $data['tahun'] = date('Y');
+        //     $data['bulan'] = date('m');
+        // }
+
+        if($this->input->post('tglawal')){
+            $data['tglawal']  = date('Y-m-d', strtotime($this->input->post('tglawal')));
+            $data['tglakhir'] = date('Y-m-d', strtotime($this->input->post('tglakhir')));
+        }else{
+            $data['tglawal']  = date('Y-m-1');
+            $data['tglakhir'] = date('Y-m-31');
+        }
+        
+        $data['range'] = [
+            'tglawal'   => $data['tglawal'],
+            'tglakhir'  => $data['tglakhir']
+        ];
+        
+        $this->db->where('tgl1 >=', $data['tglawal']);
+        $this->db->where('tgl2 <=', $data['tglakhir']);
         $this->db->where('status >', 0);
         $data['cuti'] = $this->db->get_where('cuti')->result();
 

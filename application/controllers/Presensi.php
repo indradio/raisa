@@ -492,67 +492,61 @@ class Presensi extends CI_Controller
             $this->load->view('presensi/persetujuan', $data);
             $this->load->view('templates/footer');
         }elseif ($params1=='1' and $params2=='submit'){
-            if (!empty($id)){
-                if ($id=='all'){
-                    $presensi = $this->db->where('status', '1');
-                    $presensi = $this->db->get_where('presensi', ['atasan1' => $this->session->userdata('inisial')])->result_array();
-
-                    foreach ($presensi as $row) :
+                if ($this->input->post('id')=='all'){
                         $this->db->set('approved_by', "Disetujui oleh " . $this->session->userdata['inisial']);
                         $this->db->set('approved_at', date('Y-m-d H:i:s'));
-                        $this->db->set('status', '2');
-                        $this->db->where('id', $row['id']);
+                        $this->db->set('status', '9');
+                        $this->db->where('atasan1', $this->session->userdata['inisial']);
+                        $this->db->where('status', '1');
                         $this->db->update('presensi');
-                    endforeach;
                 }else{
-                    $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
-                    if (!empty($presensi)){
+                    // $presensi = $this->db->get_where('presensi', ['id' => $this->input->post('id')])->row_array();
+                    // if (!empty($presensi)){
                         $this->db->set('approved_by', "Disetujui oleh " . $this->session->userdata['inisial']);
                         $this->db->set('approved_at', date('Y-m-d H:i:s'));
-                        $this->db->set('status', '2');
-                        $this->db->where('id', $id);
+                        $this->db->set('status', '9');
+                        $this->db->where('id', $this->input->post('id'));
                         $this->db->update('presensi');
-                    }
+                    // }
                 }
-                $this->session->set_flashdata('message', 'terimakasih');
-            }
-            redirect('presensi/persetujuan/1/list');
-        }elseif ($params1=='2' and $params2=='list' ){
-            $data['sidemenu'] = 'HP Presensi';
-            $data['sidesubmenu'] = 'Persetujuan Presensi';
-            $data['params1'] = $params1;
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-            $data['presensi'] = $this->db->get_where('presensi', ['status' => 2])->result_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('presensi/persetujuan', $data);
-            $this->load->view('templates/footer');
-        }elseif ($params1=='2' and $params2=='submit'){
-            if (!empty($id)){
-                if ($id=='all'){
-                    $presensi = $this->db->get_where('presensi', ['status' => 2])->result_array();
+                // $this->session->set_flashdata('message', 'terimakasih');
+                // redirect('presensi/persetujuan/1/list');
+        // }elseif ($params1=='2' and $params2=='list' ){
+        //     $data['sidemenu'] = 'HP Presensi';
+        //     $data['sidesubmenu'] = 'Persetujuan Presensi';
+        //     $data['params1'] = $params1;
+        //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        //     $data['presensi'] = $this->db->get_where('presensi', ['status' => 2])->result_array();
+        //     $this->load->view('templates/header', $data);
+        //     $this->load->view('templates/sidebar', $data);
+        //     $this->load->view('templates/navbar', $data);
+        //     $this->load->view('presensi/persetujuan', $data);
+        //     $this->load->view('templates/footer');
+        // }elseif ($params1=='2' and $params2=='submit'){
+        //     if (!empty($id)){
+        //         if ($id=='all'){
+        //             $presensi = $this->db->get_where('presensi', ['status' => 2])->result_array();
 
-                    foreach ($presensi as $row) :
-                        $this->db->set('hr_by', "Disetujui oleh " . $this->session->userdata['inisial']);
-                        $this->db->set('hr_at', date('Y-m-d H:i:s'));
-                        $this->db->set('status', '9');
-                        $this->db->where('id', $row['id']);
-                        $this->db->update('presensi');
-                    endforeach;
-                }else{
-                    $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
-                    if (!empty($presensi)){
-                        $this->db->set('hr_by', "Disetujui oleh " . $this->session->userdata['inisial']);
-                        $this->db->set('hr_at', date('Y-m-d H:i:s'));
-                        $this->db->set('status', '9');
-                        $this->db->where('id', $id);
-                        $this->db->update('presensi');
-                    }
-                }
-                $this->session->set_flashdata('message', 'terimakasih');
-            }
-            redirect('presensi/persetujuan/2/list');
+        //             foreach ($presensi as $row) :
+        //                 $this->db->set('hr_by', "Disetujui oleh " . $this->session->userdata['inisial']);
+        //                 $this->db->set('hr_at', date('Y-m-d H:i:s'));
+        //                 $this->db->set('status', '9');
+        //                 $this->db->where('id', $row['id']);
+        //                 $this->db->update('presensi');
+        //             endforeach;
+        //         }else{
+        //             $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
+        //             if (!empty($presensi)){
+        //                 $this->db->set('hr_by', "Disetujui oleh " . $this->session->userdata['inisial']);
+        //                 $this->db->set('hr_at', date('Y-m-d H:i:s'));
+        //                 $this->db->set('status', '9');
+        //                 $this->db->where('id', $id);
+        //                 $this->db->update('presensi');
+        //             }
+        //         }
+        //         $this->session->set_flashdata('message', 'terimakasih');
+        //     }
+        //     redirect('presensi/persetujuan/2/list');
         }else{
             redirect('error404');
         }
@@ -713,6 +707,43 @@ class Presensi extends CI_Controller
                     "shift" => $row->work_state,
                     "status" => $row->state
                 );
+            }
+            
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='persetujuan')
+        {
+            if ($this->session->userdata('posisi_id')=='2'){
+                $this->db->where('status', '1');
+                $this->db->where('div_id', $this->session->userdata('div_id'));
+                $this->db->order_by('time', 'ASC');
+            } elseif ($this->session->userdata('posisi_id')=='3'){
+                $this->db->where('status', '1');
+                $this->db->where('dept_id', $this->session->userdata('dept_id'));
+                $this->db->order_by('time', 'ASC');
+            } elseif ($this->session->userdata('posisi_id')=='5' or $this->session->userdata('posisi_id')=='6'){
+                $this->db->where('status', '1');
+                $this->db->where('sect_id', $this->session->userdata('sect_id'));
+                $this->db->order_by('time', 'ASC');
+            }
+            $presensi = $this->db->get('presensi')->result();
+
+            if (!empty($presensi)){
+    
+                foreach ($presensi as $row) {
+                    $output['data'][] = array(
+                        "nama" => $row->nama,
+                        "date" => date('d-m-Y', strtotime($row->time)),
+                        "time" => date('H:i', strtotime($row->time)),
+                        "flag" => $row->state,
+                        "shift" => $row->work_state,
+                        "catatan" => $row->description,
+                        "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#approveAbsen' data-id='".$row->id."'><i class='material-icons'>check</i></button>
+                                    <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#rejectAbsen' data-id='".$row->id."'><i class='material-icons'>clear</i></button>"
+                    );
+                }
+            } else {
+                
             }
             
             echo json_encode($output);
