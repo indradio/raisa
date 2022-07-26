@@ -124,9 +124,9 @@ class Auth extends CI_Controller
                     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
                 }
 
-                if ($atasan1['inisial']=='EJU') {
-                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
-                }
+                // if ($atasan1['inisial']=='EJU') {
+                //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
+                // }
                 
                 //cari atasan 2
                 if ($karyawan['atasan2'] == 0) {
@@ -168,9 +168,9 @@ class Auth extends CI_Controller
                     $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
                 }
 
-                if ($atasan2['inisial']=='EJU') {
-                    $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
-                }
+                // if ($atasan2['inisial']=='EJU') {
+                //     $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
+                // }
 
                 $data = [
                     'npk' => $karyawan['npk'],
