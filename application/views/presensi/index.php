@@ -415,7 +415,7 @@
     // when unchecked or checked, run the function
     option1.onchange = function() {
       if (this.checked) {
-        document.getElementById('workstate').value = 'NORMAL';
+        document.getElementById('workstate').value = 'SHIFT1';
         labelOption1.style.background = '#00aec5';
         labelOption2.style.background = '#999999';
         labelOption3.style.background = '#999999';

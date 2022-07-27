@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
-      <!-- 1. Notification -->
+    <!-- 1. Notification -->
       <!-- <div class="row">
         <div class="col-md-12">
           <div class="alert alert-default" role="alert">
@@ -593,6 +593,47 @@
     </div>
     <!-- end Perjalanan -->
 
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Absensi hari ini</h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar"> </div>
+            <div class="material-datatables">
+              <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Jam</th>
+                    <th>Shift</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Jam</th>
+                    <th>Shift</th>
+                    <th>Status</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <!-- end card body-->
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+
   </div>
   <!-- end container-fluid -->
 </div>
@@ -801,6 +842,28 @@
         // });
        
      <?php }; ?>
+
+    $('#dtpresensi').DataTable({
+      "pagingType": "full_numbers",
+      "ordering": false,
+      scrollX: true,
+      language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Search records",
+      },
+      serverSide: false,
+      processing: true,
+      ajax: {
+              "url"   : "<?= site_url('presensi/get_data/today') ?>",
+              "type"  : "POST",
+          },
+      columns: [
+        { "data":"name"},
+        { "data":"time"},
+        { "data":"shift"},
+        { "data":"status"}
+      ],
+    });
 
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal

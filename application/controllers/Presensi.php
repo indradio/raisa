@@ -690,7 +690,40 @@ class Presensi extends CI_Controller
 
     public function get_data($params=null)
     {
-        if ($params=='monthly')
+        if ($params=='today')
+        {
+            $this->db->where('date', date('Y-m-d'));
+            $this->db->order_by('time', 'DESC');
+            $presensi = $this->db->get('presensi')->result();
+            if (!empty($presensi))
+            {
+                foreach ($presensi as $row) {
+
+                if ($row->state == "C/In"){
+                    $state = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
+                }else{
+                    $state = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
+                }
+                    $output['data'][] = array(
+                        "name" => $row->nama,
+                        "time" => date('H:i', strtotime($row->time)),
+                        "shift" => $row->work_state,
+                        "status" => $state
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "name" => '',
+                    "time" => 'There are no data to display.',
+                    "shift" => '',
+                    "status" => ''
+                );
+            }
+
+            echo json_encode($output);
+            exit();
+
+        } elseif ($params=='monthly')
         {
             $this->db->where('year(time)', $this->input->post('tahun'));
             $this->db->where('month(time)', $this->input->post('bulan'));
@@ -713,17 +746,24 @@ class Presensi extends CI_Controller
             exit();
         }elseif ($params=='persetujuan')
         {
-            if ($this->session->userdata('posisi_id')=='2'){
+            if ($this->session->userdata('posisi_id')=='2')
+            {
                 $this->db->where('status', '1');
                 $this->db->where('div_id', $this->session->userdata('div_id'));
                 $this->db->order_by('time', 'ASC');
-            } elseif ($this->session->userdata('posisi_id')=='3'){
+            } elseif ($this->session->userdata('posisi_id')=='3')
+            {
                 $this->db->where('status', '1');
                 $this->db->where('dept_id', $this->session->userdata('dept_id'));
                 $this->db->order_by('time', 'ASC');
-            } elseif ($this->session->userdata('posisi_id')=='5' or $this->session->userdata('posisi_id')=='6'){
+            } elseif ($this->session->userdata('posisi_id')=='5' or $this->session->userdata('posisi_id')=='6')
+            {
                 $this->db->where('status', '1');
                 $this->db->where('sect_id', $this->session->userdata('sect_id'));
+                $this->db->order_by('time', 'ASC');
+            } else {
+                $this->db->where('status', '1');
+                $this->db->where('atasan1', $this->session->userdata('inisial'));
                 $this->db->order_by('time', 'ASC');
             }
             $presensi = $this->db->get('presensi')->result();
@@ -742,8 +782,17 @@ class Presensi extends CI_Controller
                                     <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#rejectAbsen' data-id='".$row->id."'><i class='material-icons'>clear</i></button>"
                     );
                 }
+
             } else {
-                
+                $output['data'][] = array(
+                    "nama" => "",
+                    "date" => "",
+                    "time" => "",
+                    "flag" => "Empty",
+                    "shift" => "",
+                    "catatan" => "",
+                    "action" => ""
+                );
             }
             
             echo json_encode($output);
