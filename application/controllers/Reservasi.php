@@ -542,6 +542,7 @@ class Reservasi extends CI_Controller
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
             $this->db->where('posisi_id', '3');
+            $this->db->where('is_active', '1');
             $this->db->where('dept_id', $this->session->userdata('dept_id'));
             $ka_dept = $this->db->get('karyawan')->row_array();
 
