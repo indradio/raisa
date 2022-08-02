@@ -710,7 +710,7 @@ class Cuti extends CI_Controller
             'tglakhir'  => $data['tglakhir']
         ];
         
-        $this->db->where('tgl1 >=', $data['tglawal']);
+        $this->db->where('tgl2 >=', $data['tglawal']);
         $this->db->where('tgl1 <=', $data['tglakhir']);
         $this->db->where('status >', 0);
         $data['cuti'] = $this->db->get_where('cuti')->result();
