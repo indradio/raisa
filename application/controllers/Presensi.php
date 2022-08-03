@@ -80,7 +80,7 @@ class Presensi extends CI_Controller
         }
         
         //State convert to Decimal
-        ($this->input->post('state') == 'C/In') ? $state = '1' : $state = '0';
+        ($this->input->post('state') == 'In') ? $state = '1' : $state = '0';
         
         $id = date('ymd') . $this->session->userdata('inisial') . $state;
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
@@ -104,6 +104,7 @@ class Presensi extends CI_Controller
                     'sect_id'       => $this->session->userdata('sect_id'),
                     'atasan1'       => $atasan1['inisial'],
                     'day_state'     => $day,
+                    'status'        => '1',
                     'description'   => $this->input->post('description')
                 ];
 
@@ -692,14 +693,32 @@ class Presensi extends CI_Controller
     {
         if ($params=='today')
         {
-            $this->db->where('date', date('Y-m-d'));
-            $this->db->order_by('time', 'DESC');
-            $presensi = $this->db->get('presensi')->result();
+            if ($this->session->userdata('posisi_id') == 1){
+                $this->db->where('date', date('Y-m-d'));
+                $this->db->order_by('time', 'DESC');
+                $presensi = $this->db->get('presensi')->result();
+            }elseif ($this->session->userdata('posisi_id') == 2) {
+                $this->db->where('date', date('Y-m-d'));
+                $this->db->where('div_id', $this->session->userdata('div_id'));
+                $this->db->order_by('time', 'DESC');
+                $presensi = $this->db->get('presensi')->result();
+            }elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 4) {
+                $this->db->where('date', date('Y-m-d'));
+                $this->db->where('dept_id', $this->session->userdata('dept_id'));
+                $this->db->order_by('time', 'DESC');
+                $presensi = $this->db->get('presensi')->result();
+            }else {
+                $this->db->where('date', date('Y-m-d'));
+                $this->db->where('sect_id', $this->session->userdata('sect_id'));
+                $this->db->order_by('time', 'DESC');
+                $presensi = $this->db->get('presensi')->result();
+            }
+            
             if (!empty($presensi))
             {
                 foreach ($presensi as $row) {
 
-                if ($row->state == "C/In"){
+                if ($row->state == "In"){
                     $state = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
                 }else{
                     $state = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
@@ -779,7 +798,7 @@ class Presensi extends CI_Controller
                         "shift" => $row->work_state,
                         "catatan" => $row->description,
                         "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' data-target='#approveAbsen' data-id='".$row->id."'><i class='material-icons'>check</i></button>
-                                    <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#rejectAbsen' data-id='".$row->id."'><i class='material-icons'>clear</i></button>"
+                                     <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#rejectAbsen' data-id='".$row->id."'><i class='material-icons'>clear</i></button>"
                     );
                 }
 
