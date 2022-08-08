@@ -767,21 +767,21 @@ class Presensi extends CI_Controller
         {
             if ($this->session->userdata('posisi_id')=='2')
             {
-                $this->db->where('status', '1');
                 $this->db->where('div_id', $this->session->userdata('div_id'));
                 $this->db->or_where('atasan1', $this->session->userdata('inisial'));
+                $this->db->where('status', '1');
                 $this->db->order_by('time', 'ASC');
             } elseif ($this->session->userdata('posisi_id')=='3')
             {
-                $this->db->where('status', '1');
                 $this->db->where('dept_id', $this->session->userdata('dept_id'));
                 $this->db->or_where('atasan1', $this->session->userdata('inisial'));
+                $this->db->where('status', '1');
                 $this->db->order_by('time', 'ASC');
             } elseif ($this->session->userdata('posisi_id')=='5' or $this->session->userdata('posisi_id')=='6')
             {
-                $this->db->where('status', '1');
                 $this->db->where('sect_id', $this->session->userdata('sect_id'));
                 $this->db->or_where('atasan1', $this->session->userdata('inisial'));
+                $this->db->where('status', '1');
                 $this->db->order_by('time', 'ASC');
             } else {
                 $this->db->where('status', '1');
