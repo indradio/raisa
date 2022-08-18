@@ -164,6 +164,13 @@ class Layanan extends CI_Controller
         $data['sidemenu'] = 'Layanan';
         $data['sidesubmenu'] = 'Broadcast';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        $data['lastA'] = $this->db->get_where('log_broadcast', ['group' => 'A'])->row_array();
+        $data['lastB'] = $this->db->get_where('log_broadcast', ['group' => 'B'])->row_array();
+        $data['lastC'] = $this->db->get_where('log_broadcast', ['group' => 'C'])->row_array();
+        $data['lastD'] = $this->db->get_where('log_broadcast', ['group' => 'D'])->row_array();
+        $data['lastE'] = $this->db->get_where('log_broadcast', ['group' => 'E'])->row_array();
+        $data['lastF'] = $this->db->get_where('log_broadcast', ['group' => 'F'])->row_array();
+      
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -179,32 +186,61 @@ class Layanan extends CI_Controller
             $this->db->where('status', '1');
             $this->db->where('group', 'A');
             $karyawan = $this->db->get('karyawan')->result_array();
+
+            $this->db->set('last_sent', date('Y-m-d H:i:s'));
+            $this->db->where('group', 'A');
+            $this->db->update('log_broadcast');
+
         } elseif ($parameter == 'B') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'B');
             $karyawan = $this->db->get('karyawan')->result_array();
+
+            $this->db->set('last_sent', date('Y-m-d H:i:s'));
+            $this->db->where('group', 'B');
+            $this->db->update('log_broadcast');
+
         } elseif ($parameter == 'C') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'C');
-            // $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
+
+            $this->db->set('last_sent', date('Y-m-d H:i:s'));
+            $this->db->where('group', 'C');
+            $this->db->update('log_broadcast');
+
         } elseif ($parameter == 'D') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'D');
             $karyawan = $this->db->get('karyawan')->result_array();
+
+            $this->db->set('last_sent', date('Y-m-d H:i:s'));
+            $this->db->where('group', 'D');
+            $this->db->update('log_broadcast');
+
         } elseif ($parameter == 'E') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'E');
             $karyawan = $this->db->get('karyawan')->result_array();
+
+            $this->db->set('last_sent', date('Y-m-d H:i:s'));
+            $this->db->where('group', 'E');
+            $this->db->update('log_broadcast');
+
         } elseif ($parameter == 'F') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
             $this->db->where('group', 'F');
             $karyawan = $this->db->get('karyawan')->result_array();
+
+            $this->db->set('last_sent', date('Y-m-d H:i:s'));
+            $this->db->where('group', 'F');
+            $this->db->update('log_broadcast');
+            
         } elseif ($parameter == 'Z') {
             $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
@@ -224,11 +260,20 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*BOOKING RUANG MEETING ONLINE*" .
+                            'message' => "*WINTEQ DAY IS COME*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nMengingatkan kembali, mulai sekarang sudah diaktifkan kembali penggunaan ruang meeting dengan booking terlebih dahulu di web." .
-                            "\r\nPenggunaan ruang yang tidak terjadwalkan di web maka dapat digantikan oleh pengguna yang sudah menjadwalkan di web." .
-                            "\r\n#Comeback Stronger!"
+                            "\r\nSalam olahraga dan salam sehat selalu. Kepada seluruh Karyawan diwajibkan untuk mengikuti Winteq Day yang akan dilaksanakan pada :" .
+                            "\r\n \r\nHari / Tanggal : Sabtu, 20 Agustus 2022" .
+                            "\r\nWaktu			: 07.30- 16.30 WIB" .
+                            "\r\nTempat 			: ITC CIBINONG - HALL FUTSAL & BADMINTON" .
+                            "\r\n \r\n*PENTING!*" .
+                            "\r\nSeluruh karyawan yang hadir pada kegiatan tersebut akan mendapat tambahan Tabungan Cuti dan Tunjangan Transport dengan ketentuan :" .
+                            "\r\n1. Karyawan wajib absen pada saat datang dan pulang (absensi disiapkan oleh panitia)." .
+                            "\r\n2. Bagi karyawan yang absen hanya pada saat datang dan atau pulang, maka tidak berhak untuk mendapatkan tambahan Tabungan Cuti dan Tunjangan Transport." .
+                            "\r\n \r\nDemikian informasi ini kami sampaikan." .
+                            "\r\n \r\nHormat Kami," .
+                            "\r\nPanitia WINTEQ DAY 2022" .
+                            "\r\n#ComebackStronger #WinteqDay2022"
                         ],
                     ]
                 );

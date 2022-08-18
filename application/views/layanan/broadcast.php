@@ -12,16 +12,22 @@
           </div>
           <div class="card-body">
             <a href="<?= base_url('layanan/broadcast_send/A'); ?>" class="btn btn-info">Group A</a>
+            <label class="col-md-2 col-form-label">Last Sent : <?= $lastA['last_sent'];?></label>
             </br>
             <a href="<?= base_url('layanan/broadcast_send/B'); ?>" class="btn btn-twitter">Group B</a>
+            <label class="col-md-2 col-form-label">Last Sent : <?= $lastB['last_sent'];?></label>
             </br>
             <a href="<?= base_url('layanan/broadcast_send/C'); ?>" class="btn btn-linkedin">Group C</a>
+            <label class="col-md-2 col-form-label">Last Sent : <?= $lastC['last_sent'];?></label>
             </br>
             <a href="<?= base_url('layanan/broadcast_send/D'); ?>" class="btn btn-facebook">Group D</a>
+            <label class="col-md-2 col-form-label">Last Sent : <?= $lastD['last_sent'];?></label>
             </br>
             <a href="<?= base_url('layanan/broadcast_send/E'); ?>" class="btn btn-tumblr">Group E</a>
+            <label class="col-md-2 col-form-label">Last Sent : <?= $lastE['last_sent'];?></label>
             </br>
             <a href="<?= base_url('layanan/broadcast_send/F'); ?>" class="btn btn-github">Group F</a>
+            <label class="col-md-2 col-form-label">Last Sent : <?= $lastF['last_sent'];?></label>
             </br>
             <!-- </br>
             <a href="<?= base_url('presensi/notifikasi/sect'); ?>" class="btn btn-info">Notifikasi for Sect/RDA</a>
