@@ -260,16 +260,18 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*WINTEQ DAY IS COME*" .
+                            'message' => "*REMINDER!! WINTEQ DAY IS COME*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nSalam olahraga dan salam sehat selalu. Kepada seluruh Karyawan diwajibkan untuk mengikuti Winteq Day yang akan dilaksanakan pada :" .
                             "\r\n \r\nHari / Tanggal : Sabtu, 20 Agustus 2022" .
-                            "\r\nWaktu			: 07.30- 16.30 WIB" .
-                            "\r\nTempat 			: ITC CIBINONG - HALL FUTSAL & BADMINTON" .
-                            "\r\n \r\n*PENTING!*" .
-                            "\r\nSeluruh karyawan yang hadir pada kegiatan tersebut akan mendapat tambahan Tabungan Cuti dan Tunjangan Transport dengan ketentuan :" .
-                            "\r\n1. Karyawan wajib absen pada saat datang dan pulang (absensi disiapkan oleh panitia)." .
-                            "\r\n2. Bagi karyawan yang absen hanya pada saat datang dan atau pulang, maka tidak berhak untuk mendapatkan tambahan Tabungan Cuti dan Tunjangan Transport." .
+                            "\r\nWaktu  : 07.30- 16.30 WIB" .
+                            "\r\nTempat : ITC CIBINONG - HALL FUTSAL & BADMINTON" .
+                            "\r\nBADMINTON https://goo.gl/maps/fQL45A1qz83m2R8Z7" .
+                            "\r\n \r\n*INFORMASI!*" .
+                            "\r\n1. Outfit bebas dengan tema sporty (sopan dan rapi)." .
+                            "\r\n2. Absensi berangkat dan pulang dilakukan di venue (ITC CIBINONG)." .
+                            "\r\n3. Struk parkir akan dicap oleh panitia ketika absen pulang untuk dapat parkir gratis." .
+                            "\r\n4. Pintu masuk motor dan mobil lewat samping (depan counter hp New Communication) atau dari depan PT. SERENA INDOPANGAN" .
                             "\r\n \r\nDemikian informasi ini kami sampaikan." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nPanitia WINTEQ DAY 2022" .
