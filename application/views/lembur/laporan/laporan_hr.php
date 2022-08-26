@@ -179,8 +179,8 @@
             columns: [
                 { "data":"id"},
                 { "data":"kategori"},
-                { "data":"nama"},
                 { "data":"npk"},
+                { "data":"nama"},
                 { "data":"tanggal_mulai"},
                 { "data":"jam_mulai"},
                 { "data":"tanggal_selesai"},
