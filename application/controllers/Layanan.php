@@ -260,22 +260,20 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*REMINDER!! WINTEQ DAY IS COME*" .
+                            'message' => "*INFORMASI!! ASSET OPNAME*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSalam olahraga dan salam sehat selalu. Kepada seluruh Karyawan diwajibkan untuk mengikuti Winteq Day yang akan dilaksanakan pada :" .
-                            "\r\n \r\nHari / Tanggal : Sabtu, 20 Agustus 2022" .
-                            "\r\nWaktu  : 07.30- 16.30 WIB" .
-                            "\r\nTempat : ITC CIBINONG - HALL FUTSAL & BADMINTON" .
-                            "\r\nBADMINTON https://goo.gl/maps/fQL45A1qz83m2R8Z7" .
-                            "\r\n \r\n*INFORMASI!*" .
-                            "\r\n1. Outfit bebas dengan tema sporty (sopan dan rapi)." .
-                            "\r\n2. Absensi berangkat dan pulang dilakukan di venue (ITC CIBINONG)." .
-                            "\r\n3. Struk parkir akan dicap oleh panitia ketika absen pulang untuk dapat parkir gratis." .
-                            "\r\n4. Pintu masuk motor dan mobil lewat samping (depan counter hp New Communication) atau dari depan PT. SERENA INDOPANGAN" .
+                            "\r\nSehubungan dengan akan diadakannya Asset Opname pada bulan September 2022 Mendatang" .
+                            "\r\nBerikut ini kami informasikan link yang berisi listing Asset winteq per 31 July 2022." .
+                            "\r\nSilahkan di cek oleh Bapak/Ibu apakah list PIC (Kolom E) sudah sesuai dengan kondisi saat ini, apabila tidak sesuai silahkan informasikan perubahan pada kolom yang sudah disediakan (Kolom H & I ) supaya pada saat pelaksanaan Opname Asset PIC sudah sesuai dengan kondisi saat ini." .
+                            "\r\n \r\nhttps://docs.google.com/spreadsheets/d/1_zd49Kg5gEFGLMiUIFeT7x_gYBpByvGD8NwOR4vt8fM/edit?usp=sharing" .
+                            "\r\n \r\n*NOTE!*" .
+                            "\r\n1. Perubahan data kami tunggu sampai tanggal 9 September 2022." .
+                            "\r\n2. Daftar Asset yang akan di Opname akan menggunakan data update per 9 September 2022 (sesuai data spreadsheet)." .
+                            "\r\n3. Asset Opname akan dilaksanakan menggunakan menu pada Raisa." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan." .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nPanitia WINTEQ DAY 2022" .
-                            "\r\n#ComebackStronger #WinteqDay2022"
+                            "\r\nFinance & Accounting" .
+                            "\r\n#ComebackStronger"
                         ],
                     ]
                 );
