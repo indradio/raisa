@@ -148,7 +148,7 @@
       <div class="card card-signup card-plain">
       <form class="form" id="formbatalLembur" method="post" action="<?= base_url('lembur/reject/realisasi'); ?>">
           <div class="modal-body">
-              <input type="text" class="form-control" id="id_lembur_batal" name="id_lembur_batal" value="<?= $lembur['id']; ?>"/>
+              <input type="hidden" class="form-control" id="id_lembur_batal" name="id_lembur_batal" value="<?= $lembur['id']; ?>"/>
               <h4 class="card-title text-center">Yakin ingin membatalkan lembur ini?</h4>
               <div class="row">
                       <div class="col-md-12">
@@ -309,13 +309,6 @@
                     }
                 });
                 return false;
-            });
-
-            $('#batalLembur').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget) // Button that triggered the modal
-                var id_lembur = button.data('id_lembur')
-                var modal = $(this)
-                modal.find('.modal-body input[name="id_lembur_batal"]').val(id_lembur);
             });
         });  
     </script>
