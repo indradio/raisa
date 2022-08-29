@@ -188,7 +188,7 @@
                         "data"  : {id:$('#id').val()}
                     },
                 columns: [
-                    { "data": "aktivitas" },wd
+                    { "data": "aktivitas" },
                     { "data": "deskripsi" },
                     { "data": "durasi" }
                 ],
