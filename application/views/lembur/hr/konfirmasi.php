@@ -36,7 +36,7 @@
                                 <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date('d M H:i', strtotime($lembur['tglmulai'])).date(' - H:i', strtotime($lembur['tglselesai'])); ?>"> 
                                 <button type="button" class="btn btn-success btn-link btn-just-icon" data-toggle="modal" data-target="#ubahTanggal" data-id="<?= $lembur['id']; ?>"><i class='material-icons'>manage_history</i></button>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-inline">
                                 <label for="exampleKategori" class="bmd-label-floating">Kategori</label>
                                 <?php if ($lembur['kategori']=='OT'){
                                     echo '<input type="text" class="form-control disabled" id="kategori_lembur" name="kategori_lembur" value="LEMBUR">';
@@ -45,6 +45,7 @@
                                 } elseif ($lembur['kategori']=='TC'){
                                     echo '<input type="text" class="form-control disabled" id="kategori_lembur" name="kategori_lembur" value="TABUNGAN CUTI">';
                                 } ?>
+                                <button type="button" class="btn btn-success btn-link btn-just-icon" data-toggle="modal" data-target="#ubahKategori" data-id="<?= $lembur['id']; ?>" data-kategori="<?= $lembur['kategori']; ?>"><i class='material-icons'>edit_square</i></button>
                             </div>
                             <div class="form-group">
                                 <label for="exampleLokasi" class="bmd-label-floating">Lokasi</label>
@@ -283,6 +284,29 @@
                         <div class="modal-footer justify-content-right">
                             <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
                             <button type="button" class="btn btn-success" id="btn_ubah_tglmulai">SUBMIT</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Ubah Kategori-->
+<div class="modal fade" id="ubahKategori" tabindex="-1" role="dialog" aria-labelledby="ubahKategoriTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <form class="form-horizontal" id="formUbahTanggal" method="post" action="#">
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="id_lembur_kategori" name="id_lembur_kategori" />
+                            <div class="form-group">
+                                <label for="exampleDate" class="bmd-label-static">Kategori</label></br>
+                                <select class="selectpicker" name="ubah_kategori" id="ubah_kategori" data-style="select-with-transition" data-width="auto" required></select>
+                            </div>
+                        <div class="modal-footer justify-content-right">
+                            <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                            <button type="button" class="btn btn-success" id="btn_ubah_kategori">SUBMIT</button>
                         </div>
                     </div>
                 </form>
@@ -600,6 +624,73 @@
                     $.notify({
                         icon: "add_alert",
                         message: "<b>BERHASIL!</b> Jam berhasil diubah."
+                    }, {
+                        type: "success",
+                        timer: 2000,
+                        placement: {
+                        from: "top",
+                        align: "center"
+                        }
+                    });
+                },
+                error: function(result){
+                    $.notify({
+                            icon: "add_alert",
+                            message: "<b>GAGAL!</b> Data gagal tersimpan."
+                        }, {
+                            type: "danger",
+                            timer: 2000,
+                            placement: {
+                            from: "top",
+                            align: "center"
+                            }
+                        });
+                }
+            });
+            return false;
+        });
+
+        $('#ubahKategori').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id_lembur = button.data('id') 
+            var kategori_lembur = button.data('kategori') 
+            var modal = $(this)
+            modal.find('.modal-body input[name="id_lembur_kategori"]').val(id_lembur)
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('lembur/ubah_kategori') ?>",
+                data: {
+                    id: id_lembur,
+                    kategori: kategori_lembur
+                },
+                success: function(data) {
+                    // alert(data)
+                    $('#ubah_kategori').html(data);
+                    $('#ubah_kategori').selectpicker('refresh');
+                }
+            })
+        });
+
+        $('#ubahKategori').on('hidden.bs.modal', function () {
+            $(this).find('form').trigger('reset');
+            $('#ubah_kategori').selectpicker('refresh');
+        });
+
+        $('#btn_ubah_kategori').on('click',function(){
+            $.ajax({
+                type : "POST",
+                url  : "<?= site_url('lembur/ubah_kategori/konfirmasi_hr') ?>",
+                dataType : "JSON",
+                data : {id:$('#id_lembur_kategori').val(), kategori:$('#ubah_kategori').val()},
+                success: function(result){
+
+                    $('#ubahKategori').modal('hide');
+                    $('#kategori_lembur').val(result['data']['kategori']);
+
+                    $.notify({
+                        icon: "add_alert",
+                        message: "<b>BERHASIL!</b> Kategori berhasil diubah."
                     }, {
                         type: "success",
                         timer: 2000,

@@ -3451,6 +3451,44 @@ class Lembur extends CI_Controller
         }
     }
 
+    public function ubah_kategori($params=null)
+    {
+        if ($params=='konfirmasi_hr'){
+            $this->db->set('kategori', $this->input->post('kategori'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lembur');
+
+            if ($this->input->post('kategori')=='OT'){
+                $jenis_aktivitas = 'LEMBUR';
+            }else{
+                $jenis_aktivitas = 'JAM KERJA';
+            }
+            $this->db->set('jenis_aktivitas', $jenis_aktivitas);
+            $this->db->where('link_aktivitas', $this->input->post('id'));
+            $this->db->update('aktivitas');
+
+            $kategori = $this->db->get_where('lembur_kategori',['id'=>$this->input->post('kategori')])->row();
+
+            $output['data'] = array(
+                'kategori' => $kategori->nama
+            );
+
+            echo json_encode($output);
+            exit();
+        
+        }else{
+            $kategori = $this->db->get('lembur_kategori')->result();
+            $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row();
+            foreach ($kategori as $row) :
+                echo '<option data-subtext="'. $row->id.'" value="'. $row->id.'"';
+                if ($row->id == $lembur->kategori) {
+                    echo 'selected';
+                }
+                echo '>'. $row->nama.'</option>';
+            endforeach; 
+        }
+    }
+
     public function hari()
     {
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
