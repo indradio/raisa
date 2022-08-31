@@ -229,8 +229,15 @@ class Dashboard extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+
+                    $log = [
+                        'npk' => $user['npk'],
+                        'activity' => 'Waktu realisasi LEMBUR telah habis',
+                        'reference' => $l['id']
+                    ];
+                    $this->db->insert('log', $log);
                 }
-            } elseif ($l['status'] > 4 and $l['status'] < 7 and $l['life'] == 0) {
+            } elseif ($l['status'] > 1 and $l['status'] < 7 and $l['life'] == 0) {
                 // Batalkan LEMBUR LEWAT 7 HARI
                 if ($expired < $sekarang) {
                     $this->db->set('catatan', "Waktu LEMBUR kamu telah HABIS - Dibatalkan oleh : SYSTEM Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
@@ -266,6 +273,13 @@ class Dashboard extends CI_Controller
                         ]
                     );
                     $body = $response->getBody();
+
+                    $log = [
+                        'npk' => $user['npk'],
+                        'activity' => 'Waktu LEMBUR telah melewati 7 hari',
+                        'reference' => $l['id']
+                    ];
+                    $this->db->insert('log', $log);
                 }
             }
         endforeach;
