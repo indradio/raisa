@@ -157,7 +157,7 @@ class Dashboard extends CI_Controller
             $user = $this->db->get_where('karyawan', ['npk' => $l['npk']])->row_array();
             $last_status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array();
 
-            if ($l['status'] == 4) {
+            if ($l['status'] >= 1 and $l['status'] <= 4) {
                 // Notifikasi REALISASI tinggal 8 JAM
                 if ($kirim_notif < $sekarang and $l['life'] == 0) {
                     $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
@@ -448,26 +448,17 @@ class Dashboard extends CI_Controller
         }
     }
 
-    public function sehat()
+    public function presensi()
     {
         date_default_timezone_set('asia/jakarta');
-        
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('date', date('Y-m-d'));
-        $complete = $this->db->get('kesehatan')->row_array();
-
-        if (empty($complete)){
             $data['sidemenu'] = 'Dashboard';
             $data['sidesubmenu'] = '';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('dashboard/fpk', $data);
+            $this->load->view('presensi/presensi_today', $data);
             $this->load->view('templates/footer');
-        }else{
-            redirect('dashboard');
-        }
     }
 
     public function survei($param=null)
