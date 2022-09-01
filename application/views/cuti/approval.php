@@ -35,14 +35,20 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <?php foreach ($cuti as $row) : ?>
+                  <?php foreach ($cuti as $row) : 
+                    if ($row['darurat'] == 1){
+                      $status = "DARURAT";
+                    }else{
+                      $status = "NORMAL";
+                    }?>
                     <tr onclick="#" data-toggle="modal" data-target="#approveCuti" 
                     data-id="<?= $row['id']; ?>" 
                     data-nama="<?= $row['nama']; ?>" 
                     data-tglcuti="<?= date('d M Y', strtotime($row['tgl1'])).' - '.date('d M Y', strtotime($row['tgl2'])); ?>" 
                     data-lama="<?= $row['lama']; ?> Hari" 
                     data-kategori="<?= $row['kategori']; ?>" 
-                    data-keterangan="<?= $row['keterangan']; ?>">
+                    data-keterangan="<?= $row['keterangan']; ?>"
+                    data-status="<?= $status; ?>">
                         <td><?= $row['id']; ?></td>
                         <td><?= $row['nama']; ?></td>
                         <td><?= date('d M Y', strtotime($row['tgl1'])); ?></td>
@@ -131,9 +137,15 @@
                           </div>
                       </div>
                       <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"><small>Keterangan</small></label></br>
+                          <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3" disabled></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
                           <div class="form-group">
-                              <label class="bmd-label-floating"><small>Keterangan</small></label></br>
-                              <textarea class="form-control has-success" id="keterangan" name="keterangan" rows="3" disabled></textarea>
+                              <label class="bmd-label-floating"><small>Status</small></label></br>
+                              <input type="text" class="form-control" name="status" id="status" disabled/>
                           </div>
                       </div>
                     </div>
@@ -201,6 +213,7 @@
             var lama = button.data('lama')
             var kategori = button.data('kategori')
             var keterangan = button.data('keterangan')
+            var status = button.data('status')
             var modal = $(this)
             modal.find('.modal-body input[name="id"]').val(id)
             modal.find('.modal-body input[name="nama"]').val(nama)
@@ -208,6 +221,7 @@
             modal.find('.modal-body input[name="lama"]').val(lama)
             modal.find('.modal-body input[name="kategori"]').val(kategori)
             modal.find('#keterangan').val(keterangan)
+            modal.find('.modal-body input[name="status"]').val(status)
         })  
 
         $('#rejectCuti').on('show.bs.modal', function(event) {
