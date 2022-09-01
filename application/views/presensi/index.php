@@ -43,13 +43,13 @@
                       <a class="card-title"><small>Riwayat</small></a>
                   </div>
                   <div class="col-4 text-center">
-                      <a href="#" class="btn btn-lg btn-just-icon btn-success" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-success" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">
                           <i class="fa fa-sign-in"></i>
                       </a>
                       <a class="card-title"><small>Masuk</small></a>
                   </div>
                   <div class="col-4 text-center">
-                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">
                           <i class="fa fa-sign-out"></i>
                       </a>
                       <a class="card-title"><small>Pulang</small></a>
@@ -64,11 +64,11 @@
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <?php if ($workstate == 'not found'){ ?>
-              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">
+              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">
                 <img class="img" src="<?= base_url(); ?>/assets/img/clock-in.jpg">
               </a>
             <?php }else{ ?>
-              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">
+              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">
                 <img class="img" src="<?= base_url(); ?>/assets/img/clock-out.jpg">
               </a>
             <?php } ?>
@@ -91,9 +91,9 @@
             <h4 class="card-title">
             <?php 
             if ($workstate == 'not found'){ ?>
-              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="C/In" data-btnstate="Clock In">Clock In</a>
+              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">Clock In</a>
             <?php }else{ ?>
-              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="C/Out" data-btnstate="Clock Out">Clock Out</a>
+              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">Clock Out</a>
             <?php } ?>
             </h4>
             <!-- <div class="card-description">
