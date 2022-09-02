@@ -61,7 +61,7 @@
                                     $status = $this->db->get_where('cuti_status', ['id' => $row->status])->row(); ?>
                                     <tr>
                                         <td><?= $row->id; ?></td>
-                                        <td><?= date('d M Y H:i:s', strtotime($row->created_at)); ?></td>
+                                        <td><?= date('d M Y H:i', strtotime($row->created_at)); ?></td>
                                         <td><?= $row->kategori; ?></td>
                                         <td><?= $row->npk; ?></td>
                                         <td><?= $row->nama; ?></td>
@@ -70,14 +70,14 @@
                                         <td><?= $row->lama; ?></td>
                                         <td><?= $row->keterangan; ?></td>
                                         <td><?php if ($row->acc_atasan1){
-                                            echo $row->acc_atasan1.' pada '.date('d M Y H:i:s', strtotime($row->tgl_atasan1));
+                                            echo $row->acc_atasan1.' pada '.date('d M Y H:i', strtotime($row->tgl_atasan1));
                                             }?>
                                         </td>
                                         <td><?php if ($row->acc_atasan2){
-                                            echo $row->acc_atasan2.' pada '.date('d M Y H:i:s', strtotime($row->tgl_atasan2));
+                                            echo $row->acc_atasan2.' pada '.date('d M Y H:i', strtotime($row->tgl_atasan2));
                                             }?></td>
                                         <td><?php if ($row->acc_hr){
-                                            echo $row->acc_hr.' pada '.date('d M Y H:i:s', strtotime($row->tgl_hr));
+                                            echo $row->acc_hr.' pada '.date('d M Y H:i', strtotime($row->tgl_hr));
                                             }?></td>
                                         <td><?php if ($row->darurat==1){
                                             echo 'DARURAT';
