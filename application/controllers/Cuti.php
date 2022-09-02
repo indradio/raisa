@@ -906,7 +906,7 @@ class Cuti extends CI_Controller
         $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row_array();
         
         
-        $this->db->where('tgl1 >=', $today);
+        $this->db->where('tgl1 <=', $today);
         $this->db->where('atasan1', 'DNO');
         $this->db->where('status', '1');
         $outstanding1 = $this->db->get_where('cuti')->result();
