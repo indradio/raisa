@@ -19,23 +19,23 @@
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No. Lembur</th>
-                                        <th>Tanggal Pengajuan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Tanggal Selesai</th>
+                                        <th>ID</th>
+                                        <th>Mulai <small>Tanggal</small></th>
+                                        <th>Selesai <small>Tanggal</small></th>
                                         <th>Durasi <small>(Jam)</small></th>
                                         <th>Lokasi</th>
+                                        <th>Realisasi</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No. Lembur</th>
-                                        <th>Tgl Pengajuan</th>
+                                        <th>ID</th>
                                         <th>Mulai</th>
                                         <th>Selesai</th>
                                         <th>Durasi <small>(Jam)</small></th>
                                         <th>Lokasi</th>
+                                        <th>Tgl Realisasi</th>
                                         <th>Status</th>
                                     </tr>
                                 </tfoot>
@@ -43,23 +43,15 @@
                                     <?php foreach ($lembur as $l) : ?>
                                         <tr onclick="window.location='<?= base_url('lembur/realisasi/aktivitas/') . $l['id']; ?>'" >
                                             <td><?= $l['id']; ?></td>
-                                            <td><?= date('d-M H:i', strtotime($l['tglpengajuan_realisasi'])); ?></td>
                                             <td><?= date('d-M H:i', strtotime($l['tglmulai'])); ?></td>
                                             <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= $l['durasi']; ?></td>
                                             <td><?= $l['lokasi']; ?></td>
                                             <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
+                                            <td><?php if ($l['status'] > 4) {
+                                                echo date('d-M H:i', strtotime($l['tglpengajuan_realisasi'])); 
+                                            }?></td>
                                             <td><?= $status['nama']; ?></td>
-                                            <!-- <td>
-                                                <a href="<?= base_url('lembur/realisasi_aktivitas/') . $l['id']; ?>" class="badge badge-pill badge-success">Detail</a>
-                                            </td>
-                                            <td class="text-right">
-                                                <?php if ($l['status'] == 1 or $l['status'] == 2 or $l['status'] == 3) { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#batalRsv" data-id="<?= $l['id']; ?>"><i class="material-icons">close</i></a>
-                                                <?php } else { ?>
-                                                    <a href="#" class="btn btn-link btn-danger btn-just-icon remove disabled"><i class="material-icons">close</i></a>
-                                                <?php }; ?>
-                                            </td> -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

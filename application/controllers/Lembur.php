@@ -2022,47 +2022,42 @@ class Lembur extends CI_Controller
         date_default_timezone_set('asia/jakarta');
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id_lembur_batal')])->row_array();
         $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-        if ($params=='realisasi'){
+        if ($params=='rencana'){
             // Persetujuan Koordinator / Section Head 
             if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
-                $this->db->set('atasan1_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
-                $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
-                $this->db->set('catatan', $this->input->post('catatan').' Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                $this->db->set('atasan1_rencana', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                $this->db->set('tgl_atasan1_rencana', date('Y-m-d H:i:s'));
+                $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
                 $this->db->set('status', '0');
                 $this->db->where('id', $this->input->post('id_lembur_batal'));
                 $this->db->update('lembur');
             }elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
                 if ($lembur['atasan1'] == $this->session->userdata('inisial') AND $lembur['atasan2'] == $this->session->userdata('inisial')) {
-                    $this->db->set('atasan1_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
-                    $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
-                    $this->db->set('atasan2_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
-                    $this->db->set('tgl_atasan2_realisasi', date('Y-m-d H:i:s'));
-                    $this->db->set('catatan', $this->input->post('catatan').' Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                    $this->db->set('atasan1_rencana', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                    $this->db->set('tgl_atasan1_rencana', date('Y-m-d H:i:s'));
+                    $this->db->set('atasan2_rencana', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                    $this->db->set('tgl_atasan2_rencana', date('Y-m-d H:i:s'));
+                    $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
                     $this->db->set('status', '0');
                     $this->db->where('id', $this->input->post('id_lembur_batal'));
                     $this->db->update('lembur');
                 } elseif ($lembur['atasan1'] == $this->session->userdata('inisial') AND $lembur['atasan2'] != $this->session->userdata('inisial')) {
-                    $this->db->set('atasan1_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
-                    $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
-                    $this->db->set('catatan', $this->input->post('catatan').' Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                    $this->db->set('atasan1_rencana', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                    $this->db->set('tgl_atasan1_rencana', date('Y-m-d H:i:s'));
+                    $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
                     $this->db->set('status', '0');
                     $this->db->where('id', $this->input->post('id_lembur_batal'));
                     $this->db->update('lembur');
                 } elseif ($lembur['atasan1'] != $this->session->userdata('inisial') AND $lembur['atasan2'] == $this->session->userdata('inisial')) {
-                    $this->db->set('atasan2_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
-                    $this->db->set('tgl_atasan2_realisasi', date('Y-m-d H:i:s'));
-                    $this->db->set('catatan', $this->input->post('catatan').' Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                    $this->db->set('atasan2_rencana', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                    $this->db->set('tgl_atasan2_rencana', date('Y-m-d H:i:s'));
+                    $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
                     $this->db->set('status', '0');
                     $this->db->where('id', $this->input->post('id_lembur_batal'));
                     $this->db->update('lembur');
                 }
-            }
 
-            $this->db->set('status', '0');
-            $this->db->where('link_aktivitas', $this->input->post('id_lembur_batal'));
-            $this->db->update('aktivitas');
-    
-            //Notifikasi ke ATASAN 2
+                //Notifikasi ke ATASAN 2
             $client = new \GuzzleHttp\Client();
             $response = $client->post(
                 'https://region01.krmpesan.com/api/v2/message/send-text',
@@ -2074,7 +2069,7 @@ class Lembur extends CI_Controller
                     ],
                     'json' => [
                         'phone' => $user['phone'],
-                        'message' => "*REALISASI LEMBUR KAMU DIBATALKAN*" .
+                        'message' => "*RENCANA LEMBUR KAMU DIBATALKAN*" .
                         "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
                         "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
                         "\r\nDurasi : " . $lembur['durasi'] ." Jam " .
@@ -2085,7 +2080,71 @@ class Lembur extends CI_Controller
             );
             $body = $response->getBody();
 
+            }
+        }elseif ($params=='realisasi'){
+            // Persetujuan Koordinator / Section Head 
+                if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
+                    $this->db->set('atasan1_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                    $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
+                    $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                    $this->db->set('status', '0');
+                    $this->db->where('id', $this->input->post('id_lembur_batal'));
+                    $this->db->update('lembur');
+                }elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
+                    if ($lembur['atasan1'] == $this->session->userdata('inisial') AND $lembur['atasan2'] == $this->session->userdata('inisial')) {
+                        $this->db->set('atasan1_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                        $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
+                        $this->db->set('atasan2_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                        $this->db->set('tgl_atasan2_realisasi', date('Y-m-d H:i:s'));
+                        $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                        $this->db->set('status', '0');
+                        $this->db->where('id', $this->input->post('id_lembur_batal'));
+                        $this->db->update('lembur');
+                    } elseif ($lembur['atasan1'] == $this->session->userdata('inisial') AND $lembur['atasan2'] != $this->session->userdata('inisial')) {
+                        $this->db->set('atasan1_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                        $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
+                        $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                        $this->db->set('status', '0');
+                        $this->db->where('id', $this->input->post('id_lembur_batal'));
+                        $this->db->update('lembur');
+                    } elseif ($lembur['atasan1'] != $this->session->userdata('inisial') AND $lembur['atasan2'] == $this->session->userdata('inisial')) {
+                        $this->db->set('atasan2_realisasi', 'Dibatalkan oleh '.$this->session->userdata('inisial'));
+                        $this->db->set('tgl_atasan2_realisasi', date('Y-m-d H:i:s'));
+                        $this->db->set('catatan', $this->input->post('catatan').' - Dibatalkan oleh '.$this->session->userdata('inisial').' pada '.date('Y-m-d H:i:s'));
+                        $this->db->set('status', '0');
+                        $this->db->where('id', $this->input->post('id_lembur_batal'));
+                        $this->db->update('lembur');
+                    }
+                }
+    
+                //Notifikasi ke ATASAN 2
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user['phone'],
+                            'message' => "*REALISASI LEMBUR KAMU DIBATALKAN*" .
+                            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+                            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                            "\r\nDurasi : " . $lembur['durasi'] ." Jam " .
+                            "\r\n \r\nREALISASI LEMBUR ini telah dibatalkan oleh *". $this->session->userdata('inisial') ."*".
+                            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
         }
+
+        $this->db->set('status', '0');
+        $this->db->where('link_aktivitas', $this->input->post('id_lembur_batal'));
+        $this->db->update('aktivitas');
         
         $this->session->set_flashdata('message', 'setujuilbrhr');
         redirect('lembur/persetujuan');

@@ -101,7 +101,7 @@
                             </div> 
                             <!-- Button SUBMIT -->
                             <button type="submit"  id="setujui" class="btn btn-sm btn-success">SETUJUI</button>
-                            <a href="#" id="batalAktivitas" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalRsv" data-id="<?= $lembur['id']; ?>">BATALKAN</a>
+                            <a href="#" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#batalLembur" data-id_lembur="<?= $lembur['id']; ?>">BATALKAN</a>
                             <a href="<?= base_url('lembur/persetujuan') ?>" class="btn btn-sm btn-default" role="button">Kembali</a>
                         </div>
                     </form>   
@@ -316,6 +316,33 @@
           <div class="modal-footer justify-content-center">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">KEMBALI</button>
               <button type="button" class="btn btn-danger" id="btn_hapus_aktivitas" >YA, BATALKAN!</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="batalLembur" tabindex="-1" role="dialog" aria-labelledby="batalLemburTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+      <form class="form" id="formbatalLembur" method="post" action="<?= base_url('lembur/reject/rencana'); ?>">
+          <div class="modal-body">
+              <input type="hidden" class="form-control" id="id_lembur_batal" name="id_lembur_batal" value="<?= $lembur['id']; ?>"/>
+              <h4 class="card-title text-center">Yakin ingin membatalkan lembur ini?</h4>
+              <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label class="bmd-label-floating"><small>Alasan</small></label></br>
+                              <textarea class="form-control has-success" id="catatan" name="catatan" rows="3" required="true"></textarea>
+                          </div>
+                      </div>
+                    </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">KEMBALI</button>
+              <button type="submit" class="btn btn-danger" id="btn_batal_aktivitas" >YA, BATALKAN!</button>
           </div>
       </form>
       </div>
