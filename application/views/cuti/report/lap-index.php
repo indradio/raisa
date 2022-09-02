@@ -41,6 +41,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Pengajuan <small>Tanggal</small></th>
                                         <th>Kategori</th>
                                         <th>NPK</th>
                                         <th>Nama</th>
@@ -60,6 +61,7 @@
                                     $status = $this->db->get_where('cuti_status', ['id' => $row->status])->row(); ?>
                                     <tr>
                                         <td><?= $row->id; ?></td>
+                                        <td><?= date('d M Y H:i:s', strtotime($row->created_at)); ?></td>
                                         <td><?= $row->kategori; ?></td>
                                         <td><?= $row->npk; ?></td>
                                         <td><?= $row->nama; ?></td>
@@ -89,6 +91,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Pengajuan <small>Tanggal</small></th>
                                         <th>Kategori</th>
                                         <th>NPK</th>
                                         <th>Nama</th>
