@@ -51,6 +51,7 @@
                                         <th>ACC Atasan1</th>
                                         <th>ACC Atasan2</th>
                                         <th>ACC HR</th>
+                                        <th>DARURAT</th>
                                         <th class="disabled-sorting text-right">Status</th>
                                     </tr>
                                 </thead>
@@ -76,6 +77,11 @@
                                         <td><?php if ($row->acc_hr){
                                             echo $row->acc_hr.' pada '.date('d M Y H:i:s', strtotime($row->tgl_hr));
                                             }?></td>
+                                        <td><?php if ($row->darurat==1){
+                                            echo 'DARURAT';
+                                        }else{
+                                            echo 'NORMAL';
+                                        }?></td>
                                         <td><?= $status->nama; ?></td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -93,6 +99,7 @@
                                         <th>ACC Atasan1</th>
                                         <th>ACC Atasan2</th>
                                         <th>ACC HR</th>
+                                        <th>DARURAT</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
