@@ -1319,7 +1319,7 @@ class Perjalanandl extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
-                $this->db->where('sect_id', '211');
+                $this->db->where('sect_id', '214');
                 $fa_admin = $this->db->get('karyawan_admin')->row_array();
                 $selisih = $perjalanan['total']-$perjalanan['kasbon'];
                 $client = new \GuzzleHttp\Client();
