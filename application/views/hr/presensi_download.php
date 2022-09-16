@@ -17,7 +17,8 @@
                   <!-- <label for="copro">Project*</label> -->
                   <select class="selectpicker" data-style="btn btn-link" id="year" name="year" title="Pilih Tahun" data-size="7" data-live-search="true" required>
                     <option value="2020">2020</option>
-                    <option value="2021" selected>2021</option>
+                    <option value="2021">2021</option>
+                    <option value="2022" selected>2022</option>
                   </select>
                 </div>
                 <div class="form-group">
