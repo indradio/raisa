@@ -117,6 +117,40 @@
 
     <div class="row">
 
+      <!-- Outstanding Approval Absensi -->
+      <?php if ($presensi != null){ ?>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-info">
+            <div class="card-text">
+              <h4 class="card-title">Outstanding</h4>
+              <p class="card-category">Kehadiran</p>
+            </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Nama</th>
+                <th>Waktu</th>
+                <th>Status</th>
+                <th>Direct</th>
+              </thead>
+              <tbody>
+              <?php foreach ($presensi as $row) : ?>
+              <tr onclick="window.location='<?= base_url('cuti/approval'); ?>'" >
+                <td><?= $row['nama']; ?></td>
+                <td><?= date('d-M-Y H:i', strtotime($row['time'])); ?></td>
+                <td><?= $row['work_state']; ?></td>
+                <td><?= $row['state']; ?></td>
+              </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <?php }; ?>
+
       <!-- Outstanding Approval Perjalanan -->
       <?php if ($Reservasi != null){ ?>
       <div class="col-lg-6 col-md-12">

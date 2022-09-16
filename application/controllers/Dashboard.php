@@ -145,7 +145,7 @@ class Dashboard extends CI_Controller
         //Auto LEMBUR
 
         $this->db->where('tglmulai >=', Date('Y-m-d', strtotime('-31 days')));
-        $lembur =   $this->db->get('lembur')->result_array();
+        $lembur = $this->db->get('lembur')->result_array();
 
         foreach ($lembur as $l) :
             
@@ -414,6 +414,11 @@ class Dashboard extends CI_Controller
         FROM `cuti`
         WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
         $data['Cuti'] = $this->db->query($queryCuti)->result_array();
+
+        $queryPresensi = "SELECT *
+        FROM `presensi`
+        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1')";
+        $data['presensi'] = $this->db->query($queryPresensi)->result_array();
     
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
