@@ -40,7 +40,7 @@
                             <label class="col-md-2 col-form-label">Asset Deskripsi</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" id="asset_deskripsi" name="asset_deskripsi" required="true"><?= $asset['asset_description']; ?></textarea>
+                                    <textarea rows="3" class="form-control disabled" id="asset_deskripsi" name="asset_deskripsi"><?= $asset['asset_description']; ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-end">
-                            <a href="<?= base_url('asset'); ?>" class="btn btn-link">Kembali</a>
+                            <a href="<?= base_url('asset/remaining'); ?>" class="btn btn-link">Kembali</a>
                             <button type="submit" class="btn btn-success btn-wd">OPNAME</button>
                         </div>
                         </form>
@@ -165,7 +165,7 @@
         option1.onchange = function() {
             if (this.checked) {
                 document.getElementById('status').value = '1';
-                labelOption1.style.background = '#00aec5';
+                labelOption1.style.background = '#4caf50';
                 labelOption2.style.background = '#999999';
                 labelOption3.style.background = '#999999';
                 labelOption4.style.background = '#999999';
@@ -193,7 +193,7 @@
                 document.getElementById('status').value = '3';
                 labelOption1.style.background = '#999999';
                 labelOption2.style.background = '#999999';
-                labelOption3.style.background = '#00aec5';
+                labelOption3.style.background = '#f44336';
                 labelOption4.style.background = '#999999';
                 document.getElementById("catatan").required = true;
             }
@@ -207,7 +207,7 @@
                 labelOption1.style.background = '#999999';
                 labelOption2.style.background = '#999999';
                 labelOption3.style.background = '#999999';
-                labelOption4.style.background = '#00aec5';
+                labelOption4.style.background = '#000000';
                 document.getElementById("catatan").required = true;
             }
         }
