@@ -137,7 +137,7 @@
               </thead>
               <tbody>
               <?php foreach ($presensi as $row) : ?>
-              <tr onclick="window.location='<?= base_url('cuti/approval'); ?>'" >
+              <tr onclick="window.location='<?= base_url('presensi/persetujuan/1/list'); ?>'" >
                 <td><?= $row['nama']; ?></td>
                 <td><?= date('d-M-Y H:i', strtotime($row['time'])); ?></td>
                 <td><?= $row['work_state']; ?></td>
