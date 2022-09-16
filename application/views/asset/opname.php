@@ -3,33 +3,20 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-danger" role="alert">
-            <strong>MAXIMAL FOTO 2MB YA!</strong>
-            </div>
-        </div>
-        </div>
-        <div class="row">
             <div class="col-md-12">
                 <div class="card ">
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">assignment</i>
-                        </div>
-                        <h4 class="card-title">Opname Asset</h4>
-                    </div>
                     <div class="card-body ">
-                        <?= form_open_multipart('asset/opname_proses'); ?>
+                        <?= form_open_multipart('asset/opname/proses'); ?>
                         <input type="hidden" class="form-control" name="id" value="<?= $asset['id']; ?>" required>
                         <div class="row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-4">
                                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail">
-                                        <img src="<?= base_url(); ?>assets/img/asset/sto-photo.jpg" alt="foto" name="foto">
+                                        <img src="<?= base_url().'assets/img/asset/'. $asset['asset_image']; ?>" alt="foto" name="foto">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                    <div>
+                                    <!-- <div>
                                         <span class="btn btn-round btn-facebook btn-file">
                                             <span class="fileinput-new">Ambil Foto</span>
                                             <span class="fileinput-exists">Ganti</span>
@@ -37,7 +24,7 @@
                                         </span>
                                         <br />
                                         <a href="#" class="btn btn-youtube btn-round fileinput-exists" data-dismiss="fileinput"></i>Hapus</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -45,7 +32,7 @@
                             <label class="col-md-2 col-form-label">No. Asset</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" name="asset_no" value="<?= $asset['asset_no']; ?> - <?= $asset['asset_sub_no']; ?>">
+                                    <input type="text" class="form-control disabled" name="asset_no" value="<?= $asset['asset_no']; ?> - <?= $asset['asset_sub_no']; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -53,8 +40,7 @@
                             <label class="col-md-2 col-form-label">Asset Deskripsi</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <!-- <input type="text" class="form-control" name="asset_deskripsi" value="<?= $asset['asset_deskripsi']; ?>" required> -->
-                                    <textarea rows="3" class="form-control" id="asset_deskripsi" name="asset_deskripsi" required="true"><?= $asset['asset_deskripsi']; ?></textarea>
+                                    <textarea rows="3" class="form-control" id="asset_deskripsi" name="asset_deskripsi" required="true"><?= $asset['asset_description']; ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +48,7 @@
                             <label class="col-md-2 col-form-label">Kategori</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" name="kategori" value="<?= $asset['kategori']; ?>" required>
+                                    <input type="text" class="form-control disabled" name="kategori" value="<?= $asset['category']; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -70,7 +56,7 @@
                             <label class="col-md-2 col-form-label">First Acq</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" name="first_acq" value="<?= $asset['first_acq']; ?>" required>
+                                    <input type="text" class="form-control disabled" name="first_acq" value="<?= $asset['first_acq']; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -78,7 +64,7 @@
                             <label class="col-md-2 col-form-label">Value Acq</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control disabled" name="value_acq" value="<?= $asset['value_acq']; ?>" required>
+                                    <input type="text" class="form-control disabled" name="value_acq" value="<?= $asset['value_acq']; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -86,7 +72,7 @@
                             <label class="col-md-2 col-form-label">Cost Center</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <input type="text" class="form-control" name="cost_center" value="<?= $asset['cost_center']; ?>" required>
+                                    <input type="text" class="form-control" name="cost_center" value="<?= $asset['cost_center']; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -94,7 +80,7 @@
                             <label class="col-md-2 col-form-label">PIC</label>
                             <div class="col-md-3">
                                 <input type="hidden" class="form-control" name="old_npk" value="<?= $asset['npk']; ?>" />
-                                <select class="selectpicker" name="new_npk" id="selectpic" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true" required>
+                                <select class="selectpicker" name="new_npk" id="selectpic" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
                                     <?php $karyawan = $this->db->get('karyawan')->result_array();
                                     foreach ($karyawan as $k) :
                                         echo '<option value="' . $k['npk'] . '"';
@@ -105,69 +91,50 @@
                                     endforeach; ?>
                                 </select>
                             </div>
-                            <div class="col-md-1">
-                                <div class="form-check ml-auto">
-                                    <label class="form-check-label text-dark">
-                                    <input class="form-check-input" type="checkbox" name="checkpic" id="checkpic" value="1">
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
-                                    <i>Change</i>
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <label class="col-md-2 col-form-label">Lokasi</label>
                             <div class="col-md-3">
-                                <input type="hidden" class="form-control" name="old_lokasi" value="<?= $asset['lokasi']; ?>" />
-                                <select class="selectpicker" name="new_lokasi" id="selectloc" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true" required>
+                                <input type="hidden" class="form-control" name="old_lokasi" value="<?= $asset['room']; ?>" />
+                                <select class="selectpicker" name="new_lokasi" id="selectloc" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
                                     <?php $lokasi = $this->db->get('asset_lokasi')->result_array();
                                     foreach ($lokasi as $lok) :
                                         echo '<option value="' . $lok['id'] . '"';
-                                        if ($lok['id'] == $asset['lokasi']) {
+                                        if ($lok['id'] == $asset['room']) {
                                             echo 'selected';
                                         }
                                         echo '>' . $lok['id'] . '</option>' . "\n";
                                     endforeach; ?>
                                 </select>
                             </div>
-                            <div class="col-md-1">
-                                <div class="form-check ml-auto">
-                                    <label class="form-check-label text-dark">
-                                    <input class="form-check-input" type="checkbox" name="checkloc" id="checkloc" value="1">
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
-                                    <i>Change</i>
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-2 col-form-label">Status </label>
-                            <div class="col-md-4">
-                                <select class="selectpicker" name="status" id="stats" data-style="select-with-transition" data-size="5" title="Silahkan Pilih" required>
-                                    <option value="1" <?php if ($asset['status'] == 1) {
-                                                            echo 'selected';
-                                                        }; ?>>BAIK-ADA-DIGUNAKAN</option>
-                                    <option value="2" <?php if ($asset['status'] == 2) {
-                                                            echo 'selected';
-                                                        }; ?>>BAIK-TIDAK SESUAI</option>
-                                    <option value="3" <?php if ($asset['status'] == 3) {
-                                                            echo 'selected';
-                                                        }; ?>>RUSAK</option>
-                                    <option value="4" <?php if ($asset['status'] == 4) {
-                                                            echo 'selected';
-                                                        }; ?>>HILANG</option>
-                                </select>
+                            <label class="col-md-2 col-form-label">Status</label>
+                            <div class="col-md-2">
+                                <div class="form-group has-default">  
+                                    <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-default" id="labelOption1" style="width: 100%;">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" value="1" required>BAIK-ADA-DIGUNAKAN
+                                    </label>
+                                    <label class="btn btn-default" id="labelOption2" style="width: 100%;">
+                                        <input type="radio" name="options" id="option2" autocomplete="off" value="2" required>BAIK-TIDAK SESUAI
+                                    </label>
+                                    <label class="btn btn-default" id="labelOption3" style="width: 100%;">
+                                        <input type="radio" name="options" id="option3" autocomplete="off" value="3" required>RUSAK
+                                    </label>
+                                    <label class="btn btn-default" id="labelOption4" style="width: 100%;">
+                                        <input type="radio" name="options" id="option4" autocomplete="off" value="4" required>HILANG
+                                    </label>
+                                    </div>   
+                                    <input type="hidden" class="form-control" id="status" name="status" required>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-md-2 col-form-label">Catatan</label>
                             <div class="col-md-4">
                                 <div class="form-group has-default">
-                                    <textarea rows="3" class="form-control" name="catatan" id="catatan"></textarea>
+                                    <textarea rows="5" class="form-control" name="catatan" id="catatan"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -187,47 +154,62 @@
 <!-- end content-->
 <script>
     $(document).ready(function() {
-        var checkPic = document.getElementById('checkpic');
-        var selectPic = document.getElementById('selectpic');
-        selectPic.disabled = true;
 
-        var checkLoc = document.getElementById('checkloc');
-        var selectLoc = document.getElementById('selectloc');
-        selectLoc.disabled = true;
-       
+        var labelOption1 = document.getElementById('labelOption1');
+        var labelOption2 = document.getElementById('labelOption2');
+        var labelOption3 = document.getElementById('labelOption3');
+        var labelOption4 = document.getElementById('labelOption4');
+
+        var option1 = document.getElementById('option1');
         // when unchecked or checked, run the function
-        checkPic.onchange = function() {
+        option1.onchange = function() {
             if (this.checked) {
-                // document.getElementById("selectpic").disabled = false;
-                // $( "#selectpic" ).prop( "disabled", false );
-                selectPic.disabled = false;
-            } else {
-                selectPic.disabled = true;
+                document.getElementById('status').value = '1';
+                labelOption1.style.background = '#00aec5';
+                labelOption2.style.background = '#999999';
+                labelOption3.style.background = '#999999';
+                labelOption4.style.background = '#999999';
+                document.getElementById("catatan").required = false;
             }
         }
 
+        var option2 = document.getElementById('option2');
         // when unchecked or checked, run the function
-        checkLoc.onchange = function() {
+        option2.onchange = function() {
             if (this.checked) {
-                // document.getElementById("selectLoc").disabled = false;
-                // $( "#selectLoc" ).prop( "disabled", false );
-                selectLoc.disabled = false;
-            } else {
-                selectLoc.disabled = true;
+                document.getElementById('status').value = '2';
+                labelOption1.style.background = '#999999';
+                labelOption2.style.background = '#00aec5';
+                labelOption3.style.background = '#999999';
+                labelOption4.style.background = '#999999';
+                document.getElementById("catatan").required = true;
             }
         }
-    })
 
-    $('#stats').change(function() {
-        var stats = $('#stats').val();
-                if (stats == '1') {
-                    $('#catatan').prop("required", false);
-                } else if (stats == '2') {
-                    $('#catatan').prop("required", false);
-                } else {
-                    $('#catatan').prop("required", true);
-                }
-            
+        var option3 = document.getElementById('option3');
+        // when unchecked or checked, run the function
+        option3.onchange = function() {
+            if (this.checked) {
+                document.getElementById('status').value = '3';
+                labelOption1.style.background = '#999999';
+                labelOption2.style.background = '#999999';
+                labelOption3.style.background = '#00aec5';
+                labelOption4.style.background = '#999999';
+                document.getElementById("catatan").required = true;
+            }
+        }
+
+        var option4 = document.getElementById('option4');
+        // when unchecked or checked, run the function
+        option4.onchange = function() {
+            if (this.checked) {
+                document.getElementById('status').value = '4';
+                labelOption1.style.background = '#999999';
+                labelOption2.style.background = '#999999';
+                labelOption3.style.background = '#999999';
+                labelOption4.style.background = '#00aec5';
+                document.getElementById("catatan").required = true;
+            }
+        }
     });
-    
 </script>
