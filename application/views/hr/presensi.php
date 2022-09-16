@@ -77,7 +77,7 @@
                         $this->db->where('year(time)', $tahun);
                         $this->db->where('month(time)', $bulan);
                         $this->db->where('day(time)', $i);
-                        $this->db->where('state', 'C/In');
+                        $this->db->where('state', 'In');
                         $in = $this->db->get('presensi')->row_array();
 
                         //clock Rest
@@ -85,7 +85,7 @@
                         $this->db->where('year(time)', $tahun);
                         $this->db->where('month(time)', $bulan);
                         $this->db->where('day(time)', $i);
-                        $this->db->where('state', 'C/Rest');
+                        $this->db->where('state', 'Rest');
                         $rest = $this->db->get('presensi')->row_array();
 
                         //clock out
@@ -93,7 +93,7 @@
                         $this->db->where('year(time)', $tahun);
                         $this->db->where('month(time)', $bulan);
                         $this->db->where('day(time)', $i);
-                        $this->db->where('state', 'C/Out');
+                        $this->db->where('state', 'Out');
                         $out = $this->db->get('presensi')->row_array();
                         echo '<tr>';
                         echo '<th>' . $k['nama'] . '</th>';

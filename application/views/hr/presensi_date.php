@@ -81,7 +81,7 @@
                       $this->db->where('year(time)', $tahun);
                       $this->db->where('month(time)', $bulan);
                       $this->db->where('day(time)', $tanggal);
-                      $this->db->where('state', 'C/In');
+                      $this->db->where('state', 'In');
                       $in = $this->db->get('presensi')->row_array();
 
                       //clock out
@@ -89,7 +89,7 @@
                       $this->db->where('year(time)', $tahun);
                       $this->db->where('month(time)', $bulan);
                       $this->db->where('day(time)', $tanggal);
-                      $this->db->where('state', 'C/Out');
+                      $this->db->where('state', 'Out');
                       $out = $this->db->get('presensi')->row_array();
 
                       echo '<tr>';
