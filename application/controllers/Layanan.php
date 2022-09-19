@@ -260,16 +260,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*INFORMASI!! ASSET OPNAME*" .
+                            'message' => "*INFO : ASSET OPNAME periode 2022*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSehubungan dengan akan diadakannya Asset Opname pada bulan September 2022 Mendatang" .
-                            "\r\nBerikut ini kami informasikan link yang berisi listing Asset winteq per 31 July 2022." .
-                            "\r\nSilahkan di cek oleh Bapak/Ibu apakah list PIC (Kolom E) sudah sesuai dengan kondisi saat ini, apabila tidak sesuai silahkan informasikan perubahan pada kolom yang sudah disediakan (Kolom H & I ) supaya pada saat pelaksanaan Opname Asset PIC sudah sesuai dengan kondisi saat ini." .
-                            "\r\n \r\nhttps://docs.google.com/spreadsheets/d/1_zd49Kg5gEFGLMiUIFeT7x_gYBpByvGD8NwOR4vt8fM/edit?usp=sharing" .
-                            "\r\n \r\n*NOTE!*" .
-                            "\r\n1. Perubahan data kami tunggu sampai tanggal 9 September 2022." .
-                            "\r\n2. Daftar Asset yang akan di Opname akan menggunakan data update per 9 September 2022 (sesuai data spreadsheet)." .
-                            "\r\n3. Asset Opname akan dilaksanakan menggunakan menu pada Raisa." .
+                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun" .
+                            "\r\nmaka Winteq akan mengadakan agenda asset opname pada tanggal 19-28 september 2022 (untuk kategori Asset & LVA)." .
+                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset->Remaining* lalu silahkan melakukan Asset opname (diharuskan mengupload foto barang)." .
+                            "\r\nApabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin & Acct." .
                             "\r\n \r\nDemikian informasi ini kami sampaikan." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nFinance & Accounting" .
