@@ -72,6 +72,19 @@ class Asset extends CI_Controller
 
     }
 
+    public function fa()
+    {
+        $data['sidemenu'] = 'FA Asset';
+        $data['sidesubmenu'] = 'Asset';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('asset/fa/index', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function remaining()
     {
         $data['sidemenu'] = 'Asset';
@@ -366,9 +379,17 @@ class Asset extends CI_Controller
             echo json_encode($output);
             exit();
         }elseif ($params=='remaining') {
-                        $this->db->where('opname_status <', 2);
-                        $this->db->where('npk', $this->session->userdata('npk'));
-            $asset =    $this->db->get('asset')->result();
+
+            if ($this->session->userdata('inisial')=='MRS'){
+                $this->db->where('opname_status <', 2);
+                $this->db->where('category', 'IT');
+    $asset =    $this->db->get('asset')->result();
+            }else{
+                $this->db->where('opname_status <', 2);
+                $this->db->where('npk', $this->session->userdata('npk'));
+    $asset =    $this->db->get('asset')->result();
+
+            }
             if (!empty($asset)){
                 foreach ($asset as $row) {
                     if ($row->opname_status==0)
