@@ -72,17 +72,41 @@ class Asset extends CI_Controller
 
     }
 
-    public function fa()
+    public function fa($params)
     {
-        $data['sidemenu'] = 'FA Asset';
-        $data['sidesubmenu'] = 'Asset';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/navbar', $data);
-        $this->load->view('asset/fa/index', $data);
-        $this->load->view('templates/footer');
+        if ($params=='remaining'){
+            $data['sidemenu'] = 'FA Asset';
+            $data['sidesubmenu'] = 'Remaining';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/fa/remaining', $data);
+            $this->load->view('templates/footer');
+        }elseif ($params=='verification'){
+            $data['sidemenu'] = 'FA Asset';
+            $data['sidesubmenu'] = 'Verification';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/fa/verification', $data);
+            $this->load->view('templates/footer');
+
+        }else{
+            $data['sidemenu'] = 'FA Asset';
+            $data['sidesubmenu'] = 'Asset';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/fa/index', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function remaining()
@@ -378,18 +402,20 @@ class Asset extends CI_Controller
  
             echo json_encode($output);
             exit();
+
         }elseif ($params=='remaining') {
 
             if ($this->session->userdata('inisial')=='MRS'){
                 $this->db->where('opname_status <', 2);
                 $this->db->where('category', 'IT');
-    $asset =    $this->db->get('asset')->result();
+            $asset =    $this->db->get('asset')->result();
             }else{
-                $this->db->where('opname_status <', 2);
-                $this->db->where('npk', $this->session->userdata('npk'));
-    $asset =    $this->db->get('asset')->result();
+                        $this->db->where('opname_status <', 2);
+                        $this->db->where('npk', $this->session->userdata('npk'));
+            $asset =    $this->db->get('asset')->result();
 
             }
+
             if (!empty($asset)){
                 foreach ($asset as $row) {
                     if ($row->opname_status==0)
@@ -410,6 +436,146 @@ class Asset extends CI_Controller
 
                     }
 
+                }
+            }else{
+                $output['data'][] = array(
+                    "no" => '',
+                    "deskripsi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+ 
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='fa') {
+
+            $asset =    $this->db->get('asset')->result();
+
+            if (!empty($asset)){
+                foreach ($asset as $row) {
+
+                    $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                    // $status =  $this->db->get_where('asset_status', ['id' => $row->npk])->row();
+                    $listroom =  $this->db->get_where('asset_lokasi', ['id' => $row->room])->row();
+                    if (empty($room)){
+                        $room = $listroom->nama;
+                    }else{
+                        $room = 'Unknown';
+                    }
+
+
+                        
+                    $output['data'][] = array(
+                            "no" => $row->asset_no,
+                            "sub" => $row->asset_sub_no,
+                            "description" => $row->asset_description,
+                            "category" => $row->category,
+                            "user" => $row->npk,
+                            "user_nama" => $user->nama,
+                            "room" => $row->room,
+                            "room_nama" => $room,
+                            // "status" => $status->nama,
+                            "details" => "<button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#photo' data-id='".$row->id."' data-asset_no='".$row->asset_no."'><i class='material-icons'>image_search</i></button>
+                                            <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' disabled><i class='material-icons'>person_search</i></button>"
+                        );
+
+                    // <th>NO</th>
+                    //                     <th>SUB</th>
+                    //                     <th>DESCRIPTION</th>
+                    //                     <th>CATEGORY</th>
+                    //                     <th>PIC</th>
+                    //                     <th>ROOM</th>
+                    //                     <th>STATUS</th>
+                    //                     <th>CHANGE PIC</th>
+                    //                     <th>NEW PIC</th>
+                    //                     <th>CHANGE ROOM</th>
+                    //                     <th>NEW ROOM</th>
+                    //                     <th>OPNAME BY</th>
+                    //                     <th>VERIFICATION BY</th>
+                    //                     <th>DETAILS</th>
+
+                }
+            }else{
+                $output['data'][] = array(
+                    "no" => '',
+                    "deskripsi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+ 
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='opname_remaining') {
+
+                        $this->db->where('opname_status', 0);
+            $asset =    $this->db->get('asset')->result();
+
+            if (!empty($asset)){
+
+                foreach ($asset as $row) {
+
+                    $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+
+                    $output['data'][] = array(
+                            "no" => $row->asset_no,
+                            "sub" => $row->asset_sub_no,
+                            "description" => $row->asset_description,
+                            "category" => $row->category,
+                            "user" => $row->npk,
+                            "user_nama" => $user->nama,
+                            "room" => $row->room,
+                            "details" => "<button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' disabled><i class='material-icons'>hourglass_top</i></button>"
+                        );
+                }
+
+            }else{
+                $output['data'][] = array(
+                    "no" => '',
+                    "deskripsi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+ 
+            echo json_encode($output);
+            exit();
+        }elseif ($params=='opname_verification') {
+
+            $this->db->where('verify_by', NULL);
+            $asset =    $this->db->get('asset_opnamed')->result();
+
+            if (!empty($asset)){
+                foreach ($asset as $row) {
+
+                    $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                    $status =  $this->db->get_where('asset_status', ['id' => $row->status])->row();
+                    
+                    if ($row->change_pic=='Y'){
+                        $change_pic = "<button type='button' class='btn btn-success btn-link btn-just-icon' disabled><i class='material-icons'>done</i></button>";
+                    }else{
+                        $change_pic = "<button type='button' class='btn btn-danger btn-link btn-just-icon' disabled><i class='material-icons'>close</i></button>";
+                    }
+
+                    if ($row->change_room=='Y'){
+                        $change_room = "<button type='button' class='btn btn-success btn-link btn-just-icon' disabled><i class='material-icons'>done</i></button>";
+                    }else{
+                        $change_room = "<button type='button' class='btn btn-danger btn-link btn-just-icon' disabled><i class='material-icons'>close</i></button>";
+                    }
+                        
+                    $output['data'][] = array(
+                            "no" => $row->asset_no,
+                            "sub" => $row->asset_sub_no,
+                            "description" => $row->asset_description,
+                            "category" => $row->category,
+                            "user" => $row->npk,
+                            "user_nama" => $user->nama,
+                            "room" => $row->room,
+                            "status" => $status->name,
+                            "change_pic" => $change_pic,
+                            "change_room" => $change_room,
+                            "opnamed_by" => $row->opnamed_by,
+                            "opnamed_at" => date('d-m-Y H:i', strtotime($row->opnamed_at)),
+                            "actions" => "<a href='". base_url('asset/verification/'.$row->id)."' type='button' class='btn btn-success btn-link btn-just-icon'><i class='material-icons'>task_alt</i></a>"
+                        );
                 }
             }else{
                 $output['data'][] = array(

@@ -34,23 +34,34 @@
                     <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="profile">
-                            <table id="datatables11" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
+                            <table id="dtasset" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="disabled-sorting"></th>
-                                        <th>Asset</th>
-                                        <th class="disabled-sorting th-description text-right">Actions</th>
+                                        <th>NO</th>
+                                        <th>SUB</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>CATEGORY</th>
+                                        <th>PIC</th>
+                                        <th>PIC NAME</th>
+                                        <th>ROOM</th>
+                                        <th>ROOM DESC</th>
+                                        <th>STATUS</th>
+                                        <!-- <th>CHANGE PIC</th> -->
+                                        <!-- <th>NEW PIC</th>
+                                        <th>CHANGE ROOM</th>
+                                        <th>NEW ROOM</th>
+                                        <th>OPNAME BY</th>
+                                        <th>VERIFICATION BY</th> -->
+                                        <th>DETAILS</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
+                                <!-- <tfoot>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th>No</th>
                                         <th>Asset</th>
                                         <th class="th-description text-right">Actions</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> -->
                             </table>
                         </div>
                     </div>
@@ -191,125 +202,55 @@
 <script>
     $(document).ready(function() {
 
-        $('#datatables11').DataTable({
+        $('#dtasset').DataTable({
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+    
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+    
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>');
+                            });
+                    });
+            },
             "pagingType": "full_numbers",
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
             scrollX: true,
+            scrollCollapse: true,
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             },
-            "order": [
-                [ 1, "asc" ]
-            ]
+            serverSide: false,
+            processing: true,
+            ajax: {
+                    "url"   : "<?= site_url('asset/get/fa') ?>",
+                    "type"  : "POST",
+                },
+            columns: [
+                { "data": "no" },
+                { "data": "sub" },
+                { "data": "description" },
+                { "data": "category" },
+                { "data": "user" },
+                { "data": "user_nama" },
+                { "data": "room" },
+                { "data": "room_nama" },
+                { "data": "status" },
+                { "data": "details", className: "text-right" }
+            ],
         });
-
-        $('#opname').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var modal = $(this)
-            modal.find('.modal-body input[name="id"]').val(id)
-        })
-
-        $('#reopname').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var modal = $(this)
-            modal.find('.modal-body input[name="id"]').val(id)
-        })
-
-        document.getElementById("pic").style.display = "none";
-        document.getElementById("lokasi").style.display = "none";
-
-        var labelOption1 = document.getElementById('labelOption1');
-        var labelOption2 = document.getElementById('labelOption2');
-        var labelOption3 = document.getElementById('labelOption3');
-        var labelOption4 = document.getElementById('labelOption4');
-
-        var option1 = document.getElementById('option1');
-        // when unchecked or checked, run the function
-        option1.onchange = function() {
-            if (this.checked) {
-                document.getElementById('status').value = '1';
-                labelOption1.style.background = '#00aec5';
-                labelOption2.style.background = '#999999';
-                labelOption3.style.background = '#999999';
-                labelOption4.style.background = '#999999';
-                document.getElementById("pic").style.display = "none";
-                document.getElementById("lokasi").style.display = "none";
-                document.getElementById("selectpic").required = false;
-                document.getElementById("selectlokasi").required = false;
-                document.getElementById("note").required = false;
-            }
-        }
-
-        var option2 = document.getElementById('option2');
-        // when unchecked or checked, run the function
-        option2.onchange = function() {
-            if (this.checked) {
-                document.getElementById('status').value = '2';
-                labelOption1.style.background = '#999999';
-                labelOption2.style.background = '#00aec5';
-                labelOption3.style.background = '#999999';
-                labelOption4.style.background = '#999999';
-                document.getElementById("pic").style.display = "block";
-                document.getElementById("lokasi").style.display = "block";
-                document.getElementById("selectpic").required = true;
-                document.getElementById("selectlokasi").required = true;
-                document.getElementById("note").required = false;
-            }
-        }
-
-        var option3 = document.getElementById('option3');
-        // when unchecked or checked, run the function
-        option3.onchange = function() {
-            if (this.checked) {
-                document.getElementById('status').value = '3';
-                labelOption1.style.background = '#999999';
-                labelOption2.style.background = '#999999';
-                labelOption3.style.background = '#00aec5';
-                labelOption4.style.background = '#999999';
-                document.getElementById("pic").style.display = "none";
-                document.getElementById("lokasi").style.display = "none";
-                document.getElementById("selectpic").required = false;
-                document.getElementById("selectlokasi").required = false;
-                document.getElementById("note").required = true;
-            }
-        }
-
-        var option4 = document.getElementById('option4');
-        // when unchecked or checked, run the function
-        option4.onchange = function() {
-            if (this.checked) {
-                document.getElementById('status').value = '4';
-                labelOption1.style.background = '#999999';
-                labelOption2.style.background = '#999999';
-                labelOption3.style.background = '#999999';
-                labelOption4.style.background = '#00aec5';
-                document.getElementById("pic").style.display = "none";
-                document.getElementById("lokasi").style.display = "none";
-                document.getElementById("selectpic").required = false;
-                document.getElementById("selectlokasi").required = false;
-                document.getElementById("note").required = true;
-            }
-        }
-
-        $('.image-popup-no-margins').magnificPopup({
-            type: 'image',
-            closeOnContentClick: true,
-            closeBtnInside: false,
-            fixedContentPos: true,
-            mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
-            image: {
-                verticalFit: true
-            },
-            zoom: {
-                enabled: true,
-                duration: 300 // don't foget to change the duration also in CSS
-            }
-	    });
+        
     });
 </script>
