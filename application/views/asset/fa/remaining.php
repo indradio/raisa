@@ -90,6 +90,18 @@
             "pagingType": "full_numbers",
             scrollX: true,
             scrollCollapse: true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: 'LAPORAN OPNAME ASSET',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    footer: true
+                },
+                'copy',
+                'csv', 
+                'print'
+            ],
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",

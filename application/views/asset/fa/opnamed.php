@@ -29,15 +29,20 @@
                                         <th>SUB</th>
                                         <th>DESCRIPTION</th>
                                         <th>CATEGORY</th>
+                                        <th>CHANGE PIC</th>
                                         <th>PIC</th>
                                         <th>PIC NAME</th>
-                                        <th>ROOM</th>
-                                        <th>STATUS</th>
-                                        <th>CHANGE PIC</th>
+                                        <th>NEW PIC</th>
+                                        <th>NEW NAME</th>
                                         <th>CHANGE ROOM</th>
+                                        <th>ROOM</th>
+                                        <th>NEW ROOM</th>
+                                        <th>STATUS</th>
+                                        <th>CATATAN</th>
                                         <th>OPNAME BY</th>
                                         <th>OPNAME AT</th>
-                                        <th>ACTIONS</th>
+                                        <th>VERIFY BY</th>
+                                        <th>VERIFY AT</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -46,15 +51,20 @@
                                         <th>Sub</th>
                                         <th>Description</th>
                                         <th>Category</th>
+                                        <th>Change PIC</th>
                                         <th>PIC</th>
                                         <th>PIC Name</th>
-                                        <th>Room</th>
-                                        <th>Status</th>
-                                        <th>Change PIC</th>
+                                        <th>New PIC</th>
+                                        <th>Pew Name</th>
                                         <th>Change Room</th>
+                                        <th>Room</th>
+                                        <th>New Room</th>
+                                        <th>Status</th>
+                                        <th>Catatan</th>
                                         <th>Opname By</th>
                                         <th>Opname At</th>
-                                        <th class="th-description text-right">Actions</th>
+                                        <th>Verify By</th>
+                                        <th>Verify At</th>
                                     </tr>
                                 </tfoot>
                             </table>

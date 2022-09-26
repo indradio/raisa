@@ -95,6 +95,16 @@ class Asset extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('asset/fa/verification', $data);
             $this->load->view('templates/footer');
+        }elseif ($params=='opnamed'){
+            $data['sidemenu'] = 'FA Asset';
+            $data['sidesubmenu'] = 'Opnamed';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/fa/opnamed', $data);
+            $this->load->view('templates/footer');
 
         }else{
             $data['sidemenu'] = 'FA Asset';
@@ -246,6 +256,41 @@ class Asset extends CI_Controller
         }
     }
 
+    public function verification($params)
+    {
+        
+        if ($params=='proses'){
+
+            $this->db->set('verify_by', $this->session->userdata('nama'));
+            $this->db->set('verify_at', date('Y-m-d H:i:s'));
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('asset_opnamed');
+
+            $this->db->set('opname_status', 3);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('asset');
+
+            redirect('asset/fa/verification');
+        }else{
+            $asset = $this->db->get_where('asset_opnamed', ['id' => $params])->row_array();
+            if ($asset){
+                $data['sidemenu'] = 'FA Asset';
+                $data['sidesubmenu'] = 'Verification';
+                $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+                
+                $data['asset'] = $asset;
+        
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/navbar', $data);
+                $this->load->view('asset/fa/opname_verification', $data);
+                $this->load->view('templates/footer');
+            }else{
+                redirect('asset/fa/verification');
+            }
+        }
+    }
+
     public function id($id)
     {
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -297,6 +342,11 @@ class Asset extends CI_Controller
     public function reopname()
     {
         date_default_timezone_set('asia/jakarta');
+
+        $this->db->set('opname_status', 0);
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('asset');
+
         $this->db->where('id', $this->input->post('id'));
         $this->db->delete('asset_opnamed');
 
@@ -319,14 +369,14 @@ class Asset extends CI_Controller
                     "\r\n \r\nNo Asset : *" . $asset['asset_no'] . "-". $asset['asset_sub_no']."*" .
                     "\r\nDeskripsi : *" . $asset['asset_description'] . "*" .
                     "\r\nCatatan FA : *" . $this->input->post('note') . "*" .
-                    "\r\n \r\nMohon segera lakukan opname sebelum tanggal 31 Agustus 2021.".
-                    "\r\n \r\nMasuk menu asset klik link berikut https://raisa.winteq-astra.com/asset"
+                    "\r\n \r\nMohon segera lakukan opname sebelum tanggal 28 September 2022.".
+                    "\r\n \r\nMasuk menu asset klik link berikut https://raisa.winteq-astra.com/asset/remaining"
                 ],
             ]
         );
         $body = $response->getBody();
 
-        redirect('asset/index/fa');
+        redirect('asset/fa/verification');
     }
 
     public function opname_by_fa()
