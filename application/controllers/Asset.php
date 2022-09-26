@@ -637,6 +637,63 @@ class Asset extends CI_Controller
  
             echo json_encode($output);
             exit();
+        }elseif ($params=='opname_opnamed') {
+
+            $this->db->where('verify_by !=', NULL);
+            $asset =    $this->db->get('asset_opnamed')->result();
+
+            if (!empty($asset)){
+                foreach ($asset as $row) {
+
+                    $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                    $new_user =  $this->db->get_where('karyawan', ['npk' => $row->new_npk])->row();
+                    $status =  $this->db->get_where('asset_status', ['id' => $row->status])->row();
+                    
+                    if ($row->change_pic=='Y'){
+                        $change_pic = "YA";
+                        $new_user   =  $this->db->get_where('karyawan', ['npk' => $row->new_npk])->row();
+                        $new_npk    =$new_user->npk;
+                        $new_nama   =$new_user->nama;
+                    }else{
+                        $change_pic = "TIDAK";
+                        $new_npk    ="";
+                        $new_nama   ="";
+                    }
+
+                    $change_room = ($row->change_room=='Y')? 'YA' : 'TIDAK';
+                    $new_room = ($row->change_room=='Y')? $row->new_room : '';
+                        
+                    $output['data'][] = array(
+                            "no" => $row->asset_no,
+                            "sub" => $row->asset_sub_no,
+                            "description" => $row->asset_description,
+                            "category" => $row->category,
+                            "change_pic" => $change_pic,
+                            "user" => $row->npk,
+                            "user_nama" => $user->nama,
+                            "new_user" => $new_npk,
+                            "new_user_nama" => $new_nama,
+                            "change_room" => $change_room,
+                            "room" => $row->room,
+                            "new_room" => $new_room,
+                            "status" => $status->name,
+                            "catatan" => $row->catatan,
+                            "opnamed_by" => $row->opnamed_by,
+                            "opnamed_at" => date('d-m-Y H:i', strtotime($row->opnamed_at)),
+                            "verify_by" => $row->verify_by,
+                            "verify_at" => date('d-m-Y H:i', strtotime($row->verify_at))
+                        );
+                }
+            }else{
+                $output['data'][] = array(
+                    "no" => '',
+                    "deskripsi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+ 
+            echo json_encode($output);
+            exit();
         }
     }
 }

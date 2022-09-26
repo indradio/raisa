@@ -11,7 +11,7 @@
                             <ul class="nav nav-tabs" data-tabs="tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#profile" data-toggle="tab">
-                                        <i class="material-icons">info</i> VERIFICATION
+                                        <i class="material-icons">info</i> OPNAMED
                                         <div class="ripple-container"></div>
                                     </a>
                                 </li>
@@ -128,7 +128,7 @@
             serverSide: false,
             processing: true,
             ajax: {
-                    "url"   : "<?= site_url('asset/get/opname_verification') ?>",
+                    "url"   : "<?= site_url('asset/get/opname_opnamed') ?>",
                     "type"  : "POST",
                 },
             columns: [
@@ -136,15 +136,20 @@
                 { "data": "sub" },
                 { "data": "description" },
                 { "data": "category" },
+                { "data": "change_pic" },
                 { "data": "user" },
                 { "data": "user_nama" },
-                { "data": "room" },
-                { "data": "status" },
-                { "data": "change_pic" },
+                { "data": "new_user" },
+                { "data": "new_user_nama" },
                 { "data": "change_room" },
+                { "data": "room" },
+                { "data": "new_room" },
+                { "data": "status" },
+                { "data": "catatan" },
                 { "data": "opnamed_by" },
                 { "data": "opnamed_at" },
-                { "data": "actions", className: "text-right" }
+                { "data": "verify_by" },
+                { "data": "verify_at" }
             ],
         });
         
