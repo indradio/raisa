@@ -24,7 +24,8 @@
                                 <table id="dtasset" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>No Asset</th>
+                                            <th>No. Asset</th>
+                                            <th>PIC</th>
                                             <th>Deskripsi</th>
                                             <th class="disabled-sorting th-description text-right">Actions</th>
                                         </tr>
@@ -32,6 +33,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>No Asset</th>
+                                            <th>PIC</th>
                                             <th>Deskripsi</th>
                                             <th class="th-description text-right">Actions</th>
                                         </tr>
@@ -188,6 +190,7 @@
                     },
                 columns: [
                     { "data": "no" },
+                    { "data": "pic" },
                     { "data": "deskripsi" },
                     { "data": "action", className: "text-right" }
                 ],

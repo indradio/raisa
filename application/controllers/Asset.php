@@ -466,12 +466,15 @@ class Asset extends CI_Controller
 
             }
 
+            
             if (!empty($asset)){
                 foreach ($asset as $row) {
+                    $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
                     if ($row->opname_status==0)
                     {
                         $output['data'][] = array(
                             "no" => $row->asset_no,
+                            "pic" => $user->nama,
                             "deskripsi" => $row->asset_description,
                             "action" => "<button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#photo' data-id='".$row->id."' data-asset_no='".$row->asset_no."'><i class='material-icons'>image_search</i></button>
                                             <button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' disabled><i class='material-icons'>person_search</i></button>"
@@ -479,6 +482,7 @@ class Asset extends CI_Controller
                     }elseif ($row->opname_status==1){
                         $output['data'][] = array(
                             "no" => $row->asset_no,
+                            "pic" => $user->nama,
                             "deskripsi" => $row->asset_description,
                             "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon' data-toggle='modal' disabled><i class='material-icons'>add_a_photo</i></button>
                                             <a href='". base_url('asset/opname/'.$row->id)."' type='button' class='btn btn-danger btn-link btn-just-icon'><i class='material-icons'>person_search</i></button>"
