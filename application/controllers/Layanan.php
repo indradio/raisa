@@ -262,8 +262,8 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*INFO : GANGGUAN LAYANAN INTERNET*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nDengan ini kami informasikan bahwa saat ini terdapat gangguan koneksi Internet. XSaat ini sedang ditangani oleh tim IT" .
-                            "\r\nTerdapat jalur Fiber Optik yang terputus dan sedang dalam penanganan" .
+                            "\r\nDengan ini kami informasikan bahwa saat ini terdapat gangguan koneksi Internet" .
+                            "\r\nTerdapat jalur Fiber Optik yang terputus, Saat ini sedang ditangani oleh tim IT" .
                             "\r\n \r\nMohon maaf atas ketidaknyamanan ini." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nIT" .
