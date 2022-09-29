@@ -260,11 +260,10 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*INFO : GANGGUAN LAYANAN INTERNET*" .
+                            'message' => "*INFO : LAYANAN INTERNET SUDAH KEMBALI NORMAL*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nDengan ini kami informasikan bahwa saat ini terdapat gangguan koneksi Internet" .
-                            "\r\nTerdapat jalur Fiber Optik yang terputus, Saat ini sedang ditangani oleh tim IT" .
-                            "\r\n \r\nMohon maaf atas ketidaknyamanan ini." .
+                            "\r\nDengan ini kami informasikan bahwa saat ini Layanan Internet sudah dapat digunakan kembali" .
+                            "\r\n \r\nTerima kasih atas kesabaran anda." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nIT" .
                             "\r\n#ComebackStronger"
