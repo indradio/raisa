@@ -198,9 +198,14 @@ class Asset extends CI_Controller
                 $this->db->set('opname_status', 1);
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('asset');
+
+                redirect('asset/opname/'.$this->input->post('id'));
+            }else{
+                redirect('asset/remaining');
             }
+        }else{
+            redirect('asset/remaining');
         }
-        redirect('asset/opname/'.$this->input->post('id'));
     }
 
     public function opname($params)
@@ -455,7 +460,7 @@ class Asset extends CI_Controller
 
         }elseif ($params=='remaining') {
 
-            if ($this->session->userdata('inisial')=='MRS'){
+            if ($this->session->userdata('inisial')=='MRS' OR $this->session->userdata('inisial')=='IDA'OR $this->session->userdata('inisial')=='DWS'){
                 $this->db->where('opname_status <', 2);
                 $this->db->where('category', 'IT');
             $asset =    $this->db->get('asset')->result();
