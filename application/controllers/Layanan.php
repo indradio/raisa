@@ -260,14 +260,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*REMINDER : ASSET OPNAME periode 2022*" .
+                            'message' => "*[INFO] GANGGUAN LAYANAN INTERNET*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun." .
-                            "\r\nmaka Winteq akan mengadakan agenda asset opname pada tanggal *19 september 2022 - 14 Oktober 2022* (untuk kategori Asset dan LVA)." .
-                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset-Remaining* lalu silahkan melakukan Asset opname (diharuskan mengupload foto barang)." .
-                            "\r\n \r\nDemikian informasi ini kami sampaikan.." .
+                            "\r\nDengan ini kami informasikan bahwa saat ini terdapat gangguan pada layanan Internet." .
+                            "\r\nuntuk layanan SAP dan portal SSC tetap dapat digunakan." .
+                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nFinance Accounting" .
+                            "\r\nIT" .
                             "\r\n#ComebackStronger"
                         ],
                     ]
