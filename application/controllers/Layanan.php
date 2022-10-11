@@ -260,9 +260,9 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[INFO] JANGAN TAKUT RAISA KENA MALWARE*" .
+                            'message' => "*[INFO]TERJADI SERANGAN MALWARE KE SERVER RAISA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSaat ini sedang terjadi serangan malware pada fitur mail di server RAISA." .
+                            "\r\nSaat ini sedang terjadi serangan malware pada fitur mail di server RAISA dan sedang perbaiki" .
                             "\r\nTapi jangan khawatir, raisa masih bisa digunakan kok." .
                             "\r\nCaranya Klik *Details* kemudian *Visit this unsafe site*." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
