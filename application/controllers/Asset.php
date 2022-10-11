@@ -464,6 +464,9 @@ class Asset extends CI_Controller
                 $this->db->where('opname_status <', 2);
                 $this->db->where('category', 'IT');
             $asset =    $this->db->get('asset')->result();
+            }elseif ($this->session->userdata('inisial')=='DWS'){
+                $this->db->where('opname_status <', 2);
+            $asset =    $this->db->get('asset')->result();
             }else{
                         $this->db->where('opname_status <', 2);
                         $this->db->where('npk', $this->session->userdata('npk'));
