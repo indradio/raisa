@@ -169,3 +169,57 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Tambah Peserta -->
+<div class="modal fade" id="tambahPeserta" tabindex="-1" role="dialog" aria-labelledby="tambahPesertaTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">Peseta perjalanan</h4>
+                    </div>
+                </div>
+                <form class="form" method="post" action="<?= base_url('cekdl/tambahpeserta'); ?>">
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Nomor Perjalanan</label>
+                                <div class="col-md-3">
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control disabled" name="id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label">Tambah Peserta</label>
+                                <div class="col-md-5">
+                                    <div class="form-group has-default">
+                                        <select class="selectpicker" name="anggota[]" data-style="select-with-transition" multiple title="Pilih Peserta" data-live-search="true" data-size="7">
+                                            <?php
+                                            $queryKaryawan = "SELECT *
+                                                FROM `karyawan`
+                                                WHERE `is_active` == '1' AND `status` == '1'
+                                                ORDER BY `nama` ASC
+                                                ";
+                                            $Karyawan = $this->db->query($queryKaryawan)->result_array();
+                                            foreach ($Karyawan as $k) : ?>
+                                                <option value="<?= $k['inisial']; ?>"><?= $k['nama']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-success">TAMBAH PESERTA</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
