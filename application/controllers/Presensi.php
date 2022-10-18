@@ -110,6 +110,31 @@ class Presensi extends CI_Controller
 
                 $this->db->insert('presensi', $data);
 
+                //Notifikasi ke USER
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [   
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $atasan1['phone'],
+                            'message' => "*ABSENSI ONLINE*" .
+                            "\r\n \r\n*" . $this->session->userdata('nama') . "* membutuhkan approval anda untuk absensinya sebagai berikut :" .
+                            "\r\nWaktu : *" . date('d M Y H:i') . "*" .
+                            "\r\nShift : *" . $this->input->post('workstate') . "*" .
+                            "\r\nStatus : *" . $this->input->post('state') . "*" .
+                            "\r\nLokasi : *" . $this->input->post('location') . "*" .
+                            "\r\n \r\nSegera APPROVE/REJECT agar dapat diproses oleh HR." .
+                            "\r\n#Comeback Stronger!"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+
                 $this->session->set_flashdata('message', 'clockSuccess');
             } else {
                 $this->session->set_flashdata('message', 'clockSuccess2');
@@ -707,9 +732,14 @@ class Presensi extends CI_Controller
                 $this->db->where('dept_id', $this->session->userdata('dept_id'));
                 $this->db->order_by('time', 'DESC');
                 $presensi = $this->db->get('presensi')->result();
-            }else {
+            }elseif ($this->session->userdata('posisi_id') == 7) {
                 $this->db->where('date', date('Y-m-d'));
                 $this->db->where('sect_id', $this->session->userdata('sect_id'));
+                $this->db->order_by('time', 'DESC');
+                $presensi = $this->db->get('presensi')->result();
+            }else {
+                $this->db->where('date', date('Y-m-d'));
+                $this->db->where('atasan1', $this->session->userdata('inisial'));
                 $this->db->order_by('time', 'DESC');
                 $presensi = $this->db->get('presensi')->result();
             }
