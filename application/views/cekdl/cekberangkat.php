@@ -202,7 +202,7 @@
                                             <?php
                                             $queryKaryawan = "SELECT *
                                                 FROM `karyawan`
-                                                WHERE `is_active` = '1' AND `status` = '1'
+                                                WHERE `is_active` = '1'
                                                 ORDER BY `nama` ASC
                                                 ";
                                             $Karyawan = $this->db->query($queryKaryawan)->result_array();
