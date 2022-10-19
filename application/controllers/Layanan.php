@@ -260,14 +260,15 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[INFO]TERJADI SERANGAN MALWARE KE SERVER RAISA*" .
+                            'message' => "*[REMINDER] ASSET OPNAME periode 2022*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSaat ini sedang terjadi serangan malware pada fitur mail di server RAISA dan sedang perbaiki" .
-                            "\r\nTapi jangan khawatir, raisa masih bisa digunakan kok." .
-                            "\r\nCaranya Klik *Details* kemudian *Visit this unsafe site*." .
+                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun," .
+                            "\r\nmaka Winteq akan mengadakan agenda asset opname pada tanggal *19 september 2022 - 14 Oktober 2022* (untuk kategori Asset dan LVA)." .
+                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset-Remaining* lalu melakukan Asset opname (diharuskan mengupload foto barang).." .
+                            "\r\nApabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin Acct." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
-                            // "\r\n \r\nHormat Kami," .
-                            // "\r\nAdmin RAISA" .
+                            "\r\n \r\nHormat Kami," .
+                            "\r\nFin Acct" .
                             "\r\n#ComebackStronger"
                         ],
                     ]
