@@ -258,17 +258,33 @@ class Layanan extends CI_Controller
                             'Accept' => 'application/json',
                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
                         ],
+                        // 'json' => [
+                        //     'phone' => $row['phone'],
+                        //     'message' => "*[INFO] ASSET OPNAME periode 2022*" .
+                        //     "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                        //     "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun," .
+                        //     "\r\nmaka Winteq akan mengadakan agenda asset opname pada tanggal *19 september 2022 - 14 Oktober 2022* (untuk kategori Asset dan LVA)." .
+                        //     "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset-Remaining* lalu melakukan Asset opname (diharuskan mengupload foto barang).." .
+                        //     "\r\nApabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin Acct." .
+                        //     "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                        //     "\r\n \r\nHormat Kami," .
+                        //     "\r\nFin Acct" .
+                        //     "\r\n#ComebackStronger"
+                        // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[REMINDER] ASSET OPNAME periode 2022*" .
+                            'message' => "*[Update] Kebijakan Terkait Form Penyimpangan Terbaru*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun," .
-                            "\r\nmaka Winteq akan mengadakan agenda asset opname pada tanggal *19 september 2022 - 14 Oktober 2022* (untuk kategori Asset dan LVA)." .
-                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset-Remaining* lalu melakukan Asset opname (diharuskan mengupload foto barang).." .
-                            "\r\nApabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin Acct." .
+                            "\r\nMulai tanggal 7 November 2022, berlaku aturan berikut terkait form penyimpangan:" .
+                            "\r\n \r\n- Selalu absen CICO di mesin Face ID WINTEQ." .
+                            "\r\n- Gunakan absen online di RAISA jika sedang tidak di Winteq (DL, WFH, dll), infokan atasan kamu terkait absen online ini." .
+                            "\r\n- Jangan gantikan dengan form penyimpangan." .
+                            "\r\n- Tidak ada penyimpangan dengan alasan lupa absen, berlaku juga bagi karyawan yang tidak sedang WFH,DL,dll." .
+                            "\r\n- Jika tidak ada data FACE ID atau Absen Online di Raisa, maka dinyatakan TA." .
+                            "\r\n- Absen online baru akan diproses HR jika SUDAH DIAPPROVE oleh atasan." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\n \r\nHormat Kami," .
-                            "\r\nFin Acct" .
+                            "\r\nHR" .
                             "\r\n#ComebackStronger"
                         ],
                     ]
