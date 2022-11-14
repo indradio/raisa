@@ -273,15 +273,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[Update] Kebijakan Terkait Form Penyimpangan Terbaru*" .
+                            'message' => "*[Update] Kebijakan Terkait Absensi*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nMulai tanggal 7 November 2022, berlaku aturan berikut terkait form penyimpangan:" .
-                            "\r\n \r\n- Selalu absen CICO di mesin Face ID WINTEQ." .
-                            "\r\n- Gunakan absen online di RAISA jika sedang tidak di Winteq (DL, WFH, dll), infokan atasan kamu terkait absen online ini." .
-                            "\r\n- Jangan gantikan dengan form penyimpangan." .
-                            "\r\n- Tidak ada penyimpangan dengan alasan lupa absen, berlaku juga bagi karyawan yang tidak sedang WFH,DL,dll." .
-                            "\r\n- Jika tidak ada data FACE ID atau Absen Online di Raisa, maka dinyatakan TA." .
-                            "\r\n- Absen online baru akan diproses HR jika SUDAH DIAPPROVE oleh atasan." .
+                            "\r\nPerlu diketahui terkait absensi:" .
+                            "\r\n \r\n1. Jika absen hanya ada cek in tanpa ada cek out maka langsung dilaporkan IMP setengah hari di hari itu oleh sistem." .
+                            "\r\n2. Jika absen tidak ada cek in, hanya ada cek out, maka akan langsung dilaporkan telat 30 menit oleh sistem." .
+                            "\r\n3. Jika tidak ada data absen sama sekali baik itu cek in atau cek out, tidak ada laporan cuti/surat dokter, maka dilaporkan TA di hari itu." .
+                            "\r\n4. Jika melakukan perjalanan dinas dan langsung pulang maka Absen online pulang dilakukan di customer sebelum meninggalkan tempat kerja di customer (termasuk untuk yang menginap)." .
+                            "\r\n5. Absen akan langsung direkap di tiap hari kerja. Jadi tidak akan ada lagi penyelesaian absen-absen yang terlewat di hari-hari berikutnya." .
+                            "\r\n6. Tidak ada penyimpangan dengan alasan lupa absen." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\n \r\nHormat Kami," .
                             "\r\nHR" .
