@@ -91,7 +91,8 @@
             <h4 class="card-title">
             <?php 
             if ($workstate == 'not found'){ ?>
-              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">Clock In</a>
+              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">Clock In</a></p>
+              <h5>Absen pulang aja langsung Klik <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">Clock Out</a></h5>
             <?php }else{ ?>
               <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">Clock Out</a>
             <?php } ?>
