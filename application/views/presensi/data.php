@@ -52,7 +52,7 @@
                       $this->db->where('year(time)', $tahun);
                       $this->db->where('month(time)', $bulan);
                       $this->db->where('day(time)', $i);
-                      $this->db->where('state', 'C/In');
+                      $this->db->where('state', 'In');
                       $in = $this->db->get('presensi')->row_array();
 
                       //clock out
@@ -60,7 +60,7 @@
                       $this->db->where('year(time)', $tahun);
                       $this->db->where('month(time)', $bulan);
                       $this->db->where('day(time)', $i);
-                      $this->db->where('state', 'C/Out');
+                      $this->db->where('state', 'Out');
                       $out = $this->db->get('presensi')->row_array();
                       if (date('D', strtotime($tahun . '-' . $bulan . '-' . $i)) == 'Sat' or date('D', strtotime($tahun . '-' . $bulan . '-' . $i)) == 'Sun') {
                         echo '<tr class="table-danger">';
