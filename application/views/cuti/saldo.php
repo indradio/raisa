@@ -4,17 +4,16 @@
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
-          <div class="card-header card-header-primary card-header-icon">
+        <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
               <i class="material-icons">weekend</i>
             </div>
             <p class="card-category">Saldo</p>
-            <!-- <h3 class="card-title"><?=$karyawan['saldo_cuti']; ?> hari</h3> -->
-            <h3 class="card-title">Segera Hadir</h3>
+            <h3 class="card-title"><?=$saldo_total; ?> hari</h3>
           </div>
           <div class="card-footer">
             <div class="stats"></div>
-              <a href="#" class="btn btn-facebook btn-block" data-toggle="modal" data-target="#tambahCuti">Tambah Cuti</a>
+              <!-- <a href="#" class="btn btn-facebook btn-block" data-toggle="modal" data-target="#tambahCuti">Tambah Cuti</a> -->
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@
           </div>
           <div class="card-footer">
             <div class="stats"></div>
-            <!-- <a href="#" id="btn_tambahCuti" class="btn btn-facebook btn-block" >Ajukan Cuti</a> -->
+            <a href="<?= base_url('cuti/saldo'); ?>" class="btn btn-facebook btn-block" >Kembali</a>
             <!-- data-toggle="modal" data-target="#tambahCuti" -->
           </div>
         </div>

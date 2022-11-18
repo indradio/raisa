@@ -91,8 +91,10 @@
                       <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
                       <td class="text-right">
                         <?php if ($row['saldo_digunakan']==0): ?>
-                          <a href="#" class="btn btn-link btn-warning btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#editCuti" data-id="<?= $row['id']; ?>" data-valid="<?= date('d-m-Y', strtotime($row['valid'])); ?>" data-expired="<?= date('d-m-Y', strtotime($row['expired'])); ?>" data-saldo="<?= $row['saldo']; ?>" data-keterangan="<?= $row['keterangan']; ?>"><i class="material-icons">edit</i></a>
-                          <a href="#" class="btn btn-link btn-danger btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteCuti" data-id="<?= $row['id']; ?>"><i class="material-icons">delete_forever</i></a>
+                            <a href="#" class="btn btn-link btn-warning btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#editCuti" data-id="<?= $row['id']; ?>" data-valid="<?= date('d-m-Y', strtotime($row['valid'])); ?>" data-expired="<?= date('d-m-Y', strtotime($row['expired'])); ?>" data-saldo="<?= $row['saldo']; ?>" data-keterangan="<?= $row['keterangan']; ?>"><i class="material-icons">edit</i></a>
+                            <a href="#" class="btn btn-link btn-danger btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteCuti" data-id="<?= $row['id']; ?>"><i class="material-icons">delete_forever</i></a>
+                          <?php else: ?>
+                            <a href="<?= base_url('cuti/hr_saldo_riwayat/'.$row['id']); ?>" class="btn btn-link btn-info btn-just-icon" role="button" aria-disabled="false"><i class="material-icons">plagiarism</i></a>
                           <?php endif; ?>
                       </td>
                     </tr>

@@ -53,7 +53,7 @@ class Cuti extends CI_Controller
     public function saldo()
     {
         $data['sidemenu'] = 'Cuti';
-        $data['sidesubmenu'] = 'CutiKu';
+        $data['sidesubmenu'] = 'Saldo';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $this->db->select_sum('saldo');
         $this->db->where('npk', $this->session->userdata('npk'));
@@ -78,26 +78,16 @@ class Cuti extends CI_Controller
     public function saldo_riwayat($params, $params2)
     {
         $data['sidemenu'] = 'Cuti';
-        $data['sidesubmenu'] = 'CutiKu';
+        $data['sidesubmenu'] = 'Saldo';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        // $this->db->select_sum('saldo');
-        // $this->db->where('npk', $this->session->userdata('npk'));
-        // $this->db->where('status', 'AKTIF');
-        // $query = $this->db->get('cuti_saldo');
-        // $data['saldo_total'] = $query->row()->saldo;
-        
-        // $this->db->where('npk', $this->session->userdata('npk'));
-        // $this->db->order_by('expired', 'ASC');
-        // $saldo = $this->db->get('cuti_saldo');
-        // $data['saldo'] = $saldo->result_array();
+      
         $data['saldo'] = $this->db->get_where('cuti_saldo', ['id' => $params])->row();
-
         $data['cuti'] = $this->db->get_where('cuti', ['saldo_id' => $params])->result_array();
         $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => '1'])->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('cuti/saldo_riwayat', $data);
+        $this->load->view('cuti/saldo-riwayat', $data);
         $this->load->view('templates/footer');
     }
 
@@ -716,6 +706,22 @@ class Cuti extends CI_Controller
             }
             redirect('cuti/hr_saldo');
         }
+    }
+
+    public function hr_saldo_riwayat($params)
+    {
+        $data['sidemenu'] = 'HR Cuti';
+        $data['sidesubmenu'] = 'Saldo';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+      
+        $data['saldo'] = $this->db->get_where('cuti_saldo', ['id' => $params])->row();
+        $data['cuti'] = $this->db->get_where('cuti', ['saldo_id' => $params])->result();
+        $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => '1'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/hr/saldo-riwayat', $data);
+        $this->load->view('templates/footer');
     }
 
     public function hr_report()
