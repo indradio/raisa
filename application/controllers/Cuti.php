@@ -562,7 +562,7 @@ class Cuti extends CI_Controller
         
         if (empty($params)){
             
-            $this->update_hr_saldo();
+            $this->hr_saldo_update();
 
             $data['sidemenu'] = 'HR Cuti';
             $data['sidesubmenu'] = 'Saldo';
