@@ -20,6 +20,7 @@ class Cuti extends CI_Controller
         $this->load->model('Cuti_model');
         $this->saldo_update();
         $this->approval_coo();
+        $this->update_my_saldo();
     }
 
     public function index()
@@ -49,9 +50,61 @@ class Cuti extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function saldo()
+    {
+        $data['sidemenu'] = 'Cuti';
+        $data['sidesubmenu'] = 'CutiKu';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        $this->db->select_sum('saldo');
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('status', 'AKTIF');
+        $query = $this->db->get('cuti_saldo');
+        $data['saldo_total'] = $query->row()->saldo;
+        
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->order_by('expired', 'ASC');
+        $saldo = $this->db->get('cuti_saldo');
+        $data['saldo'] = $saldo->result_array();
+
+        $data['cuti'] = $this->db->get_where('cuti', ['npk' => $this->session->userdata('npk')])->result_array();
+        $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => '1'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/saldo', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function saldo_riwayat($params, $params2)
+    {
+        $data['sidemenu'] = 'Cuti';
+        $data['sidesubmenu'] = 'CutiKu';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        // $this->db->select_sum('saldo');
+        // $this->db->where('npk', $this->session->userdata('npk'));
+        // $this->db->where('status', 'AKTIF');
+        // $query = $this->db->get('cuti_saldo');
+        // $data['saldo_total'] = $query->row()->saldo;
+        
+        // $this->db->where('npk', $this->session->userdata('npk'));
+        // $this->db->order_by('expired', 'ASC');
+        // $saldo = $this->db->get('cuti_saldo');
+        // $data['saldo'] = $saldo->result_array();
+        $data['saldo'] = $this->db->get_where('cuti_saldo', ['id' => $params])->row();
+
+        $data['cuti'] = $this->db->get_where('cuti', ['saldo_id' => $params])->result_array();
+        $data['kategori'] = $this->db->get_where('cuti_kategori', ['is_active' => '1'])->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('cuti/saldo_riwayat', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function add()
     {
         date_default_timezone_set('asia/jakarta');
+        $this->update_my_saldo();
         $this->load->helper('string');
         $this->load->helper('date');
 
@@ -166,6 +219,8 @@ class Cuti extends CI_Controller
         ];
         $this->db->insert('cuti', $data);
 
+        $this->update_my_saldo();
+
         $atasan1 = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('atasan1_inisial')])->row_array();
         $client = new \GuzzleHttp\Client();
         $response = $client->post(
@@ -196,6 +251,8 @@ class Cuti extends CI_Controller
 
     public function cancel()
     {
+        $this->update_my_saldo();
+
         $id = $this->input->post('id');
         $cuti = $this->db->get_where('cuti', ['id' => $id])->row_array();
 
@@ -211,17 +268,7 @@ class Cuti extends CI_Controller
         $this->db->where('cuti_id', $id);
         $this->db->update('cuti_detail');
         
-        $saldo = $this->db->get_where('cuti_saldo', ['id' => $cuti['saldo_id']])->row_array();
-        if ($saldo)
-        {
-            $i = $saldo['saldo_digunakan'] - $cuti['lama'];
-            $sisa = $saldo['saldo_awal'] - $i;
-
-            $this->db->set('saldo_digunakan', $i);
-            $this->db->set('saldo', $sisa);
-            $this->db->where('id', $cuti['saldo_id']);
-            $this->db->update('cuti_saldo');
-        }
+        $this->update_my_saldo();
 
         //Notifikasi ke USER
         $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
@@ -369,17 +416,7 @@ class Cuti extends CI_Controller
         $this->db->where('cuti_id', $id);
         $this->db->update('cuti_detail');
         
-        $saldo = $this->db->get_where('cuti_saldo', ['id' => $cuti['saldo_id']])->row_array();
-        if ($saldo)
-        {
-            $i = $saldo['saldo_digunakan'] - $cuti['lama'];
-            $sisa = $saldo['saldo_awal'] - $i;
-
-            $this->db->set('saldo_digunakan', $i);
-            $this->db->set('saldo', $sisa);
-            $this->db->where('id', $cuti['saldo_id']);
-            $this->db->update('cuti_saldo');
-        }
+        $this->update_my_saldo();
 
         //Notifikasi ke USER
         $user = $this->db->get_where('karyawan', ['npk' => $cuti['npk']])->row_array();
@@ -849,6 +886,7 @@ class Cuti extends CI_Controller
                     $this->db->where('saldo_id', $row->saldo_id);
                     $this->db->where('status >', 0);
                     $query = $this->db->get('cuti');
+
                     $digunakan = $query->row()->lama;
                     $sisa = $cuti_saldo->saldo_awal - $digunakan;
 
@@ -883,6 +921,118 @@ class Cuti extends CI_Controller
                 );
                 $body = $response->getBody();
             endforeach;
+
+    }
+
+    public function update_my_saldo()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $today = date('Y-m-d');
+        
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('valid <=', $today);
+        $this->db->where('expired >=', $today);
+        $this->db->where('status !=', 'AKTIF');
+        $activated = $this->db->get_where('cuti_saldo')->result();
+            foreach ($activated as $row) :
+                $this->db->set('status', 'AKTIF');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('valid >', $today);
+        $this->db->where('status !=', 'WAITING');
+        $waiting = $this->db->get_where('cuti_saldo')->result();
+            foreach ($waiting as $row) :
+                $this->db->set('status', 'WAITING');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('expired <', $today);
+        $this->db->where('status !=', 'EXPIRED');
+        $expired = $this->db->get_where('cuti_saldo')->result();
+            foreach ($expired as $row) :
+                $this->db->set('status', 'EXPIRED');
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti_saldo');
+            endforeach;
+            
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('tgl1 <', $today);
+        $this->db->where('status >', 0);
+        $this->db->where('status <', 3);
+        $this->db->where('darurat', null);
+        $cuti = $this->db->get_where('cuti')->result();
+            foreach ($cuti as $row) :
+                $this->db->set('reject_by', 'SYSTEM');
+                $this->db->set('reject_at', date('Y-m-d H:i:s'));
+                $this->db->set('reject_reason', 'Batas waktu persetujuan telah selesai');
+                $this->db->set('status', '0');
+                $this->db->set('reject_status', $row->status);
+                $this->db->where('id', $row->id);
+                $this->db->update('cuti');
+
+                $this->db->set('status', '0');
+                $this->db->where('cuti_id', $row->id);
+                $this->db->update('cuti_detail');
+
+                //Notifikasi ke USER
+                $user = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $user->phone,
+                            'message' => "*[NOTIF] PEMBATALAN CUTI*" .
+                            "\r\n \r\nNama : *" . $row->nama . "*" .
+                            "\r\nTanggal : *" . date('d-M', strtotime($row->tgl1)) . "*" .
+                            "\r\nLama : *" . $row->lama ." Hari* " .
+                            "\r\nAlasan : *Cuti kamu melewati batas waktu persetujuan atasan*" .
+                            "\r\n \r\nCuti ini telah *DIBATALKAN oleh SYSTEM*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+            endforeach;
+
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->where('status', 'AKTIF');
+            $cutiSaldo = $this->db->get_where('cuti_saldo')->result();
+
+            if ($cutiSaldo)
+            {
+                foreach ($cutiSaldo as $row) :
+                    $this->db->where('saldo_id', $row->id);
+                    $findCuti = $this->db->get('cuti')->result();
+                    
+                    if ($findCuti)
+                    {
+                        $this->db->select_sum('lama');
+                        $this->db->where('saldo_id', $row->id);
+                        $this->db->where('status >', 0);
+                        $countCuti = $this->db->get('cuti');
+
+                        $digunakan = $countCuti->row()->lama;
+                        $sisa = $row->saldo_awal - $digunakan;
+
+                        $this->db->set('saldo_digunakan', $digunakan);
+                        $this->db->set('saldo', $sisa);
+                        $this->db->where('id', $row->id);
+                        $this->db->update('cuti_saldo');
+                    }
+
+                endforeach;
+            }
 
     }
 

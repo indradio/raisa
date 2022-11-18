@@ -24,7 +24,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Riwayat</h4>
+            <h4 class="card-title">Saldo</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -37,25 +37,27 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th>Saldo Awal</th>
+                    <th>Saldo</th>
+                    <th>Digunakan</th>
                     <th>Sisa Saldo</th>
                     <th>Kategori</th>
                     <th>Keterangan</th>
                     <th>Berlaku Sampai</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>No. Cuti</th>
-                    <th>Nama</th>
-                    <th>Saldo Awal</th>
+                    <th>No</th>
+                    <th>Saldo</th>
+                    <th>Digunakan</th>
                     <th>Sisa Saldo</th>
                     <th>Kategori</th>
                     <th>Keterangan</th>
                     <th>Berlaku</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -64,13 +66,18 @@
                     $user = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
                     <tr>
                       <td><?= $row['id']; ?></td>
-                      <td><?= $user['nama']; ?></td>
                       <td><?= $row['saldo_awal']; ?></td>
+                      <td><?= $row['saldo_digunakan']; ?></td>
                       <td><?= $row['saldo']; ?></td>
                       <td><?= $row['kategori']; ?></td>
                       <td><?= $row['keterangan']; ?></td>
                       <td><?= date('d M Y', strtotime($row['expired'])); ?></td>
                       <td><?= $row['status']; ?></td>
+                      <td class="text-right">
+                        <?php if ($row['saldo_digunakan'] > 0): ?>
+                          <a href="<?= base_url('cuti/saldo_riwayat/'.$row['id'].'/'.time()); ?>" class="btn btn-link btn-info btn-just-icon" role="button" aria-disabled="false"><i class="material-icons">plagiarism</i></a>
+                          <?php endif; ?>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
