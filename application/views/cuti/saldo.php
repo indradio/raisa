@@ -74,7 +74,7 @@
                       <td><?= $row['status']; ?></td>
                       <td class="text-right">
                         <?php if ($row['saldo_digunakan'] > 0): ?>
-                          <a href="<?= base_url('cuti/saldo_riwayat/'.$row['id'].'/'.time()); ?>" class="btn btn-link btn-info btn-just-icon" target="_blank" role="button" aria-disabled="false"><i class="material-icons">plagiarism</i></a>
+                          <a href="<?= base_url('cuti/saldo_riwayat/'.$row['id'].'/'.time()); ?>" class="btn btn-link btn-info btn-just-icon" role="button" aria-disabled="false"><i class="material-icons">plagiarism</i></a>
                           <?php endif; ?>
                       </td>
                     </tr>
