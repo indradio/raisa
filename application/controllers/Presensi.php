@@ -89,7 +89,7 @@ class Presensi extends CI_Controller
             $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
             if (empty($presensi)) {
                 $data = [
-                    'id'            => $id,
+                    // 'id'            => $id,
                     'date'          => date('Y-m-d'),
                     'npk'           => $this->session->userdata('npk'),
                     'nama'          => $this->session->userdata('nama'),
@@ -173,7 +173,7 @@ class Presensi extends CI_Controller
                 if (empty($presensi)) {
 
                 $data = [
-                    'id' => $id,
+                    // 'id' => $id,
                     'npk' => $this->session->userdata('npk'),
                     'nama' => $this->session->userdata('nama'),
                     'state' => "C/In",
@@ -239,7 +239,7 @@ class Presensi extends CI_Controller
 
                     if ($this->upload->do_upload('foto')) {
                         $data = [
-                            'id' => $id,
+                            // 'id' => $id,
                             'file_name' => date('ym').'/'.$this->upload->data('file_name'),
                             'npk' => $this->session->userdata('npk'),
                             'nama' => $this->session->userdata('nama'),
