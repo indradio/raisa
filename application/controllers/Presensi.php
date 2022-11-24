@@ -718,54 +718,55 @@ class Presensi extends CI_Controller
     {
         if ($params=='today')
         {
-            if ($this->session->userdata('posisi_id') == 1){
-                $this->db->where('date', date('Y-m-d'));
-                $this->db->order_by('time', 'DESC');
-                $presensi = $this->db->get('presensi')->result();
-            }elseif ($this->session->userdata('posisi_id') == 2) {
-                $this->db->where('date', date('Y-m-d'));
-                $this->db->where('div_id', $this->session->userdata('div_id'));
-                $this->db->order_by('time', 'DESC');
-                $presensi = $this->db->get('presensi')->result();
-            }elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 4) {
-                $this->db->where('date', date('Y-m-d'));
-                $this->db->where('dept_id', $this->session->userdata('dept_id'));
-                $this->db->order_by('time', 'DESC');
-                $presensi = $this->db->get('presensi')->result();
-            }elseif ($this->session->userdata('posisi_id') == 7) {
-                $this->db->where('date', date('Y-m-d'));
-                $this->db->where('sect_id', $this->session->userdata('sect_id'));
-                $this->db->order_by('time', 'DESC');
-                $presensi = $this->db->get('presensi')->result();
-            }else {
-                $this->db->where('date', date('Y-m-d'));
-                $this->db->where('atasan1', $this->session->userdata('inisial'));
-                $this->db->order_by('time', 'DESC');
-                $presensi = $this->db->get('presensi')->result();
-            }
+            // if ($this->session->userdata('posisi_id') == 1){
+            //     $this->db->where('date', date('Y-m-d'));
+            //     $this->db->order_by('time', 'DESC');
+            //     $presensi = $this->db->get('presensi')->result();
+            // }elseif ($this->session->userdata('posisi_id') == 2) {
+            //     $this->db->where('date', date('Y-m-d'));
+            //     $this->db->where('div_id', $this->session->userdata('div_id'));
+            //     $this->db->order_by('time', 'DESC');
+            //     $presensi = $this->db->get('presensi')->result();
+            // }elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 4) {
+            //     $this->db->where('date', date('Y-m-d'));
+            //     $this->db->where('dept_id', $this->session->userdata('dept_id'));
+            //     $this->db->order_by('time', 'DESC');
+            //     $presensi = $this->db->get('presensi')->result();
+            // }elseif ($this->session->userdata('posisi_id') == 7) {
+            //     $this->db->where('date', date('Y-m-d'));
+            //     $this->db->where('sect_id', $this->session->userdata('sect_id'));
+            //     $this->db->order_by('time', 'DESC');
+            //     $presensi = $this->db->get('presensi')->result();
+            // }else {
+            //     $this->db->where('date', date('Y-m-d'));
+            //     $this->db->where('atasan1', $this->session->userdata('inisial'));
+            //     $this->db->order_by('time', 'DESC');
+            //     $presensi = $this->db->get('presensi')->result();
+            // }
+
+            $this->db->where('date', date('Y-m-d'));
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->order_by('datetime', 'DESC');
+            $presensi = $this->db->get('presensi_raw')->result();
             
             if (!empty($presensi))
             {
                 foreach ($presensi as $row) {
 
-                if ($row->state == "In"){
-                    $state = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
+                if ($row->status == "In"){
+                    $status = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
                 }else{
-                    $state = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
+                    $status = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
                 }
                     $output['data'][] = array(
-                        "name" => $row->nama,
-                        "time" => date('H:i', strtotime($row->time)),
-                        "shift" => $row->work_state,
-                        "status" => $state
+                        "status" => $status,
+                        "time" => date('H:i', strtotime($row->datetime))
                     );
                 }
             }else{
                 $output['data'][] = array(
-                    "name" => '',
-                    "time" => 'There are no data to display.',
-                    "shift" => '',
-                    "status" => ''
+                    "status" => 'There are no data to display.',
+                    "time" => ''
                 );
             }
 
