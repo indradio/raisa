@@ -90,6 +90,19 @@ class Presensi extends CI_Controller
             if (empty($presensi)) {
                 $data = [
                     // 'id'            => $id,
+                    'date'              => date('Y-m-d'),
+                    'time'              => date('H:i:s'),
+                    'datetime'          => date('Y-m-d H:i:s'),
+                    'npk'               => $this->session->userdata('npk'),
+                    'platform'          => $this->input->post('platform'),
+                    'status'            => $this->input->post('state'),
+                    'authentication'    => 'Verified'
+                ];
+
+                $this->db->insert('presensi_raw', $data);
+
+                $data = [
+                    // 'id'            => $id,
                     'date'          => date('Y-m-d'),
                     'npk'           => $this->session->userdata('npk'),
                     'nama'          => $this->session->userdata('nama'),
@@ -753,14 +766,15 @@ class Presensi extends CI_Controller
             {
                 foreach ($presensi as $row) {
 
-                if ($row->status == "In"){
-                    $status = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
-                }else{
-                    $status = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
-                }
+                    if ($row->status == "In"){
+                        $status = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
+                    }else{
+                        $status = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
+                    }
+
                     $output['data'][] = array(
                         "status" => $status,
-                        "time" => date('H:i', strtotime($row->datetime))
+                        "time" => date('H:i', strtotime($row->datetime)).' '.$row->authentication
                     );
                 }
             }else{

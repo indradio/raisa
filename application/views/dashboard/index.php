@@ -15,7 +15,6 @@
     <!-- End Notification -->
 
     <!-- 2. Banner -->
-    <div class="row">
       <?php
       date_default_timezone_set('asia/jakarta');
       $queryLayInfo = "SELECT COUNT(*)
@@ -32,14 +31,19 @@
                     WHERE `berlaku` >= CURDATE()
                     ORDER BY `id` DESC
                   ";
-        $informasi = $this->db->query($queryInfo)->result_array();
+        $informasi = $this->db->query($queryInfo)->result();
+        }
       ?>
-        <?php foreach ($informasi as $info) : ?>
-          <div class="col-md-<?= $lay; ?>">
+    <!-- end banner -->
+
+    <!-- Icon for Mobile -->
+    <div class="row">
+      <?php foreach ($informasi as $row) : ?>
+          <div class="col-md-<?= $lay; ?> d-block d-sm-none">
             <div class="card card-product">
               <div class="card-header card-header-image" data-header-animation="true">
                 <a href="#pablo">
-                  <img class="img" src="<?= base_url(); ?>assets/img/info/<?= $info['gambar_banner']; ?>">
+                  <img class="img" src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>">
                 </a>
               </div>
               <div class="card-body">
@@ -47,25 +51,19 @@
                   <button type="button" class="btn btn-info btn-link fix-broken-card">
                     <i class="material-icons">build</i> Muat Ulang!
                   </button>
-                  <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url(); ?>assets/img/info/<?= $info['gambar_konten']; ?>">
+                  <a href="#" class="badge badge-pill badge-primary mt-3" rel="tooltip" title="" data-toggle="modal" data-target="#bannerModal" data-gambar="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>">
                     Selengkapnya...
                   </a>
                 </div>
                 <h4 class="card-title">
-                  <?= $info['judul']; ?>
+                  <?= $row->judul; ?>
                 </h4>
               </div>
             </div>
           </div>
-      <?php endforeach;
-      } ?>
-    </div>
-    <!-- end banner -->
-
-    <!-- Icon for Mobile -->
-    <div class="row">
-      <div class="col-md-12 d-block d-sm-none ">
-        <div class="card">
+      <?php endforeach; ?>
+      <div class="col-md-12 d-block d-sm-none">
+          <div class="card">
               <div class="card-body">
                   <div class="row">
                       <div class="col-4 text-center">
@@ -97,56 +95,109 @@
           </div>
           <!--  end card  -->
       </div>  
+      <div class="col-md-12 d-none d-sm-block">
+          <div class="card">
+            <div class="card-body">
+              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                  <?php foreach ($informasi as $row) : ?>
+                  <div class="carousel-item <?= $row->active; ?>">
+                    <img class="d-block w-100" src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" alt="">
+                  </div>
+                  <?php endforeach; ?>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+      </div>  
     </div>
     <!-- Icon for Mobile -->
 
     <!-- HImbauan -->
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="card">
-          <div class="card-header card-header-info card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">assignment</i>
-            </div>
-            <h4 class="card-title">Absensi hari ini</h4>
-          </div>
+          <!-- <div class="card-header">
+            <h4 class="card-title">Absensi</h4>
+          </div> -->
           <div class="card-body">
-            <div class="toolbar"> </div>
-            <div class="material-datatables">
-              <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Jam</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Status</th>
-                    <th>Jam</th>
-                  </tr>
-                </tfoot>
-              </table>
+            <div id="accordion" role="tablist">
+              <!-- <div class="card-collapse">
+                <div class="card-header" role="tab" id="headingOne">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">
+                      Collapsible Group Item #1
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" style="">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  </div>
+                </div>
+              </div>
+              <div class="card-collapse">
+                <div class="card-header" role="tab" id="headingTwo">
+                  <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Collapsible Group Item #2
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  </div>
+                </div>
+              </div> -->
+              <div class="card-collapse">
+                <div class="card-header" role="tab" id="headingThree">
+                  <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <h3 class="card-title">Absensi
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </h3>
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="material-datatables">
+                      <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"></table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <!-- end card body-->
         </div>
-        <!--  end card  -->
       </div>
-      <!-- end col-md-12 -->
 
-        <div class="col-md-6">
-          <div class="card card-stats">
-            <div class="card-header">
-              <p class="card-category"></p>
-              <h3 class="card-title">Mau dapetin uang jajan 20K?</h3>
-              <h4 class="card-title">Segera kirimin konten kamu ya!</h4>
-              <a href="<?= base_url('layanan/contest'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Upload sekarang!</a>
-            </div>
+      <div class="col-md-6">
+        <div class="card card-stats">
+          <div class="card-header">
+            <p class="card-category"></p>
+            <h3 class="card-title">Mau dapetin uang jajan 20K?</h3>
+            <h4 class="card-title">Segera kirimin konten kamu ya!</h4>
+            <a href="<?= base_url('layanan/contest'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Upload sekarang!</a>
           </div>
         </div>
+      </div>
     </div>
     <!-- End HImbauan -->
 
@@ -872,13 +923,10 @@
      <?php }; ?>
 
     $('#dtpresensi').DataTable({
-      "pagingType": "full_numbers",
-      "ordering": false,
-      scrollX: true,
-      language: {
-          search: "_INPUT_",
-          searchPlaceholder: "Search records",
-      },
+      paging: false,
+      ordering: false,
+      info: false,
+      searching: false,
       serverSide: false,
       processing: true,
       ajax: {
