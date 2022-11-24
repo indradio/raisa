@@ -25,8 +25,7 @@
         <ul class="dropdown-menu">
             <li class="header-title">Butuh Bantuan?</li>
             <li class="button-container">
-                <a href="#" data-toggle="modal" data-target="#openTicket" class="btn btn-info btn-block btn-fill">FORMULIR BANTUAN</a>
-                <a href="https://wa.me/6281311196988?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-success btn-block btn-fill"><i class="material-icons">whatsapp</i> WhatsApp</a>
+                <a href="https://wa.me/6281311196988?text=Tanya%20tentang%20RAISA?%20" target="_blank" class="btn btn-success btn-block btn-fill"><i class="fa fa-whatsapp"></i> WhatsApp</a>
             </li>
             <!-- <li class="header-title"> Sidebar Filters</li>
             <li class="adjustments-line">
@@ -106,7 +105,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="openTicket" tabindex="-1" role="dialog" aria-labelledby="openTicketTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="openTicket" tabindex="-1" role="dialog" aria-labelledby="openTicketTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="card card-signup card-plain">
@@ -154,7 +153,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!--   Core JS Files   -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>

@@ -66,36 +66,41 @@
           <div class="card">
               <div class="card-body">
                   <div class="row">
-                      <div class="col-4 text-center">
-                          <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon btn-info">
-                              <i class="fa fa-taxi"></i>
-                          </a>
-                          <a class="card-title"><small>PerjalananKu</small></a>
-                      </div>
-                      <div class="col-4 text-center">
-                          <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon btn-info">
-                              <i class="fa fa-clock-o"></i>
-                          </a>
-                          <a class="card-title"><small>LemburKu</small></a>
+                    <div class="col-4 text-center">
+                        <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon btn-success">
+                            <i class="fa fa-street-view"></i>
+                        </a>
+                        </br>
+                        <a class="card-title"><small>Kehadiran</small></a>
                       </div>
                       <div class="col-4 text-center">
                           <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-info">
                               <i class="fa fa-calendar-times-o"></i>
                           </a>
-                          <a class="card-title"><small>CutiKu</small></a>
+                          </br>
+                          <a class="card-title"><small>Cuti</small></a>
                       </div>
                       <div class="col-4 text-center">
-                          <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon btn-info">
-                              <i class="fa fa-street-view"></i>
+                          <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-clock-o"></i>
                           </a>
-                          <a class="card-title"><small>Kehadiran</small></a>
+                          </br>
+                          <a class="card-title"><small>Lembur</small></a>
+                      </div>
+                      <div class="col-4 text-center">
+                          <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-car"></i>
+                          </a>
+                          </br>
+                          <a class="card-title"><small>Perjalanan</small></a>
                       </div>
                   </div>
               </div>
           </div>
           <!--  end card  -->
       </div>  
-      <div class="col-md-12 d-none d-sm-block">
+
+      <div class="col-md-10 d-none d-sm-block">
           <div class="card">
             <div class="card-body">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -126,13 +131,23 @@
               </div>
             </div>
           </div>
-      </div>  
+      </div> 
+      <div class="col-md-2 d-none d-sm-block">
+        <div class="card card-stats">
+          <div class="card-header">
+            <p class="card-category"></p>
+            <h3 class="card-title">Mau dapetin uang jajan 20K?</h3>
+            <h4 class="card-title">Segera kirimin konten kamu ya!</h4>
+            <a href="<?= base_url('layanan/contest'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Upload sekarang!</a>
+          </div>
+        </div>
+      </div> 
     </div>
     <!-- Icon for Mobile -->
 
-    <!-- HImbauan -->
+    <!-- Absensi -->
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="card">
           <!-- <div class="card-header">
             <h4 class="card-title">Absensi</h4>
@@ -191,19 +206,8 @@
           </div>
         </div>
       </div>
-
-      <div class="col-md-6">
-        <div class="card card-stats">
-          <div class="card-header">
-            <p class="card-category"></p>
-            <h3 class="card-title">Mau dapetin uang jajan 20K?</h3>
-            <h4 class="card-title">Segera kirimin konten kamu ya!</h4>
-            <a href="<?= base_url('layanan/contest'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Upload sekarang!</a>
-          </div>
-        </div>
-      </div>
     </div>
-    <!-- End HImbauan -->
+    <!-- End Absensi -->
 
     <div class="row">
 
