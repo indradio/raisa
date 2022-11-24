@@ -102,6 +102,41 @@
 
     <!-- HImbauan -->
     <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Absensi hari ini</h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar"> </div>
+            <div class="material-datatables">
+              <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Jam</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Status</th>
+                    <th>Jam</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <!-- end card body-->
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+
         <div class="col-md-6">
           <div class="card card-stats">
             <div class="card-header">
@@ -626,43 +661,6 @@
                           <?php endforeach; ?>
     </div>
     <!-- end Perjalanan -->
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-info card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">assignment</i>
-            </div>
-            <h4 class="card-title">Absensi hari ini</h4>
-          </div>
-          <div class="card-body">
-            <div class="toolbar"> </div>
-            <div class="material-datatables">
-              <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Jam</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Status</th>
-                    <th>Jam</th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-          <!-- end card body-->
-        </div>
-        <!--  end card  -->
-      </div>
-      <!-- end col-md-12 -->
-    </div>
 
   </div>
   <!-- end container-fluid -->
