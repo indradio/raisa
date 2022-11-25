@@ -275,9 +275,9 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*[PEDULI] GEMPA CIANJUR*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSaat ini, masyarakat terdampak gempa Cianjur membutuhkan keperluan pokok darurat, di antaranya evakuasi, bantuan pangan, air bersih, dan hunian sementara. Beberapa jalan juga mengalami kelumpuhan dikarenakan terjadinya longsor." .
-                            "\r\n \r\nKami mengajak Kak *" . $row['nama'] . "* untuk ikut berpartisipasi untuk meringankan beban saudara kita dengan berdonasi melalui posko yang telah disediakan" .
-                            "\r\nLokasi posko pengumpulan bantuan: Kantin" .
+                            "\r\nSaat ini, masyarakat terdampak gempa Cianjur membutuhkan bantuan kita." .
+                            "\r\nKami mengajak Kak *" . $row['nama'] . "* untuk ikut berpartisipasi untuk meringankan beban saudara kita dengan berdonasi melalui posko yang telah disediakan" .
+                            "\r\n \r\nLokasi posko pengumpulan bantuan: *Kantin*" .
                             "\r\nKebutuhan yang saat ini di utamakan:" .
                             "\r\n-Makanan instan" .
                             "\r\n-Makanan bayi" .
@@ -290,7 +290,7 @@ class Layanan extends CI_Controller
                             "\r\n-alat cuci" .
                             "\r\n-obat-obatan" .
                             "\r\n-dll" .
-                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\n \r\nTerima kasih." .
                             "\r\n#ComebackStronger"
                         ],
                     ]
