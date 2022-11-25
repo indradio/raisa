@@ -274,24 +274,23 @@ class Layanan extends CI_Controller
                         'json' => [
                             'phone' => $row['phone'],
                             'message' => "*[PEDULI] GEMPA CIANJUR*" .
-                            "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSaat ini, masyarakat terdampak gempa Cianjur membutuhkan bantuan kita." .
-                            "\r\nKami mengajak Kak *" . $row['nama'] . "* untuk ikut berpartisipasi untuk meringankan beban saudara kita dengan berdonasi melalui posko yang telah disediakan" .
-                            "\r\n \r\nLokasi posko pengumpulan bantuan: *Kantin*" .
-                            "\r\nKebutuhan yang saat ini di utamakan:" .
-                            "\r\n-Makanan instan" .
-                            "\r\n-Makanan bayi" .
-                            "\r\n-susu bayi" .
-                            "\r\n-selimut" .
-                            "\r\n-pakaian anak" .
-                            "\r\n-pakaian bayi" .
-                            "\r\n-popok anak" .
-                            "\r\n-alat mandi" .
-                            "\r\n-alat cuci" .
-                            "\r\n-obat-obatan" .
-                            "\r\n-dll" .
-                            "\r\n \r\nTerima kasih." .
-                            "\r\n#ComebackStronger"
+                                "\r\n \r\nSaat ini, masyarakat terdampak gempa Cianjur membutuhkan bantuan kita." .
+                                "\r\nKami mengajak Kak *" . $row['nama'] . "* untuk ikut berpartisipasi untuk meringankan beban saudara kita dengan berdonasi melalui posko yang telah disediakan" .
+                                "\r\n \r\nLokasi posko pengumpulan bantuan: *Kantin*" .
+                                "\r\nKebutuhan yang saat ini di utamakan:" .
+                                "\r\n-Makanan instan" .
+                                "\r\n-Makanan bayi" .
+                                "\r\n-susu bayi" .
+                                "\r\n-selimut" .
+                                "\r\n-pakaian anak" .
+                                "\r\n-pakaian bayi" .
+                                "\r\n-popok anak" .
+                                "\r\n-alat mandi" .
+                                "\r\n-alat cuci" .
+                                "\r\n-obat-obatan" .
+                                "\r\n-dll" .
+                                "\r\n \r\nTerima kasih." .
+                                "\r\n#ComebackStronger"
                         ],
                     ]
                 );
