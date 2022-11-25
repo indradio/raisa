@@ -273,18 +273,24 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[Update] Kebijakan Terkait Absensi*" .
+                            'message' => "*[PEDULI] GEMPA CIANJUR*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nPerlu diketahui terkait absensi:" .
-                            "\r\n \r\n1. Jika absen hanya ada cek in tanpa ada cek out maka langsung dilaporkan IMP setengah hari di hari itu oleh sistem." .
-                            "\r\n2. Jika absen tidak ada cek in, hanya ada cek out, maka akan langsung dilaporkan telat 30 menit oleh sistem." .
-                            "\r\n3. Jika tidak ada data absen sama sekali baik itu cek in atau cek out, tidak ada laporan cuti/surat dokter, maka dilaporkan TA di hari itu." .
-                            "\r\n4. Jika melakukan perjalanan dinas dan langsung pulang maka Absen online pulang dilakukan di customer sebelum meninggalkan tempat kerja di customer (termasuk untuk yang menginap)." .
-                            "\r\n5. Absen akan langsung direkap di tiap hari kerja. Jadi tidak akan ada lagi penyelesaian absen-absen yang terlewat di hari-hari berikutnya." .
-                            "\r\n6. Tidak ada penyimpangan dengan alasan lupa absen." .
+                            "\r\nSaat ini, masyarakat terdampak gempa Cianjur membutuhkan keperluan pokok darurat, di antaranya evakuasi, bantuan pangan, air bersih, dan hunian sementara. Beberapa jalan juga mengalami kelumpuhan dikarenakan terjadinya longsor." .
+                            "\r\n \r\nKami mengajak Kak *" . $row['nama'] . "* untuk ikut berpartisipasi untuk meringankan beban saudara kita dengan berdonasi melalui posko yang telah disediakan" .
+                            "\r\nLokasi posko pengumpulan bantuan: Kantin" .
+                            "\r\nKebutuhan yang saat ini di utamakan:" .
+                            "\r\n-Makanan instan" .
+                            "\r\n-Makanan bayi" .
+                            "\r\n-susu bayi" .
+                            "\r\n-selimut" .
+                            "\r\n-pakaian anak" .
+                            "\r\n-pakaian bayi" .
+                            "\r\n-popok anak" .
+                            "\r\n-alat mandi" .
+                            "\r\n-alat cuci" .
+                            "\r\n-obat-obatan" .
+                            "\r\n-dll" .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
-                            "\r\n \r\nHormat Kami," .
-                            "\r\nHR" .
                             "\r\n#ComebackStronger"
                         ],
                     ]
