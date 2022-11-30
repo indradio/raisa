@@ -82,7 +82,7 @@ class Presensi extends CI_Controller
         //State convert to Decimal
         ($this->input->post('state') == 'In') ? $state = '1' : $state = '0';
         
-        $id      = date('ymd') . $karyawan->npk . $state;
+        $id      = date('ymd') . $this->session->userdata('npk') . $state;
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
         if (!empty($this->input->post('location')) or !empty($this->input->post('latitude')) or !empty($this->input->post('longitude'))) {
