@@ -847,19 +847,19 @@ class Presensi extends CI_Controller
         $this->db->where('authentication','Undefined');
         $this->db->where('npk',$this->session->userdata('npk'));
         $this->db->order_by('datetime', 'ASC');
-        $presensi = $this->db->get('presensi_raw')->result();
+        $presensi_raw = $this->db->get('presensi_raw')->result();
 
-        if (!empty($presensi))
+        if (!empty($presensi_raw))
             {
-                foreach ($presensi as $row) 
+                foreach ($presensi_raw as $row) 
                     {
                         ($row->status == 'In') ? $status = '1' : $status = '0';
                         $karyawan   = $this->db->get_where('karyawan',['npk' => $this->session->userdata('npk')])->row();
                         $id         = date('ymd', strtotime($row->date)) . $karyawan->npk . $status;
 
                         $this->db->where('id',$id);
-                        $presensi_exist = $this->db->get('presensi')->row();
-                        if (empty($presensi_exist))
+                        $presensi = $this->db->get('presensi')->row();
+                        if (empty($presensi))
                             {
                                 // cari atasan1
                                 if ($karyawan->atasan1 == 0) {
@@ -944,19 +944,19 @@ class Presensi extends CI_Controller
                                 $this->db->where('id',$row->id);
                                 $this->db->update('presensi_raw');
                             }else{
-                                if ($presensi_exist->state == 'In' and $presensi_exist->time < $row->datetime)
+                                if ($presensi->state == 'In' and $presensi->time < $row->datetime)
                                     {
                                         $this->db->set('authentication','Repeated');
                                         $this->db->set('authentication_at',date('Y-m-d H:i:s'));
                                         $this->db->where('id',$row->id);
                                         $this->db->update('presensi_raw');
-                                    }elseif ($presensi_exist->state == 'In' and $presensi_exist->time >= $row->datetime)
+                                    }elseif ($presensi->state == 'In' and $presensi->time >= $row->datetime)
                                     {
                                         $this->db->set('time',date('Y-m-d H:i:s',strtotime($row->datetime)));
                                         $this->db->set('platform',$row->platform);
                                         $this->db->set('approved_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
                                         $this->db->set('hr_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
-                                        $this->db->where('id',$presensi_exist->id);
+                                        $this->db->where('id',$presensi->id);
                                         $this->db->update('presensi');
 
                                         $this->db->set('authentication','Repeated');
@@ -968,19 +968,19 @@ class Presensi extends CI_Controller
                                         $this->db->set('authentication_at',date('Y-m-d H:i:s'));
                                         $this->db->where('id',$row->id);
                                         $this->db->update('presensi_raw');
-                                    }elseif ($presensi_exist->state == 'Out' and $presensi_exist->time >= $row->datetime)
+                                    }elseif ($presensi->state == 'Out' and $presensi->time >= $row->datetime)
                                     {
                                         $this->db->set('authentication','Repeated');
                                         $this->db->set('authentication_at',date('Y-m-d H:i:s'));
                                         $this->db->where('id',$row->id);
                                         $this->db->update('presensi_raw');
-                                    }elseif ($presensi_exist->state == 'Out' and $presensi_exist->time < $row->datetime)
+                                    }elseif ($presensi->state == 'Out' and $presensi->time < $row->datetime)
                                     {
                                         $this->db->set('time',date('Y-m-d H:i:s',strtotime($row->datetime)));
                                         $this->db->set('platform',$row->platform);
                                         $this->db->set('approved_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
                                         $this->db->set('hr_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
-                                        $this->db->where('id',$presensi_exist->id);
+                                        $this->db->where('id',$presensi->id);
                                         $this->db->update('presensi');
 
                                         $this->db->set('authentication','Repeated');
