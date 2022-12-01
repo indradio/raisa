@@ -96,7 +96,8 @@ class Presensi extends CI_Controller
                     'npk'               => $this->session->userdata('npk'),
                     'platform'          => $this->input->post('platform'),
                     'status'            => $this->input->post('state'),
-                    'authentication'    => 'Verified'
+                    'authentication'    => 'Verified',
+                    'authentication_at' => date('Y-m-d H:i:s')
                 ];
 
                 $this->db->insert('presensi_raw', $data);
@@ -960,7 +961,9 @@ class Presensi extends CI_Controller
                                         $this->db->update('presensi');
 
                                         $this->db->set('authentication','Repeated');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
                                         $this->db->where('date',date('Y-m-d',strtotime($row->date)));
+                                        $this->db->where('authentication','Verified');
                                         $this->db->where('status','In');
                                         $this->db->update('presensi_raw');
 
@@ -984,8 +987,10 @@ class Presensi extends CI_Controller
                                         $this->db->update('presensi');
 
                                         $this->db->set('authentication','Repeated');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
                                         $this->db->where('date',date('Y-m-d',strtotime($row->date)));
-                                        $this->db->where('status','Óut');
+                                        $this->db->where('authentication','Verified');
+                                        $this->db->where('status','Out');
                                         $this->db->update('presensi_raw');
 
                                         $this->db->set('authentication','Verified');
