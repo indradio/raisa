@@ -119,7 +119,7 @@ class Presensi extends CI_Controller
                     'atasan1'       => $atasan1['inisial'],
                     'day_state'     => $day,
                     'status'        => '1',
-                    'description'   => $this->input->post('description')
+                    'description'   => $this->input->post('note')
                 ];
 
                 $this->db->insert('presensi', $data);
