@@ -484,8 +484,10 @@ class Perjalanan extends CI_Controller
 
         if (empty($params) and empty($id)){
             $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '6'])->result_array();
+
                                  $this->db->where('tglberangkat', date('Y-m-d'));
                                  $this->db->where('tgl_atasan2 !=', NULL);
+                                 $this->db->where('jenis_perjalanan', 'DLPP');
             $data['cancelled'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
