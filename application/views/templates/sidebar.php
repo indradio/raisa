@@ -1,6 +1,6 @@
 <body class="">
   <div class="wrapper">
-    <div class="sidebar" data-color="azure" data-background-color="white" data-image="<?= base_url(); ?>assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="orange" data-background-color="white" data-image="<?= base_url(); ?>assets/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -102,10 +102,7 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'Info HR') {
-                          echo '<span class="badge badge-info badge-sm">Baru</span>';
-                        } ?>
-                        <?php if ($m['menu'] == 'Cuti') {
+                        <?php if ($m['menu'] == 'Kehadiran') {
                           echo '<span class="badge badge-info badge-sm">Baru</span>';
                         } ?>
                         <b class="caret"></b>
@@ -118,7 +115,7 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'Info HR') {
+                              <?php if ($m['menu'] == 'Kehadiran') {
                                 echo '<span class="badge badge-info badge-sm">Baru</span>';
                               } ?>
                               <b class="caret"></b>

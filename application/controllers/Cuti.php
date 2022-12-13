@@ -1248,4 +1248,46 @@ class Cuti extends CI_Controller
 
     }
 
+    public function get_data($params)
+    {    
+        if ($params == null){
+
+        }elseif ($params == 'saldo')
+        {
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->where('status', 'AKTIF');
+            $this->db->order_by('expired', 'ASC');
+            $saldo = $this->db->get('cuti_saldo')->result();
+
+            if (!empty($saldo))
+            {
+                foreach ($saldo as $row) {
+
+                    if ($row->status == "In"){
+                        $status = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk<div class='ripple-container'></div></button>";
+                    }else{
+                        $status = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Pulang<div class='ripple-container'></div></button>";
+                    }
+
+                    $output['data'][] = array(
+                        "saldo" => $row->saldo.' Hari',
+                        "kategori" => $row->kategori,
+                        "berlaku" => 'Berlaku '.date('d M Y', strtotime($row->expired))
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "kategori" => '',
+                    "saldo" => 'There are no data to display.',
+                    "berlaku" => ''
+                );
+            }
+
+            echo json_encode($output);
+            exit();
+
+        }
+    
+    }
+
 }

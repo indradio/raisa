@@ -149,52 +149,19 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card">
-          <!-- <div class="card-header">
-            <h4 class="card-title">Absensi</h4>
-          </div> -->
           <div class="card-body">
-            <div id="accordion" role="tablist">
-              <!-- <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingOne">
-                  <h5 class="mb-0">
-                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">
-                      Collapsible Group Item #1
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" style="">
-                  <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
+            <div id="accordionAbsensi" role="tablist">
               <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingTwo">
+                <div class="card-header" role="tab" id="headingAbsensi">
                   <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Collapsible Group Item #2
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
-                  <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div> -->
-              <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingThree">
-                  <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <a class="" data-toggle="collapse" href="#collapseAbsensi" aria-expanded="true" aria-controls="collapseAbsensi">
                     <h3 class="card-title">Absensi
                       <i class="material-icons">keyboard_arrow_down</i>
                     </h3>
                     </a>
                   </h5>
                 </div>
-                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                <div id="collapseAbsensi" class="collapse show" role="tabpanel" aria-labelledby="headingAbsensi" data-parent="#accordion">
                   <div class="card-body">
                     <div class="material-datatables">
                       <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"></table>
@@ -206,8 +173,39 @@
           </div>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
     <!-- End Absensi -->
+
+    <!-- Cuti -->
+    <!-- <div class="row"> -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div id="accordionCuti" role="tablist">
+              <div class="card-collapse">
+                <div class="card-header" role="tab" id="headingCuti">
+                  <h5 class="mb-0">
+                    <a class="" data-toggle="collapse" href="#collapseCuti" aria-expanded="true" aria-controls="collapseCuti">
+                    <h3 class="card-title">Cuti
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </h3>
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseCuti" class="collapse show" role="tabpanel" aria-labelledby="headingCuti" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="material-datatables">
+                      <table id="dtcuti" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"></table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Cuti -->
 
     <div class="row">
 
@@ -944,6 +942,24 @@
       columns: [
         { "data":"status"},
         { "data":"time"}
+      ],
+    });
+
+    $('#dtcuti').DataTable({
+      paging: false,
+      ordering: false,
+      info: false,
+      searching: false,
+      serverSide: false,
+      processing: true,
+      ajax: {
+              "url"   : "<?= site_url('cuti/get_data/saldo') ?>",
+              "type"  : "POST",
+          },
+      columns: [
+        { "data":"kategori"},
+        { "data":"saldo"},
+        { "data":"berlaku"}
       ],
     });
 
