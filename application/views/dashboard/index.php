@@ -173,39 +173,8 @@
           </div>
         </div>
       </div>
-    <!-- </div> -->
-    <!-- End Absensi -->
-
-    <!-- Cuti -->
-    <!-- <div class="row"> -->
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div id="accordionCuti" role="tablist">
-              <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingCuti">
-                  <h5 class="mb-0">
-                    <a class="" data-toggle="collapse" href="#collapseCuti" aria-expanded="true" aria-controls="collapseCuti">
-                    <h3 class="card-title">Cuti
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </h3>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseCuti" class="collapse show" role="tabpanel" aria-labelledby="headingCuti" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="material-datatables">
-                      <table id="dtcuti" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"></table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <!-- End Cuti -->
+    <!-- End Absensi -->
 
     <div class="row">
 
@@ -367,9 +336,9 @@
 
                         <div class="card">
                           <div class="card-header <?= ($p['status'] == 2)? 'card-header-danger' : 'card-header-info';?> card-header-icon">
-                              <div class="card-icon">
+                              <!-- <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
-                              </div>
+                              </div> -->
                                 <?php if ($p['status'] == 1) { ?>
                                   <h4 class="card-title"><a href="#" class="btn btn-sm btn-info">READY</a></h4>
                                 <?php } elseif ($p['status'] == 2) { ?>
@@ -450,9 +419,9 @@
                         
                         <div class="card">
                             <div class="card-header card-header-warning card-header-icon">
-                              <div class="card-icon">
+                              <!-- <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
-                              </div>
+                              </div> -->
                               <?php if ($r['status'] == 1) { ?>
                                 <h4 class="card-title"><a href="#" class="btn btn-sm btn-warning">Waiting | <?= $r['atasan1']; ?></a></h4>
                                 <?php } elseif ($r['status'] == 2) { ?>
@@ -532,9 +501,9 @@
                         <?php } else { ?>
                           <div class="card">
                             <div class="card-header card-header-success card-header-icon">
-                              <div class="card-icon">
+                              <!-- <div class="card-icon">
                                 <i class="material-icons">emoji_transportation</i>
-                              </div>
+                              </div> -->
                               <h4 class="card-title"><a href="<?= base_url('reservasi/dl'); ?>" class="btn btn-sm btn-success">AVAILABLE</a></h4>
                             </div>
                             <div class="card-body text-center">
@@ -942,24 +911,6 @@
       columns: [
         { "data":"status"},
         { "data":"time"}
-      ],
-    });
-
-    $('#dtcuti').DataTable({
-      paging: false,
-      ordering: false,
-      info: false,
-      searching: false,
-      serverSide: false,
-      processing: true,
-      ajax: {
-              "url"   : "<?= site_url('cuti/get_data/saldo') ?>",
-              "type"  : "POST",
-          },
-      columns: [
-        { "data":"kategori"},
-        { "data":"saldo"},
-        { "data":"berlaku"}
       ],
     });
 
