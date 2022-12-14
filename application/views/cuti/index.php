@@ -96,7 +96,11 @@
                     $status = $this->db->get_where('cuti_status', ['id' => $row['status']])->row_array(); ?>
                     <tr>
                     <td><?= $row['kategori']. ' </br><small>('.$row['id'].')</small>'; ?></td>
-                      <td><?= date('d M Y', strtotime($row['tgl1'])); ?></td>
+                    <?php if ($row['lama']==1){ ?>
+                        <td><?= date('d M Y', strtotime($row['tgl1'])); ?></td>
+                      <?php }else{ ?>
+                        <td><?= date('d M Y', strtotime($row['tgl1'])).' - '.date('d M Y', strtotime($row['tgl2'])); ?></td>
+                    <?php } ?>
                       <td><?= $row['lama']; ?></td>
                       <td><?= $row['keterangan']; ?></td>
                       <td><?= $status['nama']; ?></td>
@@ -373,6 +377,20 @@
       $.notify({
         icon: "add_alert",
         message: "<b>Maaf!</b> Saldo cuti kamu tidak cukup."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+
+     <?php }elseif ($this->session->flashdata('notify')=='range'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Tanggal akhir harus lebih besar."
       }, {
         type: "danger",
         timer: 3000,

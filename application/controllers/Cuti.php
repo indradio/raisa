@@ -100,6 +100,12 @@ class Cuti extends CI_Controller
         $this->load->helper('string');
         $this->load->helper('date');
 
+        // validasi
+        if($this->input->post('tgl1') > $this->input->post('tgl2')){
+            $this->session->set_flashdata('notify', 'range');
+            redirect('/cuti');
+        }
+
         $id = 'CT'.date('ym').random_string('alnum',3);
         $cuti1 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl1'))));
         $cuti2 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl2'))));
@@ -696,6 +702,23 @@ class Cuti extends CI_Controller
                 $this->db->set('saldo_awal', $this->input->post('saldo'));
                 $this->db->set('saldo', $this->input->post('saldo'));
                 $this->db->set('keterangan', $this->input->post('keterangan'));
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('cuti_saldo');
+
+            // Edit Saldo sudah digunakan
+            }elseif ($params=='edit_saldo') {
+
+                $this->db->select_sum('lama');
+                $this->db->where('saldo_id', $this->input->post('id'));
+                $this->db->where('status >', 0);
+                $countCuti = $this->db->get('cuti');
+
+                $digunakan = $countCuti->row()->lama;
+                $saldo = $this->input->post('saldo') - $digunakan;
+
+                $this->db->set('saldo_awal', $this->input->post('saldo'));
+                $this->db->set('saldo_digunakan', $digunakan);
+                $this->db->set('saldo', $saldo);
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('cuti_saldo');
 

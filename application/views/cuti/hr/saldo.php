@@ -93,7 +93,8 @@
                         <?php if ($row['saldo_digunakan']==0): ?>
                             <a href="#" class="btn btn-link btn-warning btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#editCuti" data-id="<?= $row['id']; ?>" data-valid="<?= date('d-m-Y', strtotime($row['valid'])); ?>" data-expired="<?= date('d-m-Y', strtotime($row['expired'])); ?>" data-saldo="<?= $row['saldo']; ?>" data-keterangan="<?= $row['keterangan']; ?>"><i class="material-icons">edit</i></a>
                             <a href="#" class="btn btn-link btn-danger btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#deleteCuti" data-id="<?= $row['id']; ?>"><i class="material-icons">delete_forever</i></a>
-                          <?php else: ?>
+                            <?php else: ?>
+                              <a href="#" class="btn btn-link btn-warning btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#editSaldo" data-id="<?= $row['id']; ?>" data-saldo="<?= $row['saldo']; ?>" data-digunakan="<?= $row['saldo_digunakan']; ?>"><i class="material-icons">edit</i></a>
                             <a href="<?= base_url('cuti/hr_saldo_riwayat/'.$row['id']); ?>" class="btn btn-link btn-info btn-just-icon" target="_blank" role="button" aria-disabled="false"><i class="material-icons">plagiarism</i></a>
                           <?php endif; ?>
                       </td>
@@ -279,6 +280,45 @@
     </div>
 </div>
 
+<div class="modal fade" id="editSaldo" tabindex="-1" role="dialog" aria-labelledby="editSaldoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="card card-signup card-plain">
+                <form class="form" id="formEditSaldo" method="post" action="<?= base_url('cuti/hr_saldo/edit_saldo'); ?>">
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id" name="id">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label class="bmd-label">Saldo*</label></br>
+                              <input type="number" class="form-control" name="saldo" id="saldo" required/>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label class="bmd-label">Telah Digunakan</label></br>
+                              <input type="number" class="form-control" name="digunakan" id="digunakan" disabled/>
+                          </div>
+                      </div>
+                    </div>
+                    <p>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <!-- <small></small> -->
+                        <!-- <label class="col-md-5 col-form-label"></label> -->
+                        <div class="col-md-12 mr-4">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">KEMBALI</button>
+                            <button type="submit" class="btn btn-success">SUBMIT</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="deleteCuti" tabindex="-1" role="dialog" aria-labelledby="deleteCutiTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -356,6 +396,17 @@
         modal.find('.modal-body input[name="expired"]').val(expired)
         modal.find('.modal-body input[name="saldo"]').val(saldo)
         modal.find('.modal-body textarea[name="keterangan"]').val(keterangan)
+    });
+
+    $('#editSaldo').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var saldo = button.data('saldo')
+        var digunakan = button.data('digunakan')
+        var modal = $(this)
+        modal.find('.modal-body input[name="id"]').val(id)
+        modal.find('.modal-body input[name="saldo"]').val(saldo)
+        modal.find('.modal-body input[name="digunakan"]').val(digunakan)
     });
 });
 </script>
