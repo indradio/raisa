@@ -102,8 +102,11 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'Kehadiran') {
+                        <?php if ($m['menu'] == 'available') {
                           echo '<span class="badge badge-info badge-sm">Baru</span>';
+                        } ?>
+                        <?php if ($m['menu'] == 'IMP') {
+                          echo '<span class="badge badge-success badge-sm">Segera</span>';
                         } ?>
                         <b class="caret"></b>
                       </p>
@@ -115,8 +118,11 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'Kehadiran') {
+                              <?php if ($m['menu'] == 'available') {
                                 echo '<span class="badge badge-info badge-sm">Baru</span>';
+                              } ?>
+                               <?php if ($m['menu'] == 'IMP') {
+                                echo '<span class="badge badge-success badge-sm">Segera</span>';
                               } ?>
                               <b class="caret"></b>
                             </p>
