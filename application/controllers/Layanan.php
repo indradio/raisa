@@ -258,39 +258,18 @@ class Layanan extends CI_Controller
                             'Accept' => 'application/json',
                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
                         ],
-                        // 'json' => [
-                        //     'phone' => $row['phone'],
-                        //     'message' => "*[INFO] ASSET OPNAME periode 2022*" .
-                        //     "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                        //     "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun," .
-                        //     "\r\nmaka Winteq akan mengadakan agenda asset opname pada tanggal *19 september 2022 - 14 Oktober 2022* (untuk kategori Asset dan LVA)." .
-                        //     "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset-Remaining* lalu melakukan Asset opname (diharuskan mengupload foto barang).." .
-                        //     "\r\nApabila ada pertanyaan bisa menghubungi Dwi Septianingrum - Fin Acct." .
-                        //     "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
-                        //     "\r\n \r\nHormat Kami," .
-                        //     "\r\nFin Acct" .
-                        //     "\r\n#ComebackStronger"
-                        // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[PEDULI] GEMPA CIANJUR*" .
-                                "\r\n \r\nSaat ini, masyarakat terdampak gempa Cianjur membutuhkan bantuan kita." .
-                                "\r\nKami mengajak Kak *" . $row['nama'] . "* untuk ikut berpartisipasi untuk meringankan beban saudara kita dengan berdonasi melalui posko yang telah disediakan" .
-                                "\r\n \r\nLokasi posko pengumpulan bantuan: *Kantin*" .
-                                "\r\nKebutuhan yang saat ini di utamakan:" .
-                                "\r\n-Makanan instan" .
-                                "\r\n-Makanan bayi" .
-                                "\r\n-susu bayi" .
-                                "\r\n-selimut" .
-                                "\r\n-pakaian anak" .
-                                "\r\n-pakaian bayi" .
-                                "\r\n-popok anak" .
-                                "\r\n-alat mandi" .
-                                "\r\n-alat cuci" .
-                                "\r\n-obat-obatan" .
-                                "\r\n-dll" .
-                                "\r\n \r\nTerima kasih." .
-                                "\r\n#ComebackStronger"
+                            'message' => "*⚠️[BE AWARE!] DILARANG MENGINSTALL APLIKASI BAJAKAN/TIDAK BERLISENSI DI ASSET PERUSAHAAN*" .
+                            "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                            "\r\nSejalan dengan Kebijakan Astra Otoparts terkait penggunaan aplikasi atau software legal," .
+                            "\r\nMohon untuk tidak menginstall software atau aplikasi di laptop/PC Winteq secara illegal, ." .
+                            "\r\nApabila ditemukan software yang tidak memiliki lisensi maka *resikonya ditanggung oleh user yang bersangkutan*." .
+                            "\r\nJika ada pertanyaan bisa menghubungi Ridwan - IT." .
+                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\nHormat Kami," .
+                            "\r\nIT" .
+                            "\r\n#ComebackStronger"
                         ],
                     ]
                 );
