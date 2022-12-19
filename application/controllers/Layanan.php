@@ -260,17 +260,27 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*⚠️[BE AWARE!] DILARANG MENGINSTALL APLIKASI BAJAKAN/TIDAK BERLISENSI DI ASSET PERUSAHAAN*" .
+                            'message' => "*ℹ️[INFORMASI] GANGGUAN LAYANAN INTERNET*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSejalan dengan Kebijakan Astra Otoparts terkait penggunaan aplikasi atau software legal," .
-                            "\r\nMohon untuk tidak menginstall software atau aplikasi di laptop/PC Winteq secara illegal, ." .
-                            "\r\nApabila ditemukan software yang tidak memiliki lisensi maka *resikonya ditanggung oleh user yang bersangkutan*." .
-                            "\r\nJika ada pertanyaan bisa menghubungi Ridwan - IT." .
+                            "\r\nSaat ini sedang terjadi gangguan layanan internet dan sedang dalam penanganan tim IT " .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
                             "\r\nIT" .
                             "\r\n#ComebackStronger"
                         ],
+                        // 'json' => [
+                        //     'phone' => $row['phone'],
+                        //     'message' => "*⚠️[BE AWARE!] DILARANG MENGINSTALL APLIKASI BAJAKAN/TIDAK BERLISENSI DI ASSET PERUSAHAAN*" .
+                        //     "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                        //     "\r\nSejalan dengan Kebijakan Astra Otoparts terkait penggunaan aplikasi atau software legal," .
+                        //     "\r\nMohon untuk tidak menginstall software atau aplikasi di laptop/PC Winteq secara illegal, ." .
+                        //     "\r\nApabila ditemukan software yang tidak memiliki lisensi maka *resikonya ditanggung oleh user yang bersangkutan*." .
+                        //     "\r\nJika ada pertanyaan bisa menghubungi Ridwan - IT." .
+                        //     "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                        //     "\r\nHormat Kami," .
+                        //     "\r\nIT" .
+                        //     "\r\n#ComebackStronger"
+                        // ],
                     ]
                 );
                 $body = $response->getBody();
