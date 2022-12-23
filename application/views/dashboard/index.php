@@ -182,7 +182,7 @@
       <?php if ($presensi != null){ ?>
       <div class="col-lg-6 col-md-12">
         <div class="card">
-          <div class="card-header card-header-text card-header-info">
+          <div class="card-header card-header-text card-header-warning">
             <div class="card-text">
               <h4 class="card-title">Outstanding</h4>
               <p class="card-category">Kehadiran</p>
@@ -226,15 +226,15 @@
             <table class="table table-hover">
               <thead class="text-warning">
                 <th>Peserta</th>
+                <th>Tanggal</th>
                 <th>Tujuan</th>
-                <th>Waktu</th>
               </thead>
               <tbody>
               <?php foreach ($Reservasi as $row) : ?>
               <tr onclick="window.location='<?= base_url('persetujuandl'); ?>'" >
                 <td><?= $row['anggota']; ?></td>
+                <td><?= date('d-M', strtotime($row['tglberangkat'])); ?></td>
                 <td><?= $row['tujuan']; ?></td>
-                <td><?= date('d-M', strtotime($row['tglberangkat'])).' '.date('H:i', strtotime($row['jamberangkat'])); ?></td>
               </tr>
               <?php endforeach; ?>
               </tbody>
@@ -248,7 +248,7 @@
       <?php if ($RencanaLembur != null or $RealisasiLembur != null){ ?>
       <div class="col-lg-6 col-md-12">
         <div class="card">
-          <div class="card-header card-header-text card-header-danger">
+          <div class="card-header card-header-text card-header-warning">
             <div class="card-text">
               <h4 class="card-title">Outstanding</h4>
               <p class="card-category">Lembur</p>
@@ -287,7 +287,7 @@
       <?php if ($Cuti != null){ ?>
       <div class="col-lg-6 col-md-12">
         <div class="card">
-          <div class="card-header card-header-text card-header-info">
+          <div class="card-header card-header-text card-header-warning">
             <div class="card-text">
               <h4 class="card-title">Outstanding</h4>
               <p class="card-category">Cuti</p>
@@ -297,7 +297,7 @@
             <table class="table table-hover">
               <thead class="text-warning">
                 <th>Nama</th>
-                <th>Waktu</th>
+                <th>Tanggal</th>
                 <th>Lama</th>
               </thead>
               <tbody>
@@ -306,6 +306,38 @@
                 <td><?= $row['nama']; ?></td>
                 <td><?= date('d-M', strtotime($row['tgl1'])); ?></td>
                 <td><?= $row['lama']; ?> Hari</td>
+              </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <?php }; ?>
+
+      <!-- Outstanding Approval IMP -->
+      <?php if ($imp != null){ ?>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-warning">
+            <div class="card-text">
+              <h4 class="card-title">Outstanding</h4>
+              <p class="card-category">IMP</p>
+            </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Nama</th>
+                <th>Tanggal</th>
+                <th>Jam</th>
+              </thead>
+              <tbody>
+              <?php foreach ($imp as $row) : ?>
+              <tr onclick="window.location='<?= base_url('imp/approval/outstanding'); ?>'" >
+                <td><?= $row['name']; ?></td>
+                <td><?= date('d-M', strtotime($row['date'])); ?></td>
+                <td><?= date('H:i', strtotime($row['start_time'])).' - '.date('H:i', strtotime($row['end_time'])); ?></td>
               </tr>
               <?php endforeach; ?>
               </tbody>

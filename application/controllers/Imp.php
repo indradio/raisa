@@ -84,29 +84,67 @@ class Imp extends CI_Controller
             ];
             $this->db->insert('imp', $data);
 
-            // $atasan1 = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('atasan1_inisial')])->row_array();
-            // $client = new \GuzzleHttp\Client();
-            // $response = $client->post(
-            //     'https://region01.krmpesan.com/api/v2/message/send-text',
-            //     [
-            //         'headers' => [
-            //             'Content-Type' => 'application/json',
-            //             'Accept' => 'application/json',
-            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-            //         ],
-            //         'json' => [
-            //             'phone' => $atasan1['phone'],
-            //             'message' => "*[NOTIF] PENGAJUAN CUTI*" .
-            //             "\r\n \r\nNama    : *" . $data['nama'] . "*" .
-            //             "\r\nTanggal  : *" . date('d M Y', strtotime($data['tgl1'])) . "*" .
-            //             "\r\nLama      : *" . $data['lama'] ." Hari* " .
-            //             "\r\nKeterangan : *" . $data['keterangan'] . "*" .
-            //             "\r\nHarap segera respon *Setujui/Batalkan*".
-            //             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/approval"
-            //         ],
-            //     ]
-            // );
-            // $body = $response->getBody();
+            if ($this->session->userdata('posisi_id') <= 3){
+
+                $this->db->set('atasan1_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('atasan1_at', date('Y-m-d H:i:s'));
+                $this->db->set('atasan2_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('atasan2_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '3');
+                $this->db->where('id', $id);
+                $this->db->update('imp');
+    
+                $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $admin_hr->phone,
+                            'message' => "*[NEED APPROVAL] PENGAJUAN IMP*" .
+                            "\r\n \r\nNama    : *" .  $this->session->userdata('nama') . "*" .
+                            "\r\nTanggal  : *" . date('d M Y', strtotime($this->input->post('date'))) . "*" .
+                            "\r\nJam      : *" . date('H:i', strtotime($this->input->post('start_time'))).' - '.date('H:i', strtotime($this->input->post('end_time'))) ."*" .
+                            "\r\nKeterangan : *" . $this->input->post('remarks') . "*" .
+                            "\r\n \r\nIMP ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
+                            "\r\nHarap segera respon *Setujui/Batalkan*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp/hr_approval"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+        
+            }else{
+
+                $atasan1 = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('atasan1_inisial')])->row_array();
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(
+                    'https://region01.krmpesan.com/api/v2/message/send-text',
+                    [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        ],
+                        'json' => [
+                            'phone' => $atasan1['phone'],
+                            'message' => "*[NEED APPROVAL] PENGAJUAN IMP*" .
+                            "\r\n \r\nNama    : *" .  $this->session->userdata('nama') . "*" .
+                            "\r\nTanggal  : *" . date('d M Y', strtotime($this->input->post('date'))) . "*" .
+                            "\r\nJam      : *" . date('H:i', strtotime($this->input->post('start_time'))).' - '.date('H:i', strtotime($this->input->post('end_time'))) ."*" .
+                            "\r\nKeterangan : *" . $this->input->post('remarks') . "*" .
+                            "\r\nHarap segera respon *Setujui/Batalkan*".
+                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp/approval"
+                        ],
+                    ]
+                );
+                $body = $response->getBody();
+            }
 
             $this->session->set_flashdata('notify', 'success');
             redirect('/imp');
@@ -182,7 +220,7 @@ class Imp extends CI_Controller
                 }
             }
     
-            if ($this->session->userdata('inisial') == $imp->atasan2)
+            if ($this->session->userdata('inisial') == $imp->atasan2 or $this->session->userdata('posisi_id') <= 3)
             {
                 $this->db->set('atasan2_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
                 $this->db->set('atasan2_at', date('Y-m-d H:i:s'));
@@ -586,10 +624,10 @@ class Imp extends CI_Controller
             exit();
 
         }elseif ($params == 'approval'){
-            $queryCuti = "SELECT *
+            $queryIMP = "SELECT *
             FROM `imp`
             WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
-            $data = $this->db->query($queryCuti)->result();
+            $data = $this->db->query($queryIMP)->result();
 
             if ($data)
             {
