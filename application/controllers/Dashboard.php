@@ -12,6 +12,7 @@ class Dashboard extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model("dashboard_model");
+
         $this->update_perjalanan();
         $this->update_lembur();
         $this->update_cuti();
@@ -419,6 +420,11 @@ class Dashboard extends CI_Controller
         FROM `presensi`
         WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1')";
         $data['presensi'] = $this->db->query($queryPresensi)->result_array();
+
+        $queryIMP = "SELECT *
+        FROM `imp`
+        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+        $data['imp'] = $this->db->query($queryIMP)->result_array();
     
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
