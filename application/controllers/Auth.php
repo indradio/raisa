@@ -116,6 +116,10 @@ class Auth extends CI_Controller
                     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row_array();
                 }
 
+                if ($karyawan['sect_id'] == '216' and $karyawan['posisi_id'] == '11') {
+                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row_array();
+                }
+
                 if ($karyawan['dept_id'] == '11' and $karyawan['atasan1'] == '3') {
                     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'ABU'])->row_array();
                 }
@@ -272,6 +276,11 @@ class Auth extends CI_Controller
                         $this->db->where('sect_id', $karyawan['sect_id']);
                         $atasan1 = $this->db->get('karyawan')->row_array();
                     };
+
+                    if ($karyawan['sect_id'] == '216' and $karyawan['posisi_id'] == '11') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row_array();
+                    }
+
                     //cari atasan 2
                     if ($karyawan['atasan2'] == 0) {
                         $atasan2 = $atasan2 = $this->db->get_where('karyawan', ['posisi_id' =>  '0'])->row_array();
@@ -316,12 +325,6 @@ class Auth extends CI_Controller
                     ];
                     $this->session->set_userdata($data);
                     $this->session->set_flashdata('message', 'masuk');
-
-                    $log = [
-                        'npk' => $karyawan['npk'],
-                        'activity' => 'Login to RAISA'
-                    ];
-                    $this->db->insert('log', $log);
 
                     redirect('dashboard');
                 } else {
