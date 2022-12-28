@@ -94,6 +94,13 @@
                           </br>
                           <a class="card-title"><small>Perjalanan</small></a>
                       </div>
+                      <div class="col-4 text-center">
+                          <a href="<?= base_url('hr/info/coe'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fa fa-calendar"></i>
+                          </a>
+                          </br>
+                          <a class="card-title"><small>CoE</small></a>
+                      </div>
                   </div>
               </div>
           </div>
@@ -136,9 +143,9 @@
         <div class="card card-stats">
           <div class="card-header">
             <p class="card-category"></p>
-            <h3 class="card-title">Mau dapetin uang jajan 20K?</h3>
-            <h4 class="card-title">Segera kirimin konten kamu ya!</h4>
-            <a href="<?= base_url('layanan/contest'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Upload sekarang!</a>
+            <h3 class="card-title">Calendar of Event</h3>
+            <h4 class="card-title">Bingung nentuin tanggal liburan? Cek Coe Sekarang!</h4>
+            <a href="<?= base_url('hr/info/coe'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Download</a>
           </div>
         </div>
       </div> 
