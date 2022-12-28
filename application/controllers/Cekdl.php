@@ -15,7 +15,7 @@ class Cekdl extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Security';
+        $data['sidemenu'] = 'DL Security';
         $data['sidesubmenu'] = 'Perjalanan Dinas';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
@@ -30,7 +30,7 @@ class Cekdl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
 
-        $data['sidemenu'] = 'Security';
+        $data['sidemenu'] = 'DL Security';
         $data['sidesubmenu'] = 'Keberangkatan / Keluar';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->where('status', '1');
@@ -119,7 +119,7 @@ class Cekdl extends CI_Controller
 
         $reservasi = $this->db->get_where('reservasi', ['id' => $id])->row_array();
         if ($reservasi['status'] == 6) {
-            $data['sidemenu'] = 'Security';
+            $data['sidemenu'] = 'DL Security';
             $data['sidesubmenu'] = 'Keberangkatan / Keluar';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['reservasi'] = $this->db->get_where('reservasi', ['id' => $id])->row_array();
@@ -166,7 +166,7 @@ class Cekdl extends CI_Controller
 
     public function kembali()
     {
-        $data['sidemenu'] = 'Security';
+        $data['sidemenu'] = 'DL Security';
         $data['sidesubmenu'] = 'Kembali / Masuk';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['status' => '2'])->result_array();
@@ -179,7 +179,7 @@ class Cekdl extends CI_Controller
 
     public function cekkembali($dl)
     {
-        $data['sidemenu'] = 'Security';
+        $data['sidemenu'] = 'DL Security';
         $data['sidesubmenu'] = 'Kembali / Masuk';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['perjalanan'] = $this->db->get_where('perjalanan', ['id' => $dl])->row_array();

@@ -454,7 +454,7 @@ class Imp extends CI_Controller
         {
             redirect('/imp/hr_approval/outstanding');
         }elseif ($params == 'outstanding'){
-            $data['sidemenu'] = 'Sec IMP';
+            $data['sidemenu'] = 'IMP Security';
             $data['sidesubmenu'] = 'Approval';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             // Pages
