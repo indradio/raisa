@@ -102,8 +102,8 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'available') {
-                          echo '<span class="badge badge-info badge-sm">Baru</span>';
+                        <?php if ($m['menu'] == 'Info HR') {
+                          echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                         } ?>
                         <?php if ($m['menu'] == 'IMP') {
                           echo '<span class="badge badge-success badge-sm">Uji Coba</span>';
@@ -118,8 +118,8 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'available') {
-                                echo '<span class="badge badge-info badge-sm">Baru</span>';
+                              <?php if ($m['menu'] == 'Info HR') {
+                                echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                               } ?>
                                <?php if ($m['menu'] == 'IMP') {
                                 echo '<span class="badge badge-success badge-sm">Uji Coba</span>';
