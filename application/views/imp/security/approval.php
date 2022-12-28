@@ -197,7 +197,7 @@
         $('#btn_approve').on('click',function(){
             $.ajax({
                 type : "POST",
-                url  : "<?= site_url('imp/hr_approval/approve') ?>",
+                url  : "<?= site_url('imp/sec_approval/approve') ?>",
                 dataType : "JSON",
                 data : {id:$('#id').val()},
                 success: function(result){

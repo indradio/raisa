@@ -346,12 +346,22 @@ class Imp extends CI_Controller
 
             $id = $this->input->post('id');
             $imp = $this->db->get_where('imp', ['id' => $id])->row();
-    
-            $this->db->set('hr_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
-            $this->db->set('hr_at', date('Y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->where('id', $id);
-            $this->db->update('imp');
+
+            if ($imp->category == 'IMP1' || $imp->category == 'IMP2'){
+                $this->db->set('hr_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('hr_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '4');
+                $this->db->where('id', $id);
+                $this->db->update('imp');
+            }elseif ($imp->category == 'IMP3') {
+                $this->db->set('hr_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('hr_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '5');
+                $this->db->where('id', $id);
+                $this->db->update('imp');
+            }
+
+
 
             //Notifikasi ke USER
             $user = $this->db->get_where('karyawan', ['npk' => $imp->npk])->row();
@@ -457,39 +467,28 @@ class Imp extends CI_Controller
 
             $id = $this->input->post('id');
             $imp = $this->db->get_where('imp', ['id' => $id])->row();
-    
-            $this->db->set('hr_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
-            $this->db->set('hr_at', date('Y-m-d H:i:s'));
-            $this->db->set('status', '4');
-            $this->db->where('id', $id);
-            $this->db->update('imp');
-
-            //Notifikasi ke USER
-            $user = $this->db->get_where('karyawan', ['npk' => $imp->npk])->row();
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user->phone,
-                        'message' => "*[APPROVED] IMP KAMU TELAH DISETUJUI*" .
-                        "\r\n#  : *" . $imp->id . "*" .
-                        "\r\nTanggal  : *" . date('d M Y', strtotime($imp->date)) . "*" .
-                        "\r\nJam      : *" . date('H:i', strtotime($imp->start_time)).' - '.date('H:i', strtotime($imp->end_time)) ."*" .
-                        "\r\nKeterangan : *" . $imp->remarks . "*" .
-                        "\r\n \r\nIMP ini telah *DISETUJUI*".
-                        "\r\nJangan lupa untuk absen dan lapor ke SECURITY saat meninggalkan area kerja.".
-                        "\r\n \r\nInfo lebih lengkap cek! https://raisa.winteq-astra.com/imp"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
-              
+            
+            if ($imp->status == 4 && $imp->category == 'IMP1'){
+                $this->db->set('security_start_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('security_start_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '5');
+                $this->db->where('id', $id);
+                $this->db->update('imp'); 
+            }elseif ($imp->status == 5 && $imp->category == 'IMP1'){
+                $this->db->set('security_end_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('security_end_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '9');
+                $this->db->where('id', $id);
+                $this->db->update('imp');
+            }else{
+                $this->db->set('security_start_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('security_start_at', date('Y-m-d H:i:s'));
+                $this->db->set('security_end_by', 'Disetujui oleh '.$this->session->userdata('inisial'));
+                $this->db->set('security_end_at', date('Y-m-d H:i:s'));
+                $this->db->set('status', '9');
+                $this->db->where('id', $id);
+                $this->db->update('imp');
+            } 
 
             $output['data'] = array(
                 'result' => 'success'
@@ -497,6 +496,7 @@ class Imp extends CI_Controller
 
             echo json_encode($output);
             exit();
+
         }elseif ($params == 'reject'){
 
             $id = $this->input->post('id');
@@ -697,9 +697,9 @@ class Imp extends CI_Controller
 
                     $status = $this->db->get_where('imp_status', ['id' => $row->status])->row();
                     if ($row->status == 4){
-                    $status = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk/Kembali<div class='ripple-container'></div></button>";
-                    }else{
                         $status = "<button class='btn btn-link btn-danger'><i class='fa fa-sign-out'></i> Keluar/Pulang<div class='ripple-container'></div></button>";
+                    }else{
+                        $status = "<button class='btn btn-link btn-success'><i class='fa fa-sign-in'></i> Masuk/Kembali<div class='ripple-container'></div></button>";
                     }
 
                     $output['data'][] = array(
