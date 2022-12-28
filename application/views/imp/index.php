@@ -337,6 +337,20 @@
         }
       });
 
+     <?php }elseif ($this->session->flashdata('notify')=='over'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Kalo mau ngajuin harus sebelum IMP."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+
      <?php }elseif ($this->session->flashdata('notify')=='range'){ ?>
       
       $.notify({
