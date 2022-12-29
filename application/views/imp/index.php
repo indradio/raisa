@@ -1,7 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats">
           <div class="card-header card-header-info card-header-icon">
@@ -336,7 +336,7 @@
           align: "center"
         }
       });
-
+sssssssssw
      <?php }elseif ($this->session->flashdata('notify')=='over'){ ?>
       
       $.notify({

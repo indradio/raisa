@@ -9,7 +9,7 @@
                         <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
                     </button>
                 </div>
-                <a class="navbar-brand"><?= $sidemenu; ?></a>
+                <a class="navbar-brand"><?= $sidemenu.' - '.$sidesubmenu; ?></a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
