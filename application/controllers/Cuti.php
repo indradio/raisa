@@ -101,10 +101,40 @@ class Cuti extends CI_Controller
         $this->load->helper('date');
 
         // validasi
-        if($this->input->post('tgl1') > $this->input->post('tgl2')){
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('tgl1 >=', Date('Y-m-d H:i:s', strtotime($this->input->post('tgl1'))));
+        $this->db->where('tgl2 <=', Date('Y-m-d H:i:s', strtotime($this->input->post('tgl2'))));
+        $this->db->where('status !=', 0);
+        $find = $this->db->get('cuti')->row();
+
+        if($find){
+            $this->session->set_flashdata('notify', 'exist');
+            redirect('/cuti');
+        }
+
+        if($this->input->post('tgl2') < $this->input->post('tgl1')){
             $this->session->set_flashdata('notify', 'range');
             redirect('/cuti');
         }
+
+        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) <= Date('Y-m-d') && $this->input->post('darurat') != 1){
+            $this->session->set_flashdata('notify', 'late');
+            redirect('/cuti');
+        }
+
+        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime('-1 days')) && $this->input->post('darurat') == 1){
+            $this->session->set_flashdata('notify', 'late');
+            redirect('/cuti');
+        }
+
+        $day = date('D', strtotime($this->input->post('tgl1')));
+        if($day=='Sun' || $day =='Sat') {
+            $this->session->set_flashdata('notify', 'weekend');
+            redirect('/cuti');
+        }
+
+        // End of validation
+        // Process Begin here
 
         $id = 'CT'.date('ym').random_string('alnum',3);
         $cuti1 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl1'))));

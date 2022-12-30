@@ -399,6 +399,48 @@
           align: "center"
         }
       });
+
+     <?php }elseif ($this->session->flashdata('notify')=='late'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Kalo mau ngajuin cuti jangan dadakan ya! apalagi udah lewat tanggalnya."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+
+     <?php }elseif ($this->session->flashdata('notify')=='exist'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Kamu sudah mengajukan cuti di tanggal ini."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+
+     <?php }elseif ($this->session->flashdata('notify')=='weekend'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Kamu gak perlu repot2 ngajuin cuti di hari libur (sabtu & minggu)."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
      
       <?php } ?>
 

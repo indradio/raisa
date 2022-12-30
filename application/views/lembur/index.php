@@ -1,40 +1,40 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-    <div class="container-fluid">
-      <div class="row">
-          <div class="col-lg-4 col-md-6 col-sm-6">
-                <?php 
-                    $bulan = date('m');
-                    $tahun = date('Y');
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+            <?php 
+                $bulan = date('m');
+                $tahun = date('Y');
 
-                    $this->db->where('npk', $this->session->userdata('npk'));
-                    $this->db->where('year(tglmulai)',$tahun);
-                    $this->db->where('month(tglmulai)',$bulan);
-                    $this->db->where('status', '9');
-                    $total_lembur = $this->db->get('lembur');
+                $this->db->where('npk', $this->session->userdata('npk'));
+                $this->db->where('year(tglmulai)',$tahun);
+                $this->db->where('month(tglmulai)',$bulan);
+                $this->db->where('status', '9');
+                $total_lembur = $this->db->get('lembur');
 
-                    $this->db->select('SUM(durasi) as total');
-                    $this->db->where('npk', $this->session->userdata('npk'));
-                    $this->db->where('year(tglmulai)',$tahun);
-                    $this->db->where('month(tglmulai)',$bulan);
-                    $this->db->where('status', '9');
-                    $this->db->from('lembur');
-                    $totalDurasi = $this->db->get()->row()->total;
-                  
-                ?>
-            <div class="card card-stats">
-              <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">date_range</i>
-                </div>
-                <p class="card-category">Total</p>
-                <h3 class="card-title"><?= $total_lembur->num_rows().'x ('.$totalDurasi.' jam)'; ?></h3>
-              </div>
-              <div class="card-footer">
-                <a href="#" class="btn btn-facebook btn-block" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur</a>
-              </div>
+                $this->db->select('SUM(durasi) as total');
+                $this->db->where('npk', $this->session->userdata('npk'));
+                $this->db->where('year(tglmulai)',$tahun);
+                $this->db->where('month(tglmulai)',$bulan);
+                $this->db->where('status', '9');
+                $this->db->from('lembur');
+                $totalDurasi = $this->db->get()->row()->total;
+              
+            ?>
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">date_range</i>
             </div>
+            <p class="card-category">Total</p>
+            <h3 class="card-title"><?= $total_lembur->num_rows().'x ('.$totalDurasi.' jam)'; ?></h3>
           </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-facebook btn-block" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur</a>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12">
         <div class="card">
           <!-- <div class="card-header card-header-info card-header-icon">
