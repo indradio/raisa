@@ -41,7 +41,7 @@ class Imp extends CI_Controller
                 redirect('/imp');
             }
 
-            if(date('Y-m-d H:i:s', strtotime($this->input->post('start_time'))) < date('Y-m-d H:i:s')){
+            if(date('Y-m-d H:i:s', strtotime($this->input->post('date').' '.$this->input->post('start_time'))) < date('Y-m-d H:i:s')){
                 $this->session->set_flashdata('notify', 'range');
                 redirect('/imp');
             }        
