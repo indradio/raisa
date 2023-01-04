@@ -808,7 +808,8 @@ class Imp extends CI_Controller
     public function print($id)
     {   
         $data['imp'] = $this->db->get_where('imp', ['id' => $id])->row();
-        $this->load->view('imp/pdf', $data);
+        $data['section'] = $this->db->get_where('karyawan_sect', ['id' => $data['imp']->sect_id])->row();
+        $this->load->view('imp/print', $data);
     }
 
 }
