@@ -127,12 +127,6 @@ class Cuti extends CI_Controller
             redirect('/cuti');
         }
 
-        $day = date('D', strtotime($this->input->post('tgl1')));
-        if($day=='Sun' || $day =='Sat') {
-            $this->session->set_flashdata('notify', 'weekend');
-            redirect('/cuti');
-        }
-
         // End of validation
         // Process Begin here
 
