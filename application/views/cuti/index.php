@@ -176,7 +176,7 @@
                       </div>
                       <div class="col-md-12" id="">
                           <div class="form-group">
-                              <label class="bmd-label"><mark>*Jika diantara Cuti kamu terdapat <b>Hari Libur Nasional</b> di hari kerja, Harap dibuat menjadi 2x pengajuan cuti.</mark></label></br>
+                              <label class="bmd-label"><mark>*Jika diantara Cuti kamu terdapat <b>Hari Libur (Weekend/Nasional)</b>, Harap dibuat menjadi beberapa pengajuan cuti hanya di hari kerja sesuai CoE.</mark></label></br>
                           </div>
                       </div>
                       <div class="col-md-12">

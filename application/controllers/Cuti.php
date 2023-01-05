@@ -127,12 +127,18 @@ class Cuti extends CI_Controller
             redirect('/cuti');
         }
 
+        // $day = date('D', strtotime($this->input->post('tgl1')));
+        // if($day=='Sun' || $day =='Sat') {
+        //     $this->session->set_flashdata('notify', 'weekend');
+        //     redirect('/cuti');
+        // }
+
         // End of validation
         // Process Begin here
 
         $id = 'CT'.date('ym').random_string('alnum',3);
         $cuti1 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl1'))));
-        $cuti2 = new DateTime(date('Y-m-d', strtotime($this->input->post('tgl2'))));
+        $cuti2 = new DateTime(date('Y-m-d', strtotime('+1 days', strtotime($this->input->post('tgl2')))));
         $day2 = date('D', strtotime($this->input->post('tgl2')));
         
         $daterange  = new DatePeriod($cuti1, new DateInterval('P1D'), $cuti2);
@@ -140,7 +146,7 @@ class Cuti extends CI_Controller
         //mendapatkan range antara dua tanggal dan di looping
 
         $i   = 0;
-        $x   = 1;
+        $x   = 0;
         $end = 1;
 
         foreach($daterange as $date){
@@ -151,10 +157,9 @@ class Cuti extends CI_Controller
             $day         = $datetime->format('D');
 
             //Check untuk menghitung yang bukan hari sabtu dan minggu
-            if($day!="Sun" && $day!="Sat") {
+            // if($day!="Sun" && $day!="Sat") {
                 
-                $x += $end-$i;
-
+                
                 $data = [
                     'cuti_id' => $id,
                     'saldo_id' => $this->input->post('kategori'),
@@ -165,25 +170,26 @@ class Cuti extends CI_Controller
                     'status' => '1'
                 ];
                 $this->db->insert('cuti_detail', $data);
-            }
-
+                // }
+                
+            $x += $end-$i;
             $end++;
             $i++;
         }    
 
-        if($day2!="Sun" && $day2!="Sat") {
+        // if($day2!="Sun" && $day2!="Sat") {
                 
-            $data = [
-                'cuti_id' => $id,
-                'saldo_id' => $this->input->post('kategori'),
-                'tgl' => date('Y-m-d', strtotime($this->input->post('tgl2'))),
-                'npk' => $this->session->userdata('npk'),
-                'nama' => $this->session->userdata('nama'),
-                'keterangan' => $this->input->post('keterangan'),
-                'status' => '1'
-            ];
-            $this->db->insert('cuti_detail', $data);
-        }
+        //     $data = [
+        //         'cuti_id' => $id,
+        //         'saldo_id' => $this->input->post('kategori'),
+        //         'tgl' => date('Y-m-d', strtotime($this->input->post('tgl2'))),
+        //         'npk' => $this->session->userdata('npk'),
+        //         'nama' => $this->session->userdata('nama'),
+        //         'keterangan' => $this->input->post('keterangan'),
+        //         'status' => '1'
+        //     ];
+        //     $this->db->insert('cuti_detail', $data);
+        // }
 
         $saldo = $this->db->get_where('cuti_saldo', ['id' => $this->input->post('kategori')])->row_array();
         if ($saldo){
