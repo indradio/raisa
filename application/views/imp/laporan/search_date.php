@@ -90,6 +90,19 @@
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: 'LAPORAN IMP',
+                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                    messageTop: 'Periode <?= date("d M Y", strtotime($periode['start'])).' - '.date("d M Y", strtotime($periode['end'])); ?>',
+                    footer: true
+                },
+                'copy',
+                'csv', 
+                'print'
+            ],
             serverSide: false,
             processing: true,
             ajax: {
