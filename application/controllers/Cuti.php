@@ -122,10 +122,10 @@ class Cuti extends CI_Controller
             redirect('/cuti');
         }
 
-        // if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime('-1 days')) && $this->input->post('darurat') == 1){
-        //     $this->session->set_flashdata('notify', 'late');
-        //     redirect('/cuti');
-        // }
+        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime('-1 days')) && $this->input->post('darurat') == 1){
+            $this->session->set_flashdata('notify', 'late');
+            redirect('/cuti');
+        }
 
         // $day = date('D', strtotime($this->input->post('tgl1')));
         // if($day=='Sun' || $day =='Sat') {
