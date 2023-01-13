@@ -106,7 +106,7 @@
                           echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                         } ?>
                         <?php if ($m['menu'] == 'IMP') {
-                          echo '<span class="badge badge-success badge-sm">Uji Coba</span>';
+                          echo '<span class="badge badge-success badge-sm">BARU</span>';
                         } ?>
                         <b class="caret"></b>
                       </p>
@@ -122,7 +122,7 @@
                                 echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                               } ?>
                                <?php if ($m['menu'] == 'IMP') {
-                                echo '<span class="badge badge-success badge-sm">Uji Coba</span>';
+                                echo '<span class="badge badge-success badge-sm">BARU</span>';
                               } ?>
                               <b class="caret"></b>
                             </p>
