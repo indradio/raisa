@@ -541,10 +541,16 @@ class Reservasi extends CI_Controller
             $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
-            $this->db->where('posisi_id', '3');
-            $this->db->where('is_active', '1');
-            $this->db->where('dept_id', $this->session->userdata('dept_id'));
-            $ka_dept = $this->db->get('karyawan')->row_array();
+            if ($this->session->userdata('dept_id')=='11'){
+                $ka_dept = $this->db->get_where('karyawan', ['inisial' => 'ABU'])->row_array();
+            }elseif ($this->session->userdata('dept_id')=='14'){
+                $ka_dept = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
+            }else{
+                $this->db->where('posisi_id', '3');
+                $this->db->where('is_active', '1');
+                $this->db->where('dept_id', $this->session->userdata('dept_id'));
+                $ka_dept = $this->db->get('karyawan')->row_array();
+            }
 
             $tahun = date("Y", strtotime($reservasi_temp['tglberangkat']));
             $bulan = date("m", strtotime($reservasi_temp['tglberangkat']));
