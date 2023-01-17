@@ -1975,7 +1975,7 @@ class Lembur extends CI_Controller
                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
                         ],
                         'json' => [
-                            'phone' => $user['phone'],
+                            'phone' => $atasan2['phone'],
                             'message' => "*PENGAJUAN REALISASI LEMBUR*" .
                             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
                             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
