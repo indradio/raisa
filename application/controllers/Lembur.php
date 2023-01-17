@@ -2566,7 +2566,14 @@ class Lembur extends CI_Controller
                 //     }else{
                 //         $actions = "<a href='#' class='btn btn-link btn-warning btn-just-icon edit disabled'><i class='material-icons'>dvr</i></a>";
                 //     }
-    
+    if (empty($row->admin_ppic)){
+        $admin_ppic = '-';
+        $tgl_admin_ppic = '-';
+    }else{
+        $admin_ppic = 'Disetujui oleh '.$row->admin_ppic;
+        $tgl_admin_ppic = date('d-m-Y H:i', strtotime($row->tgl_admin_ppic));
+    }
+
                 $output['data'][] = array(
                     "id" => $row->id,
                     "kategori" => $kategori->nama,
@@ -2580,6 +2587,10 @@ class Lembur extends CI_Controller
                     "tul" => $row->tul,
                     "dept" => $dept->nama,
                     "sect" => $sect->nama,
+                    "hr" => 'Disetujui oleh '.$row->admin_hr,
+                    "tanggal_hr" => date('d-m-Y H:i', strtotime($row->tgl_admin_hr)),
+                    "ppic" => $admin_ppic,
+                    "tanggal_ppic" => $tgl_admin_ppic,
                     "catatan" => $row->catatan,
                     "actions" => "<a href='". base_url('lembur/laporan_lembur/').$row->id."' class='btn btn-link btn-warning btn-just-icon edit' target='_blank'><i class='material-icons'>dvr</i></a>"
                 );

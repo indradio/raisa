@@ -55,6 +55,10 @@
                                         <th>Tul</th>
                                         <th>Dept</th>
                                         <th>Sect</th>
+                                        <th>HR</th>
+                                        <th>Approval HR</th>
+                                        <th>PPIC</th>
+                                        <th>Approval PPIC</th>
                                         <th>Catatan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -74,6 +78,10 @@
                                         <th>Tul</th>
                                         <th>Dept</th>
                                         <th>Sect</th>
+                                        <th>HR</th>
+                                        <th>Approval HR</th>
+                                        <th>PPIC</th>
+                                        <th>Approval PPIC</th>
                                         <th>Catatan</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
@@ -189,6 +197,10 @@
                 { "data":"tul"},
                 { "data":"dept"},
                 { "data":"sect"},
+                { "data":"hr"},
+                { "data":"tanggal_hr"},
+                { "data":"ppic"},
+                { "data":"tanggal_ppic"},
                 { "data":"catatan"},
                 { "data":"actions"}
             ],
