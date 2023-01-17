@@ -905,6 +905,7 @@ class Lembur extends CI_Controller
             $this->db->set('deskripsi_hasil', $this->input->post('deskripsi'));
             $this->db->set('durasi', $this->input->post('durasi'));
             $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->set('diubah_oleh', 'Diubah oelh '.$this->session->userdata('inisial'). ' pada '.date('Y-m-d H:i:s'));
             $this->db->set('status', '2');
             $this->db->where('id', $this->input->post('id_aktivitas'));
             $this->db->update('aktivitas');
@@ -1056,6 +1057,7 @@ class Lembur extends CI_Controller
             $this->db->set('durasi', $this->input->post('durasi'));
             $this->db->set('progres_hasil', $this->input->post('progres'));
             $this->db->set('durasi_menit', floatval($this->input->post('durasi')) * 60);
+            $this->db->set('diubah_oleh', 'Diubah oelh '.$this->session->userdata('inisial'). ' pada '.date('Y-m-d H:i:s'));
             $this->db->set('status', '2');
             $this->db->where('id', $this->input->post('id_aktivitas'));
             $this->db->update('aktivitas');
