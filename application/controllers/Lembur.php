@@ -3712,7 +3712,7 @@ class Lembur extends CI_Controller
             foreach ($queryLead as $lead) :
 
                 $this->db->where('year(tglmulai)',$this->input->post('tahun'));
-                $this->db->where('month(tglmulai)',$this->input->post('bulan'));
+                // $this->db->where('month(tglmulai)',$this->input->post('bulan'));
                 $this->db->where('atasan1',$lead->inisial);
                 $this->db->where('status','9');
                 $rencana1 = $this->db->get('lembur');
@@ -3813,7 +3813,7 @@ class Lembur extends CI_Controller
 
                 //Atasan 1 to Atasan 2
                 $this->db->where('year(tglmulai)',$this->input->post('tahun'));
-                $this->db->where('month(tglmulai)',$this->input->post('bulan'));
+                // $this->db->where('month(tglmulai)',$this->input->post('bulan'));
                 $this->db->where('atasan2',$lead->inisial);
                 $this->db->where('atasan2_rencana !=',null);
                 $this->db->where('status','9');
@@ -3907,7 +3907,7 @@ class Lembur extends CI_Controller
                                 $diff = $time2 - $time1;
                                 $diff2 = $diff2 + $diff;   
                             }
-                        }       
+                        }
                     }
                     
                     $total_diff2 = $total_diff2 + $diff2;

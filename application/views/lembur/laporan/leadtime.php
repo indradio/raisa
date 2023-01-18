@@ -126,55 +126,55 @@
 <!-- end content-->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#dt-report').DataTable({
-            "pagingType": "full_numbers",
-            scrollX: true,
-            // scrollY: '512px',
-            dom: 'Bfrtip',
-            buttons: [
-                'copy',
-                {
-                    extend: 'excelHtml5',
-                    text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+        // $('#dt-report').DataTable({
+        //     "pagingType": "full_numbers",
+        //     scrollX: true,
+        //     // scrollY: '512px',
+        //     dom: 'Bfrtip',
+        //     buttons: [
+        //         'copy',
+        //         {
+        //             extend: 'excelHtml5',
+        //             text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
                     
-                    footer: true
-                },
-                {
-                    extend: 'pdfHtml5',
-                    text:'<i class="fa fa-file-pdf-o" aria-hidden="true" ></i>',
+        //             footer: true
+        //         },
+        //         {
+        //             extend: 'pdfHtml5',
+        //             text:'<i class="fa fa-file-pdf-o" aria-hidden="true" ></i>',
                     
-                    orientation: 'landscape',
-                    pageSize: 'A3',
-                    download: 'open',
-                    footer: true
-                }
-            ],
-            order: [
-                [0, 'asc']
-            ],
-            scrollCollapse: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            },
-            serverSide: false,
-            processing: true,
-            ajax: {
-                    "url": "<?= site_url('lembur/leadtime/get') ?>",
-                    "type": "POST",
-                    "data" : {tahun:$('#tahun').val(), bulan:$('#bulan').val()},
-                },
-            columns: [
-                { "data": "id" },
-                { "data": "nama" },
-                { "data": "rencana_at" },
-                { "data": "atasan1_rencana_at" },
-                { "data": "atasan1_rencana_time" },
-                { "data": "atasan1_rencana_by" },
-                { "data": "atasan2_rencana_at" },
-                { "data": "atasan2_rencana_time" },
-                { "data": "atasan2_rencana_by" },
-            ],
+        //             orientation: 'landscape',
+        //             pageSize: 'A3',
+        //             download: 'open',
+        //             footer: true
+        //         }
+        //     ],
+        //     order: [
+        //         [0, 'asc']
+        //     ],
+        //     scrollCollapse: true,
+        //     language: {
+        //         search: "_INPUT_",
+        //         searchPlaceholder: "Search records",
+        //     },
+        //     serverSide: false,
+        //     processing: true,
+        //     ajax: {
+        //             "url": "<?= site_url('lembur/leadtime/get') ?>",
+        //             "type": "POST",
+        //             "data" : {tahun:$('#tahun').val(), bulan:$('#bulan').val()},
+        //         },
+        //     columns: [
+        //         { "data": "id" },
+        //         { "data": "nama" },
+        //         { "data": "rencana_at" },
+        //         { "data": "atasan1_rencana_at" },
+        //         { "data": "atasan1_rencana_time" },
+        //         { "data": "atasan1_rencana_by" },
+        //         { "data": "atasan2_rencana_at" },
+        //         { "data": "atasan2_rencana_time" },
+        //         { "data": "atasan2_rencana_by" },
+        //     ],
             // initComplete: function () {
             //     this.api().columns().every( function () {
             //         var column = this;
@@ -195,7 +195,7 @@
             //         } );
             //     } );
             // }
-        });
+        // });
         $('#dt-report-atasan').DataTable({
             "pagingType": "full_numbers",
             scrollX: true,
