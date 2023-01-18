@@ -262,7 +262,7 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*ℹ️[INFORMASI] TANGGAL 23 SEBAGAI HARI KERJA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBersama ini disampaikan bahwa pada hari / tanggal *Senin / 23 Januari 2023* perusahaan menetapkan *sebagai hari kerja biasa. " .
+                            "\r\nBersama ini disampaikan bahwa pada *hari Senin tanggal 23 Januari 2023* perusahaan menetapkan *sebagai hari kerja biasa*. " .
                             "\r\nInformasi lebih lanjut silahkan dapat menghubungi HR. " .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
