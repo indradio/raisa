@@ -34,20 +34,6 @@
                                 </br>
                                 <a href="<?= base_url(); ?>assets/pdf/DPA Mobile.pdf" target="_blank">Klik Disini untuk download</a>
                             </div>
-                            <!-- <div class="tab-pane" id="link2">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/E-Claim Medcare.pdf"></iframe>
-                                </div>
-                                </br>
-                                <a href="<?= base_url(); ?>assets/pdf/E-Claim Medcare.pdf" target="_blank">Klik Disini untuk download</a>
-                            </div>
-                            <div class="tab-pane" id="link3">
-                                <video width="100%" height="auto" controls>
-                                    <source src="<?= base_url(); ?>assets/video/medcare.mp4" type="video/mp4">
-                                </video>
-                                </br>
-                                <a href="<?= base_url(); ?>assets/video/medcare.mp4" target="_blank">Klik Disini untuk download</a>
-                            </div> -->
                         </div>
                     </div>
                 </div>
