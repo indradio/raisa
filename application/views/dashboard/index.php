@@ -88,6 +88,13 @@
                           <a class="card-title"><small>Lembur</small></a>
                       </div>
                       <div class="col-4 text-center">
+                          <a href="<?= base_url('imp'); ?>" class="btn btn-lg btn-just-icon btn-info">
+                              <i class="fas fa-running"></i>
+                          </a>
+                          </br>
+                          <a class="card-title"><small>IMP</small></a>
+                      </div>
+                      <div class="col-4 text-center">
                           <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon btn-info">
                               <i class="fa fa-car"></i>
                           </a>
@@ -154,6 +161,21 @@
 
     <!-- Absensi -->
     <div class="row">
+    <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+          <div class="tab-content tab-space">
+                            <div class="tab-pane active" id="link1">
+                                <div class="embed-responsive embed-responsive-4by3">
+                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/semangatya.pdf"></iframe>
+                                </div>
+                                </br>
+                                <a href="<?= base_url(); ?>assets/pdf/semangatya.pdf" target="_blank">Klik Disini untuk download</a>
+                            </div>
+                        </div>
+          </div>
+        </div>
+      </div>
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
@@ -978,6 +1000,8 @@
     //   var modal = $(this)
     //   modal.find('.modal-body input[name="device_id"]').val(id)
 
+    // setInterval(function() {
+
       const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
 
       for (let i = 0; i < cars.length; i++) {
@@ -1022,10 +1046,9 @@
           }
         }
       xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
-      // xhr.send(new Int8Array()); 
-      // xhr.send(element);
-    // })
       }
+
+    // }, 5000);
 
     var checker = document.getElementById('check');
     var sendbtn = document.getElementById('submit');
