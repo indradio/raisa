@@ -109,5 +109,28 @@ class Laporan extends CI_Controller
         }
     }
 
+    public function leadtime($params)
+    {
+        if ($params=='lembur'){
+            $data['sidemenu'] = 'Laporan';
+            $data['sidesubmenu'] = 'Leadtime Lembur';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    
+            if (empty($this->input->post('tahun')))
+            {
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+            }else{
+                $data['tahun'] = $this->input->post('tahun');
+                $data['bulan'] = $this->input->post('bulan');
+            }
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('lembur/laporan/leadtime', $data);
+            $this->load->view('templates/footer');
+        }
+    }
 
 }
