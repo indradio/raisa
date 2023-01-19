@@ -3715,15 +3715,16 @@ class Lembur extends CI_Controller
                 // $this->db->where('month(tglmulai)',$this->input->post('bulan'));
                 $this->db->where('atasan1',$lead->inisial);
                 $this->db->where('status','9');
-                $rencana1 = $this->db->get('lembur');
-                $query = $rencana1->result();
+                $atasan1 = $this->db->get('lembur');
+                $query = $atasan1->result();
                 if ($query){
-                    $jumlah_rencana1 = $rencana1->num_rows();
+                    $jumlah_atasan1 = $atasan1->num_rows();
                 }else{
-                    $jumlah_rencana1 = 0;
+                    $jumlah_atasan1 = 0;
                 }
 
-                $total_diff1   = 0;
+                $total_diff1_rencana   = 0;
+                $total_diff1_realisasi = 0;
                 foreach ($query as $row) :
 
                     // Pengajuan to Atasan1 
@@ -3753,7 +3754,7 @@ class Lembur extends CI_Controller
                             $time2 = 0;
                         }
 
-                        $diff1 = $time2 - $time1;
+                        $diff1_rencana = $time2 - $time1;
 
                     }elseif(date('Y-M-d', strtotime($row->tglpengajuan_rencana)) < date('Y-M-d', strtotime($row->tgl_atasan1_rencana)))
                     {
@@ -3764,7 +3765,7 @@ class Lembur extends CI_Controller
                         $daterange  = new DatePeriod($date1, new DateInterval('P1D'), $date2);
                         
                         //mendapatkan range antara dua tanggal dan di looping
-                        $diff1   = 0;
+                        $diff1_rencana   = 0;
                         foreach($daterange as $date){
                 
                             //Convert tanggal untuk mendapatkan nama hari
@@ -3802,14 +3803,99 @@ class Lembur extends CI_Controller
                                 } 
                                     
                                 $diff = $time2 - $time1;
-                                $diff1 = $diff1 + $diff;   
+                                $diff1_rencana = $diff1_rencana + $diff;   
                             }
                         }       
                     }
                     
-                    $total_diff1 = $total_diff1 + $diff1;
+                    $total_diff1_rencana = $total_diff1_rencana + $diff1_rencana;
+                    //Pengajuan to Atasan 1 end
+
+                    //Realisasi to Atasan 1 Start
+                    if (date('Y-M-d', strtotime($row->tglpengajuan_realisasi))==date('Y-M-d', strtotime($row->tgl_atasan1_realisasi)))
+                    {
+                        $day1 = date('D', strtotime($row->tglpengajuan_realisasi));
+                        if($day1!="Sun" && $day1!="Sat") {
+
+                            if (date('H:i', strtotime($row->tglpengajuan_realisasi)) < '07:30'){
+                                $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tglpengajuan_realisasi)));
+                            }elseif (date('H:i', strtotime($row->tglpengajuan_realisasi)) > '16:30') {
+                                $time1 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tglpengajuan_realisasi)));
+                            }else{
+                                $time1 = strtotime($row->tglpengajuan_realisasi);
+                            }
+                            
+                            if (date('H:i', strtotime($row->tgl_atasan1_realisasi)) < '07:30'){
+                                $time2 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                            }elseif (date('H:i', strtotime($row->tgl_atasan1_realisasi)) > '16:30') {
+                                $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                            }else{
+                                $time2 = strtotime($row->tgl_atasan1_realisasi);
+                            }
+
+                        }else{
+                            $time1 = 0;
+                            $time2 = 0;
+                        }
+
+                        $diff1_realisasi = $time2 - $time1;
+
+                    }elseif(date('Y-M-d', strtotime($row->tglpengajuan_realisasi)) < date('Y-M-d', strtotime($row->tgl_atasan1_realisasi)))
+                    {
+                        $date1 = new DateTime(date('Y-m-d', strtotime($row->tglpengajuan_realisasi)));
+                        $date2 = new DateTime(date('Y-m-d', strtotime('+1 days', strtotime($row->tgl_atasan1_realisasi))));
+                        $day2 = date('D', strtotime($this->input->post('tgl2')));
+                        
+                        $daterange  = new DatePeriod($date1, new DateInterval('P1D'), $date2);
+                        
+                        //mendapatkan range antara dua tanggal dan di looping
+                        $diff1_realisasi   = 0;
+                        foreach($daterange as $date){
+                
+                            //Convert tanggal untuk mendapatkan nama hari
+                            $day         = $date->format('D');
+                
+                            // Check untuk menghitung yang bukan hari sabtu dan minggu
+                            if($day!="Sun" && $day!="Sat") {
+
+                                if (date('Y-m-d', strtotime($row->tglpengajuan_realisasi))==date('Y-m-d', strtotime($date->format("Y-m-d"))))
+                                {
+                                    if (date('H:i', strtotime($row->tglpengajuan_realisasi)) < '07:30'){
+                                        $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tglpengajuan_realisasi)));
+                                    }elseif (date('H:i', strtotime($row->tglpengajuan_realisasi)) > '16:30') {
+                                        $time1 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tglpengajuan_realisasi)));
+                                    }else{
+                                        $time1 = strtotime($row->tglpengajuan_realisasi);
+                                    }                                    
+                                    $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($date->format("Y-m-d"))));
+                                }elseif (date('Y-m-d', strtotime($row->tgl_atasan1_realisasi))==date('Y-m-d', strtotime($date->format("Y-m-d"))))
+                                { 
+                                    $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($date->format("Y-m-d"))));
+                                    if (date('H:i', strtotime($row->tgl_atasan1_realisasi)) < '07:30'){
+                                        $time2 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                                    }elseif (date('H:i', strtotime($row->tgl_atasan1_realisasi)) > '16:30') {
+                                        $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                                    }else{
+                                        $time2 = strtotime($row->tgl_atasan1_realisasi);
+                                    }
+                                    
+                                    
+                                }else{
+                                    
+                                    $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($date->format("Y-m-d"))));
+                                    $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($date->format("Y-m-d"))));
+                                } 
+                                    
+                                $diff = $time2 - $time1;
+                                $diff1_realisasi = $diff1_realisasi + $diff;   
+                            }
+                        }       
+                    }
+                    
+                    $total_diff1_realisasi = $total_diff1_realisasi + $diff1_realisasi;
+                    //Realisasi to Atasan 1 end
+
                 endforeach;
-                //Pengajuan to Atasan 1 end
 
                 //Atasan 1 to Atasan 2
                 $this->db->where('year(tglmulai)',$this->input->post('tahun'));
@@ -3817,16 +3903,17 @@ class Lembur extends CI_Controller
                 $this->db->where('atasan2',$lead->inisial);
                 $this->db->where('atasan2_rencana !=',null);
                 $this->db->where('status','9');
-                $rencana2 = $this->db->get('lembur');
-                $query = $rencana2->result();
+                $atasan2 = $this->db->get('lembur');
+                $query = $atasan2->result();
                 
                 if ($query){
-                    $jumlah_rencana2 = $rencana2->num_rows();
+                    $jumlah_atasan2 = $atasan2->num_rows();
                 }else{
-                    $jumlah_rencana2 = 0;
+                    $jumlah_atasan2 = 0;
                 }
 
-                $total_diff2   = 0;
+                $total_diff2_rencana   = 0;
+                $total_diff2_realisasi = 0;
                 foreach ($query as $row) :
 
                     // Pengajuan to Atasan2
@@ -3856,7 +3943,7 @@ class Lembur extends CI_Controller
                             $time2 = 0;
                         }
 
-                        $diff2 = $time2 - $time1;
+                        $diff2_rencana = $time2 - $time1;
 
                     }elseif(date('Y-M-d', strtotime($row->tgl_atasan1_rencana)) < date('Y-M-d', strtotime($row->tgl_atasan2_rencana)))
                     {
@@ -3905,16 +3992,118 @@ class Lembur extends CI_Controller
                                 } 
                                     
                                 $diff = $time2 - $time1;
-                                $diff2 = $diff2 + $diff;   
+                                $diff2_rencana = $diff2_rencana + $diff;   
                             }
                         }
                     }
+                    $total_diff2_rencana = $total_diff2_rencana + $diff2_rencana;
+                    // Rencana to Atasan 2 end
+                    // Realisasi to Atasan 2
+                    if (date('Y-M-d', strtotime($row->tgl_atasan1_realisasi))==date('Y-M-d', strtotime($row->tgl_atasan2_realisasi)))
+                    {
+                        $day1 = date('D', strtotime($row->tgl_atasan1_realisasi));
+                        if($day1!="Sun" && $day1!="Sat") {
+
+                            if (date('H:i', strtotime($row->tgl_atasan1_realisasi)) < '07:30'){
+                                $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                            }elseif (date('H:i', strtotime($row->tgl_atasan1_realisasi)) > '16:30') {
+                                $time1 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                            }else{
+                                $time1 = strtotime($row->tgl_atasan1_realisasi);
+                            }
+                            
+                            if (date('H:i', strtotime($row->tgl_atasan2_realisasi)) < '07:30'){
+                                $time2 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2_realisasi)));
+                            }elseif (date('H:i', strtotime($row->tgl_atasan2_realisasi)) > '16:30') {
+                                $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan2_realisasi)));
+                            }else{
+                                $time2 = strtotime($row->tgl_atasan2_realisasi);
+                            }
+
+                        }else{
+                            $time1 = 0;
+                            $time2 = 0;
+                        }
+
+                        $diff2_realisasi = $time2 - $time1;
+
+                    }elseif(date('Y-M-d', strtotime($row->tgl_atasan1_realisasi)) < date('Y-M-d', strtotime($row->tgl_atasan2_realisasi)))
+                    {
+                        $date1 = new DateTime(date('Y-m-d', strtotime($row->tgl_atasan1_realisasi)));
+                        $date2 = new DateTime(date('Y-m-d', strtotime('+1 days', strtotime($row->tgl_atasan2_realisasi))));
+                        $day2 = date('D', strtotime($this->input->post('tgl2')));
+                        
+                        $daterange  = new DatePeriod($date1, new DateInterval('P1D'), $date2);
+                        
+                        //mendapatkan range antara dua tanggal dan di looping
+                        $diff2_realisasi   = 0;
+                        foreach($daterange as $date){
+                
+                            //Convert tanggal untuk mendapatkan nama hari
+                            $day         = $date->format('D');
+                
+                            // Check untuk menghitung yang bukan hari sabtu dan minggu
+                            if($day!="Sun" && $day!="Sat") {
+
+                                if (date('Y-m-d', strtotime($row->tgl_atasan1_realisasi))==date('Y-m-d', strtotime($date->format("Y-m-d"))))
+                                {
+                                    if (date('H:i', strtotime($row->tgl_atasan1_realisasi)) < '07:30'){
+                                        $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                                    }elseif (date('H:i', strtotime($row->tgl_atasan1_realisasi)) > '16:30') {
+                                        $time1 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan1_realisasi)));
+                                    }else{
+                                        $time1 = strtotime($row->tgl_atasan1_realisasi);
+                                    }                                    
+                                    $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($date->format("Y-m-d"))));
+                                }elseif (date('Y-m-d', strtotime($row->tgl_atasan2_realisasi))==date('Y-m-d', strtotime($date->format("Y-m-d"))))
+                                { 
+                                    $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($date->format("Y-m-d"))));
+                                    if (date('H:i', strtotime($row->tgl_atasan2_realisasi)) < '07:30'){
+                                        $time2 = strtotime(date('Y-m-d 07:30:00', strtotime($row->tgl_atasan2_realisasi)));
+                                    }elseif (date('H:i', strtotime($row->tgl_atasan2_realisasi)) > '16:30') {
+                                        $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($row->tgl_atasan2_realisasi)));
+                                    }else{
+                                        $time2 = strtotime($row->tgl_atasan2_realisasi);
+                                    }
+                                    
+                                    
+                                }else{
+                                    
+                                    $time1 = strtotime(date('Y-m-d 07:30:00', strtotime($date->format("Y-m-d"))));
+                                    $time2 = strtotime(date('Y-m-d 16:30:00', strtotime($date->format("Y-m-d"))));
+                                } 
+                                    
+                                $diff = $time2 - $time1;
+                                $diff2_realisasi = $diff2_realisasi + $diff;
+                            }
+                        }
+                    }
+                    $total_diff2_realisasi = $total_diff2_realisasi + $diff2_realisasi;
+                    //Realisasi to Atasan 2 end
                     
-                    $total_diff2 = $total_diff2 + $diff2;
                 endforeach;
-                //Pengajuan to Atasan 2 end
-                $total_diff = $total_diff1 + $total_diff2;
-                $total_app = $jumlah_rencana1 + $jumlah_rencana2;
+
+                //------------
+
+                //Rencana
+                $total_diff_rencana = $total_diff1_rencana + $total_diff2_rencana;
+                $time_rencana_jam = floor($total_diff_rencana / (60 * 60));
+                $diff_menit = $total_diff_rencana - ($time_rencana_jam * (60 * 60));
+                $time_rencana_menit = floor($diff_menit / 60);
+                $time_rencana = $time_rencana_jam.' Jam '.$time_rencana_menit.' Menit ';
+                $time_rencana_int = number_format((float)$time_rencana_jam + ($time_rencana_menit/60), 2, '.', '');
+
+                //Realisasi
+                $total_diff_realisasi = $total_diff1_realisasi + $total_diff2_realisasi;
+                $time_realisasi_jam = floor($total_diff_realisasi / (60 * 60));
+                $diff_menit = $total_diff_realisasi - ($time_realisasi_jam * (60 * 60));
+                $time_realisasi_menit = floor($diff_menit / 60);
+                $time_realisasi = $time_realisasi_jam.' Jam '.$time_realisasi_menit.' Menit ';
+                $time_realisasi_int = number_format((float)$time_realisasi_jam + ($time_realisasi_menit/60), 2, '.', '');
+               
+                //Total
+                $total_diff = $total_diff1_rencana + $total_diff2_rencana + $total_diff1_realisasi + $total_diff2_realisasi;
+                $total_app = ($jumlah_atasan1 + $jumlah_atasan2)*2;
                 if ($total_app > 0){
                     $average_app = $total_diff / $total_app;
                 }else{
@@ -3935,6 +4124,8 @@ class Lembur extends CI_Controller
 
                 $output['data'][] = array(
                     'nama' => $lead->nama,
+                    'durasi_rencana' => $time_rencana,
+                    'durasi_realisasi' => $time_realisasi,
                     'durasi' => $time_atasan,
                     'jumlah' => $total_app,
                     'average' => $time_avg_int.' / '.$time_avg
