@@ -167,10 +167,8 @@
           <div class="tab-content tab-space">
                             <div class="tab-pane active" id="link1">
                                 <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/semangatya.pdf"></iframe>
+                                    <iframe class="embed-responsive-item" src="https://docs.google.com/document/d/1kaQakHREfV1lQPkoXfqtxHEFf99iGrzbN4sfL2AnlSM/edit?usp=sharing"></iframe>
                                 </div>
-                                </br>
-                                <a href="<?= base_url(); ?>assets/pdf/semangatya.pdf" target="_blank">Klik Disini untuk download</a>
                             </div>
                         </div>
           </div>
