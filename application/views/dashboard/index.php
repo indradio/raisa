@@ -114,7 +114,7 @@
           <!--  end card  -->
       </div>  
 
-      <div class="col-md-10 d-none d-sm-block">
+      <div class="col-md-12 d-none d-sm-block">
           <div class="card">
             <div class="card-body">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -145,16 +145,6 @@
               </div>
             </div>
           </div>
-      </div> 
-      <div class="col-md-2 d-none d-sm-block">
-        <div class="card card-stats">
-          <div class="card-header">
-            <p class="card-category"></p>
-            <h3 class="card-title">Calendar of Event</h3>
-            <h4 class="card-title">Bingung nentuin tanggal liburan? Cek Coe Sekarang!</h4>
-            <a href="<?= base_url('hr/info/coe'); ?>" class="btn btn-sm btn-info" role="button" aria-disabled="false">Download</a>
-          </div>
-        </div>
       </div> 
     </div>
     <!-- Icon for Mobile -->
