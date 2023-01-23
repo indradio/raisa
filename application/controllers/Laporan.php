@@ -136,8 +136,8 @@ class Laporan extends CI_Controller
     public function jamkerja($params1,$params2)
     {
         if ($params1=='monthly' and $params2=='summary'){
-            $data['sidemenu'] = 'Laporan';
-            $data['sidesubmenu'] = 'Leadtime Lembur';
+            $data['sidemenu'] = 'Laporan Project';
+            $data['sidesubmenu'] = 'Summary Jamkerja Monthly';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
     
             if (empty($this->input->post('tahun')))
