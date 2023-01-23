@@ -129,7 +129,7 @@
                 }
             ],
             order: [
-                [5, 'desc']
+                [1, 'asc']
             ],
             scrollCollapse: true,
             language: {

@@ -618,7 +618,7 @@ class Jamkerja extends CI_Controller
 
                 if ($coproHarian>0 and $totalHarian>0){
                     $okupansiHarian = ($coproHarian / $totalHarian)*100;
-                    $okupansiHarian = number_format($okupansiHarian, 2, ',', '');
+                    $okupansiHarian = number_format($okupansiHarian, 2, '.', '');
                 }else{
                     $okupansiHarian = 0;
                 }
@@ -653,7 +653,7 @@ class Jamkerja extends CI_Controller
 
                 if ($coproLembur>0 and $totalHarian>0){
                     $okupansiLembur = ($coproLembur / $totalLembur)*100;
-                    $okupansiLembur = number_format($okupansiLembur, 2, ',', '');
+                    $okupansiLembur = number_format($okupansiLembur, 2, '.', '');
                 }else{
                     $okupansiLembur = 0;
                 }
