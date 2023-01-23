@@ -133,4 +133,30 @@ class Laporan extends CI_Controller
         }
     }
 
+    public function jamkerja($params1,$params2)
+    {
+        if ($params1=='monthly' and $params2=='summary'){
+            $data['sidemenu'] = 'Laporan';
+            $data['sidesubmenu'] = 'Leadtime Lembur';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+    
+            if (empty($this->input->post('tahun')))
+            {
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+                $data['dept'] = '';
+            }else{
+                $data['tahun'] = $this->input->post('tahun');
+                $data['bulan'] = $this->input->post('bulan');
+                $data['dept'] = $this->input->post('dept');
+            }
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/laporan/monthly_summary', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
 }

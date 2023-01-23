@@ -534,9 +534,9 @@ class Jamkerja extends CI_Controller
     //         $this->load->view('templates/footer');
     // }
 
-    public function laporan($param=false)
+    public function laporan($params=false)
     {
-        if($param=="jk"){
+        if($params=="jk"){
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Cetak Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
@@ -549,7 +549,7 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/lp_jamkerja', $data);
             $this->load->view('templates/footer');
-        }elseif ($param=="ot"){
+        }elseif ($params=="ot"){
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Cetak Lembur';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -569,6 +569,117 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('jamkerja/lp_lembur', $data);
             $this->load->view('templates/footer');
+        }elseif($params='getbyMonthly_Sum'){
+
+            if (empty($this->input->post('dept')))
+            {
+                $this->db->where('work_contract','Direct Labor');
+                $this->db->where('is_active','1');
+                $this->db->where('status','1');
+            }else{
+                $this->db->where('work_contract','Direct Labor');
+                $this->db->where('dept_id',$this->input->post('dept'));
+                $this->db->where('is_active','1');
+                $this->db->where('status','1');
+            }
+            
+            $directList = $this->db->get('karyawan')->result();
+
+            foreach ($directList as $row) :
+                $deptName = $this->db->get_where('karyawan_dept', ['id' => $row->dept_id])->row();
+
+                $this->db->where('year(tglmulai)',$this->input->post('tahun'));
+                $this->db->where('month(tglmulai)',$this->input->post('bulan'));
+                $this->db->where('npk',$row->npk);
+                $this->db->where('status','9');
+                $harian = $this->db->get('jamkerja');
+                
+                $this->db->select('SUM(durasi) as totalcopro_harian');
+                $this->db->where('year(tgl_aktivitas)',$this->input->post('tahun'));
+                $this->db->where('month(tgl_aktivitas)',$this->input->post('bulan'));
+                $this->db->where('npk',$row->npk);
+                $this->db->where('jenis_aktivitas','JAM KERJA');
+                $this->db->where('kategori !=','3');
+                $this->db->where('status','9');
+                $this->db->from('aktivitas');
+                $coproHarian = $this->db->get()->row()->totalcopro_harian;
+
+                $this->db->select('SUM(durasi) as totalnon_harian');
+                $this->db->where('year(tgl_aktivitas)',$this->input->post('tahun'));
+                $this->db->where('month(tgl_aktivitas)',$this->input->post('bulan'));
+                $this->db->where('npk',$row->npk);
+                $this->db->where('jenis_aktivitas','JAM KERJA');
+                $this->db->where('kategori','3');
+                $this->db->where('status','9');
+                $this->db->from('aktivitas');
+                $nonHarian = $this->db->get()->row()->totalnon_harian;
+
+                $totalHarian = $coproHarian + $nonHarian;
+
+                if ($coproHarian>0 and $totalHarian>0){
+                    $okupansiHarian = ($coproHarian / $totalHarian)*100;
+                    $okupansiHarian = number_format($okupansiHarian, 2, ',', '');
+                }else{
+                    $okupansiHarian = 0;
+                }
+
+                $this->db->where('year(tglmulai)',$this->input->post('tahun'));
+                $this->db->where('month(tglmulai)',$this->input->post('bulan'));
+                $this->db->where('npk',$row->npk);
+                $this->db->where('status','9');
+                $lembur = $this->db->get('lembur');
+
+                $this->db->select('SUM(durasi) as totalcopro_lembur');
+                $this->db->where('year(tgl_aktivitas)',$this->input->post('tahun'));
+                $this->db->where('month(tgl_aktivitas)',$this->input->post('bulan'));
+                $this->db->where('npk',$row->npk);
+                $this->db->where('jenis_aktivitas','LEMBUR');
+                $this->db->where('kategori !=','3');
+                $this->db->where('status','9');
+                $this->db->from('aktivitas');
+                $coproLembur = $this->db->get()->row()->totalcopro_lembur;
+
+                $this->db->select('SUM(durasi) as totalnon_lembur');
+                $this->db->where('year(tgl_aktivitas)',$this->input->post('tahun'));
+                $this->db->where('month(tgl_aktivitas)',$this->input->post('bulan'));
+                $this->db->where('npk',$row->npk);
+                $this->db->where('jenis_aktivitas','LEMBUR');
+                $this->db->where('kategori','3');
+                $this->db->where('status','9');
+                $this->db->from('aktivitas');
+                $nonLembur = $this->db->get()->row()->totalnon_lembur;
+
+                $totalLembur = $coproLembur + $nonLembur;
+
+                if ($coproLembur>0 and $totalHarian>0){
+                    $okupansiLembur = ($coproLembur / $totalLembur)*100;
+                    $okupansiLembur = number_format($okupansiLembur, 2, ',', '');
+                }else{
+                    $okupansiLembur = 0;
+                }
+
+           
+            $output['data'][] = array(
+                'nama' => $row->nama,
+                'dept' => $deptName->nama,
+                'jamkerja_harian' => $harian->num_rows(),
+                'projek_harian' => $coproHarian,
+                'non_projek_harian' => $nonHarian,
+                'okupansi_harian' => $okupansiHarian,
+                'jamkerja_lembur' => $lembur->num_rows(),
+                'projek_lembur' => $coproLembur,
+                'non_projek_lembur' => $nonLembur,
+                'okupansi_lembur' => $okupansiLembur
+            );
+        endforeach;
+
+            //output to json format
+            echo json_encode($output);
+
+
+
+
+
         }else{
             $this->load->view('auth/denied');
         }
