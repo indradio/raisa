@@ -114,7 +114,7 @@
           <!--  end card  -->
       </div>  
 
-      <div class="col-md-12 d-none d-sm-block">
+      <div class="col-md-10 ml-auto mr-auto d-sm-block">
           <div class="card">
             <div class="card-body">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -151,7 +151,7 @@
 
     <!-- Absensi -->
     <div class="row">
-    <div class="col-md-8">
+    <!-- <div class="col-md-8">
         <div class="card">
           <div class="card-body">
           <div class="tab-content tab-space">
@@ -163,7 +163,7 @@
                         </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
