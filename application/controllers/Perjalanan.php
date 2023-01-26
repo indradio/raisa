@@ -489,6 +489,11 @@ class Perjalanan extends CI_Controller
                                  $this->db->where('tgl_atasan2 !=', NULL);
                                  $this->db->where('jenis_perjalanan', 'DLPP');
             $data['cancelled'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
+
+                                 $this->db->where('tglberangkat', date('Y-m-d'));
+                                 $this->db->where('tgl_fin !=', NULL);
+                                 $this->db->where('jenis_perjalanan', 'TAPP');
+            $data['cancelled_ta'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -1542,6 +1547,55 @@ class Perjalanan extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('perjalanan/leadtime', $data);
             $this->load->view('templates/footer');
+        }
+    }
+
+    public function get_data($params=null)
+    {
+        if ($params=='get')
+        {
+
+        }elseif ($params=='travelcost') {
+            
+            $this->db->where('year(tglberangkat)',$this->input->post('tahun'));
+            $this->db->where('month(tglberangkat)',$this->input->post('bulan'));
+            $this->db->where('status','9');
+            $query = $this->db->get('perjalanan')->result();
+
+            foreach ($query as $row) :
+
+                    $output['data'][] = array(
+                        'id' => $row->id,
+                        'jenis_perjalanan' => $row->jenis_perjalanan,
+                        'nama' => $row->nama,
+                        'tujuan' => $row->tujuan,
+                        'keperluan' => $row->keperluan,
+                        'anggota' => $row->anggota,
+                        'tglberangkat' => $row->tglberangkat,
+                        'jamberangkat' => $row->jamberangkat,
+                        'kmberangkat' => $row->kmberangkat,
+                        'cekberangkat' => $row->cekberangkat,
+                        'tglkembali' => $row->tglkembali,
+                        'jamkembali' => $row->jamkembali,
+                        'kmkembali' => $row->kmkembali,
+                        'cekkembali' => $row->cekkembali,
+                        'nopol' => $row->nopol,
+                        'kepemilikan' => $row->kepemilikan,
+                        'uangsaku' => $row->uang_saku,
+                        'insentif_pagi' => $row->insentif_pagi,
+                        'um_pagi' => $row->um_pagi,
+                        'um_siang' => $row->um_siang,
+                        'um_malam' => $row->total,
+                        'total' => $row->um_malam,
+                        'catatan' => $row->catatan,
+                        'catatan_security' => $row->catatan_security,
+                        'kmtotal' => $row->kmtotal
+                    );
+                
+            endforeach;
+
+            //output to json format
+            echo json_encode($output);
         }
     }
 }
