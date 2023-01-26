@@ -35,7 +35,7 @@
                   date_default_timezone_set('asia/jakarta');
                   $this->db->where('is_active', 1);
                   $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
-                  
+
                   $this->db->where('status', 2);
                   $this->db->order_by('tglmulai', 'ASC');
                   $jamkerja = $this->db->get_where('jamkerja')->result_array();
@@ -43,9 +43,9 @@
 
                     $respon = floor($jk['respon_create'] / (60 * 60 * 24));
                     if ($respon == 0) {
-                      $respon = 'Tepat Waktu';
+                      $respon = '<a class="text-success">Tepat Waktu</a>';
                     } else {
-                      $respon = $respon . ' Hari';
+                      $respon = '<a class="text-danger">'. $respon .' Hari </a>';
                     }
 
                     $now = time();
@@ -117,7 +117,7 @@
       rowGroup: {
         dataSrc: 0
       },
-      "scrollY": "512px",
+      "scrollY": "687px",
       "scrollCollapse": true,
       "paging": false
     });
