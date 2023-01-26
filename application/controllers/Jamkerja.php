@@ -516,7 +516,7 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('jamkerja/persetujuan_ppic', $data);
+            $this->load->view('jamkerja/persetujuan/persetujuan_ppic', $data);
             $this->load->view('templates/footer');
         }
     }
