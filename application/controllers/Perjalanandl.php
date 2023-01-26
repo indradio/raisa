@@ -502,6 +502,16 @@ class Perjalanandl extends CI_Controller
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Laporan Perjalanan Peserta';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if (empty($this->input->post('tahun')))
+            {
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+            }else{
+                $data['tahun'] = $this->input->post('tahun');
+                $data['bulan'] = $this->input->post('bulan');
+            }
+            
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
