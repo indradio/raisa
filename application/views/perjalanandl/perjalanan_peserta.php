@@ -69,10 +69,10 @@
                                         <th>Nomor Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Uang Saku</th>
-                                        <th>UM 1</th>
-                                        <th>UM 2</th>
-                                        <th>UM 3</th>
-                                        <th>UM 4</th>
+                                        <th>Insentif Pagi</th>
+                                        <th>UM Pagi</th>
+                                        <th>UM Siang</th>
+                                        <th>UM Malam</th>
                                         <th>Total</th>
                                         <th>Catatan GA</th>
                                         <th>Catatan Security</th>
@@ -97,10 +97,10 @@
                                         <th>No. Polisi</th>
                                         <th>Kendaraan</th>
                                         <th>Uang Saku</th>
-                                        <th>UM 1</th>
-                                        <th>UM 2</th>
-                                        <th>UM 3</th>
-                                        <th>UM 4</th>
+                                        <th>Insentif Pagi</th>
+                                        <th>UM Pagi</th>
+                                        <th>UM Siang</th>
+                                        <th>UM Malam</th>
                                         <th>Total</th>
                                         <th>Catatan GA</th>
                                         <th>Catatan Security</th>
