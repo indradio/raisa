@@ -81,8 +81,8 @@
                             endforeach;
                              ?>
                             </p>
-                            <?php if ($this->session->userdata('dept_id')==13 AND $this->session->userdata('posisi_id')==3){ ?>
-                            <div class="row col-md-12">
+                            <?php // if ($this->session->userdata('dept_id')==13 AND $this->session->userdata('posisi_id')==3){ ?>
+                            <!-- <div class="row col-md-12">
                                 <label class="col-ml-1 col-form-label">Kategori</label>
                                 <div class="col-md-7">
                                     <div class="form-group has-default">
@@ -93,8 +93,8 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <?php } ?>
+                            </div> -->
+                            <?php // } ?>
                             <div class="form-group">
                                 <label for="exampleCatatan" class="bmd-label-floating">Catatan</label>
                                 <textarea rows="3" class="form-control" name="catatan" id="catatan"><?= $lembur['catatan']; ?></textarea>
