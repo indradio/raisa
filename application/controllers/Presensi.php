@@ -1126,8 +1126,18 @@ class Presensi extends CI_Controller
             {
                 foreach ($presensi_raw as $row) 
                     {
-                        ($row->status == 'In') ? $status = '1' : $status = '0';
                         $karyawan   = $this->db->get_where('karyawan',['npk' => $row->npk])->row();
+                        if (empty($karyawan)){
+
+                                        $this->db->set('authentication','Verified');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('id',$row->id);
+                                        $this->db->update('presensi_raw');
+
+                        }else{
+
+
+                        ($row->status == 'In') ? $status = '1' : $status = '0';
                         $id         = date('ymd', strtotime($row->date)) . $row->npk . $status;
 
                         $this->db->where('id',$id);
@@ -1272,6 +1282,8 @@ class Presensi extends CI_Controller
                                     }
                                 
                             }
+
+                        }
                     }
             }
     }
