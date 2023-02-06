@@ -476,6 +476,54 @@ class Presensi extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function laporan($params)
+    {
+        date_default_timezone_set('asia/jakarta');
+        if ($params==null){
+            $data['sidemenu'] = 'HR Presensi';
+            $data['sidesubmenu'] = 'Upload Data';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('presensi/upload', $data);
+            $this->load->view('templates/footer');
+
+        }elseif ($params=='raw'){
+        
+            if($this->input->post('tgl1')){
+                $tgl1  = date('Y-m-d', strtotime($this->input->post('tgl1')));
+                $tgl2 = date('Y-m-d', strtotime($this->input->post('tgl2')));
+            }else{
+                $tgl1  = date('d-m-Y');
+                $tgl2 = date('d-m-Y');
+            }
+            
+            $data['periode'] = [
+                'tgl1' => $tgl1,
+                'tgl2' => $tgl2
+            ];
+            
+            if (empty($this->input->post('month'))) {
+                $data['bulan'] = date('m');
+            } else {
+                $data['bulan'] = $this->input->post('month');
+            }
+            $data['tahun'] = date('Y');
+
+            $data['sidemenu'] = 'HR Kehadiran';
+            $data['sidesubmenu'] = 'Data';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+            $this->load->helper('url');
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('presensi/laporan/raw_data', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
     public function peta()
     {
         date_default_timezone_set('asia/jakarta');
@@ -514,6 +562,31 @@ class Presensi extends CI_Controller
 
 		//output to json format
         echo json_encode($output);
+    }
+
+    public function download($params)
+    {
+        date_default_timezone_set('asia/jakarta');
+        $this->verify_all();
+
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+
+        if ($params == 'monthly') {
+            if (empty($this->input->post('month'))) {
+                $data['bulan'] = date('m');
+                $data['tahun'] = date('Y');
+            } else {
+                $data['bulan'] = $this->input->post('month');
+                $data['tahun'] = $this->input->post('year');
+            }
+            $data['sidemenu'] = 'HR';
+            $data['sidesubmenu'] = 'Kehadiran';
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/presensi_download', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function persetujuan($params1=null, $params2=null, $id=null)
@@ -839,6 +912,45 @@ class Presensi extends CI_Controller
             
             echo json_encode($output);
             exit();
+        }elseif ($params=='raw')
+        {
+
+            $this->verify_all();
+
+            $this->db->where('date >=', date('Y-m-d', strtotime($this->input->post('tgl1'))));
+            $this->db->where('date <=', date('Y-m-d', strtotime($this->input->post('tgl2'))));
+            $this->db->order_by('datetime', 'DESC');
+            $data = $this->db->get('presensi_raw')->result();
+            if ($data){
+                foreach ($data as $row) :
+                    // $action = "<button type='button' class='btn btn-link text-danger' data-toggle='modal' data-target='#deleteModal' data-id='".$row->id."' data-description='".$row->description."'><i class='ti-trash'></i></button>";
+                    $user = $this->db->get_where('karyawan',['npk' => $row->npk])->row();
+                            
+                    $output['data'][] = array(
+                        'tanggal' => date("d-m-Y", strtotime($row->datetime)),
+                        'jam' => date("H:i", strtotime($row->datetime)),
+                        'npk' => $row->npk,
+                        'nama' => $user->nama,
+                        'status' => $row->status,
+                        'device' => $row->platform
+                        // 'action' => $action
+                    );
+                endforeach;
+            }else{
+                $output['data'][] = array(
+                    'tanggal' =>'',
+                    'jam' => '',
+                    'npk' =>'',
+                    'nama' => 'There are no data to display.',
+                    'status' => '',
+                    'device' => ''
+                );
+            }
+            
+            // var_dump($output);
+            //output to json format
+            echo json_encode($output);
+            exit();
         }
         
     }
@@ -857,6 +969,166 @@ class Presensi extends CI_Controller
                         ($row->status == 'In') ? $status = '1' : $status = '0';
                         $karyawan   = $this->db->get_where('karyawan',['npk' => $this->session->userdata('npk')])->row();
                         $id         = date('ymd', strtotime($row->date)) . $karyawan->npk . $status;
+
+                        $this->db->where('id',$id);
+                        $presensi = $this->db->get('presensi')->row();
+                        if (empty($presensi))
+                            {
+                                // cari atasan1
+                                if ($karyawan->atasan1 == 0) {
+                                    $atasan1 = $atasan1 = $this->db->get_where('karyawan', ['posisi_id' =>  '0'])->row();;
+                                } elseif ($karyawan->atasan1 == 1) {
+                                    $atasan1 = $this->db->get_where('karyawan', ['posisi_id' =>  '1'])->row();
+                                } elseif ($karyawan->atasan1 == 2) {
+                                    $this->db->where('posisi_id', $karyawan->atasan1);
+                                    $this->db->where('div_id', $karyawan->div_id);
+                                    $this->db->where('is_active', '1');
+                                    $atasan1 = $this->db->get('karyawan')->row();
+                                } elseif ($karyawan->atasan1 == 3) {
+                                    $this->db->where('posisi_id', $karyawan->atasan1);
+                                    $this->db->where('dept_id', $karyawan->dept_id);
+                                    $this->db->where('is_active', '1');
+                                    $atasan1 = $this->db->get('karyawan')->row();
+                                } elseif ($karyawan->atasan1 == 4) {
+                                    $this->db->where('posisi_id', $karyawan->atasan1);
+                                    $this->db->where('dept_id', $karyawan->dept_id);
+                                    $this->db->where('is_active', '1');
+                                    $atasan1 = $this->db->get('karyawan')->row();
+                                } elseif ($karyawan->atasan1 == 5) {
+                                    $this->db->where('posisi_id', $karyawan->atasan1);
+                                    $this->db->where('sect_id', $karyawan->sect_id);
+                                    $this->db->where('is_active', '1');
+                                    $atasan1 = $this->db->get('karyawan')->row();
+                                } elseif ($karyawan->atasan1 == 6) {
+                                    $this->db->where('posisi_id', $karyawan->atasan1);
+                                    $this->db->where('sect_id', $karyawan->sect_id);
+                                    $this->db->where('is_active', '1');
+                                    $atasan1 = $this->db->get('karyawan')->row();
+                                };
+
+                                if ($karyawan->sect_id == '215' and $karyawan->posisi_id == '7') {
+                                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row();
+                                }
+
+                                if ($karyawan->dept_id == '11' and $karyawan->atasan1 == '3') {
+                                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'ABU'])->row();
+                                }
+
+                                if ($karyawan->dept_id == '14' and $karyawan->atasan1 == '3') {
+                                    $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row();
+                                }
+
+                                // Day Check
+                                if (date("D", strtotime($row->datetime)) == 'Sat' or date("D", strtotime($row->datetime)) == 'Sun') {
+                                    $hari = 'LIBUR';
+                                } else {
+                                    $hari = 'KERJA';
+                                }
+
+                                // insert data
+                                $data = [
+                                    'id'            => $id,
+                                    'date'          => date('Y-m-d', strtotime($row->date)),
+                                    'time'          => date('Y-m-d H:i:s', strtotime($row->datetime)),
+                                    'npk'           => $row->npk,
+                                    'nama'          => $karyawan->nama,
+                                    'state'         => $row->status,
+                                    'work_state'    => 'SHIFT2',
+                                    'description'   => null,
+                                    'location'      => 'Jl.Raya Jakarta Bogor KM.47, Nanggewer Mekar, Cibinong, Nanggewer Mekar, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16912, Indonesia',
+                                    'latitude'      => '-6.503377273528274',
+                                    'longitude'     => '106.83838396577082',
+                                    'platform'      => $row->platform,
+                                    'atasan1'       => $atasan1->inisial,
+                                    'approved_by'   => 'Disetujui oleh SYSTEM',
+                                    'approved_at'   => date('Y-m-d H:i:s', strtotime($row->datetime)),
+                                    'hr_by'         => 'Disetujui oleh SYSTEM',
+                                    'hr_at'         => date('Y-m-d H:i:s', strtotime($row->datetime)),
+                                    'day_state'     => $hari,
+                                    'div_id'        => $karyawan->div_id,
+                                    'dept_id'       => $karyawan->dept_id,
+                                    'sect_id'       => $karyawan->sect_id,
+                                    'status'        => '9'
+                                ];
+                                $this->db->insert('presensi', $data);
+
+                                $this->db->set('authentication','Verified');
+                                $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                $this->db->where('id',$row->id);
+                                $this->db->update('presensi_raw');
+                            }else{
+                                if ($presensi->state == 'In' and $presensi->time < $row->datetime)
+                                    {
+                                        $this->db->set('authentication','Repeated');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('id',$row->id);
+                                        $this->db->update('presensi_raw');
+                                    }elseif ($presensi->state == 'In' and $presensi->time >= $row->datetime)
+                                    {
+                                        $this->db->set('time',date('Y-m-d H:i:s',strtotime($row->datetime)));
+                                        $this->db->set('platform',$row->platform);
+                                        $this->db->set('approved_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
+                                        $this->db->set('hr_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
+                                        $this->db->where('id',$presensi->id);
+                                        $this->db->update('presensi');
+
+                                        $this->db->set('authentication','Repeated');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('date',date('Y-m-d',strtotime($row->date)));
+                                        $this->db->where('authentication','Verified');
+                                        $this->db->where('status','In');
+                                        $this->db->update('presensi_raw');
+
+                                        $this->db->set('authentication','Verified');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('id',$row->id);
+                                        $this->db->update('presensi_raw');
+                                    }elseif ($presensi->state == 'Out' and $presensi->time >= $row->datetime)
+                                    {
+                                        $this->db->set('authentication','Repeated');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('id',$row->id);
+                                        $this->db->update('presensi_raw');
+                                    }elseif ($presensi->state == 'Out' and $presensi->time < $row->datetime)
+                                    {
+                                        $this->db->set('time',date('Y-m-d H:i:s',strtotime($row->datetime)));
+                                        $this->db->set('platform',$row->platform);
+                                        $this->db->set('approved_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
+                                        $this->db->set('hr_at',date('Y-m-d H:i:s',strtotime($row->datetime)));
+                                        $this->db->where('id',$presensi->id);
+                                        $this->db->update('presensi');
+
+                                        $this->db->set('authentication','Repeated');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('date',date('Y-m-d',strtotime($row->date)));
+                                        $this->db->where('authentication','Verified');
+                                        $this->db->where('status','Out');
+                                        $this->db->update('presensi_raw');
+
+                                        $this->db->set('authentication','Verified');
+                                        $this->db->set('authentication_at',date('Y-m-d H:i:s'));
+                                        $this->db->where('id',$row->id);
+                                        $this->db->update('presensi_raw');
+                                    }
+                                
+                            }
+                    }
+            }
+    }
+
+    public function verify_all()
+    {
+        $this->db->where('authentication','Undefined');
+        $this->db->order_by('datetime', 'ASC');
+        $presensi_raw = $this->db->get('presensi_raw')->result();
+
+        if (!empty($presensi_raw))
+            {
+                foreach ($presensi_raw as $row) 
+                    {
+                        ($row->status == 'In') ? $status = '1' : $status = '0';
+                        $karyawan   = $this->db->get_where('karyawan',['npk' => $row->npk])->row();
+                        $id         = date('ymd', strtotime($row->date)) . $row->npk . $status;
 
                         $this->db->where('id',$id);
                         $presensi = $this->db->get('presensi')->row();
