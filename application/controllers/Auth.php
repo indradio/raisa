@@ -16,7 +16,7 @@ class Auth extends CI_Controller
             'img_path'      => './assets/img/captcha/',
             'img_url'       => base_url('assets/img/captcha/'),
             // 'font_path'     => './path/to/fonts/texb.ttf',
-            'img_width'     => 125,
+            'img_width'     => 250,
             'img_height'    => 40,
             'expiration'    => 7200,
             'word_length'   => 4,

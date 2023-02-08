@@ -84,11 +84,19 @@
                 </br>
                 <span class="bmd-form-group">
                   <div class="input-group">
-                    </br>
                     <div class="input-group-prepend">
-                        <?= $captcha; ?>
+                      <span class="input-group-text">
+                        <i class="material-icons">_</i>
+                      </span>
+                    </div>
+                    <?= $captcha; ?>
+                  </div>
+                </span>
+                <span class="bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">
-                          <i class="material-icons"></i>
+                          <i class="material-icons">keyboard_alt</i>
                         </span>
                       </div>
                       <input type="text" class="form-control" name="captcha" placeholder="Captcha">
