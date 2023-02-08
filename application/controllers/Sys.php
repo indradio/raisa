@@ -27,6 +27,44 @@ class Sys extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function info()
+    {
+      echo phpinfo();
+    }
+
+    public function captcha()
+    {
+      // Halaman Login
+      $this->load->helper('captcha');
+
+      $vals = array(
+          'word'          => substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 4),
+          'img_path'      => './assets/img/captcha/',
+          'img_url'       => base_url('assets/img/captcha/'),
+          // 'font_path'     => './path/to/fonts/texb.ttf',
+          'img_width'     => 125,
+          'img_height'    => 40,
+          'expiration'    => 7200,
+          'word_length'   => 4,
+          'font_size'     => 64,
+          'img_id'        => 'Imageid',
+          'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  
+          // White background and border, black text and red grid
+          'colors'        => array(
+                  'background'    => array(255, 255, 255),
+                  'border'        => array(255, 255, 255),
+                  'text'          => array(0, 0, 0),
+                  'grid'          => array(255, 40, 40)
+                  )
+      );
+      
+      $cap = create_captcha($vals);
+   
+        echo $cap['image'];
+      
+    }
+
     public function menu()
     {
         $data['sidemenu'] = 'System';
