@@ -13574,7 +13574,7 @@ fieldset[disabled] .form-group .form-control {
   text-align: center;
   color: #555;
   transition: all .3s;
-  border-radius: 30px;
+  border-radius: 5px;
   padding: 10px 15px;
 }
 

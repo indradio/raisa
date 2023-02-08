@@ -81,6 +81,19 @@
                       <input type="password" class="form-control" name="pwd" placeholder="Password">
                     </div>
                   </span>
+                </br>
+                <span class="bmd-form-group">
+                  <div class="input-group">
+                    </br>
+                    <div class="input-group-prepend">
+                        <?= $captcha; ?>
+                        <span class="input-group-text">
+                          <i class="material-icons"></i>
+                        </span>
+                      </div>
+                      <input type="text" class="form-control" name="captcha" placeholder="Captcha">
+                    </div>
+                  </span>
                 </div>
                 <div class="card-footer justify-content-center">
                   <button type="submit" class="btn btn-rose btn-link btn-lg">Lets Go</button>
