@@ -12,7 +12,7 @@ class Auth extends CI_Controller
         $this->load->helper('captcha');
 
         $vals = array(
-            'word'          => substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 4),
+            'word'          => substr(str_shuffle('0123456789'), 0, 4),
             'img_path'      => './assets/img/captcha/',
             'img_url'       => base_url('assets/img/captcha/'),
             // 'font_path'     => './path/to/fonts/texb.ttf',
