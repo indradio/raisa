@@ -384,7 +384,7 @@ class Dashboard extends CI_Controller
 
     public function update_presensi()
     {
-        if (date('H:i:s') > date('07:35:00') AND date('H:i:s') < date('08:00:00'))
+        if (date('H:i:s') > date('07:15:00') AND date('H:i:s') < date('08:00:00'))
         {
             $id = 'IN'.date('ymd');
             $notif = $this->db->get_where('notifikasi', ['id' =>  $id])->row();
