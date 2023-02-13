@@ -123,7 +123,7 @@
                                                       <span aria-hidden="true">&times;</span>
                                                     </button>
                                                   </div>');
-                                                    redirect('reservasi/dl1c1');
+                                                    redirect('reservasi/dl1c');
                                                 }
 
                                                 $queryAnggota = "SELECT *
@@ -154,7 +154,7 @@
                                                                   <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                               </div>');
-                                                            redirect('reservasi/dl1c1');
+                                                            redirect('reservasi/dl1c');
                                                         }
                                                     endforeach; ?>
                                                     <tr>
