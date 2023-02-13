@@ -384,7 +384,7 @@ class Dashboard extends CI_Controller
 
     public function update_presensi()
     {
-        $day = date('D', strtotime($this->input->post('date')));
+        $day = date('D');
         if($day!='Sun' || $day!='Sat') 
         {
             if (date('H:i:s') > date('07:35:00') AND date('H:i:s') < date('07:45:00'))
