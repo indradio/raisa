@@ -260,11 +260,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ️[INFORMASI] TANGGAL 23 SEBAGAI HARI KERJA*" .
+                            'message' => "*ℹ️[PENTING] DATA VAKSINASI BOOSTER KE-2*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBersama ini disampaikan bahwa pada *hari Senin tanggal 23 Januari 2023* perusahaan menetapkan *sebagai hari kerja biasa*. " .
-                            "\r\nInformasi lebih lanjut silahkan dapat menghubungi HR. " .
-                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\nSehubungan akan dilaksanakannya Vaksinasi Booster ke 2 di PT Astra Otoparts Tbk Divisi Winteq, maka mohon untuk mengisi data dibawah ini dan disubmit maksimal tanggal *24 Februari 2023*." .
+                            "\r\nhttps://docs.google.com/forms/d/1FekSpMJ7dK-r1-jTmB1r52pd6vjIWtTStiljgOrRbRU/edit" .
+                            "\r\nInformasi lebih lanjut silahkan dapat menghubungi HR" .
+                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya" .
                             "\r\nHormat Kami," .
                             "\r\nHR" .
                             "\r\n#ComebackStronger"
