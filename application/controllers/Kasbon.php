@@ -15,15 +15,14 @@ class Kasbon extends CI_Controller
 
     public function index()
     {    
-        // Halaman dashboard
         $data['sidemenu'] = 'Kasbon';
-        $data['sidesubmenu'] = 'Kasbon-Ku';
+        $data['sidesubmenu'] = 'Request';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $data['kategori'] = $this->db->get('imp_kategori')->result();
+        $data['access'] = $this->db->get_where('kasbon_user', ['npk' => $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('imp/index', $data);
+        $this->load->view('kasbon/index', $data);
         $this->load->view('templates/footer');
     }
 
