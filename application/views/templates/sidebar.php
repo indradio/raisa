@@ -102,10 +102,10 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'Info HR') {
+                        <?php if ($m['menu'] == 'x') {
                           echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                         } ?>
-                        <?php if ($m['menu'] == 'IMP') {
+                        <?php if ($m['menu'] == 'x') {
                           echo '<span class="badge badge-success badge-sm">BARU</span>';
                         } ?>
                         <b class="caret"></b>
@@ -118,10 +118,10 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'Info HR') {
+                              <?php if ($m['menu'] == 'x') {
                                 echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                               } ?>
-                               <?php if ($m['menu'] == 'IMP') {
+                               <?php if ($m['menu'] == 'x') {
                                 echo '<span class="badge badge-success badge-sm">BARU</span>';
                               } ?>
                               <b class="caret"></b>

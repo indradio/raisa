@@ -384,8 +384,7 @@ class Dashboard extends CI_Controller
 
     public function update_presensi()
     {
-        $day = date('D');
-        if($day!='Sun' || $day!='Sat') 
+        if(date('D')!='Sun' || date('D')!='Sat') 
         {
             if (date('H:i:s') > date('07:35:00') AND date('H:i:s') < date('07:45:00'))
             {
@@ -401,9 +400,8 @@ class Dashboard extends CI_Controller
                     );
                     $this->db->insert('notifikasi', $data);
 
-
                     $this->db->where('posisi_id >','4');
-                    $this->db->where('is_active','1');;
+                    $this->db->where('is_active','1');
                     $this->db->where('status','1');
                     $queryUsers = $this->db->get('karyawan')->result();
 

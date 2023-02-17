@@ -314,7 +314,7 @@ class Imp extends CI_Controller
                             "\r\nTanggal  : *" . date('d M Y', strtotime($imp->date)) . "*" .
                             "\r\nJam      : *" . date('H:i', strtotime($imp->start_time)).' - '.date('H:i', strtotime($imp->end_time)) ."*" .
                             "\r\nKeterangan : *" . $imp->remarks . "*" .
-                            "\r\n \r\nCuti ini telah DITOLAK oleh *". $this->session->userdata('inisial') ."*".
+                            "\r\n \r\nIMP ini telah DITOLAK oleh *". $this->session->userdata('inisial') ."*".
                             "\r\nAlasan : *" . $this->input->post('reason') . "*" .
                             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp"
                         ],
