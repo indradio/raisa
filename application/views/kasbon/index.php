@@ -179,8 +179,8 @@
             </div>
             <form class="form" method="post" action="<?= base_url('kasbon/submit/cancel'); ?>">
                 <div class="modal-body">
-                    <input type="text" class="form-control" id="cl_id" name="cl_id">
-                    <input type="text" class="form-control" id="cl_status" name="cl_status">
+                    <input type="hidden" class="form-control" id="cl_id" name="cl_id">
+                    <input type="hidden" class="form-control" id="cl_status" name="cl_status">
                     <div class="row">
                       <div class="col-md-12">
                           <div class="form-group">
