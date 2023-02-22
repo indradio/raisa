@@ -1,27 +1,6 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <div class="row mt-3">
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-          <div class="card-header card-header-info card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">price_change</i>
-            </div>
-            <!-- <p class="card-category">Ijin Meninggalkan Pekerjaan</p> -->
-            <h3 class="card-title">Kasbon</h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats"></div>
-            <?php if ($access){
-              echo '<a href="#" id="btn_add" class="btn btn-facebook btn-block" >Ajukan Kasbon</a>';
-            }else{
-              echo '<a href="#" id="btn_add" class="btn btn-danger btn-block disabled" >Ajukan Kasbon</a>';
-            } ?>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -29,7 +8,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title">Pengajuan</h4>
+            <h4 class="card-title">Outstanding</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -43,9 +22,8 @@
                   <tr>
                     <th>#</th>
                     <th>Tanggal</th>
-                    <th>Kasbon <small>(Rp)</small></th>
+                    <th>Nilai <small>(Rp)</small></th>
                     <th>Keterangan</th>
-                    <th>Due Date</th>
                     <th>Status</th>
                     <th class="text-right">Action</th>
                   </tr>
@@ -54,9 +32,8 @@
                   <tr>
                     <th>#</th>
                     <th>Tanggal</th>
-                    <th>Kasbon</th>
+                    <th>Nilai <small>(Rp)</small></th>
                     <th>Keterangan</th>
-                    <th>Due Date</th>
                     <th>Status</th>
                     <th class="text-right">Action</th>
                   </tr>
@@ -93,7 +70,7 @@
                     <!-- <input type="hidden" class="form-control" id="id" name="id">
                     <input type="hidden" class="form-control" id="npk" name="npk"> -->
                     <div class="row">
-                      <div class="col-md-12" id="form_advance">
+                      <div class="col-md-12" id="form_nominal">
                           <div class="form-group">
                               <label class="bmd-label">Nominal*</label></br>
                               <input type="number" class="form-control" name="advance" id="advance" required/>
@@ -226,7 +203,7 @@
           serverSide: false,
           processing: true,
           ajax: {
-                  "url"   : "<?= site_url('kasbon/get_data/requestUser') ?>",
+                  "url"   : "<?= site_url('kasbon/get_data/outstandingUser') ?>",
                   "type"  : "POST"
               },
           order: [],
@@ -235,7 +212,6 @@
               { "data": "advance_date" },
               { "data": "advance" },
               { "data": "remarks" },
-              { "data": "settlement_date" },
               { "data": "status" },
               { "data": "action", className: "text-right" }
           ],

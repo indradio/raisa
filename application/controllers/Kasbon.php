@@ -16,7 +16,7 @@ class Kasbon extends CI_Controller
     public function index()
     {    
         $data['sidemenu'] = 'Kasbon';
-        $data['sidesubmenu'] = 'Request';
+        $data['sidesubmenu'] = 'KasbonKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['access'] = $this->db->get_where('kasbon_user', ['npk' => $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
@@ -36,6 +36,32 @@ class Kasbon extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         $this->load->view('kasbon/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function outstanding()
+    {    
+        $data['sidemenu'] = 'Kasbon';
+        $data['sidesubmenu'] = 'Penyelesaian';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+     
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('kasbon/outstanding', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function report()
+    {    
+        $data['sidemenu'] = 'Kasbon';
+        $data['sidesubmenu'] = 'Riwayat';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+     
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('kasbon/report', $data);
         $this->load->view('templates/footer');
     }
 
@@ -139,6 +165,26 @@ class Kasbon extends CI_Controller
                     //output to json format
                     echo json_encode($output);
                 }
+        }elseif ($params=='settlement'){
+
+            //Validasi
+            if($this->input->post('id')!='' || $this->input->post('settlement') !='' || $this->input->post('status')=='6') 
+                {
+
+                    $this->db->set('settlement_by', $this->session->userdata('inisial'));
+                    $this->db->set('settlement_date', date('Y-m-d H:i:s'));
+                    $this->db->set('settlement', $this->input->post('settlement'));
+                    $this->db->set('status', '7');
+                    $this->db->where('id', $this->input->post('id'));
+                    $this->db->update('kasbon');
+
+                    $output['data'] = array(
+                        'result' => 'success'
+                    );
+
+                    //output to json format
+                    echo json_encode($output);
+                }
         }
     }
 
@@ -146,7 +192,6 @@ class Kasbon extends CI_Controller
     {
         if ($params == 'outstanding')
         {
-
             $data['sidemenu'] = 'Approval';
             $data['sidesubmenu'] = 'Approval Kasbon';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
@@ -156,6 +201,7 @@ class Kasbon extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('kasbon/approval', $data);
             $this->load->view('templates/footer');
+
         }elseif ($params == 'outstanding_div'){
             
             $data['sidemenu'] = 'Approval Div';
@@ -885,7 +931,6 @@ class Kasbon extends CI_Controller
     public function get_data($params)
     {    
         if ($params == null){
-
         }elseif ($params == 'index'){
             $this->db->where('npk', $this->session->userdata('npk'));
             $this->db->order_by('advance_date', 'desc');
@@ -931,6 +976,49 @@ class Kasbon extends CI_Controller
             $this->db->where('npk',$this->session->userdata('npk'));
             $this->db->where('status >',0);
             $this->db->where('status <',6);
+            $this->db->order_by('advance_date','desc');
+            $data = $this->db->get('kasbon')->result();
+
+            if ($data)
+            {
+                foreach ($data as $row) {
+
+                    $status = $this->db->get_where('kasbon_status', ['id' => $row->status])->row();
+                    if ($row->status > 0 && $row->status < 6)
+                    {
+                        $action = "<button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' data-target='#cancelKasbon' data-id='".$row->id."' data-status='".$row->status."'><i class='material-icons'>clear</i></button>
+                                    <button type='button' class='btn btn-info btn-link btn-just-icon disabled' data-toggle='modal' data-target='#hapusAktivitas' data-id_aktivitas='".$row->id."'><i class='material-icons'>description</i></button>";
+                    }else{
+                        $action = "<button type='button' class='btn btn-info btn-link btn-just-icon disabled' data-toggle='modal' data-target='#updateAktivitas' data-id_aktivitas='".$row->id."'><i class='material-icons'>description</i></button>";
+                    }
+
+                    $output['data'][] = array(
+                        "id"                => $row->id,
+                        "advance_date"      => date('d M Y', strtotime($row->advance_date)),
+                        "advance"           => number_format($row->advance, 0, '.', ','),
+                        "remarks"           => $row->remarks,
+                        "settlement_date"   => date('d M Y', strtotime($row->settlement_date)),
+                        "status"            => $status->title,
+                        "action"            => $action
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "id"                => null,
+                    "advance_date"      => null,
+                    "advance"           => null,
+                    "remarks"           => 'There are no data to display.',
+                    "settlement_date"   => null,
+                    "status"            => null,
+                    "action"            => null
+                );
+            }
+
+            echo json_encode($output);
+            exit();
+        }elseif ($params == 'outstandingUser'){
+            $this->db->where('npk',$this->session->userdata('npk'));
+            $this->db->where('status',6);
             $this->db->order_by('advance_date','desc');
             $data = $this->db->get('kasbon')->result();
 
@@ -1212,7 +1300,6 @@ class Kasbon extends CI_Controller
             exit();
 
         }
-    
     }
 
     // public function print($id)
@@ -1222,9 +1309,9 @@ class Kasbon extends CI_Controller
     //     $this->load->view('kasbon/print', $data);
     // }
 
-    public function print()
+    public function print($id)
     {   
-        $data['terbilang'] = terbilang(1000000);
+        $data['row'] = $this->db->get_where('kasbon', ['id' => $id])->row();
         $this->load->view('kasbon/print', $data);
     }
 
