@@ -29,7 +29,7 @@ class Kasbon extends CI_Controller
     public function request()
     {    
         $data['sidemenu'] = 'Kasbon';
-        $data['sidesubmenu'] = 'Request';
+        $data['sidesubmenu'] = 'Pengajuan';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['access'] = $this->db->get_where('kasbon_user', ['npk' => $this->session->userdata('npk')])->row_array();
         $this->load->view('templates/header', $data);
