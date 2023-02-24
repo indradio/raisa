@@ -1855,7 +1855,7 @@ class Lembur extends CI_Controller
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
         
         // Persetujuan Koordinator / Section Head 
-        if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
+        if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
             $this->db->set('atasan1_rencana', 'Disetujui oleh '.$this->session->userdata('inisial'));
             $this->db->set('tgl_atasan1_rencana', date('Y-m-d H:i:s'));
             $this->db->set('status', '3');
