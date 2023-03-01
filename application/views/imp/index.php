@@ -378,6 +378,20 @@ sssssssssw
           align: "center"
         }
       });
+
+     <?php }elseif ($this->session->flashdata('notify')=='maxi'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> IMP Maksimal 3,5 JAM, IMP pagi sampai pukul 11.30, IMP Pulang mulai pukul 11.00"
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
      
       <?php } ?>
 

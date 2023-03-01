@@ -49,7 +49,17 @@ class Imp extends CI_Controller
             if($this->input->post('start_time') > $this->input->post('end_time')){
                 $this->session->set_flashdata('notify', 'over');
                 redirect('/imp');
-            }        
+            }   
+
+            if($this->input->post('category') =='IMP2' && date('H:i:s', strtotime($this->input->post('end_time'))) > date('11:30:00')){
+                $this->session->set_flashdata('notify', 'maxi');
+                redirect('/imp');
+            }
+
+            if($this->input->post('category') =='IMP3' && date('H:i:s', strtotime($this->input->post('start_time'))) < date('11:00:00')){
+                $this->session->set_flashdata('notify', 'maxi');
+                redirect('/imp');
+            }
 
             $id = 'IMP'.date('ym').random_string('alnum',2);
             $imp = $this->db->get_where('imp', ['id' => $id])->row();
@@ -66,6 +76,11 @@ class Imp extends CI_Controller
             }
 
             $loss_time = $end_time - $start_time;
+
+            if($this->input->post('category') =='IMP1' && $loss_time > 12600){
+                $this->session->set_flashdata('notify', 'maxi');
+                redirect('/imp');
+            }
 
             $data = [
                 'id' => $id,
