@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="utf-8" />
-  <!-- <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/img/apple-icon.png"> -->
   <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/img/favicon.ico">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
@@ -81,7 +80,7 @@
                       <input type="password" class="form-control" name="pwd" placeholder="Password">
                     </div>
                   </span>
-                </br>
+                <!-- </br>
                 <span class="bmd-form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -101,7 +100,7 @@
                       </div>
                       <input type="text" class="form-control" name="captcha" placeholder="Captcha">
                     </div>
-                  </span>
+                  </span> -->
                 </div>
                 <div class="card-footer justify-content-center">
                   <button type="submit" class="btn btn-rose btn-link btn-lg">Lets Go</button>

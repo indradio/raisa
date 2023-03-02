@@ -104,10 +104,10 @@ class Auth extends CI_Controller
 
     public function login()
     {
-        $captcha_word = $this->session->userdata('captcha_word');
+        // $captcha_word = $this->session->userdata('captcha_word');
 
-        if (strcmp(strtolower($captcha_word), strtolower($this->input->post('captcha'))) == 0)
-        {
+        // if (strcmp(strtolower($captcha_word), strtolower($this->input->post('captcha'))) == 0)
+        // {
             // return true;
 
             $npk = $this->input->post('npk');
@@ -270,15 +270,15 @@ class Auth extends CI_Controller
                 redirect('auth');
             }
 
-        }
-        else
-        {
-            $this->session->set_flashdata('message', '<div class="alert alert-rose">
-            <strong>Login Gagal</strong>
-            <span>Maaf, Captcha salah.</span>
-            </div> </br>');
-            redirect('auth');
-        }
+        // }
+        // else
+        // {
+        //     $this->session->set_flashdata('message', '<div class="alert alert-rose">
+        //     <strong>Login Gagal</strong>
+        //     <span>Maaf, Captcha salah.</span>
+        //     </div> </br>');
+        //     redirect('auth');
+        // }
     }
 
     public function logout()
