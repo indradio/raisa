@@ -168,9 +168,9 @@ class Auth extends CI_Controller
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
                     }
 
-                    if ($atasan1['inisial']=='DBY') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'YSF'])->row_array();
-                    }
+                    // if ($atasan1['inisial']=='DBY') {
+                    //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'YSF'])->row_array();
+                    // }
 
                     // if ($atasan1['inisial']=='EJU') {
                     //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
