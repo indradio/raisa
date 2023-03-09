@@ -82,7 +82,7 @@ class Presensi extends CI_Controller
         //State convert to Decimal
         ($this->input->post('state') == 'In') ? $state = '1' : $state = '0';
         
-        $id      = date('ymd') . $this->session->userdata('npk') . $state;
+        $id      = date('ymd') . $this->session->userdata('npk') . $state . $this->input->post('workstate');
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
         if (!empty($this->input->post('location')) or !empty($this->input->post('latitude')) or !empty($this->input->post('longitude'))) {
@@ -1135,15 +1135,14 @@ class Presensi extends CI_Controller
                                         $this->db->update('presensi_raw');
 
                         }else{
+                            
+                            ($row->status == 'In') ? $status = '1' : $status = '0';
+                            $id         = date('ymd', strtotime($row->date)) . $row->npk . $status;
 
-
-                        ($row->status == 'In') ? $status = '1' : $status = '0';
-                        $id         = date('ymd', strtotime($row->date)) . $row->npk . $status;
-
-                        $this->db->where('id',$id);
-                        $presensi = $this->db->get('presensi')->row();
-                        if (empty($presensi))
-                            {
+                            $this->db->where('id',$id);
+                            $presensi = $this->db->get('presensi')->row();
+                            if (empty($presensi))
+                                {
                                 // cari atasan1
                                 if ($karyawan->atasan1 == 0) {
                                     $atasan1 = $atasan1 = $this->db->get_where('karyawan', ['posisi_id' =>  '0'])->row();;
