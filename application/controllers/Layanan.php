@@ -262,7 +262,7 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*ℹ️[INFO] LIBUR HARI RAYA NYEPI DAN CUTI BERSAMA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Even (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :" .
+                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :" .
                             "\r\n \r\n*1.	Tanggal 22 Maret 2023	: Libur Hari Raya Nyepi*" .
                             "\r\n*2.	Tanggal 23 Maret 2023	: Cuti Bersama*" .
                             "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *24 Maret 2023*." .
