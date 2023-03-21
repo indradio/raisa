@@ -260,15 +260,15 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ️[INFO] HUT KE-66 ASTRA*" .
+                            'message' => "*ℹ️[INFO] LIBUR HARI RAYA NYEPI DAN CUTI BERSAMA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nYuk, ikut berikan semangatmu dalam rangka menyambut HUT ke-66 Astra dengan upload fotomu menggunakan template HUT ke-66 Astra." .
-                            "\r\n \r\nSquare (untuk IG Feed & FB):" .
-                            "\r\nhttp://bit.ly/HUT66AstraIGFB" .
-                            "\r\n \r\nVertical (untuk IG Story):" .
-                            "\r\nhttp://bit.ly/HUT66Astraigs" .
-                            "\r\n \r\nTulis ucapan terbaik & harapan untuk Astra di caption (IG Feed & FB) atau di box pada template (IG Story). Jangan lupa tambahkan sticker dengan search keyword: HUT 66 Astra yah dan tag @satu_indonesia!" .
-                            "\r\nmenangkan traktiran dari Astra senilai @Rp200.000 voucher GoFood untuk 66 pemenang beruntung" .
+                            "\r\nBerdasarkan Calender Of Even (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :" .
+                            "\r\n \r\n*1.	Tanggal 22 Maret 2023	: Libur Hari Raya Nyepi*" .
+                            "\r\n*2.	Tanggal 23 Maret 2023	: Cuti Bersama*" .
+                            "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *24 Maret 2023*." .
+                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\nHormat Kami," .
+                            "\r\nHuman Capital" .
                             "\r\n#ComebackStronger"
                         ],
                         // 'json' => [
