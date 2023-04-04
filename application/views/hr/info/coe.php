@@ -28,11 +28,11 @@
                         </ul>
                         <div class="tab-content tab-space">
                             <div class="tab-pane active" id="link1">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="<?= base_url(); ?>assets/pdf/coe_2023.pdf"></iframe>
+                            <div class="embed-responsive embed-responsive-4by3">
+                                    <iframe class="embed-responsive-item" src="https://drive.google.com/file/d/1IHyKmHNBpUEnXkII9F5MyOAZU59EdMz1/preview"></iframe>
                                 </div>
                                 </br>
-                                <a href="<?= base_url(); ?>assets/pdf/coe_2023.pdf" target="_blank">Klik Disini untuk download</a>
+                                <a href="https://drive.google.com/file/d/1IHyKmHNBpUEnXkII9F5MyOAZU59EdMz1/view?usp=sharing" target="_blank">Klik Disini untuk download</a>
                             </div>
                             <!-- <div class="tab-pane" id="link2">
                                 <div class="embed-responsive embed-responsive-4by3">
