@@ -114,7 +114,7 @@
           <!--  end card  -->
       </div>  
 
-      <div class="col-md-10 ml-auto mr-auto d-sm-block">
+      <div class="col-md-10 ml-auto mr-auto d-none d-sm-block">
           <div class="card">
             <div class="card-body">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
