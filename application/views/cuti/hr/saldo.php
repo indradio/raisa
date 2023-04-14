@@ -81,8 +81,19 @@
                     $status = $this->db->get_where('cuti_status', ['id' => $row['status']])->row_array();
                     $user = $this->db->get_where('karyawan', ['npk' => $row['npk']])->row_array(); ?>
                     <tr>
-                      <td class="text-center"><?= $row['status'].'</br><small> ('.$row['id'].')</small>'; ?></td>
-                      <td><?= $row['kategori']; ?></td>
+                      <td class="text-center">
+                      <?php if ($row['status']=='AKTIF'): ?>
+                            <a href="#" class="btn btn-link btn-success btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#disableSaldo" data-id="<?= $row['id']; ?>"><i class="material-icons">toggle_on</i></a>
+                          <?php elseif ($row['status']=='HOLD'): ?>
+                            <a href="#" class="btn btn-link btn-info btn-just-icon" role="button" aria-disabled="false" data-toggle="modal" data-target="#enableSaldo" data-id="<?= $row['id']; ?>"><i class="material-icons">toggle_off</i></a>
+                          <?php elseif ($row['status']=='EXPIRED'): ?>
+                            <a href="#" class="btn btn-link btn-disabled btn-just-icon" role="button" aria-disabled="false"><i class="material-icons">event_busy</i></a>
+                          <?php elseif ($row['status']=='WAITING'): ?>
+                            <a href="#" class="btn btn-link btn-warning btn-just-icon" role="button" aria-disabled="false"><i class="material-icons">lock_clock</i></a>
+                          <?php endif; ?>
+                          <?= '</br>'.$row['status']; ?>
+                        </td>
+                      <td><?= $row['kategori'].'</br><small> #'.$row['id'].'</small>'; ?></td>
                       <td><?= $user['nama']; ?></td>
                       <td><?= $row['saldo_awal'].'<small> ('.$row['saldo_digunakan'].')</small>'; ?></td>
                       <td><?= $row['saldo']; ?></td>
@@ -343,6 +354,54 @@
   </div>
 </div>
 
+<div class="modal fade" id="disableSaldo" tabindex="-1" role="dialog" aria-labelledby="disableSaldoTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-info text-center">
+              <h4 class="card-title"></h4>
+          </div>
+        </div>
+      <form class="form" id="formdisableSaldo" method="post" action="<?= base_url('cuti/hr_saldo/disable'); ?>">
+          <div class="modal-body">
+              <input type="hidden" class="form-control" id="id" name="id">
+              <h4 class="card-title text-center">Yakin ingin menahan saldo cuti ini?</h4>
+          </div>
+          <div class="modal-footer justify-content-right">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">KEMBALI</button>
+              <button type="submit" class="btn btn-info">YA, HOLD!</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="enableSaldo" tabindex="-1" role="dialog" aria-labelledby="enableSaldoTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-success text-center">
+              <h4 class="card-title"></h4>
+          </div>
+        </div>
+      <form class="form" id="formenableSaldo" method="post" action="<?= base_url('cuti/hr_saldo/enable'); ?>">
+          <div class="modal-body">
+              <input type="hidden" class="form-control" id="id" name="id">
+              <h4 class="card-title text-center">Yakin ingin mengaktifkan saldo cuti ini kembali?</h4>
+          </div>
+          <div class="modal-footer justify-content-right">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">KEMBALI</button>
+              <button type="submit" class="btn btn-success">YA, AKTIFKAN!</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
   $(document).ready(function() {
     setFormValidation('#formAddCuti');
@@ -407,6 +466,20 @@
         modal.find('.modal-body input[name="id"]').val(id)
         modal.find('.modal-body input[name="saldo"]').val(saldo)
         modal.find('.modal-body input[name="digunakan"]').val(digunakan)
+    });
+
+    $('#enableSaldo').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var modal = $(this)
+        modal.find('.modal-body input[name="id"]').val(id)
+    });
+
+    $('#disableSaldo').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var modal = $(this)
+        modal.find('.modal-body input[name="id"]').val(id)
     });
 });
 </script>

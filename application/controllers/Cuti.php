@@ -758,6 +758,16 @@ class Cuti extends CI_Controller
                 $this->db->where('id',$this->input->post('id'));
                 $this->db->delete('cuti_saldo');
 
+            }elseif ($params=='enable') {
+
+                $this->db->set('status','AKTIF');
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('cuti_saldo');
+            }elseif ($params=='disable') {
+
+                $this->db->set('status','HOLD');
+                $this->db->where('id', $this->input->post('id'));
+                $this->db->update('cuti_saldo');
             }
             redirect('cuti/hr_saldo');
         }
@@ -787,6 +797,7 @@ class Cuti extends CI_Controller
         $this->db->where('valid <=', $today);
         $this->db->where('expired >=', $today);
         $this->db->where('status !=', 'AKTIF');
+        $this->db->where('status !=', 'HOLD');
         $activated = $this->db->get_where('cuti_saldo')->result();
             foreach ($activated as $row) :
                 $this->db->set('status', 'AKTIF');
@@ -1004,6 +1015,7 @@ class Cuti extends CI_Controller
         $this->db->where('valid <=', $today);
         $this->db->where('expired >=', $today);
         $this->db->where('status !=', 'AKTIF');
+        $this->db->where('status !=', 'HOLD');
         $activated = $this->db->get_where('cuti_saldo')->result();
             foreach ($activated as $row) :
                 $this->db->set('status', 'AKTIF');
@@ -1101,6 +1113,7 @@ class Cuti extends CI_Controller
         $this->db->where('valid <=', $today);
         $this->db->where('expired >=', $today);
         $this->db->where('status !=', 'AKTIF');
+        $this->db->where('status !=', 'HOLD');
         $activated = $this->db->get_where('cuti_saldo')->result();
             foreach ($activated as $row) :
                 $this->db->set('status', 'AKTIF');
