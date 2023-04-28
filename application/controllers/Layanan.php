@@ -260,15 +260,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ️[INFO] LIBUR HARI RAYA NYEPI DAN CUTI BERSAMA*" .
+                            'message' => "*ℹ️[INFO] SOLAT JUMAT DILUAR WINTEQ*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :" .
-                            "\r\n \r\n*1.	Tanggal 22 Maret 2023	: Libur Hari Raya Nyepi*" .
-                            "\r\n*2.	Tanggal 23 Maret 2023	: Cuti Bersama*" .
-                            "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *24 Maret 2023*." .
+                            "\r\nBerhubung sebagian besar karyawan masih dalam masa cuti lebaran, maka salat Jumat di Winteq pada hari ini ditiadakan. Bagi yang ingin menunaikan salat Jumat dapat dilaksanakan di mesjid di luar Winteq, seperti di mesjid BS ataupun yang lainnya." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
-                            "\r\nHuman Capital" .
+                            "\r\nDKM Winteq" .
                             "\r\n#ComebackStronger"
                         ],
                         // 'json' => [
