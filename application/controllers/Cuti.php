@@ -127,6 +127,14 @@ class Cuti extends CI_Controller
             redirect('/cuti');
         }
 
+        $saldo = $this->db->get_where('cuti_saldo', ['id' => $this->input->post('kategori')])->row_array();
+        if($saldo){
+            if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) > $saldo['expired']){
+                $this->session->set_flashdata('notify', 'late');
+                redirect('/cuti');
+            }
+        }
+
         // $day = date('D', strtotime($this->input->post('tgl1')));
         // if($day=='Sun' || $day =='Sat') {
         //     $this->session->set_flashdata('notify', 'weekend');
