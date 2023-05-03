@@ -414,6 +414,20 @@
         }
       });
 
+     <?php }elseif ($this->session->flashdata('notify')=='saldolate'){ ?>
+      
+      $.notify({
+        icon: "add_alert",
+        message: "<b>Maaf!</b> Masa berlaku saldo kamu sudah lewat."
+      }, {
+        type: "danger",
+        timer: 3000,
+        placement: {
+          from: "top",
+          align: "center"
+        }
+      });
+
      <?php }elseif ($this->session->flashdata('notify')=='exist'){ ?>
       
       $.notify({

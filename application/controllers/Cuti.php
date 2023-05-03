@@ -130,7 +130,7 @@ class Cuti extends CI_Controller
         $saldo = $this->db->get_where('cuti_saldo', ['id' => $this->input->post('kategori')])->row_array();
         if($saldo){
             if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) > $saldo['expired']){
-                $this->session->set_flashdata('notify', 'late');
+                $this->session->set_flashdata('notify', 'saldolate');
                 redirect('/cuti');
             }
         }
