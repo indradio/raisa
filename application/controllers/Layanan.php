@@ -260,12 +260,13 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ️[INFO] SOLAT JUMAT DILUAR WINTEQ*" .
+                            'message' => "*ℹ️[PENTING] UPDATE DATA PENDIDIKAN ANAK*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerhubung sebagian besar karyawan masih dalam masa cuti lebaran, maka salat Jumat di Winteq pada hari ini ditiadakan. Bagi yang ingin menunaikan salat Jumat dapat dilaksanakan di mesjid di luar Winteq, seperti di mesjid BS ataupun yang lainnya." .
+                            "\r\nSehubungan dengan adanya kebutuhan data pendidikan anak karyawan, maka mohon bantuannya untuk dapat mengisi form terlampir." .
+                            "\r\n \r\nhttps://docs.google.com/forms/d/e/1FAIpQLScRLamZlMIhOyR4RyzIFEV5Dg9JmvB_cnMHwlRLaT14F5wmnA/viewform" .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
-                            "\r\nDKM Winteq" .
+                            "\r\nHR" .
                             "\r\n#ComebackStronger"
                         ],
                         // 'json' => [
