@@ -9,35 +9,39 @@ class Auth extends CI_Controller
     {
         $this->clear_temp();
         // Halaman Login
-        $this->load->helper('captcha');
 
-        $vals = array(
-            'word'          => substr(str_shuffle('0123456789'), 0, 4),
-            'img_path'      => './assets/img/captcha/',
-            'img_url'       => base_url('assets/img/captcha/'),
-            // 'font_path'     => './path/to/fonts/texb.ttf',
-            'img_width'     => 250,
-            'img_height'    => 40,
-            'expiration'    => 7200,
-            'word_length'   => 4,
-            'font_size'     => 64,
-            'img_id'        => 'Imageid',
-            'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        //start captcha
+        // $this->load->helper('captcha');
+
+        // $vals = array(
+        //     'word'          => substr(str_shuffle('0123456789'), 0, 4),
+        //     'img_path'      => './assets/img/captcha/',
+        //     'img_url'       => base_url('assets/img/captcha/'),
+        //     // 'font_path'     => './path/to/fonts/texb.ttf',
+        //     'img_width'     => 250,
+        //     'img_height'    => 40,
+        //     'expiration'    => 7200,
+        //     'word_length'   => 4,
+        //     'font_size'     => 64,
+        //     'img_id'        => 'Imageid',
+        //     'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
     
-            // White background and border, black text and red grid
-            'colors'        => array(
-                    'background'    => array(255, 255, 255),
-                    'border'        => array(255, 255, 255),
-                    'text'          => array(0, 0, 0),
-                    'grid'          => array(255, 40, 40)
-                    )
-        );
+        //     // White background and border, black text and red grid
+        //     'colors'        => array(
+        //             'background'    => array(255, 255, 255),
+        //             'border'        => array(255, 255, 255),
+        //             'text'          => array(0, 0, 0),
+        //             'grid'          => array(255, 40, 40)
+        //             )
+        // );
         
-        $cap = create_captcha($vals);
+        // $cap = create_captcha($vals);
      
-        $data['captcha'] = $cap['image'];
-        $this->session->set_userdata('captcha_word', $cap['word']);
-        $this->load->view('auth/index', $data);
+        // $data['captcha'] = $cap['image'];
+        // $this->session->set_userdata('captcha_word', $cap['word']);
+        //end captcha
+
+        $this->load->view('auth/index');
     }
 
     public function clear_temp()
@@ -158,6 +162,10 @@ class Auth extends CI_Controller
                     
                     if ($karyawan['sect_id'] == '143' and $karyawan['posisi_id'] == '7') {
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FKU'])->row_array();
+                    }
+
+                    if ($karyawan['sect_id'] == '121' and $karyawan['posisi_id'] == '7') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'BBG'])->row_array();
                     }
 
                     if ($karyawan['dept_id'] == '11' and $karyawan['atasan1'] == '3') {
