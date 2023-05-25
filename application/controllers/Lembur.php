@@ -2277,7 +2277,7 @@ class Lembur extends CI_Controller
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $id])->result_array();
             $data['kategori'] = $this->db->get_where('jamkerja_kategori')->result_array();
             $data['aktivitas_status'] = $this->db->get('aktivitas_status')->result_array();
-            $data['listproject'] = $this->project_model->fetch_project();
+            // $data['listproject'] = $this->project_model->fetch_project();
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
