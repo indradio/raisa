@@ -260,10 +260,12 @@ class Layanan extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ️[PENTING] UPDATE DATA PENDIDIKAN ANAK*" .
+                            'message' => "*ℹ INFO LIBUR NASIONAL & CUTI BERSAMA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSehubungan dengan adanya kebutuhan data pendidikan anak karyawan, maka mohon bantuannya untuk dapat mengisi form terlampir." .
-                            "\r\n \r\nhttps://docs.google.com/forms/d/e/1FAIpQLScRLamZlMIhOyR4RyzIFEV5Dg9JmvB_cnMHwlRLaT14F5wmnA/viewform" .
+                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :." .
+                            "\r\n \r\n*1.	Tanggal 01 Juni 2023	: Libur Hari Lahir Pancasila*" .
+                            "\r\n \r\n*2.	Tanggal 02 Juni 2023	: Cuti Bersama*" .
+                            "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *05 Juni 2023*." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
                             "\r\nHR" .
