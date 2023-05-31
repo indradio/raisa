@@ -532,7 +532,7 @@ class Perjalanandl extends CI_Controller
             } elseif ($perjalanan['jenis_perjalanan'] == 'TAPP') {
                 $this->load->view('perjalanandl/sjtapp', $data);
             } elseif ($perjalanan['jenis_perjalanan'] == 'TA') {
-                $this->load->view('perjalanandl/sjta', $data);
+                $this->load->view('perjalanandl/sjdlpp', $data);
                 // $this->load->view('perjalanandl/sjta', $data);
             }
         }else{
