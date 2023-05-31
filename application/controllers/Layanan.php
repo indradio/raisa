@@ -264,7 +264,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :." .
                             "\r\n \r\n*1.	Tanggal 01 Juni 2023	: Libur Hari Lahir Pancasila*" .
-                            "\r\n \r\n*2.	Tanggal 02 Juni 2023	: Cuti Bersama*" .
+                            "\r\n*2.	Tanggal 02 Juni 2023	: Cuti Bersama*" .
                             "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *05 Juni 2023*." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
