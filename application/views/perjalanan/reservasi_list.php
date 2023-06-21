@@ -160,6 +160,36 @@
                                         </td>
                                             </tr>
                                         <?php endforeach; ?>
+                                    <?php
+                                    foreach ($cancelled_ta as $row) : ?>
+                                        <?php if ($row['tglberangkat'] < date('Y-m-d')) {
+                                            echo '<tr class="text-dark bg-danger">';
+                                            } else {
+                                            echo '<tr>';
+                                            } ?>
+                                            <td><?= $row['id']; ?></td>
+                                            <td><?= $row['jenis_perjalanan']; ?></td>
+                                            <td><?= $row['nopol']; ?>
+                                                <?php if ($row['kendaraan'] == 'Taksi') { ?>
+                                                    <br /><span class="badge badge-success"><?= $row['kendaraan']; ?></span></td>
+                                                <?php } elseif ($row['kendaraan'] == 'Sewa') { ?>
+                                                    <br /><span class="badge badge-warning"><?= $row['kendaraan']; ?></span></td>
+                                                <?php } elseif ($row['kendaraan'] == 'Pribadi') { ?>
+                                                    <br /><span class="badge badge-danger"><?= $row['kendaraan']; ?></span></td>
+                                                <?php } else { ?>
+                                                    <br /><span class="badge badge-info"><?= $row['kendaraan']; ?></span></td>
+                                                <?php }; ?>
+                                        <td><?= $row['nama']; ?></td>
+                                        <td><?= $row['anggota']; ?></td>
+                                        <td><?= $row['tujuan']; ?></td>
+                                        <td><?= $row['keperluan']; ?></td>
+                                        <td><?= date('d M Y', strtotime($row['tglberangkat'])) . '</br>' . date('H:i', strtotime($row['jamberangkat'])); ?></td>
+                                        <td><?= date('d M Y', strtotime($row['tglkembali'])) . '</br>' . date('H:i', strtotime($row['jamkembali'])); ?></td>
+                                        <td class="text-right">
+                                            <a href="<?= base_url('perjalanan/reservasi/aktivated/') . $row['id']; ?>" class="btn btn-sm btn-block btn-round btn-success">Aktifkan</a>
+                                        </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
