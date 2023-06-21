@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">emoji_transportation</i>
                         </div>
-                        <h4 class="card-title">Data Reservasi</h4>
+                        <h4 class="card-title">Reservasi hari ini</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -66,8 +66,8 @@
                                             <td><?= date('d M Y', strtotime($rsv['tglberangkat'])) . '</br>' . date('H:i', strtotime($rsv['jamberangkat'])); ?></td>
                                             <td><?= date('d M Y', strtotime($rsv['tglkembali'])) . '</br>' . date('H:i', strtotime($rsv['jamkembali'])); ?></td>
                                             <td class="text-right">
-                                                <a href="<?= base_url('perjalanan/reservasi/id/') . $rsv['id']; ?>" class="btn btn-sm btn-block btn-round btn-success">Proses</a>
-                                                <a href="" class="btn btn-sm btn-block btn-round btn-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
+                                                <a href="<?= base_url('perjalanan/reservasi/id/') . $rsv['id']; ?>" class="btn btn-sm btn-block btn-success">Proses</a>
+                                                <a href="" class="badge badge-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Cancel</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -88,7 +88,7 @@
                         <div class="card-icon">
                             <i class="material-icons">emoji_transportation</i>
                         </div>
-                        <h4 class="card-title">Aktifkan Reservasi</h4>
+                        <h4 class="card-title">Aktifkan reservasi</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -151,7 +151,7 @@
                                         <td><?= date('d M Y', strtotime($row['tglberangkat'])) . '</br>' . date('H:i', strtotime($row['jamberangkat'])); ?></td>
                                         <td><?= date('d M Y', strtotime($row['tglkembali'])) . '</br>' . date('H:i', strtotime($row['jamkembali'])); ?></td>
                                         <td class="text-right">
-                                            <a href="<?= base_url('perjalanan/reservasi/aktivated/') . $row['id']; ?>" class="btn btn-sm btn-block btn-round btn-success">Aktifkan</a>
+                                            <a href="<?= base_url('perjalanan/reservasi/aktivated/') . $row['id']; ?>" class="btn btn-sm btn-block btn-success">Aktifkan</a>
                                         </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -181,7 +181,7 @@
                                         <td><?= date('d M Y', strtotime($row['tglberangkat'])) . '</br>' . date('H:i', strtotime($row['jamberangkat'])); ?></td>
                                         <td><?= date('d M Y', strtotime($row['tglkembali'])) . '</br>' . date('H:i', strtotime($row['jamkembali'])); ?></td>
                                         <td class="text-right">
-                                            <a href="<?= base_url('perjalanan/reservasi/aktivated/') . $row['id']; ?>" class="btn btn-sm btn-block btn-round btn-success">Aktifkan</a>
+                                            <a href="<?= base_url('perjalanan/reservasi/aktivated/') . $row['id']; ?>" class="btn btn-sm btn-block btn-success">Aktifkan</a>
                                         </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -202,7 +202,7 @@
                         <div class="card-icon">
                             <i class="material-icons">emoji_transportation</i>
                         </div>
-                        <h4 class="card-title">Reservasi Hari Berikutnya</h4>
+                        <h4 class="card-title">Reservasi hari berikutnya</h4>
                     </div>
                     <div class="card-body">
                         <div class="toolbar">
@@ -264,8 +264,8 @@
                                         <td><?= date('d M Y', strtotime($rsv['tglberangkat'])) . '</br>' . date('H:i', strtotime($rsv['jamberangkat'])); ?></td>
                                         <td><?= date('d M Y', strtotime($rsv['tglkembali'])) . '</br>' . date('H:i', strtotime($rsv['jamkembali'])); ?></td>
                                         <td class="text-right">
-                                            <a href="<?= base_url('perjalanan/reservasi/id/') . $rsv['id']; ?>" class="btn btn-sm btn-block btn-round btn-success">Proses</a>
-                                            <a href="" class="btn btn-sm btn-block btn-round btn-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Batalkan</a>
+                                            <a href="<?= base_url('perjalanan/reservasi/id/') . $rsv['id']; ?>" class="btn btn-sm btn-block btn-success">Proses</a>
+                                            <a href="" class="btn btn-sm btn-block btn-danger" data-toggle="modal" data-target="#batalRsv" data-id="<?= $rsv['id']; ?>">Cancel</a>
                                         </td>
                                             </tr>
                                         <?php endforeach; ?>
