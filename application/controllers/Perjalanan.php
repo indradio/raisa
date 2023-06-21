@@ -477,12 +477,63 @@ class Perjalanan extends CI_Controller
                         $body = $response->getBody();
                     }
             endforeach;
+
+            $queryReservasi = "SELECT *
+            FROM `reservasi`
+            WHERE `tglberangkat` < CURRENT_DATE() 
+            AND (`status` >= '1' AND `status` <= '6')
+            ";
+            $reservasi = $this->db->query($queryReservasi)->result_array();
+            foreach ($reservasi as $r) :
+
+                    $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array();
+                    if (!empty($r)) {
+
+                        $this->db->set('status', '0');
+                        $this->db->set('catatan', "Reservasi perjalanan dibatalkan. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
+                        $this->db->where('id', $r['id']);
+                        $this->db->update('reservasi');
+
+                        // $this->db->where('npk', $r['npk']);
+                        // $karyawan = $this->db->get('karyawan')->row_array();
+                        // $client = new \GuzzleHttp\Client();
+                        // $response = $client->post(
+                        //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                        //     [
+                        //         'headers' => [
+                        //             'Content-Type' => 'application/json',
+                        //             'Accept' => 'application/json',
+                        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        //         ],
+                        //         'json' => [
+                        //             'phone' => $karyawan['phone'],
+                        //             'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
+                        //             "\r\nNama : *" . $r['nama'] . "*" .
+                        //             "\r\nTujuan : *" . $r['tujuan'] . "*" .
+                        //             "\r\nKeperluan : *" . $r['keperluan'] . "*" .
+                        //             "\r\nPeserta : *" . $r['anggota'] . "*" .
+                        //             "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
+                        //             "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
+                        //             "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
+                        //             "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
+                        //             "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
+                        //             "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        //         ],
+                        //     ]
+                        // );
+                        // $body = $response->getBody();
+                    }
+            endforeach;
             
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Konfirmasi Perjalanan Dinas';
         $data['karyawan'] = $this->Karyawan_model->getById();
 
         if (empty($params) and empty($id)){
+                                 $this->db->where('tglberangkat', date('Y-m-d'));
+            $data['reservasi_today'] = $this->db->get_where('reservasi', ['status' => '6'])->result_array();
+
+                                 $this->db->where('tglberangkat >', date('Y-m-d'));
             $data['reservasi'] = $this->db->get_where('reservasi', ['status' => '6'])->result_array();
 
                                  $this->db->where('tglberangkat', date('Y-m-d'));
@@ -494,7 +545,7 @@ class Perjalanan extends CI_Controller
                                  $this->db->where('tgl_fin !=', NULL);
                                  $this->db->where('jenis_perjalanan', 'TAPP');
             $data['cancelled_ta'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
-            
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
