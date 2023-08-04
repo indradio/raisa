@@ -482,7 +482,7 @@ class Asset extends CI_Controller
                 foreach ($asset as $row) {
 
                     $output['data'][] = array(
-                        "no" => $row->asset_no,
+                        "no" => $row->asset_no.'-'.$row->asset_sub_no,
                         "description" => $row->asset_description,
                         "category" => $row->category,
                         "room" => $row->room,
