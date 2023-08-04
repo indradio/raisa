@@ -77,7 +77,7 @@ class Asset extends CI_Controller
         if ($id == $this->session->userdata('npk'))
         {
             $data['sidemenu'] = 'Asset';
-            $data['sidesubmenu'] = 'AssetKu';
+            $data['sidesubmenu'] = 'Asset';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
                     
             $this->load->view('templates/header', $data);
