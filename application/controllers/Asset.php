@@ -72,6 +72,24 @@ class Asset extends CI_Controller
 
     }
 
+    public function id($id)
+    {
+        if ($id == $this->session->userdata('npk'))
+        {
+            $data['sidemenu'] = 'Asset';
+            $data['sidesubmenu'] = 'AssetKu';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+                    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/index-id', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('asset/id/'.$this->session->userdata('npk'));
+        }
+    }
+
     public function fa($params)
     {
 
@@ -296,23 +314,23 @@ class Asset extends CI_Controller
         }
     }
 
-    public function id($id)
-    {
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
-        if ($data['asset']['status']=='9'){
-            $data['sidemenu'] = 'FA';
-            $data['sidesubmenu'] = 'Asset';
-            $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/navbar', $data);
-            $this->load->view('asset/opnamed', $data);
-            $this->load->view('templates/footer');
-        }else{    
-            redirect('f221/asset');
-        }
-    }
+    // public function id($id)
+    // {
+    //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+    //     $data['asset'] = $this->db->get_where('asset', ['id' => $id])->row_array();
+    //     if ($data['asset']['status']=='9'){
+    //         $data['sidemenu'] = 'FA';
+    //         $data['sidesubmenu'] = 'Asset';
+    //         $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $id])->row_array();
+    //         $this->load->view('templates/header', $data);
+    //         $this->load->view('templates/sidebar', $data);
+    //         $this->load->view('templates/navbar', $data);
+    //         $this->load->view('asset/opnamed', $data);
+    //         $this->load->view('templates/footer');
+    //     }else{    
+    //         redirect('f221/asset');
+    //     }
+    // }
 
     public function laporan()
     {
@@ -451,6 +469,32 @@ class Asset extends CI_Controller
                 $output['data'][] = array(
                     "no" => '',
                     "deskripsi" => 'There are no data to display.',
+                    "action" => ''
+                );
+            }
+ 
+            echo json_encode($output);
+            exit();
+
+        }elseif ($params=='id'){
+            $asset = $this->db->get_where('asset', ['npk' => $this->session->userdata('npk')])->result();
+            if (!empty($asset)){
+                foreach ($asset as $row) {
+
+                    $output['data'][] = array(
+                        "no" => $row->asset_no,
+                        "description" => $row->asset_description,
+                        "category" => $row->category,
+                        "room" => $row->room,
+                        "action" => "<button type='button' class='btn btn-success btn-link btn-just-icon disabled' data-toggle='modal' data-target='#opname' data-id='".$row->id."' data-asset_no='".$row->asset_no."'><i class='material-icons'>add_a_photo</i></button>"
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "no" => '',
+                    "description" => 'There are no data to display.',
+                    "category" => '',
+                    "room" => '',
                     "action" => ''
                 );
             }
