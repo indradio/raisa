@@ -1,6 +1,7 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
+      
     <!-- 1. Notification -->
       <!-- <div class="row">
         <div class="col-md-12">
@@ -89,7 +90,7 @@
                       </div>
                       <div class="col-4 text-center">
                           <a href="<?= base_url('imp'); ?>" class="btn btn-lg btn-just-icon btn-info">
-                              <i class="fas fa-running"></i>
+                              <i class="fa fa-plane"></i>
                           </a>
                           </br>
                           <a class="card-title"><small>IMP</small></a>
