@@ -65,7 +65,7 @@
       <?php endforeach; ?>
       <div class="col-md-0 ml-auto mr-auto d-block d-sm-none">
           <div class="card">
-              <!-- <div class="card-body"> -->
+              <div class="card-body">
                   <div class="row">
                     <div class="col-3 text-center">
                         <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon btn-success">
@@ -95,14 +95,14 @@
                           </br>
                           <a class="card-title"><small>IMP</small></a> 
                       </div>
-                      <div class="col-3 text-center">
+                      <div class="col-3 mr-auto text-center">
                           <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-calendar-times-o"></i>
                           </a>
                           </br>
                           <a class="card-title"><small>CUTI</small></a> 
                       </div>
-                  <!-- </div> -->
+                  </div>
               </div>
           </div>
           <!--  end card  -->
