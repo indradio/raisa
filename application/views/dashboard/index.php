@@ -72,35 +72,35 @@
                             <i class="fa fa-street-view"></i>
                         </a>
                         </br>
-                        <a class="card-title"><small>Kehadiran</small></a>
+                        <!-- <a class="card-title"><small>Kehadiran</small></a> -->
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-clock-o"></i>
                           </a>
                           </br>
-                          <a class="card-title"><small>Lembur</small></a>
+                          <!-- <a class="card-title"><small>Lembur</small></a> -->
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-car"></i>
                           </a>
                           </br>
-                          <a class="card-title"><small>Perjalanan</small></a>
+                          <!-- <a class="card-title"><small>Perjalanan</small></a> -->
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('imp'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-plane"></i>
                           </a>
                           </br>
-                          <a class="card-title"><small>IMP</small></a>
+                          <!-- <a class="card-title"><small>IMP</small></a> -->
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-calendar-times-o"></i>
                           </a>
                           </br>
-                          <a class="card-title"><small>Cuti</small></a>
+                          <!-- <a class="card-title"><small>Cuti</small></a> -->
                       </div>
                   </div>
               </div>
