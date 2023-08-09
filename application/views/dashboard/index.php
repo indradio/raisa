@@ -63,46 +63,46 @@
             </div>
           </div>
       <?php endforeach; ?>
-      <div class="col-md-12 d-block d-sm-none">
+      <div class="col-md-12 ml-auto mr-auto d-block d-sm-none">
           <div class="card">
-              <div class="card-body">
+              <!-- <div class="card-body"> -->
                   <div class="row">
                     <div class="col-3 text-center">
                         <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon btn-success">
                             <i class="fa fa-street-view"></i>
                         </a>
                         </br>
-                        <!-- <a class="card-title"><small>Kehadiran</small></a> -->
+                        <a class="card-title"><small>ABSEN</small></a> 
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-clock-o"></i>
                           </a>
                           </br>
-                          <!-- <a class="card-title"><small>Lembur</small></a> -->
+                          <a class="card-title"><small>OT</small></a> 
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-car"></i>
                           </a>
                           </br>
-                          <!-- <a class="card-title"><small>Perjalanan</small></a> -->
+                          <a class="card-title"><small>DL</small></a> 
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('imp'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-plane"></i>
                           </a>
                           </br>
-                          <!-- <a class="card-title"><small>IMP</small></a> -->
+                          <a class="card-title"><small>IMP</small></a> 
                       </div>
                       <div class="col-3 text-center">
                           <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon btn-facebook">
                               <i class="fa fa-calendar-times-o"></i>
                           </a>
                           </br>
-                          <!-- <a class="card-title"><small>Cuti</small></a> -->
+                          <a class="card-title"><small>CUTI</small></a> 
                       </div>
-                  </div>
+                  <!-- </div> -->
               </div>
           </div>
           <!--  end card  -->
