@@ -40,7 +40,7 @@
     <!-- Icon for Mobile -->
     <div class="row">
       <?php foreach ($informasi as $row) : ?>
-          <div class="col-md-<?= $lay; ?> d-block d-sm-none">
+          <div class="col-md-0 mt-4 d-block d-sm-none">
             <div class="card card-product">
               <div class="card-header card-header-image" data-header-animation="true">
                 <a href="#pablo">
@@ -63,7 +63,7 @@
             </div>
           </div>
       <?php endforeach; ?>
-      <div class="col-md-12 ml-auto mr-auto d-block d-sm-none">
+      <div class="col-md-0 ml-auto mr-auto d-block d-sm-none">
           <div class="card">
               <!-- <div class="card-body"> -->
                   <div class="row">
