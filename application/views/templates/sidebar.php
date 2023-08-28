@@ -1,6 +1,6 @@
 <body class="">
   <div class="wrapper">
-    <div class="sidebar" data-color="danger" data-background-color="white" data-image="<?= base_url(); ?>assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="white" data-background-color="black" data-image="<?= base_url(); ?>assets/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -105,8 +105,8 @@
                         <?php if ($m['menu'] == 'x') {
                           echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                         } ?>
-                        <?php if ($m['menu'] == 'x') {
-                          echo '<span class="badge badge-success badge-sm">BARU</span>';
+                        <?php if ($m['menu'] == 'Warehouse') {
+                          echo '<span class="badge badge-success badge-sm">SEGERA</span>';
                         } ?>
                         <b class="caret"></b>
                       </p>
@@ -121,8 +121,8 @@
                               <?php if ($m['menu'] == 'x') {
                                 echo '<span class="badge badge-info badge-sm">COE 2023</span>';
                               } ?>
-                               <?php if ($m['menu'] == 'x') {
-                                echo '<span class="badge badge-success badge-sm">BARU</span>';
+                               <?php if ($m['menu'] == 'Warehouse') {
+                                echo '<span class="badge badge-success badge-sm">SEGERA</span>';
                               } ?>
                               <b class="caret"></b>
                             </p>
