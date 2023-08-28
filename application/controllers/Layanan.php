@@ -263,7 +263,7 @@ class Layanan extends CI_Controller
                             'message' => "*AOP CORE VALUE*" .
                             "\r\n \r\n*KERJASAMA*" .
                             "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
-                            "\r\n#AkuPrima #" . $row['inisial']
+                            "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
