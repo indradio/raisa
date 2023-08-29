@@ -258,26 +258,28 @@ class Layanan extends CI_Controller
                             'Accept' => 'application/json',
                             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
                         ],
-                        'json' => [
-                            'phone' => $row['phone'],
-                            'message' => "*AOP CORE VALUE*" .
-                            "\r\n \r\n*KERJASAMA*" .
-                            "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
-                            "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
-                        ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
-                        //     'message' => "*⚠️[BE AWARE!] DILARANG MENGINSTALL APLIKASI BAJAKAN/TIDAK BERLISENSI DI ASSET PERUSAHAAN*" .
-                        //     "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                        //     "\r\nSejalan dengan Kebijakan Astra Otoparts terkait penggunaan aplikasi atau software legal," .
-                        //     "\r\nMohon untuk tidak menginstall software atau aplikasi di laptop/PC Winteq secara illegal, ." .
-                        //     "\r\nApabila ditemukan software yang tidak memiliki lisensi maka *resikonya ditanggung oleh user yang bersangkutan*." .
-                        //     "\r\nJika ada pertanyaan bisa menghubungi Ridwan - IT." .
-                        //     "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
-                        //     "\r\nHormat Kami," .
-                        //     "\r\nIT" .
-                        //     "\r\n#ComebackStronger"
+                        //     'message' => "*AOP CORE VALUE*" .
+                        //     "\r\n \r\n*KERJASAMA*" .
+                        //     "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
+                        //     "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
                         // ],
+                        'json' => [
+                            'phone' => $row['phone'],
+                            'message' => "*SUDAHKAH MELAKUKAN PEMADANAN NIK-NPWP?*" .
+                            "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                            "\r\nSehubungan dengan diberlakukannya NIK sebagai NPWP, maka dihimbau kepada seluruh karyawan PT Astra Otoparts Tbk Divisi Winteq untuk segera melakukan validasi NIK sebagai NPWP pada situs : https://djponline.pajak.go.id/" .
+                            "\r\nSetelah melakukan validasi mohon untuk segera menginformasikan NIK nya kepada HR dengan format sebagai berikut beserta capture hasil validasi :" .
+                            "\r\n \r\nNama Lengkap :" .
+                            "\r\nNIK :" .
+                            "\r\nNPWP :" .
+                            "\r\nJika ada pertanyaan bisa menghubungi Ibu Lia - HR." .
+                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\nHormat Kami," .
+                            "\r\nHR" .
+                            "\r\n#AkuPrima"
+                        ],
                     ]
                 );
                 $body = $response->getBody();
