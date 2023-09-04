@@ -267,13 +267,11 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*KENAPA HARUS UJI EMISI?*" .
+                            'message' => "*INFO UJI EMISI?*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nKendaraan bermotor yang lulus uji emisi dapat memberikan dampak yang baik bagi lingkungan dan bagi durabilitas kendaraan itu sendiri loh." .
-                            "\r\nUji emisi juga membantu kamu berkontribusi dalam mengurangi pencemaran udara dari sisa gas buang kendaraan bermotor." .
-                            "\r\n \r\nBagi rekan-rekan yang memiliki kendaraan roda 4 dapat mengikuti UJI EMISI KOLEKTIF yang akan dilaksanakan pada :" .
+                            "\r\nBagi rekan-rekan yang memiliki kendaraan roda 4 dapat mengikuti UJI EMISI KOLEKTIF yang akan dilaksanakan pada :" .
                             "\r\nHari/Tanggal : Selasa/05 Sept 2023" .
-                            "\r\nLokasi : Area Parkir Winteq" .
+                            "\r\nLokasi : Area Parkir Winteq & IKP" .
                             "\r\nBiaya : Rp 163.170" .
                             "\r\nJika ada pertanyaan bisa menghubungi Pak Agus - GA." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
