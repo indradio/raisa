@@ -335,8 +335,7 @@
           from: "top",
           align: "center"
         }
-      });
-sssssssssw
+      }); 
      <?php }elseif ($this->session->flashdata('notify')=='over'){ ?>
       
       $.notify({

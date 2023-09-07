@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-tabs card-header-rose">
+                    <!-- <div class="card-header card-header-tabs card-header-rose">
                     <div class="nav-tabs-navigation">
                         <div class="nav-tabs-wrapper">
                         <span class="nav-tabs-title">Asset:</span>
@@ -17,7 +17,7 @@
                         </ul>
                         </div>
                     </div>
-                    </div>
+                    </div> -->
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="tab-pane active" id="profile">
@@ -25,17 +25,13 @@
                                     <thead>
                                         <tr>
                                             <th>No. Asset</th>
-                                            <th>PIC</th>
                                             <th>Deskripsi</th>
-                                            <th class="disabled-sorting th-description text-right">Actions</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No Asset</th>
-                                            <th>PIC</th>
                                             <th>Deskripsi</th>
-                                            <th class="th-description text-right">Actions</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -184,15 +180,13 @@
                 serverSide: false,
                 processing: true,
                 ajax: {
-                        "url"   : "<?= site_url('asset/get/remaining') ?>",
+                        "url"   : "<?= site_url('asset/get/outstanding') ?>",
                         "type"  : "POST",
                         "data"  : {id:$('#id').val()}
                     },
                 columns: [
-                    { "data": "no" },
-                    { "data": "pic" },
-                    { "data": "deskripsi" },
-                    { "data": "action", className: "text-right" }
+                    { "data": "no", className: "text-center" },
+                    { "data": "deskripsi" }
                 ],
             });
 

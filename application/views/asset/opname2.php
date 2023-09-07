@@ -6,17 +6,17 @@
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-body ">
-                        <?= form_open_multipart('asset/opname/proses'); ?>
+                        <?= form_open_multipart('asset/opname_proses/2'); ?>
                         <input type="hidden" class="form-control" name="id" value="<?= $asset['id']; ?>" required>
-                        <div class="row">
+                        <!-- <div class="row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-4">
                                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail">
-                                        <img src="<?= base_url().'assets/img/asset/'. $asset['asset_image']; ?>" alt="foto" name="foto">
+                                        <img src="" alt="foto" name="foto">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                    <!-- <div>
+                                    <div>
                                         <span class="btn btn-round btn-facebook btn-file">
                                             <span class="fileinput-new">Ambil Foto</span>
                                             <span class="fileinput-exists">Ganti</span>
@@ -24,10 +24,10 @@
                                         </span>
                                         <br />
                                         <a href="#" class="btn btn-youtube btn-round fileinput-exists" data-dismiss="fileinput"></i>Hapus</a>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <label class="col-md-2 col-form-label">No. Asset</label>
                             <div class="col-md-4">
@@ -109,20 +109,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-2 col-form-label">Status</label>
-                            <div class="col-md-2">
+                            <label class="col-md-2 col-form-label">Kondisi</label>
+                            <div class="col-md-3">
                                 <div class="form-group has-default">  
                                     <div class="btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-default" id="labelOption1" style="width: 100%;">
+                                    <label class="btn btn-default w-100" id="labelOption1">
                                         <input type="radio" name="options" id="option1" autocomplete="off" value="1" required>BAIK-ADA-DIGUNAKAN
                                     </label>
-                                    <label class="btn btn-default" id="labelOption2" style="width: 100%;">
+                                    <label class="btn btn-default w-100" id="labelOption2">
                                         <input type="radio" name="options" id="option2" autocomplete="off" value="2" required>BAIK-TIDAK SESUAI
                                     </label>
-                                    <label class="btn btn-default" id="labelOption3" style="width: 100%;">
+                                    <label class="btn btn-default w-100" id="labelOption3">
                                         <input type="radio" name="options" id="option3" autocomplete="off" value="3" required>RUSAK
                                     </label>
-                                    <label class="btn btn-default" id="labelOption4" style="width: 100%;">
+                                    <label class="btn btn-default w-100" id="labelOption4">
                                         <input type="radio" name="options" id="option4" autocomplete="off" value="4" required>HILANG
                                     </label>
                                     </div>   
@@ -179,7 +179,7 @@
             if (this.checked) {
                 document.getElementById('status').value = '2';
                 labelOption1.style.background = '#999999';
-                labelOption2.style.background = '#00aec5';
+                labelOption2.style.background = '#FFB236';
                 labelOption3.style.background = '#999999';
                 labelOption4.style.background = '#999999';
                 document.getElementById("catatan").required = true;
