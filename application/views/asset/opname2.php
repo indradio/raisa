@@ -7,7 +7,7 @@
                 <div class="card card-product">
                     <div class="card-header card-header-image" data-header-animation="true">
                     <a href="#pablo">
-                        <img class="img" src="<?= base_url('assets/img/asset/2023/'.$opnamed['asset_image']); ?>">
+                        <img class="img" src="<?= base_url('assets/img/asset/2023/'.$opnamed['asset_image']); ?>" style="width:50%;height:50%;">
                     </a>
                     </div>
                     <div class="card-body ">
