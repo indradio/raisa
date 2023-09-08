@@ -677,15 +677,20 @@ class Asset extends CI_Controller
                             "user" => $row->npk,
                             "user_nama" => $user->nama,
                             "room" => $row->room,
-                            "details" => "<button type='button' class='btn btn-danger btn-link btn-just-icon' data-toggle='modal' disabled><i class='material-icons'>hourglass_top</i></button>"
+                            "details" => "<a href='".base_url('asset/opname/'.$row->asset_no.'/'.$row->asset_sub_no)."' class='btn btn-primary btn-sm active' role='button' aria-pressed='true'>Opname Now</a>"
                         );
                 }
 
             }else{
                 $output['data'][] = array(
                     "no" => '',
-                    "deskripsi" => 'There are no data to display.',
-                    "action" => ''
+                    "sub" => '',
+                    "description" => 'There are no data to display.',
+                    "category" => '',
+                    "user" => '',
+                    "user_nama" => '',
+                    "room" => '',
+                    "details" => ''
                 );
             }
  
