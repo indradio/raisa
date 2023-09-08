@@ -102,8 +102,8 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'x') {
-                          echo '<span class="badge badge-info badge-sm">COE 2023</span>';
+                        <?php if ($m['menu'] == 'Asset') {
+                          echo '<span class="badge badge-info badge-sm">UPDATE</span>';
                         } ?>
                         <?php if ($m['menu'] == 'Warehouse') {
                           echo '<span class="badge badge-success badge-sm">SEGERA</span>';
@@ -118,8 +118,8 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'x') {
-                                echo '<span class="badge badge-info badge-sm">COE 2023</span>';
+                              <?php if ($m['menu'] == 'Asset') {
+                                echo '<span class="badge badge-info badge-sm">UPDATE</span>';
                               } ?>
                                <?php if ($m['menu'] == 'Warehouse') {
                                 echo '<span class="badge badge-success badge-sm">SEGERA</span>';
