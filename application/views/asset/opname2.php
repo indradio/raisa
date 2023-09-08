@@ -4,30 +4,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card ">
+                <div class="card card-product">
+                    <div class="card-header card-header-image" data-header-animation="true">
+                    <a href="#pablo">
+                        <img class="img" src="<?= base_url('assets/img/asset/2023/'.$opnamed['asset_image']); ?>">
+                    </a>
+                    </div>
                     <div class="card-body ">
                         <?= form_open_multipart('asset/opname_proses/2'); ?>
                         <input type="hidden" class="form-control" name="id" value="<?= $asset['id']; ?>" required>
-                        <!-- <div class="row">
-                            <label class="col-md-2 col-form-label"></label>
-                            <div class="col-md-4">
-                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail">
-                                        <img src="" alt="foto" name="foto">
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                    <div>
-                                        <span class="btn btn-round btn-facebook btn-file">
-                                            <span class="fileinput-new">Ambil Foto</span>
-                                            <span class="fileinput-exists">Ganti</span>
-                                            <input type="file" name="foto" required="true"/>
-                                        </span>
-                                        <br />
-                                        <a href="#" class="btn btn-youtube btn-round fileinput-exists" data-dismiss="fileinput"></i>Hapus</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="row">
                             <label class="col-md-2 col-form-label">No. Asset</label>
                             <div class="col-md-4">
@@ -139,7 +124,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-end">
-                            <a href="<?= base_url('asset/remaining'); ?>" class="btn btn-link">Kembali</a>
+                            <a href="<?= base_url('asset/outstanding'); ?>" class="btn btn-link">Kembali</a>
                             <button type="submit" class="btn btn-success btn-wd">OPNAME</button>
                         </div>
                         </form>

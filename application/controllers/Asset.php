@@ -204,6 +204,7 @@ class Asset extends CI_Controller
                 $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
                 
                 $data['asset'] = $asset;
+                $data['opnamed'] = $this->db->get_where('asset_opnamed', ['id' => $asset['id']])->row_array();;
         
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
