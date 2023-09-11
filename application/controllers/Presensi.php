@@ -622,44 +622,12 @@ class Presensi extends CI_Controller
                         $this->db->update('presensi');
                     // }
                 }
-                // $this->session->set_flashdata('message', 'terimakasih');
-                // redirect('presensi/persetujuan/1/list');
-        // }elseif ($params1=='2' and $params2=='list' ){
-        //     $data['sidemenu'] = 'HP Presensi';
-        //     $data['sidesubmenu'] = 'Persetujuan Presensi';
-        //     $data['params1'] = $params1;
-        //     $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        //     $data['presensi'] = $this->db->get_where('presensi', ['status' => 2])->result_array();
-        //     $this->load->view('templates/header', $data);
-        //     $this->load->view('templates/sidebar', $data);
-        //     $this->load->view('templates/navbar', $data);
-        //     $this->load->view('presensi/persetujuan', $data);
-        //     $this->load->view('templates/footer');
-        // }elseif ($params1=='2' and $params2=='submit'){
-        //     if (!empty($id)){
-        //         if ($id=='all'){
-        //             $presensi = $this->db->get_where('presensi', ['status' => 2])->result_array();
-
-        //             foreach ($presensi as $row) :
-        //                 $this->db->set('hr_by', "Disetujui oleh " . $this->session->userdata['inisial']);
-        //                 $this->db->set('hr_at', date('Y-m-d H:i:s'));
-        //                 $this->db->set('status', '9');
-        //                 $this->db->where('id', $row['id']);
-        //                 $this->db->update('presensi');
-        //             endforeach;
-        //         }else{
-        //             $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
-        //             if (!empty($presensi)){
-        //                 $this->db->set('hr_by', "Disetujui oleh " . $this->session->userdata['inisial']);
-        //                 $this->db->set('hr_at', date('Y-m-d H:i:s'));
-        //                 $this->db->set('status', '9');
-        //                 $this->db->where('id', $id);
-        //                 $this->db->update('presensi');
-        //             }
-        //         }
-        //         $this->session->set_flashdata('message', 'terimakasih');
-        //     }
-        //     redirect('presensi/persetujuan/2/list');
+        }elseif ($params1=='1' and $params2=='reject'){
+                        $this->db->set('approved_by', "Ditolak oleh " . $this->session->userdata['inisial']);
+                        $this->db->set('approved_at', date('Y-m-d H:i:s'));
+                        $this->db->set('status', '0');
+                        $this->db->where('id', $this->input->post('id'));
+                        $this->db->update('presensi');
         }else{
             redirect('error404');
         }

@@ -451,7 +451,7 @@ class Asset extends CI_Controller
                     "\r\n \r\nNo Asset : *" . $asset['asset_no'] . "-". $asset['asset_sub_no']."*" .
                     "\r\nDeskripsi : *" . $asset['asset_description'] . "*" .
                     "\r\nCatatan FA : *" . $this->input->post('note') . "*" .
-                    "\r\n \r\nMohon segera lakukan opname sebelum tanggal 28 September 2022.".
+                    "\r\n \r\nMohon segera lakukan opname sebelum tanggal 28 September 2023.".
                     "\r\n \r\nMasuk menu asset klik link berikut https://raisa.winteq-astra.com/asset/remaining"
                 ],
             ]

@@ -134,6 +134,13 @@
             modal.find('.modal-body input[name="id_approve"]').val(id)
         });
 
+        $('#rejectAbsen').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id_reject"]').val(id)
+        });
+
         $('#btn_approve').on('click',function(){
              $.ajax({
                   type : "POST",
@@ -143,7 +150,7 @@
                 
                 $.notify({
                       icon: "add_alert",
-                      message: "<b>BERHASIL!</b> Aktivitas telah ditambahkan."
+                      message: "<b>BERHASIL!</b> Absensi telah disetujui."
                   }, {
                         type: "success",
                         timer: 2000,
@@ -181,7 +188,7 @@
               success: function(result){
                 $.notify({
                       icon: "add_alert",
-                      message: "<b>BERHASIL!</b> Aktivitas telah ditambahkan."
+                      message: "<b>BERHASIL!</b> Semua Absensi telah disetujui."
                   }, {
                         type: "success",
                         timer: 2000,
@@ -209,6 +216,45 @@
               }
           });
           return false;
+        });
+
+        $('#btn_reject').on('click',function(){
+             $.ajax({
+                  type : "POST",
+                  url  : "<?= site_url('presensi/persetujuan/1/reject'); ?>",
+                  data : {id:$('#id_reject').val()},
+                  success: function(result){
+                
+                $.notify({
+                      icon: "add_alert",
+                      message: "<b>BERHASIL!</b> Absensi telah ditolak."
+                  }, {
+                        type: "danger",
+                        timer: 2000,
+                        placement: {
+                          from: "top",
+                          align: "center"
+                          }
+                      });
+                      
+                    $('#rejectAbsen').modal('hide');
+                    $('#dtpresensi').DataTable().ajax.reload();
+                },
+                error: function(result){
+                    $.notify({
+                            icon: "add_alert",
+                            message: "<b>GAGAL!</b> Data gagal tersimpan."
+                        }, {
+                            type: "danger",
+                            timer: 2000,
+                            placement: {
+                            from: "top",
+                            align: "center"
+                            }
+                        });
+                }
+            });
+            return false;
         });
       });
     </script>
