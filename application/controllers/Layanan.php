@@ -267,17 +267,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*INFO UJI EMISI?*" .
+                            'message' => "*ASSET OPNAME periode 2023*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBagi rekan-rekan yang memiliki kendaraan roda 4 dapat mengikuti UJI EMISI KOLEKTIF yang akan dilaksanakan pada :" .
-                            "\r\nHari/Tanggal : Selasa/05 Sept 2023" .
-                            "\r\nLokasi : Area Parkir Winteq & IKP" .
-                            "\r\nBiaya : Rp 163.170" .
-                            "\r\nJika ada pertanyaan bisa menghubungi Pak Agus - GA." .
+                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun maka Winteq akan mengadakan agenda asset opname pada tanggal *18-28 september 2023* (untuk kategori Asset)." .
+                            "\r\nSilahkan mengecek asset yang dimiliki pada menu *Asset-Outstanding* lalu melakukan Asset opname (diharuskan mengupload foto barang)." .
+                            "\r\nJika ada pertanyaan bisa menghubungi Bu Dwi Septianingrum - FAC." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat Kami," .
-                            "\r\nGeneral Affair" .
-                            "\r\n#AkuPrima #EmisiBikinPolusi"
+                            "\r\nFinance Accounting" .
+                            "\r\n#AkuPrima #AssetOpname2023"
                         ],
                     ]
                 );
