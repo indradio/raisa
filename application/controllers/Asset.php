@@ -12,6 +12,19 @@ class Asset extends CI_Controller
         is_logged_in();
     }
 
+    public function scan()
+    {
+        $data['sidemenu'] = 'Asset';
+        $data['sidesubmenu'] = 'Outstanding';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('asset/scan', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function index($access=null)
     {
         if ($access=='fa' or $this->session->userdata('npk')=='6086'){
@@ -264,7 +277,7 @@ class Asset extends CI_Controller
     
                 $config['file_name']            = $this->input->post('id');
                 $config['upload_path']          = './assets/img/asset/2023/';
-                $config['allowed_types']        = 'jpg|jpeg|png';
+                $config['allowed_types']        = 'jpg|JPG|jpeg|png';
                 // $config['max_size']             = '5120';
     
                 if(!is_dir($config['upload_path'])) mkdir($config['upload_path'], 0777, TRUE);
