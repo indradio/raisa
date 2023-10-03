@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller
         $this->update_perjalanan();
         $this->update_lembur();
         $this->update_cuti();
-        $this->update_presensi();
+        // $this->update_presensi();
     }
 
     public function update_perjalanan()
