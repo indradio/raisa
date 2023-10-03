@@ -383,64 +383,64 @@ class Dashboard extends CI_Controller
 
     }
 
-    public function update_presensi()
-    {
-        if(date('D')!='Sun' || date('D')!='Sat') 
-        {
-            if (date('H:i:s') > date('07:35:00') AND date('H:i:s') < date('07:45:00'))
-            {
-                $id = 'IN'.date('ymd');
-                $notif = $this->db->get_where('notifikasi', ['id' =>  $id])->row();
+    // public function update_presensi()
+    // {
+    //     if(date('D')!='Sun' || date('D')!='Sat') 
+    //     {
+    //         if (date('H:i:s') > date('07:35:00') AND date('H:i:s') < date('07:45:00'))
+    //         {
+    //             $id = 'IN'.date('ymd');
+    //             $notif = $this->db->get_where('notifikasi', ['id' =>  $id])->row();
 
-                if (empty($notif))
-                {
-                    $data = array(
-                        'id' => $id,
-                        'notifikasi' => 1,
-                        'tanggal' => date('Y-m-d H:i:s')
-                    );
-                    $this->db->insert('notifikasi', $data);
+    //             if (empty($notif))
+    //             {
+    //                 $data = array(
+    //                     'id' => $id,
+    //                     'notifikasi' => 1,
+    //                     'tanggal' => date('Y-m-d H:i:s')
+    //                 );
+    //                 $this->db->insert('notifikasi', $data);
 
-                    $this->db->where('posisi_id >','4');
-                    $this->db->where('is_active','1');
-                    $this->db->where('status','1');
-                    $queryUsers = $this->db->get('karyawan')->result();
+    //                 $this->db->where('posisi_id >','4');
+    //                 $this->db->where('is_active','1');
+    //                 $this->db->where('status','1');
+    //                 $queryUsers = $this->db->get('karyawan')->result();
 
-                    foreach ($queryUsers as $user) :
+    //                 foreach ($queryUsers as $user) :
 
-                        $this->db->where('date',date('Y-m-d'));
-                        $this->db->where('npk',$user->npk);
-                        $this->db->where('status','In');
-                        $presensi = $this->db->get('presensi_raw')->row();
-                        if (empty($presensi))
-                        {
-                                $client = new \GuzzleHttp\Client();
-                                $response = $client->post(
-                                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                                    [
-                                        'headers' => [
-                                            'Content-Type' => 'application/json',
-                                            'Accept' => 'application/json',
-                                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                                        ],
-                                        'json' => [
-                                            'phone' => $user->phone,
-                                            'message' => "*[NOTIF] ANDA BELUM ABSEN*" .
-                                            "\r\n \r\nSemangat pagi *" . $user->nama . "*" .
-                                            "\r\n \r\n*ANDA BELUM MELAKUKAN ABSENSI HARI INI*" .
-                                            "\r\nSilahkan segera absen melalui FACE ID ataupun RAISA".
-                                            "\r\n \r\nAbaikan jika kamu sedang cuti/off/ijin lainnya"
-                                        ],
-                                    ]
-                                );
-                                $body = $response->getBody();
-                        }
+    //                     $this->db->where('date',date('Y-m-d'));
+    //                     $this->db->where('npk',$user->npk);
+    //                     $this->db->where('status','In');
+    //                     $presensi = $this->db->get('presensi_raw')->row();
+    //                     if (empty($presensi))
+    //                     {
+    //                             $client = new \GuzzleHttp\Client();
+    //                             $response = $client->post(
+    //                                 'https://region01.krmpesan.com/api/v2/message/send-text',
+    //                                 [
+    //                                     'headers' => [
+    //                                         'Content-Type' => 'application/json',
+    //                                         'Accept' => 'application/json',
+    //                                         'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+    //                                     ],
+    //                                     'json' => [
+    //                                         'phone' => $user->phone,
+    //                                         'message' => "*[NOTIF] ANDA BELUM ABSEN*" .
+    //                                         "\r\n \r\nSemangat pagi *" . $user->nama . "*" .
+    //                                         "\r\n \r\n*ANDA BELUM MELAKUKAN ABSENSI HARI INI*" .
+    //                                         "\r\nSilahkan segera absen melalui FACE ID ataupun RAISA".
+    //                                         "\r\n \r\nAbaikan jika kamu sedang cuti/off/ijin lainnya"
+    //                                     ],
+    //                                 ]
+    //                             );
+    //                             $body = $response->getBody();
+    //                     }
 
-                    endforeach;
-                }
-            }
-        }
-    }
+    //                 endforeach;
+    //             }
+    //         }
+    //     }
+    // }
 
     public function index()
     {
