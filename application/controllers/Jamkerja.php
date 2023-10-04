@@ -899,9 +899,11 @@ class Jamkerja extends CI_Controller
             if($this->input->post('bulan')){
                 $data['tahun'] = $this->input->post('tahun');
                 $data['bulan'] = $this->input->post('bulan');
+                $data['section'] = $this->input->post('section');
             }else{
                 $data['tahun'] = date('Y');
                 $data['bulan'] = date('m');
+                $data['section'] = 111;
             }
 
             $this->load->view('templates/header', $data);

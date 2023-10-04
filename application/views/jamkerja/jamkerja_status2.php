@@ -40,6 +40,24 @@
                     </select>
                   </div>
                 </div>
+                <div class="col-md-3">
+                  <div class="form-group has-default">
+                    <select class="selectpicker" name="section" id="section" data-style="select-with-transition" title="Pilih Cell" data-size="7" required>
+                    <?php 
+                      $this->db->where('dept_id', '11');
+                      $this->db->or_where('dept_id', '13');
+                      $sect = $this->db->get('karyawan_sect')->result();
+                      foreach ($sect as $row) :
+                          echo '<option value="' . $row->id . '"';
+                          if ($section == $row->id) {
+                              echo 'selected';
+                          }
+                          echo '>' . $row->nama . '</option>' . "\n";
+                      endforeach; 
+                    ?>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-ml-1">
                   <button type="submit" class="btn btn-rose">SUBMIT</a>
                 </div>
@@ -99,8 +117,7 @@
 
                   for ($i = 1; $i < $tanggal + 1; $i++) {
                     $this->db->where('is_active', '1');
-                    $this->db->where('dept_id', '11');
-                    $this->db->where('sect_id', '111');
+                    $this->db->where('sect_id', $section);
                     $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                     foreach ($kry as $k) :
                       $this->db->where('npk', $k['npk']);
