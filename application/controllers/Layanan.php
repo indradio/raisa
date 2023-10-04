@@ -267,18 +267,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*SUDAHKAH MELAKUKAN PEMADANAN NIK-NPWP?*" .
+                            'message' => "*REMINDER : ASSET OPNAME periode 2023*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSehubungan dengan diberlakukannya NIK sebagai NPWP, maka dihimbau kepada seluruh karyawan PT Astra Otoparts Tbk Divisi Winteq untuk segera melakukan validasi NIK sebagai NPWP pada situs : https://djponline.pajak.go.id/." .
-                            "\r\nSetelah melakukan validasi mohon untuk segera menginformasikan NIK nya kepada HR dengan format sebagai berikut beserta capture hasil validasi :" .
-                            "\r\n \r\nNama Lengkap:" .
-                            "\r\nNIK :" .
-                            "\r\nNPWP :" .
-                            "\r\n \r\nJika ada pertanyaan bisa menghubungi Ibu Lia." .
+                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun maka Winteq akan mengadakan agenda asset opname pada tanggal *18-28 september 2023* (untuk kategori Asset)." .
+                            "\r\nSilahkan mengecek asset yang dimiliki pada menu Asset-Outstanding lalu silahkan melakukan Asset opname *(diharuskan mengupload foto barang)*." .
+                            "\r\n \r\nJika ada pertanyaan bisa menghubungi Dwi Septianingrum." .
                             "\r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
-                            "\r\nHR" .
-                            "\r\n#AkuPrima #PemadananNPWP"
+                            "\r\nFAC" .
+                            "\r\n#OpnameAsset"
                         ],
                     ]
                 );
