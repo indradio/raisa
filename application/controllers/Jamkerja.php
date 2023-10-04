@@ -891,6 +891,11 @@ class Jamkerja extends CI_Controller
     public function status()
     {
             date_default_timezone_set('asia/jakarta');
+            
+            $data['sidemenu'] = 'PPIC';
+            $data['sidesubmenu'] = 'Status Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
             if($this->input->post('bulan')){
                 $data['tahun'] = $this->input->post('tahun');
                 $data['bulan'] = $this->input->post('bulan');
@@ -898,14 +903,11 @@ class Jamkerja extends CI_Controller
                 $data['tahun'] = date('Y');
                 $data['bulan'] = date('m');
             }
-            
-            $data['sidemenu'] = 'PPIC';
-            $data['sidesubmenu'] = 'Status Jam Kerja';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('jamkerja/jamkerja_status1', $data);
+            $this->load->view('jamkerja/jamkerja_status2', $data);
             $this->load->view('templates/footer');
     }
 
@@ -960,6 +962,41 @@ class Jamkerja extends CI_Controller
         }
         echo json_encode(array("events" => $data_events));
         exit();
+    }
+
+    public function get_status()
+    {
+        $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+        for ($i = 1; $i < $tanggal + 1; $i++) {
+
+            $this->db->where('is_active', '1');
+            $directLabor = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+
+            foreach ($directLabor as $row) :
+                $this->db->where('npk', $row['npk']);
+                $this->db->where('year(tglmulai)', $tahun);
+                $this->db->where('month(tglmulai)', $bulan);
+                $this->db->where('day(tglmulai)', $i);
+                $this->db->where('status >', 0);
+                $jamkerja = $this->db->get_where('jamkerja')->row_array();
+
+                $this->db->where('npk', $row['npk']);
+                $this->db->where('year(tglmulai)', $tahun);
+                $this->db->where('month(tglmulai)', $bulan);
+                $this->db->where('day(tglmulai)', $i);
+                $this->db->where('status >', 0);
+                $lembur = $this->db->get_where('lembur')->row_array();
+
+                $data[] = array(
+                    "id" => $r->id,
+                    "title" => $r->id,
+                    "start" => $r->tglmulai,
+                    "end" => $r->tglselesai
+                );
+
+            endforeach;
+        }
     }
 
     public function get_events()
