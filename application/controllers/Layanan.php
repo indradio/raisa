@@ -269,7 +269,7 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*REMINDER : ASSET OPNAME periode 2023*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun maka Winteq akan mengadakan agenda asset opname pada tanggal *18 september 2023 - 25 oktober 2023* (untuk kategori Asset)." .
+                            "\r\nSejalan dengan SOP Astra Otoparts untuk menjalankan Asset Opname setiap tahun maka Winteq akan mengadakan agenda asset opname pada tanggal *18 september 2023 - 13 oktober 2023* (untuk kategori Asset)." .
                             "\r\nSilahkan mengecek asset yang dimiliki pada menu Asset-Outstanding lalu silahkan melakukan Asset opname *(diharuskan mengupload foto barang)*." .
                             "\r\n \r\nJika ada pertanyaan bisa menghubungi Dwi Septianingrum." .
                             "\r\nTerima kasih atas perhatian dan kerjasamanya." .
