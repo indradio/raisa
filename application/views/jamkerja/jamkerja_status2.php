@@ -99,6 +99,7 @@
 
                   for ($i = 1; $i < $tanggal + 1; $i++) {
                     $this->db->where('is_active', '1');
+                    $this->db->where('dept_id', '11');
                     $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                     foreach ($kry as $k) :
                       $this->db->where('npk', $k['npk']);
