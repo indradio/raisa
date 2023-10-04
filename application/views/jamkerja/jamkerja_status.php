@@ -49,7 +49,6 @@
         </div>
       </div>
     </div>
-    
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -64,137 +63,82 @@
               <!--        Here you can write extra buttons/actions for the toolbar              -->
             </div>
             <div class="material-datatables">
-              <table id="dt-status2" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+              <table id="dt-status1" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
-                    <th>Hari</th>
-                    <th>Tanggal</th>
-                    <th>Shift</th>
                     <th>Nama</th>
                     <th>Cell</th>
-                    <th>Tgl Submit</th>
-                    <th>Terlambat</th>
-                    <th>Status Jam Kerja</th>
-                    <th>Status Lembur</th>
+                    <?php
+                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                    for ($i = 1; $i < $tanggal + 1; $i++) {
+                      echo '<th>' . date('D, d', strtotime($tahun . '-' . $bulan . '-' . $i)) . '</th>';
+                    } ?>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                    <th>Hari</th>
-                    <th>Tanggal</th>
-                    <th>Shift</th>
-                    <th>Nama</th>
-                    <th>Cell</th>
-                    <th>Tgl Submit</th>
-                    <th>Terlambat</th>
-                    <th>Status Jam Kerja</th>
-                    <th>Status Lembur</th>
-                  </tr>
-                </tfoot>
                 <tbody>
-
                   <?php
-                  date_default_timezone_set('asia/jakarta');
-                  $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                  $this->db->where('is_active', '1');
+                  $kar = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+                  foreach ($kar as $k) :
+                    $sect = $this->db->get_where('karyawan_sect', ['id' => $k['sect_id']])->row_array();
+                  ?>
+                    <tr>
+                      <td><?= $k['nama']; ?></td>
+                      <td><?= $sect['nama']; ?></td>
+                      <?php
+                      for ($i = 1; $i < $tanggal + 1; $i++) {
+                        echo '<td>';
+                        $this->db->where('npk', $k['npk']);
+                        $this->db->where('year(tglmulai)', $tahun);
+                        $this->db->where('month(tglmulai)', $bulan);
+                        $this->db->where('day(tglmulai)', $i);
+                        $this->db->where('status >', 0);
+                        $jamkerja = $this->db->get_where('jamkerja')->row_array();
 
-                  for ($i = 1; $i < $tanggal + 1; $i++) {
-                    $this->db->where('is_active', '1');
-                    $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
-                    foreach ($kry as $k) :
-                      $this->db->where('npk', $k['npk']);
-                      $this->db->where('year(tglmulai)', $tahun);
-                      $this->db->where('month(tglmulai)', $bulan);
-                      $this->db->where('day(tglmulai)', $i);
-                      $this->db->where('status >', 0);
-                      $jamkerja = $this->db->get_where('jamkerja')->row_array();
+                        $this->db->where('npk', $k['npk']);
+                        $this->db->where('year(tglmulai)', $tahun);
+                        $this->db->where('month(tglmulai)', $bulan);
+                        $this->db->where('day(tglmulai)', $i);
+                        $this->db->where('status >', 0);
+                        $lembur = $this->db->get_where('lembur')->row_array();
 
-                      $this->db->where('npk', $k['npk']);
-                      $this->db->where('year(tglmulai)', $tahun);
-                      $this->db->where('month(tglmulai)', $bulan);
-                      $this->db->where('day(tglmulai)', $i);
-                      $this->db->where('status >', 0);
-                      $lembur = $this->db->get_where('lembur')->row_array();
-
-                      if (!empty($jamkerja)) {
-
-                        $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
-                        if ($respon == 0) {
-                          $respon = 'Tepat Waktu';
+                        if (!empty($jamkerja)) {
+                          if ($jamkerja['status'] == 9) {
+                            echo '<i class="fa fa-circle text-success"></i>';
+                          } elseif ($jamkerja['status'] == 1) {
+                            echo '<i class="fa fa-circle text-warning"></i>';
+                          } elseif ($jamkerja['status'] == 2) {
+                            echo '<i class="fa fa-circle text-info"></i>';
+                          }
                         } else {
-                          $respon = $respon;
+                          echo '<i class="fa fa-circle text-danger"></i>';
                         }
-
-                        $now = time();
-                        // $due = strtotime($jamkerja['create']);
-                        $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
-                        $approve = $due - $now;
-                        $approve = floor($approve / (60 * 60 * 24));
-                        if ($approve < 0) {
-                          $approve = '( ' . $approve . ' Hari )';
-                        } else {
-                          $approve = null;
+                        if (!empty($lembur)) {
+                          if ($lembur['status'] == 9) {
+                            echo '<i class="fa fa-circle text-success"></i>';
+                          } elseif ($lembur['status'] > 1 and $lembur['status'] < 7) {
+                            echo '<i class="fa fa-circle text-warning"></i>';
+                          } elseif ($lembur['status'] == 7) {
+                            echo '<i class="fa fa-circle text-info"></i>';
+                          }
                         }
-
-                        if ($jamkerja['status'] == 2) { ?>
-                          <tr onclick="window.location='<?= base_url('jamkerja/detail/' . $jamkerja['id']); ?>'">
-                          <?php } else {
-                          echo '<tr>';
-                        } ?>
-                          <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
-                          <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
-                          <td><?= $jamkerja['shift']; ?></td>
-                          <td><?= $k['nama']; ?></td>
-                          <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
-                          <td><?= $sect['nama']; ?></td>
-                          <td><?= date('m-d-Y', strtotime($jamkerja['create'])); ?></td>
-                          <td><?= $respon; ?></td>
-                          <td>
-                            <?php if ($jamkerja['status'] == 1) {
-                              echo 'Menunggu Persetujuan ' . $jamkerja['atasan1'] . ' <small>' . $approve . '</small>';
-                            } elseif ($jamkerja['status'] == 2) {
-                              echo 'Menunggu Persetujuan PPIC';
-                            } elseif ($jamkerja['status'] == 9) {
-                              echo 'Selesai';
-                            } ?>
-                          </td>
-                          <?php if (!empty($lembur)) {
-                            $otstat = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
-                            <td><?= $otstat['nama']; ?></td>
-                          <?php  } else { ?>
-                            <td class="text-danger">Tidak ada Laporan Lembur</td>
-                          <?php  } ?>
-                          </tr>
-                        <?php } else { ?>
-                          <tr>
-                            <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
-                            <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
-                            <td></td>
-                            <td><?= $k['nama']; ?></td>
-                            <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
-                            <td><?= $sect['nama']; ?></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
-                            <?php if (!empty($lembur)) {
-                              $otstat = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array(); ?>
-                              <td><?= $otstat['nama']; ?></td>
-                            <?php  } else { ?>
-                              <td class="text-danger">Tidak ada Laporan Lembur</td>
-                            <?php  } ?>
-                          </tr>
-                        <?php } ?>
-                    <?php endforeach;
-                  }
-                    ?>
+                        echo '</td>';
+                      } ?>
+                    </tr>
+                  <?php endforeach; ?>
 
                 </tbody>
+
               </table>
             </div>
           </div>
           <div class="card-footer">
             <div class="row">
               <div class="col-md-12">
-                <i class="fa fa-circle text-danger"></i> Tidak ada laporan jam kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja).
+                <i class="fa fa-circle text-success"></i> Laporan Jam Kerja / Lembur.
+                <i class="fa fa-circle text-info"></i> Jam Kerja/Lembur Sedang diproses oleh PPIC/HR.
+                <i class="fa fa-circle text-warning"></i> Jam Kerja sedang diproses oleh RDA/Koordinator/Depthead.
+                <i class="fa fa-circle text-danger"></i> Tidak ada Laporan Jam Kerja (Belum melaporkan, Hari libur, Cuti atau Tidak masuk kerja).
               </div>
             </div>
           </div>
@@ -205,6 +149,7 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
+    
   </div>
 </div>
 
