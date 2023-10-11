@@ -267,14 +267,14 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Jaringan Sudah NORMAL Kembali*" .
+                            'message' => "*EMPLOYEE DAY WINTEQ 2023 *" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSaat ini jaringan winteq sudah normal kembali dan bisa kamu gunakan." .
-                            "\r\nHubungi IT Care jika kamu masih mengalami kendala jaringan" .
-                            "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
-                            "\r\nHormat kami," .
-                            "\r\nIT" .
-                            "\r\n#Winteq #". $row['npk']
+                            "\r\nHalo semua, karena mau *EMPLOYEE DAY* ada form yang harus diisi segera nih ditunggu ya!." .
+                            "\r\nhttps://forms.office.com/r/mKizu4yHsY" .
+                            "\r\n \r\nTerima kasih," .
+                            "\r\nKe kedai kita ngopi (cakkeppp)" .
+                            "\r\nIkut employee day biar happy!" .
+                            "\r\n#EDWinteq2023"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
