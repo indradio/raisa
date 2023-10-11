@@ -269,7 +269,7 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*Placement Test DIUNDUR*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nPlacement Test English Course yang diagendakan hari ini (11/10/23) tidak jadi dilaksanakan dan akan dijadwalkan kempabi pada :" .
+                            "\r\nPlacement Test English Course yang diagendakan hari ini (11/10/23) tidak jadi dilaksanakan dan akan dijadwalkan kembali pada :" .
                             "\r\n \r\n*Hari/Tanggal : Rabu/18 Oktober 2023*" .
                             "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
                             "\r\nHormat kami," .
