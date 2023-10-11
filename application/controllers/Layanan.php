@@ -267,15 +267,26 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Placement Test DIUNDUR*" .
+                            'message' => "*Jaringan Sudah NORMAL Kembali*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nPlacement Test English Course yang diagendakan hari ini (11/10/23) tidak jadi dilaksanakan dan akan dijadwalkan kembali pada :" .
-                            "\r\n \r\n*Hari/Tanggal : Rabu/18 Oktober 2023*" .
+                            "\r\nSaat ini jaringan winteq sudah normal kembali dan bisa kamu gunakan." .
+                            "\r\nHubungi IT Care jika kamu masih mengalami kendala jaringan" .
                             "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
                             "\r\nHormat kami," .
-                            "\r\nHR" .
-                            "\r\n#LetsStudyEnglish"
+                            "\r\nIT" .
+                            "\r\n#Winteq #". $row['npk']
                         ],
+                        // 'json' => [
+                        //     'phone' => $row['phone'],
+                        //     'message' => "*Jaringan Sudah NORMAL Kembali*" .
+                        //     "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                        //     "\r\nSaat ini jaringan winteq sudah normal kembali dan bisa kamu gunakan." .
+                        //     "\r\nHubungi IT Care jika kamu masih mengalami kendala jaringan" .
+                        //     "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
+                        //     "\r\nHormat kami," .
+                        //     "\r\nIT" .
+                        //     "\r\n#Winteq #". $row['npk']
+                        // ],
                     ]
                 );
                 $body = $response->getBody();
