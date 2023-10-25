@@ -243,6 +243,15 @@ class Layanan extends CI_Controller
             
         } elseif ($parameter == 'Z') {
             $this->db->where('npk', '0282');
+            $this->db->where('npk', '0083');
+            $this->db->where('npk', '0200');
+            $this->db->where('npk', '0133');
+            $this->db->where('npk', '0245');
+            $this->db->where('npk', '0268');
+            $this->db->where('npk', '0105');
+            $this->db->where('npk', '0257');
+            $this->db->where('npk', '0295');
+            $this->db->where('npk', '0198');
             $karyawan = $this->db->get('karyawan')->result_array();
         }
 
@@ -265,27 +274,27 @@ class Layanan extends CI_Controller
                         //     "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
                         //     "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
                         // ],
-                        // 'json' => [
-                        //     'phone' => $row['phone'],
-                        //     'message' => "*EMPLOYEE DAY WINTEQ 2023 *" .
-                        //     "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                        //     "\r\nHalo semua, karena mau *EMPLOYEE DAY* ada form yang harus diisi segera nih ditunggu ya!." .
-                        //     "\r\nhttps://forms.office.com/r/mKizu4yHsY" .
-                        //     "\r\n \r\nTerima kasih," .
-                        //     "\r\nKe kedai kita ngopi (cakkeppp)" .
-                        //     "\r\nIkut employee day biar happy!" .
-                        //     "\r\n#EDWinteq2023"
-                        // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Akses Internet Sudah NORMAL Kembali*" .
-                            "\r\n \r\nSaat ini Akses Internet sudah normal kembali dan bisa kamu gunakan." .
-                            "\r\nHubungi IT Care jika kamu masih mengalami kendala." .
-                            "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
-                            "\r\nHormat kami," .
-                            "\r\nIT" .
-                            "\r\n#Winteq #". $row['inisial']
+                            'message' => "*LAST CALL!!! EMPLOYEE DAY WINTEQ 2023 *" .
+                            "\r\n \r\nDear *" . $row['nama'] . "*," .
+                            "\r\nBeneran nih gak ikut?" .
+                            "\r\nEmployee Day terakhir kita dari Cibinong loh." .
+                            "\r\nKalau kamu berubah pikiran, isi form berikut yuk! Ditunggu sampai besok jam 24:00 WIB yaa…" .
+                            "\r\nhttps://forms.office.com/r/mKizu4yHsY" .
+                            "\r\n \r\nSemoga kita bisa sama2 berangkat yaa.. 🫰" .
+                            "\r\n#EDWinteq2023"
                         ],
+                        // 'json' => [
+                        //     'phone' => $row['phone'],
+                        //     'message' => "*Akses Internet Sudah NORMAL Kembali*" .
+                        //     "\r\n \r\nSaat ini Akses Internet sudah normal kembali dan bisa kamu gunakan." .
+                        //     "\r\nHubungi IT Care jika kamu masih mengalami kendala." .
+                        //     "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
+                        //     "\r\nHormat kami," .
+                        //     "\r\nIT" .
+                        //     "\r\n#Winteq #". $row['inisial']
+                        // ],
                     ]
                 );
                 $body = $response->getBody();
