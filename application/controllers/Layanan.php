@@ -243,15 +243,15 @@ class Layanan extends CI_Controller
             
         } elseif ($parameter == 'Z') {
             $this->db->where('npk', '0282');
-            $this->db->where('npk', '0083');
-            $this->db->where('npk', '0200');
-            $this->db->where('npk', '0133');
-            $this->db->where('npk', '0245');
-            $this->db->where('npk', '0268');
-            $this->db->where('npk', '0105');
-            $this->db->where('npk', '0257');
-            $this->db->where('npk', '0295');
-            $this->db->where('npk', '0198');
+            $this->db->or_where('npk', '0083');
+            $this->db->or_where('npk', '0200');
+            $this->db->or_where('npk', '0133');
+            $this->db->or_where('npk', '0245');
+            $this->db->or_where('npk', '0268');
+            $this->db->or_where('npk', '0105');
+            $this->db->or_where('npk', '0257');
+            $this->db->or_where('npk', '0295');
+            $this->db->or_where('npk', '0198');
             $karyawan = $this->db->get('karyawan')->result_array();
         }
 
