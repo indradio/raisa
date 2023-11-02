@@ -925,8 +925,8 @@ class Cuti extends CI_Controller
             $data['tglawal']  = date('Y-m-d', strtotime($this->input->post('tglawal')));
             $data['tglakhir'] = date('Y-m-d', strtotime($this->input->post('tglakhir')));
         }else{
-            $data['tglawal']  = date('Y-m-1');
-            $data['tglakhir'] = date('Y-m-31');
+            $data['tglawal']  = date('Y-m-d');
+            $data['tglakhir'] = date('Y-m-d');
         }
         
         $data['range'] = [
