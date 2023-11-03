@@ -276,14 +276,14 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*LAST CALL!!! EMPLOYEE DAY WINTEQ 2023 *" .
+                            'message' => "*EMPLOYEE DAY WINTEQ 2023*" .
                             "\r\n \r\nDear *" . $row['nama'] . "*," .
-                            "\r\nBeneran nih gak ikut?" .
-                            "\r\nEmployee Day terakhir kita dari Cibinong loh." .
-                            "\r\nKalau kamu berubah pikiran, isi form berikut yuk! Ditunggu sampai besok jam 24:00 WIB yaa…" .
-                            "\r\nhttps://forms.office.com/r/mKizu4yHsY" .
-                            "\r\n \r\nSemoga kita bisa sama2 berangkat yaa.. 🫰" .
-                            "\r\n#EDWinteq2023"
+                            "\r\nKaos EMPLOYEE DAY sudah bisa diambil SEKARANG di KANTIN loh." .
+                            "\r\nhayu gasskeun." .
+                            "\r\n \r\nTerima kasih," .
+                            "\r\nBetah ngekos di Pasar Baru" .
+                            "\r\nAlhamdulillah dapet kaos baruu!" .
+                            "\r\n \r\n#EDWinteq2023"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
