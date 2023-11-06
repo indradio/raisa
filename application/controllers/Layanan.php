@@ -278,11 +278,12 @@ class Layanan extends CI_Controller
                             'phone' => $row['phone'],
                             'message' => "*EMPLOYEE DAY WINTEQ 2023*" .
                             "\r\n \r\nDear *" . $row['nama'] . "*," .
-                            "\r\nKaos EMPLOYEE DAY sudah bisa diambil SEKARANG di KANTIN loh." .
-                            "\r\nhayu gasskeun." .
-                            "\r\n \r\nTerima kasih," .
-                            "\r\nBetah ngekos di Pasar Baru" .
-                            "\r\nAlhamdulillah dapet kaos baruu!" .
+                            "\r\nBesok Selasa 7 November 2023 ada P30M terkait EMPLOYEE DAY nih. Kalau ada pertanyaan bisa banget disampaikan besok ya.🫰" .
+                            "\r\nTerima kasih," .
+                            "\r\n \r\nPake GoPay tuk beli nasi (kaseeppp)" .
+                            "\r\nnasi tumpeng ditata meriah" .
+                            "\r\nEmployee Day sebentar lagi" .
+                            "\r\nHepi bareng dan dapat hadiah" .
                             "\r\n \r\n#EDWinteq2023"
                         ],
                         // 'json' => [
