@@ -243,14 +243,6 @@ class Layanan extends CI_Controller
             
         } elseif ($parameter == 'Z') {
             $this->db->where('npk', '0282');
-            $this->db->or_where('npk', '0083');
-            $this->db->or_where('npk', '0200');
-            $this->db->or_where('npk', '0133');
-            $this->db->or_where('npk', '0245');
-            $this->db->or_where('npk', '0268');
-            $this->db->or_where('npk', '0105');
-            $this->db->or_where('npk', '0257');
-            $this->db->or_where('npk', '0295');
             $this->db->or_where('npk', '0198');
             $karyawan = $this->db->get('karyawan')->result_array();
         }
@@ -276,14 +268,14 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*EMPLOYEE DAY WINTEQ 2023*" .
+                            'message' => "*SURVEY KEPUASAN EVENT EMPLOYEE DAY WINTEQ 2023*" .
                             "\r\n \r\nDear *" . $row['nama'] . "*," .
-                            "\r\nBesok Selasa 7 November 2023 ada P30M terkait EMPLOYEE DAY nih. Kalau ada pertanyaan bisa banget disampaikan besok ya.🫰" .
-                            "\r\nTerima kasih," .
-                            "\r\n \r\nPake GoPay tuk beli nasi (kaseeppp)" .
-                            "\r\nnasi tumpeng ditata meriah" .
-                            "\r\nEmployee Day sebentar lagi" .
-                            "\r\nHepi bareng dan dapat hadiah" .
+                            "\r\nTerima kasih atas antusiasme yang luar biasa dalam acara Employee Day Winteq 2023." .
+                            "\r\nMewakili panitia, kami menyadari bahwa ada beberapa hal yg mungkin tidak anda sukai selama acara berlangsung." .
+                            "\r\nBeri tahu kami agar acara berikutnya jadi lebih lagi dengan cara mengisi form survey berikut :." .
+                            "\r\n \r\nhttps://forms.office.com/r/SYVEaLZrua" .
+                            "\r\n \r\nPetir bukan sembarang petir, Petir menyambar negara kenya" .
+                            "\r\nTerima kasih yg udah hadir, sampai jumpa di employee day berikutnya." .
                             "\r\n \r\n#EDWinteq2023"
                         ],
                         // 'json' => [
