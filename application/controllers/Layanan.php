@@ -272,7 +272,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nDear *" . $row['nama'] . "*," .
                             "\r\nTerima kasih atas antusiasme yang luar biasa dalam acara Employee Day Winteq 2023." .
                             "\r\nMewakili panitia, kami menyadari bahwa ada beberapa hal yg mungkin tidak anda sukai selama acara berlangsung." .
-                            "\r\nBeri tahu kami agar acara berikutnya jadi lebih lagi dengan cara mengisi form survey berikut :." .
+                            "\r\nBeri tahu kami agar acara berikutnya jadi lebih baik lagi dengan cara mengisi form survey berikut :." .
                             "\r\n \r\nhttps://forms.office.com/r/SYVEaLZrua" .
                             "\r\n \r\nPetir bukan sembarang petir, Petir menyambar negara kenya" .
                             "\r\nTerima kasih yg udah hadir, sampai jumpa di employee day berikutnya." .
