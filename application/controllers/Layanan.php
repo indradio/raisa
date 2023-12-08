@@ -243,7 +243,7 @@ class Layanan extends CI_Controller
             
         } elseif ($parameter == 'Z') {
             $this->db->where('npk', '0282');
-            $this->db->or_where('npk', '0198');
+            // $this->db->or_where('npk', '');
             $karyawan = $this->db->get('karyawan')->result_array();
         }
 
@@ -268,15 +268,12 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*SURVEY KEPUASAN EVENT EMPLOYEE DAY WINTEQ 2023*" .
+                            'message' => "*INFORMASI : SERVER FILE SHARING MENGALAMI GANGGUAN*" .
                             "\r\n \r\nDear *" . $row['nama'] . "*," .
-                            "\r\nTerima kasih atas antusiasme yang luar biasa dalam acara Employee Day Winteq 2023." .
-                            "\r\nMewakili panitia, kami menyadari bahwa ada beberapa hal yg mungkin tidak anda sukai selama acara berlangsung." .
-                            "\r\nBeri tahu kami agar acara berikutnya jadi lebih baik lagi dengan cara mengisi form survey berikut :." .
-                            "\r\n \r\nhttps://forms.office.com/r/SYVEaLZrua" .
-                            "\r\n \r\nPetir bukan sembarang petir, Petir menyambar negara kenya" .
-                            "\r\nTerima kasih yg udah hadir, sampai jumpa di employee day berikutnya." .
-                            "\r\n \r\n#EDWinteq2023"
+                            "\r\nSaat ini sedang terjadi gangguan pada server file sharing 10.14.15.5 sehingga tidak dapat diakses".
+                            "\r\nGangguan tersebut sedang dalam penanganan oleh tim IT" .
+                            "\r\nMohon maaf atas ketidaknyamanan yang terjadi ini." .
+                            "\r\n \r\n#ITCare"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
