@@ -29,10 +29,10 @@
                         <div class="tab-content tab-space">
                             <div class="tab-pane active" id="link1">
                             <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="https://drive.google.com/file/d/1IHyKmHNBpUEnXkII9F5MyOAZU59EdMz1/preview"></iframe>
+                                    <iframe class="embed-responsive-item" src="https://drive.google.com/file/d/1PI0y7_8fMvzSELqw2149tnX-QFER9Yu_/preview"></iframe>
                                 </div>
                                 </br>
-                                <a href="https://drive.google.com/file/d/1IHyKmHNBpUEnXkII9F5MyOAZU59EdMz1/view?usp=sharing" target="_blank">Klik Disini untuk download</a>
+                                <a href="https://drive.google.com/file/d/1PI0y7_8fMvzSELqw2149tnX-QFER9Yu_/view?usp=sharing" target="_blank">Klik Disini untuk download</a>
                             </div>
                             <!-- <div class="tab-pane" id="link2">
                                 <div class="embed-responsive embed-responsive-4by3">
