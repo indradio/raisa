@@ -102,7 +102,7 @@
                     <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                       <i class="material-icons"><?= $m['icon']; ?></i>
                       <p> <?= $m['menu']; ?>
-                        <?php if ($m['menu'] == 'Asset') {
+                        <?php if ($m['menu'] == 'Info HR') {
                           echo '<span class="badge badge-info badge-sm">UPDATE</span>';
                         } ?>
                         <?php if ($m['menu'] == 'Warehouse') {
@@ -118,7 +118,7 @@
                           <a class="nav-link" data-toggle="collapse" href="#<?= $m['menu']; ?>">
                             <i class="material-icons"><?= $m['icon']; ?></i>
                             <p> <?= $m['menu']; ?>
-                              <?php if ($m['menu'] == 'Asset') {
+                              <?php if ($m['menu'] == 'Info HR') {
                                 echo '<span class="badge badge-info badge-sm">UPDATE</span>';
                               } ?>
                                <?php if ($m['menu'] == 'Warehouse') {
