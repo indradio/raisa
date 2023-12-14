@@ -12,7 +12,7 @@
                         <ul class="nav nav-pills nav-pills-info" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#link1" role="tablist">
-                                    Calendar of Event 2023
+                                    Calendar of Event 2024
                                 </a>
                             </li>
                             <!-- <li class="nav-item">
