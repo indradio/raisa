@@ -184,12 +184,81 @@
           </div>
         </div>
       </div>
+    <!-- </div> -->
+    <!-- End Absensi -->
+
+    <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div id="accordionCuti" role="tablist">
+              <div class="card-collapse">
+                <div class="card-header" role="tab" id="headingCuti">
+                  <h5 class="mb-0">
+                    <a class="" data-toggle="collapse" href="#collapseCuti" aria-expanded="true" aria-controls="collapseCuti">
+                    <h3 class="card-title">Cuti
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </h3>
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseCuti" class="collapse show" role="tabpanel" aria-labelledby="headingCuti" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="material-datatables">
+                      <table id="dtcuti" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                      <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Sampai</th>
+            </tr>
+        </thead>
+      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- End Absensi -->
 
     <div class="row">
 
       <!-- Outstanding Approval Absensi -->
+      <?php if ($presensi != null){ ?>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-warning">
+            <div class="card-text">
+              <h4 class="card-title">Outstanding</h4>
+              <p class="card-category">Kehadiran</p>
+            </div>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Nama</th>
+                <th>Waktu</th>
+                <th>Status</th>
+                <th>Direct</th>
+              </thead>
+              <tbody>
+              <?php foreach ($presensi as $row) : ?>
+              <tr onclick="window.location='<?= base_url('presensi/persetujuan/1/list'); ?>'" >
+                <td><?= $row['nama']; ?></td>
+                <td><?= date('d-M-Y H:i', strtotime($row['time'])); ?></td>
+                <td><?= $row['work_state']; ?></td>
+                <td><?= $row['state']; ?></td>
+              </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <?php }; ?>
+      
       <?php if ($presensi != null){ ?>
       <div class="col-lg-6 col-md-12">
         <div class="card">
@@ -956,6 +1025,24 @@
         { "data":"time"}
       ],
     });
+
+    $('#dtcuti').DataTable({
+      paging: false,
+      ordering: false,
+      info: false,
+      searching: false,
+      serverSide: false,
+      processing: true,
+      ajax: {
+              "url"   : "<?= site_url('cuti/get_data/today') ?>",
+              "type"  : "POST",
+          },
+      columns: [
+        { "data":"name"},
+        { "data":"until"}
+      ],
+    });
+
 
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal

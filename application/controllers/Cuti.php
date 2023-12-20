@@ -1359,6 +1359,31 @@ class Cuti extends CI_Controller
 
             echo json_encode($output);
             exit();
+        }elseif ($params=='today')
+        {
+            $this->db->where('tgl1 <=', date('Y-m-d'));
+            $this->db->where('tgl2 >=', date('Y-m-d'));
+            $this->db->where('status !=', '0');
+            $cuti = $this->db->get('cuti')->result();
+            
+            if (!empty($cuti))
+            {
+                foreach ($cuti as $row) {
+
+                    $output['data'][] = array(
+                        "name" => $row->nama,
+                        "until" => date('d M Y', strtotime($row->tgl2))
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "name" => 'There are no data to display.',
+                    "until" => ''
+                );
+            }
+
+            echo json_encode($output);
+            exit();
 
         }
     
