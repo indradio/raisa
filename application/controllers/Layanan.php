@@ -268,12 +268,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*INFORMASI : SERVER FILE SHARING MENGALAMI GANGGUAN*" .
-                            "\r\n \r\nDear *" . $row['nama'] . "*," .
-                            "\r\nSaat ini sedang terjadi gangguan pada server file sharing 10.14.15.5 sehingga tidak dapat diakses".
-                            "\r\nGangguan tersebut sedang dalam penanganan oleh tim IT" .
-                            "\r\nMohon maaf atas ketidaknyamanan yang terjadi ini." .
-                            "\r\n \r\n#ITCare"
+                            'message' => "ℹ *[INFO] LIBUR HARI RAYA NATAL DAN CUTI BERSAMA*" .
+                            "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :".
+                            "\r\n \r\n*1.	Tgl  25 Desember 2023	: Libur Hari Raya Natal*".
+                            "\r\n*2.	Tgl 26 Desember 2023	: Cuti Bersama Hari Raya Natal*" .
+                            "\r\n \r\n*Karyawan masuk kembali bekerja seperti biasa pada tanggal 27 Desember 2023.*" .
+                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\nHormat kami," .
+                            "\r\nHR"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
