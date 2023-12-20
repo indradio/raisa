@@ -158,7 +158,7 @@
           </div>
         </div>
       </div> -->
-      <div class="col-md-4">
+      <!-- <div class="col-md-4">
         <div class="card">
           <div class="card-body">
             <div id="accordionAbsensi" role="tablist">
@@ -183,7 +183,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     <!-- </div> -->
     <!-- End Absensi -->
 
@@ -209,6 +209,46 @@
             <tr>
                 <th>Nama</th>
                 <th>Sampai</th>
+            </tr>
+        </thead>
+      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+    <!-- End Absensi -->
+
+    <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div id="accordionForm" role="tablist">
+              <div class="card-collapse">
+                <div class="card-header" role="tab" id="headingForm">
+                  <h5 class="mb-0">
+                    <a class="" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+                    <h3 class="card-title">Download Form 
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </h3>
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseForm" class="collapsed collapse" role="tabpanel" aria-labelledby="headingForm" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="material-datatables">
+                      <table id="dtForm" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                      <thead>
+            <tr>
+                <th>FORM PENGAJUAN BANTUAN RELOKASI</th>
+                <th><a href="https://drive.google.com/file/d/1GL82ndCXngkLUjurLLp1qHzqU5BJ6rK7/view?usp=sharing" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
+              </tr>
+              <tr>
+                <th>FORM PENGAJUAN PINJAMAN UANG</th>
+                <th><a href="https://drive.google.com/file/d/1Y2CFhbPnVzcSq6rm3Mo3y0mmvRCkTs-A/view?usp=sharing" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
             </tr>
         </thead>
       </table>
