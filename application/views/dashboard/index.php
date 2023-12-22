@@ -187,6 +187,7 @@
     <!-- </div> -->
     <!-- End Absensi -->
 
+    <?php if ($this->session->userdata('posisi_id') < 7){ ?>
     <div class="col-md-4">
         <div class="card">
           <div class="card-body">
@@ -220,6 +221,7 @@
           </div>
         </div>
       </div>
+      <?php }; ?>
     <!-- </div> -->
     <!-- End Absensi -->
 
