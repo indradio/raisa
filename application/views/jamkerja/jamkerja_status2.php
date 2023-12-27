@@ -113,7 +113,7 @@
 
                   <?php
                   date_default_timezone_set('asia/jakarta');
-                  if (date('m') == $bulan){
+                  if (date('y') == $tahun and date('m') == $bulan){
                     $tanggal = date('d');
                   }else{
                     $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
