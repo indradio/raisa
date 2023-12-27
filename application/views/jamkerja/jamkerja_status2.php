@@ -113,7 +113,11 @@
 
                   <?php
                   date_default_timezone_set('asia/jakarta');
-                  $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                  if (date('m') == $bulan){
+                    $tanggal = date('d');
+                  }else{
+                    $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                  }
 
                   for ($i = 1; $i < $tanggal + 1; $i++) {
                     $this->db->where('is_active', '1');
