@@ -170,8 +170,10 @@
                                 <div class="form-group select-wizard">
                                     <label class="bmd-label-static">Work Contract (required)</label>
                                     <select class="selectpicker" name="work_contract" id="work_contract" title="Pilih" data-size="2" data-style="select-with-transition" data-size="5" data-width="100%" data-live-search="false" required>
-                                        <option value="Direct Labor"> Direct Labor </option>
-                                        <option value="Indirect Labor"> Indirect Labor </option>
+                                      <?php $caontract = $this->db->get('karyawan_caontract')->result();
+                                      foreach ($caontract as $row) :
+                                          echo '<option value="'.$row->nama.'">'.$row->nama.'</option>';
+                                      endforeach; ?>
                                     </select>
                                     </div>
                                 </div>
