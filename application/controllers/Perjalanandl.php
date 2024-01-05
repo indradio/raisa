@@ -30,59 +30,59 @@ class Perjalanandl extends CI_Controller
     {
         date_default_timezone_set('asia/jakarta');
         //auto batalkan reservasi
-        $queryReservasi = "SELECT *
-        FROM `reservasi`
-        WHERE `tglberangkat` <= CURDATE() AND (`status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5' OR `status` = '6')
-        ";
-        $reservasi = $this->db->query($queryReservasi)->result_array();
-        foreach ($reservasi as $r) :
-            // cari selisih
-            $mulai = strtotime($r['jamberangkat']);
-            $selesai = time();
-            $durasi = $selesai - $mulai;
-            $jam   = floor($durasi / (60 * 60));
+        // $queryReservasi = "SELECT *
+        // FROM `reservasi`
+        // WHERE `tglberangkat` <= CURDATE() AND (`status` = '1' OR `status` = '2' OR `status` = '3' OR `status` = '4' OR `status` = '5' OR `status` = '6')
+        // ";
+        // $reservasi = $this->db->query($queryReservasi)->result_array();
+        // foreach ($reservasi as $r) :
+        //     // cari selisih
+        //     $mulai = strtotime($r['jamberangkat']);
+        //     $selesai = time();
+        //     $durasi = $selesai - $mulai;
+        //     $jam   = floor($durasi / (60 * 60));
 
-            if ($jam >= 2) {
-                $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $r['id']])->row_array();
-                $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array();
-                if ($perjalanan['id'] == null) {
+        //     if ($jam >= 2) {
+        //         $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $r['id']])->row_array();
+        //         $status = $this->db->get_where('reservasi_status', ['id' => $r['status']])->row_array();
+        //         if ($perjalanan['id'] == null) {
 
-                    $this->db->set('status', '0');
-                    $this->db->set('catatan', "Waktu reservasi perjalanan kamu telah selesai. - Dibatalkan oleh RAISA pada " . date('d-m-Y H:i'));
-                    $this->db->where('id', $r['id']);
-                    $this->db->update('reservasi');
+        //             $this->db->set('status', '0');
+        //             $this->db->set('catatan', "Waktu reservasi perjalanan kamu telah selesai. - Dibatalkan oleh RAISA pada " . date('d-m-Y H:i'));
+        //             $this->db->where('id', $r['id']);
+        //             $this->db->update('reservasi');
 
-                    $this->db->where('npk', $r['npk']);
-                    $karyawan = $this->db->get('karyawan')->row_array();
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $karyawan['phone'],
-                                'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
-                                "\r\nNama : *" . $r['nama'] . "*" .
-                                "\r\nTujuan : *" . $r['tujuan'] . "*" .
-                                "\r\nKeperluan : *" . $r['keperluan'] . "*" .
-                                "\r\nPeserta : *" . $r['anggota'] . "*" .
-                                "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
-                                "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
-                                "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
-                                "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
-                                "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
-                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                            ],
-                        ]
-                    );
-                    $body = $response->getBody();
-                }
-            }
-        endforeach;
+        //             $this->db->where('npk', $r['npk']);
+        //             $karyawan = $this->db->get('karyawan')->row_array();
+        //             $client = new \GuzzleHttp\Client();
+        //             $response = $client->post(
+        //                 'https://region01.krmpesan.com/api/v2/message/send-text',
+        //                 [
+        //                     'headers' => [
+        //                         'Content-Type' => 'application/json',
+        //                         'Accept' => 'application/json',
+        //                         'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //                     ],
+        //                     'json' => [
+        //                         'phone' => $karyawan['phone'],
+        //                         'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
+        //                         "\r\nNama : *" . $r['nama'] . "*" .
+        //                         "\r\nTujuan : *" . $r['tujuan'] . "*" .
+        //                         "\r\nKeperluan : *" . $r['keperluan'] . "*" .
+        //                         "\r\nPeserta : *" . $r['anggota'] . "*" .
+        //                         "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
+        //                         "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
+        //                         "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
+        //                         "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
+        //                         "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
+        //                         "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+        //                     ],
+        //                 ]
+        //             );
+        //             $body = $response->getBody();
+        //         }
+        //     }
+        // endforeach;
 
         $data['sidemenu'] = 'GA';
         $data['sidesubmenu'] = 'Konfirmasi Perjalanan Dinas';
