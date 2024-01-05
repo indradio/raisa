@@ -406,6 +406,9 @@ class Perjalanandl extends CI_Controller
 
         $this->session->set_flashdata('message', 'bataldl');
         redirect('perjalanandl/admindl');
+
+
+        
     }
 
     public function perjalanan($parameter=null)

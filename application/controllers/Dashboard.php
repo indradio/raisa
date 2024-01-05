@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
         is_logged_in();
         $this->load->model("dashboard_model");
 
-        $this->update_perjalanan();
+        // $this->update_perjalanan();
         $this->update_lembur();
         $this->update_cuti();
         // $this->update_presensi();
