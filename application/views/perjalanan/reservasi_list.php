@@ -128,7 +128,7 @@
                                     <?php
                                     foreach ($cancelled as $row) : ?>
                                         <?php if ($row['tglberangkat'] < date('Y-m-d')) {
-                                            echo '<tr class="text-dark bg-danger">';
+                                            echo '<tr class="text-white bg-danger">';
                                             } else {
                                             echo '<tr>';
                                             } ?>
