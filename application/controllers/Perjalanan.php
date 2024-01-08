@@ -443,6 +443,7 @@ class Perjalanan extends CI_Controller
                     if (!empty($r)) {
 
                         $this->db->set('status', '0');
+                        $this->db->set('last_status', $r['status']);
                         $this->db->set('catatan', "Reservasi perjalanan dibatalkan. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
                         $this->db->where('id', $r['id']);
                         $this->db->update('reservasi');
@@ -490,6 +491,7 @@ class Perjalanan extends CI_Controller
                     if (!empty($r)) {
 
                         $this->db->set('status', '0');
+                        $this->db->set('last_status', $r['status']);
                         $this->db->set('catatan', "Reservasi perjalanan dibatalkan. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
                         $this->db->where('id', $r['id']);
                         $this->db->update('reservasi');
