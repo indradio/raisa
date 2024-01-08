@@ -544,9 +544,10 @@ class Perjalanan extends CI_Controller
                                  $this->db->where('last_status', '6');
             $data['cancelled'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
 
-                                 $this->db->where('tglberangkat', date('Y-m-d'));
+                                //  $this->db->where('tglberangkat', date('Y-m-d'));
                                  $this->db->where('tgl_fin !=', NULL);
                                  $this->db->where('jenis_perjalanan', 'TAPP');
+                                 $this->db->where('last_status', '6');
             $data['cancelled_ta'] = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
 
             $this->load->view('templates/header', $data);
