@@ -583,6 +583,7 @@ class Perjalanan extends CI_Controller
 
             if (empty($perjalanan)){
                 $this->db->set('tglberangkat', date('Y-m-d'));
+                $this->db->set('tglkembali', date('Y-m-d'));
                 $this->db->set('jamberangkat', date('H:i:s'));
                 $this->db->set('catatan', '');
                 $this->db->set('status', '6');
