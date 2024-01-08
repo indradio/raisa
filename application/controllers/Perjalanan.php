@@ -582,6 +582,7 @@ class Perjalanan extends CI_Controller
             $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $id])->row_array();
 
             if (empty($perjalanan)){
+                $this->db->set('tglberangkat', date('Y-m-d'));
                 $this->db->set('jamberangkat', date('H:i:s'));
                 $this->db->set('catatan', '');
                 $this->db->set('status', '6');
