@@ -491,7 +491,7 @@ class Dashboard extends CI_Controller
         $data['sidemenu'] = 'Dashboard';
         $data['sidesubmenu'] = $this->session->userdata('nama');
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $data['pendapatan'] = $this->db->get('pendapatan')->result_array();
+        // $data['pendapatan'] = $this->db->get('pendapatan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);

@@ -28,6 +28,26 @@ class Perjalanan extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function dashboard()
+    {
+        date_default_timezone_set('asia/jakarta');
+
+        // List Kendaraan
+        $this->db->where('is_active', '1');
+        $this->db->where('id !=', '1');
+        $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
+    
+        // Halaman dashboard
+        $data['sidemenu'] = 'Perjalanan';
+        $data['sidesubmenu'] = 'Sedang Bertugas';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('perjalanan/dashboard/index', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function penyelesaian($parameter)
     {
         date_default_timezone_set('asia/jakarta');
