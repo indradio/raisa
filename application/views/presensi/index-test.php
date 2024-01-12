@@ -167,7 +167,7 @@
             </div>
             <form class="form-horizontal" method="post" action="<?= base_url('presensi/submit'); ?>">
                 <div class="modal-body">
-                    <div class="form-group" hidden>
+                    <div class="form-group" >
                         <input type="text" class="form-control" id="state" name="state" required="true" />
                         <input type="text" class="form-control" id="workstate" name="workstate" />
                         <input type="text" class="form-control" id="latitude" name="latitude" required="true" />
@@ -307,41 +307,52 @@
       lat = position.coords.latitude;
       lng = position.coords.longitude;
 
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
 
-      //Send the proper header information along with the request
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      xhr.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          var myObj = JSON.parse(this.responseText);
-          loc = myObj.results['0']['formatted_address'];
-          document.getElementById("loc").value = myObj.results['0']['formatted_address'];
-          document.getElementById("location").value = myObj.results['0']['formatted_address'];
-        }
-      }
-      xhr.send();
-      // xhr.send(new Int8Array()); 
-      // xhr.send(element);
+      // var xhr = new XMLHttpRequest();
+      // xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
 
-      var location = new google.maps.LatLng(lat, lng);
-      var mapCanvas = document.getElementById('map');
+      // //Send the proper header information along with the request
+      // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      var mapOptions = {
-        center: location,
-        zoom: 16,
+      // xhr.onreadystatechange = function() { // Call a function when the state changes.
+      //   if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      //     var myObj = JSON.parse(this.responseText);
+      //     loc = myObj.results['0']['formatted_address'];
+      //     document.getElementById("loc").value = myObj.results['0']['formatted_address'];
+      //     document.getElementById("location").value = myObj.results['0']['formatted_address'];
+      //   }
+      // }
+      // xhr.send();
+      // // xhr.send(new Int8Array()); 
+      // // xhr.send(element);
 
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      var map = new google.maps.Map(mapCanvas, mapOptions);
-      var marker = new google.maps.Marker({
-        position: location,
-        map: map
-      });
+      // var location = new google.maps.LatLng(lat, lng);
+      // var mapCanvas = document.getElementById('map');
 
-      marker.setMap(map);
+      // var mapOptions = {
+      //   center: location,
+      //   zoom: 16,
+
+      //   mapTypeId: google.maps.MapTypeId.ROADMAP
+      // }
+      // var map = new google.maps.Map(mapCanvas, mapOptions);
+      // var marker = new google.maps.Marker({
+      //   position: location,
+      //   map: map
+      // });
+
+      // marker.setMap(map);
     };
+
+    function initMap() {
+    // Kode Google Maps API Anda di sini
+    var peta = new google.maps.Map(document.getElementById('modalMap'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 8
+    });
+
+  }
 
     document.getElementById("platform").value = navigator.platform;
 
@@ -356,6 +367,8 @@
         sendbtn.disabled = true;
       }
     };
+
+
  
     $('#clockTime').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
@@ -575,3 +588,7 @@
         });
     });
 </script>
+
+<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4&callback=initMap">
+    </script>

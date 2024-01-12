@@ -65,6 +65,50 @@ class Presensi extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function test()
+    {
+        date_default_timezone_set('asia/jakarta');
+        $data['sidemenu'] = 'Kehadiran';
+        $data['sidesubmenu'] = 'Kehadiran';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+        $tahun      = date("Y");
+        $bulan      = date("m");
+        $tanggal    = date("d");
+
+        $this->load->helper('url');
+
+        // if (date('H:i') >= '06:00' and date('H:i') <= '08:00') {
+        //     $flag = 'Check In';
+        // } elseif (date('H:i') >= '11:00' and date('H:i') <= '14:00') {
+        //     $flag = 'Rest Time';
+        // } elseif (date('H:i') >= '17:00' and date('H:i') <= '19:00') {
+        //     $flag = 'Check Out';
+        // } else {
+        //     $flag = 'notime';
+        // }
+        // $data['flag'] = $flag;
+
+        $this->db->where('year(time)',$tahun);
+        $this->db->where('month(time)',$bulan);
+        $this->db->where('day(time)',$tanggal);
+        $this->db->where('npk',$this->session->userdata('npk'));
+        $this->db->where('state','C/In');
+        $presensi = $this->db->get('presensi')->row_array();
+        
+        if (!empty($presensi)) {
+            $data['workstate'] = $presensi['work_state'];
+        } else {
+            $data['workstate'] = 'not found';
+        }
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('presensi/index-test', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function submit()
     {
         date_default_timezone_set('asia/jakarta');
