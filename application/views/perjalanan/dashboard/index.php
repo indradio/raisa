@@ -506,7 +506,7 @@
     //   var modal = $(this)
     //   modal.find('.modal-body input[name="device_id"]').val(id)
 
-    setInterval(function() {
+    // setInterval(function() {
 
       const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
 
@@ -554,7 +554,7 @@
       xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
       }
 
-    }, 15000);   
+    // }, 15000);   
 
   });
 </script>
