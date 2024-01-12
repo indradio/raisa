@@ -446,66 +446,6 @@
 
     let timerInterval
 
-    $('#dtpresensi').DataTable({
-      paging: false,
-      ordering: false,
-      info: false,
-      searching: false,
-      serverSide: false,
-      processing: true,
-      ajax: {
-              "url"   : "<?= site_url('presensi/get_data/today') ?>",
-              "type"  : "POST",
-          },
-      columns: [
-        { "data":"status"},
-        { "data":"time"}
-      ],
-    });
-
-    $('#dtcuti').DataTable({
-      paging: false,
-      ordering: false,
-      info: false,
-      searching: false,
-      serverSide: false,
-      processing: true,
-      ajax: {
-              "url"   : "<?= site_url('cuti/get_data/today') ?>",
-              "type"  : "POST",
-          },
-      columns: [
-        { "data":"name"},
-        { "data":"until"}
-      ],
-    });
-
-
-    $('#hapusClaim').on('show.bs.modal', function(event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
-      var id = button.data('id') // Extract info from data-* attributes
-      var modal = $(this)
-      modal.find('.modal-body input[name="id"]').val(id)
-    });
-
-    $('#bannerModal').on('show.bs.modal', function(event) {
-      var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
-      var modal = $(this)
-      modal.find('#gambar').attr('src', div.data('gambar'));
-    });
-
-    window.setTimeout(function() {
-      $(".alert").fadeTo(200, 0).slideUp(200, function() {
-        $(this).remove();
-      });
-    }, 60000);
-
-    // $('#detail').on('show.bs.modal', function(event) {
-    //   var button = $(event.relatedTarget) // Button that triggered the modal
-    //   var id = button.data('id') // Extract info from data-* attributes
-    //   var modal = $(this)
-    //   modal.find('.modal-body input[name="device_id"]').val(id)
-
     // setInterval(function() {
 
       const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
