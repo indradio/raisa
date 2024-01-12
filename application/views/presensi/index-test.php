@@ -308,24 +308,23 @@
       lng = position.coords.longitude;
 
 
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
 
-      // var xhr = new XMLHttpRequest();
-      // xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
+      //Send the proper header information along with the request
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      // //Send the proper header information along with the request
-      // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      // xhr.onreadystatechange = function() { // Call a function when the state changes.
-      //   if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      //     var myObj = JSON.parse(this.responseText);
-      //     loc = myObj.results['0']['formatted_address'];
-      //     document.getElementById("loc").value = myObj.results['0']['formatted_address'];
-      //     document.getElementById("location").value = myObj.results['0']['formatted_address'];
-      //   }
-      // }
-      // xhr.send();
-      // // xhr.send(new Int8Array()); 
-      // // xhr.send(element);
+      xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          var myObj = JSON.parse(this.responseText);
+          loc = myObj.results['0']['formatted_address'];
+          document.getElementById("loc").value = myObj.results['0']['formatted_address'];
+          document.getElementById("location").value = myObj.results['0']['formatted_address'];
+        }
+      }
+      xhr.send();
+      // xhr.send(new Int8Array()); 
+      // xhr.send(element);
 
       // var location = new google.maps.LatLng(lat, lng);
       // var mapCanvas = document.getElementById('map');
@@ -343,6 +342,7 @@
       // });
 
       // marker.setMap(map);
+
     };
 
     function initMap() {
