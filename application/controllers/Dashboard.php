@@ -457,10 +457,10 @@ class Dashboard extends CI_Controller
         // $this->db->where('id !=', '1');
         // $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
 
-        // $queryReservasi = "SELECT *
-        // FROM `reservasi`
-        // WHERE (`atasan1` = '{$this->session->userdata('inisial')}' and `status` = 1) or (`atasan2` = '{$this->session->userdata('inisial')}' and `status` = 2) ";
-        // $data['Reservasi'] = $this->db->query($queryReservasi)->result_array();
+        $queryReservasi = "SELECT *
+        FROM `reservasi`
+        WHERE (`atasan1` = '{$this->session->userdata('inisial')}' and `status` = 1) or (`atasan2` = '{$this->session->userdata('inisial')}' and `status` = 2) ";
+        $data['Reservasi'] = $this->db->query($queryReservasi)->result_array();
 
         $queryRencanaLembur = "SELECT *
         FROM `lembur`
