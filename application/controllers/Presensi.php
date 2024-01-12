@@ -68,9 +68,9 @@ class Presensi extends CI_Controller
     public function submit()
     {
         date_default_timezone_set('asia/jakarta');
-        $tahun      = date("Y");
-        $bulan      = date("m");
-        $tanggal    = date("d");
+        // $tahun      = date("Y");
+        // $bulan      = date("m");
+        // $tanggal    = date("d");
 
         // Day Check
         if (date('D') == 'Sat' or date('D') == 'Sun') {
@@ -87,6 +87,7 @@ class Presensi extends CI_Controller
 
         if (!empty($this->input->post('location')) or !empty($this->input->post('latitude')) or !empty($this->input->post('longitude'))) {
             $presensi = $this->db->get_where('presensi', ['id' => $id])->row_array();
+
             if (empty($presensi)) {
                 $data = [
                     // 'id'            => $id,
@@ -157,7 +158,7 @@ class Presensi extends CI_Controller
             $this->session->set_flashdata('message', 'clockFailed');
         }
         
-        redirect('presensi');
+        redirect('presensi/data');
     }
 
     public function clockin()
