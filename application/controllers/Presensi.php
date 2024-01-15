@@ -202,7 +202,7 @@ class Presensi extends CI_Controller
             $this->session->set_flashdata('message', 'clockFailed');
         }
         
-        redirect('presensi/data');
+        redirect('presensi');
     }
 
     public function clockin()
