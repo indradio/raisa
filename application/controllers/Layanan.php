@@ -268,15 +268,13 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "ℹ *[INFO] LIBUR HARI RAYA NATAL DAN CUTI BERSAMA*" .
+                            'message' => "ℹ *[INFO] MAINTENANCE RAISA TELAH SELESAI*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2023, maka dengan ini kami informasikan bahwa :".
-                            "\r\n \r\n*1.	Tgl  25 Desember 2023	: Libur Hari Raya Natal*".
-                            "\r\n*2.	Tgl 26 Desember 2023	: Cuti Bersama Hari Raya Natal*" .
-                            "\r\n \r\n*Karyawan masuk kembali bekerja seperti biasa pada tanggal 27 Desember 2023.*" .
+                            "\r\nSaat ini Server yang digunakan RAISA sudah dilakukan penambahan kapasitas memory.".
+                            "\r\nJika kamu masih mengalami proses RAISA yang lemot, jangan ragu untuk menghubungi admin.".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
-                            "\r\nHR"
+                            "\r\nAdmin"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
