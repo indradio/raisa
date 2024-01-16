@@ -453,39 +453,51 @@ class Dashboard extends CI_Controller
         // }
 
         // List Kendaraan
-        // $this->db->where('is_active', '1');
-        // $this->db->where('id !=', '1');
-        // $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
+        $this->db->where('is_active', '1');
+        $this->db->where('id !=', '1');
+        $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
 
-        $queryReservasi = "SELECT *
-        FROM `reservasi`
-        WHERE (`atasan1` = '{$this->session->userdata('inisial')}' and `status` = 1) or (`atasan2` = '{$this->session->userdata('inisial')}' and `status` = 2) ";
-        $data['Reservasi'] = $this->db->query($queryReservasi)->result_array();
+        if ($this->session->userdata('posisi_id') < 7){
 
-        $queryRencanaLembur = "SELECT *
-        FROM `lembur`
-        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '2') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '3') ";
-        $data['RencanaLembur'] = $this->db->query($queryRencanaLembur)->result_array();
+            $queryReservasi = "SELECT *
+            FROM `reservasi`
+            WHERE (`atasan1` = '{$this->session->userdata('inisial')}' and `status` = 1) or (`atasan2` = '{$this->session->userdata('inisial')}' and `status` = 2) ";
+            $data['Reservasi'] = $this->db->query($queryReservasi)->result_array();
 
-        $queryRealisasiLembur = "SELECT *
-        FROM `lembur`
-        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '5') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '6') ";
-        $data['RealisasiLembur'] = $this->db->query($queryRealisasiLembur)->result_array();
+            $queryRencanaLembur = "SELECT *
+            FROM `lembur`
+            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '2') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '3') ";
+            $data['RencanaLembur'] = $this->db->query($queryRencanaLembur)->result_array();
 
-        $queryCuti = "SELECT *
-        FROM `cuti`
-        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
-        $data['Cuti'] = $this->db->query($queryCuti)->result_array();
+            $queryRealisasiLembur = "SELECT *
+            FROM `lembur`
+            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '5') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '6') ";
+            $data['RealisasiLembur'] = $this->db->query($queryRealisasiLembur)->result_array();
 
-        $queryPresensi = "SELECT *
-        FROM `presensi`
-        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1')";
-        $data['presensi'] = $this->db->query($queryPresensi)->result_array();
+            $queryCuti = "SELECT *
+            FROM `cuti`
+            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+            $data['Cuti'] = $this->db->query($queryCuti)->result_array();
 
-        $queryIMP = "SELECT *
-        FROM `imp`
-        WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
-        $data['imp'] = $this->db->query($queryIMP)->result_array();
+            $queryPresensi = "SELECT *
+            FROM `presensi`
+            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1')";
+            $data['presensi'] = $this->db->query($queryPresensi)->result_array();
+
+            $queryIMP = "SELECT *
+            FROM `imp`
+            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+            $data['imp'] = $this->db->query($queryIMP)->result_array();
+
+        }else{
+            $data['Reservasi'] = null;
+            $data['RencanaLembur'] = null;
+            $data['RealisasiLembur'] = null;
+            $data['Cuti'] = null;
+            $data['presensi'] = null;
+            $data['imp'] = null;
+
+        }
     
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';

@@ -444,7 +444,7 @@
 <script>
   $(document).ready(function() {
 
-    let timerInterval
+    // let timerInterval
 
     // setInterval(function() {
 
