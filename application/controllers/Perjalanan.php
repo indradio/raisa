@@ -1652,12 +1652,14 @@ class Perjalanan extends CI_Controller
 
                     if ($perjalanan){
 
-                        if ($perjalanan->status==1){
-                            $statusDL = "<button type='button' class='bagde btn-info' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SIAP BERANGKAT</button>";
+                        if ($perjalanan->status==0){
+                            $statusDL = "<button type='button' class='btn btn-outline-danger btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">PERJALANAN BATAL</button>";
+                        }elseif ($perjalanan->status==1){
+                            $statusDL = "<button type='button' class='btn btn-outline-info btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SIAP BERANGKAT</button>";
                         }elseif ($perjalanan->status==2){
-                            $statusDL = "<button type='button' class='bagde btn-success' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SEDANG PERJALANAN</button>";
+                            $statusDL = "<button type='button' class='btn btn-outline-success btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SEDANG PERJALANAN</button>";
                         }elseif ($perjalanan->status==3){
-                            $statusDL = "<button type='button' class='bagde btn-success' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SUDAH KEMBALI</button>";
+                            $statusDL = "<button type='button' class='btn btn-outline-success btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SUDAH KEMBALI</button>";
                         }
                         $output['data'][] = array(
                             "status" => $statusDL,
@@ -1670,9 +1672,9 @@ class Perjalanan extends CI_Controller
                     }else{
 
                         if ($row->status==0){
-                            $statusRSV = "<button type='button' class='bagde btn-danger' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
+                            $statusRSV = "<button type='button' class='btn btn-outline-danger btn-sm' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
                         }else{
-                            $statusRSV = "<button type='button' class='bagde btn-warning' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
+                            $statusRSV = "<button type='button' class='btn btn-outline-warning btn-sm' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
                         }
 
                         $output['data'][] = array(
