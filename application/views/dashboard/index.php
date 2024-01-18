@@ -668,6 +668,11 @@
                 { "data": "peserta" },
                 { "data": "kendaraan" }
             ],
+
+            rowReorder: true,
+            columnDefs: [
+                { orderable: true, className: 'reorder', targets: 1 }
+            ]
         });
 
 

@@ -1656,6 +1656,8 @@ class Perjalanan extends CI_Controller
                             $statusDL = "<button type='button' class='bagde btn-info' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SIAP BERANGKAT</button>";
                         }elseif ($perjalanan->status==2){
                             $statusDL = "<button type='button' class='bagde btn-success' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SEDANG PERJALANAN</button>";
+                        }elseif ($perjalanan->status==3){
+                            $statusDL = "<button type='button' class='bagde btn-success' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SUDAH KEMBALI</button>";
                         }
                         $output['data'][] = array(
                             "status" => $statusDL,
@@ -1666,8 +1668,16 @@ class Perjalanan extends CI_Controller
                         );
                         
                     }else{
+
+                        
+                        if ($perjalanan->status==0){
+                            $statusRSV = "<button type='button' class='bagde btn-danger' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
+                        }else{
+                            $statusRSV = "<button type='button' class='bagde btn-warning' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
+                        }
+
                         $output['data'][] = array(
-                            "status" => "<button type='button' class='bagde btn-warning' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>",
+                            "status" => $statusRSV,
                             "berangkat" => date('d-M', strtotime($row->tglberangkat)) . ' ' . date('H:i', strtotime($row->jamberangkat)),
                             "tujuan" => $row->tujuan,
                             "peserta" => $row->anggota,
