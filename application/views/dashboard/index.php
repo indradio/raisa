@@ -453,7 +453,7 @@
         <table id="dt-perjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
             <thead>
                 <tr>
-                  <th class="disabled-sorting text-center">Status</th>
+                  <th class="text-center">Status</th>
                   <th>Berangkat</th>
                   <th>Tujuan</th>
                   <th>Peserta</th>
@@ -668,11 +668,6 @@
                 { "data": "peserta" },
                 { "data": "kendaraan" }
             ],
-
-            rowReorder: true,
-            columnDefs: [
-                { orderable: true, className: 'reorder', targets: 1 }
-            ]
         });
 
 
