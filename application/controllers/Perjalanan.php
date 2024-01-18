@@ -1645,9 +1645,9 @@ class Perjalanan extends CI_Controller
                     // $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $row->id])->result();
                     // $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $row->id])->result();
 
-                    $this->db->where('status','1');
-                    $this->db->where('status','2');
-                    $this->db->where('status','3');
+                    // $this->db->where('status','1');
+                    // $this->db->where('status','2');
+                    // $this->db->where('status','3');
                     $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $row->id])->row();
 
                     if (!empty($perjalanan)){
