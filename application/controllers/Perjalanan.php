@@ -1669,8 +1669,7 @@ class Perjalanan extends CI_Controller
                         
                     }else{
 
-                        
-                        if ($perjalanan->status==0){
+                        if ($row->status==0){
                             $statusRSV = "<button type='button' class='bagde btn-danger' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
                         }else{
                             $statusRSV = "<button type='button' class='bagde btn-warning' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
