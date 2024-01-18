@@ -437,6 +437,41 @@
       </div>
       <?php }; ?>
     </div>
+    
+    <!-- 3. Perjalanan -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-text card-header-info">
+            <div class="card-text">
+              <h4 class="card-title">Perjalanan</h4>
+              <p class="card-category">Dinas</p>
+            </div>
+          </div>
+        <div class="card-body table-responsive">
+      <div class="material-datatables">
+        <table id="dt-perjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+            <thead>
+                <tr>
+                  <th class="disabled-sorting text-center">Status</th>
+                  <th>Berangkat</th>
+                  <th>Tujuan</th>
+                  <th>Peserta</th>
+                  <th>Nopol</th>
+                </tr>
+            </thead>
+            <!-- <tfoot>
+                <tr>
+                    <th>Aktivitas</th>
+                    <th>Durasi <small>(Jam)</small></th>
+                    <th class="disabled-sorting text-right">Actions</th>
+                </tr>
+            </tfoot> -->
+        </table>
+      </div> 
+      </div> 
+    </div>
+    <!-- end Perjalanan -->
 
   </div>
   <!-- end container-fluid -->
@@ -612,6 +647,29 @@
       ],
     });
 
+    $('#dt-perjalanan').DataTable({
+            "pagingType": "full_numbers",
+            scrollX: true,
+            scrollCollapse: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            serverSide: false,
+            processing: true,
+            ajax: {
+                    "url"   : "<?= site_url('perjalanan/get_data/dashboard') ?>",
+                    "type"  : "POST",
+                },
+            columns: [
+                { "data": "status", className: "text-center" },
+                { "data": "berangkat" },
+                { "data": "tujuan" },
+                { "data": "peserta" },
+                { "data": "kendaraan" }
+            ],
+        });
+
 
     $('#hapusClaim').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
@@ -640,51 +698,51 @@
 
     // setInterval(function() {
 
-      const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
+      // const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
 
-      for (let i = 0; i < cars.length; i++) {
+      // for (let i = 0; i < cars.length; i++) {
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
+      //   var xhr = new XMLHttpRequest();
+      //   xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
 
-        //Send the proper header information along with the request
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      //   //Send the proper header information along with the request
+      //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        xhr.onreadystatechange = function() { // Call a function when the state changes.
-          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            var myObj = JSON.parse(this.responseText);
-            var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
-            var idloc = "loc" + cars[i];
-            var lat = "lat" + cars[i];
-            var lng = "lng" + cars[i]; 
+      //   xhr.onreadystatechange = function() { // Call a function when the state changes.
+      //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      //       var myObj = JSON.parse(this.responseText);
+      //       var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
+      //       var idloc = "loc" + cars[i];
+      //       var lat = "lat" + cars[i];
+      //       var lng = "lng" + cars[i]; 
             
-            loc = myObj.data[cars[i]]['realtime']['location'];
-            // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
-            lat = myObj.data[cars[i]]['realtime']['latitude'];
-            lng = myObj.data[cars[i]]['realtime']['longitude'];
+      //       loc = myObj.data[cars[i]]['realtime']['location'];
+      //       // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
+      //       lat = myObj.data[cars[i]]['realtime']['latitude'];
+      //       lng = myObj.data[cars[i]]['realtime']['longitude'];
             
-            var mapCanvas = document.getElementById(cars[i]);
-            document.getElementById(idloc).innerHTML = loc;
+      //       var mapCanvas = document.getElementById(cars[i]);
+      //       document.getElementById(idloc).innerHTML = loc;
             
-            var location = new google.maps.LatLng(lat, lng);
-            var mapOptions = {
-              center: location,
-              zoom: 15,
-              mapTypeId: "satellite",
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-            var map = new google.maps.Map(mapCanvas, mapOptions);
+      //       var location = new google.maps.LatLng(lat, lng);
+      //       var mapOptions = {
+      //         center: location,
+      //         zoom: 15,
+      //         mapTypeId: "satellite",
+      //         mapTypeId: google.maps.MapTypeId.ROADMAP
+      //       }
+      //       var map = new google.maps.Map(mapCanvas, mapOptions);
 
-            var marker = new google.maps.Marker({
-              position: location,
-              icon: image
-            });
+      //       var marker = new google.maps.Marker({
+      //         position: location,
+      //         icon: image
+      //       });
             
-            marker.setMap(map);
-          }
-        }
-      xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
-      }
+      //       marker.setMap(map);
+      //     }
+      //   }
+      // xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
+      // }
 
     // }, 5000);
 

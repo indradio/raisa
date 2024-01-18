@@ -1633,6 +1633,60 @@ class Perjalanan extends CI_Controller
         if ($params=='get')
         {
 
+        }elseif ($params=='dashboard') {
+
+            $reservasi = $this->db->get_where('reservasi', ['tglberangkat' => date('Y-m-d')])->result();
+            if (!empty($reservasi)){
+                foreach ($reservasi as $row) {
+
+                    $status = $this->db->get_where('reservasi_status', ['id' => $row->status])->row(); 
+                    // $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $row->id])->result();
+                    // $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $row->id])->result();
+
+                    $this->db->where('status','1');
+                    $this->db->where('status','2');
+                    $this->db->where('status','3');
+                    $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $row->id])->row();
+
+                    if (!empty($perjalanan)){
+
+                        if ($perjalanan->status==1){
+                            $statusDL = "<button type='button' class='bagde btn-info' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SIAP BERANGKAT</button>";
+                        }elseif ($perjalanan->status==2){
+                            $statusDL = "<button type='button' class='bagde btn-success' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SEDANG PERJALANAN</button>";
+                        }
+                        $output['data'][] = array(
+                            "status" => $statusDL,
+                            "berangkat" => date('d-M', strtotime($perjalanan->tglberangkat)) . ' ' . date('H:i', strtotime($perjalanan->jamberangkat)),
+                            "tujuan" => $perjalanan->tujuan,
+                            "peserta" => $perjalanan->anggota,
+                            "kendaraan" => $perjalanan->nopol. ' - ' .$perjalanan->kendaraan
+                        );
+                        
+                    }else{
+                        $output['data'][] = array(
+                            "status" => "<button type='button' class='bagde btn-warning' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>",
+                            "berangkat" => date('d-M', strtotime($row->tglberangkat)) . ' ' . date('H:i', strtotime($row->jamberangkat)),
+                            "tujuan" => $row->tujuan,
+                            "peserta" => $row->anggota,
+                            "kendaraan" => $row->nopol. ' - ' .$row->kendaraan
+                        );
+                    }
+
+                }
+            }else{
+                $output['data'][] = array(
+                    "status" =>'',
+                    "berangkat" =>'',
+                    "tujuan" =>'',
+                    "peserta" =>'',
+                    "kendaraan" =>''
+                );
+            }
+ 
+            echo json_encode($output);
+            exit();
+
         }elseif ($params=='travelcost') {
             
             $this->db->where('year(tglberangkat)',$this->input->post('tahun'));
