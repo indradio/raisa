@@ -1637,7 +1637,6 @@ class Perjalanan extends CI_Controller
 
             $this->db->where('tglberangkat <=',date('Y-m-d'));
             $this->db->where('tglkembali >=',date('Y-m-d'));
-            $this->db->where('status !=','9');
             $reservasi = $this->db->get('reservasi')->result();
             if (!empty($reservasi)){
                 foreach ($reservasi as $row) {
