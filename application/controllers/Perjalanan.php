@@ -1650,7 +1650,7 @@ class Perjalanan extends CI_Controller
                     // $this->db->where('status','3');
                     $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $row->id])->row();
 
-                    if (!empty($perjalanan)){
+                    if ($perjalanan){
 
                         if ($perjalanan->status==1){
                             $statusDL = "<button type='button' class='bagde btn-info' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SIAP BERANGKAT</button>";
