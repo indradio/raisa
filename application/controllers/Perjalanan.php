@@ -1642,12 +1642,7 @@ class Perjalanan extends CI_Controller
                 foreach ($reservasi as $row) {
 
                     $status = $this->db->get_where('reservasi_status', ['id' => $row->status])->row(); 
-                    // $peserta = $this->db->get_where('perjalanan_anggota', ['reservasi_id' => $row->id])->result();
-                    // $tujuan = $this->db->get_where('perjalanan_tujuan', ['reservasi_id' => $row->id])->result();
 
-                    // $this->db->where('status','1');
-                    // $this->db->where('status','2');
-                    // $this->db->where('status','3');
                     $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $row->id])->row();
 
                     if ($perjalanan){
