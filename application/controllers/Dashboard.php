@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
         is_logged_in();
         $this->load->model("dashboard_model");
 
-        // $this->update_perjalanan();
+        $this->update_perjalanan();
         $this->update_lembur();
         $this->update_cuti();
         // $this->update_presensi();
@@ -22,9 +22,10 @@ class Dashboard extends CI_Controller
     public function update_perjalanan()
     {
         //Auto batalkan perjalanan
+
         $queryPerjalanan = "SELECT *
         FROM `perjalanan`
-        WHERE `tglberangkat` <= CURDATE() AND (`status` = 1 OR `status` = 8)
+        WHERE `tglberangkat` <= CURDATE() AND `status` = 1
         ";
         $perjalanan = $this->db->query($queryPerjalanan)->result_array();
         foreach ($perjalanan as $p) :
@@ -36,7 +37,8 @@ class Dashboard extends CI_Controller
             $menit   = floor($durasi / 60);
             $user = $this->db->get_where('karyawan', ['npk' => $p['npk']])->row_array();
             
-            if (($p['copro']!='NON PROJEK' and $jam >= 1)or($p['copro']=='NON PROJEK' and $jam >= 2)) {
+            if (($p['copro']!='NON PROJEK' and $jam >= 1) or ($p['copro']=='NON PROJEK' and $jam >= 2) or (date('Y-m-d', strtotime($p['tglberangkat'])) < date('Y-m-d'))) {
+
                 $this->db->set('status', '0');
                 $this->db->set('last_status', $p['status']);
                 $this->db->set('catatan', "Waktu keberangkatan perjalanan kamu telah selesai. - Dibatalkan oleh SYSTEM pada " . date('d-m-Y H:i'));
@@ -321,7 +323,7 @@ class Dashboard extends CI_Controller
         //         $this->db->update('cuti_saldo');
         //     endforeach;
             
-        $this->db->where('tgl1 <', $today);
+        $this->db->where('tgl1 <', date('Y-m-d'));
         $this->db->where('status >', 0);
         $this->db->where('status <', 3);
         $this->db->where('darurat', null);
@@ -368,7 +370,7 @@ class Dashboard extends CI_Controller
                         ],
                         'json' => [
                             'phone' => $user->phone,
-                            'message' => "*[NOTIF] PEMBATALAN CUTI*" .
+                            'message' => "*[DIBATALKAN] CUTI KAMU MELEBIHI BATAS WAKTU PERSETUJUAN*" .
                             "\r\n \r\nNama : *" . $row->nama . "*" .
                             "\r\nTanggal : *" . date('d-M', strtotime($row->tgl1)) . "*" .
                             "\r\nLama : *" . $row->lama ." Hari* " .
