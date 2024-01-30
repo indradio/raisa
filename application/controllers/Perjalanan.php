@@ -441,6 +441,20 @@ class Perjalanan extends CI_Controller
         redirect('perjalanandl/penyelesaian/' . $perjalanan['id']);
     }
 
+    public function change_distance()
+    {
+        if ($this->input->post('kmberangkat') < $this->input->post('kmkembali')){
+            $total = $this->input->post('kmkembali') - $this->input->post('kmberangkat');
+
+            $this->db->set('kmtotal', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
+
+        }
+     
+        redirect('perjalanandl/penyelesaian/' . $this->input->post('id'));
+    }
+
     public function reservasi($params=null,$id=null)
     {
         date_default_timezone_set('asia/jakarta');

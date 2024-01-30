@@ -42,7 +42,7 @@
                                         <input type="text" class="form-control disabled" id="tgl" name="tgl" value="<?= date("d M Y", strtotime($perjalanan['tglberangkat'])) . ' '.date("H:i", strtotime($perjalanan['jamberangkat'])).' - ' .date("d M Y", strtotime($perjalanan['tglkembali'])).' '.date("H:i", strtotime($perjalanan['jamkembali'])); ?>">
                                     <?php }?>
                                     </div>
-                                    <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#gantiTgl" data-id="<?= $perjalanan['id']; ?>">Ganti Tanggal</a>
+                                    <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#gantiTgl" data-id="<?= $perjalanan['id']; ?>">Ubah Tanggal</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -68,6 +68,7 @@
                                     <div class="form-group has-default">
                                         <input type="text" class="form-control disabled" name="kmtotal" value="<?= $perjalanan['kmtotal']; ?> Km">
                                     </div>
+                                    <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#gantiJarak" data-id="<?= $perjalanan['id']; ?>">Ubah Jarak</a>
                                 </div>
                             </div>
                             <div class="row" hidden="true">
@@ -810,6 +811,47 @@
         </div>
     </div>
   </div>
+<div class="modal fade" id="gantiJarak" tabindex="-1" role="dialog" aria-labelledby="gantiJarakTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-info text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="material-icons">clear</i>
+                        </button>
+                        <h4 class="card-title">PERJALANAN DINAS</h4>
+                    </div>
+                </div>
+                <form class="form-horizontal" method="post" action="<?= base_url('perjalanan/change_distance'); ?>">
+                    <div class="modal-body">
+                        <input type="hidden" class="form-control" id="id" name="id" required>
+                      <div class="row">
+                        <label class="col-md-3 col-form-label">Km Berangkat</label>
+                        <div class="col-md-9">
+                          <div class="form-group has-default">
+                            <input type="number" class="form-control" id="kmberangkat" name="kmberangkat" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-3 col-form-label">Km Kembali</label>
+                        <div class="col-md-9">
+                          <div class="form-group has-default">
+                            <input type="number" class="form-control" id="kmkembali" name="kmkembali" required>
+                         </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer justify-content-right">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">TUTUP</a>
+                        <button type="submit" class="btn btn-success">SUBMIT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
 <script type="text/javascript">
     $(document).ready(function() {
      
@@ -835,6 +877,13 @@
         })
 
         $('#gantiTgl').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+        })
+
+        $('#gantiJarak').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
             var modal = $(this)
