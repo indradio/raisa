@@ -52,6 +52,7 @@
                                         <th>ACC Atasan1</th>
                                         <th>ACC Atasan2</th>
                                         <th>ACC HR</th>
+                                        <th>ALASAN</th>
                                         <th>DARURAT</th>
                                         <th class="disabled-sorting text-right">Status</th>
                                     </tr>
@@ -75,16 +76,17 @@
                                         </td>
                                         <td><?php if ($row->acc_atasan2){
                                             echo $row->acc_atasan2.' pada '.date('d M Y H:i', strtotime($row->tgl_atasan2));
-                                            }?></td>
+                                        }?></td>
                                         <td><?php if ($row->acc_hr){
                                             echo $row->acc_hr.' pada '.date('d M Y H:i', strtotime($row->tgl_hr));
-                                            }?></td>
+                                        }?></td>
+                                        <td><?= $row->reject_reason; ?></td>
                                         <td><?php if ($row->darurat==1){
                                             echo 'DARURAT';
                                         }else{
                                             echo 'NORMAL';
                                         }?></td>
-                                        <td><?= $status->nama; ?></td>
+                                        <td><?= $row->reject_by.' pada '.date('d M Y H:i', strtotime($row->reject_at)); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -102,6 +104,7 @@
                                         <th>ACC Atasan1</th>
                                         <th>ACC Atasan2</th>
                                         <th>ACC HR</th>
+                                        <th>ALASAN</th>
                                         <th>DARURAT</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
