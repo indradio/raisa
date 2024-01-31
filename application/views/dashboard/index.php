@@ -694,6 +694,7 @@
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             },
+            pageLength: 50,
             serverSide: false,
             processing: true,
             ajax: {
