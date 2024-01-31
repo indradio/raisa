@@ -122,7 +122,7 @@ class Cuti extends CI_Controller
             redirect('/cuti');
         }
 
-        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime('-30 days')) && $this->input->post('darurat') == 1){
+        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime('-1 days')) && $this->input->post('darurat') == 1){
             $this->session->set_flashdata('notify', 'late');
             redirect('/cuti');
         }
