@@ -446,6 +446,8 @@ class Perjalanan extends CI_Controller
         if ($this->input->post('kmberangkat') < $this->input->post('kmkembali')){
             $total = $this->input->post('kmkembali') - $this->input->post('kmberangkat');
 
+            $this->db->set('kmberangkat', $this->input->post('kmberangkat'));
+            $this->db->set('kmkembali', $this->input->post('kmkembali'));
             $this->db->set('kmtotal', $total);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
