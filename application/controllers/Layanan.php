@@ -268,10 +268,10 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "ℹ *[INFO] MAINTENANCE RAISA TELAH SELESAI*" .
+                            'message' => "*🚭 TERIMA KASIH UNTUK TIDAK MEROKOK DI DALAM TOILET*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSaat ini Server yang digunakan RAISA sudah dilakukan penambahan kapasitas memory.".
-                            "\r\nJika kamu masih mengalami proses RAISA yang lemot, jangan ragu untuk menghubungi admin.".
+                            "\r\nDilarang merokok di dalam toilet, Silahkan merokok di area terbuka yg telah disediakan.".
+                            "\r\nPelanggaran ini akan dikenakan sanksi, mari bersama untuk menjaga fasilitas umum agar tetap bersih.".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
                             "\r\nAdmin"
