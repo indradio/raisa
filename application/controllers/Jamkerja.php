@@ -1077,7 +1077,7 @@ class Jamkerja extends CI_Controller
             $tglakhir = date('Y-m-d', strtotime($this->input->post('tglakhir')));
         }else{
             $tglawal  = date('Y-m-1');
-            $tglakhir = date('Y-m-31');
+            $tglakhir = date('Y-m-d');
         }
         
         $data['periode'] = [
