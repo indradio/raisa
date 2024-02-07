@@ -132,7 +132,7 @@ class Persetujuandl extends CI_Controller
 
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
         if ($this->session->userdata['posisi_id'] == '1' or $this->session->userdata['posisi_id'] == '2' or $this->session->userdata['posisi_id'] == '3') {
-            if ($rsv['jenis_perjalanan'] == 'DLPP') {
+            if ($rsv['jenis_perjalanan'] == 'DLPP' or $rsv['jenis_perjalanan'] == 'TAPP') {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '6');
                 $this->db->set('last_notify', date('Y-m-d H:i:s'));
@@ -169,45 +169,45 @@ class Persetujuandl extends CI_Controller
                     ]
                 );
                 $body = $response->getBody();
-            } elseif ($rsv['jenis_perjalanan'] == 'TAPP') {
-                $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
-                $this->db->set('status', '4');
-                $this->db->where('id', $this->input->post('id'));
-                $this->db->update('reservasi');
+            // } elseif ($rsv['jenis_perjalanan'] == 'TAPP') {
+            //     $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
+            //     $this->db->set('status', '4');
+            //     $this->db->where('id', $this->input->post('id'));
+            //     $this->db->update('reservasi');
 
-                // $this->db->where('posisi_id', '3');
-                // $this->db->where('dept_id', '21');
-                $this->db->where('posisi_id', '2');
-                $this->db->where('div_id', '1');
-                $div_head = $this->db->get('karyawan')->row_array();
+            //     // $this->db->where('posisi_id', '3');
+            //     // $this->db->where('dept_id', '21');
+            //     $this->db->where('posisi_id', '2');
+            //     $this->db->where('div_id', '1');
+            //     $div_head = $this->db->get('karyawan')->row_array();
 
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $div_head['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS TAPP*" .
-                            "\r\n \r\nNo. Reservasi : *" . $rsv['id'] . "*" .
-                            "\r\nNama : *" . $rsv['nama'] . "*" .
-                            "\r\nPeserta : *" . $rsv['anggota'] . "*" .
-                            "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
-                            "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
-                            "\r\nCopro : *" . $rsv['copro'] . "*" .
-                            "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
-                            "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
-                            "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
-                            "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
-                            "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+            //     $client = new \GuzzleHttp\Client();
+            //     $response = $client->post(
+            //         'https://region01.krmpesan.com/api/v2/message/send-text',
+            //         [
+            //             'headers' => [
+            //                 'Content-Type' => 'application/json',
+            //                 'Accept' => 'application/json',
+            //                 'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //             ],
+            //             'json' => [
+            //                 'phone' => $div_head['phone'],
+            //                 'message' =>"*PENGAJUAN PERJALANAN DINAS TAPP*" .
+            //                 "\r\n \r\nNo. Reservasi : *" . $rsv['id'] . "*" .
+            //                 "\r\nNama : *" . $rsv['nama'] . "*" .
+            //                 "\r\nPeserta : *" . $rsv['anggota'] . "*" .
+            //                 "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+            //                 "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
+            //                 "\r\nCopro : *" . $rsv['copro'] . "*" .
+            //                 "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
+            //                 "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
+            //                 "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+            //                 "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
+            //                 "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            //             ],
+            //         ]
+            //     );
+            //     $body = $response->getBody();
             } elseif ($rsv['jenis_perjalanan'] == 'TA') {
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '4');
