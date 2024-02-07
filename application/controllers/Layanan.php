@@ -268,13 +268,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*🚭 TERIMA KASIH UNTUK TIDAK MEROKOK DI DALAM TOILET*" .
+                            'message' => "*ℹ[INFORMASI] LIBUR ISRA MI'RAJ DAN CUTI BERSAMA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nDilarang merokok di dalam toilet, Silahkan merokok di area terbuka yg telah disediakan.".
-                            "\r\nPelanggaran ini akan dikenakan sanksi, mari bersama untuk menjaga fasilitas umum agar tetap bersih.".
+                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2024, maka dengan ini kami informasikan bahwa :".
+                            "\r\n \r\n*1.	Tgl 08 Februari 2024	: Libur Isra Mi'raj Nabi Muhammad SAW*".
+                            "\r\n*2.	Tgl 09 Februari 2024	: Cuti Bersama*".
+                            "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *12 Februari 2024*." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
-                            "\r\nAdmin"
+                            "\r\nHuman Capital"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
