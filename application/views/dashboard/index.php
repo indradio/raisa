@@ -227,7 +227,7 @@
     <!-- </div> -->
     <!-- End Absensi -->
 
-    <?php if ($this->session->userdata('posisi_id') < 7){ ?>
+    <?php if ($this->session->userdata('posisi_id') < 7 OR $this->session->userdata('npk') == '0075' OR $this->session->userdata('npk') == '0049'){ ?>
     <div class="col-md-4">
         <div class="card">
           <div class="card-body">
