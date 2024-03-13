@@ -5,14 +5,39 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-product">
-                    <div class="card-header card-header-image" data-header-animation="true">
-                    <a href="#pablo">
-                        <img class="img" src="<?= base_url('assets/img/asset/2023/'.$opnamed['asset_image']); ?>" style="width:50%;height:50%;">
-                    </a>
-                    </div>
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <?php 
+                   $images = $this->db->get_where('asset_images', ['id' => $asset['id']])->result_array();
+                    $i = 1;
+                  foreach ($images as $row) : 
+                    echo '<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'" class="'.$row['active'].'"></li>';
+                    $i++;
+                  endforeach; 
+                  ?>
+                </ol>
+                <div class="carousel-inner">
+                  <?php foreach ($images as $row) : ?>
+                  <div class="carousel-item <?= $row['active']; ?>">
+                    <img class="d-block w-100" src="<?= base_url().'assets/img/asset/2024/'.$row['asset_image']; ?>" alt="">
+                  </div>
+                  <?php endforeach; ?>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
                     <div class="card-body ">
                         <?= form_open_multipart('asset/opname_proses/2'); ?>
                         <input type="hidden" class="form-control" name="id" value="<?= $asset['id']; ?>" required>
+                        <div class="row">
+                            <a href="<?= base_url('asset/opname_image/') . $asset['id']; ?>" class="btn btn-sm btn-block btn-primary">Tambah Foto</a>
+                        </div>
                         <div class="row">
                             <label class="col-md-2 col-form-label">No. Asset</label>
                             <div class="col-md-4">
@@ -83,12 +108,12 @@
                                 <input type="hidden" class="form-control" name="old_lokasi" value="<?= $asset['room']; ?>" />
                                 <select class="selectpicker" name="new_lokasi" id="selectloc" data-style="select-with-transition" data-size="7" title="Silahkan Pilih" data-live-search="true">
                                     <?php $lokasi = $this->db->get('asset_lokasi')->result_array();
-                                    foreach ($lokasi as $lok) :
-                                        echo '<option value="' . $lok['id'] . '"';
-                                        if ($lok['id'] == $asset['room']) {
+                                    foreach ($lokasi as $raw) :
+                                        echo '<option value="' . $raw['nama'] . '"';
+                                        if ($raw['nama'] == $asset['room']) {
                                             echo 'selected';
                                         }
-                                        echo '>' . $lok['id'] . '</option>' . "\n";
+                                        echo '>' . $raw['nama'] . '</option>' . "\n";
                                     endforeach; ?>
                                 </select>
                             </div>

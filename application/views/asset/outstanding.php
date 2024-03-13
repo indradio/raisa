@@ -24,13 +24,13 @@
                                 <table id="dtasset" class="table table-shopping" cellspacing="0" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>No. Asset</th>
+                                            <th>Actions</th>
                                             <th>Deskripsi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>No Asset</th>
+                                            <th>Actions</th>
                                             <th>Deskripsi</th>
                                         </tr>
                                     </tfoot>

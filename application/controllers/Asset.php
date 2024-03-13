@@ -265,18 +265,39 @@ class Asset extends CI_Controller
         // }
     }
 
+    public function opname_image($params)
+    {
+   
+        $asset = $this->db->get_where('asset', ['id' => $params])->row_array();
+        if ($asset) {
+        
+            $data['sidemenu'] = 'Asset';
+            $data['sidesubmenu'] = 'Outstanding';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $data['asset'] = $asset;
+            
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('asset/opname3', $data);
+            $this->load->view('templates/footer');
+        }else{
+            redirect('asset/opname/'.$asset->asset_no.'/'.$asset->asset_sub_no);
+        }
+         
+    }
+
     public function opname_proses($params)
     {        
         $asset = $this->db->get_where('asset', ['id' => $this->input->post('id')])->row();
         if ($params == 1)
         {
             $user = $this->db->get_where('karyawan', ['npk' => $asset->npk])->row();
-    
             $opnamed = $this->db->get_where('asset_opnamed', ['id' => $this->input->post('id')])->row_array();
             if (empty($opnamed)) {
     
                 $config['file_name']            = $this->input->post('id');
-                $config['upload_path']          = './assets/img/asset/2023/';
+                $config['upload_path']          = './assets/img/asset/2024/';
                 $config['allowed_types']        = 'jpg|JPG|jpeg|png';
                 // $config['max_size']             = '5120';
     
@@ -285,24 +306,36 @@ class Asset extends CI_Controller
     
                     if ($this->upload->do_upload('foto')) {
         
+                        // $data = [
+                        //     'id' => $this->input->post('id'),
+                        //     'npk' => $asset->npk,
+                        //     'asset_no' => $asset->asset_no,
+                        //     'asset_sub_no' => $asset->asset_sub_no,
+                        //     'asset_description' => $asset->asset_description,
+                        //     'asset_image' => $this->upload->data('file_name'),
+                        //     'category' => $asset->category,
+                        //     'room' => $asset->room,
+                        //     'first_acq' => $asset->first_acq,
+                        //     'value_acq' => $asset->value_acq,
+                        //     'cost_center' => $asset->cost_center,
+                        //     'div_id' => $user->div_id,
+                        //     'dept_id' => $user->dept_id,
+                        //     'sect_id' => $user->sect_id,
+                        //     'status' => 1
+                        // ];
+                        // $this->db->insert('asset_opnamed', $data);
+        
+                        // $this->db->set('opname_status', 1);
+                        // $this->db->where('id', $this->input->post('id'));
+                        // $this->db->update('asset');
+
                         $data = [
                             'id' => $this->input->post('id'),
-                            'npk' => $asset->npk,
-                            'asset_no' => $asset->asset_no,
-                            'asset_sub_no' => $asset->asset_sub_no,
-                            'asset_description' => $asset->asset_description,
                             'asset_image' => $this->upload->data('file_name'),
-                            'category' => $asset->category,
-                            'room' => $asset->room,
-                            'first_acq' => $asset->first_acq,
-                            'value_acq' => $asset->value_acq,
-                            'cost_center' => $asset->cost_center,
-                            'div_id' => $user->div_id,
-                            'dept_id' => $user->dept_id,
-                            'sect_id' => $user->sect_id,
-                            'status' => 1
+                            'active' => 'active',
+                            'uuid' => vsprintf('%s-%s-%s-%s-%s', str_split(bin2hex(random_bytes(16)), 4))
                         ];
-                        $this->db->insert('asset_opnamed', $data);
+                        $this->db->insert('asset_images', $data);
         
                         $this->db->set('opname_status', 1);
                         $this->db->where('id', $this->input->post('id'));
@@ -347,6 +380,32 @@ class Asset extends CI_Controller
                 $this->db->update('asset');
 
                 redirect('asset/outstanding');
+
+            }elseif ($params == 3)
+            {
+                $config['file_name']            = $this->input->post('id');
+                $config['upload_path']          = './assets/img/asset/2024/';
+                $config['allowed_types']        = 'jpg|JPG|jpeg|png';
+                // $config['max_size']             = '5120';
+    
+                if(!is_dir($config['upload_path'])) mkdir($config['upload_path'], 0777, TRUE);
+                $this->load->library('upload', $config);
+    
+                    if ($this->upload->do_upload('foto')) {
+
+                        $data = [
+                            'id' => $this->input->post('id'),
+                            'asset_image' => $this->upload->data('file_name'),
+                            'uuid' => vsprintf('%s-%s-%s-%s-%s', str_split(bin2hex(random_bytes(16)), 4))
+                        ];
+                        $this->db->insert('asset_images', $data);
+        
+                        $this->db->set('opname_status', 1);
+                        $this->db->where('id', $this->input->post('id'));
+                        $this->db->update('asset');
+        
+                        redirect('asset/opname/'.$asset->asset_no.'/'.$asset->asset_sub_no);
+                    }
             }
 
     }
@@ -597,8 +656,8 @@ class Asset extends CI_Controller
                 foreach ($asset as $row) {
                     $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
                     $output['data'][] = array(
-                        "no" => $row->asset_no."</br><a href='".base_url('asset/opname/'.$row->asset_no.'/'.$row->asset_sub_no)."' class='btn btn-primary btn-sm active' role='button' aria-pressed='true'>Opname Now</a>",
-                        "deskripsi" => $row->asset_description
+                        "no" => "<a href='".base_url('asset/opname/'.$row->asset_no.'/'.$row->asset_sub_no)."' class='btn btn-primary btn-sm active' role='button' aria-pressed='true'>Opname</a>",
+                        "deskripsi" => $row->asset_no.'</br>'.$row->asset_description
                     );
 
 
