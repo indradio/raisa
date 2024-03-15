@@ -305,29 +305,6 @@ class Asset extends CI_Controller
                 $this->load->library('upload', $config);
     
                     if ($this->upload->do_upload('foto')) {
-        
-                        // $data = [
-                        //     'id' => $this->input->post('id'),
-                        //     'npk' => $asset->npk,
-                        //     'asset_no' => $asset->asset_no,
-                        //     'asset_sub_no' => $asset->asset_sub_no,
-                        //     'asset_description' => $asset->asset_description,
-                        //     'asset_image' => $this->upload->data('file_name'),
-                        //     'category' => $asset->category,
-                        //     'room' => $asset->room,
-                        //     'first_acq' => $asset->first_acq,
-                        //     'value_acq' => $asset->value_acq,
-                        //     'cost_center' => $asset->cost_center,
-                        //     'div_id' => $user->div_id,
-                        //     'dept_id' => $user->dept_id,
-                        //     'sect_id' => $user->sect_id,
-                        //     'status' => 1
-                        // ];
-                        // $this->db->insert('asset_opnamed', $data);
-        
-                        // $this->db->set('opname_status', 1);
-                        // $this->db->where('id', $this->input->post('id'));
-                        // $this->db->update('asset');
 
                         $data = [
                             'id' => $this->input->post('id'),
@@ -352,7 +329,7 @@ class Asset extends CI_Controller
             }elseif ($params == 2)
             {
                 $changePic = ($asset->npk==$this->input->post('new_npk'))? 'N' : 'Y';
-                $changeRoom = ($asset->room==$this->input->post('new_lokasi'))? 'N' : 'Y';
+                $changeRoom = ($asset->room==$this->input->post('new_lokasi'))? 'N' : 'N';
 
                 if ($changePic=='N' AND $changeRoom=='N' AND $this->input->post('status')=='2'){
                     $status = '1';
@@ -364,16 +341,30 @@ class Asset extends CI_Controller
                     $status = $this->input->post('status');
                 }
 
-                $this->db->set('new_npk', $this->input->post('new_npk'));
-                $this->db->set('new_room', $this->input->post('new_lokasi'));
-                $this->db->set('catatan', $this->input->post('catatan'));
-                $this->db->set('status', $status);
-                $this->db->set('change_pic', $changePic);
-                $this->db->set('change_room', $changeRoom);
-                $this->db->set('opnamed_by', $this->session->userdata('nama'));
-                $this->db->set('opnamed_at', date('Y-m-d H:i:s'));
-                $this->db->where('id', $this->input->post('id'));
-                $this->db->update('asset_opnamed');
+                $data = [
+                        'id' => $this->input->post('id'),
+                        'npk' => $asset->npk,
+                        'new_npk' => $this->input->post('new_npk'),
+                        'asset_no' => $asset->asset_no,
+                        'asset_sub_no' => $asset->asset_sub_no,
+                        'asset_description' => $asset->asset_description,
+                        'category' => $asset->category,
+                        'room' => $asset->room,
+                        'new_room' => $this->input->post('new_lokasi'),
+                        'first_acq' => $asset->first_acq,
+                        'cost_center' => $asset->cost_center,
+                        'status' => $status,
+                        'change_pic' => $changePic,
+                        'change_room' => $changeRoom,
+                        'catatan' => $this->input->post('catatan'),
+                        'div_id' => $user->div_id,
+                        'dept_id' => $user->dept_id,
+                        'sect_id' => $user->sect_id,
+                        'opnamed_by' => $this->session->userdata('nama'),
+                        'opnamed_at' => date('Y-m-d H:i:s'),
+                        'status' => 1
+                    ];
+                    $this->db->insert('asset_opnamed', $data);
 
                 $this->db->set('opname_status', 2);
                 $this->db->where('id', $this->input->post('id'));

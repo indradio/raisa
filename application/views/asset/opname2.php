@@ -5,37 +5,37 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-product">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <?php 
-                   $images = $this->db->get_where('asset_images', ['id' => $asset['id']])->result_array();
-                    $i = 1;
-                  foreach ($images as $row) : 
-                    echo '<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'" class="'.$row['active'].'"></li>';
-                    $i++;
-                  endforeach; 
-                  ?>
-                </ol>
-                <div class="carousel-inner">
-                  <?php foreach ($images as $row) : ?>
-                  <div class="carousel-item <?= $row['active']; ?>">
-                    <img class="d-block w-100" src="<?= base_url().'assets/img/asset/2024/'.$row['asset_image']; ?>" alt="">
-                  </div>
-                  <?php endforeach; ?>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
                     <div class="card-body ">
                         <?= form_open_multipart('asset/opname_proses/2'); ?>
                         <input type="hidden" class="form-control" name="id" value="<?= $asset['id']; ?>" required>
                         <div class="row">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                            <?php 
+                            $images = $this->db->get_where('asset_images', ['id' => $asset['id']])->result_array();
+                                $i = 1;
+                            foreach ($images as $row) : 
+                                echo '<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'" class="'.$row['active'].'"></li>';
+                                $i++;
+                            endforeach; 
+                            ?>
+                            </ol>
+                            <div class="carousel-inner">
+                            <?php foreach ($images as $row) : ?>
+                            <div class="carousel-item <?= $row['active']; ?>">
+                                <img class="d-block w-100" src="<?= base_url().'assets/img/asset/2024/'.$row['asset_image']; ?>" alt="">
+                            </div>
+                            <?php endforeach; ?>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                             <a href="<?= base_url('asset/opname_image/') . $asset['id']; ?>" class="btn btn-sm btn-block btn-primary">Tambah Foto</a>
                         </div>
                         <div class="row">

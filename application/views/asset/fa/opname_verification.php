@@ -9,24 +9,33 @@
                         <?= form_open_multipart('asset/verification/proses'); ?>
                         <input type="hidden" class="form-control" name="id" value="<?= $asset['id']; ?>" required>
                         <div class="row">
-                            <label class="col-md-2 col-form-label"></label>
-                            <div class="col-md-4">
-                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail">
-                                        <img src="<?= base_url().'assets/img/asset/2023/'. $asset['asset_image']; ?>" alt="foto" name="foto">
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                    <!-- <div>
-                                        <span class="btn btn-round btn-facebook btn-file">
-                                            <span class="fileinput-new">Ambil Foto</span>
-                                            <span class="fileinput-exists">Ganti</span>
-                                            <input type="file" name="foto" required="true"/>
-                                        </span>
-                                        <br />
-                                        <a href="#" class="btn btn-youtube btn-round fileinput-exists" data-dismiss="fileinput"></i>Hapus</a>
-                                    </div> -->
-                                </div>
-                            </div>
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <?php 
+                   $images = $this->db->get_where('asset_images', ['id' => $asset['id']])->result_array();
+                    $i = 1;
+                  foreach ($images as $row) : 
+                    echo '<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'" class="'.$row['active'].'"></li>';
+                    $i++;
+                  endforeach; 
+                  ?>
+                </ol>
+                <div class="carousel-inner">
+                  <?php foreach ($images as $row) : ?>
+                  <div class="carousel-item <?= $row['active']; ?>">
+                    <img class="d-block w-100" src="<?= base_url().'assets/img/asset/2024/'.$row['asset_image']; ?>" alt="">
+                  </div>
+                  <?php endforeach; ?>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
                         </div>
                         <div class="row">
                             <label class="col-md-2 col-form-label">No. Asset</label>
