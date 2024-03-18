@@ -73,12 +73,12 @@ class Auth extends CI_Controller
             }
         endforeach;
 
-        //Delete Perjalanan yg diBatalkan setelah 14 Hari
+        //Delete Perjalanan yg diBatalkan setelah 40 Hari
         $perjalanan = $this->db->get_where('perjalanan', ['status' => '0'])->result_array();
         foreach ($perjalanan as $row) :
             // cari selisih
             $now = strtotime(date('Y-m-d'));
-            $due = strtotime(date('Y-m-d', strtotime('+14 days', strtotime($row['tglberangkat']))));
+            $due = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($row['tglberangkat']))));
 
             if ($due < $now) {
 
@@ -105,12 +105,12 @@ class Auth extends CI_Controller
             }
         endforeach;
 
-        //Delete Perjalanan yg diBatalkan setelah 14 Hari
+        //Delete Perjalanan yg diBatalkan setelah 40 Hari
         $reservasi = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
         foreach ($reservasi as $row) :
             // cari selisih
             $now = strtotime(date('Y-m-d'));
-            $due = strtotime(date('Y-m-d', strtotime('+14 days', strtotime($row['tglberangkat']))));
+            $due = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($row['tglberangkat']))));
 
             if ($due < $now) {
 
