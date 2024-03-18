@@ -100,6 +100,9 @@ class Cuti extends CI_Controller
         $this->load->helper('string');
         $this->load->helper('date');
 
+        $this->db->where('id', 1);
+        $backdate = $this->db->get('cuti_backdate')->row();
+
         // validasi
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('tgl1 >=', Date('Y-m-d H:i:s', strtotime($this->input->post('tgl1'))));
@@ -122,7 +125,7 @@ class Cuti extends CI_Controller
             redirect('/cuti');
         }
 
-        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime('-1 days')) && $this->input->post('darurat') == 1){
+        if(Date('Y-m-d', strtotime($this->input->post('tgl1'))) < Date('Y-m-d', strtotime($backdate->day)) && $this->input->post('darurat') == 1){
             $this->session->set_flashdata('notify', 'late');
             redirect('/cuti');
         }
