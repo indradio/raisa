@@ -45,6 +45,7 @@
                     <select class="selectpicker" name="section" id="section" data-style="select-with-transition" title="Pilih Cell" data-size="7" required>
                     <?php 
                       $this->db->where('dept_id', '11');
+                      $this->db->or_where('dept_id', '12');
                       $this->db->or_where('dept_id', '13');
                       $sect = $this->db->get('karyawan_sect')->result();
                       foreach ($sect as $row) :

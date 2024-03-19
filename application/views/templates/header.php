@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     
     <!-- CSS Files -->
-    <link href="<?= base_url(); ?>assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+    <!-- <link href="<?= base_url(); ?>assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" /> -->
+    <link href="<?= base_url(); ?>assets/css/material-dashboard.css" rel="stylesheet" />
     
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert2.css">

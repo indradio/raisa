@@ -302,8 +302,9 @@
           </div>
         </div>
       </div>
+      <?php }; ?>
+      
     </div>
-    <?php }; ?>
     <!-- End Absensi -->
 
     <div class="row">
