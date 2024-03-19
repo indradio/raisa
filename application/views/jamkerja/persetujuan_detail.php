@@ -167,7 +167,7 @@
                         ?>
                         </div>
                             <div class="col-md-12">
-                            <?php if($this->session->userdata('sect_id')==143){ ?>
+                            <?php if($this->session->userdata('sect_id')==135){ ?>
                                 <!-- Button SUBMIT -->
                                 <form class="form" method="post" action="<?= base_url('jamkerja/approve/ppic'); ?>">
                                   <input type="text" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
