@@ -133,7 +133,7 @@
                             <td><?= $a['progres_hasil']; ?></td>
                             <td><?= $a['durasi']; ?></td>
                             <td>
-                            <?php if ($this->session->userdata('sect_id')==143){
+                            <?php if ($this->session->userdata('sect_id')==135){
                               if ($a['copro']){
                                 echo '<a href="#" class="btn btn-sm btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#ubahCopro" data-id="'. $a['id'] .'">UBAH COPRO</a>';
                               }else{
