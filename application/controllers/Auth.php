@@ -189,9 +189,9 @@ class Auth extends CI_Controller
                     //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'BBG'])->row_array();
                     // }
 
-                    // if ($karyawan['sect_id'] == '135' and $karyawan['posisi_id'] == '7') {
-                    //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'HLM'])->row_array();
-                    // }
+                    if ($karyawan['sect_id'] == '137' and $karyawan['posisi_id'] == '7') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'SAM'])->row_array();
+                    }
 
                     // if ($karyawan['sect_id'] == '136' and $karyawan['posisi_id'] == '7') {
                     //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'HLM'])->row_array();
