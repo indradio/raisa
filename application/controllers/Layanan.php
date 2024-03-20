@@ -164,12 +164,12 @@ class Layanan extends CI_Controller
         $data['sidemenu'] = 'Layanan';
         $data['sidesubmenu'] = 'Broadcast';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-        $data['lastA'] = $this->db->get_where('log_broadcast', ['group' => 'A'])->row_array();
-        $data['lastB'] = $this->db->get_where('log_broadcast', ['group' => 'B'])->row_array();
-        $data['lastC'] = $this->db->get_where('log_broadcast', ['group' => 'C'])->row_array();
-        $data['lastD'] = $this->db->get_where('log_broadcast', ['group' => 'D'])->row_array();
-        $data['lastE'] = $this->db->get_where('log_broadcast', ['group' => 'E'])->row_array();
-        $data['lastF'] = $this->db->get_where('log_broadcast', ['group' => 'F'])->row_array();
+        $data['lastA'] = $this->db->get_where('log_broadcast', ['batch' => 'A'])->row_array();
+        $data['lastB'] = $this->db->get_where('log_broadcast', ['batch' => 'B'])->row_array();
+        $data['lastC'] = $this->db->get_where('log_broadcast', ['batch' => 'C'])->row_array();
+        $data['lastD'] = $this->db->get_where('log_broadcast', ['batch' => 'D'])->row_array();
+        $data['lastE'] = $this->db->get_where('log_broadcast', ['batch' => 'E'])->row_array();
+        $data['lastF'] = $this->db->get_where('log_broadcast', ['batch' => 'F'])->row_array();
       
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
