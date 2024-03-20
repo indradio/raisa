@@ -184,61 +184,61 @@ class Layanan extends CI_Controller
         if ($parameter == 'A') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('group', 'A');
+            $this->db->where('batch', 'A');
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('group', 'A');
+            $this->db->where('batch', 'A');
             $this->db->update('log_broadcast');
 
         } elseif ($parameter == 'B') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('group', 'B');
+            $this->db->where('batch', 'B');
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('group', 'B');
+            $this->db->where('batch', 'B');
             $this->db->update('log_broadcast');
 
         } elseif ($parameter == 'C') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('group', 'C');
+            $this->db->where('batch', 'C');
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('group', 'C');
+            $this->db->where('batch', 'C');
             $this->db->update('log_broadcast');
 
         } elseif ($parameter == 'D') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('group', 'D');
+            $this->db->where('batch', 'D');
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('group', 'D');
+            $this->db->where('batch', 'D');
             $this->db->update('log_broadcast');
 
         } elseif ($parameter == 'E') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('group', 'E');
+            $this->db->where('batch', 'E');
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('group', 'E');
+            $this->db->where('batch', 'E');
             $this->db->update('log_broadcast');
 
         } elseif ($parameter == 'F') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('group', 'F');
+            $this->db->where('batch', 'F');
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('group', 'F');
+            $this->db->where('batch', 'F');
             $this->db->update('log_broadcast');
             
         } elseif ($parameter == 'Z') {
