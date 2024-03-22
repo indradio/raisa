@@ -282,6 +282,13 @@ class Perjalanan extends CI_Controller
             $this->db->set('total', $total);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('perjalanan');
+        } elseif ($parameter == 'bbm') {
+            $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $this->input->post('bbm') + $perjalanan['tol'] + $perjalanan['parkir'];
+
+            $this->db->set('bbm', $this->input->post('bbm'));
+            $this->db->set('total', $total);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('perjalanan');
         } elseif ($parameter == 'tol') {
             $total = $perjalanan['uang_saku'] + $perjalanan['insentif_pagi'] + $perjalanan['um_pagi'] + $perjalanan['um_siang'] + $perjalanan['um_malam'] + $perjalanan['taksi'] + $perjalanan['bbm'] + $this->input->post('tol') + $perjalanan['parkir'];
 

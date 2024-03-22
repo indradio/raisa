@@ -210,17 +210,17 @@
                                                     <tr class="table-success">
                                                         <td>Tunjangan</td>
                                                         <td><?= number_format($totalTunj, 0, ',', '.'); ?></td>
-                                                        <td><a href="#" class="btn btn-fill btn-sm btn-success disabled">AUTO</a></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Taksi/Sewa</br><small>Pribadi per KM</small> </td>
                                                         <td><?= number_format($perjalanan['taksi'], 0, ',', '.'); ?></td>
                                                         <td><a href="#" class="btn btn-fill btn-sm btn-warning" data-toggle="modal" data-target="#ubahTaksi" data-id="<?= $perjalanan['id']; ?>" data-taksi="<?= $perjalanan['taksi']; ?>">UBAH</a></td>
                                                     </tr>
-                                                    <tr class="table-danger" hidden>
+                                                    <tr>
                                                         <td>BBM</td>
                                                         <td><?= number_format($perjalanan['bbm'], 0, ',', '.'); ?></td>
-                                                        <td>Voucher SPBU</td>
+                                                        <td><a href="#" class="btn btn-fill btn-sm btn-warning" data-toggle="modal" data-target="#ubahBbm" data-id="<?= $perjalanan['id']; ?>" data-tol="<?= $perjalanan['bbm']; ?>">UBAH</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Tol</td>
@@ -368,6 +368,45 @@
                         <div class="col-md-7">
                             <div class="form-group has-default">
                                 <input type="number" class="form-control" id="taksi" name="taksi" required="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ubahBbm" tabindex="-1" role="dialog" aria-labelledby="ubahBbmLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ubahBbmLabel">Biaya Bbm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" action="<?= base_url('perjalanan/penyelesaian_edit/bbm'); ?>">
+                <div class="modal-body">
+                    <div class="form-group" hidden="true">
+                        <input type="text" class="form-control" id="id" name="id">
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Estimasi Biaya</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="text" class="form-control disabled" id="e_bbm" name="e_bbm" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-5 col-form-label">Aktual</label>
+                        <div class="col-md-7">
+                            <div class="form-group has-default">
+                                <input type="number" class="form-control" id="bbm" name="bbm" required="true" />
                             </div>
                         </div>
                     </div>
@@ -560,6 +599,14 @@
             var modal = $(this)
             modal.find('.modal-body input[name="id"]').val(id)
             modal.find('.modal-body input[name="e_taksi"]').val(taksi)
+        })
+        $('#ubahBbm').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var tol = button.data('bbm')
+            var modal = $(this)
+            modal.find('.modal-body input[name="id"]').val(id)
+            modal.find('.modal-body input[name="e_bbm"]').val(tol)
         })
         $('#ubahTol').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
