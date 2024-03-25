@@ -268,10 +268,13 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ[INFORMASI] Istirahat Selama Bulan Ramadan*" .
+                            'message' => "*ℹ[INFORMASI] Buka Bersama dan Jam Kerja Khusus Besok (26-03-24)*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nIstirahat selama bulan ramadan mulai pukul 12:00 dan kembali bekerja pada pukul 12:30.".
-                            "\r\nMari kita berkomitmen untuk bekerja dan istirahat sesuai waktu yg telah ditentuakn." .
+                            "\r\nGaes kindly reminder besok kita bukber ya, dengan ketentuan:".
+                            "\r\n \r\n1. Masuk jam 08.00".
+                            "\r\n2. Istirahat 12.00-13.00".
+                            "\r\n3. Selesai kerja 17.00".
+                            "\r\n4. Lanjut bukber sampai selesai".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
                             "\r\nHuman Capital"
