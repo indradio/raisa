@@ -1681,7 +1681,10 @@ class Perjalanan extends CI_Controller
                             $statusDL = "<button type='button' class='btn btn-outline btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SUDAH KEMBALI</button>";
                         }elseif ($perjalanan->status==4){
                             $statusDL = "<button type='button' class='btn btn-outline btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">PENYELESAIAN</button>";
+                        }else{
+                            $statusDL = "error";
                         }
+
                         $output['data'][] = array(
                             "status" => $statusDL,
                             "berangkat" => date('d-M', strtotime($perjalanan->tglberangkat)) . ' ' . date('H:i', strtotime($perjalanan->jamberangkat)),
