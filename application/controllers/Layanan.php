@@ -268,9 +268,9 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ🕌 Libur Hari Raya Idul Fitri 1445 H*" .
+                            'message' => "*🕌 Libur Hari Raya Idul Fitri 1445 H*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Even tahun 2024 Perusahaan menetapkan *Libur Hari Raya Idul Fitri 1445 H* sebagai berikut:".
+                            "\r\nBerdasarkan Calender Of Event tahun 2024 Perusahaan menetapkan *Libur Hari Raya Idul Fitri 1445 H* sebagai berikut:".
                             "\r\n \r\n*1. Cuti Bersama Pemerintah : 8,9,12,15 April 2024*".
                             "\r\n*2. Hari Raya ldul Fitri : 10 - 11 April 2024*".
                             "\r\n*3. Masuk Kerja Kembali : 16 April 2024*".
