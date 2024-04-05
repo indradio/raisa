@@ -268,13 +268,12 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*ℹ[INFORMASI] Buka Bersama dan Jam Kerja Khusus Besok (26-03-24)*" .
+                            'message' => "*ℹ🕌 Libur Hari Raya Idul Fitri 1445 H*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nGaes kindly reminder besok kita bukber ya, dengan ketentuan:".
-                            "\r\n \r\n1. Masuk jam 08.00".
-                            "\r\n2. Istirahat 12.00-13.00".
-                            "\r\n3. Selesai kerja 17.00".
-                            "\r\n4. Lanjut bukber sampai selesai".
+                            "\r\nBerdasarkan Calender Of Even tahun 2024 Perusahaan menetapkan *Libur Hari Raya Idul Fitri 1445 H* sebagai berikut:".
+                            "\r\n \r\n*1. Cuti Bersama Pemerintah : 8,9,12,15 April 2024*".
+                            "\r\n*2. Hari Raya ldul Fitri : 10 - 11 April 2024*".
+                            "\r\n*3. Masuk Kerja Kembali : 16 April 2024*".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
                             "\r\nHuman Capital"
