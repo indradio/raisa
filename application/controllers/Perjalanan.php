@@ -1667,6 +1667,7 @@ class Perjalanan extends CI_Controller
 
                     $status = $this->db->get_where('reservasi_status', ['id' => $row->status])->row(); 
 
+                    $this->db->where('status <',4);
                     $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $row->id])->row();
 
                     if (!empty($perjalanan)){
