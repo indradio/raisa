@@ -452,12 +452,14 @@
 <script>
   $(document).ready(function() {
 
-    fetch('http://117.102.67.82:8002/apis/tracking/realtime.php?red=yes&username=winteq&password=winteq1231407&devices=2020080162')
+    const url = 'http://117.102.67.82:8002/apis/tracking/realtime.php?red=yes&username=winteq&password=winteq1231407&devices=2020080162';
+
+fetch(url)
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    return response.json(); // Mengubah respons menjadi JSON
+    return response.json();
   })
   .then(data => {
     // Melakukan sesuatu dengan data yang diterima
