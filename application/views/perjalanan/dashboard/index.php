@@ -467,49 +467,51 @@
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         xhr.onreadystatechange = function() { // Call a function when the state changes.
-          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            var myObj = JSON.parse(this.responseText);
-            var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
-            var idloc = "loc" + cars[i];
-            var lat = "lat" + cars[i];
-            var lng = "lng" + cars[i]; 
-            
-            loc = myObj.data[cars[i]]['realtime']['location'];
-            // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
-            lat = myObj.data[cars[i]]['realtime']['latitude'];
-            lng = myObj.data[cars[i]]['realtime']['longitude'];
-            
-            // var mapCanvas = document.getElementById(cars[i]);
-            
+          if (this.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200 || xhr.status === 302) {
+              var myObj = JSON.parse(this.responseText);
+              var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
+              var idloc = "loc" + cars[i];
+              var lat = "lat" + cars[i];
+              var lng = "lng" + cars[i]; 
+              
+              loc = myObj.data[cars[i]]['realtime']['location'];
+              // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
+              lat = myObj.data[cars[i]]['realtime']['latitude'];
+              lng = myObj.data[cars[i]]['realtime']['longitude'];
+              
+              // var mapCanvas = document.getElementById(cars[i]);
+              
 
-            let map;
+              let map;
 
-            async function initMap() {
-              const { Map } = await google.maps.importLibrary("maps");
+              async function initMap() {
+                const { Map } = await google.maps.importLibrary("maps");
 
-              map = new Map(document.getElementById(cars[i]), {
-                center: { lat: lat, lng: lng },
-                zoom: 8,
-              });
+                map = new Map(document.getElementById(cars[i]), {
+                  center: { lat: lat, lng: lng },
+                  zoom: 8,
+                });
+              }
+
+              initMap();
+              
+              // var location = new google.maps.LatLng(lat, lng);
+              // var mapOptions = {
+              //   center: location,
+              //   zoom: 15,
+              //   mapTypeId: "satellite",
+              //   mapTypeId: google.maps.MapTypeId.ROADMAP
+              // }
+              // var map = new google.maps.Map(mapCanvas, mapOptions);
+
+              // var marker = new google.maps.Marker({
+              //   position: location,
+              //   icon: image
+              // });
+              
+              // marker.setMap(map);
             }
-
-            initMap();
-            
-            // var location = new google.maps.LatLng(lat, lng);
-            // var mapOptions = {
-            //   center: location,
-            //   zoom: 15,
-            //   mapTypeId: "satellite",
-            //   mapTypeId: google.maps.MapTypeId.ROADMAP
-            // }
-            // var map = new google.maps.Map(mapCanvas, mapOptions);
-
-            // var marker = new google.maps.Marker({
-            //   position: location,
-            //   icon: image
-            // });
-            
-            // marker.setMap(map);
           }
         }
       xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
