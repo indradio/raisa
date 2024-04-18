@@ -480,37 +480,24 @@
               lat = myObj.data[cars[i]]['realtime']['latitude'];
               lng = myObj.data[cars[i]]['realtime']['longitude'];
               
-              // var mapCanvas = document.getElementById(cars[i]);
+              var mapCanvas = document.getElementById(cars[i]);
+              document.getElementById(idloc).innerHTML = loc;
               
-
-              let map;
-
-              async function initMap() {
-                const { Map } = await google.maps.importLibrary("maps");
-
-                map = new Map(document.getElementById(cars[i]), {
-                  center: { lat: lat, lng: lng },
-                  zoom: 8,
-                });
+              var location = new google.maps.LatLng(lat, lng);
+              var mapOptions = {
+                center: location,
+                zoom: 15,
+                mapTypeId: "satellite",
+                mapTypeId: google.maps.MapTypeId.ROADMAP
               }
+              var map = new google.maps.Map(mapCanvas, mapOptions);
 
-              initMap();
+              var marker = new google.maps.Marker({
+                position: location,
+                icon: image
+              });
               
-              // var location = new google.maps.LatLng(lat, lng);
-              // var mapOptions = {
-              //   center: location,
-              //   zoom: 15,
-              //   mapTypeId: "satellite",
-              //   mapTypeId: google.maps.MapTypeId.ROADMAP
-              // }
-              // var map = new google.maps.Map(mapCanvas, mapOptions);
-
-              // var marker = new google.maps.Marker({
-              //   position: location,
-              //   icon: image
-              // });
-              
-              // marker.setMap(map);
+              marker.setMap(map);
             }
           }
         }
