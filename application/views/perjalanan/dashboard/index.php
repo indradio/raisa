@@ -452,57 +452,76 @@
 <script>
   $(document).ready(function() {
 
+    fetch('http://117.102.67.82:8002/apis/tracking/realtime.php?red=yes&username=winteq&password=winteq1231407&devices=2020080162')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // Mengubah respons menjadi JSON
+  })
+  .then(data => {
+    // Melakukan sesuatu dengan data yang diterima
+    console.log(data);
+  })
+  .catch(error => {
+    // Menangani kesalahan
+    console.error('There was a problem with the fetch operation:', error);
+  });
+
     // let timerInterval
 
     // setInterval(function() {
 
-      const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
+      // const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
 
-      for (let i = 0; i < cars.length; i++) {
+      // for (let i = 0; i < cars.length; i++) {
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
+      //   var xhr = new XMLHttpRequest();
+      //   xhr.open("POST", 'https://gps.intellitrac.co.id/apis/tracking/realtime.php', true);
 
-        //Send the proper header information along with the request
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      //   //Send the proper header information along with the request
+      //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        xhr.onreadystatechange = function() { // Call a function when the state changes.
-          if (this.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200 || xhr.status === 302) {
-              var myObj = JSON.parse(this.responseText);
-              var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
-              var idloc = "loc" + cars[i];
-              var lat = "lat" + cars[i];
-              var lng = "lng" + cars[i]; 
+      //   xhr.onreadystatechange = function() { // Call a function when the state changes.
+      //     if (this.readyState === XMLHttpRequest.DONE) {
+      //       if (xhr.status === 302 || xhr.status === 200) {
+      //         var myObj = JSON.parse(this.responseText);
+      //         var image = 'https://raisa.winteq-astra.com/assets/img/iconmobil.png';
+      //         var idloc = "loc" + cars[i];
+      //         var lat = "lat" + cars[i];
+      //         var lng = "lng" + cars[i]; 
               
-              loc = myObj.data[cars[i]]['realtime']['location'];
-              // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
-              lat = myObj.data[cars[i]]['realtime']['latitude'];
-              lng = myObj.data[cars[i]]['realtime']['longitude'];
+      //         loc = myObj.data[cars[i]]['realtime']['location'];
+      //         // z + cars[i] = myObj.data[cars[i]]['realtime']['ignition_status'];
+      //         lat = myObj.data[cars[i]]['realtime']['latitude'];
+      //         lng = myObj.data[cars[i]]['realtime']['longitude'];
               
-              var mapCanvas = document.getElementById(cars[i]);
-              document.getElementById(idloc).innerHTML = loc;
+      //         var mapCanvas = document.getElementById(cars[i]);
+      //         document.getElementById(idloc).innerHTML = loc;
               
-              var location = new google.maps.LatLng(lat, lng);
-              var mapOptions = {
-                center: location,
-                zoom: 15,
-                mapTypeId: "satellite",
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              }
-              var map = new google.maps.Map(mapCanvas, mapOptions);
+      //         var location = new google.maps.LatLng(lat, lng);
+      //         var mapOptions = {
+      //           center: location,
+      //           zoom: 15,
+      //           mapTypeId: "satellite",
+      //           mapTypeId: google.maps.MapTypeId.ROADMAP
+      //         }
+      //         var map = new google.maps.Map(mapCanvas, mapOptions);
 
-              var marker = new google.maps.Marker({
-                position: location,
-                icon: image
-              });
+      //         var marker = new google.maps.Marker({
+      //           position: location,
+      //           icon: image
+      //         });
               
-              marker.setMap(map);
-            }
-          }
-        }
-      xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
-      }
+      //         marker.setMap(map);
+
+      //         var link = "username=winteq&password=winteq1231407&devices=" + cars[i];
+      //       }
+      //     }
+      //   }
+      // xhr.send("username=winteq&password=winteq1231407&devices=" + cars[i]);
+      // // xhr.send("username=winteq&password=winteq1231407&devices=2020080159%3B2020080160%3B2020080161%3B2020080162%3B2020080163");
+      // }
       
       // const cars = ["2020080159", "2020080160", "2020080161", "2020080162", "2020080163"];
 
