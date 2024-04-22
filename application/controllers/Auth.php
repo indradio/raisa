@@ -206,12 +206,13 @@ class Auth extends CI_Controller
                     // }
 
                     // if ($karyawan['dept_id'] == '14' and $karyawan['atasan1'] == '3') {
+                        
                     //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
                     // }
 
-                    // if ($atasan1['inisial']=='DBY') {
-                    //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'YSF'])->row_array();
-                    // }
+                    if ($atasan1['inisial']=='DNO') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
+                    }
 
                     // if ($atasan1['inisial']=='EJU') {
                     //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
@@ -257,14 +258,18 @@ class Auth extends CI_Controller
                     //     $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
                     // }
 
-                    if ($karyawan['npk'] == '1111') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'RAISA'])->row_array();
-                        $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'RAISA'])->row_array();
+                    if ($atasan2['inisial']=='DNO') {
+                        $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
                     }
 
                     // if ($atasan2['inisial']=='EJU') {
                     //     $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'FHP'])->row_array();
                     // }
+
+                    if ($karyawan['npk'] == '1111') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'RAISA'])->row_array();
+                        $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'RAISA'])->row_array();
+                    }
 
                     $data = [
                         'npk' => $karyawan['npk'],
