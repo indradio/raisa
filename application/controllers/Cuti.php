@@ -1293,13 +1293,13 @@ class Cuti extends CI_Controller
         
         
         $this->db->where('tgl1 <=', $today);
-        $this->db->where('atasan1', 'DNO');
+        $this->db->where('atasan1', 'FHP');
         $this->db->where('status', '1');
         $outstanding1 = $this->db->get_where('cuti')->result();
             foreach ($outstanding1 as $row) :
-                $this->db->set('acc_atasan1', 'Disetujui oleh DNO');
+                $this->db->set('acc_atasan1', 'Disetujui oleh FHP');
                 $this->db->set('tgl_atasan1', date('Y-m-d H:i:s'));
-                $this->db->set('acc_atasan2', 'Disetujui oleh DNO');
+                $this->db->set('acc_atasan2', 'Disetujui oleh FHP');
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '3');
                 $this->db->where('id', $row->id);
@@ -1321,7 +1321,7 @@ class Cuti extends CI_Controller
                             "\r\nTanggal  : *" . date('d M Y', strtotime($row->tgl1)) . "*" .
                             "\r\nLama      : *" . $row->lama ." Hari* " .
                             "\r\nKeterangan : *" . $row->keterangan . "*" .
-                            "\r\n \r\nCuti ini telah DISETUJUI oleh DNO (by System)".
+                            "\r\n \r\nCuti ini telah DISETUJUI oleh FHP (by System)".
                             "\r\nHarap segera respon *Setujui/Batalkan*".
                             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/hr_approval"
                         ],
@@ -1331,11 +1331,11 @@ class Cuti extends CI_Controller
             endforeach;
 
         $this->db->where('tgl1 <=', $today);
-        $this->db->where('atasan2', 'DNO');
+        $this->db->where('atasan2', 'FHP');
         $this->db->where('status', '2');
         $outstanding1 = $this->db->get_where('cuti')->result();
             foreach ($outstanding1 as $row) :
-                $this->db->set('acc_atasan2', 'Disetujui oleh DNO');
+                $this->db->set('acc_atasan2', 'Disetujui oleh FHP');
                 $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
                 $this->db->set('status', '3');
                 $this->db->where('id', $row->id);
@@ -1357,7 +1357,7 @@ class Cuti extends CI_Controller
                             "\r\nTanggal  : *" . date('d M Y', strtotime($row->tgl1)) . "*" .
                             "\r\nLama      : *" . $row->lama ." Hari* " .
                             "\r\nKeterangan : *" . $row->keterangan . "*" .
-                            "\r\n \r\nCuti ini telah DISETUJUI oleh DNO (by System)".
+                            "\r\n \r\nCuti ini telah DISETUJUI oleh FHP (by System)".
                             "\r\nHarap segera respon *Setujui/Batalkan*".
                             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/hr_approval"
                         ],
