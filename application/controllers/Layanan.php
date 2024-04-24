@@ -268,15 +268,13 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*🕌 Libur Hari Raya Idul Fitri 1445 H*" .
+                            'message' => "*Pendaftaran Ulang Akses Youtube*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Event tahun 2024 Perusahaan menetapkan *Libur Hari Raya Idul Fitri 1445 H* sebagai berikut:".
-                            "\r\n \r\n*1. Cuti Bersama Pemerintah : 8,9,12,15 April 2024*".
-                            "\r\n*2. Hari Raya ldul Fitri : 10 - 11 April 2024*".
-                            "\r\n*3. Masuk Kerja Kembali : 16 April 2024*".
+                            "\r\nBagi rekan-rekan yang membutuhkan akses konten youtube harap segera melakukan pendaftaran ulang dengan cara".
+                            "\r\n*Mengajukan FORM IT yang ditandatangani atasan 2 atau Dept Head*".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
-                            "\r\nHuman Capital"
+                            "\r\nIT"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
