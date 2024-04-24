@@ -272,6 +272,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
                             "\r\nBagi rekan-rekan yang membutuhkan akses konten youtube harap segera melakukan pendaftaran ulang dengan cara".
                             "\r\n*Mengajukan FORM IT yang ditandatangani atasan 2 atau Dept Head*".
+                            "\r\nPeremajaan akses youtube akan dilakukan pada tanggal 1 Mei 2024.".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
                             "\r\nIT"
