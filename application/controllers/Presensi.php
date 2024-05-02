@@ -45,6 +45,12 @@ class Presensi extends CI_Controller
         // }
         // $data['flag'] = $flag;
 
+        $log = [
+            'npk' => $this->session->userdata('npk'),
+            'activity' => 'Access to Presensi'
+        ];
+        $this->db->insert('log', $log);
+
         $this->db->where('year(time)',$tahun);
         $this->db->where('month(time)',$bulan);
         $this->db->where('day(time)',$tanggal);
