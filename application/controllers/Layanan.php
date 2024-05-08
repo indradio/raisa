@@ -268,14 +268,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*Pendaftaran Ulang Akses Youtube*" .
+                            'message' => "ℹ*[INFO] LIBUR KENAIKAN ISA AL MASIH DAN CUTI BERSAMA*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBagi rekan-rekan yang membutuhkan akses konten youtube harap segera melakukan pendaftaran ulang dengan cara".
-                            "\r\n*Mengajukan FORM IT yang ditandatangani atasan 2 atau Dept Head*".
-                            "\r\nPeremajaan akses youtube akan dilakukan pada tanggal 1 Mei 2024.".
+                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2024, maka dengan ini kami informasikan bahwa :".
+                            "\r\n \r\n*1.	Tgl 09 Mei 2024	: Libur Kenaikan Isa Al Masih*" .
+                            "\r\n*2.	Tgl 10 Mei 2024	: Cuti Bersama*" .
+                            "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *13 Mei 2024*".
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
-                            "\r\nIT"
+                            "\r\nHR"
                         ],
                         // 'json' => [
                         //     'phone' => $row['phone'],
