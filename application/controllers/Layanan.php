@@ -268,12 +268,15 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "ℹ*[INFO] LIBUR KENAIKAN ISA AL MASIH DAN CUTI BERSAMA*" .
+                            'message' => "?*[INFO] JADWAL MEDICAL CHECK UP*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBerdasarkan Calender Of Event (COE) PT Astra Otoparts Tbk Divisi Winteq tahun 2024, maka dengan ini kami informasikan bahwa :".
-                            "\r\n \r\n*1.	Tgl 09 Mei 2024	: Libur Kenaikan Isa Al Masih*" .
-                            "\r\n*2.	Tgl 10 Mei 2024	: Cuti Bersama*" .
-                            "\r\n \r\nOleh karena hal tersebut, maka karyawan masuk kembali bekerja seperti biasa pada tanggal *13 Mei 2024*".
+                            "\r\nSehubungan dengan akan diadakannya medical check up pada :".
+                            "\r\n \r\n*Hari / Tanggal	: Senin / 20 Mei 2024*" .
+                            "\r\n*Waktu	    : 7:30 s/d Selesai*" .
+                            "\r\n*Tempat    : Ruang Training*" .
+                            "\r\n \r\nMaka kepada seluruh *Karyawan Tetap* diwajibkan untuk mengikuti medical check up tersebut.".
+                            "\r\n \r\n_*Bagi karwayan yg tidak mengikuti medical check up dan ternyata dikemudian hari terdeteksi penyakit yang berakibat fatal, maka perusahaan tidak bertanggung jawab atas biaya pengobatan tersebut*_.".
+                            "\r\n \r\nUntuk prosedur teknis dapat dilihat pada tautan berikut : https://bit.ly/PengumumanMCU_2024." .
                             "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
                             "\r\nHormat kami," .
                             "\r\nHR"
