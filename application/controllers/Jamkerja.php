@@ -733,11 +733,11 @@ class Jamkerja extends CI_Controller
             $now = time();
             $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
             $respon = $due - $now;
-            if ($this->input->post('catatan')){
-                $this->db->set('catatan', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
-                }
+            // if ($this->input->post('catatan')){
+            //     $this->db->set('catatan', $this->input->post('catatan').' - oleh '. $this->session->userdata('inisial'));
+            //     }
             $this->db->set('tgl_atasan1', date("Y-m-d H:i:s"));
-            $this->db->set('poin', $this->input->post('poin'));
+            // $this->db->set('poin', $this->input->post('poin'));
             $this->db->set('produktifitas', $this->input->post('produktifitas'));
             $this->db->set('respon_approve', $respon);
             $this->db->set('rev', 0);

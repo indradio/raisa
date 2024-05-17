@@ -170,7 +170,7 @@
                             <?php if($this->session->userdata('sect_id')==135){ ?>
                                 <!-- Button SUBMIT -->
                                 <form class="form" method="post" action="<?= base_url('jamkerja/approve/ppic'); ?>">
-                                  <input type="text" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+                                  <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
                                   <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
                                   <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
                                   <a href="#" class="btn btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusJamkerja" data-id="<?= $jamkerja['id']; ?>">HAPUS</a>
@@ -191,10 +191,15 @@
                                 <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
                                 <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
                                   <?php }else{ ?>
-                                <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
+                                <form class="form" method="post" action="<?= base_url('jamkerja/approve/koordinator'); ?>">
+                                <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+                                <input type="hidden" class="form-control" id="produktifitas" name="produktifitas" value="<?= $produktifitas; ?>">
+                                <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
+                                <!-- <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a> -->
                                 <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
                                 <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
-                                    <?php } ?>
+                                </form>
+                                <?php } ?>
                             <?php } ?>
                             </div>
                         </div>
