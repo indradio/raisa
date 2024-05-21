@@ -57,7 +57,7 @@
                                 <label class="col-md-2 col-form-label">Kendaraan</label>
                                 <div class="col-md-5">
                                     <div class="form-group has-default">
-                                        <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $perjalanan['kepemilikan']; ?>">
+                                        <input type="text" class="form-control disabled" name="kepemilikan" value="<?= $perjalanan['kendaraan'].' ('.$perjalanan['kepemilikan'].')'; ?>">
                                         <input type="text" class="form-control disabled" name="nopol" value="<?= $perjalanan['nopol']; ?>">
                                     </div>
                                 </div>
