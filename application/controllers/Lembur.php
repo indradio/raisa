@@ -2552,8 +2552,7 @@ class Lembur extends CI_Controller
 
             $this->db->where('tglmulai >=', $this->input->post('awal'));
             $this->db->where('tglmulai <=', $this->input->post('akhir'));
-            $this->db->where('status','8');
-            $this->db->where('status','9');
+            $this->db->where('status >','7');
             $this->db->order_by('tglmulai', 'ASC');
             $lembur = $this->db->get('lembur')->result();
     
