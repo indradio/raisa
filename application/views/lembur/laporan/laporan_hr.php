@@ -203,7 +203,7 @@
                 { "data":"tanggal_hr"},
                 { "data":"ppic"},
                 { "data":"tanggal_ppic"},
-                { "data":"status_lembur"},
+                { "data":"status"},
                 { "data":"catatan"},
                 { "data":"actions"}
             ],
