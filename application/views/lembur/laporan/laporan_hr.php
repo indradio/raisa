@@ -59,6 +59,7 @@
                                         <th>Approval HR</th>
                                         <th>PPIC</th>
                                         <th>Approval PPIC</th>
+                                        <th>Status</th>
                                         <th>Catatan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
@@ -82,6 +83,7 @@
                                         <th>Approval HR</th>
                                         <th>PPIC</th>
                                         <th>Approval PPIC</th>
+                                        <th>Status</th>
                                         <th>Catatan</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
@@ -201,6 +203,7 @@
                 { "data":"tanggal_hr"},
                 { "data":"ppic"},
                 { "data":"tanggal_ppic"},
+                { "data":"status_lembur"},
                 { "data":"catatan"},
                 { "data":"actions"}
             ],

@@ -2576,6 +2576,12 @@ class Lembur extends CI_Controller
         $tgl_admin_ppic = date('d-m-Y H:i', strtotime($row->tgl_admin_ppic));
     }
 
+    if ($row->status=='8'){
+        $status_lembur = 'Menunggu PPIC';
+    } elseif ($row->status=='9'){
+        $status_lembur = 'Selesai';
+    }
+
                 $output['data'][] = array(
                     "id" => $row->id,
                     "kategori" => $kategori->nama,
@@ -2593,6 +2599,7 @@ class Lembur extends CI_Controller
                     "tanggal_hr" => date('d-m-Y H:i', strtotime($row->tgl_admin_hr)),
                     "ppic" => $admin_ppic,
                     "tanggal_ppic" => $tgl_admin_ppic,
+                    "status" => $status_lembur,
                     "catatan" => $row->catatan,
                     "actions" => "<a href='". base_url('lembur/laporan_lembur/').$row->id."' class='btn btn-link btn-warning btn-just-icon edit' target='_blank'><i class='material-icons'>dvr</i></a>"
                 );
