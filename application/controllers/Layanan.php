@@ -268,16 +268,10 @@ class Layanan extends CI_Controller
                         // ],
                         'json' => [
                             'phone' => $row['phone'],
-                            'message' => "*[INFO] JADWAL MEDICAL CHECK UP*" .
+                            'message' => "*[INFO] GO LIVE SUNFISH 1 JUNI 2024*" .
                             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nSehubungan dengan akan diadakannya medical check up pada :".
-                            "\r\n \r\n*Hari & Tanggal	: Senin, 20 Mei 2024*" .
-                            "\r\n*Waktu	    : 7:30 s/d Selesai*" .
-                            "\r\n*Tempat    : Ruang Training*" .
-                            "\r\n \r\nMaka kepada seluruh *Karyawan Tetap* diwajibkan untuk mengikuti medical check up tersebut.".
-                            "\r\n \r\n_*Bagi karwayan yg tidak mengikuti medical check up dan ternyata dikemudian hari terdeteksi penyakit yang berakibat fatal, maka perusahaan tidak bertanggung jawab atas biaya pengobatan tersebut*_.".
-                            "\r\n \r\nUntuk prosedur teknis dapat dilihat pada tautan berikut : https://bit.ly/PengumumanMCU_2024." .
-                            "\r\n \r\nTerima kasih atas perhatian dan kerjasamanya." .
+                            "\r\nBersama ini menginformasikan bahwa aplikasi *SUNFISH akan Go Live pada tanggal 01 Juni 2024 untuk modul Personnel Administration (PA), Claim & Reimbursement*, oleh karena itu bagi karyawan yang melakukan transaksi pada modul tersebut akan otomatis terupdate ke sistem.".
+                            "\r\n \r\nApabila ada terdapat kendala dapat menghubungi HR & Change Agent dimasing-masing section." .
                             "\r\nHormat kami," .
                             "\r\nHR"
                         ],
