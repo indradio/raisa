@@ -303,7 +303,7 @@
         </div>
       </div>
       <?php }; ?>
-    <?php if (date('Y-m-d') < date('2024-05-21') ){ ?>
+    <?php if (date('Y-m-d') < date('2024-06-31') ){ ?>
     <div class="col-md-4">
         <div class="card">
           <div class="card-body">
@@ -312,7 +312,7 @@
                 <div class="card-header" role="tab" id="headingForm">
                   <h5 class="mb-0">
                     <a class="" data-toggle="collapse" href="#collapseForm2" aria-expanded="false" aria-controls="collapseForm2">
-                    <h3 class="card-title">Panduan MCU 
+                    <h3 class="card-title">Panduan Sunfish 
                       <i class="material-icons">keyboard_arrow_down</i>
                     </h3>
                     </a>
@@ -324,8 +324,8 @@
                       <table id="dtForm" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Panduan MCU</th>
-                                <th><a href="https://drive.google.com/file/d/1t_iZ19yEkS0jc4uCkZTumOCHSFI5clsB/view" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
+                                <th>Panduan Sunfish</th>
+                                <th><a href="https://drive.google.com/file/d/18mVbd0ti4V-WQRfWULycERhvF-xqjSdf/view" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
                               </tr>
                         </thead>
                       </table>
