@@ -87,64 +87,64 @@ class Dashboard extends CI_Controller
     public function update_lembur()
     {
         //Notif lembur hari ini to GA
-        $n = time();
-        $m = strtotime(date('Y-m-d 16:00:00'));
-        if ($n > $m){
-            $id = 'GA'.date('ymd');
-            $cekn = $this->db->get_where('notifikasi', ['id' =>  $id])->row_array();
-            if (empty($cekn)){
-                $today = date('d');
-                $bulan = date('m');
-                $tahun = date('Y');
-                $this->db->where('year(tglmulai)',$tahun);
-                $this->db->where('month(tglmulai)',$bulan);
-                $this->db->where('day(tglmulai)',$today);
-                $this->db->where('lokasi !=','WTQ');
-                $this->db->where('status >', '2');
-                $lembur_cus = $this->db->get('lembur');
+        // $n = time();
+        // $m = strtotime(date('Y-m-d 16:00:00'));
+        // if ($n > $m){
+        //     $id = 'GA'.date('ymd');
+        //     $cekn = $this->db->get_where('notifikasi', ['id' =>  $id])->row_array();
+        //     if (empty($cekn)){
+        //         $today = date('d');
+        //         $bulan = date('m');
+        //         $tahun = date('Y');
+        //         $this->db->where('year(tglmulai)',$tahun);
+        //         $this->db->where('month(tglmulai)',$bulan);
+        //         $this->db->where('day(tglmulai)',$today);
+        //         $this->db->where('lokasi !=','WTQ');
+        //         $this->db->where('status >', '2');
+        //         $lembur_cus = $this->db->get('lembur');
 
-                $this->db->where('year(tglmulai)',$tahun);
-                $this->db->where('month(tglmulai)',$bulan);
-                $this->db->where('day(tglmulai)',$today);
-                $this->db->where('lokasi','WTQ');
-                $this->db->where('status >', '2');
-                $lembur_wtq = $this->db->get('lembur');
+        //         $this->db->where('year(tglmulai)',$tahun);
+        //         $this->db->where('month(tglmulai)',$bulan);
+        //         $this->db->where('day(tglmulai)',$today);
+        //         $this->db->where('lokasi','WTQ');
+        //         $this->db->where('status >', '2');
+        //         $lembur_wtq = $this->db->get('lembur');
 
-                $data = array(
-                    'id' => $id,
-                    'notifikasi' => 1,
-                    'tanggal' => date('Y-m-d H:i:s')
-                );
-                $this->db->insert('notifikasi', $data);
+        //         $data = array(
+        //             'id' => $id,
+        //             'notifikasi' => 1,
+        //             'tanggal' => date('Y-m-d H:i:s')
+        //         );
+        //         $this->db->insert('notifikasi', $data);
 
-                $this->db->where('sect_id', '214');
-                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+        //         $this->db->where('sect_id', '214');
+        //         $ga_admin = $this->db->get('karyawan_admin')->row_array();
              
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $ga_admin['phone'],
-                            'message' => "*INFORMASI LEMBUR HARI INI*" . 
-                            "\r\n \r\nTanggal : *" . date('d M Y') . "*" .
-                            "\r\nLembur di WINTEQ : *" . $lembur_wtq->num_rows() . "*" .
-                            "\r\nLembur di Customer : *" . $lembur_cus->num_rows() . "*" .
-                            "\r\n \r\nMohon segera konfirmasi untuk konsumsi.".
-                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
-            }
-        }
+        //         $client = new \GuzzleHttp\Client();
+        //         $response = $client->post(
+        //             'https://region01.krmpesan.com/api/v2/message/send-text',
+        //             [
+        //                 'headers' => [
+        //                     'Content-Type' => 'application/json',
+        //                     'Accept' => 'application/json',
+        //                     'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //                 ],
+        //                 'json' => [
+        //                     'phone' => $ga_admin['phone'],
+        //                     'message' => "*INFORMASI LEMBUR HARI INI*" . 
+        //                     "\r\n \r\nTanggal : *" . date('d M Y') . "*" .
+        //                     "\r\nLembur di WINTEQ : *" . $lembur_wtq->num_rows() . "*" .
+        //                     "\r\nLembur di Customer : *" . $lembur_cus->num_rows() . "*" .
+        //                     "\r\n \r\nMohon segera konfirmasi untuk konsumsi.".
+        //                     "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+        //                 ],
+        //             ]
+        //         );
+        //         $body = $response->getBody();
+        //     }
+        // }
 
-        $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
+        // $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
         
         //Auto LEMBUR
 
@@ -163,42 +163,42 @@ class Dashboard extends CI_Controller
 
             if ($l['status'] >= 1 and $l['status'] <= 4) {
                 // Notifikasi REALISASI tinggal 8 JAM
-                if ($kirim_notif < $sekarang and $l['life'] == 0) {
-                    $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
-                    if (!isset($notifikasi['id'])) {
-                        $data = array(
-                            'id' => $l['id'],
-                            'notifikasi' => 1,
-                            'tanggal' => date('Y-m-d H:i:s')
-                        );
-                        $this->db->insert('notifikasi', $data);
+                // if ($kirim_notif < $sekarang and $l['life'] == 0) {
+                //     $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
+                //     if (!isset($notifikasi['id'])) {
+                //         $data = array(
+                //             'id' => $l['id'],
+                //             'notifikasi' => 1,
+                //             'tanggal' => date('Y-m-d H:i:s')
+                //         );
+                //         $this->db->insert('notifikasi', $data);
 
-                        //Notifikasi ke USER
-                        $client = new \GuzzleHttp\Client();
-                        $response = $client->post(
-                            'https://region01.krmpesan.com/api/v2/message/send-text',
-                            [
-                                'headers' => [
-                                    'Content-Type' => 'application/json',
-                                    'Accept' => 'application/json',
-                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                                ],
-                                'json' => [
-                                    'phone' => $user['phone'],
-                                    'message' => "*[MENUNGGU REALISASI] WAKTU REALISASI KAMU KURANG DARI 3 JAM*" .
-                                        "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
-                                        "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                                        "\r\nNama : *" . $l['nama'] . "*" .
-                                        "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
-                                        "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
-                                        "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *3 JAM*, Ayo segera selesaikan REALISASI kamu." .
-                                        "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                                        ],
-                            ]
-                        );
-                        $body = $response->getBody();
-                    }
-                }
+                //         //Notifikasi ke USER
+                //         $client = new \GuzzleHttp\Client();
+                //         $response = $client->post(
+                //             'https://region01.krmpesan.com/api/v2/message/send-text',
+                //             [
+                //                 'headers' => [
+                //                     'Content-Type' => 'application/json',
+                //                     'Accept' => 'application/json',
+                //                     'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //                 ],
+                //                 'json' => [
+                //                     'phone' => $user['phone'],
+                //                     'message' => "*[MENUNGGU REALISASI] WAKTU REALISASI KAMU KURANG DARI 3 JAM*" .
+                //                         "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
+                //                         "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                //                         "\r\nNama : *" . $l['nama'] . "*" .
+                //                         "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
+                //                         "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
+                //                         "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *3 JAM*, Ayo segera selesaikan REALISASI kamu." .
+                //                         "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                //                         ],
+                //             ]
+                //         );
+                //         $body = $response->getBody();
+                //     }
+                // }
 
                 // Batalkan LEMBUR REALISASI
                 if ($tempo < $sekarang and $l['life'] == 0) {
@@ -209,30 +209,30 @@ class Dashboard extends CI_Controller
                     $this->db->update('lembur');
 
                     //Notifikasi ke USER
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $user['phone'],
-                                'message' => "*[DIBATALKAN] WAKTU REALISASI LEMBUR KAMU TELAH HABIS*" .
-                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                                    "\r\nNama : *" . $l['nama'] . "*" .
-                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                                    "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
-                                    "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
-                                    "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR." .
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                                ],
-                        ]
-                    );
-                    $body = $response->getBody();
+                    // $client = new \GuzzleHttp\Client();
+                    // $response = $client->post(
+                    //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                    //     [
+                    //         'headers' => [
+                    //             'Content-Type' => 'application/json',
+                    //             'Accept' => 'application/json',
+                    //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    //         ],
+                    //         'json' => [
+                    //             'phone' => $user['phone'],
+                    //             'message' => "*[DIBATALKAN] WAKTU REALISASI LEMBUR KAMU TELAH HABIS*" .
+                    //                 "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                    //                 "\r\nNama : *" . $l['nama'] . "*" .
+                    //                 "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                    //                 "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                    //                 "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
+                    //                 "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
+                    //                 "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR." .
+                    //                 "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                    //             ],
+                    //     ]
+                    // );
+                    // $body = $response->getBody();
 
                     $log = [
                         'npk' => $user['npk'],
@@ -251,32 +251,32 @@ class Dashboard extends CI_Controller
                     $this->db->update('lembur');
 
                     //Notifikasi ke USER
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $user['phone'],
-                                'message' => "*[DIBATALKAN] WAKTU LEMBUR KAMU TELAH HABIS*" .
-                                    "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                                    "\r\nNama : *" . $l['nama'] . "*" .
-                                    "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                                    "\r\nStatus Terakhir : *" . $last_status['nama'] . "*" .
-                                    "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
-                                    "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
-                                    "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, dan kadiv." .
-                                    "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadept dan/atau kadiv." .
-                                    "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                                    ],
-                        ]
-                    );
-                    $body = $response->getBody();
+                    // $client = new \GuzzleHttp\Client();
+                    // $response = $client->post(
+                    //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                    //     [
+                    //         'headers' => [
+                    //             'Content-Type' => 'application/json',
+                    //             'Accept' => 'application/json',
+                    //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    //         ],
+                    //         'json' => [
+                    //             'phone' => $user['phone'],
+                    //             'message' => "*[DIBATALKAN] WAKTU LEMBUR KAMU TELAH HABIS*" .
+                    //                 "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                    //                 "\r\nNama : *" . $l['nama'] . "*" .
+                    //                 "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                    //                 "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                    //                 "\r\nStatus Terakhir : *" . $last_status['nama'] . "*" .
+                    //                 "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
+                    //                 "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
+                    //                 "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, dan kadiv." .
+                    //                 "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadept dan/atau kadiv." .
+                    //                 "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                    //                 ],
+                    //     ]
+                    // );
+                    // $body = $response->getBody();
 
                     $log = [
                         'npk' => $user['npk'],
