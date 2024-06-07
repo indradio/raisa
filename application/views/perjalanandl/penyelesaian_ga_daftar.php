@@ -19,6 +19,7 @@
                                 <thead>
                                     <tr>
                                         <th>No Perjalanan</th>
+                                        <th>Tgl Klaim</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
                                         <th>Waktu Berangkat</th>
                                         <th>Kendaraan</th>
@@ -34,6 +35,7 @@
                                     foreach ($perjalanan as $p) : ?>
                                     <tr onclick="window.location='<?= base_url('perjalanandl/penyelesaian/' . $p['id']); ?>'">
                                         <td><?= $p['id'].' - '.$p['jenis_perjalanan']; ?></td>
+                                        <td><?= date('d-M H:i', strtotime($p['klaim_at'])); ?></td>
                                         <td><?= $p['nama']; ?></td>
                                         <td><?= date('d M', strtotime($p['tglberangkat'])) . ' - ' . date('H:i', strtotime($p['jamberangkat'])); ?></td>
                                         <td><?= $p['kepemilikan']; ?></td>
@@ -48,6 +50,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>No Perjalanan</th>
+                                        <th>Tgl Klaim</th>
                                         <th>Nama <small>(<i>Pemohon</i>)</small></th>
                                         <th>Waktu Berangkat</th>
                                         <th>Kendaraan</th>
