@@ -216,27 +216,27 @@ class Lembur extends CI_Controller
             $this->db->delete('aktivitas');
 
             // Notification saat mengajukan REALISASI to ATASAN 1
-            $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $atasan1['phone'],
-                        'message' => "*PENGAJUAN REALISASI LEMBUR*" .
-                        "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) .
-                        "\r\nDurasi : " . $lembur['durasi'] ." Jam" .
-                        "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $atasan1['phone'],
+            //             'message' => "*PENGAJUAN REALISASI LEMBUR*" .
+            //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+            //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) .
+            //             "\r\nDurasi : " . $lembur['durasi'] ." Jam" .
+            //             "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
             redirect('lembur/realisasi/');
 
         }elseif ($params=='telat'){
@@ -1661,30 +1661,30 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
 
             // Notification saat mengajukan RENCANA to BAWAHAN 1
-            $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $karyawan['phone'],
-                        'message' => "*PERINTAH RENCANA LEMBUR*" .
-                        "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-                        "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
-                        "\r\n \r\nHarap segera respon *Terima/Batalkan*".
-                        "\r\n \r\nRespon sebelum jam 4 sore agar kamu *dipesankan makan malamnya".
-                        "\r\nKalau kamu belum respon, kamu tidak bisa melakukan realisasi".
-                        "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $karyawan = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $karyawan['phone'],
+            //             'message' => "*PERINTAH RENCANA LEMBUR*" .
+            //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+            //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+            //             "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+            //             "\r\n \r\nHarap segera respon *Terima/Batalkan*".
+            //             "\r\n \r\nRespon sebelum jam 4 sore agar kamu *dipesankan makan malamnya".
+            //             "\r\nKalau kamu belum respon, kamu tidak bisa melakukan realisasi".
+            //             "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
         }
        
         redirect('lembur/rencana/');
@@ -1920,31 +1920,31 @@ class Lembur extends CI_Controller
             }
 
             //Notifikasi ke USER
-            $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' => "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DISETUJUI*" .
-                        "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
-                        "\r\n \r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
-                        "\r\nDurasi " . $lembur['durasi_rencana'] ." Jam " . 
-                        "\r\n \r\nTelah disetujui oleh *" . $this->session->userdata('inisial') . "*" .
-                        "\r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
-                        "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
-                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                        "\r\n \r\n" . $notifikasi['pesan']
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $user['phone'],
+            //             'message' => "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DISETUJUI*" .
+            //             "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
+            //             "\r\n \r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
+            //             "\r\nDurasi " . $lembur['durasi_rencana'] ." Jam " . 
+            //             "\r\n \r\nTelah disetujui oleh *" . $this->session->userdata('inisial') . "*" .
+            //             "\r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
+            //             "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
+            //             "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
+            //             "\r\n \r\n" . $notifikasi['pesan']
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
         }
 
         $this->session->set_flashdata('message', 'setujuilbrhr');
@@ -1965,30 +1965,30 @@ class Lembur extends CI_Controller
             $this->db->update('lembur');
 
             //Notifikasi ke ATASAN 2
-            $atasan2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2']])->row_array();
-            if (!empty($atasan2)){
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $atasan2['phone'],
-                            'message' => "*PENGAJUAN REALISASI LEMBUR*" .
-                            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-                            "\r\nDurasi : " . $lembur['durasi'] ." Jam " .
-                            "\r\n \r\nREALISASI LEMBUR ini telah disetujui oleh *". $this->session->userdata('inisial') ."*".
-                            "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
-            }
+            // $atasan2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2']])->row_array();
+            // if (!empty($atasan2)){
+            //     $client = new \GuzzleHttp\Client();
+            //     $response = $client->post(
+            //         'https://region01.krmpesan.com/api/v2/message/send-text',
+            //         [
+            //             'headers' => [
+            //                 'Content-Type' => 'application/json',
+            //                 'Accept' => 'application/json',
+            //                 'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //             ],
+            //             'json' => [
+            //                 'phone' => $atasan2['phone'],
+            //                 'message' => "*PENGAJUAN REALISASI LEMBUR*" .
+            //                 "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+            //                 "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+            //                 "\r\nDurasi : " . $lembur['durasi'] ." Jam " .
+            //                 "\r\n \r\nREALISASI LEMBUR ini telah disetujui oleh *". $this->session->userdata('inisial') ."*".
+            //                 "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+            //             ],
+            //         ]
+            //     );
+            //     $body = $response->getBody();
+            // }
         } 
         // Persetujuan Dept Head 
         elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
@@ -2298,39 +2298,39 @@ class Lembur extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('lembur');
 
-        if ($this->input->post('konsumsi')!=0)
-        {
-            //Notifikasi ke USER
-            $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
-            $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $this->input->post('konsumsi')])->row_array();
-            $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' => "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DIKONFIRMASI OLEH GA*" .
-                        "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
-                        "\r\n \r\nID *" . $lembur['id'] .'*'. 
-                        "\r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
-                        "\r\nDurasi " . $lembur['durasi_rencana'] ." Jam " . 
-                        "\r\nKonsumsi " . $konsumsi['nama'] . 
-                        "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
-                        "\r\n \r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
-                        "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
-                        "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
-                        "\r\n \r\n" . $notifikasi['pesan']
-                    ],
-                ]
-            );
-            $body = $response->getBody();
-        }
+        // if ($this->input->post('konsumsi')!=0)
+        // {
+        //     //Notifikasi ke USER
+        //     $notifikasi = $this->db->get_where('layanan_notifikasi', ['id' => '1'])->row_array();
+        //     $konsumsi = $this->db->get_where('lembur_konsumsi', ['id' => $this->input->post('konsumsi')])->row_array();
+        //     $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+        //     $client = new \GuzzleHttp\Client();
+        //     $response = $client->post(
+        //         'https://region01.krmpesan.com/api/v2/message/send-text',
+        //         [
+        //             'headers' => [
+        //                 'Content-Type' => 'application/json',
+        //                 'Accept' => 'application/json',
+        //                 'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //             ],
+        //             'json' => [
+        //                 'phone' => $user['phone'],
+        //                 'message' => "*HOREEE!! RENCANA LEMBUR KAMU SUDAH DIKONFIRMASI OLEH GA*" .
+        //                 "\r\n \r\n*RENCANA LEMBUR* kamu dengan detil berikut :" .
+        //                 "\r\n \r\nID *" . $lembur['id'] .'*'. 
+        //                 "\r\nTanggal " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
+        //                 "\r\nDurasi " . $lembur['durasi_rencana'] ." Jam " . 
+        //                 "\r\nKonsumsi " . $konsumsi['nama'] . 
+        //                 "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
+        //                 "\r\n \r\nManfaatkan waktu lembur kamu dengan PRODUKTIF dan ingat selalu untuk jaga KESELAMATAN dalam bekerja." .
+        //                 "\r\n*JANGAN LUPA* Untuk melaporkan *REALISASI LEMBUR* kamu jika sudah selesai lemburnya ya!." .
+        //                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com" .
+        //                 "\r\n \r\n" . $notifikasi['pesan']
+        //             ],
+        //         ]
+        //     );
+        //     $body = $response->getBody();
+        // }
 
         $this->session->set_flashdata('message', 'setujuilbrga');
         redirect('lembur/konfirmasi/ga');
@@ -2421,32 +2421,32 @@ class Lembur extends CI_Controller
         }
 
         //Notifikasi ke USER
-        $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post(
-            'https://region01.krmpesan.com/api/v2/message/send-text',
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                ],
-                'json' => [
-                    'phone' => $user['phone'],
-                    'message' => "*LEMBUR KAMU TELAH DIKONFIRMASI OLEH HR*" .
-                    "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" . 
-                    "\r\n \r\n# : *" . $lembur['id'] .'*'. 
-                    "\r\nWaktu : *" . date('d-M H:i', strtotime($lembur['tglmulai'])) ." - " . date('d-M H:i', strtotime($lembur['tglselesai'])) .'*'. 
-                    "\r\nDurasi (Istirahat) : *" . $lembur['durasi_hr'] ." Jam ( " . $lembur['istirahat'] ." Jam )* " . 
-                    "\r\nEstimasi TUL : *" . $lembur['tul'] .'*'. 
-                    "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
-                    "\r\n \r\nNote : Hitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
-                    "\r\nJadi ini masih *Estimasi* ya!. Hasil final sangat mungkin berbeda dari ini." .
-                    "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                ],
-            ]
-        );
-        $body = $response->getBody();
+        // $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
+        // $client = new \GuzzleHttp\Client();
+        // $response = $client->post(
+        //     'https://region01.krmpesan.com/api/v2/message/send-text',
+        //     [
+        //         'headers' => [
+        //             'Content-Type' => 'application/json',
+        //             'Accept' => 'application/json',
+        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //         ],
+        //         'json' => [
+        //             'phone' => $user['phone'],
+        //             'message' => "*LEMBUR KAMU TELAH DIKONFIRMASI OLEH HR*" .
+        //             "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" . 
+        //             "\r\n \r\n# : *" . $lembur['id'] .'*'. 
+        //             "\r\nWaktu : *" . date('d-M H:i', strtotime($lembur['tglmulai'])) ." - " . date('d-M H:i', strtotime($lembur['tglselesai'])) .'*'. 
+        //             "\r\nDurasi (Istirahat) : *" . $lembur['durasi_hr'] ." Jam ( " . $lembur['istirahat'] ." Jam )* " . 
+        //             "\r\nEstimasi TUL : *" . $lembur['tul'] .'*'. 
+        //             "\r\nTelah konfirmasi oleh *" . $this->session->userdata('inisial') . "*" .
+        //             "\r\n \r\nNote : Hitungan ini belum dicocokan dengan *PRESENSI* kamu Loh." . 
+        //             "\r\nJadi ini masih *Estimasi* ya!. Hasil final sangat mungkin berbeda dari ini." .
+        //             "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+        //         ],
+        //     ]
+        // );
+        // $body = $response->getBody();
 
         $this->session->set_flashdata('message', 'setujuilbrhr');
         redirect('lembur/konfirmasi/hr');
