@@ -148,7 +148,7 @@ class Persetujuandl extends CI_Controller
                 $message = [
                 "messageType"   => "text",
                 "to"            => $ga_admin['phone'],
-                "body"          => "*#" . $rsv['id'] . " - PENGAJUAN PERJALANAN DINAS*" .
+                "body"          => "*" . $rsv['id'] . " - PENGAJUAN PERJALANAN DINAS*" .
                 "\r\n \r\nNama : *" . $rsv['nama'] . "*" .
                 "\r\nPeserta : *" . $rsv['anggota'] . "*" .
                 "\r\nTujuan : *" . $rsv['tujuan'] . "*" .

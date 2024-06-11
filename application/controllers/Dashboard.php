@@ -56,7 +56,7 @@ class Dashboard extends CI_Controller
                 $message = [
                 "messageType"   => "text",
                 "to"            =>  $user['phone'],
-                "body"          => "*#" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
+                "body"          => "*" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
                 "\r\n \r\nTujuan : *" . $p['tujuan'] . "*" .
                 "\r\nKeperluan : *" . $p['keperluan'] . "*" .
                 "\r\nPeserta : *" . $p['anggota'] . "*" .
@@ -218,7 +218,7 @@ class Dashboard extends CI_Controller
                     $message = [
                     "messageType"   => "text",
                     "to"            =>  $user['phone'],
-                    "body"          => "*#" . $l['id'] . " - LEMBUR KAMU MELEBIHI BATAS WAKTU REALISASI*" .
+                    "body"          => "*" . $l['id'] . " - LEMBUR KAMU MELEBIHI BATAS WAKTU REALISASI*" .
                     "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
                     "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
                     "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .

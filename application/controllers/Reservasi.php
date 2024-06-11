@@ -705,7 +705,7 @@ class Reservasi extends CI_Controller
                 $message = [
                 "messageType"   => "text",
                 "to"            => $atasan1['phone'],
-                "body"          => "*#" . $reservasi_temp['id'] . " - PERSETUJUAN PERJALANAN DINAS*" .
+                "body"          => "*" . $id . " - PERSETUJUAN PERJALANAN DINAS*" .
                 "\r\n \r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
                 "\r\nTujuan : *" . $reservasi_temp['tujuan'] . "*" .
                 "\r\nKeperluan : *" . $reservasi_temp['keperluan'] . "*" .
