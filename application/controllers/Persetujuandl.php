@@ -142,33 +142,76 @@ class Persetujuandl extends CI_Controller
                 $this->db->where('sect_id', '214');
                 $ga_admin = $this->db->get('karyawan_admin')->row_array();
 
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $ga_admin['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS DLPP*" .
-                            "\r\n \r\nNo. Reservasi : *" . $rsv['id'] . "*" .
-                            "\r\nNama : *" . $rsv['nama'] . "*" .
-                            "\r\nPeserta : *" . $rsv['anggota'] . "*" .
-                            "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
-                            "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
-                            "\r\nCopro : *" . $rsv['copro'] . "*" .
-                            "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
-                            "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
-                            "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
-                            "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
-                            "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                //Kirim pesan via Whatsapp
+                $curl = curl_init();
+
+                $pesan = [
+                "messageType"   => "text",
+                "to"            => $ga_admin['phone'],
+                "body"          => "*#" . $rsv['id'] . " - PENGAJUAN PERJALANAN DINAS*" .
+                "\r\n \r\nNama : *" . $rsv['nama'] . "*" .
+                "\r\nPeserta : *" . $rsv['anggota'] . "*" .
+                "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+                "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
+                "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
+                "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
+                "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+                "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
+                "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda.",
+                "file"          => "",
+                "delay"         => 10,
+                "schedule"      => 1665408510000
+                ];
+                
+                curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.starsender.online/api/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($pesan),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type:application/json',
+                    'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
+                ),
+                ));
+                
+                $response = curl_exec($curl);
+                
+                curl_close($curl);
+                echo $response;
+
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $ga_admin['phone'],
+                //             'message' =>"*PENGAJUAN PERJALANAN DINAS DLPP*" .
+                //             "\r\n \r\nNo. Reservasi : *" . $rsv['id'] . "*" .
+                //             "\r\nNama : *" . $rsv['nama'] . "*" .
+                //             "\r\nPeserta : *" . $rsv['anggota'] . "*" .
+                //             "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+                //             "\r\nKeperluan : *" . $rsv['keperluan'] . "*" .
+                //             "\r\nCopro : *" . $rsv['copro'] . "*" .
+                //             "\r\nBerangkat : *" . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - ' . date("H:i", strtotime($rsv['jamberangkat'])) . "* _estimasi_" .
+                //             "\r\nKembali : *" . date("d M Y", strtotime($rsv['tglkembali'])) . ' - ' . date("H:i", strtotime($rsv['jamkembali'])) . "* _estimasi_" .
+                //             "\r\nKendaraan : *" . $rsv['nopol'] . "* ( *" . $rsv['kepemilikan'] . "* )" .
+                //             "\r\nEstimasi Biaya : *" . $rsv['total'] . "*" .
+                //             "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
+
             // } elseif ($rsv['jenis_perjalanan'] == 'TAPP') {
             //     $this->db->set('tgl_atasan2', date('Y-m-d H:i:s'));
             //     $this->db->set('status', '4');
