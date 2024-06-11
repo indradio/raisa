@@ -122,7 +122,7 @@
 
                     for ($i = 1; $i < cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun) + 1; $i++) {
 
-                      $this->db->select('id, npk, nama, shift, respon_create, status');
+                      $this->db->select('id, npk, nama, shift, atasan1, respon_create, status');
                       $this->db->where('npk', $k['npk']);
                       $this->db->where('year(tglmulai)', $tahun);
                       $this->db->where('month(tglmulai)', $bulan);
