@@ -50,35 +50,75 @@ class Dashboard extends CI_Controller
                 $this->db->update('reservasi');
 
                 //Notifikasi ke USER
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $user['phone'],
-                            'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
-                                "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
-                                "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
-                                "\r\nPeserta : *" . $p['anggota'] . "*" .
-                                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
-                                "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
-                                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                                "\r\nCatatan : *" . $p['catatan'] .  "*" .
-                                "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi batas waktu keberangkatan" .
-                                "\r\nBatas Waktu keberangkatan :" .
-                                "\r\n1 Jam untuk perjalanan dengan COPRO" .
-                                "\r\n2 Jam untuk perjalanan tanpa COPRO" .
-                                "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                                ],
-                    ]
-                );
-                $body = $response->getBody();
+                //Kirim pesan via Whatsapp
+                $curl = curl_init();
+
+                $message = [
+                "messageType"   => "text",
+                "to"            =>  $user['phone'],
+                "body"          => "*#" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
+                "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
+                "\r\nPeserta : *" . $p['anggota'] . "*" .
+                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                "\r\nBatas Waktu keberangkatan :" .
+                "\r\n1 Jam untuk perjalanan dengan COPRO" .
+                "\r\n2 Jam untuk perjalanan tanpa COPRO",
+                "file"          => "",
+                "delay"         => 10,
+                "schedule"      => 1665408510000
+                ];
+                
+                curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.starsender.online/api/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($message),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type:application/json',
+                    'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
+                ),
+                ));
+                
+                $response = curl_exec($curl);
+                curl_close($curl);
+
+
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $user['phone'],
+                //             'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
+                //                 "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
+                //                 "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                //                 "\r\nKeperluan : *" . $p['keperluan'] . "*" .
+                //                 "\r\nPeserta : *" . $p['anggota'] . "*" .
+                //                 "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                //                 "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
+                //                 "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                //                 "\r\nCatatan : *" . $p['catatan'] .  "*" .
+                //                 "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi batas waktu keberangkatan" .
+                //                 "\r\nBatas Waktu keberangkatan :" .
+                //                 "\r\n1 Jam untuk perjalanan dengan COPRO" .
+                //                 "\r\n2 Jam untuk perjalanan tanpa COPRO" .
+                //                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                //                 ],
+                //     ]
+                // );
+                // $body = $response->getBody();
             }
             
         endforeach;
@@ -162,44 +202,7 @@ class Dashboard extends CI_Controller
             $last_status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array();
 
             if ($l['status'] >= 1 and $l['status'] <= 4) {
-                // Notifikasi REALISASI tinggal 8 JAM
-                // if ($kirim_notif < $sekarang and $l['life'] == 0) {
-                //     $notifikasi = $this->db->get_where('notifikasi', ['id' =>  $l['id']])->row_array();
-                //     if (!isset($notifikasi['id'])) {
-                //         $data = array(
-                //             'id' => $l['id'],
-                //             'notifikasi' => 1,
-                //             'tanggal' => date('Y-m-d H:i:s')
-                //         );
-                //         $this->db->insert('notifikasi', $data);
-
-                //         //Notifikasi ke USER
-                //         $client = new \GuzzleHttp\Client();
-                //         $response = $client->post(
-                //             'https://region01.krmpesan.com/api/v2/message/send-text',
-                //             [
-                //                 'headers' => [
-                //                     'Content-Type' => 'application/json',
-                //                     'Accept' => 'application/json',
-                //                     'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                //                 ],
-                //                 'json' => [
-                //                     'phone' => $user['phone'],
-                //                     'message' => "*[MENUNGGU REALISASI] WAKTU REALISASI KAMU KURANG DARI 3 JAM*" .
-                //                         "\r\n \r\n*LEMBUR* kamu dengan detil berikut :" .
-                //                         "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                //                         "\r\nNama : *" . $l['nama'] . "*" .
-                //                         "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai_rencana'])) . "*" .
-                //                         "\r\nDurasi : *" . $l['durasi_rencana'] . " Jam*" .
-                //                         "\r\n \r\nWaktu *REALISASI LEMBUR* kurang dari *3 JAM*, Ayo segera selesaikan REALISASI kamu." .
-                //                         "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                //                         ],
-                //             ]
-                //         );
-                //         $body = $response->getBody();
-                //     }
-                // }
-
+            
                 // Batalkan LEMBUR REALISASI
                 if ($tempo < $sekarang and $l['life'] == 0) {
                     $this->db->set('catatan', "Waktu REALISASI LEMBUR kamu telah HABIS - Dibatalkan oleh : RAISA Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
@@ -209,6 +212,41 @@ class Dashboard extends CI_Controller
                     $this->db->update('lembur');
 
                     //Notifikasi ke USER
+                    //Kirim pesan via Whatsapp
+                    $curl = curl_init();
+
+                    $message = [
+                    "messageType"   => "text",
+                    "to"            =>  $user['phone'],
+                    "body"          => "*#" . $l['id'] . " - LEMBUR KAMU MELEBIHI BATAS WAKTU REALISASI*" .
+                    "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                    "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
+                    "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR.",
+                    "file"          => "",
+                    "delay"         => 10,
+                    "schedule"      => 1665408510000
+                    ];
+                    
+                    curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.starsender.online/api/send',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($message),
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type:application/json',
+                        'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
+                    ),
+                    ));
+                    
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+
                     // $client = new \GuzzleHttp\Client();
                     // $response = $client->post(
                     //     'https://region01.krmpesan.com/api/v2/message/send-text',
@@ -221,14 +259,14 @@ class Dashboard extends CI_Controller
                     //         'json' => [
                     //             'phone' => $user['phone'],
                     //             'message' => "*[DIBATALKAN] WAKTU REALISASI LEMBUR KAMU TELAH HABIS*" .
-                    //                 "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                    //                 "\r\nNama : *" . $l['nama'] . "*" .
-                    //                 "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                    //                 "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                    //                 "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
-                    //                 "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
-                    //                 "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR." .
-                    //                 "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                                    // "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
+                                    // "\r\nNama : *" . $l['nama'] . "*" .
+                                    // "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                                    // "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                                    // "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
+                                    // "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
+                                    // "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR." .
+                                    // "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
                     //             ],
                     //     ]
                     // );
@@ -241,51 +279,8 @@ class Dashboard extends CI_Controller
                     ];
                     $this->db->insert('log', $log);
                 }
-            } elseif ($l['status'] > 1 and $l['status'] < 7 and $l['life'] == 0) {
-                // Batalkan LEMBUR LEWAT 7 HARI
-                if ($expired < $sekarang) {
-                    $this->db->set('catatan', "Waktu LEMBUR kamu telah HABIS - Dibatalkan oleh : SYSTEM Pada " . date('d-m-Y H:i', strtotime($l['expired_at'])));
-                    $this->db->set('status', '0');
-                    $this->db->set('last_status', $l['status']);
-                    $this->db->where('id', $l['id']);
-                    $this->db->update('lembur');
-
-                    //Notifikasi ke USER
-                    // $client = new \GuzzleHttp\Client();
-                    // $response = $client->post(
-                    //     'https://region01.krmpesan.com/api/v2/message/send-text',
-                    //     [
-                    //         'headers' => [
-                    //             'Content-Type' => 'application/json',
-                    //             'Accept' => 'application/json',
-                    //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    //         ],
-                    //         'json' => [
-                    //             'phone' => $user['phone'],
-                    //             'message' => "*[DIBATALKAN] WAKTU LEMBUR KAMU TELAH HABIS*" .
-                    //                 "\r\n \r\nNo LEMBUR : *" . $l['id'] . "*" .
-                    //                 "\r\nNama : *" . $l['nama'] . "*" .
-                    //                 "\r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                    //                 "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                    //                 "\r\nStatus Terakhir : *" . $last_status['nama'] . "*" .
-                    //                 "\r\n \r\nLEMBUR kamu *DIBATALKAN* otomatis oleh SISTEM" .
-                    //                 "\r\nWaktu *LEMBUR* kamu melebihi 7x24 Jam dari batas waktu *RENCANA MULAI LEMBUR*." .
-                    //                 "\r\n1. Untuk hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2, dan kadiv." .
-                    //                 "\r\n2. untuk hangus karena atasan 1 atau atasan 2 telat approve dalam 7x24 jam, maka atasan yang jadi penyebab hangus harus buat memo menjelaskan kenapa telat approve yang ditandatangani kadept dan/atau kadiv." .
-                    //                 "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                    //                 ],
-                    //     ]
-                    // );
-                    // $body = $response->getBody();
-
-                    $log = [
-                        'npk' => $user['npk'],
-                        'activity' => 'Waktu LEMBUR telah melewati 7 hari',
-                        'reference' => $l['id']
-                    ];
-                    $this->db->insert('log', $log);
-                }
             }
+            
         endforeach;
     }
 
