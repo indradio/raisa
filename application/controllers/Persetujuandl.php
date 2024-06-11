@@ -145,7 +145,7 @@ class Persetujuandl extends CI_Controller
                 //Kirim pesan via Whatsapp
                 $curl = curl_init();
 
-                $pesan = [
+                $message = [
                 "messageType"   => "text",
                 "to"            => $ga_admin['phone'],
                 "body"          => "*#" . $rsv['id'] . " - PENGAJUAN PERJALANAN DINAS*" .
@@ -172,7 +172,7 @@ class Persetujuandl extends CI_Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($pesan),
+                CURLOPT_POSTFIELDS => json_encode($message),
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type:application/json',
                     'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
@@ -180,9 +180,7 @@ class Persetujuandl extends CI_Controller
                 ));
                 
                 $response = curl_exec($curl);
-                
                 curl_close($curl);
-                echo $response;
 
                 // $client = new \GuzzleHttp\Client();
                 // $response = $client->post(
