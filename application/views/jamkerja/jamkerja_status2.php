@@ -86,28 +86,26 @@
               <table id="dt-status2" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
-                    <th>Hari</th>
                     <th>Tanggal</th>
                     <th>Shift</th>
                     <th>Nama</th>
-                    <th>Cell</th>
-                    <th>Tgl Submit</th>
-                    <th>Terlambat</th>
-                    <th>Status Jam Kerja</th>
+                    <!-- <th>Cell</th>
+                    <th>Tgl Submit</th> -->
                     <th>Status Lembur</th>
+                    <th>Status Jam Kerja</th>
+                    <th>Terlambat</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>Hari</th>
                     <th>Tanggal</th>
                     <th>Shift</th>
                     <th>Nama</th>
-                    <th>Cell</th>
-                    <th>Tgl Submit</th>
-                    <th>Terlambat</th>
-                    <th>Status Jam Kerja</th>
+                    <!-- <th>Cell</th>
+                    <th>Tgl Submit</th> -->
                     <th>Status Lembur</th>
+                    <th>Status Jam Kerja</th>
+                    <th>Terlambat</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -120,12 +118,12 @@
                     $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
                   }
 
-                  for ($i = 1; $i < $tanggal + 1; $i++) {
-                    $this->db->where('status', '1');
-                    $this->db->where('is_active', '1');
-                    $this->db->where('sect_id', $section);
-                    $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
-                    foreach ($kry as $k) :
+                  $this->db->where('status', '1');
+                  $this->db->where('is_active', '1');
+                  $this->db->where('sect_id', $section);
+                  $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+                  foreach ($kry as $k) :
+                    for ($i = 1; $i < $tanggal + 1; $i++) {
                       $this->db->where('npk', $k['npk']);
                       $this->db->where('year(tglmulai)', $tahun);
                       $this->db->where('month(tglmulai)', $bulan);
@@ -149,67 +147,59 @@
                           $respon = $respon;
                         }
 
-                        $now = time();
-                        // $due = strtotime($jamkerja['create']);
-                        $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
-                        $approve = $due - $now;
-                        $approve = floor($approve / (60 * 60 * 24));
-                        if ($approve < 0) {
-                          $approve = '( ' . $approve . ' Hari )';
-                        } else {
-                          $approve = null;
-                        }
+                        // $now = time();
+                        // // $due = strtotime($jamkerja['create']);
+                        // $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
+                        // $approve = $due - $now;
+                        // $approve = floor($approve / (60 * 60 * 24));
+                        // if ($approve < 0) {
+                        //   $approve = '( ' . $approve . ' Hari )';
+                        // } else {
+                        //   $approve = null;
+                        // }
 
                         if ($jamkerja['status'] == 2) { ?>
                           <tr onclick="window.location='<?= base_url('jamkerja/detail/' . $jamkerja['id']); ?>'">
                           <?php } else {
                           echo '<tr>';
                         } ?>
-                          <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                           <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                           <td><?= $jamkerja['shift']; ?></td>
                           <td><?= $k['nama']; ?></td>
-                          <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
-                          <td><?= $sect['nama']; ?></td>
-                          <td><?= date('m-d-Y', strtotime($jamkerja['create'])); ?></td>
-                          <td><?= $respon; ?></td>
-                          <td>
-                            <?php if ($jamkerja['status'] == 1) {
-                              echo 'Menunggu Persetujuan ' . $jamkerja['atasan1'] . ' <small>' . $approve . '</small>';
-                            } elseif ($jamkerja['status'] == 2) {
-                              echo 'Menunggu Persetujuan PPIC';
-                            } elseif ($jamkerja['status'] == 9) {
-                              echo 'Selesai';
-                            } ?>
-                          </td>
                           <?php if (!empty($lembur)) {
                             $otstat = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
                             <td><?= $otstat['nama']; ?></td>
                           <?php  } else { ?>
                             <td class="text-danger">Tidak ada Laporan Lembur</td>
                           <?php  } ?>
+                          <td>
+                            <?php if ($jamkerja['status'] == 1) {
+                              echo 'Menunggu Persetujuan ' . $jamkerja['atasan1'];
+                            } elseif ($jamkerja['status'] == 2) {
+                              echo 'Menunggu Persetujuan PPIC';
+                            } elseif ($jamkerja['status'] == 9) {
+                              echo 'Selesai';
+                            } ?>
+                          </td>
+                          <td><?= $respon; ?></td>
                           </tr>
                         <?php } else { ?>
                           <tr>
-                            <td><?= date('D', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                             <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                             <td></td>
                             <td><?= $k['nama']; ?></td>
-                            <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $k['sect_id']])->row_array(); ?>
-                            <td><?= $sect['nama']; ?></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
                             <?php if (!empty($lembur)) {
                               $otstat = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array(); ?>
                               <td><?= $otstat['nama']; ?></td>
                             <?php  } else { ?>
                               <td class="text-danger">Tidak ada Laporan Lembur</td>
                             <?php  } ?>
+                            <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
+                            <td></td>
                           </tr>
-                        <?php } ?>
-                    <?php endforeach;
-                  }
+                          <?php } 
+                        }
+                      endforeach;
                     ?>
 
                 </tbody>
@@ -240,7 +230,7 @@
         [1, 'asc']
       ],
       rowGroup: {
-        dataSrc: 1
+        dataSrc: 2
       },
       "scrollY": "1000px",
       "scrollCollapse": true,
@@ -249,10 +239,10 @@
 
     $('#dt-status2').DataTable({
       order: [
-        [1, 'asc']
+        [2, 'asc']
       ],
       rowGroup: {
-        dataSrc: 1
+        dataSrc: 2
       },
       dom: 'Bfrtip',
       buttons: [

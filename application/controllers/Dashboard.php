@@ -57,10 +57,10 @@ class Dashboard extends CI_Controller
                 "messageType"   => "text",
                 "to"            =>  $user['phone'],
                 "body"          => "*#" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
-                "\r\nTujuan : *" . $p['tujuan'] . "*" .
+                "\r\n \r\nTujuan : *" . $p['tujuan'] . "*" .
                 "\r\nKeperluan : *" . $p['keperluan'] . "*" .
                 "\r\nPeserta : *" . $p['anggota'] . "*" .
-                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . " " . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
                 "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
                 "\r\nBatas Waktu keberangkatan :" .
                 "\r\n1 Jam untuk perjalanan dengan COPRO" .
