@@ -91,7 +91,7 @@
                     <th>Nama</th>
                     <!-- <th>Cell</th>
                     <th>Tgl Submit</th> -->
-                    <th>Status Lembur</th>
+                    <!-- <th>Status Lembur</th> -->
                     <th>Status Jam Kerja</th>
                     <th>Terlambat</th>
                   </tr>
@@ -103,7 +103,7 @@
                     <th>Nama</th>
                     <!-- <th>Cell</th>
                     <th>Tgl Submit</th> -->
-                    <th>Status Lembur</th>
+                    <!-- <th>Status Lembur</th> -->
                     <th>Status Jam Kerja</th>
                     <th>Terlambat</th>
                   </tr>
@@ -131,12 +131,12 @@
                       $this->db->where('status >', 0);
                       $jamkerja = $this->db->get_where('jamkerja')->row_array();
 
-                      $this->db->where('npk', $k['npk']);
-                      $this->db->where('year(tglmulai)', $tahun);
-                      $this->db->where('month(tglmulai)', $bulan);
-                      $this->db->where('day(tglmulai)', $i);
-                      $this->db->where('status >', 0);
-                      $lembur = $this->db->get_where('lembur')->row_array();
+                      // $this->db->where('npk', $k['npk']);
+                      // $this->db->where('year(tglmulai)', $tahun);
+                      // $this->db->where('month(tglmulai)', $bulan);
+                      // $this->db->where('day(tglmulai)', $i);
+                      // $this->db->where('status >', 0);
+                      // $lembur = $this->db->get_where('lembur')->row_array();
 
                       if (!empty($jamkerja)) {
 
@@ -166,12 +166,12 @@
                           <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                           <td><?= $jamkerja['shift']; ?></td>
                           <td><?= $k['nama']; ?></td>
-                          <?php if (!empty($lembur)) {
+                          <!-- <?php if (!empty($lembur)) {
                             $otstat = $this->db->get_where('lembur_status', ['id' => $lembur['status']])->row_array(); ?>
                             <td><?= $otstat['nama']; ?></td>
                           <?php  } else { ?>
                             <td class="text-danger">Tidak ada Laporan Lembur</td>
-                          <?php  } ?>
+                          <?php  } ?> -->
                           <td>
                             <?php if ($jamkerja['status'] == 1) {
                               echo 'Menunggu Persetujuan ' . $jamkerja['atasan1'];
@@ -188,12 +188,12 @@
                             <td><?= date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)); ?></td>
                             <td></td>
                             <td><?= $k['nama']; ?></td>
-                            <?php if (!empty($lembur)) {
+                            <!-- <?php if (!empty($lembur)) {
                               $otstat = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array(); ?>
                               <td><?= $otstat['nama']; ?></td>
                             <?php  } else { ?>
                               <td class="text-danger">Tidak ada Laporan Lembur</td>
-                            <?php  } ?>
+                            <?php  } ?> -->
                             <td class="text-danger">Tidak ada Laporan Jam Kerja</td>
                             <td></td>
                           </tr>
