@@ -1622,30 +1622,64 @@ class Lembur extends CI_Controller
     
                 // Notification saat mengajukan RENCANA to ATASAN 1
                 $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $atasan1['phone'],
-                            'message' => "*PENGAJUAN RENCANA LEMBUR*" .
-                            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-                            "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
-                            "\r\nBatas Waktu : *" . date('d-M H:i', strtotime($expired)) . "*" .
-                            "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
-                            "\r\n \r\nRespon sebelum jam 4 sore agar tim kamu *Dipesankan makan malamnya".
-                            "\r\nKalau kamu belum respon, tim kamu tidak bisa melakukan realisasi".
-                            "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+
+                //Kirim pesan via Whatsapp
+                $curl = curl_init();
+
+                $message = [
+                "messageType"   => "text",
+                "to"            => $atasan1['phone'],
+                "body"          => $lembur['nama'] . " mengajukan lembur untuk tanggal " .date('d-M H:i', strtotime($lembur['tglmulai'])) . " Selama " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." . 
+                "\r\n \r\nLembur ini membutuhkan persetujuan dari anda.",
+                "file"          => "",
+                "delay"         => 30,
+                "schedule"      => 1665408510000
+                ];
+                
+                curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.starsender.online/api/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($message),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type:application/json',
+                    'Authorization: 610c04c9-a7e1-4b7e-918c-e9847b643e47'
+                ),
+                ));
+                
+                $response = curl_exec($curl);
+                curl_close($curl);
+
+
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $atasan1['phone'],
+                //             'message' => "*PENGAJUAN RENCANA LEMBUR*" .
+                //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+                //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                //             "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+                //             "\r\nBatas Waktu : *" . date('d-M H:i', strtotime($expired)) . "*" .
+                //             "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
+                //             "\r\n \r\nRespon sebelum jam 4 sore agar tim kamu *Dipesankan makan malamnya".
+                //             "\r\nKalau kamu belum respon, tim kamu tidak bisa melakukan realisasi".
+                //             "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
             }
 
         }else{
