@@ -705,16 +705,16 @@ class Reservasi extends CI_Controller
                 $message = [
                 "messageType"   => "text",
                 "to"            => $atasan1['phone'],
-                "body"          => "*" . $id . " - PERSETUJUAN PERJALANAN DINAS*" .
-                "\r\n \r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
-                "\r\nTujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                "\r\nKeperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                "\r\nBerangkat : *" . date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])) . "* _estimasi_" .
-                "\r\nKembali : *" . date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])) . "* _estimasi_" .
-                "\r\nEstimasi Biaya : *" . $reservasi_temp['total'] . "*" .
+                "body"          => " . $id . - PERSETUJUAN PERJALANAN DINAS" .
+                "\r\n \r\nPeserta : " . $reservasi_temp['anggota'] . "" .
+                "\r\nTujuan : " . $reservasi_temp['tujuan'] . "" .
+                "\r\nKeperluan : " . $reservasi_temp['keperluan'] . "" .
+                "\r\nBerangkat : " . date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])) . " _estimasi_" .
+                "\r\nKembali : " . date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])) . " _estimasi_" .
+                "\r\nEstimasi Biaya : " . $reservasi_temp['total'] . 
                 "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda.",
                 "file"          => "",
-                "delay"         => 10,
+                "delay"         => 30,
                 "schedule"      => 1665408510000
                 ];
                 
@@ -730,7 +730,7 @@ class Reservasi extends CI_Controller
                 CURLOPT_POSTFIELDS => json_encode($message),
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type:application/json',
-                    'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
+                    'Authorization: 610c04c9-a7e1-4b7e-918c-e9847b643e47'
                 ),
                 ));
                 
