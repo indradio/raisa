@@ -899,6 +899,35 @@ class Jamkerja extends CI_Controller
             if($this->input->post('bulan')){
                 $data['tahun'] = $this->input->post('tahun');
                 $data['bulan'] = $this->input->post('bulan');
+                $data['tgl1'] = $this->input->post('tgl1');
+                $data['tgl2'] = $this->input->post('tgl2');
+                $data['section'] = $this->input->post('section');
+            }else{
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+                $data['tgl1'] = date('d');
+                $data['tgl2'] = date('d');
+                $data['section'] = 111;
+            }
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('jamkerja/jamkerja_status2', $data);
+            $this->load->view('templates/footer');
+    }
+
+    public function status_ot()
+    {
+            date_default_timezone_set('asia/jakarta');
+            
+            $data['sidemenu'] = 'PPIC';
+            $data['sidesubmenu'] = 'Status Jam Kerja';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+
+            if($this->input->post('bulan')){
+                $data['tahun'] = $this->input->post('tahun');
+                $data['bulan'] = $this->input->post('bulan');
                 $data['section'] = $this->input->post('section');
             }else{
                 $data['tahun'] = date('Y');
@@ -909,7 +938,7 @@ class Jamkerja extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
-            $this->load->view('jamkerja/jamkerja_status2', $data);
+            $this->load->view('jamkerja/jamkerja_status3', $data);
             $this->load->view('templates/footer');
     }
 
@@ -1204,5 +1233,148 @@ class Jamkerja extends CI_Controller
         
         echo json_encode($output);
         exit();
+    }
+
+    public function get_status_section()
+    {
+        date_default_timezone_set('asia/jakarta');
+        //Set variable
+        // $tahun      = $this->input->post('tahun');
+        // $bulan      = $this->input->post('bulan');
+        // $tanggal    = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+        // $section    = $this->input->post('section');
+
+        $tahun      = '2024';
+        $bulan      = '05';
+        $tanggal    = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+        $section    = '111';
+
+        
+        
+        $this->db->where('status', '1');
+        $this->db->where('is_active', '1');
+        $this->db->where('sect_id', $section);
+        $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+        
+        foreach ($kry as $k) {
+            $row = array();
+            for ($i = 1; $i < $tanggal + 1; $i++) {
+
+                      $this->db->where('npk', $k['npk']);
+                      $this->db->where('year(tglmulai)', $tahun);
+                      $this->db->where('month(tglmulai)', $bulan);
+                      $this->db->where('day(tglmulai)', $i);
+                      $this->db->where('status >', 0);
+                      $jamkerja = $this->db->get_where('jamkerja')->row_array();
+
+                        if (!empty($jamkerja)) {
+                            if ($jamkerja['status'] == 1) {
+                                $jk_status = 'Menunggu Persetujuan ' . $jamkerja['atasan1'];
+                            } elseif ($jamkerja['status'] == 2) {
+                                $jk_status = 'Menunggu Persetujuan PPIC';
+                            } elseif ($jamkerja['status'] == 9) {
+                                $jk_status = 'Selesai';
+                            }
+                        else{
+                                $jk_status = 'Tidak ada Laporan';
+                        }
+
+                      $this->db->where('npk', $k['npk']);
+                      $this->db->where('year(tglmulai)', $tahun);
+                      $this->db->where('month(tglmulai)', $bulan);
+                      $this->db->where('day(tglmulai)', $i);
+                      $this->db->where('status >', 0);
+                      $lembur = $this->db->get_where('lembur')->row_array();
+
+                        if (!empty($lembur)) {
+                            $status_ot = $this->db->get_where('lembur_status', ['id' =>  $lembur['status']])->row_array();
+                            $ot_status = $status_ot['nama'];
+                        }
+                        else{
+                            $ot_status = 'Tidak ada Laporan';
+                        }
+
+                        // $respon = floor($jamkerja['respon_create'] / (60 * 60 * 24));
+                        // if ($respon == 0) {
+                        //   $respon = 'Tepat Waktu';
+                        // } else {
+                        //   $respon = $respon;
+                        // }
+
+                        // $now = time();
+                        // // $due = strtotime($jamkerja['create']);
+                        // $due = strtotime(date('Y-m-d 23:59:00', strtotime($jamkerja['create'])));
+                        // $approve = $due - $now;
+                        // $approve = floor($approve / (60 * 60 * 24));
+                        // if ($approve < 0) {
+                        //   $approve = '( ' . $approve . ' Hari )';
+                        // } else {
+                        //   $approve = null;
+                        // }
+                        $row[] =  $k['nama'];
+                        $row[] = date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i));
+
+                        // $output['data'][] = array(
+                        //         "nama" => $k['nama'],
+                        //         "tgl" => date('m-d-Y', strtotime($tahun . '-' . $bulan . '-' . $i)),
+                        //         "shift" => $jamkerja['shift'],
+                        //         "jk" => $jk_status,
+                        //         "ot" => $ot_status
+                        // );
+                        
+                    }
+
+                    $output['data'][] = array(
+                            "nama" => $row,
+                    );
+                    
+                    
+                };
+                echo json_encode($output);
+                exit();
+                    // echo json_encode($output);
+
+            }
+
+
+        // $this->db->where('tgl_aktivitas >=',$this->input->post('awal'));
+        // $this->db->where('tgl_aktivitas <=',$this->input->post('akhir'));
+        // $this->db->where('contract', 'Direct Labor');
+        // $this->db->where('status', 9);
+        // $aktivitas = $this->db->get('aktivitas')->result();
+
+        // foreach ($aktivitas as $row) {
+        //     $person = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+        //     $dept = $this->db->get_where('karyawan_dept', ['id' => $person->dept_id])->row();
+        //     $sect = $this->db->get_where('karyawan_sect', ['id' => $person->sect_id])->row();
+        //     $posisi = $this->db->get_where('karyawan_posisi', ['id' => $person->posisi_id])->row();
+            
+        //     $kategori =  $this->db->get_where('jamkerja_kategori', ['id' => $row->kategori])->row();
+        //     if ($row->copro){
+        //         $copro = $row->copro;
+        //     }else{
+        //         $copro = $row->aktivitas;
+        //     }
+
+        //     $output['data'][] = array(
+        //         "tanggal" => date('m-d-Y', strtotime($row->tgl_aktivitas)),
+        //         "nama" => $person->nama,
+        //         "npk" => $person->npk,
+        //         "kategori" => $kategori->nama,
+        //         "copro" => $copro,
+        //         "aktivitas" => $row->aktivitas,
+        //         "deskripsi" => $row->deskripsi_hasil,
+        //         "durasi" => $row->durasi,
+        //         "progres" => $row->progres_hasil,
+        //         "dept" => $dept->nama,
+        //         "sect" => $sect->nama,
+        //         "posisi" => $posisi->nama,
+        //         "jenis" => $row->jenis_aktivitas,
+        //         "hari" => date('D', strtotime($row->tgl_aktivitas))
+        //     );
+        // }
+        
+        // echo json_encode($output);
+        // exit();
     }
 }
