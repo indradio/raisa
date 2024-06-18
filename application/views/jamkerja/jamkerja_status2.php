@@ -13,7 +13,7 @@
           <div class="card-body">
             <form class="form-horizontal" action="<?= base_url('jamkerja/status'); ?>" method="post">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group has-default">
                     <select class="selectpicker" name="tahun" id="tahun" data-style="select-with-transition" title="Pilih tahun" data-size="3" required>
                       <?php for ($y = date('Y')-3; $y <= date('Y'); $y++) { ?>
@@ -22,7 +22,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group has-default">
                     <select class="selectpicker" name="bulan" id="bulan" data-style="select-with-transition" title="Pilih Bulan" data-size="7" required>
                       <option value="01"<?php echo ($bulan == '01') ? 'selected' : ''; ?>>Januari</option>
@@ -40,7 +40,37 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                  <div class="form-group has-default">
+                    <select class="selectpicker" name="tgl1" id="tgl1" data-style="select-with-transition" title="Pilih tanggal" data-size="7" required>
+                    <?php 
+                      for ($i=1; $i <= cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun); $i++) {
+                        echo '<option value="' . $i . '"';
+                          if ($i == $tgl1) {
+                              echo 'selected';
+                          }
+                          echo '>' . $i . '</option>' . "\n";
+                      }
+                    ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group has-default">
+                    <select class="selectpicker" name="tgl2" id="tgl2" data-style="select-with-transition" title="Pilih tanggal" data-size="7" required>
+                    <?php 
+                      for ($i=1; $i <= cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun); $i++) {
+                        echo '<option value="' . $i . '"';
+                          if ($i == $tgl2) {
+                              echo 'selected';
+                          }
+                          echo '>' . $i . '</option>' . "\n";
+                      }
+                    ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
                   <div class="form-group has-default">
                     <select class="selectpicker" name="section" id="section" data-style="select-with-transition" title="Pilih Cell" data-size="7" required>
                     <?php 
@@ -60,7 +90,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-ml-1">
+                <div class="col-md-12">
                   <button type="submit" class="btn btn-rose">SUBMIT</a>
                 </div>
               </div>
@@ -121,7 +151,8 @@
                   $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
                   foreach ($kry as $k) :
 
-                    for ($i = 1; $i < cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun) + 1; $i++) {
+                    // for ($i = 1; $i < cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun) + 1; $i++) {
+                    for ($i = $tgl1; $i <= $tgl2; $i++) {
 
                       $this->db->select('id, npk, nama, shift, atasan1, respon_create, status');
                       $this->db->where('npk', $k['npk']);
