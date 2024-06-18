@@ -612,7 +612,7 @@ class Reservasi extends CI_Controller
             $this->db->where('reservasi_id', $reservasi_temp['id']);
             $this->db->update('perjalanan_anggota');
 
-            if ($this->session->userdata('posisi_id') <= 3) {
+            if ($this->session->userdata('posisi_id') <= 4) {
                 if ($reservasi_temp['jenis_perjalanan'] != 'TA') {
                     $this->db->set('atasan1', null);
                     $this->db->set('atasan2', null);
@@ -1057,7 +1057,7 @@ class Reservasi extends CI_Controller
             ];
             $this->db->insert('reservasi', $data);
 
-            if ($this->session->userdata('posisi_id') <= 3) {
+            if ($this->session->userdata('posisi_id') <= 4) {
 
                 $this->db->set('atasan1', null);
                 $this->db->set('atasan2', null);
