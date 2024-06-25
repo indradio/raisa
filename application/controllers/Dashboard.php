@@ -51,43 +51,43 @@ class Dashboard extends CI_Controller
 
                 //Notifikasi ke USER
                 //Kirim pesan via Whatsapp
-                $curl = curl_init();
+                // $curl = curl_init();
 
-                $message = [
-                "messageType"   => "text",
-                "to"            =>  $user['phone'],
-                "body"          => "*" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
-                "\r\n \r\nTujuan : *" . $p['tujuan'] . "*" .
-                "\r\nKeperluan : *" . $p['keperluan'] . "*" .
-                "\r\nPeserta : *" . $p['anggota'] . "*" .
-                "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . " " . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
-                "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                "\r\nBatas Waktu keberangkatan :" .
-                "\r\n1 Jam untuk perjalanan dengan COPRO" .
-                "\r\n2 Jam untuk perjalanan tanpa COPRO",
-                "file"          => "",
-                "delay"         => 10,
-                "schedule"      => 1665408510000
-                ];
+                // $message = [
+                // "messageType"   => "text",
+                // "to"            =>  $user['phone'],
+                // "body"          => "*" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
+                // "\r\n \r\nTujuan : *" . $p['tujuan'] . "*" .
+                // "\r\nKeperluan : *" . $p['keperluan'] . "*" .
+                // "\r\nPeserta : *" . $p['anggota'] . "*" .
+                // "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . " " . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
+                // "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
+                // "\r\nBatas Waktu keberangkatan :" .
+                // "\r\n1 Jam untuk perjalanan dengan COPRO" .
+                // "\r\n2 Jam untuk perjalanan tanpa COPRO",
+                // "file"          => "",
+                // "delay"         => 10,
+                // "schedule"      => 1665408510000
+                // ];
                 
-                curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.starsender.online/api/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($message),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type:application/json',
-                    'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
-                ),
-                ));
+                // curl_setopt_array($curl, array(
+                // CURLOPT_URL => 'https://api.starsender.online/api/send',
+                // CURLOPT_RETURNTRANSFER => true,
+                // CURLOPT_ENCODING => '',
+                // CURLOPT_MAXREDIRS => 10,
+                // CURLOPT_TIMEOUT => 0,
+                // CURLOPT_FOLLOWLOCATION => true,
+                // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                // CURLOPT_CUSTOMREQUEST => 'POST',
+                // CURLOPT_POSTFIELDS => json_encode($message),
+                // CURLOPT_HTTPHEADER => array(
+                //     'Content-Type:application/json',
+                //     'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
+                // ),
+                // ));
                 
-                $response = curl_exec($curl);
-                curl_close($curl);
+                // $response = curl_exec($curl);
+                // curl_close($curl);
 
 
                 // $client = new \GuzzleHttp\Client();
@@ -213,39 +213,39 @@ class Dashboard extends CI_Controller
 
                     //Notifikasi ke USER
                     //Kirim pesan via Whatsapp
-                    $curl = curl_init();
+                    // $curl = curl_init();
 
-                    $message = [
-                    "messageType"   => "text",
-                    "to"            =>  $user['phone'],
-                    "body"          => "*" . $l['id'] . " - LEMBUR KAMU MELEBIHI BATAS WAKTU REALISASI*" .
-                    "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
-                    "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
-                    "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
-                    "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR.",
-                    "file"          => "",
-                    "delay"         => 10,
-                    "schedule"      => 1665408510000
-                    ];
+                    // $message = [
+                    // "messageType"   => "text",
+                    // "to"            =>  $user['phone'],
+                    // "body"          => "*" . $l['id'] . " - LEMBUR KAMU MELEBIHI BATAS WAKTU REALISASI*" .
+                    // "\r\n \r\nTanggal : *" . date('d-M H:i', strtotime($l['tglmulai'])) . "*" .
+                    // "\r\nDurasi : *" . $l['durasi'] . " Jam*" .
+                    // "\r\n \r\nWaktu *REALISASI LEMBUR* kamu melebihi 2x24 Jam dari batas waktu *RENCANA LEMBUR*." .
+                    // "\r\nLembur yg hangus karena karyawan telat membuat realisasi dalam 2x24 jam, maka karyawan harus buat memo menjelaskan kenapa telat membuat realisasi yang ditandatangani atasan 1, atasan 2 dan kadiv kemudian diserahkan ke HR.",
+                    // "file"          => "",
+                    // "delay"         => 10,
+                    // "schedule"      => 1665408510000
+                    // ];
                     
-                    curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://api.starsender.online/api/send',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => json_encode($message),
-                    CURLOPT_HTTPHEADER => array(
-                        'Content-Type:application/json',
-                        'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
-                    ),
-                    ));
+                    // curl_setopt_array($curl, array(
+                    // CURLOPT_URL => 'https://api.starsender.online/api/send',
+                    // CURLOPT_RETURNTRANSFER => true,
+                    // CURLOPT_ENCODING => '',
+                    // CURLOPT_MAXREDIRS => 10,
+                    // CURLOPT_TIMEOUT => 0,
+                    // CURLOPT_FOLLOWLOCATION => true,
+                    // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    // CURLOPT_CUSTOMREQUEST => 'POST',
+                    // CURLOPT_POSTFIELDS => json_encode($message),
+                    // CURLOPT_HTTPHEADER => array(
+                    //     'Content-Type:application/json',
+                    //     'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
+                    // ),
+                    // ));
                     
-                    $response = curl_exec($curl);
-                    curl_close($curl);
+                    // $response = curl_exec($curl);
+                    // curl_close($curl);
 
                     // $client = new \GuzzleHttp\Client();
                     // $response = $client->post(
@@ -353,29 +353,29 @@ class Dashboard extends CI_Controller
                 }
 
                 //Notifikasi ke USER
-                $user = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $user->phone,
-                            'message' => "*[DIBATALKAN] CUTI KAMU MELEBIHI BATAS WAKTU PERSETUJUAN*" .
-                            "\r\n \r\nNama : *" . $row->nama . "*" .
-                            "\r\nTanggal : *" . date('d-M', strtotime($row->tgl1)) . "*" .
-                            "\r\nLama : *" . $row->lama ." Hari* " .
-                            "\r\nAlasan : *Cuti kamu melewati batas waktu persetujuan atasan*" .
-                            "\r\n \r\nCuti ini telah *DIBATALKAN oleh SYSTEM*".
-                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $user = $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $user->phone,
+                //             'message' => "*[DIBATALKAN] CUTI KAMU MELEBIHI BATAS WAKTU PERSETUJUAN*" .
+                //             "\r\n \r\nNama : *" . $row->nama . "*" .
+                //             "\r\nTanggal : *" . date('d-M', strtotime($row->tgl1)) . "*" .
+                //             "\r\nLama : *" . $row->lama ." Hari* " .
+                //             "\r\nAlasan : *Cuti kamu melewati batas waktu persetujuan atasan*" .
+                //             "\r\n \r\nCuti ini telah *DIBATALKAN oleh SYSTEM*".
+                //             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/cuti/"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
             endforeach;
 
     }
