@@ -312,7 +312,7 @@
                 <div class="card-header" role="tab" id="headingForm">
                   <h5 class="mb-0">
                     <a class="" data-toggle="collapse" href="#collapseForm2" aria-expanded="false" aria-controls="collapseForm2">
-                    <h3 class="card-title">Panduan Sunfish 
+                    <h3 class="card-title">Panduan App 
                       <i class="material-icons">keyboard_arrow_down</i>
                     </h3>
                     </a>
@@ -326,6 +326,10 @@
                             <tr>
                                 <th>Panduan Sunfish</th>
                                 <th><a href="https://drive.google.com/file/d/18mVbd0ti4V-WQRfWULycERhvF-xqjSdf/view" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
+                              </tr>
+                            <tr>
+                                <th>Panduan registrasi myDPA</th>
+                                <th><a href="https://drive.google.com/file/d/1X5PFkv8O3xgt4VJAzV3Tz_bxdsOiWGp6/view?usp=sharing" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
                               </tr>
                         </thead>
                       </table>
