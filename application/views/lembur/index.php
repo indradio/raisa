@@ -65,7 +65,7 @@
                 $this->db->select('SUM(tul) as total');
                 $this->db->where('npk', $this->session->userdata('npk'));
                 $this->db->where('year(tglmulai)',$tahun);
-                $this->db->where('month(tglmulai)',$bulan);
+                $this->db->where('month(tglmulai)',$bulanLalu);
                 $this->db->where('status', '9');
                 $this->db->from('lembur');
                 $totalTulLast = $this->db->get()->row()->total;
