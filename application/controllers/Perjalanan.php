@@ -79,36 +79,36 @@ class Perjalanan extends CI_Controller
                 $this->db->where('id', $this->input->post('id'));
                 $this->db->update('perjalanan');
 
-                $this->db->where('sect_id', '214');
-                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                // $this->db->where('sect_id', '214');
+                // $ga_admin = $this->db->get('karyawan_admin')->row_array();
 
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $ga_admin['phone'],
-                            'message' =>"*PENGAJUAN PENYELESAIAN PERJALANAN DINAS*" .
-                            "\r\n \r\nNo. Reservasi : *" . $perjalanan['id'] . "*" .
-                            "\r\nNama : *" . $perjalanan['nama'] . "*" .
-                            "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
-                            "\r\nTujuan : *" . $perjalanan['tujuan'] . "*" .
-                            "\r\nKeperluan : *" . $perjalanan['keperluan'] . "*" .
-                            "\r\nBerangkat : *" . date("d M Y", strtotime($perjalanan['tglberangkat'])) . ' - ' . date("H:i", strtotime($perjalanan['jamberangkat'])) . "* _estimasi_" .
-                            "\r\nKembali : *" . date("d M Y", strtotime($perjalanan['tglkembali'])) . ' - ' . date("H:i", strtotime($perjalanan['jamkembali'])) . "* _estimasi_" .
-                            "\r\nKendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
-                            "\r\n \r\nKasbon : *" . $perjalanan['kasbon'] . "*" .
-                            "\r\nBiaya : *" . $perjalanan['total'] . "*" .
-                            "\r\n \r\nProses sekarang! https://raisa.winteq-astra.com/perjalanandl/penyelesaian/".$perjalanan['id'],
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $ga_admin['phone'],
+                //             'message' =>"*PENGAJUAN PENYELESAIAN PERJALANAN DINAS*" .
+                //             "\r\n \r\nNo. Reservasi : *" . $perjalanan['id'] . "*" .
+                //             "\r\nNama : *" . $perjalanan['nama'] . "*" .
+                //             "\r\nPeserta : *" . $perjalanan['anggota'] . "*" .
+                //             "\r\nTujuan : *" . $perjalanan['tujuan'] . "*" .
+                //             "\r\nKeperluan : *" . $perjalanan['keperluan'] . "*" .
+                //             "\r\nBerangkat : *" . date("d M Y", strtotime($perjalanan['tglberangkat'])) . ' - ' . date("H:i", strtotime($perjalanan['jamberangkat'])) . "* _estimasi_" .
+                //             "\r\nKembali : *" . date("d M Y", strtotime($perjalanan['tglkembali'])) . ' - ' . date("H:i", strtotime($perjalanan['jamkembali'])) . "* _estimasi_" .
+                //             "\r\nKendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
+                //             "\r\n \r\nKasbon : *" . $perjalanan['kasbon'] . "*" .
+                //             "\r\nBiaya : *" . $perjalanan['total'] . "*" .
+                //             "\r\n \r\nProses sekarang! https://raisa.winteq-astra.com/perjalanandl/penyelesaian/".$perjalanan['id'],
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
                 redirect('perjalanan/penyelesaian/daftar');
             }else{
                 redirect('perjalanan/penyelesaian/daftar');
@@ -491,34 +491,34 @@ class Perjalanan extends CI_Controller
                         $this->db->where('id', $r['id']);
                         $this->db->update('reservasi');
 
-                        $this->db->where('npk', $r['npk']);
-                        $karyawan = $this->db->get('karyawan')->row_array();
-                        $client = new \GuzzleHttp\Client();
-                        $response = $client->post(
-                            'https://region01.krmpesan.com/api/v2/message/send-text',
-                            [
-                                'headers' => [
-                                    'Content-Type' => 'application/json',
-                                    'Accept' => 'application/json',
-                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                                ],
-                                'json' => [
-                                    'phone' => $karyawan['phone'],
-                                    'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
-                                    "\r\nNama : *" . $r['nama'] . "*" .
-                                    "\r\nTujuan : *" . $r['tujuan'] . "*" .
-                                    "\r\nKeperluan : *" . $r['keperluan'] . "*" .
-                                    "\r\nPeserta : *" . $r['anggota'] . "*" .
-                                    "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
-                                    "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
-                                    "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
-                                    "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
-                                    "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
-                                    "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                                ],
-                            ]
-                        );
-                        $body = $response->getBody();
+                        // $this->db->where('npk', $r['npk']);
+                        // $karyawan = $this->db->get('karyawan')->row_array();
+                        // $client = new \GuzzleHttp\Client();
+                        // $response = $client->post(
+                        //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                        //     [
+                        //         'headers' => [
+                        //             'Content-Type' => 'application/json',
+                        //             'Accept' => 'application/json',
+                        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        //         ],
+                        //         'json' => [
+                        //             'phone' => $karyawan['phone'],
+                        //             'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
+                        //             "\r\nNama : *" . $r['nama'] . "*" .
+                        //             "\r\nTujuan : *" . $r['tujuan'] . "*" .
+                        //             "\r\nKeperluan : *" . $r['keperluan'] . "*" .
+                        //             "\r\nPeserta : *" . $r['anggota'] . "*" .
+                        //             "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
+                        //             "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
+                        //             "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
+                        //             "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
+                        //             "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
+                        //             "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        //         ],
+                        //     ]
+                        // );
+                        // $body = $response->getBody();
                     }
             endforeach;
 
@@ -719,33 +719,33 @@ class Perjalanan extends CI_Controller
                     $this->db->update('reservasi');
 
                     //Kirim Notifikasi
-                    $user = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
+                    // $user = $this->db->get_where('karyawan', ['npk' => $reservasi['npk']])->row_array();
 
-                    $client = new \GuzzleHttp\Client();
-                    $response = $client->post(
-                        'https://region01.krmpesan.com/api/v2/message/send-text',
-                        [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                                'Accept' => 'application/json',
-                                'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                            ],
-                            'json' => [
-                                'phone' => $user['phone'],
-                                'message' => "*PERJALANAN DINAS KAMU SUDAH SIAP" .
-                                "*\r\n \r\nNo. Perjalanan : *" . $data['id'] . "*" .
-                                "\r\nTujuan : *" . $data['tujuan'] . "*" .
-                                "\r\nPeserta : *" . $data['anggota'] . "*" .
-                                "\r\nKeperluan : *" . $data['keperluan'] . "*" .
-                                "\r\nBerangkat : *" . $data['tglberangkat'] . "* *" . $data['jamberangkat'] . "* _estimasi_" .
-                                "\r\nKembali : *" . $data['tglkembali'] . "* *" . $data['jamkembali'] . "* _estimasi_" .
-                                "\r\nKendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "* ) " .
-                                "\r\n \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal." .
-                                "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas."
-                            ],
-                        ]
-                    );
-                    $body = $response->getBody();
+                    // $client = new \GuzzleHttp\Client();
+                    // $response = $client->post(
+                    //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                    //     [
+                    //         'headers' => [
+                    //             'Content-Type' => 'application/json',
+                    //             'Accept' => 'application/json',
+                    //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                    //         ],
+                    //         'json' => [
+                    //             'phone' => $user['phone'],
+                    //             'message' => "*PERJALANAN DINAS KAMU SUDAH SIAP" .
+                    //             "*\r\n \r\nNo. Perjalanan : *" . $data['id'] . "*" .
+                    //             "\r\nTujuan : *" . $data['tujuan'] . "*" .
+                    //             "\r\nPeserta : *" . $data['anggota'] . "*" .
+                    //             "\r\nKeperluan : *" . $data['keperluan'] . "*" .
+                    //             "\r\nBerangkat : *" . $data['tglberangkat'] . "* *" . $data['jamberangkat'] . "* _estimasi_" .
+                    //             "\r\nKembali : *" . $data['tglkembali'] . "* *" . $data['jamkembali'] . "* _estimasi_" .
+                    //             "\r\nKendaraan : *" . $data['nopol'] . "* ( *" . $data['kepemilikan'] . "* ) " .
+                    //             "\r\n \r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal." .
+                    //             "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas."
+                    //         ],
+                    //     ]
+                    // );
+                    // $body = $response->getBody();
 
                     if ($this->input->post('kasbon')>0){
 
@@ -824,34 +824,34 @@ class Perjalanan extends CI_Controller
                         $this->db->where('id', $r['id']);
                         $this->db->update('reservasi');
 
-                        $this->db->where('npk', $r['npk']);
-                        $karyawan = $this->db->get('karyawan')->row_array();
-                        $client = new \GuzzleHttp\Client();
-                        $response = $client->post(
-                            'https://region01.krmpesan.com/api/v2/message/send-text',
-                            [
-                                'headers' => [
-                                    'Content-Type' => 'application/json',
-                                    'Accept' => 'application/json',
-                                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                                ],
-                                'json' => [
-                                    'phone' => $karyawan['phone'],
-                                    'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
-                                    "\r\nNama : *" . $r['nama'] . "*" .
-                                    "\r\nTujuan : *" . $r['tujuan'] . "*" .
-                                    "\r\nKeperluan : *" . $r['keperluan'] . "*" .
-                                    "\r\nPeserta : *" . $r['anggota'] . "*" .
-                                    "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
-                                    "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
-                                    "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
-                                    "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
-                                    "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
-                                    "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                                ],
-                            ]
-                        );
-                        $body = $response->getBody();
+                        // $this->db->where('npk', $r['npk']);
+                        // $karyawan = $this->db->get('karyawan')->row_array();
+                        // $client = new \GuzzleHttp\Client();
+                        // $response = $client->post(
+                        //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                        //     [
+                        //         'headers' => [
+                        //             'Content-Type' => 'application/json',
+                        //             'Accept' => 'application/json',
+                        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                        //         ],
+                        //         'json' => [
+                        //             'phone' => $karyawan['phone'],
+                        //             'message' => "*RESERVASI PERJALANAN DINAS DIBATALKAN*\r\n \r\n No. Reservasi : *" . $r['id'] . "*" .
+                        //             "\r\nNama : *" . $r['nama'] . "*" .
+                        //             "\r\nTujuan : *" . $r['tujuan'] . "*" .
+                        //             "\r\nKeperluan : *" . $r['keperluan'] . "*" .
+                        //             "\r\nPeserta : *" . $r['anggota'] . "*" .
+                        //             "\r\nBerangkat : *" . $r['tglberangkat'] . "* *" . $r['jamberangkat'] . "* _estimasi_" .
+                        //             "\r\nKembali : *" . $r['tglkembali'] . "* *" . $r['jamkembali'] . "* _estimasi_" .
+                        //             "\r\nKendaraan : *" . $r['nopol'] . "* ( *" . $r['kepemilikan'] . "* )" .
+                        //             "\r\nStatus Terakhir : *" . $status['nama'] . "*" .
+                        //             "\r\n \r\nWaktu reservasi kamu telah selesai. Dibatalkan oleh RAISA pada " . date('d-m-Y H:i') .
+                        //             "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                        //         ],
+                        //     ]
+                        // );
+                        // $body = $response->getBody();
                     }
             endforeach;
             
@@ -934,34 +934,34 @@ class Perjalanan extends CI_Controller
                 $this->db->update('reservasi');
 
                 //Kirim Notifikasi
-                $this->db->where('sect_id', '214');
-                $ga_admin = $this->db->get('karyawan_admin')->row_array();
+                // $this->db->where('sect_id', '214');
+                // $ga_admin = $this->db->get('karyawan_admin')->row_array();
 
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $ga_admin['phone'],
-                            'message' =>"*PENGAJUAN PERJALANAN DINAS TA*" .
-                            "\r\n \r\nNo. Reservasi : *" . $reservasi['id'] . "*" .
-                            "\r\nNama : *" . $reservasi['nama'] . "*" .
-                            "\r\nPeserta : *" . $reservasi['anggota'] . "*" .
-                            "\r\nTujuan : *" . $reservasi['tujuan'] . "*" .
-                            "\r\nKeperluan : *" . $reservasi['keperluan'] . "*" .
-                            "\r\nBerangkat : *" . date("d M Y", strtotime($reservasi['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi['jamberangkat'])) . "* _estimasi_" .
-                            "\r\nKembali : *" . date("d M Y", strtotime($reservasi['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi['jamkembali'])) . "* _estimasi_" .
-                            "\r\nKendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kendaraan'] . "* )" .
-                            "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $ga_admin['phone'],
+                //             'message' =>"*PENGAJUAN PERJALANAN DINAS TA*" .
+                //             "\r\n \r\nNo. Reservasi : *" . $reservasi['id'] . "*" .
+                //             "\r\nNama : *" . $reservasi['nama'] . "*" .
+                //             "\r\nPeserta : *" . $reservasi['anggota'] . "*" .
+                //             "\r\nTujuan : *" . $reservasi['tujuan'] . "*" .
+                //             "\r\nKeperluan : *" . $reservasi['keperluan'] . "*" .
+                //             "\r\nBerangkat : *" . date("d M Y", strtotime($reservasi['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi['jamberangkat'])) . "* _estimasi_" .
+                //             "\r\nKembali : *" . date("d M Y", strtotime($reservasi['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi['jamkembali'])) . "* _estimasi_" .
+                //             "\r\nKendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kendaraan'] . "* )" .
+                //             "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
 
                 $this->session->set_flashdata('message', 'barudl');
                 redirect('perjalanan/ta');

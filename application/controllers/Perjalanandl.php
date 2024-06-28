@@ -195,32 +195,32 @@ class Perjalanandl extends CI_Controller
                 $this->db->update('reservasi');
 
                 //Kirim Notifikasi
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $karyawan['phone'],
-                            'message' => "*Perjalanan Dinas kamu dengan detail berikut :" .
-                            "*\r\n \r\nNo. Perjalanan : *" . $data['id'] . "*" .
-                            "\r\nTujuan : *" . $reservasi['tujuan'] . "*" .
-                            "\r\nPeserta : *" . $reservasi['anggota'] . "*" .
-                            "\r\nKeperluan : *" . $reservasi['keperluan'] . "*" .
-                            "\r\nBerangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
-                            "\r\nKembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
-                            "\r\nKendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "* ) " .
-                            "\r\n \r\nTELAH SIAP UNTUK DIBERANGKATKAN" .
-                            "\r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal." .
-                            "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas."
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $karyawan['phone'],
+                //             'message' => "*Perjalanan Dinas kamu dengan detail berikut :" .
+                //             "*\r\n \r\nNo. Perjalanan : *" . $data['id'] . "*" .
+                //             "\r\nTujuan : *" . $reservasi['tujuan'] . "*" .
+                //             "\r\nPeserta : *" . $reservasi['anggota'] . "*" .
+                //             "\r\nKeperluan : *" . $reservasi['keperluan'] . "*" .
+                //             "\r\nBerangkat : *" . $reservasi['tglberangkat'] . "* *" . $reservasi['jamberangkat'] . "* _estimasi_" .
+                //             "\r\nKembali : *" . $reservasi['tglkembali'] . "* *" . $reservasi['jamkembali'] . "* _estimasi_" .
+                //             "\r\nKendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "* ) " .
+                //             "\r\n \r\nTELAH SIAP UNTUK DIBERANGKATKAN" .
+                //             "\r\nSebelum berangkat pastikan semua kelengkapan yang diperlukan tidak tertinggal." .
+                //             "\r\nHati-hati dalam berkendara, gunakan sabuk keselamatan dan patuhi rambu-rambu lalu lintas."
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
 
                 if ($this->input->post('kasbon')>0){
 
@@ -759,26 +759,26 @@ class Perjalanandl extends CI_Controller
         if ($this->session->userdata('posisi_id')=='7'){
 
             //kirim notif
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $atasan1['phone'],
-                        'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS INI MUNDUR*". 
-                        "\r\n \r\n*#" . $perjalanan['id'] . "*" .
-                        "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
-                        "\r\nPeserta: *" . $perjalanan['anggota'] . "*" .
-                        "\r\nWaktu Keberangkatan Menjadi: *" . date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat']))) . "*"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $atasan1['phone'],
+            //             'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS INI MUNDUR*". 
+            //             "\r\n \r\n*#" . $perjalanan['id'] . "*" .
+            //             "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
+            //             "\r\nPeserta: *" . $perjalanan['anggota'] . "*" .
+            //             "\r\nWaktu Keberangkatan Menjadi: *" . date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat']))) . "*"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
 
             $atasan2 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan2')])->row_array();
 
@@ -807,26 +807,26 @@ class Perjalanandl extends CI_Controller
         }else{
 
             //kirim notif
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $atasan1['phone'],
-                        'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS INI MUNDUR*". 
-                        "\r\n \r\n*#" . $perjalanan['id'] . "*" .
-                        "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
-                        "\r\nPeserta: *" . $perjalanan['anggota'] . "*" .
-                        "\r\nWaktu Keberangkatan Menjadi: *" . date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat']))) . "*"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $atasan1['phone'],
+            //             'message' => "*WAKTU KEBERANGKATAN PERJALANAN DINAS INI MUNDUR*". 
+            //             "\r\n \r\n*#" . $perjalanan['id'] . "*" .
+            //             "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
+            //             "\r\nPeserta: *" . $perjalanan['anggota'] . "*" .
+            //             "\r\nWaktu Keberangkatan Menjadi: *" . date('H:i:s', strtotime('+1 hour', strtotime($perjalanan['jamberangkat']))) . "*"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
             
         }
 
