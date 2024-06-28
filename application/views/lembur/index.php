@@ -20,6 +20,14 @@
                 $this->db->where('status', '9');
                 $this->db->from('lembur');
                 $totalDurasi = $this->db->get()->row()->total;
+
+                $this->db->select('SUM(tul) as total');
+                $this->db->where('npk', $this->session->userdata('npk'));
+                $this->db->where('year(tglmulai)',$tahun);
+                $this->db->where('month(tglmulai)',$bulan);
+                $this->db->where('status', '9');
+                $this->db->from('lembur');
+                $totalTul = $this->db->get()->row()->total;
               
             ?>
         <div class="card card-stats">
@@ -27,11 +35,52 @@
             <div class="card-icon">
               <i class="material-icons">date_range</i>
             </div>
-            <p class="card-category">Total</p>
-            <h3 class="card-title"><?= $total_lembur->num_rows().'x ('.$totalDurasi.' jam)'; ?></h3>
+            <p class="card-category">Lembur bulan ini</p>
+            <h3 class="card-title"><?= $total_lembur->num_rows().'x | '.$totalDurasi.' jam | '.$totalTul.' Tul'; ?></h3>
+            <p class="card-category">*Ini hanya estimasi, belum diverifikasi oleh data absensi dan system SAP</p>
           </div>
           <div class="card-footer">
             <a href="#" class="btn btn-facebook btn-block" role="button" aria-disabled="false" data-toggle="modal" data-target="#tambahLembur">Rencana Lembur</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+            <?php 
+                $bulanLalu = date('m') ;
+
+                $this->db->where('npk', $this->session->userdata('npk'));
+                $this->db->where('year(tglmulai)',$tahun);
+                $this->db->where('month(tglmulai)',$bulanLalu);
+                $this->db->where('status', '9');
+                $totalLemburLast = $this->db->get('lembur');
+
+                $this->db->select('SUM(durasi) as total');
+                $this->db->where('npk', $this->session->userdata('npk'));
+                $this->db->where('year(tglmulai)',$tahun);
+                $this->db->where('month(tglmulai)',$bulanLalu);
+                $this->db->where('status', '9');
+                $this->db->from('lembur');
+                $totalDurasiLast = $this->db->get()->row()->total;
+
+                $this->db->select('SUM(tul) as total');
+                $this->db->where('npk', $this->session->userdata('npk'));
+                $this->db->where('year(tglmulai)',$tahun);
+                $this->db->where('month(tglmulai)',$bulan);
+                $this->db->where('status', '9');
+                $this->db->from('lembur');
+                $totalTulLast = $this->db->get()->row()->total;
+              
+            ?>
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">date_range</i>
+            </div>
+            <p class="card-category">Lembur bulan lalu</p>
+            <h3 class="card-title"><?= $totalLemburLast->num_rows().'x | '.$totalDurasiLast.' jam | '.$totalTulLast.' Tul'; ?></h3>
+            <p class="card-category">*Ini hanya estimasi, belum diverifikasi oleh data absensi dan system SAP</p>
+          </div>
+          <div class="card-footer">
           </div>
         </div>
       </div>
