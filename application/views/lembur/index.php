@@ -46,7 +46,7 @@
       </div>
       <div class="col-lg-4 col-md-6 col-sm-6">
             <?php 
-                $bulanLalu = date('m') ;
+                $bulanLalu = date('m') -1;
 
                 $this->db->where('npk', $this->session->userdata('npk'));
                 $this->db->where('year(tglmulai)',$tahun);
