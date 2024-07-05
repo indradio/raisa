@@ -62,72 +62,72 @@ class Persetujuandl extends CI_Controller
 
         $user = $this->db->get_where('karyawan', ['npk' => $rsv['npk']])->row_array();
         if (date('H:i', strtotime($rsv['jamberangkat'])) != date("H:i", strtotime($this->input->post('jamberangkat'))) OR date('H:i', strtotime($rsv['jamkembali'])) != date("H:i", strtotime($this->input->post('jamkembali')))) {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' =>"*PERUBAHAN JAM KEBERANGKATAN PERJALANAN DINAS*" .
-                        "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
-                        "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
-                        "\r\n \r\n*BERUBAH MENJADI*" .
-                        "\r\nBerangkat : " . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - *' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
-                        "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - *' . date("H:i", strtotime($this->input->post('jamkembali'))) . "*" .
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $user['phone'],
+            //             'message' =>"*PERUBAHAN JAM KEBERANGKATAN PERJALANAN DINAS*" .
+            //             "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
+            //             "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+            //             "\r\n \r\n*BERUBAH MENJADI*" .
+            //             "\r\nBerangkat : " . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - *' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
+            //             "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - *' . date("H:i", strtotime($this->input->post('jamkembali'))) . "*" .
+            //             "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
         }elseif (date('H:i', strtotime($rsv['jamberangkat'])) != date("H:i", strtotime($this->input->post('jamberangkat')))){
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $user['phone'],
-                            'message' =>"*PERUBAHAN JAM KEBERANGKATAN PERJALANAN DINAS*" .
-                            "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
-                            "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
-                            "\r\n \r\n*BERUBAH MENJADI*" .
-                            "\r\nBerangkat : " . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - *' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
-                            "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $user['phone'],
+                //             'message' =>"*PERUBAHAN JAM KEBERANGKATAN PERJALANAN DINAS*" .
+                //             "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
+                //             "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+                //             "\r\n \r\n*BERUBAH MENJADI*" .
+                //             "\r\nBerangkat : " . date("d M Y", strtotime($rsv['tglberangkat'])) . ' - *' . date("H:i", strtotime($this->input->post('jamberangkat'))) . "*" .
+                //             "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
         }elseif (date('H:i', strtotime($rsv['jamkembali'])) != date("H:i", strtotime($this->input->post('jamkembali')))) {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' =>"*PERUBAHAN JAM KEMBALI PERJALANAN DINAS*" .
-                        "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
-                        "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
-                        "\r\n \r\n*BERUBAH MENJADI*" .
-                        "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - *' . date("H:i", strtotime($rsv['jamkembali'])) . "*" .
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $user['phone'],
+            //             'message' =>"*PERUBAHAN JAM KEMBALI PERJALANAN DINAS*" .
+            //             "\r\n \r\nPerjalanan dinas kamu dengan No. Reservasi : *" . $rsv['id'] . "*" .
+            //             "\r\nTujuan : *" . $rsv['tujuan'] . "*" .
+            //             "\r\n \r\n*BERUBAH MENJADI*" .
+            //             "\r\nKembali : " . date("d M Y", strtotime($rsv['tglkembali'])) . ' - *' . date("H:i", strtotime($rsv['jamkembali'])) . "*" .
+            //             "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
         }
 
         //Ganti status : 1 = Reservasi baru, 2 = Reservasi disetujui seksi/koordinator, 3 = Reservasi disetujui Kadept/kadiv/coo
