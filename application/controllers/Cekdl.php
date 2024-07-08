@@ -173,38 +173,38 @@ class Cekdl extends CI_Controller
         $this->db->where('id', $perjalanan['reservasi_id']);
         $this->db->update('reservasi');
 
-        if ($perjalanan['jenis_perjalanan'] == 'DLPP' or $perjalanan['jenis_perjalanan'] == 'TAPP' or $perjalanan['jenis_perjalanan'] == 'TA') {
-            $user = $this->db->get_where('karyawan', ['npk' => $perjalanan['npk']])->row_array();
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $user['phone'],
-                        'message' => "*PERJALANAN DINAS TELAH KEMBALI*". 
-                        "\r\n \r\n No. Perjalanan : *" . $perjalanan['id'] . "*" .
-                        "\r\n Nama : *" . $perjalanan['nama'] . "*" .
-                        "\r\n Tujuan : *" . $perjalanan['tujuan'] . "*" .
-                        "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
-                        "\r\n Peserta : *" . $perjalanan['anggota'] . "*" .
-                        "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "*" .
-                        "\r\n Kembali : *" . date("Y-m-d") . "* *" . date("H:i:s") . "*" .
-                        "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
-                        "\r\n \r\nPerjalanan ini telah kembali, JANGAN LUPA UNTUK SEGERA MELAKUKAN PENYELESAIAN.".
-                        "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul 07:00-09:00 (dibayarkan hari yang sama).".
-                        "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul lewat 09:01 (dibayarkan hari berikutnya).".
-                        "\r\n \r\nklik link berikut : https://raisa.winteq-astra.com/perjalanan/penyelesaian/".$perjalanan['id'].
-                        "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
-        }
+        // if ($perjalanan['jenis_perjalanan'] == 'DLPP' or $perjalanan['jenis_perjalanan'] == 'TAPP' or $perjalanan['jenis_perjalanan'] == 'TA') {
+            // $user = $this->db->get_where('karyawan', ['npk' => $perjalanan['npk']])->row_array();
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->post(
+            //     'https://region01.krmpesan.com/api/v2/message/send-text',
+            //     [
+            //         'headers' => [
+            //             'Content-Type' => 'application/json',
+            //             'Accept' => 'application/json',
+            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+            //         ],
+            //         'json' => [
+            //             'phone' => $user['phone'],
+            //             'message' => "*PERJALANAN DINAS TELAH KEMBALI*". 
+            //             "\r\n \r\n No. Perjalanan : *" . $perjalanan['id'] . "*" .
+            //             "\r\n Nama : *" . $perjalanan['nama'] . "*" .
+            //             "\r\n Tujuan : *" . $perjalanan['tujuan'] . "*" .
+            //             "\r\n Keperluan : *" . $perjalanan['keperluan'] . "*" .
+            //             "\r\n Peserta : *" . $perjalanan['anggota'] . "*" .
+            //             "\r\n Berangkat : *" . $perjalanan['tglberangkat'] . "* *" . $perjalanan['jamberangkat'] . "*" .
+            //             "\r\n Kembali : *" . date("Y-m-d") . "* *" . date("H:i:s") . "*" .
+            //             "\r\n Kendaraan : *" . $perjalanan['nopol'] . "* ( *" . $perjalanan['kepemilikan'] . "* )" .
+            //             "\r\n \r\nPerjalanan ini telah kembali, JANGAN LUPA UNTUK SEGERA MELAKUKAN PENYELESAIAN.".
+            //             "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul 07:00-09:00 (dibayarkan hari yang sama).".
+            //             "\r\n \r\nPenyelesaian sudah di verifikasi oleh GA pada pukul lewat 09:01 (dibayarkan hari berikutnya).".
+            //             "\r\n \r\nklik link berikut : https://raisa.winteq-astra.com/perjalanan/penyelesaian/".$perjalanan['id'].
+            //             "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
+            //         ],
+            //     ]
+            // );
+            // $body = $response->getBody();
+        // }
 
         redirect('cekdl/kembali');
     }
@@ -637,32 +637,32 @@ class Cekdl extends CI_Controller
                 $this->db->update('reservasi');
 
                 //Kirim Notifikasi
-                $ga_admin = $this->db->get_where('karyawan_admin', ['sect_id' => '214'])->row_array();
+                // $ga_admin = $this->db->get_where('karyawan_admin', ['sect_id' => '214'])->row_array();
 
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $ga_admin['phone'],
-                            'message' => "*Perjalanan Dinas telah diberangkatkan oleh security :" .
-                            "*\r\n \r\nNo. Perjalanan : *" . $data['id'] . "*" .
-                            "\r\nTujuan : *" . $reservasi['tujuan'] . "*" .
-                            "\r\nPeserta : *" . $reservasi['anggota'] . "*" .
-                            "\r\nKeperluan : *" . $reservasi['keperluan'] . "*" .
-                            "\r\nBerangkat : *" . date("d-m-Y H:i") . "*" .
-                            "\r\nKembali : " . $reservasi['tglkembali'] . " " . $reservasi['jamkembali'] . " _estimasi_" .
-                            "\r\nKendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "* ) " .
-                            "\r\n \r\nTELAH DIBERANGKATKAN OLEH SECURITY"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $ga_admin['phone'],
+                //             'message' => "*Perjalanan Dinas telah diberangkatkan oleh security :" .
+                //             "*\r\n \r\nNo. Perjalanan : *" . $data['id'] . "*" .
+                //             "\r\nTujuan : *" . $reservasi['tujuan'] . "*" .
+                //             "\r\nPeserta : *" . $reservasi['anggota'] . "*" .
+                //             "\r\nKeperluan : *" . $reservasi['keperluan'] . "*" .
+                //             "\r\nBerangkat : *" . date("d-m-Y H:i") . "*" .
+                //             "\r\nKembali : " . $reservasi['tglkembali'] . " " . $reservasi['jamkembali'] . " _estimasi_" .
+                //             "\r\nKendaraan : *" . $reservasi['nopol'] . "* ( *" . $reservasi['kepemilikan'] . "* ) " .
+                //             "\r\n \r\nTELAH DIBERANGKATKAN OLEH SECURITY"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
 
             $this->session->set_flashdata('message', 'berangkat');
             redirect('cekdl/berangkat');

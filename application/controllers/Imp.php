@@ -114,56 +114,56 @@ class Imp extends CI_Controller
                 $this->db->where('id', $id);
                 $this->db->update('imp');
     
-                $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row();
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $admin_hr->phone,
-                            'message' => "*[NEED APPROVAL] PENGAJUAN IMP*" .
-                            "\r\n \r\nNama    : *" .  $this->session->userdata('nama') . "*" .
-                            "\r\nTanggal  : *" . date('d M Y', strtotime($this->input->post('date'))) . "*" .
-                            "\r\nJam      : *" . date('H:i', strtotime($this->input->post('start_time'))).' - '.date('H:i', strtotime($this->input->post('end_time'))) ."*" .
-                            "\r\nKeterangan : *" . $this->input->post('remarks') . "*" .
-                            "\r\n \r\nIMP ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
-                            "\r\nHarap segera respon *Setujui/Batalkan*".
-                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp/hr_approval"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $admin_hr = $this->db->get_where('karyawan_admin', ['sect_id' => '215'])->row();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $admin_hr->phone,
+                //             'message' => "*[NEED APPROVAL] PENGAJUAN IMP*" .
+                //             "\r\n \r\nNama    : *" .  $this->session->userdata('nama') . "*" .
+                //             "\r\nTanggal  : *" . date('d M Y', strtotime($this->input->post('date'))) . "*" .
+                //             "\r\nJam      : *" . date('H:i', strtotime($this->input->post('start_time'))).' - '.date('H:i', strtotime($this->input->post('end_time'))) ."*" .
+                //             "\r\nKeterangan : *" . $this->input->post('remarks') . "*" .
+                //             "\r\n \r\nIMP ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
+                //             "\r\nHarap segera respon *Setujui/Batalkan*".
+                //             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp/hr_approval"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
         
             }else{
 
-                $atasan1 = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('atasan1_inisial')])->row_array();
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $atasan1['phone'],
-                            'message' => "*[NEED APPROVAL] PENGAJUAN IMP*" .
-                            "\r\n \r\nNama    : *" .  $this->session->userdata('nama') . "*" .
-                            "\r\nTanggal  : *" . date('d M Y', strtotime($this->input->post('date'))) . "*" .
-                            "\r\nJam      : *" . date('H:i', strtotime($this->input->post('start_time'))).' - '.date('H:i', strtotime($this->input->post('end_time'))) ."*" .
-                            "\r\nKeterangan : *" . $this->input->post('remarks') . "*" .
-                            "\r\nHarap segera respon *Setujui/Batalkan*".
-                            "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp/approval"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $atasan1 = $this->db->get_where('karyawan', ['inisial' => $this->session->userdata('atasan1_inisial')])->row_array();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $atasan1['phone'],
+                //             'message' => "*[NEED APPROVAL] PENGAJUAN IMP*" .
+                //             "\r\n \r\nNama    : *" .  $this->session->userdata('nama') . "*" .
+                //             "\r\nTanggal  : *" . date('d M Y', strtotime($this->input->post('date'))) . "*" .
+                //             "\r\nJam      : *" . date('H:i', strtotime($this->input->post('start_time'))).' - '.date('H:i', strtotime($this->input->post('end_time'))) ."*" .
+                //             "\r\nKeterangan : *" . $this->input->post('remarks') . "*" .
+                //             "\r\nHarap segera respon *Setujui/Batalkan*".
+                //             "\r\n \r\nCek sekarang! https://raisa.winteq-astra.com/imp/approval"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
             }
 
             $this->session->set_flashdata('notify', 'success');
