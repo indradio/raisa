@@ -671,25 +671,25 @@
     let timerInterval
     <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
       
-        // Swal.fire({
-        //   title: 'Selamat Hari Raya Idul Fitri 1443H',
-        //   html: '',
-        //   imageUrl: '<?= base_url(); ?>/assets/img/info/idul-fitri-1443H.jpg',
-        //   imageWidth: 400,
-        //   imageHeight: 200,
-        //   imageAlt: 'Custom image',
-        //   timer: 5000,
-        //   timerProgressBar: true,
-        //   showConfirmButton: false,
-        //   willClose: () => {
-        //     clearInterval(timerInterval)
-        //   }
-        // }).then((result) => {
-        //   /* Read more about handling dismissals below */
-        //   if (result.dismiss === Swal.DismissReason.timer) {
-        //     console.log('I was closed by the timer')
-        //   }
-        // });
+        Swal.fire({
+          title: 'Gunakan HTTPS://',
+          html: 'Untuk melindungi data dari hacker.</br> clear cache bila perlu.',
+          // imageUrl: '<?= base_url(); ?>/assets/img/info/idul-fitri-1443H.jpg',
+          // imageWidth: 400,
+          // imageHeight: 200,
+          // imageAlt: 'Custom image',
+          timer: 5000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          willClose: () => {
+            clearInterval(timerInterval)
+          }
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+          }
+        });
        
      <?php }; ?>
 
