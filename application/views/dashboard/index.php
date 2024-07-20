@@ -672,7 +672,7 @@
     <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
       
         Swal.fire({
-          title: 'Gunakan HTTPS://',
+          title: 'Pastikan menggunakan HTTPS://',
           html: 'Untuk melindungi data dari hacker.</br> clear cache bila perlu.',
           // imageUrl: '<?= base_url(); ?>/assets/img/info/idul-fitri-1443H.jpg',
           // imageWidth: 400,
