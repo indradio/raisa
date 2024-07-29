@@ -13,7 +13,7 @@
           </div>
           <div class="card-footer">
             <div class="stats"></div>
-              <a href="#" id="btn_tambahCuti" class="btn btn-facebook btn-block" >Ajukan Cuti</a>
+              <a href="#" id="btn_fcksunfish" class="btn btn-facebook btn-block">Ajukan Cuti</a>
               <!-- data-toggle="modal" data-target="#tambahCuti" -->
             </div>
             <div class="col-md-12">
@@ -329,6 +329,30 @@
       $('#tambahCuti').modal("show");
 
     }
+  });
+
+  $('#btn_fcksunfish').on('click',function(){
+
+    Swal.fire({
+      title: 'Perhatian!',
+      icon: 'warning',
+      html:
+      'Mulai tanggal 30 Juli 2024, fitur CUTI sudah beralih menggunakan sunfish.',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, Saya Mengerti',
+      showClass: {
+        popup: 'animate__animated animate__heartBeat'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOut'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+      }
+    });
+
   });
 
         function kategoriSelect(valueSelect)
