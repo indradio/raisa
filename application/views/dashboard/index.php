@@ -67,20 +67,6 @@
           <div class="card">
               <div class="card-body">
                   <div class="row">
-                      <div class="col-3 text-center" style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                        <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                            <i class="fa fa-street-view"></i>
-                        </a>
-                        </br>
-                        <a class="card-title"><small>ABSEN</small></a> 
-                      </div>
-                      <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                          <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
-                              <i class="fa fa-clock-o"></i>
-                          </a>
-                          </br>
-                          <a class="card-title"><small>OT</small></a> 
-                      </div>
                       <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
                           <a href="<?= base_url('perjalanandl'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
                               <i class="fa fa-car"></i>
@@ -89,25 +75,39 @@
                           <a class="card-title"><small>DL</small></a> 
                       </div>
                       <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                          <a href="<?= base_url('imp'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
-                              <i class="fa fa-plane"></i>
+                          <a href="<?= base_url('lembur'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                              <i class="fa fa-clock-o"></i>
                           </a>
+                          </br>
+                          <a class="card-title"><small>OT</small></a> 
+                        </div>
+                        <div class="col-3 mr-auto text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
+                            <a href="<?= base_url('jamkerja'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                                <i class="fa fa-check-square-o"></i>
+                            </a>
+                            </br>
+                            <a class="card-title"><small>JAM KERJA</small></a> 
+                        </div>
+                      <div class="col-3 text-center" style="padding-left: 1%;padding-right: 1%;max-width: 20%">
+                      <button id="btn_fcksunfish1" class="btn btn-lg btn-just-icon btn-round btn-facebook">
+                            <i class="fa fa-street-view"></i>
+      </button>
+                        </br>
+                        <a class="card-title"><small>ABSEN</small></a> 
+                      </div>
+                      <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
+                      <button id="btn_fcksunfish2" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                              <i class="fa fa-plane"></i>
+                              </button>
                           </br>
                           <a class="card-title"><small>IMP</small></a> 
                       </div>
                       <div class="col-3 mr-auto text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                          <a href="<?= base_url('cuti'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                      <button id="btn_fcksunfish3" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
                               <i class="fa fa-calendar-times-o"></i>
-                          </a>
+                              </button>
                           </br>
                           <a class="card-title"><small>CUTI</small></a> 
-                      </div>
-                      <div class="col-3 mr-auto text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                          <a href="<?= base_url('jamkerja'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
-                              <i class="fa fa-check-square-o"></i>
-                          </a>
-                          </br>
-                          <a class="card-title"><small>JAM KERJA</small></a> 
                       </div>
 
                       <!-- <div class="col-md-1 col-sm-1">
@@ -667,6 +667,78 @@
 <!-- Javascript -->
 <script>
   $(document).ready(function() {
+
+    $('#btn_fcksunfish1').on('click',function(){
+
+      Swal.fire({
+        title: 'Perhatian!',
+        icon: 'warning',
+        html:
+        'Fitur Absensi sekarang sudah beralih ke sunfish.',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Saya Mengerti',
+        showClass: {
+          popup: 'animate__animated animate__heartBeat'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOut'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+        }
+      });
+
+    });
+
+    $('#btn_fcksunfish2').on('click',function(){
+
+      Swal.fire({
+        title: 'Perhatian!',
+        icon: 'warning',
+        html:
+        'Fitur Imp sekarang sudah beralih ke sunfish.',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Saya Mengerti',
+        showClass: {
+          popup: 'animate__animated animate__heartBeat'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOut'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+        }
+      });
+
+    });
+
+    $('#btn_fcksunfish3').on('click',function(){
+
+      Swal.fire({
+        title: 'Perhatian!',
+        icon: 'warning',
+        html:
+        'Fitur Cuti sekarang sudah beralih ke sunfish.',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Saya Mengerti',
+        showClass: {
+          popup: 'animate__animated animate__heartBeat'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOut'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+        }
+      });
+
+    });
 
     let timerInterval
     <?php if ($this->session->flashdata('message')=='masuk'){ ?> 

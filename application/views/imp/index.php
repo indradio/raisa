@@ -1,3 +1,4 @@
+
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
@@ -13,7 +14,7 @@
           </div>
           <div class="card-footer">
             <div class="stats"></div>
-            <a href="#" id="btn_add" class="btn btn-facebook btn-block" >Ajukan IMP</a>
+            <a href="#" id="btn_fcksunfish" class="btn btn-facebook btn-block" >Ajukan IMP</a>
             <!-- data-toggle="modal" data-target="#tambahCuti" -->
           </div>
         </div>
@@ -224,6 +225,30 @@
 
 <!-- script ajax Kategori-->
 <script type="text/javascript">
+  $('#btn_fcksunfish').on('click',function(){
+
+Swal.fire({
+  title: 'Perhatian!',
+  icon: 'warning',
+  html:
+  'Mulai tanggal 30 Juli 2024, fitur IMP sudah beralih menggunakan sunfish.',
+  showCancelButton: false,
+  confirmButtonColor: '#3085d6',
+  confirmButtonText: 'Ya, Saya Mengerti',
+  showClass: {
+    popup: 'animate__animated animate__heartBeat'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOut'
+  }
+}).then((result) => {
+  if (result.isConfirmed) {
+    
+  }
+});
+
+});
+
   $('#btn_add').on('click',function(){
     
     var now_d = '<?= date('D') ?>';
