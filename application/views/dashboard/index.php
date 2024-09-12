@@ -741,7 +741,7 @@
     });
 
     let timerInterval
-    <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
+    <?php if ($this->session->flashdata('message')=='free'){ ?> 
       
         Swal.fire({
           title: 'Pastikan menggunakan HTTPS://',
