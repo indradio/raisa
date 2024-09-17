@@ -90,6 +90,7 @@ class Asset extends CI_Controller
         if ($id == $this->session->userdata('npk'))
         {
             $data['sidemenu'] = 'Asset';
+
             $data['sidesubmenu'] = 'Asset';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
                     
@@ -495,31 +496,31 @@ class Asset extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->delete('asset_opnamed');
 
-        $asset = $this->db->get_where('asset',['id' => $this->input->post('id')])->row_array();
-        $this->db->where('npk', $asset['npk']);
-        $user = $this->db->get('karyawan',['npk', $asset['npk']])->row_array();
+        // $asset = $this->db->get_where('asset',['id' => $this->input->post('id')])->row_array();
+        // $this->db->where('npk', $asset['npk']);
+        // $user = $this->db->get('karyawan',['npk', $asset['npk']])->row_array();
      
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post(
-            'https://region01.krmpesan.com/api/v2/message/send-text',
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                ],
-                'json' => [
-                    'phone' => $user['phone'],
-                    'message' => "*TOLONG OPNAME KEMBALI ASSET BERIKUT*" . 
-                    "\r\n \r\nNo Asset : *" . $asset['asset_no'] . "-". $asset['asset_sub_no']."*" .
-                    "\r\nDeskripsi : *" . $asset['asset_description'] . "*" .
-                    "\r\nCatatan FA : *" . $this->input->post('note') . "*" .
-                    "\r\n \r\nMohon segera lakukan opname sebelum tanggal 28 September 2023.".
-                    "\r\n \r\nMasuk menu asset klik link berikut https://raisa.winteq-astra.com/asset/remaining"
-                ],
-            ]
-        );
-        $body = $response->getBody();
+        // $client = new \GuzzleHttp\Client();
+        // $response = $client->post(
+        //     'https://region01.krmpesan.com/api/v2/message/send-text',
+        //     [
+        //         'headers' => [
+        //             'Content-Type' => 'application/json',
+        //             'Accept' => 'application/json',
+        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+        //         ],
+        //         'json' => [
+        //             'phone' => $user['phone'],
+        //             'message' => "*TOLONG OPNAME KEMBALI ASSET BERIKUT*" . 
+        //             "\r\n \r\nNo Asset : *" . $asset['asset_no'] . "-". $asset['asset_sub_no']."*" .
+        //             "\r\nDeskripsi : *" . $asset['asset_description'] . "*" .
+        //             "\r\nCatatan FA : *" . $this->input->post('note') . "*" .
+        //             "\r\n \r\nMohon segera lakukan opname sebelum tanggal 28 September 2023.".
+        //             "\r\n \r\nMasuk menu asset klik link berikut https://raisa.winteq-astra.com/asset/remaining"
+        //         ],
+        //     ]
+        // );
+        // $body = $response->getBody();
 
         redirect('asset/fa/verification');
     }
