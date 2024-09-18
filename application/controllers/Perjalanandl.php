@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class Perjalanandl extends CI_Controller
 {
@@ -1924,7 +1926,7 @@ class Perjalanandl extends CI_Controller
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('perjalanan');
 
-        // $user = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
+        $user = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
         // $client = new \GuzzleHttp\Client();
         // $response = $client->post(
         //     'https://region01.krmpesan.com/api/v2/message/send-text',
@@ -1957,6 +1959,35 @@ class Perjalanandl extends CI_Controller
         //     ]
         // );
         // $body = $response->getBody();
+
+        $client = new \GuzzleHttp\Client();
+        $options = [
+        'form_params' => [
+          'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+          'number' => $user['phone'],
+          'message' => "*PEMBAYARAN PERJALANAN DINAS*". 
+                      "\r\n \r\nKamu mendapat pembayaran dari perjalanan dinas berikut :".
+                      "\r\n \r\nNo. Perjalanan : *" . $perjalanan['id'] . "*" .
+                      "\r\nTgl Perjalanan : *" .date("Y-m-d", strtotime($perjalanan['tglberangkat'])). "*" .
+                      "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
+                      "\r\nNama: *" . $p_peserta['karyawan_nama'] . "*" .
+                      "\r\nUang Saku : *" . number_format($us, 0, ',', '.') . "*" .
+                      "\r\nInsentif Pagi : *" . number_format($ip, 0, ',', '.') . "*" .
+                      "\r\nMakan Pagi : *" . number_format($ump, 0, ',', '.') . "*" .
+                      "\r\nMakan Siang : *" . number_format($ums, 0, ',', '.') . "*" .
+                      "\r\nMakan Malam : *" . number_format($umm, 0, ',', '.') . "*" .
+                      "\r\nBiaya Perjalanan : *" . number_format($bp, 0, ',', '.') . "*" .
+                      "\r\nKasbon : *(" . number_format($kas, 0, ',', '.') . ")*" .
+                      "\r\n________________" .
+                      "\r\nTotal yang dibayarkan : *" . number_format($tb, 0, ',', '.') . "*" .
+                      "\r\ne-Wallet : *" . $ewallet . "*" .
+                      "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com",
+          'date' => date('Y-m-d'),
+          'time' => date(' H:i:s')
+        ]];
+        $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+        $res = $client->sendAsync($request, $options)->wait();
+        echo $res->getBody();
 
         redirect('perjalanandl/payment/'.$this->input->post('id'));
     }
