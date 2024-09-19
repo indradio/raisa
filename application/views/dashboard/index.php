@@ -170,7 +170,31 @@
     </div>
     <!-- Icon for Mobile -->
 
-         
+          <!-- 1. Notification -->
+
+
+      <?php if ( $vote > '0'){ 
+
+      $this->db->select('v.vote_npk, k.nama');
+      $this->db->from('vote_bipartit v');
+      $this->db->join('karyawan k', 'v.vote_npk = k.npk');
+      $voted = $this->db->get()->row_array();
+       
+       ?> 
+      <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-with-icon" data-notify="container">
+              <i class="material-icons" data-notify="icon">notifications</i>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="material-icons">close</i>
+              </button>
+              <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
+              <span data-notify="message">Terimkasih kamu telah memilih <b><?=$voted['nama'] ?></b> sebagai ketua bipartit selanjutnya.</span>
+            </div>
+        </div>
+      </div>
+      <?php }; ?>
+    <!-- End Notification -->
 
     <!-- Absensi -->
     <div class="row">
