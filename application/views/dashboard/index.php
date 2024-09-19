@@ -175,9 +175,10 @@
 
       <?php if ( $vote > '0'){ 
 
-      $this->db->select('v.vote_npk, k.nama');
+      $this->db->select('v.npk, v.vote_npk, k.nama');
       $this->db->from('vote_bipartit v');
       $this->db->join('karyawan k', 'v.vote_npk = k.npk');
+      $this->db->where('v.npk', $this->session->userdata('npk'));
       $voted = $this->db->get()->row_array();
        
        ?> 
