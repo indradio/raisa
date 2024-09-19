@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class Layanan extends CI_Controller
 {
@@ -178,6 +180,36 @@ class Layanan extends CI_Controller
         $this->load->view('layanan/broadcast', $data);
         $this->load->view('templates/footer');
     }
+
+    public function broadcast_wa()
+    {
+
+        $this->db->where('is_active', '1');
+        $this->db->where('status', '1');
+        $karyawan = $this->db->get('karyawan')->result_array();
+
+        foreach ($karyawan as $row) :
+
+            $client = new \GuzzleHttp\Client();
+            $options = [
+            'form_params' => [
+            'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+            'number' => $row['phone'],
+            'message' => "*VOTE KETUA BIPARTIT*". 
+                        "\r\n \r\nSiapakah yang akan menjadi ketua bipartit periode 2024-2027?".
+                        "\r\nKamulah penentunya!! Pilih sekarnag melalui RAISA" .
+                        "\r\nUntuk informasi lebih lengkap dapat menghubungi pak suparmo.",
+            'date' => date('Y-m-d'),
+            'time' => date(' H:i:s')
+            ]];
+            $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+            $res = $client->sendAsync($request, $options)->wait();
+            echo $res->getBody();
+
+        endforeach;
+        redirect('dashboard');
+
+    }
     public function broadcast_send($parameter)
     {
         date_default_timezone_set('asia/jakarta');
@@ -250,44 +282,64 @@ class Layanan extends CI_Controller
         foreach ($karyawan as $row) :
 
                 //Notifikasi ke USER
+
                 $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        // 'json' => [
-                        //     'phone' => $row['phone'],
-                        //     'message' => "*AOP CORE VALUE*" .
-                        //     "\r\n \r\n*KERJASAMA*" .
-                        //     "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
-                        //     "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
-                        // ],
-                        'json' => [
-                            'phone' => $row['phone'],
-                            'message' => "*[INFO] GO LIVE SUNFISH 1 JUNI 2024*" .
-                            "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                            "\r\nBersama ini menginformasikan bahwa aplikasi *SUNFISH akan Go Live pada tanggal 01 Juni 2024 untuk modul Personnel Administration (PA), Claim & Reimbursement*, oleh karena itu bagi karyawan yang melakukan transaksi pada modul tersebut akan otomatis terupdate ke sistem.".
-                            "\r\n \r\nApabila ada terdapat kendala dapat menghubungi HR & Change Agent dimasing-masing section." .
-                            "\r\nHormat kami," .
-                            "\r\nHR"
-                        ],
-                        // 'json' => [
-                        //     'phone' => $row['phone'],
-                        //     'message' => "*Akses Internet Sudah NORMAL Kembali*" .
-                        //     "\r\n \r\nSaat ini Akses Internet sudah normal kembali dan bisa kamu gunakan." .
-                        //     "\r\nHubungi IT Care jika kamu masih mengalami kendala." .
-                        //     "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
-                        //     "\r\nHormat kami," .
-                        //     "\r\nIT" .
-                        //     "\r\n#Winteq #". $row['inisial']
-                        // ],
-                    ]
-                );
-                $body = $response->getBody();
+            $options = [
+            'form_params' => [
+            'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+            'number' => $row['phone'],
+            'message' => "*VOTE KETUA BIPARTIT*". 
+                        "\r\n \r\nSiapakah yang akan menjadi ketua bipartit periode 2024-2027?".
+                        "\r\nKamulah penentunya!! Pilih sekarnag melalui RAISA" .
+                        "\r\nUntuk informasi lebih lengkap dapat menghubungi pak suparmo.",
+            'date' => date('Y-m-d'),
+            'time' => date(' H:i:s')
+            ]];
+            $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+            $res = $client->sendAsync($request, $options)->wait();
+            echo $res->getBody();
+
+        // endforeach;
+
+
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         // 'json' => [
+                //         //     'phone' => $row['phone'],
+                //         //     'message' => "*AOP CORE VALUE*" .
+                //         //     "\r\n \r\n*KERJASAMA*" .
+                //         //     "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
+                //         //     "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
+                //         // ],
+                //         'json' => [
+                //             'phone' => $row['phone'],
+                //             'message' => "*[INFO] GO LIVE SUNFISH 1 JUNI 2024*" .
+                //             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
+                //             "\r\nBersama ini menginformasikan bahwa aplikasi *SUNFISH akan Go Live pada tanggal 01 Juni 2024 untuk modul Personnel Administration (PA), Claim & Reimbursement*, oleh karena itu bagi karyawan yang melakukan transaksi pada modul tersebut akan otomatis terupdate ke sistem.".
+                //             "\r\n \r\nApabila ada terdapat kendala dapat menghubungi HR & Change Agent dimasing-masing section." .
+                //             "\r\nHormat kami," .
+                //             "\r\nHR"
+                //         ],
+                //         // 'json' => [
+                //         //     'phone' => $row['phone'],
+                //         //     'message' => "*Akses Internet Sudah NORMAL Kembali*" .
+                //         //     "\r\n \r\nSaat ini Akses Internet sudah normal kembali dan bisa kamu gunakan." .
+                //         //     "\r\nHubungi IT Care jika kamu masih mengalami kendala." .
+                //         //     "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
+                //         //     "\r\nHormat kami," .
+                //         //     "\r\nIT" .
+                //         //     "\r\n#Winteq #". $row['inisial']
+                //         // ],
+                //     ]
+                // );
+                // $body = $response->getBody();
 
         endforeach;
         redirect('layanan/broadcast');
@@ -446,5 +498,26 @@ class Layanan extends CI_Controller
             $this->load->view('layanan/contest/index', $data);
             $this->load->view('templates/footer');
         }
+    }
+
+    public function send_mail()
+    {
+        $this->load->library('email'); // Memuat pustaka email
+        $this->load->config('email'); // Memuat konfigurasi email
+
+        // Konfigurasi email
+        $this->email->from('raisa.winteq@gmail.com', 'Your Name'); // Ganti dengan email dan nama Anda
+        $this->email->to('indra.dio@winteq.component.astra.co.id'); // Email tujuan
+        $this->email->subject('Test Email from CodeIgniter');
+        $this->email->message('This is a test email sent from CodeIgniter.');
+
+        // Mengirim email
+        if ($this->email->send()) {
+            echo 'Email sent successfully!';
+        } else {
+            echo 'Failed to send email.';
+            echo $this->email->print_debugger(); // Untuk debug
+        }
+        
     }
 }
