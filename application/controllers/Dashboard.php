@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class Dashboard extends CI_Controller
 {
@@ -495,7 +497,10 @@ class Dashboard extends CI_Controller
             $data['imp'] = null;
 
         }
-    
+
+        $queryVOTE = $this->db->query("SELECT COUNT(*) AS total_votes FROM `vote_bipartit` WHERE `npk` = '{$this->session->userdata('npk')}'")->row_array();
+        $data['vote'] = $queryVOTE['total_votes'];
+
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
         $data['sidesubmenu'] = $this->session->userdata('nama');
@@ -646,6 +651,36 @@ class Dashboard extends CI_Controller
                 $this->db->insert('survei_emisi', $data);
     
             redirect('dashboard');
+        
+    }
+
+    public function vote_bipartit()
+    {
+                $data = [
+                    'npk' => $this->session->userdata('npk'),
+                    'vote_npk' => $this->input->post('vote')
+                ];
+                $this->db->insert('vote_bipartit', $data);
+    
+            redirect('dashboard');
+        
+    }
+
+    public function wa()
+    {
+        $client = new \GuzzleHttp\Client();
+        $options = [
+        'form_params' => [
+          'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+          'number' => '081311196988',
+          'message' => 'Testing RAISA',
+          'date' => date('Y-m-d'),
+          'time' => date(' H:i:s')
+        ]];
+        $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+        $res = $client->sendAsync($request, $options)->wait();
+        echo $res->getBody();
+        
         
     }
 

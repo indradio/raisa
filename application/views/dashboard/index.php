@@ -2,19 +2,6 @@
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
 
-    <!-- 1. Notification -->
-      <!-- <div class="row">
-        <div class="col-md-12">
-          <div class="alert alert-default" role="alert">
-            <strong>Butuh bantuan RAISA?</strong>
-            </br>
-            </br>Silahkan isi form berikut ya!
-            </br><a href="#" class="btn btn-info text-white" role="button" aria-disabled="true" data-toggle="modal" data-target="#openTicket">Butuh bantuan? Klik sekarang</a>
-          </div>
-        </div>
-      </div> -->
-    <!-- End Notification -->
-
     <!-- 2. Banner -->
       <?php
       date_default_timezone_set('asia/jakarta');
@@ -63,6 +50,7 @@
             </div>
           </div>
       <?php endforeach; ?>
+
       <div class="col-md-0 ml-auto mr-auto d-block d-sm-none">
           <div class="card">
               <div class="card-body">
@@ -91,7 +79,7 @@
                       <div class="col-3 text-center" style="padding-left: 1%;padding-right: 1%;max-width: 20%">
                       <button id="btn_fcksunfish1" class="btn btn-lg btn-just-icon btn-round btn-facebook">
                             <i class="fa fa-street-view"></i>
-      </button>
+                      </button>
                         </br>
                         <a class="card-title"><small>ABSEN</small></a> 
                       </div>
@@ -181,6 +169,32 @@
       </div> 
     </div>
     <!-- Icon for Mobile -->
+
+          <!-- 1. Notification -->
+
+
+      <?php if ( $vote > '0'){ 
+       $voted = $this->db->query("SELECT v.vote_npk, k.nama
+       FROM db_raisa.vote_bipartit v
+       JOIN db_raisa.karyawan k
+       ON v.vote_npk = k.npk;
+       ")->row_array();
+       
+       ?> 
+      <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-with-icon" data-notify="container">
+              <i class="material-icons" data-notify="icon">notifications</i>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="material-icons">close</i>
+              </button>
+              <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
+              <span data-notify="message">Terimkasih kamu telah memilih <b><?=$voted['nama'] ?></b> sebagai ketua bipartit selanjutnya.</span>
+            </div>
+        </div>
+      </div>
+      <?php }; ?>
+    <!-- End Notification -->
 
     <!-- Absensi -->
     <div class="row">
@@ -664,8 +678,49 @@
   </div>
 </div> -->
 
+<!-- Button trigger modal (optional) -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="display: none;">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Vote Ketua Bipartit</h5>
+      </div>
+      <form class="form" method="post" action="<?= base_url('dashboard/vote_bipartit'); ?>">
+        <div class="modal-body">
+        Mari pilih calon ketua yang bijak, santun dan mengedepankan keharmonisan hubungan antara karyawan dan perusahaan.
+              </br>
+          <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label class="bmd-label">Pilih calon*</label></br>
+                                <select class="selectpicker" name="vote" id="vote" title="Pilih" data-style="select-with-transition" data-size="5" data-width="block" data-live-search="false" required>
+                                    <?php 
+                                    $candidate = $this->db->query("SELECT * FROM `karyawan` WHERE `gol_id` = '1' AND `status` = '1' AND `is_active` = '1'")->result_array();
+                                    foreach ($candidate as $row) : 
+                                    ?>
+                                        <option value="<?= $row['npk']; ?>"><?= $row['nama']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                          </div>
+                      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">VOTE!</button>
+        </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
 <!-- Javascript -->
 <script>
+
   $(document).ready(function() {
 
     $('#btn_fcksunfish1').on('click',function(){
@@ -740,17 +795,19 @@
 
     });
 
+    
+
     let timerInterval
-    <?php if ($this->session->flashdata('message')=='free'){ ?> 
+    <?php if ($this->session->flashdata('message')=='masuk' and $vote == '0'){ ?> 
       
         Swal.fire({
-          title: 'Pastikan menggunakan HTTPS://',
-          html: 'Untuk melindungi data dari hacker.</br> clear cache bila perlu.',
+          title: 'Tentukan pilihanmu sekarang',
+          html: 'Siapakah yang jadi ketua Bipartit periode selanjutnya!.',
           // imageUrl: '<?= base_url(); ?>/assets/img/info/idul-fitri-1443H.jpg',
           // imageWidth: 400,
           // imageHeight: 200,
           // imageAlt: 'Custom image',
-          timer: 5000,
+          timer: 2000,
           timerProgressBar: true,
           showConfirmButton: false,
           willClose: () => {
@@ -760,6 +817,7 @@
           /* Read more about handling dismissals below */
           if (result.dismiss === Swal.DismissReason.timer) {
             console.log('I was closed by the timer')
+            $('#myModal').modal('show');
           }
         });
        
