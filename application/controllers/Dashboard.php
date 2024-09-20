@@ -666,6 +666,16 @@ class Dashboard extends CI_Controller
         
     }
 
+    public function vote_reset()
+    {
+              // Menghapus data di mana npk sesuai dengan session
+            $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->delete('vote_bipartit');
+    
+            redirect('dashboard');
+        
+    }
+
     public function wa()
     {
         $client = new \GuzzleHttp\Client();
