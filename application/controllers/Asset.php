@@ -330,7 +330,7 @@ class Asset extends CI_Controller
             }elseif ($params == 2)
             {
                 $changePic = ($asset->npk==$this->input->post('new_npk'))? 'N' : 'Y';
-                $changeRoom = ($asset->room==$this->input->post('new_lokasi'))? 'N' : 'N';
+                $changeRoom = ($asset->room==$this->input->post('new_lokasi'))? 'N' : 'Y';
 
                 if ($changePic=='N' AND $changeRoom=='N' AND $this->input->post('status')=='2'){
                     $status = '1';
