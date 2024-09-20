@@ -300,7 +300,7 @@ class Layanan extends CI_Controller
             $res = $client->sendAsync($request, $options)->wait();
             echo $res->getBody();
 
-            $nowtime = strtotime('+1 second', $nowtime);
+            $nowtime = strtotime('+5 second', $nowtime);
 
         // endforeach;
 
