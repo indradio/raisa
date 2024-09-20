@@ -251,7 +251,7 @@
                 <div class="card-header" role="tab" id="headingVote">
                   <h5 class="mb-0">
                     <a class="" data-toggle="collapse" href="#collapseVote" aria-expanded="true" aria-controls="collapseVote">
-                    <h3 class="card-title">Vote Bipartit
+                    <h3 class="card-title">Top 5 Vote Bipartit
                       <i class="material-icons">keyboard_arrow_down</i>
                     </h3>
                     </a>
@@ -276,7 +276,7 @@
                         ->join('karyawan k', 'd.vote_npk = k.npk')
                         ->group_by('k.nama, d.vote_npk')
                         ->order_by('vote_count', 'DESC')
-                        ->limit(10);
+                        ->limit(5);
 
                         $query = $this->db->get();
                         $result = $query->result_array();
