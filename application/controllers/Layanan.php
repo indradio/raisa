@@ -284,20 +284,23 @@ class Layanan extends CI_Controller
                 //Notifikasi ke USER
 
                 $client = new \GuzzleHttp\Client();
-            $options = [
-            'form_params' => [
-            'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
-            'number' => $row['phone'],
-            'message' => "*VOTE KETUA BIPARTIT*". 
-                        "\r\n \r\nSiapakah yang akan menjadi ketua bipartit periode 2024-2027?".
-                        "\r\nKamulah penentunya!! Pilih sekarnag melalui RAISA" .
-                        "\r\nUntuk informasi lebih lengkap dapat menghubungi pak suparmo.",
-            'date' => date('Y-m-d'),
-            'time' => date(' H:i:s')
+                $nowtime = time(); // Waktu awal saat ini
+                $options = [
+                'form_params' => [
+                'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                'number' => $row['phone'],
+                'message' => "*VOTE KETUA BIPARTIT*". 
+                            "\r\n \r\nSiapakah yang akan menjadi ketua bipartit periode 2024-2027?".
+                            "\r\nKamulah penentunya!! Pilih sekarnag melalui RAISA" .
+                            "\r\nUntuk informasi lebih lengkap dapat menghubungi pak suparmo.",
+                'date' => date('Y-m-d'),
+                'time' => date('H:i:s', $nowtime)
             ]];
             $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
             $res = $client->sendAsync($request, $options)->wait();
             echo $res->getBody();
+
+            $nowtime = strtotime('+1 second', $nowtime);
 
         // endforeach;
 
