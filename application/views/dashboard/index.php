@@ -191,7 +191,6 @@
               </button>
               <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
               <span data-notify="message">Terimkasih kamu telah memilih <b><?=$voted['nama'] ?></b> sebagai ketua bipartit selanjutnya.</span>
-              <a href="<?= base_url('dashboard/vote_reset'); ?>" class="btn btn-facebook">Klik jika berubah pilihan</a>
             </div>
         </div>
       </div>
@@ -859,16 +858,16 @@
     
 
     let timerInterval
-    <?php if ($this->session->flashdata('message')=='masuk' and $vote == '0'){ ?> 
+    <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
       
         Swal.fire({
-          title: 'Tentukan pilihanmu sekarang',
-          html: 'Siapakah yang jadi ketua Bipartit periode selanjutnya!.',
+          title: 'Qoute of the day!',
+          html: 'Gak ada! kerja kerja...',
           // imageUrl: '<?= base_url(); ?>/assets/img/info/idul-fitri-1443H.jpg',
           // imageWidth: 400,
           // imageHeight: 200,
           // imageAlt: 'Custom image',
-          timer: 2000,
+          timer: 1000,
           timerProgressBar: true,
           showConfirmButton: false,
           willClose: () => {
@@ -878,7 +877,6 @@
           /* Read more about handling dismissals below */
           if (result.dismiss === Swal.DismissReason.timer) {
             console.log('I was closed by the timer')
-            $('#myModal').modal('show');
           }
         });
        
