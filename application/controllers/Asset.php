@@ -362,7 +362,7 @@ class Asset extends CI_Controller
                         'dept_id' => $user->dept_id,
                         'sect_id' => $user->sect_id,
                         'opnamed_by' => $this->session->userdata('nama'),
-                        'opnamed_at' => date('Y-m-d H:i:s'),
+                        // 'opnamed_at' => date('Y-m-d H:i:s'),
                         'status' => 1
                     ];
                     $this->db->insert('asset_opnamed', $data);
@@ -566,8 +566,8 @@ class Asset extends CI_Controller
                     'div_id' => $this->session->userdata('div_id'),
                     'dept_id' => $this->session->userdata('dept_id'),
                     'sect_id' => $this->session->userdata('sect_id'),
-                    'opnamed_by' => $this->session->userdata('nama'),
-                    'opnamed_at' => date('Y-m-d H:i:s')
+                    // 'opnamed_at' => date('Y-m-d H:i:s'),
+                    'opnamed_by' => $this->session->userdata('nama')
                 ];
                 $this->db->insert('asset_opnamed', $data);
             }
