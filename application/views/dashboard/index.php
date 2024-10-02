@@ -172,17 +172,7 @@
 
           <!-- 1. Notification -->
 
-
-      <?php if ( $vote > '0'){ 
-
-      $this->db->select('v.npk, v.vote_npk, k.nama');
-      $this->db->from('vote_bipartit v');
-      $this->db->join('karyawan k', 'v.vote_npk = k.npk');
-      $this->db->where('v.npk', $this->session->userdata('npk'));
-      $voted = $this->db->get()->row_array();
-       
-       ?> 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
             <div class="alert alert-info alert-with-icon" data-notify="container">
               <i class="material-icons" data-notify="icon">notifications</i>
@@ -190,11 +180,10 @@
                 <i class="material-icons">close</i>
               </button>
               <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
-              <span data-notify="message">Terimkasih kamu telah memilih <b><?=$voted['nama'] ?></b> sebagai ketua bipartit selanjutnya.</span>
+              <span data-notify="message">Terimkasih kamu telah memilih <b></b> sebagai ketua bipartit selanjutnya.</span>
             </div>
         </div>
-      </div>
-      <?php }; ?>
+      </div> -->
     <!-- End Notification -->
 
     <!-- Absensi -->
@@ -241,65 +230,6 @@
       </div> -->
     <!-- </div> -->
     <!-- End Absensi -->
-
-    <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div id="accordionVote" role="tablist">
-              <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingVote">
-                  <h5 class="mb-0">
-                    <a class="" data-toggle="collapse" href="#collapseVote" aria-expanded="true" aria-controls="collapseVote">
-                    <h3 class="card-title">Top 5 Vote Bipartit
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </h3>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseVote" class="collapse show" role="tabpanel" aria-labelledby="headingVote" data-parent="#accordion">
-                <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead class=" text-primary">
-                          <tr><th>
-                            Nama
-                          </th>
-                          <th>
-                            Vote
-                          </th>
-                        </tr></thead>
-                        <tbody>
-                        <?php 
-                        $this->db->select('k.nama, d.vote_npk, COUNT(d.vote_npk) AS vote_count')
-                        ->from('vote_bipartit d')
-                        ->join('karyawan k', 'd.vote_npk = k.npk')
-                        ->group_by('k.nama, d.vote_npk')
-                        ->order_by('vote_count', 'DESC')
-                        ->limit(5);
-
-                        $query = $this->db->get();
-                        $result = $query->result_array();
-                        foreach ($result as $row) : 
-                        ?>
-                          <tr>
-                            <td>
-                            <?= $row['nama']; ?>
-                            </td>
-                            <td>
-                            <?= $row['vote_count']; ?>
-                            </td>
-                          </tr>
-                          <?php endforeach; ?>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
     <?php if ($this->session->userdata('posisi_id') < 7 OR $this->session->userdata('npk') == '0075' OR $this->session->userdata('npk') == '0049'){ ?>
     <div class="col-md-4">
