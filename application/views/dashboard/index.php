@@ -189,85 +189,18 @@
     <!-- Absensi -->
     <div class="row">
     <!-- <div class="col-md-8">
-        <div class="card">
-          <div class="card-body">
-          <div class="tab-content tab-space">
-                            <div class="tab-pane active" id="link1">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="https://docs.google.com/document/d/1kaQakHREfV1lQPkoXfqtxHEFf99iGrzbN4sfL2AnlSM/edit?usp=sharing"></iframe>
-                                </div>
-                            </div>
-                        </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div id="accordionAbsensi" role="tablist">
-              <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingAbsensi">
-                  <h5 class="mb-0">
-                    <a class="" data-toggle="collapse" href="#collapseAbsensi" aria-expanded="true" aria-controls="collapseAbsensi">
-                    <h3 class="card-title">Absensi
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </h3>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseAbsensi" class="collapse show" role="tabpanel" aria-labelledby="headingAbsensi" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="material-datatables">
-                      <table id="dtpresensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"></table>
-                    </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content tab-space">
+                <div class="tab-pane active" id="link1">
+                  <div class="embed-responsive embed-responsive-4by3">
+                      <iframe class="embed-responsive-item" src="https://docs.google.com/document/d/1kaQakHREfV1lQPkoXfqtxHEFf99iGrzbN4sfL2AnlSM/edit?usp=sharing"></iframe>
                   </div>
-                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div> -->
-    <!-- </div> -->
-    <!-- End Absensi -->
+        </div> -->
 
-    <?php if ($this->session->userdata('posisi_id') < 7 OR $this->session->userdata('npk') == '0075' OR $this->session->userdata('npk') == '0049'){ ?>
-    <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div id="accordionCuti" role="tablist">
-              <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingCuti">
-                  <h5 class="mb-0">
-                    <a class="" data-toggle="collapse" href="#collapseCuti" aria-expanded="true" aria-controls="collapseCuti">
-                    <h3 class="card-title">Cuti
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </h3>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseCuti" class="collapse show" role="tabpanel" aria-labelledby="headingCuti" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="material-datatables">
-                      <table id="dtcuti" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Sampai</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <?php }; ?>
-    <!-- </div> -->
-    <!-- End Absensi -->
     <?php if ($this->session->userdata('posisi_id') > 3 ){ ?>
     <div class="col-md-4">
         <div class="card">

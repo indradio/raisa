@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class Lembur extends CI_Controller
 {
@@ -216,27 +218,24 @@ class Lembur extends CI_Controller
             $this->db->delete('aktivitas');
 
             // Notification saat mengajukan REALISASI to ATASAN 1
-            // $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
-            // $client = new \GuzzleHttp\Client();
-            // $response = $client->post(
-            //     'https://region01.krmpesan.com/api/v2/message/send-text',
-            //     [
-            //         'headers' => [
-            //             'Content-Type' => 'application/json',
-            //             'Accept' => 'application/json',
-            //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-            //         ],
-            //         'json' => [
-            //             'phone' => $atasan1['phone'],
-            //             'message' => "*PENGAJUAN REALISASI LEMBUR*" .
-            //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-            //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) .
-            //             "\r\nDurasi : " . $lembur['durasi'] ." Jam" .
-            //             "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-            //         ],
-            //     ]
-            // );
-            // $body = $response->getBody();
+            $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
+            $client = new \GuzzleHttp\Client();
+            $options = [
+                'form_params' => [
+                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                    'number' => $atasan1['phone'],
+                    'message' => "*PENGAJUAN REALISASI LEMBUR*" .
+                                "\r\n \r\n👤 : *" . $lembur['nama'] . "*" .
+                                "\r\n🗓 : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                                "\r\n🕗 : " . $lembur['durasi'] ." Jam " .
+                                "\r\n\r\nBatal otomatis pada *" . date('d-M H:i', strtotime($expired)) . "*",
+                    'date' => date('Y-m-d'),
+                    'time' => date(' H:i:s')
+                ]
+            ];
+            $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+            $res = $client->sendAsync($request, $options)->wait();
+            echo $res->getBody();
             redirect('lembur/realisasi/');
 
         }elseif ($params=='telat'){
@@ -1581,30 +1580,30 @@ class Lembur extends CI_Controller
                 $this->db->update('lembur');
     
                 // Notification saat mengajukan RENCANA to ATASAN 2
-                $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2_rencana']])->row_array();
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post(
-                    'https://region01.krmpesan.com/api/v2/message/send-text',
-                    [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Accept' => 'application/json',
-                            'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                        ],
-                        'json' => [
-                            'phone' => $karyawan['phone'],
-                            'message' => "*PENGAJUAN RENCANA LEMBUR*" .
-                            "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                            "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-                            "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
-                            "\r\n \r\nRENCANA LEMBUR ini telah DISETUJUI oleh *". $lembur['atasan1_rencana'] ."*".
-                            "\r\nHarap segera respon *Setujui/Batalkan*".
-                            "\r\n \r\n*Semakin lama kamu merespon, semakin sedikit waktu tim kamu membuat realisasi*".
-                            "\r\n Untuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                        ],
-                    ]
-                );
-                $body = $response->getBody();
+                // $karyawan = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2_rencana']])->row_array();
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $karyawan['phone'],
+                //             'message' => "*PENGAJUAN RENCANA LEMBUR*" .
+                //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+                //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                //             "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
+                //             "\r\n \r\nRENCANA LEMBUR ini telah DISETUJUI oleh *". $lembur['atasan1_rencana'] ."*".
+                //             "\r\nHarap segera respon *Setujui/Batalkan*".
+                //             "\r\n \r\n*Semakin lama kamu merespon, semakin sedikit waktu tim kamu membuat realisasi*".
+                //             "\r\n Untuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
 
             }else{
                 
@@ -1623,63 +1622,23 @@ class Lembur extends CI_Controller
                 // Notification saat mengajukan RENCANA to ATASAN 1
                 $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
 
-                //Kirim pesan via Whatsapp
-                $curl = curl_init();
+                $client = new \GuzzleHttp\Client();
+                $options = [
+                'form_params' => [
+                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                    'number' => $atasan1['phone'],
+                    'message' => "*PENGAJUAN RENCANA LEMBUR*" .
+                                "\r\n \r\n👤 : *" . $lembur['nama'] . "*" .
+                                "\r\n🗓 : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                                "\r\n🕗 : " . $lembur['durasi_rencana'] ." Jam " .
+                                "\r\n\r\nBatal otomatis pada *" . date('d-M H:i', strtotime($expired)) . "*",
+                    'date' => date('Y-m-d'),
+                    'time' => date(' H:i:s')
+                ]];
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $res = $client->sendAsync($request, $options)->wait();
+                echo $res->getBody();
 
-                $message = [
-                "messageType"   => "text",
-                "to"            => $atasan1['phone'],
-                "body"          => $lembur['nama'] . " mengajukan lembur untuk tanggal " .date('d-M H:i', strtotime($lembur['tglmulai'])) . " Selama " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." . 
-                "\r\n \r\nLembur ini membutuhkan persetujuan dari anda.",
-                "file"          => "",
-                "delay"         => 30,
-                "schedule"      => 1665408510000
-                ];
-                
-                curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.starsender.online/api/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($message),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type:application/json',
-                    'Authorization: 610c04c9-a7e1-4b7e-918c-e9847b643e47'
-                ),
-                ));
-                
-                $response = curl_exec($curl);
-                curl_close($curl);
-
-
-                // $client = new \GuzzleHttp\Client();
-                // $response = $client->post(
-                //     'https://region01.krmpesan.com/api/v2/message/send-text',
-                //     [
-                //         'headers' => [
-                //             'Content-Type' => 'application/json',
-                //             'Accept' => 'application/json',
-                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                //         ],
-                //         'json' => [
-                //             'phone' => $atasan1['phone'],
-                //             'message' => "*PENGAJUAN RENCANA LEMBUR*" .
-                //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-                //             "\r\nDurasi : " . date('H', strtotime($lembur['durasi_rencana'])) ." Jam " . date('i', strtotime($lembur['durasi_rencana']))." Menit." .
-                //             "\r\nBatas Waktu : *" . date('d-M H:i', strtotime($expired)) . "*" .
-                //             "\r\n \r\nHarap segera respon *Setujui/Batalkan*".
-                //             "\r\n \r\nRespon sebelum jam 4 sore agar tim kamu *Dipesankan makan malamnya".
-                //             "\r\nKalau kamu belum respon, tim kamu tidak bisa melakukan realisasi".
-                //             "\r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                //         ],
-                //     ]
-                // );
-                // $body = $response->getBody();
             }
 
         }else{
@@ -1741,25 +1700,24 @@ class Lembur extends CI_Controller
         // Notification saat mengajukan REALISASI to ATASAN 1
         $atasan1 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan1']])->row_array();
         $client = new \GuzzleHttp\Client();
-        $response = $client->post(
-            'https://region01.krmpesan.com/api/v2/message/send-text',
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                ],
-                'json' => [
-                    'phone' => $atasan1['phone'],
-                    'message' => "*PENGAJUAN REALISASI LEMBUR*" .
-                    "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                    "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) .
-                    "\r\nDurasi : " . $lembur['durasi'] ." Jam" .
-                    "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                ],
+        $options = [
+            'form_params' => [
+                'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                'number' => $atasan1['phone'],
+                'message' => "*PENGAJUAN REALISASI LEMBUR*" .
+                            "\r\n \r\n👤 : *" . $lembur['nama'] . "*" .
+                            "\r\n🗓 : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                            "\r\n🕗 : " . $lembur['durasi'] ." Jam " .
+                            "\r\n\r\nBatal otomatis pada *" . date('d-M H:i', strtotime($expired)) . "*",
+                'date' => date('Y-m-d'),
+                'time' => date(' H:i:s')
             ]
-        );
-        $body = $response->getBody();
+        ];
+        $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+        $res = $client->sendAsync($request, $options)->wait();
+        echo $res->getBody();
+
+
         redirect('lembur/realisasi/');
     }
 
@@ -1899,29 +1857,24 @@ class Lembur extends CI_Controller
             //Notifikasi ke ATASAN 2
             $atasan2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2']])->row_array();
             $client = new \GuzzleHttp\Client();
-            $response = $client->post(
-                'https://region01.krmpesan.com/api/v2/message/send-text',
-                [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                    ],
-                    'json' => [
-                        'phone' => $atasan2['phone'],
-                        'message' => "*PENGAJUAN RENCANA LEMBUR*" .
-                        "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-                        "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai_rencana'])) . 
-                        "\r\nDurasi : " . $lembur['durasi_rencana'] ." Jam " .
-                        "\r\n \r\nRENCANA LEMBUR ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*".
-                        "\r\nHarap segera respon *Setujui/Batalkan*".
-                        "\r\n \r\n*Semakin lama kamu merespon, semakin sedikit waktu tim kamu membuat realisasi*".
-                        "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-                    ],
-                ]
-            );
-            $body = $response->getBody();
+                $options = [
+                'form_params' => [
+                'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                'number' => $atasan2['phone'],
+                'message' => "*PENGAJUAN RENCANA LEMBUR*" .
+                            "\r\n \r\n👤 : *" . $lembur['nama'] . "*" .
+                            "\r\n🗓 : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                            "\r\n🕗 : " . $lembur['durasi_rencana'] ." Jam " .
+                            "\r\n \r\nRENCANA LEMBUR ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*",
+                'date' => date('Y-m-d'),
+                'time' => date(' H:i:s')
+                ]];
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $res = $client->sendAsync($request, $options)->wait();
+                echo $res->getBody();
+
         } 
+
         // Persetujuan Dept Head UP
         else if ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
             
@@ -1998,31 +1951,49 @@ class Lembur extends CI_Controller
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('lembur');
 
-            //Notifikasi ke ATASAN 2
-            // $atasan2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2']])->row_array();
-            // if (!empty($atasan2)){
-            //     $client = new \GuzzleHttp\Client();
-            //     $response = $client->post(
-            //         'https://region01.krmpesan.com/api/v2/message/send-text',
-            //         [
-            //             'headers' => [
-            //                 'Content-Type' => 'application/json',
-            //                 'Accept' => 'application/json',
-            //                 'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-            //             ],
-            //             'json' => [
-            //                 'phone' => $atasan2['phone'],
-            //                 'message' => "*PENGAJUAN REALISASI LEMBUR*" .
-            //                 "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
-            //                 "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
-            //                 "\r\nDurasi : " . $lembur['durasi'] ." Jam " .
-            //                 "\r\n \r\nREALISASI LEMBUR ini telah disetujui oleh *". $this->session->userdata('inisial') ."*".
-            //                 "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
-            //             ],
-            //         ]
-            //     );
-            //     $body = $response->getBody();
-            // }
+            // Notifikasi ke ATASAN 2
+            $atasan2 = $this->db->get_where('karyawan', ['inisial' => $lembur['atasan2']])->row_array();
+            if (!empty($atasan2)){
+                $client = new \GuzzleHttp\Client();
+                $options = [
+                'form_params' => [
+                'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                'number' => $atasan2['phone'],
+                'message' => "*PENGAJUAN RENCANA LEMBUR*" .
+                            "\r\n \r\n👤 : *" . $lembur['nama'] . "*" .
+                            "\r\n🗓 : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                            "\r\n🕗 : " . $lembur['durasi'] ." Jam " .
+                            "\r\n \r\nRENCANA LEMBUR ini telah DISETUJUI oleh *". $this->session->userdata('inisial') ."*",
+                'date' => date('Y-m-d'),
+                'time' => date(' H:i:s')
+                ]];
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $res = $client->sendAsync($request, $options)->wait();
+                echo $res->getBody();
+
+
+                // $client = new \GuzzleHttp\Client();
+                // $response = $client->post(
+                //     'https://region01.krmpesan.com/api/v2/message/send-text',
+                //     [
+                //         'headers' => [
+                //             'Content-Type' => 'application/json',
+                //             'Accept' => 'application/json',
+                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
+                //         ],
+                //         'json' => [
+                //             'phone' => $atasan2['phone'],
+                //             'message' => "*PENGAJUAN REALISASI LEMBUR*" .
+                //             "\r\n \r\nNama : *" . $lembur['nama'] . "*" .
+                //             "\r\nTanggal : " . date('d-M H:i', strtotime($lembur['tglmulai'])) . 
+                //             "\r\nDurasi : " . $lembur['durasi'] ." Jam " .
+                //             "\r\n \r\nREALISASI LEMBUR ini telah disetujui oleh *". $this->session->userdata('inisial') ."*".
+                //             "\r\n \r\nUntuk informasi lebih lengkap dapat dilihat melalui RAISA di link berikut https://raisa.winteq-astra.com"
+                //         ],
+                //     ]
+                // );
+                // $body = $response->getBody();
+            }
         } 
         // Persetujuan Dept Head 
         elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
