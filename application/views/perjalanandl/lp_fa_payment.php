@@ -38,9 +38,9 @@
                             <table id="dt-report" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Nomor_Perjalanan</th>
-                                        <th>Jenis DL</th>
-                                        <th>Waktu Keberangkatan</th>
+                                        <th>Nomor</th>
+                                        <th>Jenis</th>
+                                        <th>Keberangkatan</th>
                                         <th>Tujuan</th>
                                         <th>Peserta</th>
                                         <th>e-Wallet</th>
@@ -48,11 +48,11 @@
                                         <th>Taksi/Pribadi</th>
                                         <th>BBM</th>
                                         <th>TOL</th>
-                                        <th>Parkir <small>Lainnya</small></th>
+                                        <th>Lainnya</th>
                                         <th>Total_Biaya</th>
                                         <th>Approval</th>
-                                        <th>Verifikasi GA</th>
-                                        <th>Verifikasi FA</th>
+                                        <th>Verifikasi</th>
+                                        <th>Payment</th>
                                         <th>Status</th>
                                         <th>Npk</th>
                                     </tr>
