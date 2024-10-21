@@ -363,8 +363,7 @@ class Asset extends CI_Controller
                         'dept_id' => $user->dept_id,
                         'sect_id' => $user->sect_id,
                         'opnamed_by' => $this->session->userdata('nama'),
-                        'opnamed_at' => date('Y-m-d H:i:s'),
-                        'status' => 1
+                        'opnamed_at' => date('Y-m-d H:i:s')
                     ];
                     $this->db->insert('asset_opnamed', $data);
 
