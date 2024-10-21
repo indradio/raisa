@@ -796,6 +796,7 @@ class Asset extends CI_Controller
                             "change_room" => $change_room,
                             "opnamed_by" => $row->opnamed_by,
                             "opnamed_at" => date('d-m-Y H:i', strtotime($row->opnamed_at)),
+                            "catatan" => $row->catatan,
                             "actions" => "<a href='". base_url('asset/verification/'.$row->id)."' type='button' class='btn btn-success btn-link btn-just-icon'><i class='material-icons'>task_alt</i></a>"
                         );
                 }
