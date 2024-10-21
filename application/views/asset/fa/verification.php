@@ -37,6 +37,7 @@
                                         <th>CHANGE ROOM</th>
                                         <th>OPNAME BY</th>
                                         <th>OPNAME AT</th>
+                                        <th>REMARK</th>
                                         <th>ACTIONS</th>
                                     </tr>
                                 </thead>
@@ -54,6 +55,7 @@
                                         <th>Change Room</th>
                                         <th>Opname By</th>
                                         <th>Opname At</th>
+                                        <th>Remark</th>
                                         <th class="th-description text-right">Actions</th>
                                     </tr>
                                 </tfoot>
@@ -134,6 +136,7 @@
                 { "data": "change_room" },
                 { "data": "opnamed_by" },
                 { "data": "opnamed_at" },
+                { "data": "catatan" },
                 { "data": "actions", className: "text-right" }
             ],
         });
