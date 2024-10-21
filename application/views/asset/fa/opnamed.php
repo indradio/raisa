@@ -43,6 +43,7 @@
                                         <th>OPNAME AT</th>
                                         <th>VERIFY BY</th>
                                         <th>VERIFY AT</th>
+                                        <th>REMARK</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -65,6 +66,7 @@
                                         <th>Opname At</th>
                                         <th>Verify By</th>
                                         <th>Verify At</th>
+                                        <th>Remark</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -150,6 +152,7 @@
                 { "data": "opnamed_at" },
                 { "data": "verify_by" },
                 { "data": "verify_at" }
+                { "data": "catatan" }
             ],
         });
         

@@ -854,7 +854,8 @@ class Asset extends CI_Controller
                             "opnamed_by" => $row->opnamed_by,
                             "opnamed_at" => date('d-m-Y H:i', strtotime($row->opnamed_at)),
                             "verify_by" => $row->verify_by,
-                            "verify_at" => date('d-m-Y H:i', strtotime($row->verify_at))
+                            "verify_at" => date('d-m-Y H:i', strtotime($row->verify_at)),
+                            "catatan" => $row->catatan
                         );
                 }
             }else{
