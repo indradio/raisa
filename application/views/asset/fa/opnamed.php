@@ -151,7 +151,7 @@
                 { "data": "opnamed_by" },
                 { "data": "opnamed_at" },
                 { "data": "verify_by" },
-                { "data": "verify_at" }
+                { "data": "verify_at" },
                 { "data": "catatan" }
             ],
         });
