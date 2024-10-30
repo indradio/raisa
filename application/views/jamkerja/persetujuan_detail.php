@@ -93,9 +93,9 @@
               <b><h3>Porsi ke COPRO : <?= $produktifitas; ?> % </h3></b>
               
               <div class="progress" style="width: 100%">
-                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1; ?>%" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
-                  <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2; ?>%" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="8"></div>
-                  <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3; ?>%" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1; ?>%" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="<?= $shift; ?>"></div>
+                  <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2; ?>%" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="<?= $shift; ?>"></div>
+                  <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3; ?>%" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="<?= $shift; ?>"></div>
               </div>
               <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){
                 echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';
