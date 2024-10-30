@@ -703,7 +703,7 @@ class Jamkerja extends CI_Controller
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result_array();
+            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result();
             // $data['listproject'] = $this->jamkerja_model->fetch_project();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -717,7 +717,7 @@ class Jamkerja extends CI_Controller
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result_array();
+            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
