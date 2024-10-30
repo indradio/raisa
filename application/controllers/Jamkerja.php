@@ -696,13 +696,14 @@ class Jamkerja extends CI_Controller
 
     public function detail($link_aktivitas)
     {
-        if ($this->session->userdata('dept_id')==14 AND $this->session->userdata('dept_id')==143){
+        if ($this->session->userdata('npk')=='0160'){
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
-            $data['listproject'] = $this->db->get_where('project', ['copro' => '600900'])->result_array();
+            $data['kategori'] = $this->jamkerja_model->fetch_kategori();
+            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result_array();
             // $data['listproject'] = $this->jamkerja_model->fetch_project();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -716,7 +717,7 @@ class Jamkerja extends CI_Controller
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['listproject'] = $this->db->get_where('project', ['copro' => '600900'])->result_array();
+            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
