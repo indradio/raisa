@@ -39,49 +39,54 @@
               $durasi = $jamkerja['durasi'];
               
               if ($durasi < 4) {
+                $shift = $durasi;
                 $sisaDurasi = 4;
               } else {
                 if ($jamkerja['shift']=='SHIFT1'){
+                    $shift = 6;
                     $sisaDurasi = 6 - $durasi;
                 }elseif ($jamkerja['shift']=='SHIFT2'){
+                    $shift = 8;
                     $sisaDurasi = 8 - $durasi;
                 }elseif ($jamkerja['shift']=='SHIFT3'){
                     $sisaDurasi = 7 - $durasi;
+                    $shift = 7;
                 }
               }
               $jam = $this->db->get_where('jam', ['jam <=' =>  $sisaDurasi])->result();
-              
-              if ($jamkerja['shift']=='SHIFT1'){
-                $shift = 6;
-              }elseif ($jamkerja['shift']=='SHIFT2'){
-                $shift = 8;
-              }elseif ($jamkerja['shift']=='SHIFT3'){
-                $shift = 7;
+
+              // Select the sum of 'durasi' for each 'kategori' in a single query
+              $this->db->select('kategori, SUM(durasi) as total_durasi');
+              $this->db->where('link_aktivitas', $link);
+              $this->db->where_in('kategori', ['1', '2', '3']);
+              $this->db->group_by('kategori');
+              $query = $this->db->get('aktivitas');
+
+              // Initialize variables
+              $kategori1 = $kategori2 = $kategori3 = 0;
+              $bar1 = $bar2 = $bar3 = 0;
+              $produktif1 = $produktif2 = $produktif3 = 0;
+
+              // Process the results
+              foreach ($query->result() as $row) {
+                  switch ($row->kategori) {
+                      case '1':
+                          $kategori1 = $row->total_durasi;
+                          $bar1 = $kategori1 * 12.5;
+                          $produktif1 = ($kategori1 / $shift) * 100;
+                          break;
+                      case '2':
+                          $kategori2 = $row->total_durasi;
+                          $bar2 = $kategori2 * 12.5;
+                          $produktif2 = ($kategori2 / $shift) * 100;
+                          break;
+                      case '3':
+                          $kategori3 = $row->total_durasi;
+                          $bar3 = $kategori3 * 12.5;
+                          $produktif3 = ($kategori3 / $shift) * 100; // Adjusted to * 100 based on your original code
+                          break;
+                  }
               }
-
-              $this->db->select_sum('durasi');
-              $this->db->where('link_aktivitas', $link);
-              $this->db->where('kategori', '1');
-              $query1 = $this->db->get('aktivitas');
-              $kategori1 = $query1->row()->durasi;
-              $bar1 = $kategori1 * 12.5;
-              $produktif1 = ($kategori1 / $shift) * 100;
-
-              $this->db->select_sum('durasi');
-              $this->db->where('link_aktivitas', $link);
-              $this->db->where('kategori', '2');
-              $query2 = $this->db->get('aktivitas');
-              $kategori2 = $query2->row()->durasi;
-              $bar2 = $kategori2 * 12.5;
-              $produktif2 = ($kategori2 / $shift) * 100;
-
-              $this->db->select_sum('durasi');
-              $this->db->where('link_aktivitas', $link);
-              $this->db->where('kategori', '3');
-              $query3 = $this->db->get('aktivitas');
-              $kategori3 = $query3->row()->durasi;
-              $bar3 = $kategori3 * 12.5;
-              $produktif3 = ($kategori3 / $shift) * 0;
 
               $produktifitas = $produktif1 + $produktif2 + $produktif3;
               ?>
@@ -124,25 +129,33 @@
                 </tfoot>
                 <tbody>
                     <?php
-                    foreach ($aktivitas as $a) : ?>
+                     // Fetch all categories and map them by ID
+                    $kategori_data = $this->db->get('jamkerja_kategori')->result_array();
+                    $kategori_map = [];
+                    foreach ($kategori_data as $kategori_row) {
+                        $kategori_map[$kategori_row['id']] = $kategori_row['nama'];
+                    }
+
+                    foreach ($aktivitas as $row) : ?>
                         <tr>
-                            <?php $katgr = $this->db->get_where('jamkerja_kategori', ['id' => $a['kategori']])->row_array(); ?>
-                            <td><?= $katgr['nama']; ?> <small>(<?= $a['copro']; ?>)</small></td>
-                            <td><?= $a['aktivitas']; ?></td>
-                            <td><?= $a['deskripsi_hasil']; ?></td>
-                            <td><?= $a['progres_hasil']; ?></td>
-                            <td><?= $a['durasi']; ?></td>
+                            <td><?= isset($kategori_map[$row['kategori']]) ? $kategori_map[$row['kategori']] : 'Unknown' ?> <small>(<?= $row['copro']; ?>)</small></td>
+                            <td><?= $row['aktivitas']; ?></td>
+                            <td><?= $row['deskripsi_hasil']; ?></td>
+                            <td><?= $row['progres_hasil']; ?></td>
+                            <td><?= $row['durasi']; ?></td>
                             <td>
-                            <?php if ($this->session->userdata('sect_id')==135){
-                              if ($a['copro']){
-                                echo '<a href="#" class="btn btn-sm btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#ubahCopro" data-id="'. $a['id'] .'">UBAH COPRO</a>';
+                            <?php if ($this->session->userdata('npk')=='0160'){
+                              if ($row['copro']){
+                                echo '<a href="#" class="btn btn-sm btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#ubahCopro" data-id="'. $row['id'] .'">UBAH COPRO</a>';
                               }else{
                                 echo '<a href="#" class="btn btn-sm btn-default disabled" role="button" aria-disabled="true">NON PROJEK</a>';
                               }
-                              echo '<a href="#" class="btn btn-sm  btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $a['id'] .'">HAPUS</a>';
+                              $role = 'ppic';
                             }else{
-                              echo '<a href="#" class="btn btn-sm  btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $a['id'] .'">HAPUS</a>';
-                            } ?>
+                              $role = 'koordinator';
+                            }
+                            echo '<a href="#" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $row['id'] .'">HAPUS</a>';
+                            ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -167,40 +180,18 @@
                         ?>
                         </div>
                             <div class="col-md-12">
-                            <?php if($this->session->userdata('sect_id')==135){ ?>
                                 <!-- Button SUBMIT -->
-                                <form class="form" method="post" action="<?= base_url('jamkerja/approve/ppic'); ?>">
-                                  <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
-                                  <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
-                                  <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                  <a href="#" class="btn btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusJamkerja" data-id="<?= $jamkerja['id']; ?>">HAPUS</a>
-                                  <a href="<?= base_url('jamkerja/persetujuan/ppic') ?>" class="btn btn-link" role="button">Kembali</a>
-                                </form>
-                            <?php }else{ ?>
-                                <!-- Button SUBMIT -->
-                                <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){ ?>
-                                <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
-                                <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
-                                <?php }elseif($jamkerja['shift']=='SHIFT2' AND $jamkerja['durasi']<8){ ?>
-                                <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
-                                <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
-                                <?php }elseif($jamkerja['shift']=='SHIFT3' AND $jamkerja['durasi']<7){ ?>
-                                <a href="#" class="btn btn btn-success disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a>
-                                <a href="#" class="btn btn btn-warning disabled" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
-                                  <?php }else{ ?>
-                                <form class="form" method="post" action="<?= base_url('jamkerja/approve/koordinator'); ?>">
-                                <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
-                                <input type="hidden" class="form-control" id="produktifitas" name="produktifitas" value="<?= $produktifitas; ?>">
-                                <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
-                                <!-- <a href="#" class="btn btn btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#approveJamkerja" data-id="<?= $jamkerja['id']; ?>">APPROVE</a> -->
-                                <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
-                                <a href="<?= base_url('jamkerja/persetujuan/koordinator') ?>" class="btn btn-default" role="button">Kembali</a>
-                                </form>
+                                <?php if($sisaDurasi == 0){ ?>
+                                  <form class="form" method="post" action="<?= base_url('jamkerja/approve/'.$role); ?>">
+                                    <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
+                                    <input type="hidden" class="form-control" id="produktifitas" name="produktifitas" value="<?= $produktifitas; ?>">
+
+                                    <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
+                                    
+                                    <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
+                                    <!-- <a href="<?= base_url('jamkerja/persetujuan') ?>" class="btn btn-default" role="button">Kembali</a> -->
+                                  </form>
                                 <?php } ?>
-                            <?php } ?>
                             </div>
                         </div>
                     </div>
