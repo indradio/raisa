@@ -716,7 +716,7 @@ class Jamkerja extends CI_Controller
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['listproject'] = $this->jamkerja_model->fetch_project();
+            $data['listproject'] = $this->db->get_where('project', ['copro' => '600900'])->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
