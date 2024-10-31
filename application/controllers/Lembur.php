@@ -56,7 +56,13 @@ class Lembur extends CI_Controller
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'LemburKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
+        // $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
+        $this->db->where('npk', $this->session->userdata('npk'));
+        $this->db->where('tglmulai >=', date('Y-m-d', strtotime('-3 months')));
+        $data['lembur'] = $this->db->get('lembur')->result_array();
+
+        $this->output->cache(10); // Durasi dalam menit
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
