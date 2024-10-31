@@ -627,12 +627,12 @@ class Asset extends CI_Controller
 
         }elseif ($params=='outstanding') {
 
-            if ($this->session->userdata('inisial')=='MRS' OR $this->session->userdata('inisial')=='IDA'){
+            if ($this->session->userdata('inisial')=='IFA' OR $this->session->userdata('inisial')=='IDA'){
                             $this->db->where('opname_status <', 2);
                             $this->db->where('npk', '0282');
                 $asset =    $this->db->get('asset')->result();
 
-            }elseif ($this->session->userdata('inisial')=='DWS'){
+            }elseif ($this->session->userdata('inisial')=='MBB'){
                             $this->db->where('opname_status <', 2);
                 $asset =    $this->db->get('asset')->result();
 
@@ -643,7 +643,6 @@ class Asset extends CI_Controller
 
             }
 
-            
             if (!empty($asset)){
                 foreach ($asset as $row) {
                     $user =  $this->db->get_where('karyawan', ['npk' => $row->npk])->row();
