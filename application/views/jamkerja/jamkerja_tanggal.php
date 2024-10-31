@@ -110,9 +110,9 @@
                                     $jam = $this->db->get_where('jam', ['jam <=' =>  $sisadurasi])->result();
                                     ?>
                                     <div class="progress" style="width: 100%">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1 . '%'; ?>" aria-valuenow="<?= $kategori1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2 . '%'; ?>" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="8"></div>
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3 . '%'; ?>" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?= $bar1 . '%'; ?>" aria-valuenow="<?= $bar1; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2 . '%'; ?>" aria-valuenow="<?= $bar2; ?>" aria-valuemin="0" aria-valuemax="8"></div>
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3 . '%'; ?>" aria-valuenow="<?= $bar3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                                     </div>
 
                                     <?php if ($jamkerja['shift']=='SHIFT1' and $durasi < 6.0) { ?>
