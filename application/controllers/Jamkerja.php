@@ -485,6 +485,9 @@ class Jamkerja extends CI_Controller
     public function persetujuan($role=null)
     {
         date_default_timezone_set('asia/jakarta');
+        // Aktifkan cache untuk 10 menit (600 detik)
+        $this->output->cache(10); // Durasi dalam menit
+        
         if ($role==null){
             $data['bulan'] = date('m');
             $data['tahun'] = date('Y');
