@@ -8,6 +8,9 @@ class Jamkerja extends CI_Controller
         parent::__construct();
         is_logged_in();
         date_default_timezone_set('asia/jakarta');
+
+        // Aktifkan cache untuk 10 menit (600 detik)
+        $this->output->cache(10); // Durasi dalam menit
         
         $this->load->model("jamkerja_model");
         $this->load->model("Aktivitas_model");
@@ -24,6 +27,10 @@ class Jamkerja extends CI_Controller
             $data['aktivitas'] = $this->jamkerja_model->get_ACT_TODAY();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
             $data['project'] = $this->jamkerja_model->fetch_project();
+
+            // Aktifkan cache untuk 10 menit (600 detik)
+            $this->output->cache(10); // Durasi dalam menit
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
