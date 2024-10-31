@@ -106,10 +106,11 @@
 </div>
 
 <!--   Core JS Files   -->
-<script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/core/jquery.min.js" async></script>
+<script src="<?= base_url(); ?>assets/js/core/popper.min.js" async></script>
+<script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js" async></script>
+
+<script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js" defer></script>
 <!-- Plugin for the momentJs  -->
 <script src="<?= base_url(); ?>assets/js/plugins/moment.min.js" async></script>
 <!--  Plugin for Sweet Alert -->
@@ -121,14 +122,14 @@
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
 <script src="<?= base_url(); ?>assets/js/plugins/jquery.bootstrap-wizard.js" defer></script>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-selectpicker.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-selectpicker.js" async></script>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker.min.js" async></script>
 <!-- Plugin for the Modal  -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-modal.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-modal.js" async></script>
 <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
 <script src="<?= base_url(); ?>assets/js/plugins/jquery.dataTables.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/plugins/dataTables.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/dataTables.js" async></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-tagsinput.js"></script>
 <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
@@ -136,13 +137,13 @@
 <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
 <script src="<?= base_url(); ?>assets/js/plugins/fullcalendar.min.js"></script>
 <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-<script src="<?= base_url(); ?>assets/js/plugins/jquery-jvectormap.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/jquery-jvectormap.js" defer></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="<?= base_url(); ?>assets/js/plugins/nouislider.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/nouislider.min.js" async></script>
 <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js" async></script>
 <!-- Library for adding dinamically elements -->
-<script src="<?= base_url(); ?>assets/js/plugins/arrive.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/arrive.min.js" defer></script>
 <!--  Google Maps Plugin    -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4"></script> -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0"></script> -->
