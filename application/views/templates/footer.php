@@ -164,7 +164,7 @@
 <!--  Plugin for Sweet Alert -->
 <script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/plugins/sweet-alert.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/sweet-alert.js" async></script>
 <!-- Forms Validations Plugin -->
 <script src="<?= base_url(); ?>assets/js/plugins/jquery.validate.min.js"></script>
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
