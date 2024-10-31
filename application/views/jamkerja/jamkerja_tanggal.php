@@ -1,6 +1,62 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-    
+    <?php if ($jamkerja['status'] == 0) { ?>
+        <?php if ($jamkerja['rev'] == 1) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>LAPORAN JAM KERJA ini membutuhkan REVISI,</strong>
+                </br>
+            </div>
+        <?php } ?>
+        <?php if ($jamkerja['catatan']) { ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Catatan dari ATASAN,</strong>
+                </br>
+                <?= $jamkerja['catatan']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php } ?>
+        <?php if ($jamkerja['catatan_ppic']) { ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Catatan dari PPIC,</strong>
+                </br>
+                <?= $jamkerja['catatan_ppic']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php } ?>
+    <?php } elseif ($jamkerja['status'] == 1) { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
+            <?php if ($this->session->userdata('posisi_id') > 6) { ?>
+                </br>
+                <small>Laporan Jam Kerja kamu sedang diperiksa oleh <?= $jamkerja['atasan1']; ?></small>
+            <?php } ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php } elseif ($jamkerja['status'] == 2) { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
+            </br>
+            <small>Laporan Jam Kerja kamu sedang diperiksa oleh PPIC</small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php } else { ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Yeayy, Laporan Jam Kerja kamu sudah disetujui</strong>
+            </br>
+            <small>Laporan Jam Kerja kamu sudah diperiksa oleh Atasan & PPIC</small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php } ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -20,29 +76,25 @@
                                     $link = $jamkerja['id'];
                                     $durasi = $jamkerja['durasi'];
 
-                                    $this->db->select_sum('durasi');
+                                    // Get the total durations grouped by category
+                                    $this->db->select('kategori, SUM(durasi) as total_durasi');
                                     $this->db->where('link_aktivitas', $link);
                                     $this->db->where('jenis_aktivitas', 'JAM KERJA');
-                                    $this->db->where('kategori', '1');
-                                    $query1 = $this->db->get('aktivitas');
-                                    $kategori1 = $query1->row()->durasi;
-                                    $bar1 = $kategori1 * 12.5;
+                                    $this->db->group_by('kategori');
+                                    $query = $this->db->get('aktivitas');
 
-                                    $this->db->select_sum('durasi');
-                                    $this->db->where('link_aktivitas', $link);
-                                    $this->db->where('jenis_aktivitas', 'JAM KERJA');
-                                    $this->db->where('kategori', '2');
-                                    $query2 = $this->db->get('aktivitas');
-                                    $kategori2 = $query2->row()->durasi;
-                                    $bar2 = $kategori2 * 12.5;
+                                    $results = $query->result_array();
+                                    $durasiData = [];
 
-                                    $this->db->select_sum('durasi');
-                                    $this->db->where('link_aktivitas', $link);
-                                    $this->db->where('jenis_aktivitas', 'JAM KERJA');
-                                    $this->db->where('kategori', '3');
-                                    $query3 = $this->db->get('aktivitas');
-                                    $kategori3 = $query3->row()->durasi;
-                                    $bar3 = $kategori3 * 12.5;
+                                    // Initialize the result array for each category
+                                    foreach ($results as $result) {
+                                        $durasiData[$result['kategori']] = $result['total_durasi'];
+                                    }
+
+                                    // Calculate bars for each category
+                                    $bar1 = isset($durasiData['1']) ? $durasiData['1'] * 12.5 : 0;
+                                    $bar2 = isset($durasiData['2']) ? $durasiData['2'] * 12.5 : 0;
+                                    $bar3 = isset($durasiData['3']) ? $durasiData['3'] * 12.5 : 0;
 
                                     if ($durasi < 4) {
                                         $sisadurasi = 4;
