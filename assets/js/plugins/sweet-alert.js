@@ -1,29 +1,6 @@
 const flashData = $('.flash-data').data('flashdata');
 console.log(flashData);
-if (flashData == 'masuk') {
-  
-  swal({
-    title: "",
-    text: "“Keterbukaan informasi dikedepankan dibanding ngedumel di belakang.” — @bapak2ID",
-    buttonsStyling: false,
-    showConfirmButton: false,
-    // confirmButtonClass: "btn btn-info",
-    // type: "info",
-    timer: "5000",
-    timerProgressBar: true,
-    didOpen: () => {
-      Swal.showLoading()
-      // const b = Swal.getHtmlContainer().querySelector('b')
-      timerInterval = setInterval(() => {
-        b.textContent = Swal.getTimerLeft()
-      }, 100)
-  },
-  willClose: () => {
-    clearInterval(timerInterval)
-  }
-  }).catch(swal.noop)
-
-} else if (flashData == 'approved') {
+if (flashData == 'approved') {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top',
