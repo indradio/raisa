@@ -8,9 +8,6 @@ class Jamkerja extends CI_Controller
         parent::__construct();
         is_logged_in();
         date_default_timezone_set('asia/jakarta');
-
-        // Aktifkan cache untuk 10 menit (600 detik)
-        $this->output->cache(10); // Durasi dalam menit
         
         $this->load->model("jamkerja_model");
         $this->load->model("Aktivitas_model");
@@ -131,6 +128,8 @@ class Jamkerja extends CI_Controller
     public function tanggal($date)
     {
         date_default_timezone_set('asia/jakarta');
+        // Aktifkan cache untuk 10 menit (600 detik)
+        $this->output->cache(10); // Durasi dalam menit
         
         $tahun = date("Y", strtotime($date));
         $bulan = date("m", strtotime($date));
@@ -554,6 +553,10 @@ class Jamkerja extends CI_Controller
                                 $this->db->where('tglmulai <', date("Y-m-d 23:59:00", strtotime($this->input->post('tanggal'))));
                                 $this->db->where('status', '9');
             $data['jamkerja'] = $this->db->get('jamkerja')->result_array();
+
+            // Aktifkan cache untuk 10 menit (600 detik)
+            $this->output->cache(10); // Durasi dalam menit
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -574,6 +577,10 @@ class Jamkerja extends CI_Controller
             $data['lembur'] = $this->db->query($querylembur)->result_array();
             $data['tglmulai'] = $tglmulai;
             $data['tglselesai'] = $tglselesai;
+
+            // Aktifkan cache untuk 10 menit (600 detik)
+            $this->output->cache(10); // Durasi dalam menit
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -714,7 +721,10 @@ class Jamkerja extends CI_Controller
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
             $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result();
-            // $data['listproject'] = $this->jamkerja_model->fetch_project();
+            
+            // Aktifkan cache untuk 10 menit (600 detik)
+            $this->output->cache(10); // Durasi dalam menit
+        
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -728,6 +738,10 @@ class Jamkerja extends CI_Controller
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
             $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result();
+            
+            // Aktifkan cache untuk 10 menit (600 detik)
+            $this->output->cache(10); // Durasi dalam menit
+            
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
