@@ -151,7 +151,7 @@
 <!--  Notifications Plugin    -->
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-notify.js" async></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript" async></script>
+<script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="<?= base_url(); ?>assets/js/plugins/simple.money.format.js" async></script>
 <script>
