@@ -1,62 +1,6 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-    <?php if ($jamkerja['status'] == 0) { ?>
-        <?php if ($jamkerja['rev'] == 1) { ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>LAPORAN JAM KERJA ini membutuhkan REVISI,</strong>
-                </br>
-            </div>
-        <?php } ?>
-        <?php if ($jamkerja['catatan']) { ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Catatan dari ATASAN,</strong>
-                </br>
-                <?= $jamkerja['catatan']; ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <?php } ?>
-        <?php if ($jamkerja['catatan_ppic']) { ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Catatan dari PPIC,</strong>
-                </br>
-                <?= $jamkerja['catatan_ppic']; ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <?php } ?>
-    <?php } elseif ($jamkerja['status'] == 1) { ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
-            <?php if ($this->session->userdata('posisi_id') > 6) { ?>
-                </br>
-                <small>Laporan Jam Kerja kamu sedang diperiksa oleh <?= $jamkerja['atasan1']; ?></small>
-            <?php } ?>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php } elseif ($jamkerja['status'] == 2) { ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Terimakasih, kamu sudah melaporkan Jam Kerja</strong>
-            </br>
-            <small>Laporan Jam Kerja kamu sedang diperiksa oleh PPIC</small>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php } else { ?>
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Yeayy, Laporan Jam Kerja kamu sudah disetujui</strong>
-            </br>
-            <small>Laporan Jam Kerja kamu sudah diperiksa oleh Atasan & PPIC</small>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php } ?>
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
