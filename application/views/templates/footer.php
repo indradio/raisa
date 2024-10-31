@@ -111,7 +111,7 @@
 <script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
-<script src="<?= base_url(); ?>assets/js/plugins/moment.min.js" defer></script>
+<script src="<?= base_url(); ?>assets/js/plugins/moment.min.js" async></script>
 <!--  Plugin for Sweet Alert -->
 <script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.js" async></script>
 <script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.min.js" async></script>
