@@ -106,9 +106,9 @@
 </div>
 
 <!--   Core JS Files   -->
-<script src="<?= base_url(); ?>assets/js/core/jquery.min.js" async></script>
-<script src="<?= base_url(); ?>assets/js/core/popper.min.js" async></script>
-<script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js" async></script>
+<script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js"></script>
 
 <script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js" async></script>
 <!-- Plugin for the momentJs  -->
