@@ -57,9 +57,6 @@ class Lembur extends CI_Controller
         $data['sidesubmenu'] = 'LemburKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         // $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
-        $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('tglmulai >=', date('Y-m-d', strtotime('-3 months')));
-        $data['lembur'] = $this->db->get('lembur')->result_array();
 
         $this->output->cache(10); // Durasi dalam menit
 
@@ -2764,9 +2761,8 @@ class Lembur extends CI_Controller
            
         }elseif ($params=='lemburku'){
           
-            $this->db->limit(365);  // Produces: LIMIT 100
-            $this->db->order_by('tglmulai DESC');
             $this->db->where('npk', $this->session->userdata('npk'));
+            $this->db->where('tglmulai >=', date('Y-m-d', strtotime('-3 months')));
             $lembur = $this->db->get('lembur')->result();
 
             foreach ($lembur as $row) {
