@@ -128,30 +128,33 @@ class Jamkerja extends CI_Controller
     public function tanggal($date)
     {
         date_default_timezone_set('asia/jakarta');
-        // Aktifkan cache untuk 10 menit (600 detik)
-        $this->output->cache(10); // Durasi dalam menit
         
         $tahun = date("Y", strtotime($date));
         $bulan = date("m", strtotime($date));
         $tanggal = date("d", strtotime($date));
+        $data['sidemenu'] = 'Jam Kerja';
+        $data['sidesubmenu'] = 'Laporan Kerja Harian';
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
     
         $this->db->where('year(tglmulai)',$tahun);
         $this->db->where('month(tglmulai)',$bulan);
         $this->db->where('day(tglmulai)',$tanggal);
         $this->db->where('npk',$this->session->userdata('npk'));
         $jamkerja = $this->db->get('jamkerja')->row_array();
+
         if (!empty($jamkerja['id'])){
         
-            $data['sidemenu'] = 'Jam Kerja';
-            $data['sidesubmenu'] = 'Laporan Kerja Harian';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-            $this->db->where('year(tglmulai)',$tahun);
-            $this->db->where('month(tglmulai)',$bulan);
-            $this->db->where('day(tglmulai)',$tanggal);
-            $this->db->where('npk',$this->session->userdata('npk'));
-            $data['jamkerja'] = $this->db->get('jamkerja')->row_array();
+            // $this->db->where('year(tglmulai)',$tahun);
+            // $this->db->where('month(tglmulai)',$bulan);
+            // $this->db->where('day(tglmulai)',$tanggal);
+            // $this->db->where('npk',$this->session->userdata('npk'));
+            $data['jamkerja'] = $jamkerja;
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
             $data['project'] = $this->jamkerja_model->fetch_project();
+
+            // Aktifkan cache untuk 10 menit (600 detik)
+            $this->output->cache(10); // Durasi dalam menit
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/navbar', $data);
@@ -160,9 +163,6 @@ class Jamkerja extends CI_Controller
         
         }else{
 
-            $data['sidemenu'] = 'Jam Kerja';
-            $data['sidesubmenu'] = 'Laporan Kerja Harian';
-            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $data['tanggal'] = date("d M Y", strtotime($date));
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
