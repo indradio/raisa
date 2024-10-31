@@ -105,70 +105,21 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" id="openTicket" tabindex="-1" role="dialog" aria-labelledby="openTicketTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <div class="card-header card-header-info text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="material-icons">clear</i>
-                        </button>
-                        <h4 class="card-title">Ada yang bisa kami bantu?</h4>
-                    </div>
-                </div>
-                <form id="ticket" class="form" method="post" action="<?= base_url('ticket/new'); ?>">
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Menu</label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <select class="selectpicker" data-size="5" data-style="select-with-transition" id="menu" name="menu" title="Pilih menu" required="true">
-                                            <option value="PERJALANAN">Perjalanan</option>
-                                            <option value="JAM KERJA">Jam Kerja</option>
-                                            <option value="LEMBUR">Lembur</option>
-                                            <option value="CUTI">Cuti</option>
-                                            <option value="GANTI HARI">Ganti Hari</option>
-                                            <option value="LAINNYA">Lainnya...</option>                                           
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Kasus </br><small><i>Ceritakan</i></small></label>
-                                <div class="col-md-8">
-                                    <div class="form-group has-default">
-                                        <textarea class="form-control" id="case" name="case" rows="5" required="true"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-right">
-                                <button class="btn btn-default btn-link" data-dismiss="modal">TUTUP</button>
-                                <button type="submit" class="btn btn-success btn-round">LAPORKAN!</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
 <!--   Core JS Files   -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
-<script src="<?= base_url(); ?>assets/js/plugins/moment.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/moment.min.js" defer></script>
 <!--  Plugin for Sweet Alert -->
-<script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.js"></script>
-<script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.js" async></script>
+<script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.min.js" async></script>
 <script src="<?= base_url(); ?>assets/js/plugins/sweet-alert.js" async></script>
 <!-- Forms Validations Plugin -->
-<script src="<?= base_url(); ?>assets/js/plugins/jquery.validate.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/jquery.validate.min.js" async></script>
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-<script src="<?= base_url(); ?>assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/jquery.bootstrap-wizard.js" defer></script>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-selectpicker.js"></script>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
@@ -196,13 +147,13 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4"></script> -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-ubIYpWmP5j_UGlt6B4xzUsjASRsmeo0"></script> -->
 <!-- Chartist JS -->
-<script src="<?= base_url(); ?>assets/js/plugins/chartist.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/chartist.min.js" async></script>
 <!--  Notifications Plugin    -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-notify.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-notify.js" async></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript"></script>
+<script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript" async></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="<?= base_url(); ?>assets/js/plugins/simple.money.format.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/simple.money.format.js" async></script>
 <script>
     $(document).ready(function() {
         $().ready(function() {
