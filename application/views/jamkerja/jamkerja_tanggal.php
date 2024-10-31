@@ -182,16 +182,14 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <!-- <div class="row"> -->
-                        <p> Perhatikan hal-hal berikut :
+                            <!-- <p> Perhatikan hal-hal berikut :
                             </br> 1. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 6 Jam Kerja untuk shift 1.
                             </br> 2. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 8 Jam Kerja untuk shift 2.
                             </br> 3. Laporan Kerja Harian kamu akan otomatis ter-submit jika durasi sudah 7 Jam Kerja untuk shift 3.
                             </br> 4. Istirahat Siang hanya untuk aktivitas lembur, tidak untuk Laporan Kerja Harian.
-                            <!-- </div> -->
                             </br>
-                            </br>
-                            <a href="<?= base_url('jamkerja'); ?>" class="btn btn-reddit mb-2" role="button" aria-disabled="false">KEMBALI</a>
+                            </br> -->
+                        <a href="<?= base_url('jamkerja'); ?>" class="btn btn-reddit mb-2" role="button" aria-disabled="false">KEMBALI</a>
                     </div>
                 </div>
                 <!--  end card  -->
