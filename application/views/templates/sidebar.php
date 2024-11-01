@@ -8,7 +8,7 @@
       -->
       <div class="logo">
         <a href="#" class="simple-text logo-mini">
-            <img src="<?= base_url(); ?>assets/img/logo.png" style="width:28px; height:28px;"/>
+            <img data-src="<?= base_url(); ?>assets/img/logo.png" class="lazyload" style="width:28px; height:28px;"/>
         </a>
         <a href="#" class="simple-text logo-normal">
           R A I S A
@@ -17,7 +17,7 @@
       <div class="sidebar-wrapper">
         <div class="user">
           <div class="photo">
-            <img src="<?= base_url(); ?>assets/img/faces/<?= $karyawan['foto']; ?>" />
+            <img data-src="<?= base_url(); ?>assets/img/faces/<?= $karyawan['foto']; ?>"  class="lazyload" />
           </div>
           <div class="user-info">
             <a data-toggle="collapse" href="#collapseExample" class="username">

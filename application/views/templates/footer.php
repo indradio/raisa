@@ -105,11 +105,13 @@
     </div>
 </div>
 
+
 <!--   Core JS Files   -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/core/bootstrap-material-design.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
 <script src="<?= base_url(); ?>assets/js/plugins/perfect-scrollbar.jquery.min.js" async></script>
 <!-- Plugin for the momentJs  -->
 <script src="<?= base_url(); ?>assets/js/plugins/moment.min.js" async></script>
@@ -131,11 +133,11 @@
 <script src="<?= base_url(); ?>assets/js/plugins/jquery.dataTables.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/dataTables.js" async></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-tagsinput.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-tagsinput.js" defer></script>
 <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="<?= base_url(); ?>assets/js/plugins/jasny-bootstrap.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/jasny-bootstrap.min.js" defer></script>
 <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-<script src="<?= base_url(); ?>assets/js/plugins/fullcalendar.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/fullcalendar.min.js" async></script>
 <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
 <script src="<?= base_url(); ?>assets/js/plugins/jquery-jvectormap.js" defer></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
@@ -155,6 +157,7 @@
 <script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript" async></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="<?= base_url(); ?>assets/js/plugins/simple.money.format.js" async></script>
+
 <script>
     $(document).ready(function() {
         $().ready(function() {
