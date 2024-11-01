@@ -31,7 +31,7 @@
             <div class="card card-product">
               <div class="card-header card-header-image" data-header-animation="true">
                 <a href="#pablo">
-                  <img class="img" data-src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" class="lazyload">
+                  <img class="img" data-src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" class="lazyload" />
                 </a>
               </div>
               <div class="card-body">
@@ -151,7 +151,7 @@
                 <div class="carousel-inner">
                   <?php foreach ($informasi as $row) : ?>
                   <div class="carousel-item <?= $row->active; ?>">
-                    <img class="d-block w-100" data-src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" class="lazyload">
+                    <img class="d-block w-100 lazyload" data-src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" />
                   </div>
                   <?php endforeach; ?>
                 </div>
