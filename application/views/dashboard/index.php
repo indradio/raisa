@@ -31,7 +31,7 @@
             <div class="card card-product">
               <div class="card-header card-header-image" data-header-animation="true">
                 <a href="#pablo">
-                  <img class="img" data-src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" class="lazyload" />
+                  <img class="img lazyload" data-src="<?= base_url().'assets/img/info/'.$row->gambar_banner; ?>" />
                 </a>
               </div>
               <div class="card-body">
