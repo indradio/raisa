@@ -20,13 +20,13 @@ class Jamkerja extends CI_Controller
             $data['sidemenu'] = 'Jam Kerja';
             $data['sidesubmenu'] = 'Laporan Kerja Harian';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
-            $data['jamkerja'] = $this->jamkerja_model->get_WH_TODAY();
-            $data['aktivitas'] = $this->jamkerja_model->get_ACT_TODAY();
-            $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['project'] = $this->jamkerja_model->fetch_project();
+            // $data['jamkerja'] = $this->jamkerja_model->get_WH_TODAY();
+            // $data['aktivitas'] = $this->jamkerja_model->get_ACT_TODAY();
+            // $data['kategori'] = $this->jamkerja_model->fetch_kategori();
+            // $data['project'] = $this->jamkerja_model->fetch_project();
 
             // Aktifkan cache untuk 10 menit (600 detik)
-            $this->output->cache(10); // Durasi dalam menit
+            $this->output->cache(5); // Durasi dalam menit
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -136,11 +136,14 @@ class Jamkerja extends CI_Controller
         $data['sidesubmenu'] = 'Laporan Kerja Harian';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
     
-        $this->db->where('year(tglmulai)',$tahun);
-        $this->db->where('month(tglmulai)',$bulan);
-        $this->db->where('day(tglmulai)',$tanggal);
-        $this->db->where('npk',$this->session->userdata('npk'));
-        $jamkerja = $this->db->get('jamkerja')->row_array();
+        $jamkerja = $this->db
+            ->where('EXTRACT(YEAR FROM tglmulai) =', $tahun)
+            ->where('EXTRACT(MONTH FROM tglmulai) =', $bulan)
+            ->where('EXTRACT(DAY FROM tglmulai) =', $tanggal)
+            ->where('npk', $this->session->userdata('npk'))
+            ->get('jamkerja')
+            ->row_array();
+
 
         if (!empty($jamkerja['id'])){
         
@@ -150,10 +153,11 @@ class Jamkerja extends CI_Controller
             // $this->db->where('npk',$this->session->userdata('npk'));
             $data['jamkerja'] = $jamkerja;
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['project'] = $this->jamkerja_model->fetch_project();
+            $data['project'] = $this->db->where('status', 'OPEN')->or_where('status', 'TECO')->get('project')->result();
+            // $data['project'] = $this->jamkerja_model->fetch_project();
 
             // Aktifkan cache untuk 10 menit (600 detik)
-            $this->output->cache(10); // Durasi dalam menit
+            $this->output->cache(5); // Durasi dalam menit
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -720,10 +724,10 @@ class Jamkerja extends CI_Controller
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result();
+            $data['listproject'] = $this->db->where('status', 'OPEN')->or_where('status', 'TECO')->get('project')->result();
             
             // Aktifkan cache untuk 10 menit (600 detik)
-            $this->output->cache(10); // Durasi dalam menit
+            $this->output->cache(5); // Durasi dalam menit
         
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -737,10 +741,10 @@ class Jamkerja extends CI_Controller
             $data['jamkerja'] = $this->db->get_where('jamkerja', ['id' => $link_aktivitas])->row_array();
             $data['aktivitas'] = $this->db->get_where('aktivitas', ['link_aktivitas' => $link_aktivitas])->result_array();
             $data['kategori'] = $this->jamkerja_model->fetch_kategori();
-            $data['listproject'] = $this->db->get_where('project', ['status' => 'OPEN'])->result();
+            $data['listproject'] = $this->db->where('status', 'OPEN')->or_where('status', 'TECO')->get('project')->result();
             
             // Aktifkan cache untuk 10 menit (600 detik)
-            $this->output->cache(10); // Durasi dalam menit
+            $this->output->cache(5); // Durasi dalam menit
             
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
