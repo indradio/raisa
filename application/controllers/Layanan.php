@@ -290,9 +290,13 @@ class Layanan extends CI_Controller
                 'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                 'number' => $row['phone'],
                 'message' => "*VOTE KETUA BIPARTIT*". 
-                            "\r\n \r\nBapak-Bapak Ibu, sekedar menginformasikan untuk voting ketua bipartit Bapak Ibu akan bisa vote dan terus mengubah vote sampai Senin 23 Sept 2024 pukul 12.00.".
-                            "\r\nSuara yang akan diambil adalah suara akhir per waktu cut." .
-                            "\r\nUntuk informasi lebih lengkap dapat menghubungi pak suparmo.",
+                            "\r\n \r\nSemangat Pagi kak".$row['nama'].
+                            "\r\nYuk hadir di acara *Employee Engagement Survey & Condusive Working Climate Survey* untuk menyuarakan ide demi lingkungan kerja yang lebih baik! 🗣️." .
+                            "\r\n \r\n📅 13 November 2024".
+                            "\r\n📍 Ruang Training".
+                            "\r\n🕗 Batch I: 08.00 - 10.00 WIB".
+                            "\r\n🕗 Batch II: 13.30 - 15.00 WIB".
+                            "\r\n \r\nHadir dan dapatkan *souvenir menarik!* Sampai jumpa! 🎁😊",
                 'date' => date('Y-m-d'),
                 'time' => date('H:i:s', $nowtime)
             ]];
