@@ -289,8 +289,8 @@ class Layanan extends CI_Controller
                 'form_params' => [
                 'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                 'number' => $row['phone'],
-                'message' => "*VOTE KETUA BIPARTIT*". 
-                            "\r\n \r\nSemangat Pagi kak".$row['nama'].
+                'message' => "*Employee Engagement Survey & Condusive Working Climate Survey*". 
+                            "\r\n \r\nSemangat Pagi kak ".$row['nama'].
                             "\r\nYuk hadir di acara *Employee Engagement Survey & Condusive Working Climate Survey* untuk menyuarakan ide demi lingkungan kerja yang lebih baik! 🗣️." .
                             "\r\n \r\n📅 13 November 2024".
                             "\r\n📍 Ruang Training".
