@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class Reservasi extends CI_Controller
 {
@@ -699,71 +701,26 @@ class Reservasi extends CI_Controller
                 }
             } else {
 
-                //Kirim pesan via Whatsapp
-                $curl = curl_init();
-
-                $message = [
-                "messageType"   => "text",
-                "to"            => $atasan1['phone'],
-                "body"          => " . $id . - PERSETUJUAN PERJALANAN DINAS" .
-                "\r\n \r\nPeserta : " . $reservasi_temp['anggota'] . "" .
-                "\r\nTujuan : " . $reservasi_temp['tujuan'] . "" .
-                "\r\nKeperluan : " . $reservasi_temp['keperluan'] . "" .
-                "\r\nBerangkat : " . date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])) . " _estimasi_" .
-                "\r\nKembali : " . date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])) . " _estimasi_" .
-                "\r\nEstimasi Biaya : " . $reservasi_temp['total'] . 
-                "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda.",
-                "file"          => "",
-                "delay"         => 30,
-                "schedule"      => 1665408510000
+                $client = new \GuzzleHttp\Client();
+                $options = [
+                    'form_params' => [
+                        'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                        'number' => $atasan1['phone'],
+                        'message' => "*PENGAJUAN PERJALANAN DINAS*" .
+                                    "\r\n \r\nNama : *" . $reservasi_temp['nama'] . "*" .
+                                    "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
+                                    "\r\nTujuan : *" . $reservasi_temp['tujuan'] . "*" .
+                                    "\r\nKeperluan : *" . $reservasi_temp['keperluan'] . "*".
+                                    "\r\nBerangkat : *" . date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])) . "* _estimasi_" .
+                                    "\r\nKembali : *" . date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])) . "* _estimasi_" .
+                                    "\r\nKendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "* )",
+                        'date' => date('Y-m-d'),
+                        'time' => date(' H:i:s')
+                    ]
                 ];
-                
-                curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.starsender.online/api/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($message),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type:application/json',
-                    'Authorization: 610c04c9-a7e1-4b7e-918c-e9847b643e47'
-                ),
-                ));
-                
-                $response = curl_exec($curl);
-                curl_close($curl);
-
-                //Kirim Notifikasi ke Atasan1
-                // $client = new \GuzzleHttp\Client();
-                // $response = $client->post(
-                //     'https://region01.krmpesan.com/api/v2/message/send-text',
-                //     [
-                //         'headers' => [
-                //             'Content-Type' => 'application/json',
-                //             'Accept' => 'application/json',
-                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                //         ],
-                //         'json' => [
-                //             'phone' => $atasan1['phone'],
-                //             'message' =>"*PENGAJUAN PERJALANAN DINAS ". $reservasi_temp['jenis_perjalanan'] . "*".
-                //             "\r\n \r\nNo. Reservasi : *" . $id . "*" .
-                //             "\r\nNama : *" . $reservasi_temp['nama'] . "*" .
-                //             "\r\nPeserta : *" . $reservasi_temp['anggota'] . "*" .
-                //             "\r\nTujuan : *" . $reservasi_temp['tujuan'] . "*" .
-                //             "\r\nKeperluan : *" . $reservasi_temp['keperluan'] . "*" .
-                //             "\r\nBerangkat : *" . date("d M Y", strtotime($reservasi_temp['tglberangkat'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamberangkat'])) . "* _estimasi_" .
-                //             "\r\nKembali : *" . date("d M Y", strtotime($reservasi_temp['tglkembali'])) . ' - ' . date("H:i", strtotime($reservasi_temp['jamkembali'])) . "* _estimasi_" .
-                //             "\r\nKendaraan : *" . $reservasi_temp['nopol'] . "* ( *" . $reservasi_temp['kepemilikan'] . "* )" .
-                //             "\r\nEstimasi Biaya : *" . $reservasi_temp['total'] . "*" .
-                //             "\r\n \r\nPerjalanan ini membutuhkan persetujuan dari anda. Untuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                //         ],
-                //     ]
-                // );
-                // $body = $response->getBody();
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $res = $client->sendAsync($request, $options)->wait();
+                echo $res->getBody();
             }
 
             //delete temporary
