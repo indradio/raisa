@@ -30,8 +30,8 @@
       
       $pdf->Cell(44,5,'HARI / TGL              :   '. date('d-m-Y', strtotime($lembur['tglmulai'])),1,0,1);
       $pdf->SetFont('Arial','',6);
-      $pdf->Cell(78,10,'RENCANA LEMBUR',1,0,'C',1);
-      $pdf->Cell(78,10,'LAPORAN LEMBUR',1,0,'C',1);
+      $pdf->Cell(78,10,"RENCANA LEMBUR | Tanggal Pengajuan : ".date('d M Y H:i', strtotime($lembur['tglpengajuan_rencana'])),1,0,'C',1);      
+      $pdf->Cell(78,10,'LAPORAN LEMBUR | Tanggal Pengajuan : '.date('d M Y H:i', strtotime($lembur['tglpengajuan_realisasi'])),1,0,'C',1);
       $pdf->Cell(0,5,'',0,1,0);
 
       $pdf->SetFont('Arial','B',6);
@@ -62,10 +62,6 @@
       $pdf->Cell(32,5, date('H:i', strtotime($lembur['tglselesai'])),1,0,'C',1);
       $pdf->Cell(14,5, $lembur['durasi'].' JAM',1,1,'C',0);
       $pdf->Cell(56,5,'',0,1,0);
-
-      // $pdf->Ln(1);
-      // $pdf->Cell(93, 5, 'Tanggal Pengajuan Rencana : '.date('d M Y H:i', strtotime($lembur['tglpengajuan_rencana'])), 0,'C', 0);
-      // $pdf->Cell(78, 5, 'Tanggal Pengajuan Realisasi : '.date('d M Y H:i', strtotime($lembur['tglpengajuan_realisasi'])), 0,'C', 0);
 
       $pdf->Ln(4);
       $pdf->SetFont('Arial','B',5);
