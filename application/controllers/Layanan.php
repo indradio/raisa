@@ -302,7 +302,7 @@ class Layanan extends CI_Controller
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
                 ]];
-            $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
+            $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
             $res = $client->sendAsync($request, $options)->wait();
             echo $res->getBody();
 
