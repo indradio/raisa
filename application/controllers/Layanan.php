@@ -350,6 +350,25 @@ class Layanan extends CI_Controller
                 // );
                 // $body = $response->getBody();
 
+                //Notifikasi ke USER
+
+                $client = new \GuzzleHttp\Client();
+                $nowtime = time(); // Waktu awal saat ini
+                $options = [
+                'form_params' => [
+                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                    'number' => $row['phone'],
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
+                    'caption' => 'berisi caption yang akan dikirim',
+                    'date' => date('Y-m-d'),
+                    'time' => date('H:i:s', $nowtime)
+                ]];
+            $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
+            $res = $client->sendAsync($request, $options)->wait();
+            echo $res->getBody();
+
+            $nowtime = strtotime('+5 second', $nowtime);
+
         endforeach;
         redirect('layanan/broadcast');
     }

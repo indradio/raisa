@@ -629,8 +629,10 @@ class Asset extends CI_Controller
 
             if ($this->session->userdata('inisial')=='IFA' OR $this->session->userdata('inisial')=='IDA'){
                             $this->db->where('opname_status <', 2);
+                            $this->db->group_start(); // Mulai grup kondisi OR
                             $this->db->where('npk', '0282');
-                            $this->db->where('npk', '0081');
+                            $this->db->or_where('npk', '0081');
+                            $this->db->group_end(); // Akhiri grup kondisi OR
                 $asset =    $this->db->get('asset')->result();
 
             }elseif ($this->session->userdata('inisial')=='MBB'){
