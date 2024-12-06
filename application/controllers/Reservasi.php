@@ -21,6 +21,7 @@ class Reservasi extends CI_Controller
         $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
         $data['reservasi'] = $this->db
+                        ->order_by('tglberangkat', 'DESC') 
                         ->get_where('reservasi', ['npk' => $this->session->userdata('npk')], 100)
                         ->result_array();
 
