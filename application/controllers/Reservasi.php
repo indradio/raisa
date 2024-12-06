@@ -20,7 +20,10 @@ class Reservasi extends CI_Controller
         $data['sidemenu'] = 'Perjalanan Dinas';
         $data['sidesubmenu'] = 'Reservasi';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        $data['reservasi'] = $this->db->get_where('reservasi', ['npk' =>  $this->session->userdata('npk')])->result_array();
+        $data['reservasi'] = $this->db
+                        ->get_where('reservasi', ['npk' => $this->session->userdata('npk')], 100)
+                        ->result_array();
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
