@@ -201,7 +201,7 @@
           </div>
         </div> -->
 
-    <?php if ($this->session->userdata('posisi_id') > 3 ){ ?>
+    <?php if ($this->session->userdata('posisi_id') > 0 ){ ?>
     <div class="col-md-4">
         <div class="card">
           <div class="card-body">
