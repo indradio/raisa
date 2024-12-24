@@ -12,7 +12,7 @@
                         <ul class="nav nav-pills nav-pills-info" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#link1" role="tablist">
-                                    Calendar of Event 2024
+                                    Calendar of Event 2025
                                 </a>
                             </li>
                             <!-- <li class="nav-item">
@@ -29,10 +29,10 @@
                         <div class="tab-content tab-space">
                             <div class="tab-pane active" id="link1">
                             <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="https://drive.google.com/file/d/1PI0y7_8fMvzSELqw2149tnX-QFER9Yu_/preview"></iframe>
+                                    <iframe class="embed-responsive-item" src="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/view"></iframe>
                                 </div>
                                 </br>
-                                <a href="https://drive.google.com/file/d/1PI0y7_8fMvzSELqw2149tnX-QFER9Yu_/view?usp=sharing" target="_blank">Klik Disini untuk download</a>
+                                <a href="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/view?usp=sharing" target="_blank">Klik Disini untuk download</a>
                             </div>
                             <!-- <div class="tab-pane" id="link2">
                                 <div class="embed-responsive embed-responsive-4by3">
