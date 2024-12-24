@@ -29,7 +29,7 @@
                         <div class="tab-content tab-space">
                             <div class="tab-pane active" id="link1">
                             <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" src="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/view"></iframe>
+                                    <iframe src="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/preview" width="640" height="480" allow="autoplay"></iframe>
                                 </div>
                                 </br>
                                 <a href="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/view?usp=sharing" target="_blank">Klik Disini untuk download</a>
