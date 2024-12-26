@@ -283,74 +283,32 @@ class Layanan extends CI_Controller
 
                 //Notifikasi ke USER
 
-                $client = new \GuzzleHttp\Client();
-                $nowtime = time(); // Waktu awal saat ini
-                $options = [
-                'form_params' => [
-                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
-                    'number' => $row['phone'],
-                    // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
-                    'message' => "*SAVE THE DATE! Employee Engagement Survey & Condusive Working Climate Survey*". 
-                                "\r\n \r\nSemangat Pagi kak ".$row['nama'].
-                                "\r\nYuk hadir di acara *Employee Engagement Survey & Condusive Working Climate Survey* untuk menyuarakan ide demi lingkungan kerja yang lebih baik! 🗣️." .
-                                "\r\n \r\n📅 13 November 2024".
-                                "\r\n📍 Ruang Training".
-                                "\r\n🕗 Batch I: 08.00 - 10.00 WIB".
-                                "\r\n🕗 Batch II: 13.30 - 15.00 WIB".
-                                "\r\n \r\nHadir dan dapatkan *souvenir menarik!* Sampai jumpa! 🎁😊".
-                                "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
-                    'date' => date('Y-m-d'),
-                    'time' => date('H:i:s', $nowtime)
-                ]];
-            $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
-            $res = $client->sendAsync($request, $options)->wait();
-            echo $res->getBody();
-
-            $nowtime = strtotime('+5 second', $nowtime);
-
-        // endforeach;
-
-
                 // $client = new \GuzzleHttp\Client();
-                // $response = $client->post(
-                //     'https://region01.krmpesan.com/api/v2/message/send-text',
-                //     [
-                //         'headers' => [
-                //             'Content-Type' => 'application/json',
-                //             'Accept' => 'application/json',
-                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                //         ],
-                //         // 'json' => [
-                //         //     'phone' => $row['phone'],
-                //         //     'message' => "*AOP CORE VALUE*" .
-                //         //     "\r\n \r\n*KERJASAMA*" .
-                //         //     "\r\n*Menghormati dan mensukseskan keputusan yang telah diambil*" .
-                //         //     "\r\n \r\n#AkuPrima #" . $row['inisial']."PastiBisa"
-                //         // ],
-                //         'json' => [
-                //             'phone' => $row['phone'],
-                //             'message' => "*[INFO] GO LIVE SUNFISH 1 JUNI 2024*" .
-                //             "\r\n \r\nSemangat pagi *" . $row['nama'] . "*," .
-                //             "\r\nBersama ini menginformasikan bahwa aplikasi *SUNFISH akan Go Live pada tanggal 01 Juni 2024 untuk modul Personnel Administration (PA), Claim & Reimbursement*, oleh karena itu bagi karyawan yang melakukan transaksi pada modul tersebut akan otomatis terupdate ke sistem.".
-                //             "\r\n \r\nApabila ada terdapat kendala dapat menghubungi HR & Change Agent dimasing-masing section." .
-                //             "\r\nHormat kami," .
-                //             "\r\nHR"
-                //         ],
-                //         // 'json' => [
-                //         //     'phone' => $row['phone'],
-                //         //     'message' => "*Akses Internet Sudah NORMAL Kembali*" .
-                //         //     "\r\n \r\nSaat ini Akses Internet sudah normal kembali dan bisa kamu gunakan." .
-                //         //     "\r\nHubungi IT Care jika kamu masih mengalami kendala." .
-                //         //     "\r\n \r\nMohon maaf atas ketidaknyamanan yang terjadi." .
-                //         //     "\r\nHormat kami," .
-                //         //     "\r\nIT" .
-                //         //     "\r\n#Winteq #". $row['inisial']
-                //         // ],
-                //     ]
-                // );
-                // $body = $response->getBody();
+                // $nowtime = time(); // Waktu awal saat ini
+                // $options = [
+                // 'form_params' => [
+                //     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                //     'number' => $row['phone'],
+                //     // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
+                //     'message' => "*SAVE THE DATE! Employee Engagement Survey & Condusive Working Climate Survey*". 
+                //                 "\r\n \r\nSemangat Pagi kak ".$row['nama'].
+                //                 "\r\nYuk hadir di acara *Employee Engagement Survey & Condusive Working Climate Survey* untuk menyuarakan ide demi lingkungan kerja yang lebih baik! 🗣️." .
+                //                 "\r\n \r\n📅 13 November 2024".
+                //                 "\r\n📍 Ruang Training".
+                //                 "\r\n🕗 Batch I: 08.00 - 10.00 WIB".
+                //                 "\r\n🕗 Batch II: 13.30 - 15.00 WIB".
+                //                 "\r\n \r\nHadir dan dapatkan *souvenir menarik!* Sampai jumpa! 🎁😊".
+                //                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
+                //     'date' => date('Y-m-d'),
+                //     'time' => date('H:i:s', $nowtime)
+                // ]];
+                // $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                // $res = $client->sendAsync($request, $options)->wait();
+                // echo $res->getBody();
 
-                //Notifikasi ke USER
+                // $nowtime = strtotime('+5 second', $nowtime);
+
+
 
                 $client = new \GuzzleHttp\Client();
                 $nowtime = time(); // Waktu awal saat ini
@@ -358,16 +316,34 @@ class Layanan extends CI_Controller
                 'form_params' => [
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
-                    'caption' => 'berisi caption yang akan dikirim',
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/info_it.jpg',
+                    'caption' => 'Vacation Mode: Protection ON! #BolehHealing #JanganHilang',
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
                 ]];
-            $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
-            $res = $client->sendAsync($request, $options)->wait();
-            echo $res->getBody();
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
+                $res = $client->sendAsync($request, $options)->wait();
+                echo $res->getBody();
 
-            $nowtime = strtotime('+5 second', $nowtime);
+                $nowtime = strtotime('+5 second', $nowtime);
+
+
+            // $client = new \GuzzleHttp\Client();
+            // $nowtime = time(); // Waktu awal saat ini
+            // $options = [
+            // 'form_params' => [
+            // 'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+            // 'number' => $row['phone'],
+            // 'file' => 'berisi URL file yang akan dikirim contoh: "https://drive.usercontent.google.com/u/0/uc?id=1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0&export=download"',
+            // 'caption' => 'berisi caption yang akan dikirim',
+            // 'date' => date('Y-m-d'),
+            // 'time' => date('H:i:s', $nowtime)
+            // ]];
+
+            // $request = new Request('POST', 'https://app.ruangwa.id/api/send_document');
+            // $res = $client->sendAsync($request, $options)->wait();
+            // echo $res->getBody();
+
 
         endforeach;
         redirect('layanan/broadcast');
