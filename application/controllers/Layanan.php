@@ -316,8 +316,8 @@ class Layanan extends CI_Controller
                 'form_params' => [
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/info_it.jpg',
-                    'caption' => 'Vacation Mode: Protection ON! #BolehHealing #JanganHilang',
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/jadwal.jpg',
+                    'caption' => 'Perubahan jam kerja karyawan 2025',
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
                 ]];
