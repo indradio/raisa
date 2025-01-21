@@ -283,49 +283,49 @@ class Layanan extends CI_Controller
 
                 //Notifikasi ke USER
 
-                // $client = new \GuzzleHttp\Client();
-                // $nowtime = time(); // Waktu awal saat ini
-                // $options = [
-                // 'form_params' => [
-                //     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
-                //     'number' => $row['phone'],
-                //     // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
-                //     'message' => "*SAVE THE DATE! Employee Engagement Survey & Condusive Working Climate Survey*". 
-                //                 "\r\n \r\nSemangat Pagi kak ".$row['nama'].
-                //                 "\r\nYuk hadir di acara *Employee Engagement Survey & Condusive Working Climate Survey* untuk menyuarakan ide demi lingkungan kerja yang lebih baik! 🗣️." .
-                //                 "\r\n \r\n📅 13 November 2024".
-                //                 "\r\n📍 Ruang Training".
-                //                 "\r\n🕗 Batch I: 08.00 - 10.00 WIB".
-                //                 "\r\n🕗 Batch II: 13.30 - 15.00 WIB".
-                //                 "\r\n \r\nHadir dan dapatkan *souvenir menarik!* Sampai jumpa! 🎁😊".
-                //                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
-                //     'date' => date('Y-m-d'),
-                //     'time' => date('H:i:s', $nowtime)
-                // ]];
-                // $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
-                // $res = $client->sendAsync($request, $options)->wait();
-                // echo $res->getBody();
-
-                // $nowtime = strtotime('+5 second', $nowtime);
-
-
-
                 $client = new \GuzzleHttp\Client();
                 $nowtime = time(); // Waktu awal saat ini
                 $options = [
                 'form_params' => [
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/jadwal.jpg',
-                    'caption' => 'Perubahan jam kerja karyawan 2025',
+                    // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
+                    'message' => "*SAVE THE DATE! FAREWELL PARTY PAK SUPARMO*". 
+                                "\r\n \r\nSemangat Pagi kak ".$row['nama'].
+                                "\r\nMenjelang usainya masa bakti di PT Astra Otoparts Tbk Divisi WINTEQ.".
+                                "\r\nMaka Pak Suparmo mengundang seluruh insan Winteq (karyawan, Non Karyawan, magang dan PKL) agar dapat menghadiri acara perpisahan yang dilaksanakan pada:" .
+                                "\r\n \r\n📅 Kamis, 23 Januari 2025".
+                                "\r\n🕗 15.30 - Selesai".
+                                "\r\n📍 Ruang Kantin".
+                                "\r\n \r\nHadir dan bagikan kenangan terbaik kamu. Sampai jumpa! 🎁😊".
+                                "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
                 ]];
-                $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
                 $res = $client->sendAsync($request, $options)->wait();
                 echo $res->getBody();
 
                 $nowtime = strtotime('+5 second', $nowtime);
+
+
+
+                // $client = new \GuzzleHttp\Client();
+                // $nowtime = time(); // Waktu awal saat ini
+                // $options = [
+                // 'form_params' => [
+                //     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                //     'number' => $row['phone'],
+                //     'file' => 'https://raisa.winteq-astra.com/assets/img/info/jadwal.jpg',
+                //     'caption' => 'Perubahan jam kerja karyawan 2025',
+                //     'date' => date('Y-m-d'),
+                //     'time' => date('H:i:s', $nowtime)
+                // ]];
+                // $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
+                // $res = $client->sendAsync($request, $options)->wait();
+                // echo $res->getBody();
+
+                // $nowtime = strtotime('+5 second', $nowtime);
 
 
             // $client = new \GuzzleHttp\Client();
