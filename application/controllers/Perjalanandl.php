@@ -1829,6 +1829,7 @@ class Perjalanandl extends CI_Controller
             if (($this->session->userdata('sect_id')=='211' 
                     or $this->session->userdata('npk')=='0075' 
                     or $this->session->userdata('npk')=='0049' 
+                    or $this->session->userdata('npk')=='0074' 
                     or $this->session->userdata('npk')=='1111') 
                     and $perjalanan['status']=='5')
             {
