@@ -717,7 +717,7 @@ class Jamkerja extends CI_Controller
 
     public function detail($link_aktivitas)
     {
-        if ($this->session->userdata('npk')=='0160'){
+        if ($this->session->userdata('npk')=='0209'){
             $data['sidemenu'] = 'PPIC';
             $data['sidesubmenu'] = 'Persetujuan Jam Kerja';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();

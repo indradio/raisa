@@ -144,7 +144,7 @@
                             <td><?= $row['progres_hasil']; ?></td>
                             <td><?= $row['durasi']; ?></td>
                             <td>
-                            <?php if ($this->session->userdata('npk')=='0160'){
+                            <?php if ($this->session->userdata('npk')=='0209'){
                               if ($row['copro']){
                                 echo '<a href="#" class="btn btn-sm btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#ubahCopro" data-id="'. $row['id'] .'">UBAH COPRO</a>';
                               }else{
