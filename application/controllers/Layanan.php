@@ -288,7 +288,7 @@ class Layanan extends CI_Controller
                 'form_params' => [
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/info/spt2025.jpg',
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/spt2025.jpg',
                     'caption' => '',
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
@@ -307,7 +307,7 @@ class Layanan extends CI_Controller
                     'number' => $row['phone'],
                     // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
                     'message' => "*Ayo Segera Laporkan Pajak Anda - Batas Waktu 31 Maret*". 
-                                "\r\n \r\nSemangat Pagi kak ".$row['nama'].
+                                "\r\n \r\nSemangat Pagi ".$row['nama'].
                                 "\r\nIngat, batas waktu untuk melaporkan Pajak Tahunan Anda adalah *31 Maret!* Pastikan Anda melaporkan pajak tepat waktu agar terhindar dari denda dan masalah lainnya.".
                                 "\r\nSiapkan Surat Pemberitahuan (SPT) dan dokumen pendukung lainnya. Jika Anda memerlukan bantuan atau memiliki pertanyaan, hubungi HR atau kunjungi kantor pajak terdekat." .
                                 "\r\n \r\nJangan menunggu hingga detik terakhir, pastikan Anda melaporkan pajak Anda sebelum 31 Maret!".
