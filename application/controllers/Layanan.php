@@ -289,24 +289,7 @@ class Layanan extends CI_Controller
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
                     'file' => 'https://raisa.winteq-astra.com/assets/img/spt2025.jpg',
-                    'caption' => '',
-                    'date' => date('Y-m-d'),
-                    'time' => date('H:i:s', $nowtime)
-                ]];
-                $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
-                $res = $client->sendAsync($request, $options)->wait();
-                echo $res->getBody();
-
-                // $nowtime = strtotime('+5 second', $nowtime);
-
-                $client = new \GuzzleHttp\Client();
-                $nowtime = time(); // Waktu awal saat ini
-                $options = [
-                'form_params' => [
-                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
-                    'number' => $row['phone'],
-                    // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
-                    'message' => "*Ayo Segera Laporkan Pajak Anda - Batas Waktu 31 Maret*". 
+                    'caption' => "*Ayo Segera Laporkan Pajak Anda - Batas Waktu 31 Maret*". 
                                 "\r\n \r\nSemangat Pagi ".$row['nama'].
                                 "\r\nIngat, batas waktu untuk melaporkan Pajak Tahunan Anda adalah *31 Maret!* Pastikan Anda melaporkan pajak tepat waktu agar terhindar dari denda dan masalah lainnya.".
                                 "\r\nSiapkan Surat Pemberitahuan (SPT) dan dokumen pendukung lainnya. Jika Anda memerlukan bantuan atau memiliki pertanyaan, hubungi HR atau kunjungi kantor pajak terdekat." .
@@ -315,11 +298,33 @@ class Layanan extends CI_Controller
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
                 ]];
-                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
                 $res = $client->sendAsync($request, $options)->wait();
                 echo $res->getBody();
 
                 $nowtime = strtotime('+5 second', $nowtime);
+
+                // $client = new \GuzzleHttp\Client();
+                // $nowtime = time(); // Waktu awal saat ini
+                // $options = [
+                // 'form_params' => [
+                //     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                //     'number' => $row['phone'],
+                //     // 'file' => 'https://raisa.winteq-astra.com/assets/img/info/ees-2.jpg',
+                //     'message' => "*Ayo Segera Laporkan Pajak Anda - Batas Waktu 31 Maret*". 
+                //                 "\r\n \r\nSemangat Pagi ".$row['nama'].
+                //                 "\r\nIngat, batas waktu untuk melaporkan Pajak Tahunan Anda adalah *31 Maret!* Pastikan Anda melaporkan pajak tepat waktu agar terhindar dari denda dan masalah lainnya.".
+                //                 "\r\nSiapkan Surat Pemberitahuan (SPT) dan dokumen pendukung lainnya. Jika Anda memerlukan bantuan atau memiliki pertanyaan, hubungi HR atau kunjungi kantor pajak terdekat." .
+                //                 "\r\n \r\nJangan menunggu hingga detik terakhir, pastikan Anda melaporkan pajak Anda sebelum 31 Maret!".
+                //                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
+                //     'date' => date('Y-m-d'),
+                //     'time' => date('H:i:s', $nowtime)
+                // ]];
+                // $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                // $res = $client->sendAsync($request, $options)->wait();
+                // echo $res->getBody();
+
+                // $nowtime = strtotime('+5 second', $nowtime);
 
 
             // $client = new \GuzzleHttp\Client();
