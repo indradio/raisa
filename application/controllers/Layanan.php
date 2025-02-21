@@ -288,12 +288,10 @@ class Layanan extends CI_Controller
                 'form_params' => [
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/spt2025.jpg',
-                    'caption' => "*Ayo Segera Laporkan Pajak Anda - Batas Waktu 31 Maret*". 
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/hut_astra.jpg',
+                    'caption' => "*NOBAR HUT ASTRA ke 68*". 
                                 "\r\n \r\nSemangat Pagi ".$row['nama'].
-                                "\r\nIngat, batas waktu untuk melaporkan Pajak Tahunan Anda adalah *31 Maret!* Pastikan Anda melaporkan pajak tepat waktu agar terhindar dari denda dan masalah lainnya.".
-                                "\r\nSiapkan Surat Pemberitahuan (SPT) dan dokumen pendukung lainnya. Jika Anda memerlukan bantuan atau memiliki pertanyaan, hubungi HR atau kunjungi kantor pajak terdekat." .
-                                "\r\n \r\nJangan menunggu hingga detik terakhir, pastikan Anda melaporkan pajak Anda sebelum 31 Maret!".
+                                "\r\nDalam rangka memperingati HUT ke 68 Astra, bersama ini mengundang rekan rekan untuk turut mengikuti rangkaian acara nya yang dilaksanakan secara hybrid, melalui *nonton bareng* di ruang kantin WINTEQ pagi ini dari jam 09.00 sd 10.30.".
                                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
