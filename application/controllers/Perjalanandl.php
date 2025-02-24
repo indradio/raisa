@@ -2007,15 +2007,13 @@ class Perjalanandl extends CI_Controller
             $tglawal = date('Y-m-d 00:00:00');
             $tglakhir = date('Y-m-d 23:59:59');
             $this->db->where('payment_at',$tglawal);
-            $this->db->where('status', '9');
-            $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
+            $data['perjalanan'] = $this->db->get('view_report_payment_perjalanan')->result_array();
         }else{
             $tglawal = date('Y-m-d 00:00:00', strtotime($this->input->post('tglawal')));
             $tglakhir = date('Y-m-d 23:59:59', strtotime($this->input->post('tglakhir')));
             $this->db->where('payment_at >=',$tglawal);
             $this->db->where('payment_at <=',$tglakhir);
-            $this->db->where('status', '9');
-            $data['perjalanan'] = $this->db->get('perjalanan')->result_array();
+            $data['perjalanan'] = $this->db->get('view_report_payment_perjalanan')->result_array();
         }
         $data['tglawal'] = $tglawal;
         $data['tglakhir'] = $tglakhir;

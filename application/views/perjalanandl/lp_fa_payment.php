@@ -41,17 +41,20 @@
                                         <th>Nomor</th>
                                         <th>Jenis</th>
                                         <th>Keberangkatan</th>
-                                        <th>Tujuan</th>
                                         <th>Peserta</th>
                                         <th>e-Wallet</th>
-                                        <th>Tunjangan</th>
+                                        <th>uangsaku</th>
+                                        <th>insentif</th>
+                                        <th>pagi</th>
+                                        <th>siang</th>
+                                        <th>malam</th>
+                                        <th>Total Tunjangan</th>
                                         <th>Taksi/Pribadi</th>
                                         <th>BBM</th>
                                         <th>TOL</th>
                                         <th>Lainnya</th>
-                                        <th>Total_Biaya</th>
-                                        <th>Approval</th>
-                                        <th>Verifikasi</th>
+                                        <th>Total Perjalanan</th>
+                                        <th>Total Dibayarkan</th>
                                         <th>Payment</th>
                                         <th>Status</th>
                                         <th>Npk</th>
@@ -59,44 +62,34 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($perjalanan as $p) : 
-                                        $reservasi = $this->db->get_where('reservasi', ['id' => $p['reservasi_id']])->row_array();
-                                        $p_peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $p['id']])->result_array();
-                                        foreach ($p_peserta as $pp) : 
-                                            $peserta = $this->db->get_where('karyawan', ['npk' => $pp['npk']])->row_array();
-                                            ?>
+                                    foreach ($perjalanan as $p) : ?>
                                         <tr>
-                                            <td><?= $p['id']; ?></td>
+                                            <td><?= $p['perjalanan_id']; ?></td>
                                             <td><?= $p['jenis_perjalanan']; ?></td>
-                                            <td><?= date("d-m-Y", strtotime($p['tglberangkat'])).' '.date("H:i", strtotime($p['jamberangkat']));; ?></td>
-                                            <td><?= $p['tujuan']; ?></td>
-                                            <td><?= $pp['karyawan_nama']; ?></td>
-                                            <td><?= $pp['ewallet']; ?></td>
-                                            <td><?= number_format($pp['total'], 0, '.', ','); ?></td>
-                                            <?php if ($p['pic_perjalanan']==$pp['karyawan_inisial']){
-                                                echo '<td>'. number_format($p['taksi'], 0, '.', ','),'</td>';
-                                                echo '<td>'. number_format($p['bbm'], 0, '.', ','),'</td>';
-                                                echo '<td>'. number_format($p['tol'], 0, '.', ','),'</td>';
-                                                echo '<td>'. number_format($p['parkir'], 0, '.', ','),'</td>';
-                                            } else {
-                                                echo '<td>0</td>';
-                                                echo '<td>0</td>';
-                                                echo '<td>0</td>';
-                                                echo '<td>0</td>';
-                                            }?>
-                                            <td><?= number_format($pp['bayar'], 0, '.', ','); ?></td>
-                                            <td><?= substr($reservasi['atasan1'], -3).' - '.date("d-m-Y H:i", strtotime($reservasi['tgl_atasan1'])); ?></td>
-                                            <td><?= $p['penyelesaian_by'].' - '.date("d-m-Y H:i", strtotime($p['penyelesaian_at'])); ?></td>
-                                            <?php if ($pp['payment_by']){
-                                                echo '<td>'.$pp['payment_by'].' - '.date("d-m-Y H:i", strtotime($pp['payment_at'])).'</td>';
+                                            <td><?= date("d-m-Y", strtotime($p['tglberangkat'])); ?></td>
+                                            <td><?= $p['karyawan_nama']; ?></td>
+                                            <td><?= $p['ewallet']; ?></td>
+                                            <td><?= number_format($p['uang_saku'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['insentif_pagi'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['um_pagi'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['um_siang'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['um_malam'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['tunjangan_perjalanan'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['taksi'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['bbm'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['tol'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['lainnya'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['biaya_perjalanan'], 0, '.', ','); ?></td>
+                                            <td><?= number_format($p['total_yg_dibayarkan'], 0, '.', ','); ?></td>
+                                            <?php if ($p['payment_by']){
+                                                echo '<td>'.$p['payment_by'].' - '.date("d-m-Y H:i", strtotime($p['payment_at'])).'</td>';
                                             } else {
                                                 echo '<td>-</td>';
                                             }?>
-                                            <td><?= $pp['status_pembayaran']; ?></td>
-                                            <td><?= $peserta['npk']; ?></td>
+                                            <td><?= $p['status_pembayaran']; ?></td>
+                                            <td><?= $p['npk']; ?></td>
                                         </tr>
-                                    <?php endforeach; 
-                                endforeach; ?>
+                                    <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -110,10 +103,13 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th>Total Biaya</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -177,7 +173,7 @@
                 endRender: function ( rows, group ) {
                     var avg = rows
                         .data()
-                        .pluck(11)
+                        .pluck(16)
                         .reduce( function (a, b) {
                             return a + b.replace(/[^\d]/g, '')*1;
                         }, 0);
@@ -200,7 +196,7 @@
     
                 // Total over all pages
                 total = api
-                    .column( 11 )
+                    .column( 16 )
                     .data()
                     .reduce( function (a, b) {
                         return intVal(a) + intVal(b);
@@ -218,7 +214,7 @@
                 }
 
                 // Update footer
-                $( api.column( 11 ).footer() ).html(
+                $( api.column( 16 ).footer() ).html(
                     'Rp '+ rupiah
                 );
             }
