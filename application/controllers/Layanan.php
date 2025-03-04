@@ -288,7 +288,7 @@ class Layanan extends CI_Controller
                 'form_params' => [
                     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/kajian.png',
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/Kajian.jpg',
                     'caption' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
                                 "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
                                 "\r\nSemangat Pagi ".$row['nama'].
