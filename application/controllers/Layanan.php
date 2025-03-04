@@ -292,14 +292,14 @@ class Layanan extends CI_Controller
                     'caption' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
                                 "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
                                 "\r\nSemangat Pagi ".$row['nama'].
-                                "\r\nDi Bulan Ramadhan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadhan yg akan dilaksanakan pada:".
+                                "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
                                 "\r\n \r\n📅Hari: Selasa, 4 Maret 2025".
                                 "\r\n 🕔Jam : *Ba'da Dzuhur* ".
-                                "\r\n 🏡 Lokasi : *Masjid Winteq*".
-                                "\r\n 📝Tema :  *Keutamaan puasa Ramadhan*".
-                                "\r\n 🔊 Narasumber : *Ust. Rudi Safaat*".
-                                "\r\n \r\nMari maksimalkan Ramadhan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq. ",
-                                "\r\nDKM Masjid Winteq ",
+                                "\r\n 🏡Lokasi : *Masjid Winteq*".
+                                "\r\n 📝Tema :  *Keutamaan puasa Ramadan*".
+                                "\r\n 🔊Narasumber : *Ust. Rudi Safaat*".
+                                "\r\n \r\nMari maksimalkan Ramadan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq.".
+                                "\r\nDKM Masjid Winteq ".
                                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
