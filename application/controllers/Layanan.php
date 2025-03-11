@@ -285,33 +285,6 @@ class Layanan extends CI_Controller
         foreach ($karyawan as $row) :
 
                 //Notifikasi ke USER
-<<<<<<< Updated upstream
-                $client = new \GuzzleHttp\Client();
-                $nowtime = time(); // Waktu awal saat ini
-                $options = [
-                'form_params' => [
-                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
-                    'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/Kajian.jpg',
-                    'caption' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
-                                "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
-                                "\r\nSemangat Pagi ".$row['nama'].
-                                "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
-                                "\r\n \r\n📅Hari: *Kamis, 6 Maret 2025*".
-                                "\r\n 🕔Jam : *Ba'da Dzuhur* ".
-                                "\r\n 🏡Lokasi : *Masjid Winteq*".
-                                "\r\n 🔊Narasumber : *Ust. Nanang*".
-                                "\r\n \r\nMari maksimalkan Ramadan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq.".
-                                "\r\nDKM Masjid Winteq ".
-                                "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
-                    'date' => date('Y-m-d'),
-                    'time' => date('H:i:s', $nowtime)
-                ]];
-                $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
-                $res = $client->sendAsync($request, $options)->wait();
-                echo $res->getBody();
-=======
->>>>>>> Stashed changes
 
                 // $options = [
                 // 'form_params' => [
@@ -345,7 +318,7 @@ class Layanan extends CI_Controller
                             "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
                             "\r\nSemangat Pagi ".$row['nama'].
                             "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
-                            "\r\n \r\n📅Hari: Senin, 11 Maret 2025".
+                            "\r\n \r\n📅Hari: Selasa, 11 Maret 2025".
                             "\r\n 🕔Jam : *Ba'da Dzuhur* ".
                             "\r\n 🏡Lokasi : *Masjid Winteq*".
                             "\r\n 📝Tema :  *Dahsyat nya keutamaan membaca Al Qur'an*".
