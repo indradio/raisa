@@ -318,10 +318,10 @@ class Layanan extends CI_Controller
                             "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
                             "\r\nSemangat Pagi ".$row['nama'].
                             "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
-                            "\r\n \r\n📅Hari: Selasa, 11 Maret 2025".
+                            "\r\n \r\n📅Hari: *Selasa, 18 Maret 2025*".
                             "\r\n 🕔Jam : *Ba'da Dzuhur* ".
                             "\r\n 🏡Lokasi : *Masjid Winteq*".
-                            "\r\n 📝Tema :  *Dahsyat nya keutamaan membaca Al Qur'an*".
+                            "\r\n 📝Tema :  * Menjaga lisan pada bulan Ramadhan*".
                             "\r\n 🔊Narasumber : *Ust. Rudi Safaat*".
                             "\r\n \r\nMari maksimalkan Ramadan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq.".
                             "\r\nDKM Masjid Winteq ".
