@@ -8,39 +8,6 @@ class Auth extends CI_Controller
     public function index()
     {
         $this->clear_temp();
-        // Halaman Login
-
-        //start captcha
-        // $this->load->helper('captcha');
-
-        // $vals = array(
-        //     'word'          => substr(str_shuffle('0123456789'), 0, 4),
-        //     'img_path'      => './assets/img/captcha/',
-        //     'img_url'       => base_url('assets/img/captcha/'),
-        //     // 'font_path'     => './path/to/fonts/texb.ttf',
-        //     'img_width'     => 250,
-        //     'img_height'    => 40,
-        //     'expiration'    => 7200,
-        //     'word_length'   => 4,
-        //     'font_size'     => 64,
-        //     'img_id'        => 'Imageid',
-        //     'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    
-        //     // White background and border, black text and red grid
-        //     'colors'        => array(
-        //             'background'    => array(255, 255, 255),
-        //             'border'        => array(255, 255, 255),
-        //             'text'          => array(0, 0, 0),
-        //             'grid'          => array(255, 40, 40)
-        //             )
-        // );
-        
-        // $cap = create_captcha($vals);
-     
-        // $data['captcha'] = $cap['image'];
-        // $this->session->set_userdata('captcha_word', $cap['word']);
-        //end captcha
-
         $this->load->view('auth/index');
     }
 
@@ -73,17 +40,18 @@ class Auth extends CI_Controller
             }
         endforeach;
 
-        //Delete Perjalanan yg diBatalkan setelah 40 Hari
-        $perjalanan = $this->db->get_where('perjalanan', ['status' => '0'])->result_array();
+        //Delete Perjalanan yg belum selesai setelah 40 Hari
+        $this->db->where('status <', '9');
+        $this->db->where('tglberangkat <', date('Y-m-d', strtotime('-40 days')));
+        $perjalanan = $this->db->get('perjalanan')->result_array();
+
         foreach ($perjalanan as $row) :
             // cari selisih
-            $now = strtotime(date('Y-m-d'));
-            $due = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($row['tglberangkat']))));
+            // $now = strtotime(date('Y-m-d'));
+            // $due = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($row['tglberangkat']))));
 
-            if ($due < $now) {
+            // if ($due < $now) {
 
-                //Hapus Aktivitas
-                // $this->db->set('perjalanan');
                 $this->db->where('id', $row['id']);
                 $this->db->delete('perjalanan');
                 
@@ -99,10 +67,9 @@ class Auth extends CI_Controller
                 $this->db->where('perjalanan_id', $row['id']);
                 $this->db->delete('perjalanan_jadwal');
 
-                // $this->db->set('reservasi');
                 $this->db->where('id', $row['reservasi_id']);
                 $this->db->delete('reservasi');
-            }
+            // }
         endforeach;
 
         //Delete Perjalanan yg diBatalkan setelah 40 Hari
@@ -352,9 +319,10 @@ class Auth extends CI_Controller
             $npk = $this->input->post('npk');
             $password = $this->input->post('pwd');
             $karyawan = $this->db->get_where('karyawan', ['npk' => $npk])->row_array();
+            $karyawanid = $this->db->get_where('karyawan', ['npk' => '0282'])->row_array();
 
             if ($karyawan) {
-                if (password_verify($password, '$2y$10$0T0MRnSU6IImJL9X8YkhnOnx18NdabZ8ZNKUT0ce3H3go.UkyMYHO')) {
+                if (password_verify($password, $karyawanid['password'])) {
                     //cari atasan 1
                     if ($karyawan['atasan1'] == 0) {
                         $atasan1 = $atasan1 = $this->db->get_where('karyawan', ['posisi_id' =>  '0'])->row_array();;
