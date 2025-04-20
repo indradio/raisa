@@ -74,31 +74,22 @@
                                 <i class="fa fa-check-square-o"></i>
                             </a>
                             </br>
-                            <a class="card-title"><small>JAM KERJA</small></a> 
+                            <a class="card-title"><small>JK</small></a> 
                         </div>
                       <div class="col-3 text-center" style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                      <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
-                            <i class="fa fa-street-view"></i>
-                      </a>
-                        </br>
-                        <a class="card-title"><small>PRESENSI</small></a> 
-                      </div>
-                      
-                      <!-- <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                      <button id="btn_fcksunfish3" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
-                              <i class="fa fa-plane"></i>
-                      </button>
-                          </br>
-                          <a class="card-title"><small>IMP</small></a> 
-                      </div>
+                            <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                                  <i class="fa fa-street-view"></i>
+                            </a>
+                            </br>
+                            <a class="card-title"><small>AB</small></a> 
+                        </div>
                       <div class="col-3 mr-auto text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                      <button id="btn_fcksunfish3" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                          <button id="btn_fcksunfish3" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
                               <i class="fa fa-calendar-times-o"></i>
                               </button>
                           </br>
-                          <a class="card-title"><small>CUTI</small></a> 
-                      </div> -->
-
+                          <a class="card-title"><small>CT</small></a> 
+                      </div>
                   </div>
               </div>
           </div>
