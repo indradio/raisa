@@ -12,7 +12,14 @@ class Presensi_model extends CI_Model
     {
         $this->db->where('npk', $this->session->userdata('npk'));
         $this->db->where('state', 'In');
-        $this->db->limit(93);
+
+        // Hitung tanggal 2 bulan ke belakang
+        $two_months_ago = date('Y-m-d', strtotime('-2 months'));
+        $this->db->where('date >=', $two_months_ago);
+
+        $this->db->order_by('date', 'DESC'); // opsional: urutkan terbaru dulu
+        $this->db->limit(93); // opsional: batasi data jika perlu
+
         return $this->db->get("presensi");
     }
     public function GET_MY_OUT($date)

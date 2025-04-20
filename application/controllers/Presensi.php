@@ -3,9 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+
 //load Spout Library
 require_once APPPATH.'third_party/spout/src/Spout/Autoloader/autoload.php';
- 
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Box\Spout\Reader\ReaderFactory;
 use Box\Spout\Common\Type;
@@ -118,9 +120,6 @@ class Presensi extends CI_Controller
     public function submit()
     {
         date_default_timezone_set('asia/jakarta');
-        // $tahun      = date("Y");
-        // $bulan      = date("m");
-        // $tanggal    = date("d");
 
         // Day Check
         if (date('D') == 'Sat' or date('D') == 'Sun') {
@@ -176,29 +175,23 @@ class Presensi extends CI_Controller
                 $this->db->insert('presensi', $data);
 
                 //Notifikasi ke USER
-                // $client = new \GuzzleHttp\Client();
-                // $response = $client->post(
-                //     'https://region01.krmpesan.com/api/v2/message/send-text',
-                //     [   
-                //         'headers' => [
-                //             'Content-Type' => 'application/json',
-                //             'Accept' => 'application/json',
-                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                //         ],
-                //         'json' => [
-                //             'phone' => $atasan1['phone'],
-                //             'message' => "*ABSENSI ONLINE*" .
-                //             "\r\n \r\n*" . $this->session->userdata('nama') . "* membutuhkan approval anda untuk absensinya sebagai berikut :" .
-                //             "\r\nWaktu : *" . date('d M Y H:i') . "*" .
-                //             "\r\nShift : *" . $this->input->post('workstate') . "*" .
-                //             "\r\nStatus : *" . $this->input->post('state') . "*" .
-                //             "\r\nLokasi : *" . $this->input->post('location') . "*" .
-                //             "\r\n \r\nSegera APPROVE/REJECT agar dapat diproses oleh HR." .
-                //             "\r\n#Comeback Stronger!"
-                //         ],
-                //     ]
-                // );
-                // $body = $response->getBody();
+                $client = new \GuzzleHttp\Client();
+                $options = [
+                    'form_params' => [
+                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                    'number' => $atasan1['phone'],
+                    'message' => "*PRESENSI ONLINE*". 
+                            "\r\n \r\n🚪 Check *".$this->input->post('state')."*".
+                            "\r\n 👤Nama: *".$this->session->userdata('nama')."*".
+                            "\r\n 🕔Jam : *".date('d-M HH:mm')."*".
+                            "\r\n 🏡Lokasi : *".$this->input->post('location')."*".
+                            "\r\n Cek di peta: https://www.google.com/maps?q=".$this->input->post('latitude').",".$this->input->post('longitude'),
+                    'date' => date('Y-m-d'),
+                    'time' => date('H:i:s')
+                ]];
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $res = $client->sendAsync($request, $options)->wait();
+                echo $res->getBody();
 
                 $this->session->set_flashdata('message', 'clockSuccess');
             } else {
@@ -685,6 +678,31 @@ class Presensi extends CI_Controller
     }
 
     public function GET_MY_IN()
+    {
+        // Our Start and End Dates
+        $events = $this->Presensi_model->GET_MY_IN();
+        $data_events = array();
+
+        foreach ($events->result() as $r) {
+            $out = $this->Presensi_model->GET_MY_OUT($r->date)->row();
+            if (empty($out)){
+                $end = $r->time;
+            }else{
+                $end = $out->time;
+            }
+
+            $data_events[] = array(
+                "id" => $r->id,
+                "title" => $r->work_state,
+                "start" => $r->time,
+                "end" => $end
+            );
+        }
+        echo json_encode(array("events" => $data_events));
+        exit();
+    }
+
+    public function GET_MY_ATT()
     {
         // Our Start and End Dates
         $events = $this->Presensi_model->GET_MY_IN();

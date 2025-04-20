@@ -7,18 +7,6 @@
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
-    <!-- <div class="alert alert-info alert-with-icon" data-notify="container">
-      <i class="material-icons" data-notify="icon">notifications</i>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <i class="material-icons">close</i>
-      </button>
-      <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
-      <span data-notify="message">Kategori Absen :</span>
-      <span data-notify="message">1. SHIFT Untuk kamu yang kerja normal, langsung dari/ke Customer</span>
-      <span data-notify="message">2. WFH Untuk kamu yang saat ini <strong>KERJA</strong> dari rumah</span>
-      <span data-notify="message">3. OFF DAY Untuk kamu yang harus standby di rumah</span>
-      <span data-notify="message">4. ISOMAN Untuk kamu yang sedang berjuang melawan COVID-19, Semangat!</span>
-    </div> -->
     <div class="row">
       <div class="col-md-12 d-block d-sm-none ">
         <div class="card card-product">
@@ -49,13 +37,13 @@
                       <a class="card-title"><small>Riwayat</small></a>
                   </div>
                   <div class="col-4 text-center">
-                      <a href="#" class="btn btn-lg btn-just-icon btn-success" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-success" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Check In">
                           <i class="fa fa-sign-in"></i>
                       </a>
                       <a class="card-title"><small>Masuk</small></a>
                   </div>
                   <div class="col-4 text-center">
-                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">
+                      <a href="#" class="btn btn-lg btn-just-icon btn-google" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Check Out">
                           <i class="fa fa-sign-out"></i>
                       </a>
                       <a class="card-title"><small>Pulang</small></a>
@@ -70,11 +58,11 @@
         <div class="card card-product">
           <div class="card-header card-header-image" data-header-animation="true">
             <?php if ($workstate == 'not found'){ ?>
-              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">
+              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Check In">
                 <img class="img" src="<?= base_url(); ?>/assets/img/clock-in.jpg">
               </a>
             <?php }else{ ?>
-              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">
+              <a href="#" class="btn btn-link" role="button" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Check Out">
                 <img class="img" src="<?= base_url(); ?>/assets/img/clock-out.jpg">
               </a>
             <?php } ?>
@@ -93,17 +81,14 @@
               <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
                 <i class="material-icons">close</i>
               </button> -->
-
-
-              
             </div>
             <h4 class="card-title">
             <?php 
             if ($workstate == 'not found'){ ?>
-              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Clock In">Clock In</a></p>
-              <h5>Absen pulang aja langsung Klik <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">Clock Out</a></h5>
+              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="In" data-btnstate="Check In">Check In</a></p>
+              <h5>Absen pulang aja langsung Klik <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Check Out">Check Out</a></h5>
             <?php }else{ ?>
-              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Clock Out">Clock Out</a>
+              <a href="#" data-toggle="modal" data-target="#clockTime" data-state="Out" data-btnstate="Check Out">Check Out</a>
             <?php } ?>
             </h4>
             <!-- <div class="card-description">
@@ -138,7 +123,7 @@
     </div>
     <div class="row">
       <div class="col-md-12" hidden>
-        <form id="timePrecense" class="form" method="post" action="<?= base_url('presensi/submit'); ?>">
+        <form id="timePrecense" class="form" method="post" action="#">
           <div class="card ">
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
@@ -176,18 +161,18 @@
             </div>
             <form class="form-horizontal" method="post" action="<?= base_url('presensi/submit'); ?>">
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <input type="text" class="form-control" id="state" name="state" required="true" />
                         <input type="text" class="form-control" id="workstate" name="workstate" />
                         <input type="text" class="form-control" id="latitude" name="latitude" required="true" />
                         <input type="text" class="form-control" id="longitude" name="longitude" required="true" />
                         <textarea rows="3" class="form-control" id="location" name="location" required="true"></textarea>
                         <input type="text" class="form-control" id="platform" name="platform" required="true" />
-                        <p id="lokasiStatus">Mendeteksi lokasi...</p>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
                         <div id="modalMap" class="map" style="width:100%;height:380px;"></div>
+                        <p id="lokasiStatus">Mendeteksi lokasi...</p>
                       </div>
                     </div>
                     <div class="row">
@@ -303,56 +288,6 @@
       x.innerHTML = "Geolocation is not supported by this browser.";
     };
 
-    function showPosition(position) {
-      // x.innerHTML = "Latitude: " + position.coords.latitude +
-      //   "<br>Longitude: " + position.coords.longitude;
-      document.getElementById("lat").value = position.coords.latitude;
-      document.getElementById("lng").value = position.coords.longitude;
-      // document.getElementById("vLat").value = position.coords.latitude;
-      // document.getElementById("vLng").value = position.coords.longitude;
-      document.getElementById("latitude").value = position.coords.latitude;
-      document.getElementById("longitude").value = position.coords.longitude;
-
-
-      lat = position.coords.latitude;
-      lng = position.coords.longitude;
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
-
-      //Send the proper header information along with the request
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      xhr.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          var myObj = JSON.parse(this.responseText);
-          loc = myObj.results['0']['formatted_address'];
-          document.getElementById("loc").value = myObj.results['0']['formatted_address'];
-          document.getElementById("location").value = myObj.results['0']['formatted_address'];
-        }
-      }
-      xhr.send();
-      // xhr.send(new Int8Array()); 
-      // xhr.send(element);
-
-      var location = new google.maps.LatLng(lat, lng);
-      var mapCanvas = document.getElementById('map');
-
-      var mapOptions = {
-        center: location,
-        zoom: 16,
-
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      var map = new google.maps.Map(mapCanvas, mapOptions);
-      var marker = new google.maps.Marker({
-        position: location,
-        map: map
-      });
-
-      marker.setMap(map);
-    };
-
     document.getElementById("platform").value = navigator.platform;
 
     var checker = document.getElementById('check');
@@ -375,27 +310,6 @@
         document.getElementById("clockTimeLabel").innerHTML= btnstate ;
         modal.find('.modal-body input[name="state"]').val(state)
         document.getElementById("submit").innerHTML= btnstate ;
-
-        // lat = position.coords.latitude;
-        // lng = position.coords.longitude;
-
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("POST", 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyAHFISdyofTP6NPRE142yGJjZPa1Z2VbU4', true);
-
-        // //Send the proper header information along with the request
-        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        // xhr.onreadystatechange = function() { // Call a function when the state changes.
-        //   if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        //     var myObj = JSON.parse(this.responseText);
-        //     loc = myObj.results['0']['formatted_address'];
-        //     document.getElementById("loc").value = myObj.results['0']['formatted_address'];
-        //     document.getElementById("location").value = myObj.results['0']['formatted_address'];
-        //   }
-        // }
-        // xhr.send();
-        // xhr.send(new Int8Array()); 
-        // xhr.send(element);
 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -424,33 +338,20 @@
               
           }, function(error) {
             $('#lokasiStatus').text("Gagal deteksi lokasi ❌: " + error.message);
+            $('#btnSubmit').prop('disabled', true);
           }, { enableHighAccuracy: true, timeout: 10000 });
         } else {
           $('#lokasiStatus').text("Browser tidak mendukung GPS.");
+          $('#btnSubmit').prop('disabled', true);
         }
 
-        // var location = new google.maps.LatLng(lat, lng);
-        // var mapCanvas = document.getElementById('modalMap');
-
-        // var mapOptions = {
-        //   center: location,
-        //   zoom: 16,
-
-        //   mapTypeId: google.maps.MapTypeId.ROADMAP
-        // }
-        // var map = new google.maps.Map(mapCanvas, mapOptions);
-        // var marker = new google.maps.Marker({
-        //   position: location,
-        //   map: map
-        // });
-
-        // marker.setMap(map);
     });
 
     function getAddress(lat, lng) {
       $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`, function(data) {
         console.log(data);
-        $('#lokasiStatus').text(data.display_name);
+        $('#location').val(data.display_name);
+        $('#loc').text(data.display_name);
       });
     }
 
@@ -556,6 +457,23 @@
         $(this).remove();
       });
     }, 60000);
+
+    function showPosition(position) {
+      // x.innerHTML = "Latitude: " + position.coords.latitude +
+      //   "<br>Longitude: " + position.coords.longitude;
+      document.getElementById("lat").value = position.coords.latitude;
+      document.getElementById("lng").value = position.coords.longitude;
+      // document.getElementById("vLat").value = position.coords.latitude;
+      // document.getElementById("vLng").value = position.coords.longitude;
+      document.getElementById("latitude").value = position.coords.latitude;
+      document.getElementById("longitude").value = position.coords.longitude;
+
+
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+
+    };
+
   });
 
   $(document).ready(function() {
