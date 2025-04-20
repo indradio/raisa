@@ -83,7 +83,8 @@
                         </br>
                         <a class="card-title"><small>PRESENSI</small></a> 
                       </div>
-                      <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
+                      
+                      <!-- <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
                       <button id="btn_fcksunfish3" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
                               <i class="fa fa-plane"></i>
                       </button>
@@ -96,39 +97,8 @@
                               </button>
                           </br>
                           <a class="card-title"><small>CUTI</small></a> 
-                      </div>
-
-                      <!-- <div class="col-md-1 col-sm-1">
-                        <button class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                          <i class="fa fa-facebook"> </i>
-                        </button>
-                      </div>
-
-                      <div class="col-md-1 col-sm-1">
-                        <button class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                          <i class="fa fa-facebook"> </i>
-                        </button>
                       </div> -->
-                      <!-- <div class="col-md-1 col-sm-1">
-                        <button class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                          <i class="fa fa-facebook"> </i>
-                        </button>
-                      </div>
-                      <div class="col-md-1 col-sm-1">
-                        <button class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                          <i class="fa fa-facebook"> </i>
-                        </button>
-                      </div>
-                      <div class="col-md-1 col-sm-1">
-                        <button class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                          <i class="fa fa-facebook"> </i>
-                        </button>
-                      </div>
-                      <div class="col-md-1 col-sm-1">
-                        <button class="btn btn-lg btn-just-icon btn-round btn-facebook">
-                          <i class="fa fa-facebook"> </i>
-                        </button>
-                      </div> -->
+
                   </div>
               </div>
           </div>
