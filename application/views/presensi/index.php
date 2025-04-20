@@ -1,3 +1,9 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <div class="content">
   <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
   <div class="container-fluid">
@@ -400,7 +406,22 @@
             $('#lokasiStatus').text("Lokasi terdeteksi ✅");
             $('#btnSubmit').prop('disabled', false);
 
-            getAddress(lat, lng); // Tambahan
+            getAddress(lat, lng);
+
+              // Tampilkan Leaflet Map
+            const map = L.map('modalMap').setView([lat, lng], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 19,
+              attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([lat, lng]).addTo(map)
+              .bindPopup('Lokasi Anda')
+              .openPopup();
+
+              map.invalidateSize();
+              
           }, function(error) {
             $('#lokasiStatus').text("Gagal deteksi lokasi ❌: " + error.message);
           }, { enableHighAccuracy: true, timeout: 10000 });
