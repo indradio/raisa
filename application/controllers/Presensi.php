@@ -139,7 +139,6 @@ class Presensi extends CI_Controller
 
             if (empty($presensi)) {
                 $data = [
-                    // 'id'            => $id,
                     'date'              => date('Y-m-d'),
                     'time'              => date('H:i:s'),
                     'datetime'          => date('Y-m-d H:i:s'),
@@ -182,10 +181,10 @@ class Presensi extends CI_Controller
                     'number' => $atasan1['phone'],
                     'message' => "*PRESENSI ONLINE*". 
                             "\r\n \r\n🚪 Check *".$this->input->post('state')."*".
-                            "\r\n 👤 *".$this->session->userdata('nama')."*".
-                            "\r\n 🕔 *".date('d-M H:m')."*".
-                            "\r\n 📍 *".$this->input->post('location')."*".
-                            "\r\n Cek di peta: https://www.google.com/maps?q=".$this->input->post('latitude').",".$this->input->post('longitude'),
+                            "\r\n👤 *".$this->session->userdata('nama')."*".
+                            "\r\n🕔 *".date('d-M H:m')."*".
+                            "\r\n📍 *".$this->input->post('location')."*".
+                            "\r\n \r\nCek di peta: https://www.google.com/maps?q=".$this->input->post('latitude').",".$this->input->post('longitude'),
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s')
                 ]];
