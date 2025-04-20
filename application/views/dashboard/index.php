@@ -77,16 +77,16 @@
                             <a class="card-title"><small>JAM KERJA</small></a> 
                         </div>
                       <div class="col-3 text-center" style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                      <button id="btn_fcksunfish1" class="btn btn-lg btn-just-icon btn-round btn-facebook">
+                      <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
                             <i class="fa fa-street-view"></i>
-                      </button>
+                      </a>
                         </br>
-                        <a class="card-title"><small>ABSEN</small></a> 
+                        <a class="card-title"><small>PRESENSI</small></a> 
                       </div>
                       <div class="col-3 text-center"  style="padding-left: 1%;padding-right: 1%;max-width: 20%">
-                      <a href="<?= base_url('presensi'); ?>" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
+                      <button id="btn_fcksunfish3" class="btn btn-lg btn-just-icon  btn-round btn-facebook">
                               <i class="fa fa-plane"></i>
-                      </a>
+                      </button>
                           </br>
                           <a class="card-title"><small>IMP</small></a> 
                       </div>
