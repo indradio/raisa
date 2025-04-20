@@ -87,6 +87,9 @@
               <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
                 <i class="material-icons">close</i>
               </button> -->
+
+
+              
             </div>
             <h4 class="card-title">
             <?php 
@@ -167,13 +170,14 @@
             </div>
             <form class="form-horizontal" method="post" action="<?= base_url('presensi/submit'); ?>">
                 <div class="modal-body">
-                    <div class="form-group" hidden>
+                    <div class="form-group">
                         <input type="text" class="form-control" id="state" name="state" required="true" />
                         <input type="text" class="form-control" id="workstate" name="workstate" />
                         <input type="text" class="form-control" id="latitude" name="latitude" required="true" />
                         <input type="text" class="form-control" id="longitude" name="longitude" required="true" />
                         <textarea rows="3" class="form-control" id="location" name="location" required="true"></textarea>
                         <input type="text" class="form-control" id="platform" name="platform" required="true" />
+                        <p id="lokasiStatus">Mendeteksi lokasi...</p>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
@@ -387,23 +391,48 @@
         // xhr.send(new Int8Array()); 
         // xhr.send(element);
 
-        var location = new google.maps.LatLng(lat, lng);
-        var mapCanvas = document.getElementById('modalMap');
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            $('#latitude').val(lat);
+            $('#longitude').val(lng);
+            $('#lokasiStatus').text("Lokasi terdeteksi ✅");
+            $('#btnSubmit').prop('disabled', false);
 
-        var mapOptions = {
-          center: location,
-          zoom: 16,
-
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+            getAddress(lat, lng); // Tambahan
+          }, function(error) {
+            $('#lokasiStatus').text("Gagal deteksi lokasi ❌: " + error.message);
+          }, { enableHighAccuracy: true, timeout: 10000 });
+        } else {
+          $('#lokasiStatus').text("Browser tidak mendukung GPS.");
         }
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        var marker = new google.maps.Marker({
-          position: location,
-          map: map
-        });
 
-        marker.setMap(map);
+        // var location = new google.maps.LatLng(lat, lng);
+        // var mapCanvas = document.getElementById('modalMap');
+
+        // var mapOptions = {
+        //   center: location,
+        //   zoom: 16,
+
+        //   mapTypeId: google.maps.MapTypeId.ROADMAP
+        // }
+        // var map = new google.maps.Map(mapCanvas, mapOptions);
+        // var marker = new google.maps.Marker({
+        //   position: location,
+        //   map: map
+        // });
+
+        // marker.setMap(map);
     });
+
+    function getAddress(lat, lng) {
+      $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`, function(data) {
+        console.log(data);
+        $('#lokasiStatus').text(data.display_name);
+      });
+    }
+
 
     var labelOption1 = document.getElementById('labelOption1');
     var labelOption2 = document.getElementById('labelOption2');
