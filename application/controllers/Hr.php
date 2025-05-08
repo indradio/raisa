@@ -487,6 +487,67 @@ class Hr extends CI_Controller
         }
     }
 
+    public function get_presensi_by_date()
+    {
+        $result = [];
+        $date = date('Y-m-d', strtotime($this->input->post('date')));
+        // $date = date('Y-m-d', strtotime('2025-04-20'));
+
+        // Ambil karyawan yang aktif
+        $this->db->where('is_active', '1');
+        $this->db->where('status', '1');
+        $users = $this->db->get('karyawan')->result_array();
+
+        foreach ($users as $user) {
+            $row = [
+                'tanggal' => date('m-d-Y', strtotime("$date")),
+                'nama' => $user['nama'],
+                'inisial' => $user['inisial'],
+                'work_state' => 'N/A'
+            ];
+
+            // Clock In
+            $this->db->where('npk', $user['npk']);
+            $this->db->where('date', $date);
+            $this->db->where('state', 'In');
+            $in = $this->db->get('presensi')->row_array();
+
+            if (!empty($in)) {
+                $row['in_time'] = date('H:i', strtotime($in['time']));
+                $row['work_state'] = $in['work_state'];
+                $row['in_location'] = $in['location'];
+                $row['in_lat'] = $in['latitude'];
+                $row['in_long'] = $in['longitude'];
+            } else {
+                $row['in_time'] = null;
+                $row['in_location'] = null;
+            }
+
+            // Clock Out
+            $this->db->where('npk', $user['npk']);
+            $this->db->where('date', $date);
+            $this->db->where('state', 'Out');
+            $out = $this->db->get('presensi')->row_array();
+
+            if (!empty($out)) {
+                $row['out_time'] = date('H:i', strtotime($out['time']));
+                $row['work_state'] = $out['work_state'];
+                $row['out_location'] = $out['location'];
+                $row['out_lat'] = $out['latitude'];
+                $row['out_long'] = $out['longitude'];
+            } else {
+                $row['out_time'] = null;
+                $row['out_location'] = null;
+            }
+
+            // $result[] = $row;
+            $result['data'][] = $row;
+        }
+
+        echo json_encode($result);
+    }
+
+
     public function download($menu)
     {
         date_default_timezone_set('asia/jakarta');

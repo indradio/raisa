@@ -152,9 +152,9 @@ class Auth extends CI_Controller
                     //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FKU'])->row_array();
                     // }
 
-                    // if ($karyawan['sect_id'] == '112' and $karyawan['posisi_id'] == '7') {
-                    //     $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'WBS'])->row_array();
-                    // }
+                    if ($karyawan['sect_id'] == '112' and $karyawan['posisi_id'] == '7') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'ANS'])->row_array();
+                    }
 
                     if ($karyawan['sect_id'] == '137' and $karyawan['posisi_id'] == '7') {
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'SAM'])->row_array();
@@ -354,30 +354,6 @@ class Auth extends CI_Controller
                         $this->db->where('is_active', '1');
                         $atasan1 = $this->db->get('karyawan')->row_array();
                     };
-
-                    if ($karyawan['sect_id'] == '215' and $karyawan['posisi_id'] == '7') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row_array();
-                    }
-
-                    if ($karyawan['sect_id'] == '216' and $karyawan['posisi_id'] == '11') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'AGS'])->row_array();
-                    }
-                    
-                    if ($karyawan['sect_id'] == '143' and $karyawan['posisi_id'] == '7') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'FKU'])->row_array();
-                    }
-
-                    if ($karyawan['sect_id'] == '121' and $karyawan['posisi_id'] == '7') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'BBG'])->row_array();
-                    }
-
-                    if ($karyawan['dept_id'] == '11' and $karyawan['atasan1'] == '3') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'ABU'])->row_array();
-                    }
-
-                    if ($karyawan['dept_id'] == '14' and $karyawan['atasan1'] == '3') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
-                    }
                     
                     //cari atasan 2
                     if ($karyawan['atasan2'] == 0) {
@@ -410,14 +386,6 @@ class Auth extends CI_Controller
                         $this->db->where('is_active', '1');
                         $atasan2 = $this->db->get('karyawan')->row_array();
                     };
-
-                    if ($karyawan['dept_id'] == '11' and $karyawan['atasan2'] == '3') {
-                        $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'ABU'])->row_array();
-                    }
-
-                    if ($karyawan['dept_id'] == '14' and $karyawan['atasan2'] == '3') {
-                        $atasan2 = $this->db->get_where('karyawan', ['inisial' => 'KKO'])->row_array();
-                    }
 
                     if ($karyawan['npk'] == '1111') {
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'RAISA'])->row_array();
