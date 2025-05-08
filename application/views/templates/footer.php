@@ -124,14 +124,14 @@
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
 <script src="<?= base_url(); ?>assets/js/plugins/jquery.bootstrap-wizard.js" defer></script>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-selectpicker.js" async></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-selectpicker.js"></script>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker.min.js" async></script>
+<script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
 <!-- Plugin for the Modal  -->
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-modal.js" async></script>
 <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
 <script src="<?= base_url(); ?>assets/js/plugins/jquery.dataTables.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/plugins/dataTables.js" async></script>
+<script src="<?= base_url(); ?>assets/js/plugins/dataTables.js"></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-tagsinput.js" defer></script>
 <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
