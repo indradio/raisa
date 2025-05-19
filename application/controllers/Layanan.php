@@ -193,7 +193,7 @@ class Layanan extends CI_Controller
             $client = new \GuzzleHttp\Client();
             $options = [
             'form_params' => [
-            'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+            'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
             'number' => $row['phone'],
             'message' => "*VOTE KETUA BIPARTIT*". 
                         "\r\n \r\nSiapakah yang akan menjadi ketua bipartit periode 2024-2027?".
@@ -288,7 +288,7 @@ class Layanan extends CI_Controller
 
                 // $options = [
                 // 'form_params' => [
-                //     'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                //     'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
                 //     'number' => $row['phone'],
                 //     'file' => 'https://raisa.winteq-astra.com/assets/img/wa/Kajian.jpg',
                 //     'caption' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
@@ -312,7 +312,7 @@ class Layanan extends CI_Controller
 
                 $options = [
                     'form_params' => [
-                    'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+                    'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
                     'number' => $row['phone'],
                     'message' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
                             "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".

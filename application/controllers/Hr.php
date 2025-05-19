@@ -454,6 +454,33 @@ class Hr extends CI_Controller
             $this->load->view('templates/navbar', $data);
             $this->load->view('hr/presensi_date', $data);
             $this->load->view('templates/footer');
+        } elseif ($parameter == 'pivot') {
+            if (empty($this->input->post('start_date'))) {
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+                $data['tanggal'] = date('d');
+            } else {
+                $data['tahun'] = date('Y', strtotime($this->input->post('start_date')));
+                $data['bulan'] = date('m', strtotime($this->input->post('start_date')));
+                $data['tanggal'] = date('d', strtotime($this->input->post('start_date')));
+            }
+            if (empty($this->input->post('end_date'))) {
+                $data['tahun'] = date('Y');
+                $data['bulan'] = date('m');
+                $data['tanggal'] = date('d');
+            } else {
+                $data['tahun'] = date('Y', strtotime($this->input->post('end_date')));
+                $data['bulan'] = date('m', strtotime($this->input->post('end_date')));
+                $data['tanggal'] = date('d', strtotime($this->input->post('end_date')));
+            }
+            $data['sidemenu'] = 'HR';
+            $data['sidesubmenu'] = 'Laporan Kehadiran perhari';
+            $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/navbar', $data);
+            $this->load->view('hr/presensi_pivot', $data);
+            $this->load->view('templates/footer');
         } elseif ($parameter == 'karyawan') {
             $user = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
             $data['npk'] = $user['npk'];
@@ -489,65 +516,177 @@ class Hr extends CI_Controller
 
     public function get_presensi_by_date()
     {
-        $result = [];
-        $date = date('Y-m-d', strtotime($this->input->post('date')));
-        // $date = date('Y-m-d', strtotime('2025-04-20'));
+        if (!empty($this->input->post('date')))
+        {
+   
+            $date = date('Y-m-d', strtotime($this->input->post('date')));
+            // $date = date('Y-m-d', strtotime('2025-04-20'));
+                
+                // Ambil karyawan yang aktif
+                $this->db->select("
+                    karyawan.nama, 
+                    karyawan.npk,
+                    p_in.time AS in_time,
+                    p_in.work_state AS in_state,
+                    p_in.location AS in_location,
+                    p_in.latitude AS in_lat,
+                    p_in.longitude AS in_long,
+                    p_out.time AS out_time,
+                    p_out.work_state AS out_state,
+                    p_out.location AS out_location,
+                    p_out.latitude AS out_lat,
+                    p_out.longitude AS out_long
+                ");
 
-        // Ambil karyawan yang aktif
-        $this->db->where('is_active', '1');
-        $this->db->where('status', '1');
-        $users = $this->db->get('karyawan')->result_array();
+                $this->db->from('karyawan');
+                $this->db->where('karyawan.is_active', '1');
+                $this->db->where('karyawan.status', '1');
+                $this->db->join('presensi as p_in', "p_in.npk = karyawan.npk AND p_in.date = '$date' AND p_in.state = 'In'", 'left');
+                $this->db->join('presensi as p_out', "p_out.npk = karyawan.npk AND p_out.date = '$date' AND p_out.state = 'Out'", 'left');
+                $presensi = $this->db->get()->result();
+                
+                foreach ($presensi as $row) {
+                    
+                    $work_state = !empty($row->in_state) ? $row->in_state :
+                    (!empty($row->out_state) ? $row->out_state : '');
 
-        foreach ($users as $user) {
-            $row = [
-                'tanggal' => date('m-d-Y', strtotime("$date")),
-                'nama' => $user['nama'],
-                'inisial' => $user['inisial'],
-                'work_state' => 'N/A'
-            ];
+                    $in_time = !empty($row->in_time) ? date('H:i:s', strtotime($row->in_time)) : '';
+                    $out_time = !empty($row->out_time) ? date('H:i:s', strtotime($row->out_time)) : '';
 
-            // Clock In
-            $this->db->where('npk', $user['npk']);
-            $this->db->where('date', $date);
-            $this->db->where('state', 'In');
-            $in = $this->db->get('presensi')->row_array();
-
-            if (!empty($in)) {
-                $row['in_time'] = date('H:i', strtotime($in['time']));
-                $row['work_state'] = $in['work_state'];
-                $row['in_location'] = $in['location'];
-                $row['in_lat'] = $in['latitude'];
-                $row['in_long'] = $in['longitude'];
-            } else {
-                $row['in_time'] = null;
-                $row['in_location'] = null;
+                    $output['data'][] = array(
+                        "tanggal" => date('d-m-Y', strtotime($date)),
+                        "nama" => $row->nama,
+                        "work_state" => $work_state, 
+                        "in_time" => $in_time,
+                        "out_time" => $out_time,
+                        "in_location" => $row->in_location,
+                        "out_location" => $row->out_location,
+                        
+                    );
+                }
+            }else{
+                $output['data'][] = array(
+                    "tanggal" => '',
+                    "nama" => '',
+                    "work_state" => '', 
+                    "in_time" => 'Tidak ada data',
+                    "out_time" => '',
+                    "in_location" => '',
+                    "out_location" => '',
+                );
             }
-
-            // Clock Out
-            $this->db->where('npk', $user['npk']);
-            $this->db->where('date', $date);
-            $this->db->where('state', 'Out');
-            $out = $this->db->get('presensi')->row_array();
-
-            if (!empty($out)) {
-                $row['out_time'] = date('H:i', strtotime($out['time']));
-                $row['work_state'] = $out['work_state'];
-                $row['out_location'] = $out['location'];
-                $row['out_lat'] = $out['latitude'];
-                $row['out_long'] = $out['longitude'];
-            } else {
-                $row['out_time'] = null;
-                $row['out_location'] = null;
-            }
-
-            // $result[] = $row;
-            $result['data'][] = $row;
-        }
-
-        echo json_encode($result);
+            
+            echo json_encode($output);
+        
     }
 
+    public function get_presensi_by_pivot()
+    {
+        $start = new DateTime($this->input->post('start_date'));
+        $end = new DateTime($this->input->post('end_date'));
+        $dates = [];
+        while ($start <= $end) {
+            $dates[] = $start->format('Y-m-d');
+            $start->modify('+1 day');
+        }
+        
+        // Ambil semua presensi
+        $this->db->select('karyawan.nama, karyawan.npk, presensi.date, presensi.state, presensi.time');
+        $this->db->from('karyawan');
+        $this->db->join('presensi', 'presensi.npk = karyawan.npk', 'left');
+        $this->db->where('karyawan.is_active', '1');
+        $this->db->where('karyawan.status', '1');
+        $this->db->where_in('presensi.date', $dates);
+        $query = $this->db->get()->result();
+        
+        // Kelompokkan data
+        $data = [];
+        foreach ($query as $row) {
+            $nama = $row->nama;
+            $date = $row->date;
+            $state = $row->state;
+            $time = $row->time;
 
+            if (!isset($data[$nama])) {
+                $data[$nama] = ['nama' => $nama];
+                foreach ($dates as $d) {
+                    $data[$nama][$d] = ['in' => null, 'out' => null];
+                }
+            }
+
+            if ($state == 'In') {
+                $data[$nama][$date]['in'] = date('H:i', strtotime($time));
+            }
+            if ($state == 'Out') {
+                $data[$nama][$date]['out'] = date('H:i', strtotime($time));
+            }
+        }
+
+        // Gabungkan in dan out menjadi satu string
+        $final = [];
+        foreach ($data as $nama => $info) {
+            $row = ['nama' => $info['nama']];
+            foreach ($dates as $d) {
+                $in = $info[$d]['in'] ?? '<i class="fa fa-times text-danger"></i>';
+                $out = $info[$d]['out'] ?? '<i class="fa fa-times text-danger"></i>';
+                if ($info[$d]['in'] || $info[$d]['out']) {
+                    $row[$d] = trim("$in - $out", " -");
+                } else {
+                    $row[$d] = '';
+                }
+            }
+            $final[] = $row;
+        }
+
+        // Output JSON
+        echo json_encode([
+            'dates' => $dates,
+            'data' => $final
+        ]);
+        
+    }
+
+    public function get_presensi_by_raw()
+    {
+        // Ambil karyawan yang aktif
+        $this->db->select('
+            presensi.*, 
+            presensi.nama AS karyawan_nama,
+            karyawan_dept.nama AS dept_nama, 
+            karyawan_sect.nama AS sect_nama
+        ');
+        $this->db->from('presensi');
+        $this->db->join('karyawan_dept', 'karyawan_dept.id = presensi.dept_id', 'left');
+        $this->db->join('karyawan_sect', 'karyawan_sect.id = presensi.sect_id', 'left');
+        $this->db->where('YEAR(presensi.time)', $this->input->post('year'));
+        $this->db->where('MONTH(presensi.time)',$this->input->post('month'));
+        $presensi = $this->db->get()->result();
+
+        $output = ['data' => []];
+                        
+        foreach ($presensi as $row) {
+
+            $approved = !empty($row->approved_by) ? $row->approved_by.' - '.date('d-m-Y H:i', strtotime($row->approved_at)) : '<i class="fa fa-times text-danger"></i>';
+            $hr = !empty($row->hr_by) ? $row->hr_by.' - '.date('d-m-Y H:i', strtotime($row->hr_at)) : '<i class="fa fa-times text-danger"></i>';
+
+            $output['data'][] = array(
+                "date" => date('d-m-Y', strtotime($row->time)),
+                "time" => date('H:i:s', strtotime($row->time)),
+                "nama" => $row->karyawan_nama,
+                "npk" => $row->npk,
+                "work_state" => $row->work_state, 
+                "direct_state" => $row->state,
+                "description" => $row->description,
+                "location" => $row->location,
+                "approved" => $approved,
+                "hr" => $hr
+            );
+
+        }
+
+        echo json_encode($output);
+    }
+    
     public function download($menu)
     {
         date_default_timezone_set('asia/jakarta');

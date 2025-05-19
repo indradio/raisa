@@ -752,7 +752,6 @@ class Jamkerja extends CI_Controller
             $this->load->view('jamkerja/persetujuan_detail', $data);
             $this->load->view('templates/footer');
         }
-        
     }
 
     public function approve($role)

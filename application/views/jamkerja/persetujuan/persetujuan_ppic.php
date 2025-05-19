@@ -19,6 +19,7 @@
                 <thead>
                   <tr>
                     <th>Tanggal</th>
+                    <th>ID</th>
                     <th>Nama</th>
                     <th>Cell</th>
                   </tr>
@@ -26,6 +27,7 @@
                 <tfoot>
                   <tr>
                     <th>Tanggal</th>
+                    <th>ID</th>
                     <th>Nama</th>
                     <th>Cell</th>
                   </tr>
@@ -33,8 +35,8 @@
                 <tbody>
                   <?php
                   date_default_timezone_set('asia/jakarta');
-                  $this->db->where('is_active', 1);
-                  $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
+                  // $this->db->where('is_active', 1);
+                  // $kry = $this->db->get_where('karyawan', ['work_contract' => 'Direct Labor'])->result_array();
 
                   $this->db->where('status', 2);
                   $this->db->order_by('tglmulai', 'ASC');
@@ -63,6 +65,7 @@
                     <tr onclick="window.location='<?= base_url('jamkerja/detail/' . $jk['id']); ?>'">
 
                       <td><?= date('D, d M Y', strtotime($jk['tglmulai'])); ?></td>
+                      <td><?= $jk['id']; ?></td>
                       <td><?= $jk['nama'] . ' <small>( ' . $respon . ' )</small>'; ?></td>
                       <?php $sect = $this->db->get_where('karyawan_sect', ['id' =>  $jk['sect_id']])->row_array(); ?>
                       <td><?= $sect['nama']; ?></td>

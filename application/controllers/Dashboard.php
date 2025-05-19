@@ -617,7 +617,7 @@ class Dashboard extends CI_Controller
         $client = new \GuzzleHttp\Client();
         $options = [
         'form_params' => [
-          'token' => 'LcoQVK5S35r43GNN6JH6bYyhKepVct9mQLHfy5B6hsK9E2Boaj',
+          'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
           'number' => '081311196988',
           'message' => 'Testing RAISA',
           'date' => date('Y-m-d'),

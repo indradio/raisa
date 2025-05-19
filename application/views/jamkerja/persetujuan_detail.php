@@ -110,6 +110,7 @@
                 <thead>
                     <tr>
                         <th>Kategori</th>
+                        <th>copro</th>
                         <th>Aktivitas</th>
                         <th>Deskripsi</th>
                         <th>Hasil (%)</th>
@@ -120,6 +121,7 @@
                 <tfoot>
                     <tr>
                         <th>Kategori</th>
+                        <th>copro</th>
                         <th>Aktivitas</th>
                         <th>Deskripsi</th>
                         <th>Hasil</th>
@@ -130,32 +132,37 @@
                 <tbody>
                     <?php
                      // Fetch all categories and map them by ID
-                    $kategori_data = $this->db->get('jamkerja_kategori')->result_array();
-                    $kategori_map = [];
-                    foreach ($kategori_data as $kategori_row) {
-                        $kategori_map[$kategori_row['id']] = $kategori_row['nama'];
-                    }
-
-                    foreach ($aktivitas as $row) : ?>
+                    foreach ($aktivitas as $row) : 
+                    
+                      $mapKategori = [
+                        1 => 'Project',
+                        2 => 'Non Project',
+                        3 => 'Lain-lain Project'
+                    ];
+                    
+                    $kategori = $mapKategori[$row['kategori']] ?? 'N/A';
+                    
+                    ?>
                         <tr>
-                            <td><?= isset($kategori_map[$row['kategori']]) ? $kategori_map[$row['kategori']] : 'Unknown' ?> <small>(<?= $row['copro']; ?>)</small></td>
+                            <td><?= $kategori; ?></td>
+                            <td><?= $row['copro']; ?>
+                            <?php 
+                            if ($this->session->userdata('npk')=='0209'){
+                              if ($row['copro']){
+                                echo '<a href="#" class="badge badge-sm badge-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#ubahCopro" data-id="'. $row['id'] .'">UBAH COPRO</a>';
+                              }else{
+                                echo '<a href="#" class="badge badge-sm badge-default disabled" role="button" aria-disabled="true">NON PROJEK</a>';
+                              }
+                            }
+                            ?>
+                            </td>
+                            <td><?= $row['aktivitas']; ?></td>
                             <td><?= $row['aktivitas']; ?></td>
                             <td><?= $row['deskripsi_hasil']; ?></td>
                             <td><?= $row['progres_hasil']; ?></td>
                             <td><?= $row['durasi']; ?></td>
                             <td>
-                            <?php if ($this->session->userdata('npk')=='0209'){
-                              if ($row['copro']){
-                                echo '<a href="#" class="btn btn-sm btn-success" role="button" aria-disabled="false" data-toggle="modal" data-target="#ubahCopro" data-id="'. $row['id'] .'">UBAH COPRO</a>';
-                              }else{
-                                echo '<a href="#" class="btn btn-sm btn-default disabled" role="button" aria-disabled="true">NON PROJEK</a>';
-                              }
-                              $role = 'ppic';
-                            }else{
-                              $role = 'koordinator';
-                            }
-                            echo '<a href="#" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $row['id'] .'">HAPUS</a>';
-                            ?>
+                            <?php echo '<a href="#" class="btn btn-sm btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusAktivitas" data-id="'. $row['id'] .'">HAPUS</a>'; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -167,14 +174,16 @@
                         <div class="row">
                         <div class="col-md-12">
                         <?php 
-                            $this->db->distinct();
-                            $this->db->select('copro');
-                            $this->db->where('link_aktivitas', $jamkerja['id']);
-                            $aktivitas_copro = $this->db->get('aktivitas')->result_array();
-                            foreach ($aktivitas_copro as $ac) : 
-                              $project = $this->db->get_where('project', ['copro' =>  $ac['copro']])->row_array();
-                              if ($ac['copro']){
-                                echo  $ac['copro'] . ' = '. $project['deskripsi'] . '<br>';  
+                            if ($this->session->userdata('npk')=='0209'){
+                              $role = 'ppic';
+                            }else{
+                              $role = 'koordinator';
+                            }
+
+                            foreach ($aktivitas as $row) : 
+                              if ($row['copro']){
+                                $project = $this->db->get_where('project', ['copro' =>  $row['copro']])->row_array();
+                                echo  $row['copro'] . ' = '. $project['deskripsi'] . '<br>';  
                               }
                             endforeach; 
                         ?>
@@ -189,6 +198,7 @@
                                     <button type="submit" class="btn btn-fill btn-success">APPROVE</button>
                                     
                                     <a href="#" class="btn btn btn-warning" role="button" aria-disabled="false" data-toggle="modal" data-target="#revisiJamkerja" data-id="<?= $jamkerja['id']; ?>">REVISI</a>
+                                    <a href="#" class="btn btn btn-danger" role="button" aria-disabled="false" data-toggle="modal" data-target="#hapusJamkerja" data-id="<?= $jamkerja['id']; ?>">HAPUS</a>
                                     <!-- <a href="<?= base_url('jamkerja/persetujuan') ?>" class="btn btn-default" role="button">Kembali</a> -->
                                   </form>
                                 <?php } ?>
@@ -341,13 +351,13 @@
 </div>
 
 <!-- Modal Revisi Jam Kerja-->
-<div class="modal fade" id="revisiJamkerja" tabindex="-1" role="dialog" aria-labelledby="revisiJamkerjaTitle" aria-hidden="true">
+<div class="modal fade" id="revisiJamkerja" tabindex="-1" role="dialog" aria-labelledby="revisiJamkerjaTitle">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="card card-signup card-plain">
         <div class="modal-header">
           <div class="card-header card-header-primary text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <button type="button" class="close" data-dismiss="modal">
               <i class="material-icons">clear</i>
             </button>
             <h4 class="card-title">ALASAN REVISI</h4>
@@ -367,14 +377,14 @@
   </div>
 </div>
 
-<!-- Modal Revisi Jam Kerja-->
-<div class="modal fade" id="hapusJamkerja" tabindex="-1" role="dialog" aria-labelledby="hapusJamkerjaTitle" aria-hidden="true">
+<!-- Modal Hapus Jam Kerja-->
+<div class="modal fade" id="hapusJamkerja" tabindex="-1" role="dialog" aria-labelledby="hapusJamkerjaTitle">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="card card-signup card-plain">
         <div class="modal-header">
           <div class="card-header card-header-danger text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <button type="button" class="close" data-dismiss="modal">
               <i class="material-icons">clear</i>
             </button>
             <h4 class="card-title">YAKIN MAU MENGHAPUS JAM KERJA INI?</h4>
@@ -383,8 +393,8 @@
         <form class="form" method="post" action="<?= base_url('jamkerja/hapus'); ?>">
           <div class="modal-body">
             <input type="hidden" class="form-control" id="id" name="id" value="<?= $jamkerja['id']; ?>">
-            <h4 class="card-title text-center">#<?= $jamkerja['id'].' - '. $jamkerja['nama']; ?></br>
-            <small><?= date("d M Y", strtotime($jamkerja['tglmulai'])).' - '.$jamkerja['nama']; ?></small>
+            <h4 class="card-title text-center"><?= date("d M Y", strtotime($jamkerja['tglmulai'])).' - '. $jamkerja['nama']; ?></br>
+            <small>#<?= $jamkerja['id']; ?></small>
             </br>
             <small class="text-danger"><i>INGAT! Jam kerja yang dihapus tidak dapat diaktifkan kembali.</i></small>
           </div>
@@ -421,12 +431,10 @@
                             <div class="form-group">
                                 <label for="kategori">Kategori*</label>
                                 <select class="form-control selectpicker" name="kategori" id="kategori" title="Pilih Kategori" data-style="btn btn-link" data-size="3" data-live-search="false" onchange="kategoriSelect(this);" required>
-                                        <?php foreach ($kategori as $row) 
-                                        {
-                                            echo '<option value="' . $row->id . '">' . $row->nama . '</option>';
-                                        }
-                                        ?>
-                                    </select>
+                                  <option value="1">PROJECT</option>
+                                  <option value="2">LAIN-LAIN PROJECT</option>
+                                  <option value="3">NON PROJECT</option>
+                                </select>
                             </div>
                             <div class="form-group" id="copro_0" style="display:none;">
                                 <label for="copro">Project*</label>

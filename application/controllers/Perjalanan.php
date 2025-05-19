@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //load Guzzle Library
 require_once APPPATH.'third_party/guzzle/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class Perjalanan extends CI_Controller
 {

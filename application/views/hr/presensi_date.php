@@ -17,12 +17,18 @@
                   <div class="col-md-3">
                     <label for="prdate" class="bmd-label-floating">Select Date *</label>
                     <input type="text" class="form-control datepicker" id="prdate" name="prdate" required="true" />
-                    <button type="button" class="btn btn-twitter" id="selectDateBtn"><i class="material-icons">search</i> Search by Date</button>
+                    <button type="button" class="btn btn-twitter" id="selectDateBtn"><i class="material-icons">search</i> Search</button>
                   </div>
                   <div class="col-md-6"></div>
                 </div>
               </form>
              
+              <a href="<?= base_url('hr/presensi/pivot'); ?>" class="btn btn-linkedin">
+                <span class="btn-label">
+                  <i class="material-icons">dataset</i>
+                </span>
+                PIVOT RANGE
+              </a>
               <a href="<?= base_url('hr/download/presensi'); ?>" class="btn btn-linkedin" target="_blank">
                 <span class="btn-label">
                   <i class="material-icons">cloud_download</i>
@@ -68,17 +74,6 @@
     $('#selectDateBtn').on('click', function () {
        
       $('#dt-presensi').DataTable().ajax.reload();
-      $.notify({
-          icon: "add_alert",
-          message: "<b>LOADING!</b> Data sedang diproses."
-      }, {
-          type: "success",
-          timer: 2000,
-          placement: {
-          from: "top",
-          align: "center"
-          }
-      });
 
     });
 

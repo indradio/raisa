@@ -42,55 +42,22 @@
             </div>
             <div class="material-datatables">
               <div class="table-responsive">
-                <table id="dtperjalanan" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <table id="dt-presensi" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
                       <th>Tanggal</th>
+                      <th>Jam</th>
                       <th>NPK</th>
                       <th>Nama</th>
-                      <th>Jam</th>
-                      <th>State</th>
-                      <th>New State</th>
-                      <th>Section</th>
-                      <th>Dept</th>
+                      <th>Shift</th>
+                      <th>Status</th>
+                      <th>Keterangan</th>
                       <th>Lokasi</th>
-                      <th>Device</th>
+                      <th>Atasan</th>
+                      <th>HR</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php
-                      $this->db->where('year(time)', $tahun);
-                      $this->db->where('month(time)', $bulan);
-                      $presensi = $this->db->get('presensi')->result_array();
-                      foreach ($presensi as $p) :
-                        $dept = $this->db->get_where('karyawan_dept', ['id' => $p['dept_id']])->row_array();
-                        $sect = $this->db->get_where('karyawan_sect', ['id' => $p['sect_id']])->row_array();
-                      if (date('D', strtotime($p['time'])) == 'Sat' or date('D', strtotime($p['time'])) == 'Sun') {
-                        echo '<tr class="table-danger">';
-                      } else {
-                        echo '<tr>';
-                      }
-                      echo '<th>' . date('m-d-Y', strtotime($p['time'])) . '</th>';
-                      echo '<th>' . $p['npk'] . '</th>';
-                      echo '<th>' . $p['nama'] . '</th>';
-                      echo '<th>' . date('H:i', strtotime($p['time'])) . '</th>';
-                      echo '<th>' . $p['state'] . '</th>';
-                      echo '<th>' . $p['work_state'] . '</th>';
-                      if ($sect){
-                          echo '<th>' . $sect['nama'] . '</th>';
-                        }else{
-                            echo '<th></th>';
-                        }
-                        if ($dept){
-                            echo '<th>' . $dept['nama'] . '</th>';
-                        }else{
-                            echo '<th></th>';
-                        }
-                        echo '<th>' . $p['location'] . '</th>';
-                        echo '<th>' . $p['platform'] . '</th>';
-                    endforeach;
-                    ?>
-                  </tbody>
                 </table>
               </div>
             </div>
@@ -106,3 +73,56 @@
     <!-- end row -->
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+
+
+    $('#dt-presensi').DataTable({
+        "pagingType": "full_numbers",
+          scrollX: true,
+          dom: 'Bfrtip',
+          buttons: [
+              {
+                  extend: 'excelHtml5',
+                  title: 'LAPORAN PRESENSI',
+                  text:'<i class="fa fa-table fainfo" aria-hidden="true" ></i>',
+                  footer: true
+              },
+              'copy',
+              'csv', 
+              'print'
+          ],
+          "lengthMenu": [
+              [25, 50, 100, -1],
+              [25, 50, 100, "All"]
+          ],
+          serverSide: false,
+          processing: true,
+          ajax: {
+                  "url"   : "<?= site_url('hr/get_presensi_by_raw') ?>",
+                  "type"  : "POST",
+                  "data"  : function(d) {
+                            d.year = $('#year').val(), // Ambil nilai terbaru setiap reload
+                            d.month = $('#month').val() // Ambil nilai terbaru setiap reload
+                      }
+              },
+          columns: [
+              { "data": "date", className: "text-center" },
+              { "data": "time", className: "text-center" },
+              { "data": "npk" },
+              { "data": "nama" },
+              { "data": "work_state" },
+              { "data": "direct_state" },
+              { "data": "description" },
+              { "data": "location" },
+              { "data": "approved" },
+              { "data": "hr" }
+          ],
+          language: {
+              search: "_INPUT_",
+              searchPlaceholder: "Search records",
+          }
+      });
+  });
+</script>
