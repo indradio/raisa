@@ -90,7 +90,7 @@
                         <label class="col-md-5 col-form-label">jam Berangkat</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="07:30" required>
+                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="07:00" required>
                          </div>
                         </div>
                       </div>
@@ -98,7 +98,7 @@
                         <label class="col-md-5 col-form-label">jam Kembali</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" value="16:30" required>
+                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" value="16:00" required>
                           </div>
                         </div>
                       </div>
@@ -138,7 +138,7 @@
                         <label class="col-md-5 col-form-label">jam Berangkat</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="07:30" required>
+                            <input type="text" class="form-control timepicker" id="jamberangkat" name="jamberangkat" value="07:00" required>
                          </div>
                         </div>
                       </div>
@@ -146,7 +146,7 @@
                         <label class="col-md-5 col-form-label">jam Kembali</label>
                         <div class="col-md-6">
                           <div class="form-group has-default">
-                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" value="16:30" required>
+                            <input type="text" class="form-control timepicker" id="jamkembali" name="jamkembali" value="16:00" required>
                           </div>
                         </div>
                       </div>

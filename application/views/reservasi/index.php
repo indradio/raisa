@@ -122,8 +122,8 @@
     
       var now_d = '<?= date('D') ?>';
       let now_t = <?= strtotime(date('H:i:s')) ?>;
-      let min_t = <?= strtotime(date('07:30:00')) ?>;
-      let max_t = <?= strtotime(date('16:30:00')) ?>;
+      let min_t = <?= strtotime(date('07:00:00')) ?>;
+      let max_t = <?= strtotime(date('16:00:00')) ?>;
 
       if (now_d == 'Sat' || now_d == 'Sun' || now_t < min_t || now_t > max_t) {
 
