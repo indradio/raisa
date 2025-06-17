@@ -5,7 +5,7 @@ class Zmpu_model extends CI_Model
     var $table = 'zmpu';
     var $column_order = array('pr_date','pr_no','copro','requestor','pr_desc','pr_qty','pr_uom',null,'pic_pch',null); //set column field database for datatable orderable
     var $column_search = array('pr_date','copro','pr_no','pr_desc'); //set column field database for datatable searchable 
-    var $order = array('pr_date' => 'asc'); // default order 
+    var $order = array('pr_date' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -70,16 +70,4 @@ class Zmpu_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    // function fetch_project()
-    // {
-    //     $this->db->order_by("copro", "ASC");
-    //     $query = $this->db->get("project");
-    //     return $query->result();
-    // }
-
-    // function fetch_status()
-    // {
-    //     $query = $this->db->get("project_status");
-    //     return $query->result();
-    // }
 }
