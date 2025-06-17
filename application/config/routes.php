@@ -52,3 +52,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['purchase-request'] = 'Purchaserequest/index';
+$route['purchase-request/pch'] = 'Purchaserequest/zmpu';
+$route['purchase-request/outstanding'] = 'Purchaserequest/informasi';
