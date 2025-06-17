@@ -23,8 +23,8 @@ class Purchaserequest extends CI_Controller
 
     public function index()
     {
-        $data['sidemenu'] = 'Purchase Request';
-        $data['sidesubmenu'] = '';
+        $data['sidemenu'] = 'Info PCH';
+        $data['sidesubmenu'] = 'PR Update';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
 
         $counts = $this->db
