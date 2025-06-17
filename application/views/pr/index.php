@@ -105,8 +105,8 @@
                                         <th>PR DATE</th>
                                         <th>PR NUMBER</th>
                                         <th>STATUS</th>
-                                        <th>COPRO</th>
                                         <th>REQUESTOR</th>
+                                        <th>COPRO</th>
                                         <th>DESC</th>
                                         <th>QTY</th>
                                         <th>UoM</th>
@@ -121,8 +121,8 @@
                                         <th>PR Date</th>
                                         <th>PR Number</th>
                                         <th>Status</th>
-                                        <th>COPRO</th>
                                         <th>Requestor</th>
+                                        <th>COPRO</th>
                                         <th>Description</th>
                                         <th>Qty</th>
                                         <th>UoM</th>
