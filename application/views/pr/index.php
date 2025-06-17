@@ -91,7 +91,7 @@
                     <div class="card-body">
                         <div class="toolbar d-flex justify-content-between align-items-center">
                             <h3 class="mb-0">Last Update : <?= $last; ?></h3>
-                            <?php if ($this->session->userdata('sect_id') == '222'): ?>
+                            <?php if ($this->session->userdata('sect_id') == '222' or $this->session->userdata('npk') == '1111'): ?>
                                 <a href="#" class="btn btn-linkedin" role="button" aria-disabled="false" data-toggle="modal" data-target="#importProject">
                                     Import ZMPU
                                 </a>
@@ -310,6 +310,7 @@
                                 <!-- </div> -->
                             </div>
                             <div class="modal-footer justify-content-right">
+                            <a href="<?= base_url('assets/temp_excel/template_upload_zmpu.xlsx'); ?>" class="btn btn-linkedin btn-link" role="button" aria-disabled="false">DOWNLOAD TEMPLATE</a>
                                 <button type="submit" class="btn btn-success">Import</button>
                             </div>
                         </div>
