@@ -1699,7 +1699,7 @@ class Perjalanan extends CI_Controller
                     'kendaraan' => "{$row->nopol_p} - {$row->kendaraan_p}"
                 ];
             } else {
-                $btnType = ($row->status == 0) ? 'danger' : 'warning';
+                $btnType = ($row->status_reservasi == 0) ? 'danger' : 'warning';
                 $statusRSV = "<button type='button' class='btn btn-outline-{$btnType} btn-sm' data-toggle='modal' data-target='#rsvModal' data-id='{$row->reservasi_id}'>{$row->status_reservasi}</button>";
 
                 $output['data'][] = [
