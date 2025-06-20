@@ -56,9 +56,8 @@ class Lembur extends CI_Controller
         $data['sidemenu'] = 'Lembur';
         $data['sidesubmenu'] = 'LemburKu';
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
-        // $data['lembur'] = $this->db->get_where('lembur', ['npk' =>  $this->session->userdata('npk')])->result_array();
 
-        $this->output->cache(10); // Durasi dalam menit
+        $this->output->cache(5); // Durasi dalam menit
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -2576,19 +2575,20 @@ class Lembur extends CI_Controller
                 //     }else{
                 //         $actions = "<a href='#' class='btn btn-link btn-warning btn-just-icon edit disabled'><i class='material-icons'>dvr</i></a>";
                 //     }
-    if (empty($row->admin_ppic)){
-        $admin_ppic = '-';
-        $tgl_admin_ppic = '-';
-    }else{
-        $admin_ppic = 'Disetujui oleh '.$row->admin_ppic;
-        $tgl_admin_ppic = date('d-m-Y H:i', strtotime($row->tgl_admin_ppic));
-    }
 
-    if ($row->status=='8'){
-        $status_lembur = 'Menunggu PPIC';
-    } elseif ($row->status=='9'){
-        $status_lembur = 'Selesai';
-    }
+                if (empty($row->admin_ppic)){
+                    $admin_ppic = '-';
+                    $tgl_admin_ppic = '-';
+                }else{
+                    $admin_ppic = 'Disetujui oleh '.$row->admin_ppic;
+                    $tgl_admin_ppic = date('d-m-Y H:i', strtotime($row->tgl_admin_ppic));
+                }
+
+                if ($row->status=='8'){
+                    $status_lembur = 'Menunggu PPIC';
+                } elseif ($row->status=='9'){
+                    $status_lembur = 'Selesai';
+                }
 
                 $output['data'][] = array(
                     "id" => $row->id,
@@ -2761,32 +2761,48 @@ class Lembur extends CI_Controller
            
         }elseif ($params=='lemburku'){
           
-            $this->db->where('npk', $this->session->userdata('npk'));
-            $this->db->where('tglmulai >=', date('Y-m-d', strtotime('-3 months')));
-            $lembur = $this->db->get('lembur')->result();
+            $this->db->select('l.id, l.tglmulai, l.tglselesai, l.durasi_rencana, l.durasi, l.tul, ls.nama AS status_nama, l.status');
+            $this->db->from('lembur l');
+            $this->db->join('lembur_status ls', 'ls.id = l.status', 'left');
+            $this->db->where('l.npk', $this->session->userdata('npk'));
+            $this->db->where('l.tglmulai >=', date('Y-m-d', strtotime('-12 months')));
+            $lembur = $this->db->get()->result();
+
+            $output['data'] = [];
 
             foreach ($lembur as $row) {
+                $durasi = ($row->status < 5) ? $row->durasi_rencana : $row->durasi;
 
-                $status = $this->db->get_where('lembur_status', ['id' => $row->status])->row();
+                if ($row->status == '0') {
+                    $status = '<a href="#" class="btn btn-sm btn-danger" style="pointer-events: none; cursor: default;">DIBATALKAN</a>';
+                } elseif ($row->status == '2' or $row->status == '3' or $row->status == '5' or $row->status == '6') {
+                    $status = '<a href="#" class="btn btn-sm btn-reddit" style="pointer-events: none; cursor: default;">'.$row->status.'</a>';
+                } elseif ($row->status == '4') {
+                    $status = '<a href="#" class="btn btn-sm btn-info" style="pointer-events: none; cursor: default;">REALISASI</a>';
+                } elseif ($row->status == '7' ) {
+                    $status = '<a href="#" class="btn btn-sm btn-dribbble" style="pointer-events: none; cursor: default;">ADMIN HR</a>';
+                } elseif ($row->status == '8') {
+                    $status = '<a href="#" class="btn btn-sm btn-dribbble" style="pointer-events: none; cursor: default;">ADMIN PPIC</a>';
+                } elseif ($row->status == '9') {
+                    $status = '<a href="#" class="btn btn-sm btn-success" style="pointer-events: none; cursor: default;">SELESAI</a>';
+                } else {
+                    $status = '<a href="#" class="btn btn-sm btn-default" style="pointer-events: none; cursor: default;">REQUEST</a>';
+                }
 
-                if ($row->status < 5):
-                    $durasi = $row->durasi_rencana;
-                else :
-                    $durasi = $row->durasi;
-                endif;
-
-                $output['data'][] = array(
+                $output['data'][] = [
                     "id" => $row->id,
+                    "status" => $status,
                     "mulai" => date('d M y H:i', strtotime($row->tglmulai)),
                     "selesai" => date('d M y H:i', strtotime($row->tglselesai)),
                     "durasi" => $durasi,
-                    "catatan" => $row->catatan,
-                    "status" => $status->nama,
-                    "action" => ""
-                );
+                    "tul" => $row->tul,
+                    "action" => '<a href="#" class="btn btn-sm btn-info" style="pointer-events: none; cursor: default;">DETAIL</a>'
+                ];
             }
+
             echo json_encode($output);
-            exit();
+            exit;
+
 
         }elseif ($params=='penyimpangan')
         {

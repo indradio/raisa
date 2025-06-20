@@ -100,23 +100,23 @@
               <table id="dtlembur" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                   <tr>
-                    <th>No. Lembur</th>
+                    <th>ID</th>
+                    <th>Status</th>
                     <th>Mulai</th>
                     <th>Selesai</th>
                     <th>Durasi</th>
-                    <th>Catatan</th>
-                    <th>Status</th>
+                    <th>Est. TUL</th>
                     <th class="disabled-sorting text-right">Actions</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>No. Lembur</th>
+                    <th>ID</th>
+                    <th>Status</th>
                     <th>Mulai</th>
                     <th>Selesai</th>
                     <th>Durasi</th>
-                    <th>Catatan</th>
-                    <th>Status</th>
+                    <th>Est. TUL</th>
                     <th class="text-right">Actions</th>
                   </tr>
                 </tfoot>
@@ -344,16 +344,16 @@
             order: [0,"desc"],
             ajax: {
                     "url"   : "<?= site_url('lembur/getData/lemburku') ?>",
-                    "type"  : "POST",
-                    "data"  : {id:$('#id').val()}
+                    "type"  : "GET",
+                    // "data"  : {id:$('#id').val()}
                 },
             columns: [
                 { "data": "id" },
+                { "data": "status" },
                 { "data": "mulai" },
                 { "data": "selesai" },
                 { "data": "durasi" },
-                { "data": "catatan" },
-                { "data": "status" },
+                { "data": "tul" },
                 { "data": "action", className: "text-right" }
             ],
         });
