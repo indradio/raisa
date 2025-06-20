@@ -1671,7 +1671,8 @@ class Perjalanan extends CI_Controller
             $this->db->from('reservasi r');
             $this->db->join('reservasi_status rs', 'rs.id = r.status', 'left');
             $this->db->join('perjalanan p', 'p.reservasi_id = r.id AND p.status < 4', 'left');
-            $this->db->where('r.status !=', 0);
+            $this->db->where('r.status >', 0);
+            $this->db->where('r.status <', 9);
             $this->db->where('r.tglberangkat <=', date('Y-m-d'));
             $this->db->where('r.tglkembali >=', date('Y-m-d'));
             $reservasi = $this->db->get()->result();
