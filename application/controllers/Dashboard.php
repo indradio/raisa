@@ -15,8 +15,8 @@ class Dashboard extends CI_Controller
         is_logged_in();
         $this->load->model("dashboard_model");
 
-        $this->update_perjalanan();
-        $this->update_lembur();
+        // $this->update_perjalanan();
+        // $this->update_lembur();
     }
 
     public function update_perjalanan()
@@ -50,75 +50,7 @@ class Dashboard extends CI_Controller
                 $this->db->update('reservasi');
 
                 //Notifikasi ke USER
-                //Kirim pesan via Whatsapp
-                // $curl = curl_init();
 
-                // $message = [
-                // "messageType"   => "text",
-                // "to"            =>  $user['phone'],
-                // "body"          => "*" . $p['id'] . " - PERJALANAN KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*" .
-                // "\r\n \r\nTujuan : *" . $p['tujuan'] . "*" .
-                // "\r\nKeperluan : *" . $p['keperluan'] . "*" .
-                // "\r\nPeserta : *" . $p['anggota'] . "*" .
-                // "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . " " . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
-                // "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                // "\r\nBatas Waktu keberangkatan :" .
-                // "\r\n1 Jam untuk perjalanan dengan COPRO" .
-                // "\r\n2 Jam untuk perjalanan tanpa COPRO",
-                // "file"          => "",
-                // "delay"         => 10,
-                // "schedule"      => 1665408510000
-                // ];
-                
-                // curl_setopt_array($curl, array(
-                // CURLOPT_URL => 'https://api.starsender.online/api/send',
-                // CURLOPT_RETURNTRANSFER => true,
-                // CURLOPT_ENCODING => '',
-                // CURLOPT_MAXREDIRS => 10,
-                // CURLOPT_TIMEOUT => 0,
-                // CURLOPT_FOLLOWLOCATION => true,
-                // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                // CURLOPT_CUSTOMREQUEST => 'POST',
-                // CURLOPT_POSTFIELDS => json_encode($message),
-                // CURLOPT_HTTPHEADER => array(
-                //     'Content-Type:application/json',
-                //     'Authorization: 26e68837-3e49-4692-b389-e2e132de361c'
-                // ),
-                // ));
-                
-                // $response = curl_exec($curl);
-                // curl_close($curl);
-
-
-                // $client = new \GuzzleHttp\Client();
-                // $response = $client->post(
-                //     'https://region01.krmpesan.com/api/v2/message/send-text',
-                //     [
-                //         'headers' => [
-                //             'Content-Type' => 'application/json',
-                //             'Accept' => 'application/json',
-                //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-                //         ],
-                //         'json' => [
-                //             'phone' => $user['phone'],
-                //             'message' => "*[DIBATALKAN] PERJALANAN DINAS KAMU MELEBIHI BATAS WAKTU KEBERANGKATAN*". 
-                //                 "\r\n \r\n No. PERJALANAN : *" . $p['id'] . "*" .
-                //                 "\r\nTujuan : *" . $p['tujuan'] . "*" .
-                //                 "\r\nKeperluan : *" . $p['keperluan'] . "*" .
-                //                 "\r\nPeserta : *" . $p['anggota'] . "*" .
-                //                 "\r\nBerangkat : *" . date('d-M', strtotime($p['tglberangkat'])) . "* *" . date('H:i', strtotime($p['jamberangkat'])) . "* _estimasi_" .
-                //                 "\r\nKembali : *" . date('d-M', strtotime($p['tglkembali'])) . "* *" . date('H:i', strtotime($p['jamkembali'])) . "* _estimasi_" .
-                //                 "\r\nKendaraan : *" . $p['nopol'] . "* ( *" . $p['kepemilikan'] . "* )" .
-                //                 "\r\nCatatan : *" . $p['catatan'] .  "*" .
-                //                 "\r\n \r\nWaktu keberangkatan perjalanan kamu melebihi batas waktu keberangkatan" .
-                //                 "\r\nBatas Waktu keberangkatan :" .
-                //                 "\r\n1 Jam untuk perjalanan dengan COPRO" .
-                //                 "\r\n2 Jam untuk perjalanan tanpa COPRO" .
-                //                 "\r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-                //                 ],
-                //     ]
-                // );
-                // $body = $response->getBody();
             }
             
         endforeach;
@@ -287,12 +219,12 @@ class Dashboard extends CI_Controller
     public function index()
     {
         date_default_timezone_set('asia/jakarta');
-        // Aktifkan cache untuk 10 menit (600 detik)
-        $this->output->cache(10); // Durasi dalam menit
+        // Aktifkan cache untuk 15 menit (900 detik)
+        $this->output->cache(15); // Durasi dalam menit
 
-        $this->db->where('is_active', '1');
-        $this->db->where('id !=', '1');
-        $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
+        // $this->db->where('is_active', '1');
+        // $this->db->where('id !=', '1');
+        // $data['kendaraan'] = $this->db->get('kendaraan')->result_array();
 
         if ($this->session->userdata('posisi_id') < 7){
 
@@ -311,20 +243,23 @@ class Dashboard extends CI_Controller
             WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '5') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '6') ";
             $data['RealisasiLembur'] = $this->db->query($queryRealisasiLembur)->result_array();
 
-            $queryCuti = "SELECT *
-            FROM `cuti`
-            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
-            $data['Cuti'] = $this->db->query($queryCuti)->result_array();
+            // $queryCuti = "SELECT *
+            // FROM `cuti`
+            // WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+            // $data['Cuti'] = $this->db->query($queryCuti)->result_array();
 
             $queryPresensi = "SELECT *
             FROM `presensi`
             WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1')";
             $data['presensi'] = $this->db->query($queryPresensi)->result_array();
 
-            $queryIMP = "SELECT *
-            FROM `imp`
-            WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
-            $data['imp'] = $this->db->query($queryIMP)->result_array();
+            // $queryIMP = "SELECT *
+            // FROM `imp`
+            // WHERE(`atasan1` = '{$this->session->userdata('inisial')}' AND `status`= '1') OR (`atasan2` = '{$this->session->userdata('inisial')}' AND `status`= '2') ";
+            // $data['imp'] = $this->db->query($queryIMP)->result_array();
+
+            $data['Cuti'] = null;
+            $data['imp'] = null;
 
         }else{
             $data['Reservasi'] = null;
@@ -336,8 +271,6 @@ class Dashboard extends CI_Controller
 
         }
 
-        $queryVOTE = $this->db->query("SELECT COUNT(*) AS total_votes FROM `vote_bipartit` WHERE `npk` = '{$this->session->userdata('npk')}'")->row_array();
-        $data['vote'] = $queryVOTE['total_votes'];
 
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
