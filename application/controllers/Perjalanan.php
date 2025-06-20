@@ -1662,11 +1662,12 @@ class Perjalanan extends CI_Controller
 
             // Ambil semua reservasi aktif hari ini, join dengan status dan perjalanan
             $this->db->select('
-            r.id AS reservasi_id, r.tglberangkat, r.tglkembali, r.jamberangkat, r.tujuan, r.anggota, r.nopol, r.kendaraan,
-            rs.nama AS status_reservasi,
-            p.id AS perjalanan_id, p.status AS status_perjalanan, p.tglberangkat AS tgl_p, p.jamberangkat AS jam_p, 
-            p.tujuan AS tujuan_p, p.anggota AS anggota_p, p.nopol AS nopol_p, p.kendaraan AS kendaraan_p
+                r.id AS reservasi_id, r.tglberangkat, r.tglkembali, r.jamberangkat, r.tujuan, r.anggota, r.nopol, r.kendaraan,
+                r.status AS status_reservasi, rs.nama AS nama_status_reservasi,
+                p.id AS perjalanan_id, p.status AS status_perjalanan, p.tglberangkat AS tgl_p, p.jamberangkat AS jam_p, 
+                p.tujuan AS tujuan_p, p.anggota AS anggota_p, p.nopol AS nopol_p, p.kendaraan AS kendaraan_p
             ');
+
             $this->db->from('reservasi r');
             $this->db->join('reservasi_status rs', 'rs.id = r.status', 'left');
             $this->db->join('perjalanan p', 'p.reservasi_id = r.id AND p.status < 4', 'left');
