@@ -21,85 +21,73 @@ class Auth extends CI_Controller
         $this->db->delete('log');
         
         //Delete Lembur yg diBatalkan setelah 40 Hari
-        $lembur = $this->db->get_where('lembur', ['status' => '0'])->result_array();
-        foreach ($lembur as $l) :
-            // cari selisih
-            $sekarang = strtotime(date('Y-m-d'));
-            $tempo = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($l['tglmulai']))));
+        $last40 = date('Y-m-d', strtotime('-40 days'));
 
-            if ($tempo < $sekarang) {
+        // Ambil ID lembur yang akan dihapus
+        $lembur = $this->db->select('id')
+            ->from('lembur')
+            ->where('status', 0)
+            ->where('tglmulai <', $last40)
+            ->get()
+            ->result_array();
 
-                $this->db->set('lembur');
-                $this->db->where('id', $l['id']);
-                $this->db->delete('lembur');
+        $lembur_id = array_column($lembur, 'id');
 
-                //Hapus Aktivitas
-                $this->db->set('aktivitas');
-                $this->db->where('link_aktivitas', $l['id']);
-                $this->db->delete('aktivitas');
-            }
-        endforeach;
+        if (!empty($lembur_id)) {
+            // Hapus lembur
+            $this->db->where_in('id', $lembur_id)->delete('lembur');
+
+            // Hapus aktivitas
+            $this->db->where_in('link_aktivitas', $lembur_id)->delete('aktivitas');
+        }
+
 
         //Delete Perjalanan yg belum selesai setelah 40 Hari
-        $this->db->where('status <', '9');
-        $this->db->where('tglberangkat <', date('Y-m-d', strtotime('-40 days')));
-        $perjalanan = $this->db->get('perjalanan')->result_array();
+        $perjalanan = $this->db->select('id, reservasi_id')
+            ->from('perjalanan')
+            ->where('status <', 9)
+            ->where('tglberangkat <', $last40)
+            ->get()
+            ->result_array();
 
-        foreach ($perjalanan as $row) :
-            // cari selisih
-            // $now = strtotime(date('Y-m-d'));
-            // $due = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($row['tglberangkat']))));
+        // Ambil array ID perjalanan dan reservasi
+        $perjalanan_ids = array_column($perjalanan, 'id');
+        $reservasi_ids = array_column($perjalanan, 'reservasi_id');
 
-            // if ($due < $now) {
+        // Hapus semua data terkait jika ada data
+        if (!empty($perjalanan_ids)) {
+            $this->db->where_in('id', $perjalanan_ids)->delete('perjalanan');
+            $this->db->where_in('perjalanan_id', $perjalanan_ids)->delete('perjalanan_anggota');
+            $this->db->where_in('perjalanan_id', $perjalanan_ids)->delete('perjalanan_tujuan');
+            $this->db->where_in('perjalanan_id', $perjalanan_ids)->delete('perjalanan_ta');
+            $this->db->where_in('perjalanan_id', $perjalanan_ids)->delete('perjalanan_jadwal');
+        }
 
-                $this->db->where('id', $row['id']);
-                $this->db->delete('perjalanan');
-                
-                $this->db->where('perjalanan_id', $row['id']);
-                $this->db->delete('perjalanan_anggota');
-                
-                $this->db->where('perjalanan_id', $row['id']);
-                $this->db->delete('perjalanan_tujuan');
+        if (!empty($reservasi_ids)) {
+            $this->db->where_in('id', $reservasi_ids)->delete('reservasi');
+        }
 
-                $this->db->where('perjalanan_id', $row['id']);
-                $this->db->delete('perjalanan_ta');
 
-                $this->db->where('perjalanan_id', $row['id']);
-                $this->db->delete('perjalanan_jadwal');
+        //Delete Reservasi yg diBatalkan setelah 40 Hari
+        $reservasi = $this->db->select('id')
+        ->from('reservasi')
+        ->where('status', 0)
+        ->where('tglberangkat <', $last40)
+        ->get()
+        ->result_array();
 
-                $this->db->where('id', $row['reservasi_id']);
-                $this->db->delete('reservasi');
-            // }
-        endforeach;
+        // Ambil array ID reservasi
+        $reservasi_ids = array_column($reservasi, 'id');
 
-        //Delete Perjalanan yg diBatalkan setelah 40 Hari
-        $reservasi = $this->db->get_where('reservasi', ['status' => '0'])->result_array();
-        foreach ($reservasi as $row) :
-            // cari selisih
-            $now = strtotime(date('Y-m-d'));
-            $due = strtotime(date('Y-m-d', strtotime('+40 days', strtotime($row['tglberangkat']))));
+        // Jika ada reservasi yang harus dihapus
+        if (!empty($reservasi_ids)) {
+            $this->db->where_in('id', $reservasi_ids)->delete('reservasi');
+            $this->db->where_in('id', $reservasi_ids)->delete('perjalanan_anggota');
+            $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_tujuan');
+            $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_ta');
+            $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_jadwal');
+        }
 
-            if ($due < $now) {
-
-                //Hapus Aktivitas
-                // $this->db->set('perjalanan');
-                $this->db->where('id', $row['id']);
-                $this->db->delete('reservasi');
-                
-                $this->db->where('id', $row['id']);
-                $this->db->delete('perjalanan_anggota');
-                
-                $this->db->where('reservasi_id', $row['id']);
-                $this->db->delete('perjalanan_tujuan');
-
-                $this->db->where('reservasi_id', $row['id']);
-                $this->db->delete('perjalanan_ta');
-
-                $this->db->where('reservasi_id', $row['id']);
-                $this->db->delete('perjalanan_jadwal');
-
-            }
-        endforeach;
     }
 
     public function login()
