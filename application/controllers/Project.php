@@ -29,7 +29,7 @@ class Project extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
         if($this->session->userdata('sec_id')==211){
-            $this->load->view('project/index-fa', $data);
+            $this->load->view('project/index_fa', $data);
         }else{
             $this->load->view('project/index', $data);
         }
