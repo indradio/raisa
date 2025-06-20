@@ -1672,7 +1672,6 @@ class Perjalanan extends CI_Controller
             $this->db->join('reservasi_status rs', 'rs.id = r.status', 'left');
             $this->db->join('perjalanan p', 'p.reservasi_id = r.id AND p.status < 4', 'left');
             $this->db->where('r.status >', 0);
-            $this->db->where('r.status <', 9);
             $this->db->where('r.tglberangkat <=', date('Y-m-d'));
             $this->db->where('r.tglkembali >=', date('Y-m-d'));
             $reservasi = $this->db->get()->result();
@@ -1688,29 +1687,30 @@ class Perjalanan extends CI_Controller
             ];
 
             foreach ($reservasi as $row) {
-            if ($row->perjalanan_id) {
-                $status = $status_labels[$row->status_perjalanan] ?? ['default', 'ERROR'];
-                $statusDL = "<button type='button' class='btn btn-outline-{$status[0]} btn-sm' data-toggle='modal' data-target='#dlModal' data-id='{$row->perjalanan_id}'>{$status[1]}</button>";
+                if ($row->perjalanan_id) {
+                    $status = $status_labels[$row->status_perjalanan] ?? ['default', 'ERROR'];
+                    $statusDL = "<button type='button' class='btn btn-outline-{$status[0]} btn-sm' data-toggle='modal' data-target='#dlModal' data-id='{$row->perjalanan_id}'>{$status[1]}</button>";
 
-                $output['data'][] = [
-                    'status' => $statusDL,
-                    'berangkat' => date('d-M', strtotime($row->tgl_p)) . ' ' . date('H:i', strtotime($row->jam_p)),
-                    'tujuan' => $row->tujuan_p,
-                    'peserta' => $row->anggota_p,
-                    'kendaraan' => "{$row->nopol_p} - {$row->kendaraan_p}"
-                ];
-            } else {
-                $btnType = ($row->status_reservasi == 0) ? 'danger' : 'warning';
-                $statusRSV = "<button type='button' class='btn btn-outline-{$btnType} btn-sm' data-toggle='modal' data-target='#rsvModal' data-id='{$row->reservasi_id}'>{$row->nama_status_reservasi}</button>";
+                    $output['data'][] = [
+                        'status' => $statusDL,
+                        'berangkat' => date('d-M', strtotime($row->tgl_p)) . ' ' . date('H:i', strtotime($row->jam_p)),
+                        'tujuan' => $row->tujuan_p,
+                        'peserta' => $row->anggota_p,
+                        'kendaraan' => "{$row->nopol_p} - {$row->kendaraan_p}"
+                    ];
+                } else {
+                    if($row->status_reservasi < 9){
+                        $statusRSV = "<button type='button' class='btn btn-outline-warning btn-sm' data-toggle='modal' data-target='#rsvModal' data-id='{$row->reservasi_id}'>{$row->nama_status_reservasi}</button>";
 
-                $output['data'][] = [
-                    'status' => $statusRSV,
-                    'berangkat' => date('d-M', strtotime($row->tglberangkat)) . ' ' . date('H:i', strtotime($row->jamberangkat)),
-                    'tujuan' => $row->tujuan,
-                    'peserta' => $row->anggota,
-                    'kendaraan' => "{$row->nopol} - {$row->kendaraan}"
-                ];
-            }
+                        $output['data'][] = [
+                            'status' => $statusRSV,
+                            'berangkat' => date('d-M', strtotime($row->tglberangkat)) . ' ' . date('H:i', strtotime($row->jamberangkat)),
+                            'tujuan' => $row->tujuan,
+                            'peserta' => $row->anggota,
+                            'kendaraan' => "{$row->nopol} - {$row->kendaraan}"
+                        ];
+                    }
+                }
             }
 
             if (empty($reservasi)) {
