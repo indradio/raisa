@@ -686,7 +686,7 @@
     
 
     let timerInterval
-    <?php if ($this->session->flashdata('message')=='masuk'){ ?> 
+    <?php if ($this->session->flashdata('message')=='x'){ ?> 
       
         Swal.fire({
           title: 'Qoute of the day!',
