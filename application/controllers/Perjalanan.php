@@ -1660,72 +1660,70 @@ class Perjalanan extends CI_Controller
 
         }elseif ($params=='dashboard') {
 
-            $this->db->where('tglberangkat <=',date('Y-m-d'));
-            $this->db->where('tglkembali >=',date('Y-m-d'));
-            $this->db->where('status !=',0);
-            $reservasi = $this->db->get('reservasi')->result();
-            if (!empty($reservasi)){
-                foreach ($reservasi as $row) {
+            // Ambil semua reservasi aktif hari ini, join dengan status dan perjalanan
+            $this->db->select('
+            r.id AS reservasi_id, r.tglberangkat, r.tglkembali, r.jamberangkat, r.tujuan, r.anggota, r.nopol, r.kendaraan,
+            rs.nama AS status_reservasi,
+            p.id AS perjalanan_id, p.status AS status_perjalanan, p.tglberangkat AS tgl_p, p.jamberangkat AS jam_p, 
+            p.tujuan AS tujuan_p, p.anggota AS anggota_p, p.nopol AS nopol_p, p.kendaraan AS kendaraan_p
+            ');
+            $this->db->from('reservasi r');
+            $this->db->join('reservasi_status rs', 'rs.id = r.status', 'left');
+            $this->db->join('perjalanan p', 'p.reservasi_id = r.id AND p.status < 4', 'left');
+            $this->db->where('r.status !=', 0);
+            $this->db->where('r.tglberangkat <=', date('Y-m-d'));
+            $this->db->where('r.tglkembali >=', date('Y-m-d'));
+            $reservasi = $this->db->get()->result();
 
-                    $status = $this->db->get_where('reservasi_status', ['id' => $row->status])->row(); 
+            $output['data'] = [];
 
-                    $this->db->where('status <',4);
-                    $perjalanan = $this->db->get_where('perjalanan', ['reservasi_id' => $row->id])->row();
+            $status_labels = [
+            0 => ['danger', 'PERJALANAN BATAL'],
+            1 => ['success', 'SIAP BERANGKAT'],
+            2 => ['info', 'SEDANG PERJALANAN'],
+            3 => ['default', 'SUDAH KEMBALI'],
+            4 => ['default', 'PENYELESAIAN'],
+            ];
 
-                    if (!empty($perjalanan)){
+            foreach ($reservasi as $row) {
+            if ($row->perjalanan_id) {
+                $status = $status_labels[$row->status_perjalanan] ?? ['default', 'ERROR'];
+                $statusDL = "<button type='button' class='btn btn-outline-{$status[0]} btn-sm' data-toggle='modal' data-target='#dlModal' data-id='{$row->perjalanan_id}'>{$status[1]}</button>";
 
-                        if ($perjalanan->status==0){
-                            $statusDL = "<button type='button' class='btn btn-outline-danger btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">PERJALANAN BATAL</button>";
-                        }elseif ($perjalanan->status==1){
-                            $statusDL = "<button type='button' class='btn btn-outline-success btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SIAP BERANGKAT</button>";
-                        }elseif ($perjalanan->status==2){
-                            $statusDL = "<button type='button' class='btn btn-outline-info btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SEDANG PERJALANAN</button>";
-                        }elseif ($perjalanan->status==3){
-                            $statusDL = "<button type='button' class='btn btn-outline btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">SUDAH KEMBALI</button>";
-                        }elseif ($perjalanan->status==4){
-                            $statusDL = "<button type='button' class='btn btn-outline btn-sm' data-toggle='modal' data-target='#dlModal' data-id=".$perjalanan->id.">PENYELESAIAN</button>";
-                        }else{
-                            $statusDL = "error";
-                        }
+                $output['data'][] = [
+                    'status' => $statusDL,
+                    'berangkat' => date('d-M', strtotime($row->tgl_p)) . ' ' . date('H:i', strtotime($row->jam_p)),
+                    'tujuan' => $row->tujuan_p,
+                    'peserta' => $row->anggota_p,
+                    'kendaraan' => "{$row->nopol_p} - {$row->kendaraan_p}"
+                ];
+            } else {
+                $btnType = ($row->status == 0) ? 'danger' : 'warning';
+                $statusRSV = "<button type='button' class='btn btn-outline-{$btnType} btn-sm' data-toggle='modal' data-target='#rsvModal' data-id='{$row->reservasi_id}'>{$row->status_reservasi}</button>";
 
-                        $output['data'][] = array(
-                            "status" => $statusDL,
-                            "berangkat" => date('d-M', strtotime($perjalanan->tglberangkat)) . ' ' . date('H:i', strtotime($perjalanan->jamberangkat)),
-                            "tujuan" => $perjalanan->tujuan,
-                            "peserta" => $perjalanan->anggota,
-                            "kendaraan" => $perjalanan->nopol. ' - ' .$perjalanan->kendaraan
-                        );
-                        
-                    }else{
-
-                        if ($row->status==0){
-                            $statusRSV = "<button type='button' class='btn btn-outline-danger btn-sm' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
-                        }else{
-                            $statusRSV = "<button type='button' class='btn btn-outline-warning btn-sm' data-toggle='modal' data-target='#rsvModal' data-id=".$row->id.">".$status->nama."</button>";
-                        }
-
-                        $output['data'][] = array(
-                            "status" => $statusRSV,
-                            "berangkat" => date('d-M', strtotime($row->tglberangkat)) . ' ' . date('H:i', strtotime($row->jamberangkat)),
-                            "tujuan" => $row->tujuan,
-                            "peserta" => $row->anggota,
-                            "kendaraan" => $row->nopol. ' - ' .$row->kendaraan
-                        );
-                    }
-
-                }
-            }else{
-                $output['data'][] = array(
-                    "status" =>'',
-                    "berangkat" =>'',
-                    "tujuan" =>'',
-                    "peserta" =>'',
-                    "kendaraan" =>''
-                );
+                $output['data'][] = [
+                    'status' => $statusRSV,
+                    'berangkat' => date('d-M', strtotime($row->tglberangkat)) . ' ' . date('H:i', strtotime($row->jamberangkat)),
+                    'tujuan' => $row->tujuan,
+                    'peserta' => $row->anggota,
+                    'kendaraan' => "{$row->nopol} - {$row->kendaraan}"
+                ];
             }
- 
+            }
+
+            if (empty($reservasi)) {
+            $output['data'][] = [
+                'status' => '',
+                'berangkat' => '',
+                'tujuan' => '',
+                'peserta' => '',
+                'kendaraan' => ''
+            ];
+            }
+
             echo json_encode($output);
-            exit();
+            exit;
+
 
         }elseif ($params=='travelcost') {
             
