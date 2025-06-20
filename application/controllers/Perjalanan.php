@@ -1700,7 +1700,7 @@ class Perjalanan extends CI_Controller
                 ];
             } else {
                 $btnType = ($row->status_reservasi == 0) ? 'danger' : 'warning';
-                $statusRSV = "<button type='button' class='btn btn-outline-{$btnType} btn-sm' data-toggle='modal' data-target='#rsvModal' data-id='{$row->reservasi_id}'>{$row->status_reservasi}</button>";
+                $statusRSV = "<button type='button' class='btn btn-outline-{$btnType} btn-sm' data-toggle='modal' data-target='#rsvModal' data-id='{$row->reservasi_id}'>{$row->nama_status_reservasi}</button>";
 
                 $output['data'][] = [
                     'status' => $statusRSV,
