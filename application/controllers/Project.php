@@ -21,14 +21,18 @@ class Project extends CI_Controller
     {
         $data['sidemenu'] = 'Project';
         $data['sidesubmenu'] = 'Project';
-        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
+        $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         $data['liststatus'] = $this->db->get("project_status")->result();
         $data['listcustomer'] = $this->db->get("customer")->result();
         $this->load->helper('url');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/navbar', $data);
-        $this->load->view('project/index', $data);
+        if($this->session->userdata('sec_id')==211){
+            $this->load->view('project/index-fa', $data);
+        }else{
+            $this->load->view('project/index', $data);
+        }
         $this->load->view('templates/footer');
     }
 
@@ -309,11 +313,10 @@ class Project extends CI_Controller
         } else {
             echo "Error :" . $this->upload->display_errors(); //tampilkan pesan error jika file gagal diupload
         }
-    // }
 
-    redirect('project/project/fa');
+        redirect('project/project/fa');
+
     }
-    // }
     
     public function addProject()
     {
