@@ -2775,8 +2775,14 @@ class Lembur extends CI_Controller
 
                 if ($row->status == '0') {
                     $status = '<a href="#" class="btn btn-sm btn-danger" style="pointer-events: none; cursor: default;">DIBATALKAN</a>';
-                } elseif ($row->status == '2' or $row->status == '3' or $row->status == '5' or $row->status == '6') {
-                    $status = '<a href="#" class="btn btn-sm btn-reddit" style="pointer-events: none; cursor: default;">'.$row->status.'</a>';
+                } elseif ($row->status == '2') {
+                    $status = '<a href="#" class="btn btn-sm btn-reddit" style="pointer-events: none; cursor: default;">MENUNGGU ATASAN 1</a>';
+                } elseif ($row->status == '3') {
+                    $status = '<a href="#" class="btn btn-sm btn-reddit" style="pointer-events: none; cursor: default;">MENUNGGU ATASAN 2</a>';
+                } elseif ($row->status == '5') {
+                    $status = '<a href="#" class="btn btn-sm btn-warning" style="pointer-events: none; cursor: default;">MENUNGGU ATASAN 1</a>';
+                } elseif ($row->status == '6') {
+                    $status = '<a href="#" class="btn btn-sm btn-warning" style="pointer-events: none; cursor: default;">MENUNGGU ATASAN 2</a>';
                 } elseif ($row->status == '4') {
                     $status = '<a href="#" class="btn btn-sm btn-info" style="pointer-events: none; cursor: default;">REALISASI</a>';
                 } elseif ($row->status == '7' ) {
