@@ -144,16 +144,16 @@ class Auth extends CI_Controller
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'ANS'])->row_array();
                     }
 
+                    if ($karyawan['sect_id'] == '114' and $karyawan['posisi_id'] == '7') {
+                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'DBY'])->row_array();
+                    }
+
                     if ($karyawan['sect_id'] == '137' and $karyawan['posisi_id'] == '7') {
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'SAM'])->row_array();
                     }
 
                     if ($karyawan['sect_id'] == '138' and $karyawan['posisi_id'] == '7') {
                         $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'HLM'])->row_array();
-                    }
-
-                    if ($karyawan['sect_id'] == '114' and $karyawan['posisi_id'] == '7') {
-                        $atasan1 = $this->db->get_where('karyawan', ['inisial' => 'DBY'])->row_array();
                     }
 
                     // if ($karyawan['dept_id'] == '11' and $karyawan['atasan1'] == '3') {
