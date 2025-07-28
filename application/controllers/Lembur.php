@@ -1849,7 +1849,7 @@ class Lembur extends CI_Controller
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
         
         // Persetujuan Koordinator / Section Head 
-        if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
+        if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
             $this->db->set('atasan1_rencana', 'Disetujui oleh '.$this->session->userdata('inisial'));
             $this->db->set('tgl_atasan1_rencana', date('Y-m-d H:i:s'));
             $this->db->set('status', '3');
@@ -1878,7 +1878,7 @@ class Lembur extends CI_Controller
         } 
 
         // Persetujuan Dept Head UP
-        else if ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
+        else if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
             
             if ($lembur['atasan1'] == $this->session->userdata('inisial') AND $lembur['atasan2'] == $this->session->userdata('inisial')) {
                 $this->db->set('atasan1_rencana', 'Disetujui oleh '.$this->session->userdata('inisial'));
@@ -1946,7 +1946,7 @@ class Lembur extends CI_Controller
         $lembur = $this->db->get_where('lembur', ['id' => $this->input->post('id')])->row_array();
         $user = $this->db->get_where('karyawan', ['npk' => $lembur['npk']])->row_array();
         // Persetujuan Koordinator / Section Head 
-        if ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
+        if ($this->session->userdata('posisi_id') == 5 or $this->session->userdata('posisi_id') == 6) {
             $this->db->set('atasan1_realisasi', 'Disetujui oleh '.$this->session->userdata('inisial'));
             $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
             $this->db->set('status', '6');
@@ -1998,7 +1998,7 @@ class Lembur extends CI_Controller
             }
         } 
         // Persetujuan Dept Head 
-        elseif ($this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
+        elseif ($this->session->userdata('posisi_id') == 4 or $this->session->userdata('posisi_id') == 3 or $this->session->userdata('posisi_id') == 2 or $this->session->userdata('posisi_id') == 1) {
             if ($lembur['atasan1'] == $this->session->userdata('inisial') AND $lembur['atasan2'] == $this->session->userdata('inisial')) {
                 $this->db->set('atasan1_realisasi', 'Disetujui oleh '.$this->session->userdata('inisial'));
                 $this->db->set('tgl_atasan1_realisasi', date('Y-m-d H:i:s'));
