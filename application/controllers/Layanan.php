@@ -286,51 +286,49 @@ class Layanan extends CI_Controller
 
                 //Notifikasi ke USER
 
-                // $options = [
-                // 'form_params' => [
-                //     'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
-                //     'number' => $row['phone'],
-                //     'file' => 'https://raisa.winteq-astra.com/assets/img/wa/Kajian.jpg',
-                //     'caption' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
-                //                 "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
-                //                 "\r\nSemangat Pagi ".$row['nama'].
-                //                 "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
-                //                 "\r\n \r\n📅Hari: Kamis, 6 Maret 2025".
-                //                 "\r\n 🕔Jam : *Ba'da Dzuhur* ".
-                //                 "\r\n 🏡Lokasi : *Masjid Winteq*".
-                //                 "\r\n 📝Tema :  *Keutamaan puasa Ramadan*".
-                //                 "\r\n 🔊Narasumber : *Ust. Rudi Safaat*".
-                //                 "\r\n \r\nMari maksimalkan Ramadan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq.".
-                //                 "\r\nDKM Masjid Winteq ".
-                //                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
-                //     'date' => date('Y-m-d'),
-                //     'time' => date('H:i:s', $nowtime)
-                // ]];
-                // $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
-                // $res = $client->sendAsync($request, $options)->wait();
-                // echo $res->getBody();
-
                 $options = [
-                    'form_params' => [
+                'form_params' => [
                     'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
                     'number' => $row['phone'],
-                    'message' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
-                            "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
-                            "\r\nSemangat Pagi ".$row['nama'].
-                            "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
-                            "\r\n \r\n📅Hari: *Selasa, 25 Maret 2025*".
-                            "\r\n 🕔Jam : *Ba'da Dzuhur* ".
-                            "\r\n 🏡Lokasi : *Masjid Winteq*".
-                            "\r\n 🔊Narasumber : *Ust. Nanang*".
-                            "\r\n \r\nMari maksimalkan Ramadan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq.".
-                            "\r\nDKM Masjid Winteq ".
-                            "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/180825.jpg',
+                    'caption' => "🇲🇨 18 Agustus Sebagai Hari Kerja Normal ". 
+                                "\r\n \r\nSemangat Pagi ".$row['nama'].
+                                "\r\nDengan ini diumumkan kepada seluruh karyawan PT Astra Otoparts Tbk Divisi Winteq terkait status tanggal 18 Agustus 2025, sebagai berikut :".
+                                "\r\n \r\nMengingat : ".
+                                "\r\n 1. Surat Keputusan Bersama Menteri Agama, Menteri Ketenagakerjaan dan Menteri Pendayagunaan Apartur Negara dan Reformasi Birokasi Republik Indonesia Nomor 933 tahun 2025 , Nomor 1 tahun 2025, Nomor 3 tahun 2025 tanggal 07 Agustus 2025 ".
+                                "\r\n 2. Calender Of Even PT Astra Otoparts Tbk Divsi Winteq tahun 2025 ".
+                                "\r\n \r\nDengan ini ditetapkan bahwa tanggal *18 Agustus 2025 sebagai HARI KERJA NORMAL*.".
+                                "\r\n \r\nKarawang, 08 Agustus 2025".
+                                "\r\nHR".
+                                "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
                 ]];
-                $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
                 $res = $client->sendAsync($request, $options)->wait();
                 echo $res->getBody();
+
+                // $options = [
+                //     'form_params' => [
+                //     'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
+                //     'number' => $row['phone'],
+                //     'message' => "🕌 *DKM WINTEQ Present* 🕌 *Kajian Islami Ramadan*". 
+                //             "\r\n \r\nAssalamu’alaikum warahmatullahi wabarakatuh".
+                //             "\r\nSemangat Pagi ".$row['nama'].
+                //             "\r\nDi Bulan Ramadan yang penuh berkah ini DKM Winteq akan menyelenggarakan kultum Ramadan yg akan dilaksanakan pada:".
+                //             "\r\n \r\n📅Hari: *Selasa, 25 Maret 2025*".
+                //             "\r\n 🕔Jam : *Ba'da Dzuhur* ".
+                //             "\r\n 🏡Lokasi : *Masjid Winteq*".
+                //             "\r\n 🔊Narasumber : *Ust. Nanang*".
+                //             "\r\n \r\nMari maksimalkan Ramadan kali ini dengan menambah wawasan bersama. Ditunggu kehadirannya warga Winteq.".
+                //             "\r\nDKM Masjid Winteq ".
+                //             "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
+                //     'date' => date('Y-m-d'),
+                //     'time' => date('H:i:s', $nowtime)
+                // ]];
+                // $request = new Request('POST', 'https://app.ruangwa.id/api/send_message');
+                // $res = $client->sendAsync($request, $options)->wait();
+                // echo $res->getBody();
 
                         
             $nowtime = strtotime('+5 second', $nowtime);
