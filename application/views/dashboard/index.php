@@ -186,6 +186,10 @@
                                 <th>CoE 2025</th>
                                 <th><a href="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/view?usp=sharing" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
                               </tr>
+                            <tr>
+                                <th>Pengumuman tanggal 18 Agst 2025</th>
+                                <th><a href="https://drive.google.com/file/d/1w-hmKRX6nvUc9WAi9vXlnro68wBt950x/view" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
+                              </tr>
                             <!-- <tr>
                                 <th>FORM PENGAJUAN BANTUAN RELOKASI</th>
                                 <th><a href="https://drive.google.com/file/d/1GL82ndCXngkLUjurLLp1qHzqU5BJ6rK7/view?usp=sharing" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
