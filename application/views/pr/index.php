@@ -102,32 +102,34 @@
                             <table id="dtproject" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>PR DATE</th>
                                         <th>PR NUMBER</th>
-                                        <th>STATUS</th>
-                                        <th>REQUESTOR</th>
-                                        <th>COPRO</th>
+                                        <th>PR DATE</th>
+                                        <th>PO NUMBER</th>
+                                        <th>PO DATE</th>
                                         <th>DESC</th>
                                         <th>QTY</th>
                                         <th>UoM</th>
+                                        <th>COPRO</th>
+                                        <th>REQUESTOR</th>
                                         <th>PCH</th>
-                                        <th>DETAILS</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>PR Date</th>
-                                        <th>PR Number</th>
-                                        <th>Status</th>
-                                        <th>Requestor</th>
-                                        <th>COPRO</th>
-                                        <th>Description</th>
-                                        <th>Qty</th>
+                                        <th>PR NUMBER</th>
+                                        <th>PR DATE</th>
+                                        <th>PO NUMBER</th>
+                                        <th>PO DATE</th>
+                                        <th>DESC</th>
+                                        <th>QTY</th>
                                         <th>UoM</th>
+                                        <th>COPRO</th>
+                                        <th>REQUESTOR</th>
                                         <th>PCH</th>
-                                        <th>Details</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </tfoot>
                             </table>

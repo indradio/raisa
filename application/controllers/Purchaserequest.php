@@ -88,21 +88,25 @@ class Purchaserequest extends CI_Controller
             } else {
                 $status = '<a href="#" class="btn btn-sm btn-info" style="pointer-events: none; cursor: default;">REQUEST</a>';
             }
-
-            $action = '<a href="#" class="btn btn-sm btn-info">View</a>';
             
 
             $row = array();
-            $row[] = date("d.m.Y", strtotime($zmpu->pr_date));
             $row[] = $zmpu->pr_no;
-            $row[] = $status;
-            $row[] = $zmpu->requestor;
-            $row[] = $zmpu->copro;
+            $row[] = date("d.m.Y", strtotime($zmpu->pr_date));
+            if($zmpu->po_no){
+                $row[] = $zmpu->po_no;
+                $row[] = date("d.m.Y", strtotime($zmpu->po_date));
+            }else{
+                $row[] = '';
+                $row[] = '';
+            }
             $row[] = $zmpu->pr_desc;
             $row[] = $zmpu->pr_qty;
             $row[] = $zmpu->pr_uom;
+            $row[] = $zmpu->copro;
+            $row[] = $zmpu->requestor;
             $row[] = $zmpu->pic_pch;
-            $row[] = $action;
+            $row[] = $status;
           
             $data[] = $row;
         }
