@@ -208,30 +208,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div id="accordionForm2" role="tablist">
-              <div class="card-collapse">
-                <div class="card-header" role="tab" id="headingForm">
-                  <h5 class="mb-0">
-                    <a class="" data-toggle="collapse" href="#collapseForm2" aria-expanded="false" aria-controls="collapseForm2">
-                    <h3 class="card-title">Employee Day 2025 
-                      <i class="material-icons">keyboard_arrow_down</i>
-                    </h3>
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseForm2" class="collapsed collapse" role="tabpanel" aria-labelledby="headingForm" data-parent="#accordion">
-                  <div class="card-body">
-                  <iframe width="640px" height="480px" src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__WPQFhVUMFdDV01GSDVIT1BCRVY5RlBTUkYyRklZNi4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <?php }; ?>
       <?php if (date('Y-m-d') < date('2024-06-31') ){ ?>
       <div class="col-md-4">
