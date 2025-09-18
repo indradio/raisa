@@ -298,7 +298,7 @@ class Layanan extends CI_Controller
                                 "\r\nCuzz isi survey singkat ini yaa ⬇️".
                                 "\r\n \r\nhttps://forms.gle/Edj4YNTG61h9fzrH6".
                                 "\r\n \r\nBuat yang udah isi, bakal dapet souvenir keren loh. Jadi tunggu apa lagi? isi sekarang aja, literally cuma butuh 3 menit kok ⏳".
-                                "\r\nPanitia WINTEQ Employee Day 2025".
+                                "\r\n \r\nPanitia WINTEQ Employee Day 2025".
                                 "\r\n#EmployeeDay2025 #YourVoiceMatters".
                                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
