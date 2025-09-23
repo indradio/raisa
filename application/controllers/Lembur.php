@@ -121,9 +121,11 @@ class Lembur extends CI_Controller
             $data['sidesubmenu'] = 'Realisasi';
             $data['karyawan'] = $this->db->get_where('karyawan', ['npk' =>  $this->session->userdata('npk')])->row_array();
             $npk = $this->session->userdata('npk');
-            $queryLembur = "SELECT *
-            FROM `lembur`
-            WHERE (`status`= '4' OR `status`= '5' OR `status`= '6') and `npk`= '$npk' ";
+            $queryLembur = "SELECT l.*, ls.nama AS status_nama
+                FROM lembur l
+                JOIN lembur_status ls ON l.status = ls.id
+                WHERE (l.status IN ('4','5','6')) 
+                AND l.npk = '$npk'";
             $data['lembur'] = $this->db->query($queryLembur)->result_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

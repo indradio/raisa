@@ -47,11 +47,10 @@
                                             <td><?= date('d-M H:i', strtotime($l['tglselesai'])); ?></td>
                                             <td><?= $l['durasi']; ?></td>
                                             <td><?= $l['lokasi']; ?></td>
-                                            <?php $status = $this->db->get_where('lembur_status', ['id' => $l['status']])->row_array(); ?>
                                             <td><?php if ($l['status'] > 4) {
                                                 echo date('d-M H:i', strtotime($l['tglpengajuan_realisasi'])); 
                                             }?></td>
-                                            <td><?= $status['nama']; ?></td>
+                                            <td><?= $l['status_nama']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
