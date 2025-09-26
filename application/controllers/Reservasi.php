@@ -565,7 +565,7 @@ class Reservasi extends CI_Controller
             $this->db->where('month(tglberangkat)', $bulan);
             $rsv = $this->db->get('reservasi');
             $total_rsv = $rsv->num_rows() + 1;
-            $id = 'RSV' . date('ym', strtotime($reservasi_temp['tglberangkat'])) .$reservasi_temp['npk']. sprintf("%04s", $total_rsv);
+            $id = 'RV' . date('ym', strtotime($reservasi_temp['tglberangkat'])) .$reservasi_temp['npk']. sprintf("%02s", $total_rsv);
 
             $data = [
                 'id' => $id,
@@ -984,7 +984,7 @@ class Reservasi extends CI_Controller
             $this->db->where('month(tglberangkat)', $bulan);
             $rsv = $this->db->get('reservasi');
             $total_rsv = $rsv->num_rows() + 1;
-            $id = 'RSV' . date('ym', strtotime($reservasi_temp['tglberangkat'])) .$reservasi_temp['npk']. sprintf("%04s", $total_rsv);
+            $id = 'RV' . date('ym', strtotime($reservasi_temp['tglberangkat'])) .$reservasi_temp['npk']. sprintf("%02s", $total_rsv);
 
             $data = [
                 'id' => $id,
