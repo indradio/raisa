@@ -103,171 +103,133 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php
-                                // 🔹 Ambil data anggota hanya sekali (lebih efisien)
-                                $anggota = $this->db
-                                    ->where('perjalanan_id', $perjalanan['id'])
-                                    ->get('perjalanan_anggota')
-                                    ->result_array();
-
-                                // 🔹 Tentukan kolom tunjangan aktif (yang nilainya > 0)
-                                $kolomTunjangan = [
-                                    'uang_saku'      => 'Uang Saku',
-                                    'insentif_pagi'  => 'Insentif',
-                                    'um_pagi'        => 'Pagi',
-                                    'um_siang'       => 'Siang',
-                                    'um_malam'       => 'Malam',
-                                ];
-
-                                $kolomAktif = array_filter($kolomTunjangan, function($key) use ($perjalanan) {
-                                    return isset($perjalanan[$key]) && $perjalanan[$key] > 0;
-                                }, ARRAY_FILTER_USE_KEY);
-
-                                // 🔹 Hitung total tunjangan PIC & total keseluruhan
-                                $totalTunj = 0;
-                                $tunj_pic = 0;
-                                foreach ($anggota as &$a) {
-                                    $a['total'] = 0;
-                                    foreach (array_keys($kolomAktif) as $field) {
-                                        $a['total'] += (float)($a[$field] ?? 0);
-                                    }
-                                    if ($a['karyawan_inisial'] == $perjalanan['pic_perjalanan']) {
-                                        $tunj_pic = $a['total'];
-                                    }
-                                    $totalTunj += $a['total'];
-                                }
-                                unset($a);
-
-                                $biayaPerjalanan = $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
-                            ?>
-
                             <div class="row">
-                                <label class="col-md-2 col-form-label">
-                                    Tunjangan <br><small>Peserta</small>
-                                </label>
+                            <label class="col-md-2 col-form-label">
+                                Tunjangan <br><small>Peserta</small>
+                            </label>
 
-                                <div class="col-md-8">
-
-                                    <?php if ($perjalanan['jenis_perjalanan'] == 'TAPP'): ?>
-                                    <a href="#" class="btn btn-sm btn-facebook" 
-                                        data-toggle="modal" 
-                                        data-target="#ubahKategori" 
+                            <div class="col-md-8">
+                                <?php if ($perjalanan['jenis_perjalanan'] == 'TAPP'): ?>
+                                    <a href="#" class="btn btn-sm btn-facebook"
+                                        data-toggle="modal"
+                                        data-target="#ubahKategori"
                                         data-id="<?= $perjalanan['id']; ?>">
                                         Ganti Kategori DLPP
                                     </a>
-                                    <?php endif; ?>
+                                <?php endif; ?>
 
-                                    <div class="table-responsive">
+                                <div class="table-responsive">
                                     <table class="table table-striped table-no-bordered table-hover" width="100%">
                                         <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nama</th>
-                                            <th>Total</th>
-                                            <?php foreach ($kolomAktif as $label): ?>
-                                            <th><small><?= $label; ?></small></th>
-                                            <?php endforeach; ?>
-                                        </tr>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nama</th>
+                                                <th>Total</th>
+                                                <?php foreach ($kolomAktif as $label): ?>
+                                                    <th><small><?= $label; ?></small></th>
+                                                <?php endforeach; ?>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($anggota as $a): ?>
-                                            <tr>
-                                            <td><?= $a['karyawan_inisial']; ?></td>
-                                            <td>
-                                                <?php if ($perjalanan['pic_perjalanan'] == $a['karyawan_inisial']): ?>
-                                                <a href="#" class="btn btn-link btn-success btn-just-icon" 
-                                                    data-toggle="tooltip" title="PIC Perjalanan">
-                                                    <i class="material-icons">military_tech</i>
-                                                </a>
-                                                <?php else: ?>
-                                                <a href="<?= base_url('perjalanan/change_pic/'.$perjalanan['id'].'/'.$a['karyawan_inisial']); ?>" 
-                                                    class="btn btn-link btn-warning btn-just-icon" 
-                                                    data-toggle="tooltip" title="Jadikan PIC">
-                                                    <i class="material-icons">push_pin</i>
-                                                </a>
-                                                <?php endif; ?>
-                                                <?= $a['karyawan_nama']; ?>
-                                            </td>
+                                            <?php foreach ($anggota as $a): ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($a['karyawan_inisial']); ?></td>
+                                                    <td>
+                                                        <?php if ($perjalanan['pic_perjalanan'] == $a['karyawan_inisial']): ?>
+                                                            <a href="#" class="btn btn-link btn-success btn-just-icon" 
+                                                                data-toggle="tooltip" title="PIC Perjalanan">
+                                                                <i class="material-icons">military_tech</i>
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <a href="<?= base_url('perjalanan/change_pic/'.$perjalanan['id'].'/'.$a['karyawan_inisial']); ?>" 
+                                                                class="btn btn-link btn-warning btn-just-icon" 
+                                                                data-toggle="tooltip" title="Jadikan PIC">
+                                                                <i class="material-icons">push_pin</i>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                        <?= htmlspecialchars($a['karyawan_nama']); ?>
+                                                    </td>
 
-                                            <td><strong><?= number_format($a['total'], 0, ',', '.'); ?></strong></td>
+                                                    <td><strong><?= $a['total_formatted']; ?></strong></td>
 
-                                            <?php foreach ($kolomAktif as $key => $label): ?>
-                                                <td><small><?= number_format($a[$key] ?? 0, 0, ',', '.'); ?></small></td>
+                                                    <?php foreach ($kolomAktif as $key => $label): ?>
+                                                        <td><small><?= $a[$key.'_formatted']; ?></small></td>
+                                                    <?php endforeach; ?>
+                                                </tr>
                                             <?php endforeach; ?>
-                                            </tr>
-                                        <?php endforeach; ?>
                                         </tbody>
                                     </table>
 
                                     <small>
-                                        *<?= number_format($tunj_pic, 0, ',', '.') ?> (Tunjangan) + 
+                                        *<?= number_format($tunjanganPic, 0, ',', '.') ?> (Tunjangan) + 
                                         <?= number_format($biayaPerjalanan, 0, ',', '.') ?> (Biaya Perjalanan) - 
                                         <?= number_format($perjalanan['kasbon'], 0, ',', '.') ?> (Kasbon)
                                     </small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                            <p>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">
+                                    Rincian<br><small>Biaya Perjalanan</small>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-no-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Biaya</th>
+                                                    <th>Total (Rp)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    $biaya = [
+                                                        'taksi'  => 'Taksi/Sewa<br><small>Pribadi per KM (est)</small>',
+                                                        'bbm'    => 'BBM',
+                                                        'tol'    => 'TOL',
+                                                        'parkir' => 'Parkir & Lainnya'
+                                                    ];
+                                                ?>
+                                                <tr class="table-success">
+                                                    <td>Tunjangan</td>
+                                                    <td><?= number_format($perjalanan['total_tunjangan'], 0, ',', '.'); ?></td>
+                                                </tr>
+                                                <?php foreach ($biaya as $field => $label): ?>
+                                                    <tr>
+                                                        <td><?= $label; ?></td>
+                                                        <td>
+                                                            <input 
+                                                                type="number"
+                                                                name="<?= $field; ?>"
+                                                                value="<?= $perjalanan[$field]; ?>"
+                                                                data-id="<?= $perjalanan['id']; ?>"
+                                                                class="form-control biaya-input"
+                                                                min="0"
+                                                            >
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                                <tr>
+                                                    <td><h5>TOTAL</h5></td>
+                                                    <td class="text-center">
+                                                        <h5 id="total-biaya"><?= number_format($perjalanan['total'], 0, ',', '.'); ?></h5>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <small>*Isi Biaya tol jika menggunakan uang pribadi, kosongkan jika menggunakan e-toll dari GA.</small>
                                     </div>
                                 </div>
                             </div>
 
-                            <p>
-                            <div class="row">
-    <label class="col-md-2 col-form-label">
-        Rincian<br><small>Biaya Perjalanan</small>
-    </label>
-    <div class="col-md-8">
-        <div class="table-responsive">
-            <table class="table table-striped table-no-bordered table-hover" width="100%">
-                <thead>
-                    <tr>
-                        <th>Biaya</th>
-                        <th>Total (Rp)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        $biaya = [
-                            'taksi'  => 'Taksi/Sewa<br><small>Pribadi per KM (est)</small>',
-                            'bbm'    => 'BBM',
-                            'tol'    => 'TOL',
-                            'parkir' => 'Parkir & Lainnya'
-                        ];
-                    ?>
-                    <tr class="table-success">
-                        <td>Tunjangan</td>
-                        <td><?= number_format($totalTunj, 0, ',', '.'); ?></td>
-                    </tr>
-                    <?php foreach ($biaya as $field => $label): ?>
-                        <tr>
-                            <td><?= $label; ?></td>
-                            <td>
-                                <input 
-                                    type="number"
-                                    name="<?= $field; ?>"
-                                    value="<?= $perjalanan[$field]; ?>"
-                                    data-id="<?= $perjalanan['id']; ?>"
-                                    class="form-control biaya-input"
-                                    min="0"
-                                >
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <tr>
-                        <td><h5>TOTAL</h5></td>
-                        <td class="text-center">
-                            <h5 id="total-biaya"><?= number_format($perjalanan['total'], 0, ',', '.'); ?></h5>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <small>*Isi Biaya tol jika menggunakan uang pribadi, kosongkan jika menggunakan e-toll dari GA.</small>
-        </div>
-    </div>
-</div>
-
 
                             <p>
                                 <?php 
-                                    $selisih = ($tunj_pic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - $perjalanan['kasbon'];
-                                    $selisihPositif = $perjalanan['kasbon'] - ($tunj_pic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']);
+                                    $selisih = ($tunjanganPic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - $perjalanan['kasbon'];
+                                    $selisihPositif = $perjalanan['kasbon'] - ($tunjanganPic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']);
                                     if ($perjalanan['kasbon'] > 0){ 
                                 ?>
                                 <div class="row">
@@ -283,10 +245,10 @@
                                     <label class="col-md-2 col-form-label">Selisih</label>
                                     <div class="col-md-8">
                                         <div class="form-group has-default">
-                                            <input type="text" class="form-control disabled" name="selisih" value="<?= number_format(($tunj_pic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - $perjalanan['kasbon'], 0, ',', '.'); ?>">
+                                            <input type="text" class="form-control disabled" name="selisih" value="<?= number_format(($tunjanganPic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - $perjalanan['kasbon'], 0, ',', '.'); ?>">
                                         </div>
                                         <small>*Selisih =(Biaya Perjalanan + Tunj PIC) - Kasbon.</small></br>
-                                        <?php if ($selisih < 0){ echo '<a href="#" class="btn btn-sm btn-facebook" data-toggle="modal" data-target="#penyelesaianKasbon" data-id="'.$perjalanan['id'].'" data-kasbon_out="'.number_format($perjalanan['kasbon_out'], 0, ',', '.').'" data-kasbon_out_ewallet="'.$perjalanan['kasbon_ewallet'].'" data-biaya="( '.number_format($perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'], 0, ',', '.').' )" data-tunj="( '.number_format($tunj_pic, 0, ',', '.').' )" data-kasbon_in="( '.number_format($perjalanan['kasbon_in'], 0, ',', '.').' )" data-kasbon_transfer="'.$selisihPositif.'" data-kasbon="'.number_format($selisihPositif, 0, ',', '.').'">Kembalikan Kasbon</a>'; }?>
+                                        <?php if ($selisih < 0){ echo '<a href="#" class="btn btn-sm btn-facebook" data-toggle="modal" data-target="#penyelesaianKasbon" data-id="'.$perjalanan['id'].'" data-kasbon_out="'.number_format($perjalanan['kasbon_out'], 0, ',', '.').'" data-kasbon_out_ewallet="'.$perjalanan['kasbon_ewallet'].'" data-biaya="( '.number_format($perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'], 0, ',', '.').' )" data-tunj="( '.number_format($tunjanganPic, 0, ',', '.').' )" data-kasbon_in="( '.number_format($perjalanan['kasbon_in'], 0, ',', '.').' )" data-kasbon_transfer="'.$selisihPositif.'" data-kasbon="'.number_format($selisihPositif, 0, ',', '.').'">Kembalikan Kasbon</a>'; }?>
                                     </div>
                                 </div>
                                 <?php } ?>
@@ -336,6 +298,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="ubahKategori" tabindex="-1" role="dialog" aria-labelledby="ubahKategoriLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -364,6 +327,8 @@
         </div>
     </div>
 </div>
+
+<!-- Start Tidak digunakan -->
 <div class="modal fade" id="ubahTaksi" tabindex="-1" role="dialog" aria-labelledby="ubahTaksiLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -520,6 +485,8 @@
         </div>
     </div>
 </div>
+<!-- End Tidak digunakan -->
+
 <div class="modal fade" id="penyelesaianKasbon" tabindex="-1" role="dialog" aria-labelledby="penyelesaianKasbonLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -607,49 +574,50 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
-$(document).ready(function() {
-    let timer = null;
+    $(document).ready(function() {
+        let timer = null;
 
-    $('.biaya-input').on('input', function() {
-        const input = $(this);
-        const id = input.data('id');
-        const field = input.attr('name');
-        const value = parseFloat(input.val()) || 0;
+        $('.biaya-input').on('input', function() {
+            const input = $(this);
+            const id = input.data('id');
+            const field = input.attr('name');
+            const value = parseFloat(input.val()) || 0;
 
-        if (!id) return console.warn('⚠️ ID perjalanan tidak ditemukan.');
+            if (!id) return console.warn('⚠️ ID perjalanan tidak ditemukan.');
 
-        // Hentikan timer sebelumnya
-        clearTimeout(timer);
+            // Hentikan timer sebelumnya
+            clearTimeout(timer);
 
-        // Jalankan ulang setelah delay 1 detik
-        timer = setTimeout(() => {
-            $.ajax({
-                url: "<?= base_url('perjalanan/update_biaya_field'); ?>",
-                method: "POST",
-                data: { id: id, field: field, value: value },
-                dataType: "json",
-                beforeSend: function() {
-                    input.css('background-color', '#fff3cd'); // kuning lembut → sedang update
-                },
-                success: function(res) {
-                    if (res.status === 'success') {
-                        $('#total-biaya').text(res.new_total.toLocaleString('id-ID'));
-                        input.css('background-color', '#d4edda'); // hijau → sukses
-                        setTimeout(() => input.css('background-color', ''), 800);
-                    } else {
+            // Jalankan ulang setelah delay 1 detik
+            timer = setTimeout(() => {
+                $.ajax({
+                    url: "<?= base_url('perjalanan/update_biaya_field'); ?>",
+                    method: "POST",
+                    data: { id: id, field: field, value: value },
+                    dataType: "json",
+                    beforeSend: function() {
+                        input.css('background-color', '#fff3cd'); // kuning lembut → sedang update
+                    },
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            $('#total-biaya').text(res.new_total.toLocaleString('id-ID'));
+                            input.css('background-color', '#d4edda'); // hijau → sukses
+                            setTimeout(() => input.css('background-color', ''), 800);
+                        } else {
+                            input.css('background-color', '#f8d7da'); // merah → error
+                            console.error(res.message);
+                        }
+                    },
+                    error: function() {
                         input.css('background-color', '#f8d7da'); // merah → error
-                        console.error(res.message);
+                        console.error('Gagal menyimpan perubahan');
                     }
-                },
-                error: function() {
-                    input.css('background-color', '#f8d7da'); // merah → error
-                    console.error('Gagal menyimpan perubahan');
-                }
-            });
-        }, 1000); // delay 1 detik
+                });
+            }, 1000); // delay 1 detik
+        });
     });
-});
 
 
     $(document).ready(function() {
@@ -659,6 +627,8 @@ $(document).ready(function() {
             var modal = $(this)
             modal.find('.modal-body input[name="id"]').val(id)
         })
+
+        // Start Tidak digunakan
         $('#ubahTaksi').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
@@ -691,6 +661,7 @@ $(document).ready(function() {
             modal.find('.modal-body input[name="id"]').val(id)
             modal.find('.modal-body input[name="e_parkir"]').val(parkir)
         })
+        // End Tidak digunakan
 
         $('#penyelesaianKasbon').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)

@@ -221,12 +221,79 @@ class Perjalanan extends CI_Controller
                 $this->db->update('perjalanan', ['total' => $total], ['id' => $parameter]);
             }
 
+            // --- Ambil data anggota hanya sekali ---
+            $anggota = $this->db
+            ->select('karyawan_inisial, karyawan_nama, uang_saku, insentif_pagi, um_pagi, um_siang, um_malam')
+            ->where('perjalanan_id', $perjalanan['id'])
+            ->get('perjalanan_anggota')
+            ->result_array();
+
+            // --- Tentukan kolom tunjangan aktif ---
+            $kolomTunjangan = [
+            'uang_saku'      => 'Uang Saku',
+            'insentif_pagi'  => 'Insentif',
+            'um_pagi'        => 'Pagi',
+            'um_siang'       => 'Siang',
+            'um_malam'       => 'Malam',
+            ];
+
+            $kolomAktif = [];
+            foreach ($kolomTunjangan as $key => $label) {
+            if (!empty($perjalanan[$key]) && $perjalanan[$key] > 0) {
+                $kolomAktif[$key] = $label;
+            }
+            }
+
+            // --- Hitung total tunjangan per anggota ---
+            $totalTunjangan = 0;
+            $tunjanganPic = 0;
+
+            foreach ($anggota as &$a) {
+            $total = 0;
+            foreach (array_keys($kolomAktif) as $key) {
+                $total += (float)($a[$key] ?? 0);
+            }
+            $a['total'] = $total;
+            $a['total_formatted'] = number_format($total, 0, ',', '.');
+
+            foreach (array_keys($kolomAktif) as $key) {
+                $a[$key.'_formatted'] = number_format($a[$key] ?? 0, 0, ',', '.');
+            }
+
+            if ($a['karyawan_inisial'] == $perjalanan['pic_perjalanan']) {
+                $tunjanganPic = $total;
+            }
+
+            $totalTunjangan += $total;
+            }
+            unset($a);
+
+            // --- Biaya Perjalanan ---
+            $biayaPerjalanan = ($perjalanan['taksi'] ?? 0)
+                        + ($perjalanan['bbm'] ?? 0)
+                        + ($perjalanan['tol'] ?? 0)
+                        + ($perjalanan['parkir'] ?? 0);
+
+            // --- Kirim ke view ---
+            $data['anggota']          = $anggota;
+            $data['kolomAktif']       = $kolomAktif;
+            $data['totalTunjangan']   = $totalTunjangan;
+            $data['tunjanganPic']     = $tunjanganPic;
+            $data['biayaPerjalanan']  = $biayaPerjalanan;
+
+
             // Tampilkan halaman
             $data = [
                 'sidemenu' => 'Perjalanan Dinas',
                 'sidesubmenu' => 'Penyelesaian',
                 'karyawan' => $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array(),
                 'perjalanan' => $this->db->get_where('perjalanan', ['id' => $parameter])->row_array(),
+                'anggota' =>  $anggota,
+                'kolomAktif'       => $kolomAktif,
+                'totalTunjangan'   => $totalTunjangan,
+                'tunjanganPic'     => $tunjanganPic,
+                'biayaPerjalanan'  => $biayaPerjalanan
+
             ];
 
             $this->load->view('templates/header', $data);
