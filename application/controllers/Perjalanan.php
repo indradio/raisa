@@ -87,19 +87,13 @@ class Perjalanan extends CI_Controller
                     break;
 
                 case 'submit':
-                    $id = $this->input->post('id');
-                    $perjalanan = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
-
-                    $catatanInput = $this->input->post('catatan');
-                    $catatan = $catatanInput
-                        ? $catatanInput . ' - ' . $this->session->userdata('inisial')
-                        : '';
+                    $id = $this->input->post('id'); 
 
                     $updateData = [
                         'klaim_by'   => $this->session->userdata('inisial'),
                         'klaim_at'   => date('Y-m-d H:i:s'),
                         'tujuan_pic' => $this->input->post('tujuan_pic'),
-                        'catatan'    => $catatan,
+                        'catatan'    => $this->input->post('catatan'),
                         'status'     => 4
                     ];
 
@@ -117,120 +111,122 @@ class Perjalanan extends CI_Controller
             // Jika ditemukan data perjalanan spesifik (misal akses langsung dengan ID)
 
             // Cek PIC
-            $pic = $this->db
-                ->where('karyawan_inisial', $perjalanan['pic_perjalanan'])
-                ->where('perjalanan_id', $parameter)
-                ->get('perjalanan_anggota')
-                ->row_array();
-
+            $pic = $this->db->get_where('perjalanan_anggota', [
+                'perjalanan_id' => $parameter,
+                'karyawan_inisial' => $perjalanan['pic_perjalanan']
+            ])->row_array();
             if (empty($pic)) {
                 redirect('perjalanan/penyelesaian_pic/' . $parameter);
             }
 
-            // Jika bukan TA, lakukan proses perhitungan tunjangan
+            $total = 0;
+
             if ($perjalanan['jenis_perjalanan'] != 'TA') {
-
-                // Ambil semua peserta dan data dasar
+                // Ambil semua peserta
                 $peserta = $this->db->get_where('perjalanan_anggota', ['perjalanan_id' => $parameter])->result_array();
-                $um = $this->db->get_where('perjalanan_um', ['id' => '1'])->row_array();
+                $um = $this->db->get_where('perjalanan_um', ['id' => 1])->row_array();
 
-                // Cache tunjangan berdasarkan golongan biar nggak query berulang
-                $tunjanganCache = [];
-
-                foreach ($peserta as $a) {
-                    $gol = $a['karyawan_gol'];
-
-                    if (!isset($tunjanganCache[$gol])) {
-                        $tunjanganCache[$gol] = $this->db
-                            ->where('jenis_perjalanan', $perjalanan['jenis_perjalanan'])
-                            ->where('gol_id', $gol)
-                            ->get('perjalanan_tunjangan')
-                            ->row_array();
-                    }
-
-                    $tunjangan = $tunjanganCache[$gol] ?? [];
-
-                    $this->db->where(['npk' => $a['npk'], 'perjalanan_id' => $parameter])
-                            ->update('perjalanan_anggota', [
-                                'uang_saku'      => $tunjangan['uang_saku'] ?? 0,
-                                'insentif_pagi'  => $tunjangan['insentif_pagi'] ?? 0,
-                                'um_pagi'        => $tunjangan['um_pagi'] ?? 0,
-                                'um_siang'       => $tunjangan['um_siang'] ?? 0,
-                                'um_malam'       => $tunjangan['um_malam'] ?? 0,
-                            ]);
+                // Ambil daftar tunjangan sekaligus, disimpan di cache array
+                $tunjanganList = $this->db->get('perjalanan_tunjangan')->result_array();
+                $tunjanganMap = [];
+                foreach ($tunjanganList as $t) {
+                    $tunjanganMap[$t['jenis_perjalanan'] . '_' . $t['gol_id']] = $t;
                 }
 
-                // Hitung total tunjangan hanya sekali query
-                $this->db->select([
-                    'SUM(uang_saku) AS uang_saku',
-                    'SUM(insentif_pagi) AS insentif_pagi',
-                    'SUM(um_pagi) AS um_pagi',
-                    'SUM(um_siang) AS um_siang',
-                    'SUM(um_malam) AS um_malam'
-                ]);
-                $this->db->where('perjalanan_id', $parameter);
-                $sum = $this->db->get('perjalanan_anggota')->row_array();
+                // Update peserta sekaligus (lebih cepat)
+                foreach ($peserta as &$p) {
+                    $key = $perjalanan['jenis_perjalanan'] . '_' . $p['karyawan_gol'];
+                    $tunjangan = $tunjanganMap[$key] ?? [
+                        'uang_saku' => 0,
+                        'insentif_pagi' => 0,
+                        'um_pagi' => 0,
+                        'um_siang' => 0,
+                        'um_malam' => 0
+                    ];
 
-                // Hitung total berdasarkan kondisi jam & jenis perjalanan
-                $uang_saku      = ($perjalanan['jenis_perjalanan'] == 'TAPP') ? $sum['uang_saku'] : 0;
-                $insentif_pagi  = ($perjalanan['jamberangkat'] <= $um['um1']) ? $sum['insentif_pagi'] : 0;
-                $um_pagi        = ($perjalanan['jenis_perjalanan'] == 'TAPP' && $perjalanan['jamberangkat'] <= $um['um2']) ? $sum['um_pagi'] : 0;
-
-                $um_siang = 0;
-                if (
-                    ($perjalanan['jamberangkat'] <= $um['um3'] && $perjalanan['jamkembali'] >= $um['um3']) ||
-                    ($perjalanan['jamberangkat'] <= $um['um3'] && $perjalanan['jamkembali'] <= $um['um3'] && $perjalanan['tglkembali'] > $perjalanan['tglberangkat'])
-                ) {
-                    $um_siang = $sum['um_siang'];
+                    $this->db->update('perjalanan_anggota', [
+                        'uang_saku' => $tunjangan['uang_saku'],
+                        'insentif_pagi' => $tunjangan['insentif_pagi'],
+                        'um_pagi' => $tunjangan['um_pagi'],
+                        'um_siang' => $tunjangan['um_siang'],
+                        'um_malam' => $tunjangan['um_malam'],
+                    ], [
+                        'npk' => $p['npk'],
+                        'perjalanan_id' => $parameter
+                    ]);
                 }
 
-                $um_malam = 0;
-                if (
-                    ($perjalanan['jamkembali'] >= $um['um4']) ||
-                    ($perjalanan['jamkembali'] <= $um['um4'] && $perjalanan['tglkembali'] > $perjalanan['tglberangkat'])
-                ) {
-                    $um_malam = $sum['um_malam'];
-                }
+                // Hitung total per jenis
+                $uang_saku = ($perjalanan['jenis_perjalanan'] == 'TAPP') 
+                    ? $this->db->select_sum('uang_saku')->where('perjalanan_id', $parameter)->get('perjalanan_anggota')->row()->uang_saku 
+                    : 0;
 
-                // Total keseluruhan
-                $total = $uang_saku + $insentif_pagi + $um_pagi + $um_siang + $um_malam +
-                        $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+                $insentif_pagi = ($perjalanan['jamberangkat'] <= $um['um1'])
+                    ? $this->db->select_sum('insentif_pagi')->where('perjalanan_id', $parameter)->get('perjalanan_anggota')->row()->insentif_pagi
+                    : 0;
 
-                $this->db->where('id', $parameter)
-                        ->update('perjalanan', [
-                            'uang_saku'     => $uang_saku,
-                            'insentif_pagi' => $insentif_pagi,
-                            'um_pagi'       => $um_pagi,
-                            'um_siang'      => $um_siang,
-                            'um_malam'      => $um_malam,
-                            'total'         => $total
-                        ]);
+                $um_pagi = ($perjalanan['jenis_perjalanan'] == 'TAPP' && $perjalanan['jamberangkat'] <= $um['um2'])
+                    ? $this->db->select_sum('um_pagi')->where('perjalanan_id', $parameter)->get('perjalanan_anggota')->row()->um_pagi
+                    : 0;
 
-                // Update total per peserta berdasarkan nilai aktif
+                $um_siang = (
+                    ($perjalanan['jamberangkat'] <= $um['um3'] && $perjalanan['jamkembali'] >= $um['um3'])
+                    || ($perjalanan['jamberangkat'] <= $um['um3'] && $perjalanan['tglkembali'] > $perjalanan['tglberangkat'])
+                )
+                    ? $this->db->select_sum('um_siang')->where('perjalanan_id', $parameter)->get('perjalanan_anggota')->row()->um_siang
+                    : 0;
+
+                $um_malam = (
+                    ($perjalanan['jamkembali'] >= $um['um4'])
+                    || ($perjalanan['tglkembali'] > $perjalanan['tglberangkat'])
+                )
+                    ? $this->db->select_sum('um_malam')->where('perjalanan_id', $parameter)->get('perjalanan_anggota')->row()->um_malam
+                    : 0;
+
+                $total_tunjangan = $uang_saku + $insentif_pagi + $um_pagi + $um_siang + $um_malam;
+                $total_perjalanan = $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
+                $total = $total_tunjangan + $total_perjalanan;
+
+                // Update perjalanan
+                $this->db->update('perjalanan', [
+                    'uang_saku' => $uang_saku,
+                    'insentif_pagi' => $insentif_pagi,
+                    'um_pagi' => $um_pagi,
+                    'um_siang' => $um_siang,
+                    'um_malam' => $um_malam,
+                    'total_tunjangan' => $total_tunjangan,
+                    'total_perjalanan' => $total_perjalanan,
+                    'total' => $total
+                ], ['id' => $parameter]);
+
+                // Update total per peserta
                 foreach ($peserta as $p) {
-                    $totalPeserta =
-                        ($uang_saku > 0 ? $p['uang_saku'] : 0) +
-                        ($insentif_pagi > 0 ? $p['insentif_pagi'] : 0) +
-                        ($um_pagi > 0 ? $p['um_pagi'] : 0) +
-                        ($um_siang > 0 ? $p['um_siang'] : 0) +
-                        ($um_malam > 0 ? $p['um_malam'] : 0);
+                    $p_total = 0;
+                    $p_total += ($uang_saku > 0) ? $p['uang_saku'] : 0;
+                    $p_total += ($insentif_pagi > 0) ? $p['insentif_pagi'] : 0;
+                    $p_total += ($um_pagi > 0) ? $p['um_pagi'] : 0;
+                    $p_total += ($um_siang > 0) ? $p['um_siang'] : 0;
+                    $p_total += ($um_malam > 0) ? $p['um_malam'] : 0;
 
-                    $this->db->where(['npk' => $p['npk'], 'perjalanan_id' => $parameter])
-                            ->update('perjalanan_anggota', ['total' => $totalPeserta]);
+                    $this->db->update('perjalanan_anggota', [
+                        'total' => $p_total
+                    ], [
+                        'npk' => $p['npk'],
+                        'perjalanan_id' => $parameter
+                    ]);
                 }
             } else {
-                // Jika jenis perjalanan TA
+                // Untuk jenis TA
                 $total = $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir'];
-                $this->db->where('id', $parameter)->update('perjalanan', ['total' => $total]);
+                $this->db->update('perjalanan', ['total' => $total], ['id' => $parameter]);
             }
 
-            // Load data ke view
-            $npk = $this->session->userdata('npk');
+            // Tampilkan halaman
             $data = [
-                'sidemenu'    => 'Perjalanan Dinas',
+                'sidemenu' => 'Perjalanan Dinas',
                 'sidesubmenu' => 'Penyelesaian',
-                'karyawan'    => $this->db->get_where('karyawan', ['npk' => $npk])->row_array(),
-                'perjalanan'  => $this->db->get_where('perjalanan', ['id' => $parameter])->row_array()
+                'karyawan' => $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array(),
+                'perjalanan' => $this->db->get_where('perjalanan', ['id' => $parameter])->row_array(),
             ];
 
             $this->load->view('templates/header', $data);
@@ -241,6 +237,39 @@ class Perjalanan extends CI_Controller
         }
 
     }
+
+    public function update_biaya_field()
+    {
+        $id = $this->input->post('id', true);
+        $field = $this->input->post('field', true);
+        $value = (float)$this->input->post('value');
+
+        $allowed = ['taksi', 'bbm', 'tol', 'parkir'];
+        if (!$id || !in_array($field, $allowed)) {
+            echo json_encode(['status' => 'error', 'message' => 'Data tidak valid']);
+            return;
+        }
+
+        // Update nilai biaya
+        $this->db->set($field, $value)->where('id', $id)->update('perjalanan');
+
+        // Ambil ulang data untuk total
+        $p = $this->db->get_where('perjalanan', ['id' => $id])->row_array();
+
+        // Asumsikan kamu punya kolom 'total_tunjangan'
+        $total_perjalanan = ($p['taksi'] ?? 0) + ($p['bbm'] ?? 0) + ($p['tol'] ?? 0) + ($p['parkir'] ?? 0);
+        $total = $total_perjalanan + ($p['total_tunjangan'] ?? 0);
+
+        // Update dua kolom sekaligus
+        $this->db
+        ->set('total_perjalanan', $total_perjalanan)
+        ->set('total', $total)
+        ->where('id', $id)
+        ->update('perjalanan');
+
+        echo json_encode(['status' => 'success', 'new_total' => $total]);
+    }
+
     public function penyelesaian_pic($id)
     {
         $data['sidemenu'] = 'Perjalanan Dinas';
