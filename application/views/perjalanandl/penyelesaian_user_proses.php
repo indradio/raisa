@@ -287,7 +287,9 @@
                                                     <?php }else{ ?>
                                                     <button type="submit" class="btn btn-fill btn-success">KLAIM</button>
                                                     <a href="<?= base_url('perjalanan/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
-                                            <?php } } ?>
+                                            <?php } }else{ ?>
+                                                        <button type="submit" class="btn btn-fill btn-success">KLAIM</button>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
