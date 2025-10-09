@@ -122,18 +122,16 @@
                                     <table class="table table-striped table-no-bordered table-hover" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Nama</th>
-                                                <th>Total</th>
                                                 <?php foreach ($kolomAktif as $label): ?>
-                                                    <th><small><?= $label; ?></small></th>
+                                                    <th><?= $label; ?></th>
                                                 <?php endforeach; ?>
+                                                <th>Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach ($anggota as $a): ?>
                                                 <tr>
-                                                    <td><?= htmlspecialchars($a['karyawan_inisial']); ?></td>
                                                     <td>
                                                         <?php if ($perjalanan['pic_perjalanan'] == $a['karyawan_inisial']): ?>
                                                             <a href="#" class="btn btn-link btn-success btn-just-icon" 
@@ -147,14 +145,15 @@
                                                                 <i class="material-icons">push_pin</i>
                                                             </a>
                                                         <?php endif; ?>
-                                                        <?= htmlspecialchars($a['karyawan_nama']); ?>
+                                                        <?= htmlspecialchars($a['karyawan_inisial']); ?>
+                                                        <small> - <?= htmlspecialchars($a['karyawan_nama']); ?></small>
                                                     </td>
 
-                                                    <td><strong><?= $a['total_formatted']; ?></strong></td>
-
                                                     <?php foreach ($kolomAktif as $key => $label): ?>
-                                                        <td><small><?= $a[$key.'_formatted']; ?></small></td>
+                                                        <td><?= $a[$key.'_formatted']; ?></td>
                                                     <?php endforeach; ?>
+
+                                                    <td><strong><?= $a['total_formatted']; ?></strong></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -173,7 +172,7 @@
                             <p>
                             <div class="row">
                                 <label class="col-md-2 col-form-label">
-                                    Rincian<br><small>Biaya Perjalanan</small>
+                                Biaya Perjalanan<br><small>Rincian</small>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="table-responsive">
@@ -228,9 +227,9 @@
 
                             <p>
                                 <?php 
+                                    if ($perjalanan['kasbon'] > 0){ 
                                     $selisih = ($tunjanganPic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']) - $perjalanan['kasbon'];
                                     $selisihPositif = $perjalanan['kasbon'] - ($tunjanganPic + $perjalanan['taksi'] + $perjalanan['bbm'] + $perjalanan['tol'] + $perjalanan['parkir']);
-                                    if ($perjalanan['kasbon'] > 0){ 
                                 ?>
                                 <div class="row">
                                     <label class="col-md-2 col-form-label">Kasbon</label>
@@ -280,14 +279,15 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-10">
                                         <div class="form-group has-default">
-                                        <?php if ($selisih < 0){ ?>
-                                                <button type="submit" class="btn btn-fill btn-default disabled" disabled="true">KLAIM</button>
-                                                <a href="<?= base_url('perjalanan/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
-                                                </br><small>*Silahkan kembalikan kasbon terlebih dahulu.</small>
-                                            <?php }else{ ?>
-                                                <button type="submit" class="btn btn-fill btn-success">KLAIM</button>
-                                                <a href="<?= base_url('perjalanan/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
-                                            <?php } ?>
+                                        <?php if ($perjalanan['kasbon'] > 0){ 
+                                                    if ($selisih < 0){ ?>
+                                                        <button type="submit" class="btn btn-fill btn-default disabled" disabled="true">KLAIM</button>
+                                                        <a href="<?= base_url('perjalanan/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
+                                                        </br><small>*Silahkan kembalikan kasbon terlebih dahulu.</small>
+                                                    <?php }else{ ?>
+                                                    <button type="submit" class="btn btn-fill btn-success">KLAIM</button>
+                                                    <a href="<?= base_url('perjalanan/penyelesaian/daftar'); ?>" class="btn btn-link btn-default">Kembali</a>
+                                            <?php } } ?>
                                         </div>
                                     </div>
                                 </div>

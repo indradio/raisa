@@ -232,9 +232,9 @@ class Perjalanan extends CI_Controller
             $kolomTunjangan = [
             'uang_saku'      => 'Uang Saku',
             'insentif_pagi'  => 'Insentif',
-            'um_pagi'        => 'Pagi',
-            'um_siang'       => 'Siang',
-            'um_malam'       => 'Malam',
+            'um_pagi'        => 'Makan Pagi',
+            'um_siang'       => 'Makan Siang',
+            'um_malam'       => 'Makan Malam',
             ];
 
             $kolomAktif = [];
