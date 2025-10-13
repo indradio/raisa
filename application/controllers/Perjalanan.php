@@ -155,6 +155,7 @@ class Perjalanan extends CI_Controller
                         'perjalanan_id' => $parameter
                     ]);
                 }
+                unset($p);
 
                 // Hitung total per jenis
                 $uang_saku = ($perjalanan['jenis_perjalanan'] == 'TAPP') 

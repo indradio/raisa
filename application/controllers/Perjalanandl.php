@@ -1931,39 +1931,6 @@ class Perjalanandl extends CI_Controller
         $this->db->update('perjalanan');
 
         $user = $this->db->get_where('karyawan', ['npk' => $this->input->post('npk')])->row_array();
-        // $client = new \GuzzleHttp\Client();
-        // $response = $client->post(
-        //     'https://region01.krmpesan.com/api/v2/message/send-text',
-        //     [
-        //         'headers' => [
-        //             'Content-Type' => 'application/json',
-        //             'Accept' => 'application/json',
-        //             'Authorization' => 'Bearer zrIchFm6ewt2f18SbXRcNzSVXJrQBEsD1zrbjtxuZCyi6JfOAcRIQkrL6wEmChqVWwl0De3yxAhJAuKS',
-        //         ],
-        //         'json' => [
-        //             'phone' => $user['phone'],
-        //             'message' => "*PEMBAYARAN PERJALANAN DINAS*". 
-        //             "\r\n \r\nKamu mendapat pembayaran dari perjalanan dinas berikut :".
-        //             "\r\n \r\nNo. Perjalanan : *" . $perjalanan['id'] . "*" .
-        //             "\r\nTgl Perjalanan : *" .date("Y-m-d", strtotime($perjalanan['tglberangkat'])). "*" .
-        //             "\r\nTujuan : *" .$perjalanan['tujuan']. "*" .
-        //             "\r\nNama: *" . $p_peserta['karyawan_nama'] . "*" .
-        //             "\r\nUang Saku : *" . number_format($us, 0, ',', '.') . "*" .
-        //             "\r\nInsentif Pagi : *" . number_format($ip, 0, ',', '.') . "*" .
-        //             "\r\nMakan Pagi : *" . number_format($ump, 0, ',', '.') . "*" .
-        //             "\r\nMakan Siang : *" . number_format($ums, 0, ',', '.') . "*" .
-        //             "\r\nMakan Malam : *" . number_format($umm, 0, ',', '.') . "*" .
-        //             "\r\nBiaya Perjalanan : *" . number_format($bp, 0, ',', '.') . "*" .
-        //             "\r\nKasbon : *(" . number_format($kas, 0, ',', '.') . ")*" .
-        //             "\r\n________________" .
-        //             "\r\nTotal yang dibayarkan : *" . number_format($tb, 0, ',', '.') . "*" .
-        //             "\r\ne-Wallet : *" . $ewallet . "*" .
-        //             "\r\n \r\nUntuk informasi lebih lengkap silahkan buka portal aplikasi di link berikut https://raisa.winteq-astra.com"
-        //         ],
-        //     ]
-        // );
-        // $body = $response->getBody();
-
         $client = new \GuzzleHttp\Client();
         $options = [
         'form_params' => [
