@@ -16,13 +16,12 @@ class Dashboard extends CI_Controller
         $this->load->model("dashboard_model");
 
         // $this->update_perjalanan();
-        // $this->update_lembur();
+        $this->update_lembur();
     }
 
     public function update_perjalanan()
     {
         //Auto batalkan perjalanan
-
         $queryPerjalanan = "SELECT *
         FROM `perjalanan`
         WHERE `tglberangkat` <= CURDATE() AND `status` = 1
