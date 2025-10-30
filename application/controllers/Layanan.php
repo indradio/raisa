@@ -286,22 +286,37 @@ class Layanan extends CI_Controller
 
                 //Notifikasi ke USER
 
+                // $options = [
+                // 'form_params' => [
+                //     'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
+                //     'number' => $row['phone'],
+                //     'file' => 'https://raisa.winteq-astra.com/assets/img/wa/phising.jpg',
+                //     'caption' => "⚠️ Peringatan Keamanan: Serangan Email Phishing". 
+                //                 "\r\n \r\nSemangat Pagi ".$row['nama'].
+                //                 "\r\nMakasih banget udah ikut meramaikan Employee Day kemarin 🎉".
+                //                 "\r\nKita pengen denger cerita & pendapat kalian biar next event makin kece 💯".
+                //                 "\r\nCuzz isi survey singkat ini yaa ⬇️".
+                //                 "\r\n \r\nhttps://forms.gle/Edj4YNTG61h9fzrH6".
+                //                 "\r\n \r\nBuat yang udah isi, bakal dapet souvenir keren loh. Jadi tunggu apa lagi? isi sekarang aja, literally cuma butuh 3 menit kok ⏳".
+                //                 "\r\nSouvenir bisa kalian ambil mulai besok jam 08-10 pagi di ruang training".
+                //                 "\r\n \r\nRegards,".
+                //                 "\r\nPanitia WINTEQ Employee Day 2025".
+                //                 "\r\n#EmployeeDay2025 #YourVoiceMatters".
+                //                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
+                //     'date' => date('Y-m-d'),
+                //     'time' => date('H:i:s', $nowtime)
+                // ]];
                 $options = [
                 'form_params' => [
                     'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
                     'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/surveyed25.jpg',
-                    'caption' => "SURVEY Acara WINTEQ Employee Day 2025". 
-                                "\r\n \r\nSemangat Pagi ".$row['nama'].
-                                "\r\nMakasih banget udah ikut meramaikan Employee Day kemarin 🎉".
-                                "\r\nKita pengen denger cerita & pendapat kalian biar next event makin kece 💯".
-                                "\r\nCuzz isi survey singkat ini yaa ⬇️".
-                                "\r\n \r\nhttps://forms.gle/Edj4YNTG61h9fzrH6".
-                                "\r\n \r\nBuat yang udah isi, bakal dapet souvenir keren loh. Jadi tunggu apa lagi? isi sekarang aja, literally cuma butuh 3 menit kok ⏳".
-                                "\r\nSouvenir bisa kalian ambil mulai besok jam 08-10 pagi di ruang training".
-                                "\r\n \r\nRegards,".
-                                "\r\nPanitia WINTEQ Employee Day 2025".
-                                "\r\n#EmployeeDay2025 #YourVoiceMatters".
+                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/phishing.jpg',
+                    'caption' => "⚠️ Peringatan Keamanan: Serangan Email Phishing". 
+                                "\r\n \r\nSaat ini terdapat upaya serangan email phishing yang menargetkan pengguna internal. Mohon tidak membuka atau mengklik tautan apa pun pada email yang mencurigakan, terutama yang meminta login, data pribadi, atau verifikasi akun.".
+                                "\r\n \r\nJika Anda menerima email mencurigakan, hapus segera dan jangan membalas. Tetap waspada dan selalu periksa alamat pengirim sebelum berinteraksi dengan email tersebut.".
+                                "\r\n \r\n🔒 Keamanan data kita adalah tanggung jawab bersama".
+                                "\r\nIT WINTEQ".
+                                "\r\n#KeamananData #StopPhishing #CyberSecurity #EmailAman #WaspadaPhishing #DataProtection #ThinkBeforeYouClick".
                                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
