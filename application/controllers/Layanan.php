@@ -315,8 +315,7 @@ class Layanan extends CI_Controller
                                 "\r\n \r\nSaat ini terdapat upaya serangan email phishing yang menargetkan pengguna internal. Mohon tidak membuka atau mengklik tautan apa pun pada email yang mencurigakan, terutama yang meminta login, data pribadi, atau verifikasi akun.".
                                 "\r\n \r\nJika Anda menerima email mencurigakan, hapus segera dan jangan membalas. Tetap waspada dan selalu periksa alamat pengirim sebelum berinteraksi dengan email tersebut.".
                                 "\r\n \r\n🔒 Keamanan data kita adalah tanggung jawab bersama".
-                                "\r\nIT WINTEQ".
-                                "\r\n#KeamananData #StopPhishing #CyberSecurity #EmailAman #WaspadaPhishing #DataProtection #ThinkBeforeYouClick".
+                                "\r\n \r\n#KeamananData #StopPhishing #CyberSecurity #EmailAman #WaspadaPhishing #DataProtection #ThinkBeforeYouClick".
                                 "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
                     'date' => date('Y-m-d'),
                     'time' => date('H:i:s', $nowtime)
