@@ -109,15 +109,6 @@
                             </label>
 
                             <div class="col-md-8">
-                                <?php if ($perjalanan['jenis_perjalanan'] == 'TAPP'): ?>
-                                    <a href="#" class="btn btn-sm btn-facebook"
-                                        data-toggle="modal"
-                                        data-target="#ubahKategori"
-                                        data-id="<?= $perjalanan['id']; ?>">
-                                        Ganti Kategori DLPP
-                                    </a>
-                                <?php endif; ?>
-
                                 <div class="table-responsive">
                                     <table class="table table-striped table-no-bordered table-hover" width="100%">
                                         <thead>
@@ -201,9 +192,9 @@
                                                         <td><?= $label; ?></td>
                                                         <td>
                                                             <input 
-                                                                type="number"
+                                                                type="text"
                                                                 name="<?= $field; ?>"
-                                                                value="<?= $perjalanan[$field]; ?>"
+                                                                value="<?= number_format($perjalanan[$field], 0, ',', '.'); ?>"
                                                                 data-id="<?= $perjalanan['id']; ?>"
                                                                 class="form-control biaya-input"
                                                                 min="0"
@@ -581,13 +572,19 @@
     $(document).ready(function() {
         let timer = null;
 
-        $('.biaya-input').on('input', function() {
+        $('.biaya-input').on('input', function () {
             const input = $(this);
             const id = input.data('id');
             const field = input.attr('name');
-            const value = parseFloat(input.val()) || 0;
 
             if (!id) return console.warn('⚠️ ID perjalanan tidak ditemukan.');
+
+            // Ambil nilai asli (hapus titik)
+            let rawValue = input.val().replace(/\./g, '');
+            let numericValue = parseFloat(rawValue) || 0;
+
+            // Format tampilan angka ribuan
+            input.val(numericValue.toLocaleString('id-ID'));
 
             // Hentikan timer sebelumnya
             clearTimeout(timer);
@@ -597,7 +594,11 @@
                 $.ajax({
                     url: "<?= base_url('perjalanan/update_biaya_field'); ?>",
                     method: "POST",
-                    data: { id: id, field: field, value: value },
+                    data: {
+                        id: id,
+                        field: field,
+                        value: numericValue // kirim angka murni ke backend
+                    },
                     dataType: "json",
                     beforeSend: function() {
                         input.css('background-color', '#fff3cd'); // kuning lembut → sedang update
