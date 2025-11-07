@@ -2,13 +2,54 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
         <div class="row">
+
+                <div class="col-md-8 d-none d-sm-block">
+                    <div class="card">
+                    <div class="card-header card-header-icon card-header-rose">
+                        <div class="card-icon">
+                        <i class="material-icons">insert_chart</i>
+                        </div>
+                        <h4 class="card-title">Payment Request</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="multipleBarsChart" class="ct-chart"></div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">report</i>
+                            </div>
+                            <p class="card-category">ARRIVED</p>
+                            <h3 class="card-title"><?= isset($counts_po['ARRIVED']) ? $counts_po['ARRIVED'] : 0; ?></h3>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
                     <div class="card card-stats">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
+                                <i class="material-icons">report</i>
+                            </div>
+                            <p class="card-category">PO RELEASE</p>
+                            <h3 class="card-title"><?= isset($counts_po['PO_RELEASE']) ? $counts_po['PO_RELEASE'] : 0; ?></h3>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                <!-- Card  -->
+                <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                            <div class="card-icon">
                                 <i class="material-icons">near_me</i>
                             </div>
-                            <p class="card-category">REQUEST</p>
+                            <p class="card-category">APPROVAL DEPT. USER</p>
                             <h3 class="card-title"><?= isset($counts['null']) ? $counts['null'] : 0; ?></h3>
                         </div>
                         <div class="card-footer">
@@ -17,25 +58,12 @@
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
                     <div class="card card-stats">
-                        <div class="card-header card-header-warning card-header-icon">
-                            <div class="card-icon">
-                                <i class="material-icons">report</i>
-                            </div>
-                            <p class="card-category">PR RELEASE</p>
-                            <h3 class="card-title"><?= isset($counts['X']) ? $counts['X'] : 0; ?></h3>
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
-                    <div class="card card-stats">
-                        <div class="card-header card-header-info card-header-icon">
+                        <div class="card-header card-header-danger card-header-icon">
                             <div class="card-icon">
                                 <i class="material-icons">report</i>
                             </div>
                             <p class="card-category">ADMIN PCH</p>
-                            <h3 class="card-title"><?= isset($counts['XX']) ? $counts['XX'] : 0; ?></h3>
+                            <h3 class="card-title"><?= isset($counts['X']) ? $counts['X'] : 0; ?></h3>
                         </div>
                         <div class="card-footer">
                         </div>
@@ -48,7 +76,7 @@
                                 <i class="material-icons">report</i>
                             </div>
                             <p class="card-category">BUYER</p>
-                            <h3 class="card-title"><?= isset($counts['XXX']) ? $counts['XXX'] : 0; ?></h3>
+                            <h3 class="card-title"><?= isset($counts['XX']) ? $counts['XX'] : 0; ?></h3>
                         </div>
                         <div class="card-footer">
                         </div>
@@ -60,7 +88,20 @@
                             <div class="card-icon">
                                 <i class="material-icons">report</i>
                             </div>
-                            <p class="card-category">PO RELEASE</p>
+                            <p class="card-category">APPROVAL PR PCH</p>
+                            <h3 class="card-title"><?= isset($counts['XXX']) ? $counts['XXX'] : 0; ?></h3>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-info card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">report</i>
+                            </div>
+                            <p class="card-category">PR RELEASE</p>
                             <h3 class="card-title"><?= isset($counts['XXXX']) ? $counts['XXXX'] : 0; ?></h3>
                         </div>
                         <div class="card-footer">
@@ -69,12 +110,12 @@
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
                     <div class="card card-stats">
-                        <div class="card-header card-header-success card-header-icon">
+                        <div class="card-header card-header-primary card-header-icon">
                             <div class="card-icon">
                                 <i class="material-icons">report</i>
                             </div>
-                            <p class="card-category">DEL, QC, ARRIVED</p>
-                            <h3 class="card-title"><?= isset($counts['XXXXX']) ? $counts['XXXXX'] : 0; ?></h3>
+                            <p class="card-category">CREATE PO</p>
+                            <h3 class="card-title"><?= isset($counts_po['CREATE_PO']) ? $counts_po['CREATE_PO'] : 0; ?></h3>
                         </div>
                         <div class="card-footer">
                         </div>
@@ -348,119 +389,53 @@
                 "targets": [6,9], //first column / numbering column
                 // "targets": [0,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //first column / numbering column
                 "orderable": false, //set not orderable
-            },
+            }],
             // {
             //     "targets": [9], //first column / numbering column
             //     "orderable": false, //set not orderable
             //     "defaultContent": "<a href='#' class='btn btn-sm btn-info btn-round'>DETAIL</a>",
             // }, 
-        ],
-    });
-
-    $('#dtproject tbody').on('click', 'button', function() {
-        var data = tableproject.row($(this).parents('tr')).data();
-        $('#projectModal').on('show.bs.modal', function() {
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this)
-            modal.find('.modal-body input[name="copro"]').val(data[1])
-            modal.find('.modal-body input[name="customer"]').val(data[2])
-            modal.find('.modal-body textarea[name="deskripsi"]').val(data[3])
-        })
         
-        $('#projectModal').modal("show");
-        
-    });
-
-        var groupColumn = 1;
-        var tablewbs = $('#dtwbs').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [-1],
-                ["All"]
-            ],
-            scrollX: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            },
-            //Set column definition initialisation properties.
-            "columnDefs": [{
-                "visible": false,
-                "targets": groupColumn
-            }, ],
-            "columnDefs": [{
-                "targets": [12], //first column / numbering column
-                "orderable": false, //set not orderable
-            }, ],
-            "order": [
-                [0, 'asc']
-            ],
-            "displayLength": -1,
-            "drawCallback": function(settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
-
-                api.column(groupColumn, {
-                    page: 'current'
-                }).data().each(function(group, i) {
-                    if (last !== group) {
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td colspan="13">' + group + '</td></tr>'
-                        );
-
-                        last = group;
-                    }
-                });
-            }
         });
 
-        // var groupColumn = 1;
-        var tableakwbs = $('#dtakwbs').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [-1],
-                ["All"]
-            ],
-            scrollX: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
+        var dataMultipleBarsChart = {
+            labels: ['APPROVAL DEPT. USER', 'ADMIN PCH', 'BUYER', 'APPROVAL PR PCH', 'PR RELEASE', 'CREATE PO', 'PO RELEASE'],
+            series: [
+                [
+                    <?= isset($counts['null']) ? $counts['null'] : 0; ?>, 
+                    <?= isset($counts['X']) ? $counts['X'] : 0; ?>, 
+                    <?= isset($counts['XX']) ? $counts['XX'] : 0; ?>, 
+                    <?= isset($counts['XXX']) ? $counts['XXX'] : 0; ?>, 
+                    <?= isset($counts['XXXX']) ? $counts['XXXX'] : 0; ?>, 
+                    <?= isset($counts_po['CREATE_PO']) ? $counts_po['CREATE_PO'] : 0; ?>, 
+                    <?= isset($counts_po['PO_RELEASE']) ? $counts_po['PO_RELEASE'] : 0; ?>
+                ],
+            ]
+        };
+
+        var optionsMultipleBarsChart = {
+            seriesBarDistance: 10,
+            axisX: {
+            showGrid: false
             },
-            //Set column definition initialisation properties.
-            "columnDefs": [{
-                "visible": false,
-                "targets": groupColumn
-            }, ],
-            "columnDefs": [{
-                "targets": [8], //first column / numbering column
-                "orderable": false, //set not orderable
-            }, ],
-            "order": [
-                [0, 'asc']
-            ],
-            "displayLength": -1,
-            "drawCallback": function(settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
+            height: '300px'
+        };
 
-                api.column(groupColumn, {
-                    page: 'current'
-                }).data().each(function(group, i) {
-                    if (last !== group) {
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td colspan="9">' + group + '</td></tr>'
-                        );
-
-                        last = group;
-                    }
-                });
+        var responsiveOptionsMultipleBarsChart = [
+            ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                return value[0];
+                }
             }
-        });
+            }]
+        ];
+
+        var multipleBarsChart = Chartist.Bar('#multipleBarsChart', dataMultipleBarsChart, optionsMultipleBarsChart, responsiveOptionsMultipleBarsChart);
+
+        //start animation for the Emails Subscription Chart
+        md.startAnimationForBarChart(multipleBarsChart);
+
     });
 </script>

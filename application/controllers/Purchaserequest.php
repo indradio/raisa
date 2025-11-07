@@ -40,7 +40,38 @@ class Purchaserequest extends CI_Controller
             $data['counts'][$key] = $row->total;
         }
 
-        $data['last'] = $this->db->select('created_at')->get('zmpu')->row('created_at');
+        $query = $this->db->query("
+            SELECT 
+                CASE 
+                    WHEN pr_no IS NULL AND gr_doc IS NULL THEN 'CREATE_PO'
+                    WHEN pr_no IS NOT NULL AND gr_doc IS NULL THEN 'PO_RELEASE'
+                    WHEN pr_no IS NOT NULL AND gr_doc IS NOT NULL THEN 'ARRIVED'
+                END AS kategori,
+                COUNT(*) AS total
+            FROM zmpu
+            WHERE pr_release IS NOT NULL
+            GROUP BY 
+                CASE 
+                    WHEN pr_no IS NULL AND gr_doc IS NULL THEN 'CREATE_PO'
+                    WHEN pr_no IS NOT NULL AND gr_doc IS NULL THEN 'PO_RELEASE'
+                    WHEN pr_no IS NOT NULL AND gr_doc IS NOT NULL THEN 'ARRIVED'
+            END
+        ");
+
+        $rows = $query->result();
+
+        $data['counts_po'] = [
+            'CREATE_PO'   => 0,
+            'PO_RELEASE' => 0,
+            'ARRIVED'  => 0
+        ];
+
+        foreach ($rows as $row) {
+            $data['counts_po'][$row->kategori] = (int) $row->total;
+        }
+
+
+        $data['last'] = date("d M Y H:i:s", strtotime($this->db->select('created_at')->get('zmpu')->row('created_at')));
         
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -70,23 +101,23 @@ class Purchaserequest extends CI_Controller
         foreach ($query as $zmpu) {
 
             if ($zmpu->pr_release == 'XXXXX') {
-                if (empty($zmpu->gr_doc) && empty($zmpu->gr_block)) {
-                    $status = '<a href="#" class="btn btn-sm btn-linkedin" style="pointer-events: none; cursor: default;">DELIVERY</a>';
-                } elseif (empty($zmpu->gr_doc) && !empty($zmpu->gr_block)) {
-                    $status = '<a href="#" class="btn btn-sm btn-twitter" style="pointer-events: none; cursor: default;">QC CHECK</a>';
+                if (empty($zmpu->gr_doc) && empty($zmpu->po_no)) {
+                    $status = '<a href="#" class="btn btn-sm btn-linkedin" style="pointer-events: none; cursor: default;">CREATE PO</a>';
+                } elseif (empty($zmpu->godoc) && !empty($zmpu->po_no)) {
+                    $status = '<a href="#" class="btn btn-sm btn-twitter" style="pointer-events: none; cursor: default;">PO RELEASE</a>';
                 } else {
                     $status = '<a href="#" class="btn btn-sm btn-success" style="pointer-events: none; cursor: default;">ARRIVED</a>';
                 }
             } elseif ($zmpu->pr_release == 'XXXX') {
-                $status = '<a href="#" class="btn btn-sm btn-reddit" style="pointer-events: none; cursor: default;">APPROVAL PO DEPT</a>';
+                $status = '<a href="#" class="btn btn-sm btn-twitter" style="pointer-events: none; cursor: default;">PR RELEASE</a>';
             } elseif ($zmpu->pr_release == 'XXX') {
-                $status = '<a href="#" class="btn btn-sm btn-primary" style="pointer-events: none; cursor: default;">BUYER</a>';
+                $status = '<a href="#" class="btn btn-sm btn-warning" style="pointer-events: none; cursor: default;">APPROVAL PR PCH</a>';
             } elseif ($zmpu->pr_release == 'XX' ) {
-                $status = '<a href="#" class="btn btn-sm btn-dribbble" style="pointer-events: none; cursor: default;">ADMIN PCH</a>';
+                $status = '<a href="#" class="btn btn-sm btn-dribbble" style="pointer-events: none; cursor: default;">BUYER</a>';
             } elseif ($zmpu->pr_release == 'X') {
-                $status = '<a href="#" class="btn btn-sm btn-warning" style="pointer-events: none; cursor: default;">APPROVAL PR DEPT</a>';
+                $status = '<a href="#" class="btn btn-sm btn-youtube" style="pointer-events: none; cursor: default;">ADMIN PCH</a>';
             } else {
-                $status = '<a href="#" class="btn btn-sm btn-info" style="pointer-events: none; cursor: default;">REQUEST</a>';
+                $status = '<a href="#" class="btn btn-sm btn-warning" style="pointer-events: none; cursor: default;">APPROVAL DEPT. USER</a>';
             }
             
 
