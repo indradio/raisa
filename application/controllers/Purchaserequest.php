@@ -103,7 +103,7 @@ class Purchaserequest extends CI_Controller
             if ($zmpu->pr_release == 'XXXXX') {
                 if (empty($zmpu->gr_doc) && empty($zmpu->po_no)) {
                     $status = '<a href="#" class="btn btn-sm btn-linkedin" style="pointer-events: none; cursor: default;">CREATE PO</a>';
-                } elseif (empty($zmpu->godoc) && !empty($zmpu->po_no)) {
+                } elseif (empty($zmpu->gr_doc) && !empty($zmpu->po_no)) {
                     $status = '<a href="#" class="btn btn-sm btn-twitter" style="pointer-events: none; cursor: default;">PO RELEASE</a>';
                 } else {
                     $status = '<a href="#" class="btn btn-sm btn-success" style="pointer-events: none; cursor: default;">ARRIVED</a>';
