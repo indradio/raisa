@@ -1,15 +1,15 @@
 <div class="content">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mt-4">
 
                 <div class="col-md-8 d-none d-sm-block">
                     <div class="card">
-                    <div class="card-header card-header-icon card-header-rose">
+                    <div class="card-header card-header-icon card-header-primary">
                         <div class="card-icon">
                         <i class="material-icons">insert_chart</i>
                         </div>
-                        <h4 class="card-title">Payment Request</h4>
+                        <h4 class="card-title">Purchase Request</h4>
                     </div>
                     <div class="card-body">
                         <div id="multipleBarsChart" class="ct-chart"></div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6 d-none d-sm-block">
                     <div class="card card-stats">
-                        <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-header card-header-rose card-header-icon">
                             <div class="card-icon">
                                 <i class="material-icons">report</i>
                             </div>
@@ -386,7 +386,7 @@
 
             //Set column definition initialisation properties.
             "columnDefs": [{
-                "targets": [6,9], //first column / numbering column
+                "targets": [6,9,10], //first column / numbering column
                 // "targets": [0,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //first column / numbering column
                 "orderable": false, //set not orderable
             }],
