@@ -111,7 +111,7 @@ class Purchaserequest extends CI_Controller
             } elseif ($zmpu->pr_release == 'XXXX') {
                 $status = '<a href="#" class="btn btn-sm btn-twitter" style="pointer-events: none; cursor: default;">PR RELEASE</a>';
             } elseif ($zmpu->pr_release == 'XXX') {
-                $status = '<a href="#" class="btn btn-sm btn-warning" style="pointer-events: none; cursor: default;">APPROVAL PR PCH</a>';
+                $status = '<a href="#" class="btn btn-sm btn-google" style="pointer-events: none; cursor: default;">APPROVAL PR PCH</a>';
             } elseif ($zmpu->pr_release == 'XX' ) {
                 $status = '<a href="#" class="btn btn-sm btn-dribbble" style="pointer-events: none; cursor: default;">BUYER</a>';
             } elseif ($zmpu->pr_release == 'X') {
