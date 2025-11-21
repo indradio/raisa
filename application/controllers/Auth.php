@@ -82,7 +82,7 @@ class Auth extends CI_Controller
         // Jika ada reservasi yang harus dihapus
         if (!empty($reservasi_ids)) {
             $this->db->where_in('id', $reservasi_ids)->delete('reservasi');
-            $this->db->where_in('id', $reservasi_ids)->delete('perjalanan_anggota');
+            $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_anggota');
             $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_tujuan');
             $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_ta');
             $this->db->where_in('reservasi_id', $reservasi_ids)->delete('perjalanan_jadwal');
