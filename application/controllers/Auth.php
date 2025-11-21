@@ -7,7 +7,7 @@ class Auth extends CI_Controller
 {
     public function index()
     {
-        // $this->clear_temp();
+        $this->clear_temp();
         $this->load->view('auth/index');
     }
 
