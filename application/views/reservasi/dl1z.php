@@ -278,18 +278,21 @@
                                             <p class="mb-0 text-danger">2. Pastikan status pajak kendaraan aktif.</p>
                                             <p class="mb-0 text-danger">3. Mobil sudah berasuransi dan status perlindungannya aktif.</p>
                                             <p class="mb-0 text-danger">4. Segala kejadian selama perjalanan dinas menjadi tanggung jawab pengemudi.</p>
-                                            <p class="mb-0 text-danger">5. Patuhi semua rambu-rambu lalu lintas dan undang-undang yang berlaku.</p>
-                                            <p class="mb-0 text-danger">6. Patuhi peraturan GA yang berlaku.</b>
+                                            <p class="mb-0 text-danger">5. pastikan pengemudi melakukan pengecekan kondisi kendaraan.</p>
+                                            <p class="mb-0 text-danger">6. pastikan pengemudi dalam kondisi prima.</p>
+                                            <p class="mb-0 text-danger">7. Patuhi semua rambu-rambu lalu lintas dan undang-undang yang berlaku.</p>
+                                            <p class="mb-0 text-danger">8. Patuhi peraturan GA yang berlaku.</b>
                                         </div>
                                         <?php }else{ ?>
                                         <div class="form-group has-default">
                                             <p class="mb-0">Perhatikan hal-hal berikut:</p>
-                                            <p class="mb-0">1. Mengemudilah dengan aman dan gunakan selalu sabuk keselamatan.</p>
-                                            <p class="mb-0">2. Patuhi semua rambu-rambu lalu lintas dan undang-undang yang berlaku.</p>
-                                            <p class="mb-0">3. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.</p>
-                                            <p class="mb-0">4. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.</p>
-                                            <p class="mb-0">5. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.</p>
-                                            <p class="mb-0">6. Patuhi peraturan GA yang berlaku.
+                                            <p class="mb-0 text-danger"><b>1. Pastikan pengemudi memiliki sim A aktif.</p>
+                                            <p class="mb-0 text-danger">2. Segala kejadian selama perjalanan dinas menjadi tanggung jawab pengemudi.</p>
+                                            <p class="mb-0 text-danger">3. pastikan pengemudi melakukan pengecekan kondisi kendaraan.</p>
+                                            <p class="mb-0 text-danger">4. pastikan pengemudi dalam kondisi prima.</p>
+                                            <p class="mb-0 text-danger">5. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih, jangan tinggalkan sampah dan barang-barang lainnya.</p>
+                                            <p class="mb-0 text-danger">6. Patuhi semua rambu-rambu lalu lintas dan undang-undang yang berlaku.</p>
+                                            <p class="mb-0 text-danger">7. Patuhi peraturan GA yang berlaku.</b>
                                         </div>
                                         <?php }; ?>
                                         <div class="form-check">

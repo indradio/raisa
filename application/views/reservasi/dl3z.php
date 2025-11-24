@@ -250,7 +250,9 @@
                                         <p class="mb-0">2. Jangan menaruh barang-barang di dashboard karena dapat mengganggu fungsi airbag.</p>
                                         <p class="mb-0">3. Jagalah kebersihan kendaraan, jangan tinggalkan sampah dan barang-barang lainnya.</p>
                                         <p class="mb-0">4. Hargai pengguna berikutnya. Kembalikan kendaraan dalam kondisi bersih dan rapih.</p>
-                                        <p class="mb-0">5. Patuhi peraturan GA yang berlaku.
+                                        <p class="mb-0">5. pastikan pengendara melakukan pengecekan kondisi kendaraan.</p>
+                                        <p class="mb-0">6. pastikan pengemudi/driver dalam kondisi prima.</p>
+                                        <p class="mb-0">7. Patuhi peraturan GA yang berlaku.
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
