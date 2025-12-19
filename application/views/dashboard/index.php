@@ -171,7 +171,7 @@
                 <div class="card-header" role="tab" id="headingForm">
                   <h5 class="mb-0">
                     <a class="" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
-                    <h3 class="card-title">Calendar of Event Winteq 2026 
+                    <h3 class="card-title">Calendar of Event Winteq
                       <i class="material-icons">keyboard_arrow_down</i>
                     </h3>
                     </a>
@@ -185,7 +185,11 @@
                             <tr>
                                 <th>CoE 2026</th>
                                 <th><a href="https://drive.google.com/file/d/1XL9uCK1p_JGPrMIUoQIcFOV38ukMiy9T/view" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
-                              </tr>
+                            </tr>
+                            <tr>
+                                <th>CoE 2025</th>
+                                <th><a href="https://drive.google.com/file/d/1hWhwaBSvwujCYccx2awJLW4RfTPNHJl0/view" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
+                            </tr>
                             <!-- <tr>
                                 <th>FORM PENGAJUAN BANTUAN RELOKASI</th>
                                 <th><a href="https://drive.google.com/file/d/1GL82ndCXngkLUjurLLp1qHzqU5BJ6rK7/view?usp=sharing" target="_blank" class='btn btn-link btn-success'><i class='fa fa-download'></i> Download<div class='ripple-container'></div></a></th>
