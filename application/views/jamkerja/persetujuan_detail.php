@@ -42,17 +42,15 @@
                 $shift = $durasi;
                 $sisaDurasi = 4;
               } else {
-                if ($jamkerja['shift']=='SHIFT1'){
-                    $shift = 6;
-                    $sisaDurasi = 6 - $durasi;
-                }elseif ($jamkerja['shift']=='SHIFT2'){
-                    $shift = 8;
-                    $sisaDurasi = 8 - $durasi;
+                if ($jamkerja['shift']=='SHIFT1' OR $jamkerja['shift']=='SHIFT1_PAKO'){
+                    $sisadurasi = 6 - $durasi;
+                }elseif ($jamkerja['shift']=='SHIFT2' OR $jamkerja['shift']=='SHIFT3_A'){
+                    $sisadurasi = 8 - $durasi;
                 }elseif ($jamkerja['shift']=='SHIFT3'){
-                    $sisaDurasi = 7 - $durasi;
-                    $shift = 7;
+                    $sisadurasi = 7 - $durasi;
                 }
               }
+
               $jam = $this->db->get_where('jam', ['jam <=' =>  $sisaDurasi])->result();
 
               // Select the sum of 'durasi' for each 'kategori' in a single query
@@ -97,9 +95,9 @@
                   <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?= $bar2; ?>%" aria-valuenow="<?= $kategori2; ?>" aria-valuemin="0" aria-valuemax="<?= $shift; ?>"></div>
                   <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3; ?>%" aria-valuenow="<?= $kategori3; ?>" aria-valuemin="0" aria-valuemax="<?= $shift; ?>"></div>
               </div>
-              <?php if($jamkerja['shift']=='SHIFT1' AND $jamkerja['durasi']<6){
+              <?php if(($jamkerja['shift']=='SHIFT1' OR $jamkerja['shift']=='SHIFT1_PAKO') AND $jamkerja['durasi']<6){
                 echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';
-              } elseif($jamkerja['shift']=='SHIFT2' AND $jamkerja['durasi']<8){
+              } elseif(($jamkerja['shift']=='SHIFT2' OR $jamkerja['shift']=='SHIFT3_A') AND $jamkerja['durasi']<8){
                 echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';
               } elseif($jamkerja['shift']=='SHIFT3' AND $jamkerja['durasi']<7){
                 echo '<a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="'. $jamkerja['id'].'" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>';

@@ -47,17 +47,25 @@ class Jamkerja extends CI_Controller
         $atasan1 = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('atasan1')])->row_array();
 
         if ($this->input->post('shift')=='SHIFT1'){
-            $tglmulai = date('Y-m-d 00:30:00', strtotime($tanggal));
-            $tglselesai = date('Y-m-d 07:30:00', strtotime($tanggal));
-            $due = strtotime(date('Y-m-d 00:30:00', strtotime('+1 days', strtotime($tanggal))));
+            $tglmulai = date('Y-m-d 00:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 06:59:59', strtotime($tanggal));
+            $due = strtotime(date('Y-m-d 00:00:00', strtotime('+1 days', strtotime($tanggal))));
         }elseif($this->input->post('shift')=='SHIFT2'){
-            $tglmulai = date('Y-m-d 07:30:00', strtotime($tanggal));
-            $tglselesai = date('Y-m-d 16:30:00', strtotime($tanggal));
-            $due = strtotime(date('Y-m-d 07:30:00', strtotime('+1 days', strtotime($tanggal))));
+            $tglmulai = date('Y-m-d 07:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 15:59:59', strtotime($tanggal));
+            $due = strtotime(date('Y-m-d 07:00:00', strtotime('+1 days', strtotime($tanggal))));
         }elseif($this->input->post('shift')=='SHIFT3'){
-            $tglmulai = date('Y-m-d 16:30:00', strtotime($tanggal));
-            $tglselesai = date('Y-m-d 00:00:00', strtotime('+1 days',strtotime($tanggal)));
-            $due = strtotime(date('Y-m-d 16:30:00', strtotime('+1 days', strtotime($tanggal))));
+            $tglmulai = date('Y-m-d 16:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 23:59:59', strtotime($tanggal));
+            $due = strtotime(date('Y-m-d 16:00:00', strtotime('+1 days', strtotime($tanggal))));
+        }elseif($this->input->post('shift')=='SHIFT1_PAKO'){
+            $tglmulai = date('Y-m-d 21:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 03:59:59', strtotime('+1 days',strtotime($tanggal)));
+            $due = strtotime(date('Y-m-d 21:00:00', strtotime('+1 days', strtotime($tanggal))));
+        }elseif($this->input->post('shift')=='SHIFT3_A'){
+            $tglmulai = date('Y-m-d 13:00:00', strtotime($tanggal));
+            $tglselesai = date('Y-m-d 21:59:59', strtotime($tanggal));
+            $due = strtotime(date('Y-m-d 16:00:00', strtotime('+1 days', strtotime($tanggal))));
         }
         
         $create = time();
@@ -262,7 +270,8 @@ class Jamkerja extends CI_Controller
         $this->db->from('aktivitas');
         $totaldurasi = $this->db->get()->row()->total;
 
-        if ($jamkerja['shift']=='SHIFT1'){
+        if ($jamkerja['shift']=='SHIFT1' OR $jamkerja['shift']=='SHIFT1_PAKO'){
+
             
             if ($totaldurasi==6){
                 $this->db->set('rev', 0);
@@ -305,7 +314,8 @@ class Jamkerja extends CI_Controller
                     $this->db->update('jamkerja');
                 }
             } 
-        }elseif ($jamkerja['shift']=='SHIFT2'){
+
+        }elseif ($jamkerja['shift']=='SHIFT2' OR $jamkerja['shift']=='SHIFT3_A'){
             
             if ($totaldurasi==8){
                 $this->db->set('rev', 0);
@@ -348,7 +358,9 @@ class Jamkerja extends CI_Controller
                     $this->db->update('jamkerja');
                 }
             } 
+            
         }elseif ($jamkerja['shift']=='SHIFT3'){
+
             
             if ($totaldurasi==7){
                 $this->db->set('rev', 0);

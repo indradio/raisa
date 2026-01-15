@@ -99,9 +99,9 @@
                                     if ($durasi < 4) {
                                         $sisadurasi = 4;
                                     } else {
-                                        if ($jamkerja['shift']=='SHIFT1'){
+                                        if ($jamkerja['shift']=='SHIFT1' OR $jamkerja['shift']=='SHIFT1_PAKO'){
                                             $sisadurasi = 6 - $durasi;
-                                        }elseif ($jamkerja['shift']=='SHIFT2'){
+                                        }elseif ($jamkerja['shift']=='SHIFT2' OR $jamkerja['shift']=='SHIFT3_A'){
                                             $sisadurasi = 8 - $durasi;
                                         }elseif ($jamkerja['shift']=='SHIFT3'){
                                             $sisadurasi = 7 - $durasi;
@@ -115,9 +115,9 @@
                                         <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?= $bar3 . '%'; ?>" aria-valuenow="<?= $bar3; ?>" aria-valuemin="0" aria-valuemax="8"></div>
                                     </div>
 
-                                    <?php if ($jamkerja['shift']=='SHIFT1' and $durasi < 6.0) { ?>
+                                    <?php if (($jamkerja['shift']=='SHIFT1' OR $jamkerja['shift']=='SHIFT1_PAKO') and $durasi < 6.0) { ?>
                                         <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
-                                    <?php }elseif ($jamkerja['shift']=='SHIFT2' and $durasi < 8.0){ ?>
+                                    <?php }elseif (($jamkerja['shift']=='SHIFT2' OR $jamkerja['shift']=='SHIFT3_A') and $durasi < 8.0){ ?>
                                         <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
                                     <?php }elseif ($jamkerja['shift']=='SHIFT3' and $durasi < 7.0){ ?>
                                         <a href="#" class="btn btn-facebook mb-2" role="button" data-toggle="modal" data-target="#aktivitasModal" data-id="<?= $jamkerja['id']; ?>" aria-disabled="false">TAMBAH AKTIVITAS JAM KERJA</a>
