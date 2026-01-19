@@ -37,17 +37,21 @@
               <?php
               $link = $jamkerja['id'];
               $durasi = $jamkerja['durasi'];
+              $shift = $durasi;
               
               if ($durasi < 4) {
-                $shift = $durasi;
                 $sisaDurasi = 4;
               } else {
-                if ($jamkerja['shift']=='SHIFT1' OR $jamkerja['shift']=='SHIFT1_PAKO'){
-                    $sisadurasi = 6 - $durasi;
-                }elseif ($jamkerja['shift']=='SHIFT2' OR $jamkerja['shift']=='SHIFT3_A'){
-                    $sisadurasi = 8 - $durasi;
+                if ($jamkerja['shift']=='SHIFT1'){
+                    $sisaDurasi = 6 - $durasi;
+                }elseif ($jamkerja['shift']=='SHIFT1_PAKO'){
+                    $sisaDurasi = 6 - $durasi;
+                }elseif ($jamkerja['shift']=='SHIFT2'){
+                    $sisaDurasi = 8 - $durasi;
+                }elseif ($jamkerja['shift']=='SHIFT3_A'){
+                    $sisaDurasi = 8 - $durasi;
                 }elseif ($jamkerja['shift']=='SHIFT3'){
-                    $sisadurasi = 7 - $durasi;
+                    $sisaDurasi = 7 - $durasi;
                 }
               }
 
