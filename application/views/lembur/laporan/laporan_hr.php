@@ -59,6 +59,7 @@
                                         <th>Approval HR</th>
                                         <th>PPIC</th>
                                         <th>Approval PPIC</th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
                                         <th>Catatan</th>
                                         <th class="disabled-sorting text-right">Actions</th>
@@ -83,6 +84,7 @@
                                         <th>Approval HR</th>
                                         <th>PPIC</th>
                                         <th>Approval PPIC</th>
+                                        <th>Lokasi</th>
                                         <th>Status</th>
                                         <th>Catatan</th>
                                         <th class="text-right">Actions</th>
@@ -203,6 +205,7 @@
                 { "data":"tanggal_hr"},
                 { "data":"ppic"},
                 { "data":"tanggal_ppic"},
+                { "data":"lokasi"},
                 { "data":"status"},
                 { "data":"catatan"},
                 { "data":"actions"}
