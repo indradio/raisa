@@ -307,19 +307,29 @@ class Layanan extends CI_Controller
                 //     'time' => date('H:i:s', $nowtime)
                 // ]];
                 $options = [
-                'form_params' => [
-                    'token' => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
-                    'number' => $row['phone'],
-                    'file' => 'https://raisa.winteq-astra.com/assets/img/wa/phishing.jpg',
-                    'caption' => "⚠️ Peringatan Keamanan: Serangan Email Phishing". 
-                                "\r\n \r\nSaat ini terdapat upaya serangan email phishing yang menargetkan pengguna internal. Mohon tidak membuka atau mengklik tautan apa pun pada email yang mencurigakan, terutama yang meminta login, data pribadi, atau verifikasi akun.".
-                                "\r\n \r\nJika Anda menerima email mencurigakan, hapus segera dan jangan membalas. Tetap waspada dan selalu periksa alamat pengirim sebelum berinteraksi dengan email tersebut.".
-                                "\r\n \r\n🔒 Keamanan data kita adalah tanggung jawab bersama".
-                                "\r\n \r\n#KeamananData #StopPhishing #CyberSecurity #EmailAman #WaspadaPhishing #DataProtection #ThinkBeforeYouClick".
-                                "\r\n \r\nFollow R A I S A x WINTEQ channel on WhatsApp: https://whatsapp.com/channel/0029Vah2IkLDzgT9vSSZfR40 ",
-                    'date' => date('Y-m-d'),
-                    'time' => date('H:i:s', $nowtime)
-                ]];
+                    'form_params' => [
+                        'token'  => '1o7dFUa9TKGawCCwpGXo5H9ag4X7Z8xYw5fyDY3yg67UWp1PF8',
+                        'number' => $row['phone'],
+                        'file'   => 'https://raisa.winteq-astra.com/assets/img/wa/familyday2026.png',
+                        'caption' =>
+                            "🎉 Semangat Pagi Insan Winteq! 👋" .
+                            "\r\n\r\nDalam semangat merayakan *20 Tahun Berkarya*, Panitia sedang menyusun rangkaian acara *Family Day 2026* dengan tema *\"Symphony of Excellence\"* sebagai bentuk apresiasi untuk seluruh karyawan dan keluarga." .
+                            "\r\n\r\nUntuk memastikan harmoni acara ini terasa maksimal bagi seluruh Insan Winteq, kami mengundang Bapak/Ibu/Rekan-rekan untuk memberikan aspirasi melalui polling persiapan acara pada tautan berikut:" .
+                            "\r\n\r\n🔗 https://bit.ly/Finalisasi_Famday2026" .
+                            "\r\n\r\n⏰ Mohon diisi paling lambat:" .
+                            "\r\n📅 Senin, 8 Juni 2026" .
+                            "\r\n🕛 Pukul 12:00 WIB" .
+                            "\r\n\r\n📍 Informasi lokasi acara:" .
+                            "\r\nhttps://canva.link/w0jswsrayvabkwz" .
+                            "\r\n\r\nPartisipasi aktif Anda sangat berarti untuk kesuksesan perayaan bersejarah ini." .
+                            "\r\n\r\nMari kita wujudkan Family Day 2026 yang penuh kebersamaan, keceriaan, dan kenangan indah bersama keluarga tercinta." .
+                            "\r\n\r\nTerima kasih atas partisipasinya 🙏" .
+                            "\r\n\r\n#FamilyDay2026 #20TahunBerkarya #SymphonyOfExcellence #InsanWinteq #OneTeamOneFamily",
+                        'date' => date('Y-m-d'),
+                        'time' => date('H:i:s', $nowtime)
+                    ]
+                ];
+                
                 $request = new Request('POST', 'https://app.ruangwa.id/api/send_image');
                 $res = $client->sendAsync($request, $options)->wait();
                 echo $res->getBody();
