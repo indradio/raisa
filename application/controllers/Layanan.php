@@ -213,71 +213,40 @@ class Layanan extends CI_Controller
     public function broadcast_send($parameter)
     {
         date_default_timezone_set('asia/jakarta');
-        if ($parameter == 'A') {
+        $karyawan = [];
+
+    switch ($parameter) {
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'E':
+        case 'F':
+
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('batch', 'A');
+            $this->db->where('batch', $parameter);
+
             $karyawan = $this->db->get('karyawan')->result_array();
 
             $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', 'A');
+            $this->db->where('batch', $parameter);
             $this->db->update('log_broadcast');
 
-        } elseif ($parameter == 'B') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('batch', 'B');
-            $karyawan = $this->db->get('karyawan')->result_array();
+            break;
 
-            $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', 'B');
-            $this->db->update('log_broadcast');
+        case '0282':
 
-        } elseif ($parameter == 'C') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('batch', 'C');
-            $karyawan = $this->db->get('karyawan')->result_array();
-
-            $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', 'C');
-            $this->db->update('log_broadcast');
-
-        } elseif ($parameter == 'D') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('batch', 'D');
-            $karyawan = $this->db->get('karyawan')->result_array();
-
-            $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', 'D');
-            $this->db->update('log_broadcast');
-
-        } elseif ($parameter == 'E') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('batch', 'E');
-            $karyawan = $this->db->get('karyawan')->result_array();
-
-            $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', 'E');
-            $this->db->update('log_broadcast');
-
-        } elseif ($parameter == 'F') {
-            $this->db->where('is_active', '1');
-            $this->db->where('status', '1');
-            $this->db->where('batch', 'F');
-            $karyawan = $this->db->get('karyawan')->result_array();
-
-            $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', 'F');
-            $this->db->update('log_broadcast');
-            
-        } elseif ($parameter == '0282') {
             $this->db->where('npk', '0282');
-            // $this->db->or_where('npk', '');
             $karyawan = $this->db->get('karyawan')->result_array();
-        }
+
+            break;
+
+        default:
+
+            show_error('Parameter tidak valid : '.$parameter);
+            return;
+    }
 
         $client = new \GuzzleHttp\Client();
         $nowtime = time(); // Waktu awal saat ini
@@ -366,40 +335,47 @@ class Layanan extends CI_Controller
     public function broadcast_send_up($parameter)
     {
         date_default_timezone_set('asia/jakarta');
-        $karyawan = [];
-
-    switch ($parameter) {
-        case 'A':
-        case 'B':
-        case 'C':
-        case 'D':
-        case 'E':
-        case 'F':
-
+        if ($parameter == 'A') {
             $this->db->where('is_active', '1');
             $this->db->where('status', '1');
-            $this->db->where('batch', $parameter);
-
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'A');
             $karyawan = $this->db->get('karyawan')->result_array();
-
-            $this->db->set('last_sent', date('Y-m-d H:i:s'));
-            $this->db->where('batch', $parameter);
-            $this->db->update('log_broadcast');
-
-            break;
-
-        case '0282':
-
+        } elseif ($parameter == 'B') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'B');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'C') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'C');
+            // $this->db->where('npk', '0282');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'D') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'D');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'E') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'E');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'F') {
+            $this->db->where('is_active', '1');
+            $this->db->where('status', '1');
+            $this->db->where('gol_id >', '1');
+            $this->db->where('group', 'F');
+            $karyawan = $this->db->get('karyawan')->result_array();
+        } elseif ($parameter == 'Z') {
             $this->db->where('npk', '0282');
             $karyawan = $this->db->get('karyawan')->result_array();
-
-            break;
-
-        default:
-
-            show_error('Parameter tidak valid : '.$parameter);
-            return;
-    }
+        }
 
         foreach ($karyawan as $k) :
                 //Notifikasi ke USER
