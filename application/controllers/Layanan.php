@@ -360,7 +360,7 @@ class Layanan extends CI_Controller
             // $nowtime = strtotime('+5 second', $nowtime);
 
         endforeach;
-        redirect('layanan/broadcast');
+        // redirect('layanan/broadcast');
     }
 
     public function broadcast_send_up($parameter)
