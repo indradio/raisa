@@ -54,6 +54,9 @@
           <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <?= $this->session->flashdata('message'); ?>
             <form class="form" method="post" action="<?= base_url('auth/login'); ?>">
+            <input type="hidden"
+                     name="<?= $this->security->get_csrf_token_name(); ?>"
+                     value="<?= $this->security->get_csrf_hash(); ?>">
               <div class="card card-login card-hidden">
                 <div class="card-header card-header-info text-center">
                   <h4 class="card-title">Login</h4>
@@ -164,7 +167,7 @@
   <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="<?= base_url(); ?>assets/js/material-dashboard.js?v=2.1.0" type="text/javascript"></script>
-  <script>
+  <!-- <script>
     $(document).ready(function() {
       $().ready(function() {
         $('.fixed-plugin a').click(function(event) {
@@ -315,7 +318,7 @@
         });
       });
     });
-  </script>
+  </script> -->
   <script>
     $(document).ready(function() {
       md.checkFullPageBackgroundImage();
