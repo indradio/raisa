@@ -154,18 +154,18 @@ class Auth extends CI_Controller
         }
 
         // NPK RAISA saat ini 4 digit. Validasi di server, bukan hanya di HTML.
-        if (!preg_match('/^\d{4}$/', $npk)) {
-            $this->record_login_failure($attempts, $max_attempts, $lock_seconds);
-            $this->session->set_flashdata(
-                'message',
-                '<div class="alert alert-rose">
-                    <strong>Login Gagal</strong>
-                    <span>Format NPK tidak valid.</span>
-                </div><br>'
-            );
-            redirect('auth');
-            return;
-        }
+        // if (!preg_match('/^\d{4}$/', $npk)) {
+        //     $this->record_login_failure($attempts, $max_attempts, $lock_seconds);
+        //     $this->session->set_flashdata(
+        //         'message',
+        //         '<div class="alert alert-rose">
+        //             <strong>Login Gagal</strong>
+        //             <span>Format NPK tidak valid.</span>
+        //         </div><br>'
+        //     );
+        //     redirect('auth');
+        //     return;
+        // }
 
         // Gunakan Query Builder untuk menghindari SQL Injection.
         $karyawan = $this->db
@@ -443,7 +443,7 @@ class Auth extends CI_Controller
             );
         }
     }
-    
+
 
     public function logout()
     {
