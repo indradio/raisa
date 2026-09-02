@@ -113,7 +113,7 @@
           </div>
           <div class="col-md-12 ml-auto mr-auto text-center">
             <!-- <i class="material-icons">perm_phone_msg</i> -->
-            Butuh bantuan ? Hubungi <a href="https://wa.me/6281311196988" target="blank">Indra Dio</a> (+62813-1119-6988)
+            Butuh bantuan ? Hubungi <a href="#" target="blank">Indra Dio</a>
           </div>
         </div>
       </div>
