@@ -221,8 +221,8 @@ if (empty($perjalanan['penyelesaian_by'])) {
 $pdf->Ln(5);
 $pdf->SetFont('Arial', 'B', 6);
 if (empty($atasan1['nama'])) {
-    $pdf->Cell(43, 5, '', 0, 0, 'C', 0);
-    $pdf->Cell(43, 5, '', 0, 0, 'C', 0);
+    $pdf->Cell(43, 5, $perjalanan['nama'], 0, 0, 'C', 0);
+    $pdf->Cell(43, 5, $perjalanan['nama'], 0, 0, 'C', 0);
 }else{
     $pdf->Cell(43, 5, $atasan1['nama'], 0, 0, 'C', 0);
     $pdf->Cell(42, 5, $atasan2['nama'], 0, 0, 'C', 0);
