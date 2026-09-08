@@ -159,7 +159,7 @@ class Asset extends CI_Controller
         $data['karyawan'] = $this->db->get_where('karyawan', ['npk' => $this->session->userdata('npk')])->row_array();
         
         $this->db->where('npk', $this->session->userdata('npk'));
-        $this->db->where('opname_statuss', 0);
+        $this->db->where('opname_status', 0);
         $assetRemaining = $this->db->get('asset');
         $data['assetRemaining'] = $assetRemaining->num_rows();
 
