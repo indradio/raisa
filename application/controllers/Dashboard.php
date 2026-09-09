@@ -269,6 +269,11 @@ class Dashboard extends CI_Controller
             $data['imp'] = null;
         }
 
+        $data['informasi'] = $this->db
+            ->where('berlaku >=', date('Y-m-d'))
+            ->order_by('id', 'DESC')
+            ->get('informasi')
+            ->result();
 
         // Halaman dashboard
         $data['sidemenu'] = 'Dashboard';
