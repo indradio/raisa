@@ -12,15 +12,15 @@
   
   /* Setting ukuran slide */
   .swiper-slide-banner {
-    width: 70% !important; /* Diperbesar agar fokus tengah lebih dominan */
-    height: 70% !important; /* Diperbesar tingginya */
-    border-radius: -20px;
+    width: 65% !important; /* Diperbesar agar fokus tengah lebih dominan */
+    height: 65% !important; /* Diperbesar tingginya */
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 12px 30px rgba(0,0,0,0.15);
     transition: transform 0.4s ease, opacity 0.4s ease;
     opacity: 0.25;
     filter: blur(1px);
-    transform: scale(0.65) !important;
+    transform: scale(0.75) !important;
   }
 
   /* Slide Tengah yang Aktif */
@@ -133,15 +133,18 @@
       <?php
         // Duplikasi data secara otomatis jika gambar kurang dari 3 agar sisi kanan tidak melompong
         $bannerSlides = $informasi;
-        if (count($informasi) < 6) {
+        if (count($informasi) > 0 && count($informasi) < 5) {
             $bannerSlides = array_merge($informasi, $informasi);
+            if (count($bannerSlides) == 2) {
+                $bannerSlides = array_merge($bannerSlides, $informasi);
+            }
         }
       ?>
 
       <!-- ================= DESKTOP VIEW (SWIPER PREVIEW) ================= -->
       <!-- <div class="row mt-4"> -->
       <div class="row d-none d-sm-block mb-4">
-        <div class="col-12">
+        <div class="col-12 mt-4 ">
           <div class="swiper mySwiperBanner swiper-banner-container">
             <div class="swiper-wrapper">
               <?php foreach ($bannerSlides as $row) : ?>
@@ -392,7 +395,7 @@
     var swiper = new Swiper(".mySwiperBanner", {
       slidesPerView: "auto",
       centeredSlides: true,
-      spaceBetween: -25,
+      spaceBetween: -50,
       loop: true,
       loopAdditionalSlides: 3,
       autoplay: {
