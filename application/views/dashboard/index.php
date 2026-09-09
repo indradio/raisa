@@ -133,7 +133,7 @@
       <?php
         // Duplikasi data secara otomatis jika gambar kurang dari 3 agar sisi kanan tidak melompong
         $bannerSlides = $informasi;
-        if (count($informasi) > 0 && count($informasi) < 5) {
+        if (count($informasi) > 0 && count($informasi) < 6) {
             $bannerSlides = array_merge($informasi, $informasi);
             if (count($bannerSlides) == 2) {
                 $bannerSlides = array_merge($bannerSlides, $informasi);
@@ -392,10 +392,14 @@
 <script>
 
   $(document).ready(function() {
+    var totalSlides = $('.swiper-slide-banner').length;
     var swiper = new Swiper(".mySwiperBanner", {
       slidesPerView: "auto",
       centeredSlides: true,
-      spaceBetween: -50,
+      spaceBetween: -75,
+      loopedSlides: totalSlides, 
+      observer: true,            
+      observeParents: true,
       loop: true,
       loopAdditionalSlides: 3,
       autoplay: {
